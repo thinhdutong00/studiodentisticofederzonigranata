@@ -1,5 +1,7 @@
 ---
 import { site } from '../data/site';
+
+const navigation = site.navigation.filter((item) => item.label !== 'Home');
 ---
 
 <header class="site-header">
@@ -8,10 +10,13 @@ import { site } from '../data/site';
       <img src={site.logo} alt="Studio dentistico Federzoni Granata" width="400" height="52" />
     </a>
     <nav class="primary-nav" aria-label="Navigazione principale">
-      {site.navigation.map((item) => <a href={item.href}>{item.label}</a>)}
+      {navigation.map((item) => <a href={item.href}>{item.label}</a>)}
     </nav>
-    <nav class="social-nav" aria-label="Canali social">
-      {site.social.map((item) => <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={item.label}>{item.label.slice(0, 2)}</a>)}
-    </nav>
+    <div class="header-actions">
+      <nav class="social-nav" aria-label="Canali social">
+        {site.social.map((item) => <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={item.label}>{item.label.slice(0, 2)}</a>)}
+      </nav>
+      <a class="button button-small header-cta" href="/#contatti">Richiedi Info</a>
+    </div>
   </div>
 </header>

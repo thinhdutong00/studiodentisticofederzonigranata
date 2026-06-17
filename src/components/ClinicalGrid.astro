@@ -1,0 +1,25 @@
+---
+interface ImageItem {
+  src: string;
+  alt: string;
+}
+
+interface Props {
+  images: ImageItem[];
+  limit?: number;
+}
+
+const { images, limit } = Astro.props;
+const visibleImages = typeof limit === 'number' ? images.slice(0, limit) : images;
+---
+
+{visibleImages.length > 0 && (
+  <div class="clinical-grid">
+    {visibleImages.map((image) => (
+      <figure class="clinical-card">
+        <img src={image.src} alt={image.alt} loading="lazy" />
+        {image.alt && <figcaption>{image.alt}</figcaption>}
+      </figure>
+    ))}
+  </div>
+)}

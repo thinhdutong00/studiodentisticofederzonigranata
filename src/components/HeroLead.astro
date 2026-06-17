@@ -1,0 +1,38 @@
+---
+import PillForm from './PillForm.astro';
+import TrustBar from './TrustBar.astro';
+
+interface Props {
+  kicker?: string;
+  title: string;
+  description?: string;
+  image?: string;
+  showForm?: boolean;
+  compact?: boolean;
+}
+
+const {
+  kicker = 'Studio dentistico Federzoni Granata',
+  title,
+  description,
+  image,
+  showForm = false,
+  compact = false,
+} = Astro.props;
+---
+
+<section class:list={['hero-lead', compact && 'hero-lead-compact']} style={image ? `--hero-image: url('${image}')` : undefined}>
+  <div class="container hero-lead-inner">
+    <div class="hero-copy">
+      <p class="eyebrow">{kicker}</p>
+      <h1>{title}</h1>
+      {description && <p class="hero-description">{description}</p>}
+      {showForm && <PillForm variant="compact" />}
+      <TrustBar compact={compact} />
+    </div>
+    <a class="hero-scroll-cue" href="#digitale" aria-label="Vai alla sezione Il Digitale">
+      <img src="/assets/original/2021/03/arrow-scrolldown-black.png" alt="" loading="eager" />
+      <span class="sr-only">Scroll down</span>
+    </a>
+  </div>
+</section>

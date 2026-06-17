@@ -1,0 +1,26 @@
+---
+import PillForm from './PillForm.astro';
+
+interface Props {
+  title?: string;
+  lead?: string;
+  showForm?: boolean;
+}
+
+const {
+  title = 'Inizia dal tuo prossimo sorriso',
+  lead = 'Contatta lo studio per informazioni su visite, trattamenti e disponibilità nelle sedi di Modena e Reggio Emilia.',
+  showForm = true,
+} = Astro.props;
+---
+
+<section class="final-cta">
+  <div class="container final-cta-inner">
+    <div>
+      <p class="eyebrow">Contatti</p>
+      <h2>{title}</h2>
+      <p>{lead}</p>
+    </div>
+    {showForm ? <PillForm variant="compact" note="Modulo estetico: presto verrà collegato a Resend." /> : <a class="button button-primary" href="/#contatti">Richiedi Info</a>}
+  </div>
+</section>

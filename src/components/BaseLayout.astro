@@ -24,6 +24,9 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/png" href="/assets/original/2020/10/cropped-favicon-32x32.png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/assets/original/2020/10/cropped-favicon-180x180.png" />
     <meta property="og:type" content="website" />
@@ -49,18 +52,22 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
 <style is:global>
   :root {
-    --ink: #172033;
-    --muted: #667085;
-    --line: #d9e2ea;
+    --ink: #243033;
+    --muted: #657479;
+    --line: #dce6e9;
     --paper: #ffffff;
-    --soft: #f3f7f8;
-    --blue: #0c4da2;
-    --blue-dark: #08366f;
+    --soft: #f5f7f8;
+    --soft-blue: #eef7f9;
+    --blue: #347cc2;
+    --blue-dark: #155a94;
     --aqua: #7db9c5;
     --green: #87a83d;
-    --shadow: 0 18px 50px rgba(20, 42, 66, 0.11);
+    --green-dark: #6f8b30;
+    --nav-height: 84px;
+    --shadow: 0 18px 50px rgba(32, 54, 72, 0.12);
+    --shadow-soft: 0 10px 34px rgba(32, 54, 72, 0.08);
     color-scheme: light;
-    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: "Lato", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
 
   * {
@@ -69,20 +76,35 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--nav-height) + 20px);
   }
 
   body {
     margin: 0;
     color: var(--ink);
     background: var(--paper);
+    font-family: "Lato", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 1rem;
     line-height: 1.65;
     text-rendering: optimizeLegibility;
   }
 
   img {
+    display: block;
     max-width: 100%;
     height: auto;
-    display: block;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   a {
@@ -100,53 +122,147 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   }
 
   .container {
-    width: min(1120px, calc(100vw - 40px));
+    width: min(1280px, calc(100% - 48px));
     margin: 0 auto;
   }
 
+  .container-narrow {
+    width: min(920px, calc(100% - 48px));
+  }
+
   .section {
-    padding: 76px 0;
+    padding: 88px 0;
   }
 
   .section-soft {
     background: var(--soft);
   }
 
+  .eyebrow {
+    margin: 0 0 14px;
+    color: var(--green-dark);
+    font-family: "Montserrat", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    line-height: 1.35;
+    text-transform: uppercase;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0 0 18px;
+    color: var(--ink);
+    font-family: "Montserrat", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.12;
+  }
+
+  h1 {
+    font-size: 4.3rem;
+  }
+
+  h2 {
+    font-size: 3rem;
+  }
+
+  h3 {
+    font-size: 1.55rem;
+  }
+
+  p {
+    margin: 0 0 18px;
+  }
+
+  .button,
+  button.button {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    padding: 12px 24px;
+    background: var(--blue);
+    color: #fff;
+    font: inherit;
+    font-weight: 900;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+  }
+
+  .button:hover,
+  button.button:hover {
+    background: var(--blue-dark);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  .button-small {
+    min-height: 42px;
+    padding: 10px 18px;
+    font-size: 0.94rem;
+  }
+
+  .button-outline {
+    border-color: rgba(52, 124, 194, 0.3);
+    background: #fff;
+    color: var(--blue);
+  }
+
+  .button-outline:hover {
+    border-color: var(--blue);
+    background: var(--soft-blue);
+    color: var(--blue-dark);
+  }
+
   .site-header {
     position: sticky;
     top: 0;
     z-index: 40;
-    background: rgba(255, 255, 255, 0.94);
-    border-bottom: 1px solid rgba(217, 226, 234, 0.8);
+    background: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid rgba(220, 230, 233, 0.85);
     backdrop-filter: blur(16px);
   }
 
   .header-inner {
-    min-height: 76px;
-    display: flex;
+    min-height: var(--nav-height);
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
-    justify-content: space-between;
     gap: 28px;
   }
 
   .brand {
-    flex: 0 0 auto;
     display: inline-flex;
     align-items: center;
+    min-width: 0;
   }
 
   .brand img {
     width: 300px;
-    max-width: 45vw;
+    max-width: 34vw;
   }
 
   .primary-nav {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 18px;
-    font-size: 0.92rem;
+    justify-content: center;
+    gap: 8px 20px;
+    font-family: "Montserrat", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    font-size: 0.78rem;
     font-weight: 700;
-    letter-spacing: 0;
+    line-height: 1.2;
     text-transform: uppercase;
   }
 
@@ -159,9 +275,17 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     color: var(--blue);
   }
 
+  .header-actions {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    min-width: 0;
+  }
+
   .social-nav {
     display: flex;
-    gap: 8px;
+    gap: 7px;
   }
 
   .social-nav a {
@@ -171,83 +295,685 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     border-radius: 50%;
     display: inline-grid;
     place-items: center;
-    text-decoration: none;
     color: var(--blue);
-    font-size: 0.75rem;
-    font-weight: 800;
+    font-size: 0.68rem;
+    font-weight: 900;
+    line-height: 1;
+    text-decoration: none;
+    text-transform: uppercase;
   }
 
-  .hero {
-    min-height: 70vh;
+  .social-nav a:hover {
+    border-color: rgba(52, 124, 194, 0.45);
+    background: var(--soft-blue);
+  }
+
+  .hero-lead {
+    --hero-image: none;
+    position: relative;
+    min-height: 82svh;
     display: grid;
-    align-items: end;
+    align-items: center;
+    overflow: hidden;
     color: #fff;
+    background-color: var(--blue-dark);
+    background-image:
+      linear-gradient(90deg, rgba(13, 47, 78, 0.86), rgba(13, 47, 78, 0.58) 52%, rgba(13, 47, 78, 0.32)),
+      var(--hero-image);
     background-position: center;
     background-size: cover;
+  }
+
+  .hero-lead-inner {
     position: relative;
+    padding: 92px 0 58px;
   }
 
-  .hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(5, 18, 35, 0.1), rgba(5, 18, 35, 0.72));
+  .hero-copy {
+    width: min(900px, 100%);
   }
 
-  .hero-content {
-    position: relative;
-    padding: 160px 0 64px;
+  .hero-lead .eyebrow {
+    color: #d8eef2;
   }
 
-  .eyebrow {
-    margin: 0 0 14px;
-    font-size: 0.82rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--aqua);
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    color: var(--ink);
-    line-height: 1.12;
-    letter-spacing: 0;
-    margin: 0 0 18px;
-  }
-
-  .hero h1 {
-    max-width: 820px;
+  .hero-lead h1 {
+    max-width: 870px;
     color: #fff;
-    font-size: clamp(2.6rem, 6vw, 5.6rem);
+    font-size: 4.4rem;
   }
 
-  .hero p {
-    max-width: 700px;
-    margin: 0;
+  .hero-description {
+    max-width: 760px;
+    margin: 0 0 30px;
+    color: rgba(255, 255, 255, 0.9);
     font-size: 1.18rem;
   }
 
-  .page-hero {
-    padding: 90px 0 54px;
-    background: linear-gradient(180deg, #eef7f9, #fff);
-    border-bottom: 1px solid var(--line);
+  .hero-scroll-cue {
+    position: absolute;
+    right: 0;
+    bottom: 24px;
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.88);
+    box-shadow: var(--shadow-soft);
   }
 
-  .page-hero h1 {
-    max-width: 920px;
-    font-size: clamp(2.2rem, 4.5vw, 4.8rem);
+  .hero-scroll-cue img {
+    width: 18px;
+    height: auto;
+    filter: invert(35%) sepia(73%) saturate(745%) hue-rotate(173deg) brightness(91%) contrast(89%);
   }
 
-  .page-hero p {
-    max-width: 780px;
-    margin: 0;
+  .trust-bar {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .trust-item {
+    min-height: 118px;
+    padding: 18px;
+    border: 1px solid rgba(52, 124, 194, 0.16);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .hero-lead .trust-item {
+    border-color: rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.13);
+    box-shadow: none;
+    backdrop-filter: blur(10px);
+  }
+
+  .trust-item strong {
+    display: block;
+    color: var(--blue);
+    font-family: "Montserrat", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  .hero-lead .trust-item strong,
+  .hero-lead .trust-item span {
+    color: #fff;
+  }
+
+  .trust-item span {
+    display: block;
+    margin-top: 9px;
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
+
+  .pill-form {
+    width: 100%;
+  }
+
+  .pill-form h2 {
+    margin-bottom: 20px;
+    color: var(--blue-dark);
+    font-size: 2.2rem;
+  }
+
+  .pill-form-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr) auto;
+    gap: 8px;
+    align-items: center;
+    max-width: 800px;
+    padding: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.38);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 18px 50px rgba(10, 36, 56, 0.2);
+  }
+
+  .pill-form-compact label {
+    position: relative;
+    display: block;
+  }
+
+  .pill-form-compact label span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .pill-form input,
+  .pill-form textarea,
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    border: 1px solid #cfdee3;
+    border-radius: 999px;
+    background: #fff;
+    color: var(--ink);
+    font: inherit;
+    outline: none;
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+  }
+
+  .pill-form input {
+    min-height: 52px;
+    padding: 0 18px;
+  }
+
+  .pill-form textarea,
+  .contact-form textarea {
+    min-height: 150px;
+    resize: vertical;
+  }
+
+  .pill-form input:focus,
+  .pill-form textarea:focus,
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 4px rgba(52, 124, 194, 0.12);
+  }
+
+  .pill-form-full,
+  .contact-form {
+    padding: 32px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .pill-form-full label,
+  .contact-form label {
+    display: grid;
+    gap: 7px;
+    color: var(--muted);
+    font-size: 0.93rem;
+    font-weight: 800;
+  }
+
+  .pill-form-full input,
+  .pill-form-full textarea,
+  .contact-form input,
+  .contact-form textarea {
+    border-radius: 12px;
+    padding: 13px 14px;
+  }
+
+  .full-span {
+    grid-column: 1 / -1;
+  }
+
+  .checkbox-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 18px 0 22px;
+    color: var(--muted);
+    font-weight: 800;
+  }
+
+  .checkbox-row input {
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    margin-top: 3px;
+  }
+
+  .form-note {
+    margin: 14px 0 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .section-band {
+    padding: 96px 0;
+    background: var(--paper);
+  }
+
+  .section-band-soft {
+    background: var(--soft);
+  }
+
+  .section-band-blue {
+    background: var(--soft-blue);
+  }
+
+  .section-band-dark {
+    background: #10283d;
+    color: #f5fbfc;
+  }
+
+  .section-band-dark h2,
+  .section-band-dark h3,
+  .section-band-dark .section-heading p {
+    color: #fff;
+  }
+
+  .section-heading {
+    max-width: 840px;
+    margin: 0 auto 42px;
+    text-align: center;
+  }
+
+  .section-heading h2 {
+    color: var(--blue);
+  }
+
+  .section-heading p:not(.eyebrow) {
+    margin: 0 auto;
     color: var(--muted);
     font-size: 1.08rem;
+  }
+
+  .rich-text p:last-child,
+  .rich-text ul:last-child,
+  .rich-text ol:last-child {
+    margin-bottom: 0;
+  }
+
+  .rich-text ul,
+  .rich-text ol,
+  .content-body ul,
+  .content-body ol {
+    padding-left: 1.2rem;
+  }
+
+  .rich-text li + li,
+  .content-body li + li {
+    margin-top: 6px;
+  }
+
+  .intro-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.75fr);
+    gap: 40px;
+    align-items: start;
+  }
+
+  .intro-copy {
+    display: grid;
+    gap: 24px;
+  }
+
+  .services-panel {
+    padding: 28px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .services-panel .eyebrow {
+    margin-bottom: 10px;
+  }
+
+  .services-panel ul {
+    columns: 2;
+    column-gap: 28px;
+    margin: 0;
+    padding-left: 1.15rem;
+  }
+
+  .image-card,
+  .content-figure {
+    overflow: hidden;
+    border-radius: 8px;
+    background: #eef4f5;
+    box-shadow: var(--shadow);
+  }
+
+  .image-card img,
+  .content-figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .intro-image {
+    aspect-ratio: 4 / 5;
+    position: sticky;
+    top: calc(var(--nav-height) + 24px);
+  }
+
+  .media-hero-card {
+    position: relative;
+    min-height: 340px;
+    margin: 0 0 38px;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #e9f2f4;
+    box-shadow: var(--shadow);
+  }
+
+  .media-hero-card-tight {
+    min-height: 260px;
+  }
+
+  .media-hero-card img {
+    width: 100%;
+    height: 100%;
+    min-height: inherit;
+    object-fit: cover;
+  }
+
+  .media-hero-card figcaption {
+    position: absolute;
+    left: 18px;
+    bottom: 18px;
+    max-width: calc(100% - 36px);
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--blue-dark);
+    font-family: "Montserrat", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 800;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .feature-grid,
+  .link-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 16px;
+  }
+
+  .feature-card,
+  .link-card {
+    min-height: 136px;
+    display: grid;
+    align-content: start;
+    gap: 12px;
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--ink);
+    text-decoration: none;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .feature-card-link:hover,
+  .link-card:hover {
+    border-color: rgba(52, 124, 194, 0.38);
+    color: var(--blue-dark);
+    transform: translateY(-1px);
+  }
+
+  .feature-index {
+    width: 34px;
+    height: 34px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--soft-blue);
+    color: var(--blue);
+    font-weight: 900;
+  }
+
+  .feature-card strong,
+  .link-card {
+    font-family: "Montserrat", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    font-weight: 700;
+  }
+
+  .feature-card small {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+
+  .digital-grid {
+    display: grid;
+    gap: 22px;
+  }
+
+  .tech-card {
+    display: grid;
+    grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1fr);
+    gap: 26px;
+    align-items: center;
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .tech-card:nth-child(even) .tech-media {
+    order: 2;
+  }
+
+  .tech-media {
+    aspect-ratio: 16 / 10;
+  }
+
+  .tech-body h3 {
+    color: var(--blue);
+  }
+
+  .team-grid {
+    display: grid;
+    gap: 22px;
+  }
+
+  .person-card {
+    display: grid;
+    grid-template-columns: minmax(260px, 0.42fr) minmax(0, 1fr);
+    gap: 28px;
+    align-items: center;
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .person-card:nth-child(even) .person-photo {
+    order: 2;
+  }
+
+  .person-photo {
+    aspect-ratio: 4 / 3;
+  }
+
+  .person-card h3 {
+    color: var(--blue);
+  }
+
+  .staff-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 24px;
+  }
+
+  .staff-card {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .staff-card .image-card {
+    aspect-ratio: 1 / 1;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .staff-card h3 {
+    margin: 0;
+    padding: 18px;
+    color: var(--blue);
+    font-size: 1.15rem;
+  }
+
+  .clinical-showcase {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 34px;
+    align-items: center;
+  }
+
+  .case-brand-mark {
+    width: 116px;
+    margin-bottom: 20px;
+  }
+
+  .office-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .office-card {
+    display: grid;
+    gap: 14px;
+    align-content: start;
+    min-height: 100%;
+    padding: 26px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .office-card h3 {
+    margin: 0;
+    color: var(--blue);
+  }
+
+  .office-card p {
+    margin: 0;
+  }
+
+  .office-card dl {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+  }
+
+  .office-card dl > div {
+    display: grid;
+    gap: 2px;
+  }
+
+  .office-card dt {
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .office-card dd {
+    margin: 0;
+  }
+
+  .bando-link {
+    margin-top: 24px;
+    padding: 18px 22px;
+    border: 1px solid rgba(135, 168, 61, 0.34);
+    border-radius: 8px;
+    background: #f8fbf1;
+  }
+
+  .bando-link p {
+    margin: 0;
+  }
+
+  .youtube-channel-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 24px;
+    align-items: center;
+    margin-top: 34px;
+    padding: 28px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .youtube-channel-card h2 {
+    margin-bottom: 12px;
+    color: var(--blue);
+    font-size: 2rem;
+  }
+
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .video-card {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .video-frame {
+    aspect-ratio: 16 / 9;
+    background: #10283d;
+  }
+
+  .video-frame iframe {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: 0;
+  }
+
+  .video-card-body {
+    padding: 20px;
+  }
+
+  .video-card-body h3 {
+    margin-bottom: 10px;
+    color: var(--blue);
+    font-size: 1.2rem;
+  }
+
+  .video-card-body p {
+    color: var(--muted);
+    font-size: 0.96rem;
+  }
+
+  .video-card-body a {
+    font-weight: 900;
+  }
+
+  .contact-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+    gap: 32px;
+    align-items: start;
+  }
+
+  .contact-copy {
+    position: sticky;
+    top: calc(var(--nav-height) + 24px);
   }
 
   .content-shell {
@@ -266,14 +992,14 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   .content-body h2 {
     margin-top: 54px;
     color: var(--blue);
-    font-size: clamp(2rem, 3.6vw, 3.8rem);
+    font-size: 2.8rem;
     text-align: center;
   }
 
   .content-body h3 {
     margin-top: 36px;
     color: var(--blue);
-    font-size: clamp(1.35rem, 2vw, 2rem);
+    font-size: 1.8rem;
   }
 
   .content-body h4,
@@ -291,26 +1017,8 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     margin: 0 0 20px;
   }
 
-  .content-body ul,
-  .content-body ol {
-    padding-left: 1.35rem;
-  }
-
-  .content-body li + li {
-    margin-top: 5px;
-  }
-
   .content-figure {
     margin: 32px auto;
-    overflow: hidden;
-    border-radius: 8px;
-    background: #eef4f5;
-    box-shadow: var(--shadow);
-  }
-
-  .content-figure img {
-    width: 100%;
-    object-fit: cover;
   }
 
   .content-figure figcaption {
@@ -327,140 +1035,35 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     background: var(--soft);
   }
 
-  .button,
-  button.button {
-    display: inline-flex;
-    min-height: 46px;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    border: 0;
-    border-radius: 4px;
-    padding: 12px 20px;
-    background: var(--blue);
-    color: #fff;
-    font: inherit;
-    font-weight: 800;
-    text-decoration: none;
-    cursor: pointer;
+  .page-hero {
+    padding: 88px 0 58px;
+    background: var(--soft-blue);
+    border-bottom: 1px solid var(--line);
   }
 
-  .button:hover,
-  button.button:hover {
-    background: var(--blue-dark);
-    color: #fff;
-  }
-
-  .link-grid,
-  .office-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px;
-    margin: 26px 0;
-  }
-
-  .link-card,
-  .office-card {
-    padding: 22px;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    background: #fff;
-    box-shadow: 0 8px 28px rgba(20, 42, 66, 0.06);
-  }
-
-  .link-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    text-decoration: none;
-    color: var(--ink);
-    font-weight: 800;
-  }
-
-  .office-card h3 {
+  .page-hero h1 {
+    max-width: 920px;
     color: var(--blue);
-    margin-top: 0;
+    font-size: 3.7rem;
   }
 
-  .contact-form {
-    margin: 50px auto 0;
-    max-width: 900px;
-    padding: 28px;
-    border-radius: 8px;
-    background: var(--soft);
-    border: 1px solid var(--line);
-  }
-
-  .contact-form h2 {
-    margin-top: 0;
-    text-align: left;
-  }
-
-  .form-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
-  }
-
-  .contact-form label {
-    display: grid;
-    gap: 7px;
+  .page-hero p {
+    max-width: 780px;
+    margin: 0;
     color: var(--muted);
-    font-size: 0.92rem;
-    font-weight: 700;
-  }
-
-  .contact-form input,
-  .contact-form textarea {
-    width: 100%;
-    border: 1px solid #cbd7df;
-    border-radius: 4px;
-    padding: 13px 14px;
-    background: #fff;
-    color: var(--ink);
-    font: inherit;
-  }
-
-  .contact-form textarea {
-    min-height: 150px;
-    resize: vertical;
-  }
-
-  .full-span {
-    grid-column: 1 / -1;
-  }
-
-  .checkbox-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 16px 0 22px;
-    color: var(--muted);
-    font-weight: 700;
-  }
-
-  .checkbox-row input {
-    width: 18px;
-    height: 18px;
-  }
-
-  .form-note {
-    margin: 12px 0 0;
-    color: var(--muted);
-    font-size: 0.9rem;
+    font-size: 1.08rem;
   }
 
   .site-footer {
-    margin-top: 70px;
-    background: #101928;
-    color: #f4f7fb;
+    background: #10283d;
+    color: #f4f9fb;
   }
 
   .footer-inner {
-    padding: 56px 0;
+    padding: 62px 0;
     display: grid;
-    grid-template-columns: 1.1fr 1fr 1fr;
-    gap: 30px;
+    grid-template-columns: 1.12fr 1fr 1fr;
+    gap: 32px;
   }
 
   .site-footer h2,
@@ -468,14 +1071,18 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     color: #fff;
   }
 
+  .site-footer p {
+    color: rgba(255, 255, 255, 0.78);
+  }
+
   .site-footer a {
-    color: #c7e7ee;
+    color: #d6eef3;
   }
 
   .footer-bottom {
     border-top: 1px solid rgba(255, 255, 255, 0.14);
     padding: 18px 0;
-    color: #b6c5d8;
+    color: rgba(255, 255, 255, 0.68);
     font-size: 0.9rem;
   }
 
@@ -486,9 +1093,9 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     bottom: 18px;
     z-index: 80;
     display: none;
-    max-width: 960px;
+    max-width: 720px;
     margin: 0 auto;
-    padding: 18px;
+    padding: 16px;
     border-radius: 8px;
     background: #111827;
     color: #fff;
@@ -500,7 +1107,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   }
 
   .cookie-banner p {
-    margin: 0 0 12px;
+    margin: 0 0 10px;
   }
 
   .cookie-actions {
@@ -512,12 +1119,12 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   .cookie-actions button {
     min-height: 40px;
     border: 1px solid rgba(255, 255, 255, 0.24);
-    border-radius: 4px;
+    border-radius: 999px;
     padding: 9px 14px;
     background: var(--blue);
     color: #fff;
     font: inherit;
-    font-weight: 800;
+    font-weight: 900;
     cursor: pointer;
   }
 
@@ -525,48 +1132,259 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     background: transparent;
   }
 
-  @media (max-width: 900px) {
-    .header-inner,
-    .primary-nav {
-      align-items: flex-start;
-      flex-direction: column;
+  @media (max-width: 1120px) {
+    .header-inner {
+      grid-template-columns: auto 1fr;
+      gap: 12px 24px;
+      padding: 12px 0;
+    }
+
+    .brand img {
+      max-width: 280px;
     }
 
     .primary-nav {
-      gap: 10px;
-      padding-bottom: 18px;
+      grid-column: 1 / -1;
+      justify-content: flex-start;
+      order: 3;
+    }
+
+    .header-actions {
+      justify-self: end;
+    }
+
+    .hero-lead h1 {
+      font-size: 3.6rem;
+    }
+
+    .trust-bar {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .intro-layout,
+    .clinical-showcase,
+    .contact-panel,
+    .youtube-channel-card {
+      grid-template-columns: 1fr;
+    }
+
+    .video-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .intro-image,
+    .contact-copy {
+      position: static;
+    }
+  }
+
+  @media (max-width: 900px) {
+    :root {
+      --nav-height: 76px;
+    }
+
+    .container,
+    .container-narrow {
+      width: min(100% - 36px, 1280px);
+    }
+
+    h1 {
+      font-size: 3.2rem;
+    }
+
+    h2,
+    .section-heading h2 {
+      font-size: 2.45rem;
+    }
+
+    .hero-lead {
+      min-height: 78svh;
+      background-image:
+        linear-gradient(180deg, rgba(13, 47, 78, 0.86), rgba(13, 47, 78, 0.64)),
+        var(--hero-image);
+    }
+
+    .hero-lead-inner {
+      padding: 72px 0 46px;
+    }
+
+    .hero-lead h1 {
+      font-size: 3rem;
+    }
+
+    .pill-form-row {
+      max-width: 560px;
+      grid-template-columns: 1fr;
+      border-radius: 24px;
+      padding: 10px;
+    }
+
+    .pill-form-row .button {
+      width: 100%;
+    }
+
+    .services-panel ul {
+      columns: 1;
+    }
+
+    .tech-card,
+    .person-card,
+    .office-grid,
+    .footer-inner,
+    .form-grid,
+    .video-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .tech-card:nth-child(even) .tech-media,
+    .person-card:nth-child(even) .person-photo {
+      order: 0;
+    }
+
+    .staff-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .social-nav {
       display: none;
     }
-
-    .footer-inner,
-    .form-grid {
-      grid-template-columns: 1fr;
-    }
   }
 
-  @media (max-width: 620px) {
-    .container {
-      width: min(100% - 28px, 1120px);
+  @media (max-width: 640px) {
+    .container,
+    .container-narrow {
+      width: min(100% - 28px, 1280px);
     }
 
-    .hero {
-      min-height: 62vh;
+    .section,
+    .section-band {
+      padding: 64px 0;
     }
 
-    .hero-content {
-      padding-top: 110px;
+    .header-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
     }
 
-    .section {
-      padding: 54px 0;
+    .brand img {
+      width: 220px;
+      max-width: 62vw;
     }
 
+    .primary-nav {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px 12px;
+      font-size: 0.72rem;
+    }
+
+    .primary-nav a {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .header-cta {
+      min-height: 38px;
+      padding: 9px 14px;
+      font-size: 0.86rem;
+    }
+
+    h1 {
+      font-size: 2.45rem;
+    }
+
+    h2,
+    .section-heading h2,
     .content-body h1,
-    .content-body h2 {
+    .content-body h2,
+    .page-hero h1 {
+      font-size: 2.05rem;
       text-align: left;
+    }
+
+    h3,
+    .content-body h3 {
+      font-size: 1.38rem;
+    }
+
+    .section-heading {
+      margin-bottom: 30px;
+      text-align: left;
+    }
+
+    .hero-lead {
+      min-height: 76svh;
+    }
+
+    .hero-lead h1 {
+      font-size: 2.45rem;
+    }
+
+    .hero-description {
+      font-size: 1.03rem;
+    }
+
+    .trust-bar,
+    .staff-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-scroll-cue {
+      display: none;
+    }
+
+    .trust-item {
+      min-height: 0;
+    }
+
+    .feature-grid,
+    .link-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .tech-card,
+    .person-card,
+    .pill-form-full,
+    .contact-form,
+    .office-card,
+    .services-panel,
+    .youtube-channel-card {
+      padding: 20px;
+    }
+
+    .media-hero-card,
+    .media-hero-card-tight {
+      min-height: 210px;
+      margin-bottom: 28px;
+    }
+
+    .youtube-channel-card h2 {
+      font-size: 1.55rem;
+    }
+
+    .page-hero {
+      padding: 58px 0 42px;
+    }
+
+    .cookie-banner {
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      padding: 12px;
+      font-size: 0.86rem;
+    }
+
+    .cookie-actions {
+      gap: 8px;
+    }
+
+    .cookie-actions button {
+      min-height: 34px;
+      padding: 7px 11px;
     }
   }
 </style>

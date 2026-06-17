@@ -1,0 +1,31 @@
+---
+import { site } from '../data/site';
+---
+
+<div class="office-grid">
+  {site.offices.map((office) => (
+    <article class="office-card" id={office.city === 'Modena' ? 'modena' : 'reggio-emilia'}>
+      <p class="eyebrow">{office.city}</p>
+      <h3>{office.title}</h3>
+      <dl>
+        <div>
+          <dt>Indirizzo</dt>
+          <dd>{office.address}</dd>
+        </div>
+        <div>
+          <dt>Telefono</dt>
+          <dd><a href={office.phoneHref}>{office.phone}</a></dd>
+        </div>
+        <div>
+          <dt>Email</dt>
+          <dd><a href={office.emailHref}>{office.email}</a></dd>
+        </div>
+        <div>
+          <dt>Orari</dt>
+          <dd>{office.hours}</dd>
+        </div>
+      </dl>
+      <a class="button button-outline" href={office.href}>Dettagli {office.city}</a>
+    </article>
+  ))}
+</div>

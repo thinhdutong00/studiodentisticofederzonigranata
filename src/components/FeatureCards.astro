@@ -1,0 +1,32 @@
+---
+interface Feature {
+  label: string;
+  href?: string;
+  description?: string;
+}
+
+interface Props {
+  items: Feature[];
+  numbered?: boolean;
+}
+
+const { items, numbered = false } = Astro.props;
+---
+
+<div class="feature-grid">
+  {items.map((item, index) => (
+    item.href ? (
+      <a class="feature-card feature-card-link" href={item.href}>
+        <span class="feature-index">{numbered ? String(index + 1).padStart(2, '0') : '✓'}</span>
+        <strong>{item.label}</strong>
+        {item.description && <small>{item.description}</small>}
+      </a>
+    ) : (
+      <article class="feature-card">
+        <span class="feature-index">{numbered ? String(index + 1).padStart(2, '0') : '✓'}</span>
+        <strong>{item.label}</strong>
+        {item.description && <small>{item.description}</small>}
+      </article>
+    )
+  ))}
+</div>

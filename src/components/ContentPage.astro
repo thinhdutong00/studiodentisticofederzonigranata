@@ -1,5 +1,10 @@
 ---
 import ContactForm from './ContactForm.astro';
+import FeatureCards from './FeatureCards.astro';
+import HeroLead from './HeroLead.astro';
+import OfficeCards from './OfficeCards.astro';
+import PillForm from './PillForm.astro';
+import SectionBand from './SectionBand.astro';
 import { site, type SitePage } from '../data/site';
 
 interface Props {
@@ -10,82 +15,345 @@ const { page } = Astro.props;
 const titleBlock = page.blocks.find((block) => block.type === 'heading');
 const pageTitle = titleBlock?.text || page.navTitle;
 const bodyBlocks = page.path === '/' ? page.blocks : page.blocks.filter((block) => block !== titleBlock);
+const homeBlocks = page.blocks;
+
+const cleanHeading = (text = '') =>
+  text
+    .replace(/Dottoressa(?=[A-ZÀ-Ý])/g, 'Dottoressa ')
+    .replace(/Dottor(?=[A-ZÀ-Ý])/g, 'Dottor ')
+    .replace('Casi CliniciEsempi di lavori eseguiti dallo studio odontoiatrico', 'Casi Clinici')
+    .trim();
+
+const htmlAt = (index: number) => {
+  const block = homeBlocks[index];
+  return block && 'html' in block ? block.html : '';
+};
+
+const headingAt = (index: number, fallback: string) => {
+  const block = homeBlocks[index];
+  return block?.type === 'heading' ? cleanHeading(block.text) : fallback;
+};
+
+const imageAt = (index: number, fallbackAlt = '') => {
+  const block = homeBlocks[index];
+  return block?.type === 'image'
+    ? {
+        src: block.src,
+        alt: block.alt || fallbackAlt,
+      }
+    : undefined;
+};
+
+const listItemsFromHtml = (html: string) =>
+  Array.from(html.matchAll(/<li>(.*?)<\/li>/g)).map((match) =>
+    match[1]
+      .replace(/<[^>]+>/g, '')
+      .replace(/\s+/g, ' ')
+      .trim(),
+  );
+
+const introParagraphs = [htmlAt(2), htmlAt(3)].filter(Boolean);
+const serviceIntro = htmlAt(4);
+const serviceItems = listItemsFromHtml(htmlAt(5)).map((label) => ({ label }));
+const introImage = imageAt(6, 'Dentista nello studio Federzoni Granata');
+
+const digitalIntro = [htmlAt(8), htmlAt(9)].filter(Boolean);
+const digitalFeatures = [
+  { title: headingAt(11, 'Impronta Digitale'), html: htmlAt(12), image: imageAt(10, 'Impronta digitale') },
+  { title: headingAt(13, 'Scanner facciale'), html: htmlAt(14), image: imageAt(15, 'Scanner facciale') },
+  { title: headingAt(17, 'Chirurgia guidata'), html: htmlAt(18), image: imageAt(16, 'Implantologia computer guidata') },
+  { title: headingAt(19, 'Sorriso virtuale'), html: htmlAt(20), image: imageAt(21, 'Sorriso virtuale') },
+  { title: headingAt(23, 'TAC Cone beam'), html: htmlAt(24), image: imageAt(22, 'TAC Cone beam') },
+];
+
+const doctors = [
+  { title: headingAt(26, 'Dottoressa Chiara Federzoni'), html: htmlAt(27), image: imageAt(28, 'Dentista Chiara Federzoni') },
+  { title: headingAt(30, 'Dottor Stefano Granata'), html: htmlAt(31), image: imageAt(29, 'Dentista Stefano Granata') },
+];
+
+const staff = [
+  { title: headingAt(33, 'Dottor Giovanni Strozzi'), image: imageAt(32, 'Dottor Giovanni Strozzi') },
+  { title: headingAt(35, 'ASO Alejandra Bellini'), image: imageAt(34, 'ASO Alejandra Bellini') },
+  { title: headingAt(37, 'ASO Agnese Leoni'), image: imageAt(36, 'ASO Agnese Leoni') },
+];
+
+const clinicalBody = htmlAt(39);
+const clinicalMark = imageAt(40, 'Logo Federzoni Granata');
+const clinicalItems = site.clinicalLinks.map((item) => ({ label: item.label, href: item.href }));
+const bandoHtml = htmlAt(57);
+
+const editorialMedia = {
+  intro: {
+    src: '/assets/original/2021/02/HOME.jpg',
+    alt: 'Studio Dentistico Federzoni Granata',
+    label: 'Studio',
+  },
+  digitale: {
+    src: '/assets/original/2021/03/IL-DIGITALE-scaled.jpg',
+    alt: 'Odontoiatria digitale nello studio',
+    label: 'Digitale',
+  },
+  studio: {
+    src: '/assets/original/2021/01/LO-STUDIO-scaled.jpg',
+    alt: 'Lo Studio Dentistico Federzoni Granata',
+    label: 'Lo Studio',
+  },
+  clinici: {
+    src: '/assets/original/2021/04/CASI-CLINICI-prova.jpg',
+    alt: 'Casi clinici dello studio odontoiatrico',
+    label: 'Casi Clinici',
+  },
+  sedi: {
+    src: '/assets/original/2022/05/dentista-reggio-emilia-modena-3.jpg',
+    alt: 'Studi dentistici di Modena e Reggio Emilia',
+    label: 'Sedi',
+  },
+};
+
+const videoBlocks = page.path === '/video/' ? page.blocks : [];
+const videoIntroHtml = videoBlocks[1] && 'html' in videoBlocks[1] ? videoBlocks[1].html : '';
+const videoLeadHtml = videoBlocks[3] && 'html' in videoBlocks[3] ? videoBlocks[3].html : '';
+const videoChannelTitle = videoBlocks[4]?.type === 'heading' ? videoBlocks[4].text : 'Studio Dentistico Federzoni Granata';
+const videoItems = [
+  { id: '5T0EhOcKp9k', title: 'Ponte Maryland', description: 'Ponte adesivo per sostituire un dente quando non si può inserire un impianto.' },
+  { id: 'UrDSGXJzbhQ', title: 'Denti in giornata', description: 'Una riflessione sui tempi corretti per ripristinare funzione e salute orale.' },
+  { id: 'Ji1plubRtSs', title: 'Parodontologia o implantologia', description: 'Quando preservare i denti e quando valutare gli impianti.' },
+  { id: 'gl4tqBSwyic', title: 'Ortodonzia e allineatori', description: 'Allineatori trasparenti per giovani e adulti.' },
+  { id: 'ePNtvPhQu1Q', title: 'Tecnologie implantari', description: 'Strumenti e diagnosi per valutare l’inserimento degli impianti.' },
+  { id: 'kDj5PXvsj0A', title: 'TAC e visita approfondita', description: 'CBCT, diagnosi e pianificazione accurata del trattamento.' },
+  { id: 'yALQdE_9-rE', title: 'Chirurgia guidata', description: 'Progettazione digitale e mascherine chirurgiche per interventi guidati.' },
+  { id: 'isanVOgd-wE', title: 'Implantologia rigenerativa', description: 'Corso teorico pratico di implantologia rigenerativa.' },
+  { id: 'gCRq49_54IA', title: 'Visita senza impegno', description: 'Perché diagnosi, prognosi e piano di trattamento richiedono tempo.' },
+];
 ---
 
 {page.path === '/' ? (
-  <section class="hero" style={`background-image: url('${site.heroImage}')`}>
-    <div class="container hero-content">
-      <p class="eyebrow">Studio dentistico Federzoni Granata</p>
-      <h1>{pageTitle}</h1>
-      <p>{page.description || site.description}</p>
-    </div>
-  </section>
-) : (
-  <section class="page-hero">
-    <div class="container">
-      <p class="eyebrow">{page.kind === 'article' ? 'Approfondimenti' : site.name}</p>
-      <h1>{pageTitle}</h1>
-      {page.description && <p>{page.description}</p>}
-    </div>
-  </section>
-)}
+  <div class="homepage">
+    <HeroLead
+      kicker="Studio dentistico Federzoni Granata"
+      title={cleanHeading(pageTitle)}
+      description={page.description || site.description}
+      image={site.heroImage}
+      showForm
+    />
 
-<section class="section">
-  <div class="container content-shell">
-    {page.path === '/' && (
-      <div class="link-grid" aria-label="Casi clinici">
-        {site.clinicalLinks.map((item) => <a class="link-card" href={item.href}>{item.label}<span aria-hidden="true">→</span></a>)}
+    <SectionBand eyebrow="Odontoiatria digitale" title={headingAt(1, 'Odontoiatria digitale per adulti e bambini')} lead="Un approccio multidisciplinare per adulti e bambini, con tecnologie digitali e attenzione costante alla relazione con il paziente.">
+      <figure class="media-hero-card">
+        <img src={editorialMedia.intro.src} alt={editorialMedia.intro.alt} loading="lazy" />
+        <figcaption>{editorialMedia.intro.label}</figcaption>
+      </figure>
+      <div class="intro-layout">
+        <div class="intro-copy">
+          <div class="rich-text">
+            {introParagraphs.map((html) => <Fragment set:html={html} />)}
+          </div>
+          <div class="services-panel">
+            <p class="eyebrow">Terapie e trattamenti</p>
+            <div class="rich-text" set:html={serviceIntro} />
+            <FeatureCards items={serviceItems} />
+          </div>
+        </div>
+        {introImage && (
+          <figure class="image-card intro-image">
+            <img src={introImage.src} alt={introImage.alt} loading="lazy" />
+          </figure>
+        )}
       </div>
-    )}
-    <div class="content-body">
-      {bodyBlocks.map((block) => {
-        if (block.type === 'heading') {
-          const Tag = `h${Math.min(Math.max(block.level, 1), 6)}`;
-          return <Tag id={block.id}>{block.text}</Tag>;
-        }
-        if (block.type === 'paragraph') return <Fragment set:html={block.html} />;
-        if (block.type === 'list') return <Fragment set:html={block.html} />;
-        if (block.type === 'html') return <div set:html={block.html} />;
-        if (block.type === 'image') {
-          return (
-            <figure class="content-figure">
-              <img src={block.src} alt={block.alt} loading="lazy" />
-              {block.alt && <figcaption>{block.alt}</figcaption>}
-            </figure>
-          );
-        }
-        if (block.type === 'embed') {
-          return (
-            <div class="content-embed">
-              <p>{block.type === 'video' ? 'Video esterno' : block.type === 'map' ? 'Mappa esterna' : 'Contenuto esterno'}</p>
-              <a class="button" href={block.url} target="_blank" rel="noopener noreferrer">{block.label}</a>
+    </SectionBand>
+
+    <SectionBand id="digitale" eyebrow="Tecnologie" title={headingAt(7, 'Il Digitale: Odontoiatria digitale')} tone="soft">
+      <figure class="media-hero-card media-hero-card-tight">
+        <img src={editorialMedia.digitale.src} alt={editorialMedia.digitale.alt} loading="lazy" />
+        <figcaption>{editorialMedia.digitale.label}</figcaption>
+      </figure>
+      <div class="rich-text container-narrow">
+        {digitalIntro.map((html) => <Fragment set:html={html} />)}
+      </div>
+      <div class="digital-grid">
+        {digitalFeatures.map((item) => (
+          <article class="tech-card">
+            {item.image && (
+              <figure class="image-card tech-media">
+                <img src={item.image.src} alt={item.image.alt} loading="lazy" />
+              </figure>
+            )}
+            <div class="tech-body">
+              <h3>{item.title}</h3>
+              <div class="rich-text" set:html={item.html} />
             </div>
-          );
-        }
-      })}
+          </article>
+        ))}
+      </div>
+    </SectionBand>
 
-      {page.kind === 'clinical' && (
-        <div class="link-grid" aria-label="Altre categorie cliniche">
-          {site.clinicalLinks.filter((item) => item.href !== page.path).map((item) => <a class="link-card" href={item.href}>{item.label}<span aria-hidden="true">→</span></a>)}
+    <SectionBand id="studio" eyebrow="Lo studio" title={headingAt(25, 'Lo Studio Dentistico')} lead="Esperienze specialistiche diverse lavorano insieme per un percorso completo, dalla prevenzione alla protesi digitale.">
+      <figure class="media-hero-card">
+        <img src={editorialMedia.studio.src} alt={editorialMedia.studio.alt} loading="lazy" />
+        <figcaption>{editorialMedia.studio.label}</figcaption>
+      </figure>
+      <div class="team-grid">
+        {doctors.map((person) => (
+          <article class="person-card">
+            {person.image && (
+              <figure class="image-card person-photo">
+                <img src={person.image.src} alt={person.image.alt} loading="lazy" />
+              </figure>
+            )}
+            <div>
+              <h3>{person.title}</h3>
+              <div class="rich-text" set:html={person.html} />
+            </div>
+          </article>
+        ))}
+      </div>
+      <div class="staff-grid" aria-label="Collaboratori dello studio">
+        {staff.map((person) => (
+          <article class="staff-card">
+            {person.image && (
+              <figure class="image-card">
+                <img src={person.image.src} alt={person.image.alt} loading="lazy" />
+              </figure>
+            )}
+            <h3>{person.title}</h3>
+          </article>
+        ))}
+      </div>
+    </SectionBand>
+
+    <SectionBand id="casi-clinici" eyebrow="Casi clinici" title="Casi Clinici" lead="Esempi di lavori eseguiti dallo studio odontoiatrico" tone="blue">
+      <figure class="media-hero-card media-hero-card-tight">
+        <img src={editorialMedia.clinici.src} alt={editorialMedia.clinici.alt} loading="lazy" />
+        <figcaption>{editorialMedia.clinici.label}</figcaption>
+      </figure>
+      <div class="clinical-showcase">
+        <div>
+          {clinicalMark && <img class="case-brand-mark" src={clinicalMark.src} alt={clinicalMark.alt} loading="lazy" />}
+          <div class="rich-text" set:html={clinicalBody} />
         </div>
-      )}
+        <FeatureCards items={clinicalItems} numbered />
+      </div>
+    </SectionBand>
 
-      {page.path === '/' && (
-        <div class="office-grid">
-          {site.offices.map((office) => (
-            <article class="office-card">
-              <h3>{office.title}</h3>
-              <p>{office.address}</p>
-              <p><a href={office.phoneHref}>{office.phone}</a></p>
-              <p><a href={office.emailHref}>{office.email}</a></p>
-              <p>{office.hours}</p>
-              <a class="button" href={office.href}>Dettagli {office.city}</a>
-            </article>
-          ))}
+    <SectionBand eyebrow="Sedi e contatti" title="Modena e Reggio Emilia" lead="Due studi, un unico percorso di cura. Puoi contattare direttamente la sede più comoda o inviare una richiesta dal sito.">
+      <figure class="media-hero-card media-hero-card-tight">
+        <img src={editorialMedia.sedi.src} alt={editorialMedia.sedi.alt} loading="lazy" />
+        <figcaption>{editorialMedia.sedi.label}</figcaption>
+      </figure>
+      <OfficeCards />
+      {bandoHtml && <div class="bando-link rich-text" set:html={bandoHtml} />}
+    </SectionBand>
+
+    <SectionBand id="contatti" eyebrow="Contatti" title="Compila il modulo contatti per ulteriori informazioni!" tone="soft">
+      <div class="contact-panel">
+        <div class="contact-copy">
+          <p>
+            Lascia nome, recapito e messaggio: il modulo è già predisposto graficamente e verrà collegato all'invio email nella fase successiva.
+          </p>
+          <p>
+            Per urgenze o prenotazioni puoi usare anche i numeri diretti delle sedi di Modena e Reggio Emilia.
+          </p>
         </div>
-      )}
-
-      {page.hasContactForm && <ContactForm />}
-    </div>
+        <PillForm variant="full" />
+      </div>
+    </SectionBand>
   </div>
-</section>
+) : page.path === '/video/' ? (
+  <>
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">{site.name}</p>
+        <h1>{cleanHeading(pageTitle)}</h1>
+        {page.description && <p>{page.description}</p>}
+      </div>
+    </section>
+
+    <SectionBand eyebrow="Video" title="Scopri il nostro studio dentistico!" lead="Guarda i contenuti video dello Studio Dentistico Federzoni Granata e approfondisci tecnologie, trattamenti e casi clinici.">
+      {videoIntroHtml && <div class="rich-text container-narrow" set:html={videoIntroHtml} />}
+      <div class="youtube-channel-card">
+        <div>
+          <p class="eyebrow">YouTube</p>
+          <h2>{videoChannelTitle}</h2>
+          {videoLeadHtml && <div class="rich-text" set:html={videoLeadHtml} />}
+        </div>
+        <a class="button button-outline" href="https://www.youtube.com/channel/UCO-D1kTMKZIFAE2oT6maghg/" target="_blank" rel="noopener noreferrer">Apri il canale</a>
+      </div>
+    </SectionBand>
+
+    <SectionBand eyebrow="Canale YouTube" title="Video dello studio" tone="soft">
+      <div class="video-grid">
+        {videoItems.map((video) => (
+          <article class="video-card">
+            <div class="video-frame">
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${video.id}`}
+                title={video.title}
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              />
+            </div>
+            <div class="video-card-body">
+              <h3>{video.title}</h3>
+              <p>{video.description}</p>
+              <a href={`https://www.youtube.com/watch?v=${video.id}`} target="_blank" rel="noopener noreferrer">Guarda su YouTube</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </SectionBand>
+
+    <SectionBand eyebrow="Casi Clinici" title="Categorie cliniche">
+      <FeatureCards items={clinicalItems} numbered />
+    </SectionBand>
+  </>
+) : (
+  <>
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">{page.kind === 'article' ? 'Approfondimenti' : site.name}</p>
+        <h1>{cleanHeading(pageTitle)}</h1>
+        {page.description && <p>{page.description}</p>}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container content-shell">
+        <div class="content-body">
+          {bodyBlocks.map((block) => {
+            if (block.type === 'heading') {
+              const Tag = `h${Math.min(Math.max(block.level, 1), 6)}`;
+              return <Tag id={block.id}>{cleanHeading(block.text)}</Tag>;
+            }
+            if (block.type === 'paragraph') return <Fragment set:html={block.html} />;
+            if (block.type === 'list') return <Fragment set:html={block.html} />;
+            if (block.type === 'html') return <div set:html={block.html} />;
+            if (block.type === 'image') {
+              return (
+                <figure class="content-figure">
+                  <img src={block.src} alt={block.alt} loading="lazy" />
+                  {block.alt && <figcaption>{block.alt}</figcaption>}
+                </figure>
+              );
+            }
+            if (block.type === 'embed') {
+              return (
+                <div class="content-embed">
+                  <p>Contenuto esterno</p>
+                  <a class="button" href={block.url} target="_blank" rel="noopener noreferrer">{block.label}</a>
+                </div>
+              );
+            }
+          })}
+
+          {page.kind === 'clinical' && (
+            <div class="link-grid" aria-label="Altre categorie cliniche">
+              {site.clinicalLinks.filter((item) => item.href !== page.path).map((item) => <a class="link-card" href={item.href}>{item.label}<span aria-hidden="true">→</span></a>)}
+            </div>
+          )}
+
+          {page.hasContactForm && <ContactForm />}
+        </div>
+      </div>
+    </section>
+  </>
+)}
