@@ -105,7 +105,7 @@ export const site = {
     }
   ],
   "footerNote": "Tutte le immagini presenti sul sito sono sotto il copyright dello Studio Dentistico Federzoni Granata",
-  "generatedAt": "2026-06-17T18:01:05.633Z",
+  "generatedAt": "2026-06-17T18:07:31.249Z",
   "assetCount": 337,
   "pages": [
     {
@@ -131,20 +131,20 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Lavoriamo insieme da più di 30 anni con competenze specialistiche diverse che ci consentono un approccio completo e multidisciplinare ai vostri sorrisi, di cui ci prendiamo cura fin dalla prima infanzia.</p></body></html>"
+          "html": "<p>Lavoriamo insieme da più di 30 anni con competenze specialistiche diverse che ci consentono un approccio completo e multidisciplinare ai vostri sorrisi, di cui ci prendiamo cura fin dalla prima infanzia.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Vi invitiamo a scoprire chi siamo, le nostre nuovissime tecnologie digitali e soprattutto, oltre le parole, i nostri casi clinici.</p></body></html>"
+          "html": "<p>Vi invitiamo a scoprire chi siamo, le nostre nuovissime tecnologie digitali e soprattutto, oltre le parole, i nostri casi clinici.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Si eseguono terapie e trattamenti di:</p></body></html>"
+          "html": "<p>Si eseguono terapie e trattamenti di:</p>"
         },
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li>Igiene orale e Prevenzione</li><li>Sbiancamento</li><li>Conservativa (otturazioni)</li><li>Endodonzia (devitalizzazioni)</li><li>Pedodonzia (odontoiatria infantile)</li><li>Ortodonzia e Allineatori invisibili (adulti e bimbi)</li><li>Estetica diretta (faccette in composito)</li><li>Parodontologia (cure gengivali)</li><li>Protesi fissa e mobile</li><li>Estetica Indiretta (faccette in porcellana)</li><li>Chirurgia Stomatologica</li><li>Implantologia tradizionale e computer guidata</li><li>Gnatologia (disturbi articolazione temporo-mandibolare)</li><li>Dispositivi contro il russamento e le apnee notturne</li></ul></body></html>"
+          "html": "<ul><li>Igiene orale e Prevenzione</li><li>Sbiancamento</li><li>Conservativa (otturazioni)</li><li>Endodonzia (devitalizzazioni)</li><li>Pedodonzia (odontoiatria infantile)</li><li>Ortodonzia e Allineatori invisibili (adulti e bimbi)</li><li>Estetica diretta (faccette in composito)</li><li>Parodontologia (cure gengivali)</li><li>Protesi fissa e mobile</li><li>Estetica Indiretta (faccette in porcellana)</li><li>Chirurgia Stomatologica</li><li>Implantologia tradizionale e computer guidata</li><li>Gnatologia (disturbi articolazione temporo-mandibolare)</li><li>Dispositivi contro il russamento e le apnee notturne</li></ul>"
         },
         {
           "type": "image",
@@ -159,11 +159,11 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Lo studio Federzoni Granata ha realizzato un progetto grazie alla Coesione Italia 21-27 Emilia Romagna, Ue, Stato e Regione Emilia Romagna. <a href=\"/assets/original/2024/10/bando-emilia-romagna-digitalizzazione-poster-A3-pdf.pdf\">Link</a></p></body></html>"
+          "html": "<p>Lo studio Federzoni Granata ha realizzato un progetto grazie alla Coesione Italia 21-27 Emilia Romagna, Ue, Stato e Regione Emilia Romagna. <a href=\"/assets/original/2024/10/bando-emilia-romagna-digitalizzazione-poster-A3-pdf.pdf\">Link</a></p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Tra i punti di forza della nostra attività professionale, c’è sicuramente l’impiego di sofisticate strumentazioni e di attrezzature tecniche di ultima generazione, puntualmente integrate da nuovi aggiornamenti e supportate da metodiche di intervento innovative. In Implantologia vengono adoperati software e sistemi CAD-CAM specifici, mediante i quali è possibile progettare la chirurgia e <strong>l’inserzione degli impianti dentali senza tagli e senza alcun punto di sutura, con il carico immediato dei denti anche nell’arco della giornata e con notevole riduzione del dolore e del disagio post-operatorio</strong>.<br>\nGrazie all’Implantologia Computer Guidata, anche le tempistiche di intervento vengono ridotte in maniera significativa, consentendo il rapido recupero delle funzionalità del paziente. Il supporto visivo digitale, inoltre, consente l’approfondimento dei piani di trattamento per l’analisi e la previsualizzazione del sorriso virtuale.</p></body></html>"
+          "html": "<p>Tra i punti di forza della nostra attività professionale, c’è sicuramente l’impiego di sofisticate strumentazioni e di attrezzature tecniche di ultima generazione, puntualmente integrate da nuovi aggiornamenti e supportate da metodiche di intervento innovative. In Implantologia vengono adoperati software e sistemi CAD-CAM specifici, mediante i quali è possibile progettare la chirurgia e <strong>l’inserzione degli impianti dentali senza tagli e senza alcun punto di sutura, con il carico immediato dei denti anche nell’arco della giornata e con notevole riduzione del dolore e del disagio post-operatorio</strong>.<br>\nGrazie all’Implantologia Computer Guidata, anche le tempistiche di intervento vengono ridotte in maniera significativa, consentendo il rapido recupero delle funzionalità del paziente. Il supporto visivo digitale, inoltre, consente l’approfondimento dei piani di trattamento per l’analisi e la previsualizzazione del sorriso virtuale.</p>"
         },
         {
           "type": "image",
@@ -178,7 +178,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Non è più necessario utilizzare portaimpronta e paste fastidiose in bocca. Niente sensazioni sgradevoli, una<strong> telecamera 3D</strong> riprende denti, impianti e gengive. I file sono inviati telematicamente in laboratorio. </p></body></html>"
+          "html": "<p>Non è più necessario utilizzare portaimpronta e paste fastidiose in bocca. Niente sensazioni sgradevoli, una<strong> telecamera 3D</strong> riprende denti, impianti e gengive. I file sono inviati telematicamente in laboratorio. </p>"
         },
         {
           "type": "heading",
@@ -187,7 +187,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Lo scanner facciale è uno strumento innovativo. Permette di inserire il <strong>volto 3D</strong> del paziente e di elaborare il piano di trattamento. È come avere il paziente sempre in studio e in laboratorio per costruire il suo sorriso personalizzato. </p></body></html>"
+          "html": "<p>Lo scanner facciale è uno strumento innovativo. Permette di inserire il <strong>volto 3D</strong> del paziente e di elaborare il piano di trattamento. È come avere il paziente sempre in studio e in laboratorio per costruire il suo sorriso personalizzato. </p>"
         },
         {
           "type": "image",
@@ -206,7 +206,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Il chirurgo esegue un intervento virtuale al computer inserendo gli impianti con un <strong>software di chirurgia guidata</strong>, dopodiché una tecnologia 3D costruisce una Guida Chirurgica che permette di inserire gli <strong>impianti in bocca, senza tagli, senza dolore, rapidamente e di caricare gli impianti con un provvisorio fisso in giornata</strong>. </p></body></html>"
+          "html": "<p>Il chirurgo esegue un intervento virtuale al computer inserendo gli impianti con un <strong>software di chirurgia guidata</strong>, dopodiché una tecnologia 3D costruisce una Guida Chirurgica che permette di inserire gli <strong>impianti in bocca, senza tagli, senza dolore, rapidamente e di caricare gli impianti con un provvisorio fisso in giornata</strong>. </p>"
         },
         {
           "type": "heading",
@@ -215,7 +215,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Utilizziamo un software per l’elaborazione del <strong>sorriso virtuale</strong>. Il paziente vede il suo sorriso prima di iniziare la terapia. Riteniamo questa analisi fondamentale per la comprensione del piano di trattamento e per personalizzare il sorriso. </p></body></html>"
+          "html": "<p>Utilizziamo un software per l’elaborazione del <strong>sorriso virtuale</strong>. Il paziente vede il suo sorriso prima di iniziare la terapia. Riteniamo questa analisi fondamentale per la comprensione del piano di trattamento e per personalizzare il sorriso. </p>"
         },
         {
           "type": "image",
@@ -234,7 +234,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>CBCT a fascio conico di ultima generazione.<br>\nPermette di ottenere immagini 3D nitide e precise,con bassa dose di radiazioni (circa 50%) in meno rispetto ad una Tac convenzionale.</p></body></html>"
+          "html": "<p>CBCT a fascio conico di ultima generazione.<br>\nPermette di ottenere immagini 3D nitide e precise,con bassa dose di radiazioni (circa 50%) in meno rispetto ad una Tac convenzionale.</p>"
         },
         {
           "type": "heading",
@@ -249,7 +249,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Laurea con lode in Odontoiatria e Protesi Dentale e abilitazione professionale presso l’Università di Modena nel 1987. Laureata frequentatrice: Reparto di Conservativa ed Endodonzia (Dir. Prof.G. Dondi Dall’Orologio) Clinica Odontoiatrica dell’Università di Bologna; Department of Orthodontics (Dir. Prof. E. Shapiro),Tufts University di Boston; Division d’Orthodontie et de Pédodontie (Dir. Prof. J.P.Joho), Université de Genève. Società scientifiche frequentate: Accademia Italiana di Conservativa, Società Italiana di Endodonzia. Società Italiana di Ortodonzia. Libera professione presso lo Studio dentistico Federzoni Granata di Modena e Reggio Emilia dal 1992 , occupandosi di Pedodonzia, Ortodonzia, Endodonzia e Conservativa.</p></body></html>"
+          "html": "<p>Laurea con lode in Odontoiatria e Protesi Dentale e abilitazione professionale presso l’Università di Modena nel 1987. Laureata frequentatrice: Reparto di Conservativa ed Endodonzia (Dir. Prof.G. Dondi Dall’Orologio) Clinica Odontoiatrica dell’Università di Bologna; Department of Orthodontics (Dir. Prof. E. Shapiro),Tufts University di Boston; Division d’Orthodontie et de Pédodontie (Dir. Prof. J.P.Joho), Université de Genève. Società scientifiche frequentate: Accademia Italiana di Conservativa, Società Italiana di Endodonzia. Società Italiana di Ortodonzia. Libera professione presso lo Studio dentistico Federzoni Granata di Modena e Reggio Emilia dal 1992 , occupandosi di Pedodonzia, Ortodonzia, Endodonzia e Conservativa.</p>"
         },
         {
           "type": "image",
@@ -268,7 +268,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Professore a contratto presso l’Università di Padova dal 2019<br>\nProfessore a contratto presso l’Università di Modena e Reggio Emilia 2014-2017<br>\nSpecialista in Protesi riconosciuto dall’EPA, European Prosthodontic Association<br>\nSocio attivo AIOP, Accademia Italiana di Odontoiatria Protesica<br>\nSocio attivo IAO, Italian Academy of Osseointegration<br>\nDDS Certified Speaker DDS, Digital Dental Society<br>\nSocio Attivo Onorario DI&RA, DIgital Implant and Restorative Academy<br>\nSocio attivo CAI Academy Computer Aided Implantology<br>\nRelatore in corsi e congressi nazionali ed internazionali su argomenti legati alla protesi digitale, la chirurgia computer guidata, chirurgia rigenerativa su impianti.<br><a rel=\"noopener noreferrer\" href=\"https://pubmed.ncbi.nlm.nih.gov/?term=stefano+granata\" target=\"_blank\">Autore di pubblicazioni scientifiche su riviste di fama internazionale</a></p></body></html>"
+          "html": "<p>Professore a contratto presso l’Università di Padova dal 2019<br>\nProfessore a contratto presso l’Università di Modena e Reggio Emilia 2014-2017<br>\nSpecialista in Protesi riconosciuto dall’EPA, European Prosthodontic Association<br>\nSocio attivo AIOP, Accademia Italiana di Odontoiatria Protesica<br>\nSocio attivo IAO, Italian Academy of Osseointegration<br>\nDDS Certified Speaker DDS, Digital Dental Society<br>\nSocio Attivo Onorario DI&RA, DIgital Implant and Restorative Academy<br>\nSocio attivo CAI Academy Computer Aided Implantology<br>\nRelatore in corsi e congressi nazionali ed internazionali su argomenti legati alla protesi digitale, la chirurgia computer guidata, chirurgia rigenerativa su impianti.<br><a rel=\"noopener noreferrer\" href=\"https://pubmed.ncbi.nlm.nih.gov/?term=stefano+granata\" target=\"_blank\">Autore di pubblicazioni scientifiche su riviste di fama internazionale</a></p>"
         },
         {
           "type": "image",
@@ -308,7 +308,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>La documentazione clinica esposta in questo sito, è il capitolo più importante per il nostro studio dentistico. Riteniamo che le foto siano molto più eloquenti delle parole, soprattutto per i non addetti ai lavori.<br>\nI casi esposti sono quelli di routine del nostro studio, un piccolo riassunto delle terapie più comuni. Si tratta spesso di casi multidisciplinari, in cui i vari professionisti si sono intervallati in sinergia sul paziente, ciascuno con la propria esperienza e conoscenza specialistica.</p></body></html>"
+          "html": "<p>La documentazione clinica esposta in questo sito, è il capitolo più importante per il nostro studio dentistico. Riteniamo che le foto siano molto più eloquenti delle parole, soprattutto per i non addetti ai lavori.<br>\nI casi esposti sono quelli di routine del nostro studio, un piccolo riassunto delle terapie più comuni. Si tratta spesso di casi multidisciplinari, in cui i vari professionisti si sono intervallati in sinergia sul paziente, ciascuno con la propria esperienza e conoscenza specialistica.</p>"
         },
         {
           "type": "image",
@@ -363,19 +363,19 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Indirizzo:<br><strong>Via Giovanni Segantini, 25, 41124 Modena (MO)</strong></p></body></html>"
+          "html": "<p>Indirizzo:<br><strong>Via Giovanni Segantini, 25, 41124 Modena (MO)</strong></p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Telefono: <strong><br><a href=\"tel:+39059345557\">+39 059345557</a></strong> (Modena)</p></body></html>"
+          "html": "<p>Telefono: <strong><br><a href=\"tel:+39059345557\">+39 059345557</a></strong> (Modena)</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Email: <strong><br><a href=\"mailto:info.federzonigranata@gmail.com\">info.federzonigranata@gmail.com</a></strong></p></body></html>"
+          "html": "<p>Email: <strong><br><a href=\"mailto:info.federzonigranata@gmail.com\">info.federzonigranata@gmail.com</a></strong></p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p><strong>ORARI:</strong><br>\nDal Lunedì al Venerdì: 10:00 – 19:00<br>\nSabato e Domenica: CHIUSO</p></body></html>"
+          "html": "<p><strong>ORARI:</strong><br>\nDal Lunedì al Venerdì: 10:00 – 19:00<br>\nSabato e Domenica: CHIUSO</p>"
         },
         {
           "type": "heading",
@@ -385,15 +385,15 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Indirizzo:<br><strong>Via Guido da Castello 8, 42121 Reggio nell’Emilia (RE)</strong></p></body></html>"
+          "html": "<p>Indirizzo:<br><strong>Via Guido da Castello 8, 42121 Reggio nell’Emilia (RE)</strong></p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Telefono:<br><strong><a href=\"tel:+390522436618\">+39 0522436618</a></strong> (Reggio Emilia)</p></body></html>"
+          "html": "<p>Telefono:<br><strong><a href=\"tel:+390522436618\">+39 0522436618</a></strong> (Reggio Emilia)</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p><a href=\"/assets/original/2024/05/bando-emilia-romagna-digitalizzazione-poster-MOD-3-vers.definitiva-2-1.pdf\">Studio Federzoni Granata ha partecipato al bando regionale per l’innovazione tecnologica &gt; Clicca per informazioni </a></p></body></html>"
+          "html": "<p><a href=\"/assets/original/2024/05/bando-emilia-romagna-digitalizzazione-poster-MOD-3-vers.definitiva-2-1.pdf\">Studio Federzoni Granata ha partecipato al bando regionale per l’innovazione tecnologica &gt; Clicca per informazioni </a></p>"
         },
         {
           "type": "heading",
@@ -484,7 +484,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>L’ortodonzia è il settore dell’odontoiatria che si occupa della diagnosi, della prevenzione e della cura delle malocclusioni, presenti qualora vi sia una cattiva relazione fra l’arcata dentaria superiore e quella inferiore. La terapia cura la posizione anomala di uno o più elementi dentali, eliminando il danno che questa alterazione porta sull’estetica del volto e sulle funzioni della respirazione, masticazione e fonazione. Attualmente si fa largo uso degli allineatori invisibili, una serie di mascherine in materiale plastico, trasparenti e rimovibili, che accompagnano la dentatura nella posizione desiderata, in maniera dolce e graduale.</p></body></html>"
+          "html": "<p>L’ortodonzia è il settore dell’odontoiatria che si occupa della diagnosi, della prevenzione e della cura delle malocclusioni, presenti qualora vi sia una cattiva relazione fra l’arcata dentaria superiore e quella inferiore. La terapia cura la posizione anomala di uno o più elementi dentali, eliminando il danno che questa alterazione porta sull’estetica del volto e sulle funzioni della respirazione, masticazione e fonazione. Attualmente si fa largo uso degli allineatori invisibili, una serie di mascherine in materiale plastico, trasparenti e rimovibili, che accompagnano la dentatura nella posizione desiderata, in maniera dolce e graduale.</p>"
         },
         {
           "type": "heading",
@@ -599,7 +599,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/estetica/\">Estetica</a></li><li><a href=\"/protesi/\">Protesi</a></li><li><a href=\"/parodontologia/\">Parodontologia</a></li><li><a href=\"/implantologia/\">Implantologia</a></li><li><a href=\"/ortodonzia/\">Ortodonzia</a></li><li><a href=\"/conservativa/\">Conservativa</a></li><li><a href=\"/endodonzia/\">Endodonzia</a></li><li><a href=\"/video/\">Video</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/estetica/\">Estetica</a></li><li><a href=\"/protesi/\">Protesi</a></li><li><a href=\"/parodontologia/\">Parodontologia</a></li><li><a href=\"/implantologia/\">Implantologia</a></li><li><a href=\"/ortodonzia/\">Ortodonzia</a></li><li><a href=\"/conservativa/\">Conservativa</a></li><li><a href=\"/endodonzia/\">Endodonzia</a></li><li><a href=\"/video/\">Video</a></li></ul>"
         }
       ]
     },
@@ -620,7 +620,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>L’Endodonzia è la branca dell’odontoiatria che si occupa della terapia dell’endodonto, ovvero lo spazio all’interno dell’elemento dentario, che contiene la polpa dentaria, vasi e nervi.</p></body></html>"
+          "html": "<p>L’Endodonzia è la branca dell’odontoiatria che si occupa della terapia dell’endodonto, ovvero lo spazio all’interno dell’elemento dentario, che contiene la polpa dentaria, vasi e nervi.</p>"
         },
         {
           "type": "heading",
@@ -659,7 +659,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Lesione endodontica in guarigione dopo terapia</p></body></html>"
+          "html": "<p>Lesione endodontica in guarigione dopo terapia</p>"
         },
         {
           "type": "heading",
@@ -714,7 +714,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/estetica/\">Estetica</a></li><li><a href=\"/protesi/\">Protesi</a></li><li><a href=\"/parodontologia/\">Parodontologia</a></li><li><a href=\"/implantologia/\">Implantologia</a></li><li><a href=\"/ortodonzia/\">Ortodonzia</a></li><li><a href=\"/conservativa/\">Conservativa</a></li><li><a href=\"/endodonzia/\">Endodonzia</a></li><li><a href=\"/video/\">Video</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/estetica/\">Estetica</a></li><li><a href=\"/protesi/\">Protesi</a></li><li><a href=\"/parodontologia/\">Parodontologia</a></li><li><a href=\"/implantologia/\">Implantologia</a></li><li><a href=\"/ortodonzia/\">Ortodonzia</a></li><li><a href=\"/conservativa/\">Conservativa</a></li><li><a href=\"/endodonzia/\">Endodonzia</a></li><li><a href=\"/video/\">Video</a></li></ul>"
         }
       ]
     },
@@ -735,7 +735,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Scopri il nostro studio dentistico!</p></body></html>"
+          "html": "<p>Scopri il nostro studio dentistico!</p>"
         },
         {
           "type": "heading",
@@ -744,7 +744,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Scopri nostri servizi tramite il nostro canale!</p></body></html>"
+          "html": "<p>Scopri nostri servizi tramite il nostro canale!</p>"
         },
         {
           "type": "heading",
@@ -759,7 +759,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/estetica/\">Estetica</a></li><li><a href=\"/protesi/\">Protesi</a></li><li><a href=\"/parodontologia/\">Parodontologia</a></li><li><a href=\"/implantologia/\">Implantologia</a></li><li><a href=\"/ortodonzia/\">Ortodonzia</a></li><li><a href=\"/conservativa/\">Conservativa</a></li><li><a href=\"/endodonzia/\">Endodonzia</a></li><li><a href=\"/video/\">Video</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/estetica/\">Estetica</a></li><li><a href=\"/protesi/\">Protesi</a></li><li><a href=\"/parodontologia/\">Parodontologia</a></li><li><a href=\"/implantologia/\">Implantologia</a></li><li><a href=\"/ortodonzia/\">Ortodonzia</a></li><li><a href=\"/conservativa/\">Conservativa</a></li><li><a href=\"/endodonzia/\">Endodonzia</a></li><li><a href=\"/video/\">Video</a></li></ul>"
         }
       ]
     },
@@ -779,7 +779,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Nella dentistica estetica, si fa spesso uso delle faccette dentali. Sono delle lamine di spessore inferiore o uguali al millimetro in media, che vengono posizionate all’esterno dei denti per cambiarne forma colore lunghezza. Le faccette sono un’ausilio per migliorare anatomia e funzione della masticazione, a volte invece entrano a far parte della “cosmesi dentale”, quando vogliamo correggere discromie non altrimenti migliorabili con gli sbiancamenti, o quando vogliamo chiudere spazi eccessivi tra i denti (diastemi).</p></body></html>"
+          "html": "<p>Nella dentistica estetica, si fa spesso uso delle faccette dentali. Sono delle lamine di spessore inferiore o uguali al millimetro in media, che vengono posizionate all’esterno dei denti per cambiarne forma colore lunghezza. Le faccette sono un’ausilio per migliorare anatomia e funzione della masticazione, a volte invece entrano a far parte della “cosmesi dentale”, quando vogliamo correggere discromie non altrimenti migliorabili con gli sbiancamenti, o quando vogliamo chiudere spazi eccessivi tra i denti (diastemi).</p>"
         },
         {
           "type": "heading",
@@ -859,7 +859,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/estetica/\">Estetica</a></li><li><a href=\"/protesi/\">Protesi</a></li><li><a href=\"/parodontologia/\">Parodontologia</a></li><li><a href=\"/implantologia/\">Implantologia</a></li><li><a href=\"/ortodonzia/\">Ortodonzia</a></li><li><a href=\"/conservativa/\">Conservativa</a></li><li><a href=\"/endodonzia/\">Endodonzia</a></li><li><a href=\"/video/\">Video</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/estetica/\">Estetica</a></li><li><a href=\"/protesi/\">Protesi</a></li><li><a href=\"/parodontologia/\">Parodontologia</a></li><li><a href=\"/implantologia/\">Implantologia</a></li><li><a href=\"/ortodonzia/\">Ortodonzia</a></li><li><a href=\"/conservativa/\">Conservativa</a></li><li><a href=\"/endodonzia/\">Endodonzia</a></li><li><a href=\"/video/\">Video</a></li></ul>"
         }
       ]
     },
@@ -885,7 +885,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Si tratta di una soluzione che si utilizza come ponte provvisorio di attesa, oppure come definitivo in casi in cui le condizioni anatomiche o economiche sconsigliano l’utilizzo di impianti. I denti hanno una preparazione minima, limitata allo smalto, in più può servire a splintare (unire) denti con supporto parodontale residuo ridotto per dare maggiore stabilità.</p></body></html>"
+          "html": "<p>Si tratta di una soluzione che si utilizza come ponte provvisorio di attesa, oppure come definitivo in casi in cui le condizioni anatomiche o economiche sconsigliano l’utilizzo di impianti. I denti hanno una preparazione minima, limitata allo smalto, in più può servire a splintare (unire) denti con supporto parodontale residuo ridotto per dare maggiore stabilità.</p>"
         },
         {
           "type": "heading",
@@ -894,7 +894,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Innovativi sono i sistemi adesivi di Ponti Maryland senza metallo. In questo caso la paziente di 13 anni, dopo ortodonzia per agenesia del dente 12 (incisivo laterale superiore DX), in attesa di inserire un impianto in età adulta, porta una protesi incollata in ceramica del tutto analoga ad un dente naturale.</p></body></html>"
+          "html": "<p>Innovativi sono i sistemi adesivi di Ponti Maryland senza metallo. In questo caso la paziente di 13 anni, dopo ortodonzia per agenesia del dente 12 (incisivo laterale superiore DX), in attesa di inserire un impianto in età adulta, porta una protesi incollata in ceramica del tutto analoga ad un dente naturale.</p>"
         },
         {
           "type": "heading",
@@ -988,7 +988,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Sono delle lamine sottilissime che vengono incollate all’esterno dei denti, per cambiarne forma e colore. Le faccette dentali vengono usate per migliorare anatomia e funzione della masticazione, o quando vogliamo correggere il colore dei denti, non altrimenti migliorabile con gli sbiancamenti, oppure quando vogliamo chiudere spazi eccessivi tra i denti.</p></body></html>"
+          "html": "<p>Sono delle lamine sottilissime che vengono incollate all’esterno dei denti, per cambiarne forma e colore. Le faccette dentali vengono usate per migliorare anatomia e funzione della masticazione, o quando vogliamo correggere il colore dei denti, non altrimenti migliorabile con gli sbiancamenti, oppure quando vogliamo chiudere spazi eccessivi tra i denti.</p>"
         },
         {
           "type": "heading",
@@ -1022,7 +1022,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>I denti che non si vedevano più, sono stati allungati e resi più importanti e più chiari, donando un aspetto ringiovanito e più adatto al paziente. Il tutto senza limare i denti se non esternamente, nei confini nello smalto, per uno spessore di 0,4 – 0,5 mm.</p></body></html>"
+          "html": "<p>I denti che non si vedevano più, sono stati allungati e resi più importanti e più chiari, donando un aspetto ringiovanito e più adatto al paziente. Il tutto senza limare i denti se non esternamente, nei confini nello smalto, per uno spessore di 0,4 – 0,5 mm.</p>"
         },
         {
           "type": "heading",
@@ -1031,7 +1031,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Sorriso invecchiato, labbra distoniche e asimmetriche</p></body></html>"
+          "html": "<p>Sorriso invecchiato, labbra distoniche e asimmetriche</p>"
         },
         {
           "type": "image",
@@ -1045,7 +1045,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Sorriso naturale, labbra simmetriche e ben supportate dai denti</p></body></html>"
+          "html": "<p>Sorriso naturale, labbra simmetriche e ben supportate dai denti</p>"
         },
         {
           "type": "image",
@@ -1074,7 +1074,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Preparazione faccette: La preparazione rimane confinata nello smalto. Le faccette hanno spessore molto ridotto, inferiore al mm.</p></body></html>"
+          "html": "<p>Preparazione faccette: La preparazione rimane confinata nello smalto. Le faccette hanno spessore molto ridotto, inferiore al mm.</p>"
         },
         {
           "type": "heading",
@@ -1168,7 +1168,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Corone singole ceramica integrale (metal free). Il nucleo delle corone è privo di metallo.</p></body></html>"
+          "html": "<p>Corone singole ceramica integrale (metal free). Il nucleo delle corone è privo di metallo.</p>"
         },
         {
           "type": "heading",
@@ -1258,7 +1258,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/estetica/\">Estetica</a></li><li><a href=\"/protesi/\">Protesi</a></li><li><a href=\"/parodontologia/\">Parodontologia</a></li><li><a href=\"/implantologia/\">Implantologia</a></li><li><a href=\"/ortodonzia/\">Ortodonzia</a></li><li><a href=\"/conservativa/\">Conservativa</a></li><li><a href=\"/endodonzia/\">Endodonzia</a></li><li><a href=\"/video/\">Video</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/estetica/\">Estetica</a></li><li><a href=\"/protesi/\">Protesi</a></li><li><a href=\"/parodontologia/\">Parodontologia</a></li><li><a href=\"/implantologia/\">Implantologia</a></li><li><a href=\"/ortodonzia/\">Ortodonzia</a></li><li><a href=\"/conservativa/\">Conservativa</a></li><li><a href=\"/endodonzia/\">Endodonzia</a></li><li><a href=\"/video/\">Video</a></li></ul>"
         }
       ]
     },
@@ -1279,7 +1279,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>La malattia parodontale (una volta chiamata piorrea), determina la perdita del supporto di tessuti duri (osso) e molli (gengiva). Conseguenza della malattia parodontale sono le tasche, le recessioni, la migrazione e la mobilità dei denti, e tutta una serie di altri fattori spiacevoli, quali alitosi, sanguinamento, dolore, fino alla perdita dei denti stessi. Il Parodontologo ha come fine la preservazione e il mantenimento dei denti per evitare estrazioni e impianti.</p></body></html>"
+          "html": "<p>La malattia parodontale (una volta chiamata piorrea), determina la perdita del supporto di tessuti duri (osso) e molli (gengiva). Conseguenza della malattia parodontale sono le tasche, le recessioni, la migrazione e la mobilità dei denti, e tutta una serie di altri fattori spiacevoli, quali alitosi, sanguinamento, dolore, fino alla perdita dei denti stessi. Il Parodontologo ha come fine la preservazione e il mantenimento dei denti per evitare estrazioni e impianti.</p>"
         },
         {
           "type": "heading",
@@ -1343,7 +1343,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Chirurgia delle forcazioni: in alcuni casi, anziché togliere il dente ed inserire un impianto, si può togliere solo una delle radici o separarle, così da mantenere il dente per anni, rinviando l’estrazione.</p></body></html>"
+          "html": "<p>Chirurgia delle forcazioni: in alcuni casi, anziché togliere il dente ed inserire un impianto, si può togliere solo una delle radici o separarle, così da mantenere il dente per anni, rinviando l’estrazione.</p>"
         },
         {
           "type": "heading",
@@ -1392,7 +1392,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>La perdita dei denti si associa spesso a perdita dei tessuti circostanti (gengiva e osso). A volte è necessario ricostruire questi tessuti chirurgicamente o artificialmente, per migliorare l’estetica ed evitare i classici denti lunghi.</p></body></html>"
+          "html": "<p>La perdita dei denti si associa spesso a perdita dei tessuti circostanti (gengiva e osso). A volte è necessario ricostruire questi tessuti chirurgicamente o artificialmente, per migliorare l’estetica ed evitare i classici denti lunghi.</p>"
         },
         {
           "type": "heading",
@@ -1421,7 +1421,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Correzione “sorriso gengivale” (gummy smile).<br>\nSi può correggere un gummy smile, e ripristinare una giusta proporzione tra esposizione dei denti e gengive.</p></body></html>"
+          "html": "<p>Correzione “sorriso gengivale” (gummy smile).<br>\nSi può correggere un gummy smile, e ripristinare una giusta proporzione tra esposizione dei denti e gengive.</p>"
         },
         {
           "type": "heading",
@@ -1450,7 +1450,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>E’ la chirurgia utilizzata prevalentemente per le recessioni radicolari, sia a scopo estetico, sia per diminuire la sensibilità dei colletti, ma anche per migliorare la quantità e qualità di gengiva cheratinizzata attorno al colletto delle radici, utile per resistere all’azione meccanica dello spazzolino e a mantenere stabile la posizione della gengiva. Molto utilizzata anche in abbinamento all’implantologia per creare una situazione di tessuti ideale prima di posizionare impianti.</p></body></html>"
+          "html": "<p>E’ la chirurgia utilizzata prevalentemente per le recessioni radicolari, sia a scopo estetico, sia per diminuire la sensibilità dei colletti, ma anche per migliorare la quantità e qualità di gengiva cheratinizzata attorno al colletto delle radici, utile per resistere all’azione meccanica dello spazzolino e a mantenere stabile la posizione della gengiva. Molto utilizzata anche in abbinamento all’implantologia per creare una situazione di tessuti ideale prima di posizionare impianti.</p>"
         },
         {
           "type": "heading",
@@ -1459,7 +1459,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Lembo bilaminare</p></body></html>"
+          "html": "<p>Lembo bilaminare</p>"
         },
         {
           "type": "heading",
@@ -1488,7 +1488,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Lembo bilaminare<br>\nCorrezione recessioni di 4 denti e corona singola in oro ceramica sul dente 26</p></body></html>"
+          "html": "<p>Lembo bilaminare<br>\nCorrezione recessioni di 4 denti e corona singola in oro ceramica sul dente 26</p>"
         },
         {
           "type": "heading",
@@ -1542,7 +1542,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Lembo ruotato</p></body></html>"
+          "html": "<p>Lembo ruotato</p>"
         },
         {
           "type": "heading",
@@ -1572,7 +1572,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/estetica/\">Estetica</a></li><li><a href=\"/protesi/\">Protesi</a></li><li><a href=\"/parodontologia/\">Parodontologia</a></li><li><a href=\"/implantologia/\">Implantologia</a></li><li><a href=\"/ortodonzia/\">Ortodonzia</a></li><li><a href=\"/conservativa/\">Conservativa</a></li><li><a href=\"/endodonzia/\">Endodonzia</a></li><li><a href=\"/video/\">Video</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/estetica/\">Estetica</a></li><li><a href=\"/protesi/\">Protesi</a></li><li><a href=\"/parodontologia/\">Parodontologia</a></li><li><a href=\"/implantologia/\">Implantologia</a></li><li><a href=\"/ortodonzia/\">Ortodonzia</a></li><li><a href=\"/conservativa/\">Conservativa</a></li><li><a href=\"/endodonzia/\">Endodonzia</a></li><li><a href=\"/video/\">Video</a></li></ul>"
         }
       ]
     },
@@ -1603,7 +1603,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>La chirurgia rigenerativa e gli impianti permettono risultati estetici soddisfacenti, solo se il chirurgo è esperto.</p></body></html>"
+          "html": "<p>La chirurgia rigenerativa e gli impianti permettono risultati estetici soddisfacenti, solo se il chirurgo è esperto.</p>"
         },
         {
           "type": "heading",
@@ -1642,7 +1642,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Impianto post-estrattivo immediato e innesto connettivale.</p></body></html>"
+          "html": "<p>Impianto post-estrattivo immediato e innesto connettivale.</p>"
         },
         {
           "type": "heading",
@@ -1671,7 +1671,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>In questo caso si è reso necessario il rialzo del seno mascellare bilaterale, per la ricostruzione dei tessuti duri (osso) e dei tessuti molli (gengiva). La paziente ha portato 25 anni una protesi incongrua, questo le ha provocato la perdita di tanto osso. Con la tecnologia CAD-CAM, è possibile ricostruire le protesi, partendo da un disegno al computer, e poi produrla attraverso una macchina che costruisce in 3D il pezzo in zirconio o altro materiale. Il tecnico di laboratorio provvede poi a personalizzare con la porcellana estetica.</p></body></html>"
+          "html": "<p>In questo caso si è reso necessario il rialzo del seno mascellare bilaterale, per la ricostruzione dei tessuti duri (osso) e dei tessuti molli (gengiva). La paziente ha portato 25 anni una protesi incongrua, questo le ha provocato la perdita di tanto osso. Con la tecnologia CAD-CAM, è possibile ricostruire le protesi, partendo da un disegno al computer, e poi produrla attraverso una macchina che costruisce in 3D il pezzo in zirconio o altro materiale. Il tecnico di laboratorio provvede poi a personalizzare con la porcellana estetica.</p>"
         },
         {
           "type": "heading",
@@ -1710,7 +1710,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Riabilitazione totale superiore e inferiore su impianti. Gli esiti di una paradontite grave portano alla perdita totale dei denti. E’ necessario ricostruire sia i denti sia i tessuti molli e anche l’osso per il sostegno delle labbra.</p></body></html>"
+          "html": "<p>Riabilitazione totale superiore e inferiore su impianti. Gli esiti di una paradontite grave portano alla perdita totale dei denti. E’ necessario ricostruire sia i denti sia i tessuti molli e anche l’osso per il sostegno delle labbra.</p>"
         },
         {
           "type": "heading",
@@ -1754,7 +1754,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Un software progetta la chirurgia, da cui viene ricavata una mascherina. Gli impianti vengono inseriti senza tagli, senza suture, senza sanguinamento, con il carico immediato dei denti in giornata. Questa tecnica necessita di una buona conoscenza dei mezzi informatici e chirurgici del dentista, semplificando per il paziente l’atto chirurgico, il comfort, il dolore e la riduzione dei tempi operatori.</p></body></html>"
+          "html": "<p>Un software progetta la chirurgia, da cui viene ricavata una mascherina. Gli impianti vengono inseriti senza tagli, senza suture, senza sanguinamento, con il carico immediato dei denti in giornata. Questa tecnica necessita di una buona conoscenza dei mezzi informatici e chirurgici del dentista, semplificando per il paziente l’atto chirurgico, il comfort, il dolore e la riduzione dei tempi operatori.</p>"
         },
         {
           "type": "heading",
@@ -1818,7 +1818,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>La chirurgia guidata permette di passare immediatamente a denti fissi senza tagli, suture, dolore, sanguinamento e gonfiore.</p></body></html>"
+          "html": "<p>La chirurgia guidata permette di passare immediatamente a denti fissi senza tagli, suture, dolore, sanguinamento e gonfiore.</p>"
         },
         {
           "type": "heading",
@@ -1887,7 +1887,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Qual è l’umore di un paziente senza sorriso e senza possibilità di masticare? E se il sorriso può cambiare in un giorno, come reagisce?</p></body></html>"
+          "html": "<p>Qual è l’umore di un paziente senza sorriso e senza possibilità di masticare? E se il sorriso può cambiare in un giorno, come reagisce?</p>"
         },
         {
           "type": "image",
@@ -1931,7 +1931,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Chirurgia Computer Guidata: no tagli, no suture, no stress e carico immediato.</p></body></html>"
+          "html": "<p>Chirurgia Computer Guidata: no tagli, no suture, no stress e carico immediato.</p>"
         },
         {
           "type": "heading",
@@ -1975,7 +1975,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Con la tecnologia CAD-CAM conoscendo già prima la posizione virtuale degli impianti, si può preparare il provvisorio che verrà applicato fisso lo stesso giorno della chirurgia.</p></body></html>"
+          "html": "<p>Con la tecnologia CAD-CAM conoscendo già prima la posizione virtuale degli impianti, si può preparare il provvisorio che verrà applicato fisso lo stesso giorno della chirurgia.</p>"
         },
         {
           "type": "heading",
@@ -2035,7 +2035,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/estetica/\">Estetica</a></li><li><a href=\"/protesi/\">Protesi</a></li><li><a href=\"/parodontologia/\">Parodontologia</a></li><li><a href=\"/implantologia/\">Implantologia</a></li><li><a href=\"/ortodonzia/\">Ortodonzia</a></li><li><a href=\"/conservativa/\">Conservativa</a></li><li><a href=\"/endodonzia/\">Endodonzia</a></li><li><a href=\"/video/\">Video</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/estetica/\">Estetica</a></li><li><a href=\"/protesi/\">Protesi</a></li><li><a href=\"/parodontologia/\">Parodontologia</a></li><li><a href=\"/implantologia/\">Implantologia</a></li><li><a href=\"/ortodonzia/\">Ortodonzia</a></li><li><a href=\"/conservativa/\">Conservativa</a></li><li><a href=\"/endodonzia/\">Endodonzia</a></li><li><a href=\"/video/\">Video</a></li></ul>"
         }
       ]
     },
@@ -2056,23 +2056,23 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Lo studio dentistico del Dott. Stefano Granata e Dott.ssa Chiara Federzoni, a Modena, si occupa di tutte le branche dell’odontoiatria, dall’implantologia alla chirurgia, dalle faccette dentali alle cure gengivali.</p></body></html>"
+          "html": "<p>Lo studio dentistico del Dott. Stefano Granata e Dott.ssa Chiara Federzoni, a Modena, si occupa di tutte le branche dell’odontoiatria, dall’implantologia alla chirurgia, dalle faccette dentali alle cure gengivali.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Indirizzo:<br><strong>Via Giovanni Segantini, 25, 41124 Modena (MO)</strong></p></body></html>"
+          "html": "<p>Indirizzo:<br><strong>Via Giovanni Segantini, 25, 41124 Modena (MO)</strong></p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Telefono: <strong><br><a href=\"tel:+39059345557\">+39 059345557</a></strong> (Modena)</p></body></html>"
+          "html": "<p>Telefono: <strong><br><a href=\"tel:+39059345557\">+39 059345557</a></strong> (Modena)</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Email: <strong><br><a href=\"mailto:info.federzonigranata@gmail.com\">info.federzonigranata@gmail.com</a></strong></p></body></html>"
+          "html": "<p>Email: <strong><br><a href=\"mailto:info.federzonigranata@gmail.com\">info.federzonigranata@gmail.com</a></strong></p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p><strong>ORARI:</strong><br>\nDal Lunedì al Venerdì: 10:00 – 19:00<br>\nSabato e Domenica: CHIUSO</p></body></html>"
+          "html": "<p><strong>ORARI:</strong><br>\nDal Lunedì al Venerdì: 10:00 – 19:00<br>\nSabato e Domenica: CHIUSO</p>"
         },
         {
           "type": "heading",
@@ -2097,7 +2097,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Questo sito internet utilizza cookie di tipo tecnico, strettamente necessari all’utilizzo del sito web. In particolare questi cookie hanno le seguenti funzioni: recuperare le impostazioni dell’utente (salvare la sessione dell’utente e ricordare alcune impostazioni come le impostazioni di accessibilità); memorizzare il luogo dell’utente e ricordare le impostazioni di lingua (in forma anonima); personalizzare il contenuto della pagina a seconda del dispositivo utilizzato dall’utente, delle sue scelte e delle impostazioni (in forma anonima). Potete rifiutarvi di usare i cookies selezionando l’impostazione appropriata sul vostro browser, ma ciò potrebbe impedirvi di utilizzare tutte le funzionalità di questo sito web.<br>\nSulle pagine di questo sito web sono inseriti plugin gestiti da Google (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland). Quando visitate una pagina del nostro sito che contiene un plugin di questo tipo, il suo browser si connette direttamente ai server di Google. Il contenuto del plugin è direttamente trasmesso da Google al suo browser, che poi lo incorpora nel sito. Per ulteriori informazioni, si può consultare l’informativa sulla privacy <a rel=\"noopener noreferrer\" href=\"https://policies.google.com/\" target=\"_blank\">https://policies.google.com</a> .<br>\nSulle nostre pagine sono inseriti i plugin del social network Facebook, Instagram e WhatsApp (Meta Platforms Ireland Limited, 4 Grand Canal Square Grand Canal Harbour Dublin 2 Ireland). Quando visitate le nostre pagine, il plugin stabilisce una connessione diretta tra il browser e il server di Meta, le corrispondenti informazioni vengono trasmesse dal browser direttamente alla piattaforma del social network e da questo memorizzate. Per ulteriori informazioni, si può consultare l’informativa sulla privacy <a rel=\"noopener noreferrer\" href=\"https://www.facebook.com/privacy/explanation\" target=\"_blank\">https://www.facebook.com/privacy/explanation</a> e <a rel=\"noopener noreferrer\" href=\"https://www.facebook.com/help/cookies\" target=\"_blank\">https://www.facebook.com/help/cookies</a> .<br>\nLa maggior parte dei browser accetta automaticamente i cookies, ma l’utente normalmente può modificare le impostazioni per disabilitare tale funzione. E’ possibile bloccare tutte le tipologie di cookies, oppure accettare di riceverne soltanto alcuni e disabilitarne altri. La sezione “Opzioni” o “Preferenze” nel menu del browser permettono di evitare di ricevere cookies e altre tecnologie di tracciamento utente, e come ottenere notifica dal browser dell’attivazione di queste tecnologie. In alternativa, è anche possibile consultare la sezione “Aiuto” della barra degli strumenti presente nella maggior parte dei browser.<br>\nSe vuoi cambiare le tue preferenze sui cookie di questo sito, segui questo link: <a href=\"/\">preferenze cookie</a></p></body></html>"
+          "html": "<p>Questo sito internet utilizza cookie di tipo tecnico, strettamente necessari all’utilizzo del sito web. In particolare questi cookie hanno le seguenti funzioni: recuperare le impostazioni dell’utente (salvare la sessione dell’utente e ricordare alcune impostazioni come le impostazioni di accessibilità); memorizzare il luogo dell’utente e ricordare le impostazioni di lingua (in forma anonima); personalizzare il contenuto della pagina a seconda del dispositivo utilizzato dall’utente, delle sue scelte e delle impostazioni (in forma anonima). Potete rifiutarvi di usare i cookies selezionando l’impostazione appropriata sul vostro browser, ma ciò potrebbe impedirvi di utilizzare tutte le funzionalità di questo sito web.<br>\nSulle pagine di questo sito web sono inseriti plugin gestiti da Google (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland). Quando visitate una pagina del nostro sito che contiene un plugin di questo tipo, il suo browser si connette direttamente ai server di Google. Il contenuto del plugin è direttamente trasmesso da Google al suo browser, che poi lo incorpora nel sito. Per ulteriori informazioni, si può consultare l’informativa sulla privacy <a rel=\"noopener noreferrer\" href=\"https://policies.google.com/\" target=\"_blank\">https://policies.google.com</a> .<br>\nSulle nostre pagine sono inseriti i plugin del social network Facebook, Instagram e WhatsApp (Meta Platforms Ireland Limited, 4 Grand Canal Square Grand Canal Harbour Dublin 2 Ireland). Quando visitate le nostre pagine, il plugin stabilisce una connessione diretta tra il browser e il server di Meta, le corrispondenti informazioni vengono trasmesse dal browser direttamente alla piattaforma del social network e da questo memorizzate. Per ulteriori informazioni, si può consultare l’informativa sulla privacy <a rel=\"noopener noreferrer\" href=\"https://www.facebook.com/privacy/explanation\" target=\"_blank\">https://www.facebook.com/privacy/explanation</a> e <a rel=\"noopener noreferrer\" href=\"https://www.facebook.com/help/cookies\" target=\"_blank\">https://www.facebook.com/help/cookies</a> .<br>\nLa maggior parte dei browser accetta automaticamente i cookies, ma l’utente normalmente può modificare le impostazioni per disabilitare tale funzione. E’ possibile bloccare tutte le tipologie di cookies, oppure accettare di riceverne soltanto alcuni e disabilitarne altri. La sezione “Opzioni” o “Preferenze” nel menu del browser permettono di evitare di ricevere cookies e altre tecnologie di tracciamento utente, e come ottenere notifica dal browser dell’attivazione di queste tecnologie. In alternativa, è anche possibile consultare la sezione “Aiuto” della barra degli strumenti presente nella maggior parte dei browser.<br>\nSe vuoi cambiare le tue preferenze sui cookie di questo sito, segui questo link: <a href=\"/\">preferenze cookie</a></p>"
         }
       ]
     },
@@ -2117,51 +2117,51 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Il trattamento dei dati, siano essi acquisiti telefonicamente, via posta elettronica, moduli elettronici o con altra modalità, è conforme a quanto previsto dal Regolamento Europeo 2016/679 che si occupa della protezione delle persone con riguardo al trattamento dei dati personali.</p></body></html>"
+          "html": "<p>Il trattamento dei dati, siano essi acquisiti telefonicamente, via posta elettronica, moduli elettronici o con altra modalità, è conforme a quanto previsto dal Regolamento Europeo 2016/679 che si occupa della protezione delle persone con riguardo al trattamento dei dati personali.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p><strong>Oggetto del Trattamento</strong><br>\nVengono trattati i dati personali identificativi (ad esempio, nome, cognome, ragione sociale, indirizzo, telefono, e-mail, riferimenti bancari e di pagamento, ecc.) da Lei comunicati.<br>\nSono trattati dati particolari dei pazienti (come dati sanitari, foto, ecc.) necessari per fornire le cure.<br>\nL’invio facoltativo, esplicito e volontario di posta elettronica ai nostri indirizzi email, comporta la successiva acquisizione dell’indirizzo del mittente, necessario per rispondere alle richieste, nonché degli eventuali altri dati personali inseriti nella missiva.</p></body></html>"
+          "html": "<p><strong>Oggetto del Trattamento</strong><br>\nVengono trattati i dati personali identificativi (ad esempio, nome, cognome, ragione sociale, indirizzo, telefono, e-mail, riferimenti bancari e di pagamento, ecc.) da Lei comunicati.<br>\nSono trattati dati particolari dei pazienti (come dati sanitari, foto, ecc.) necessari per fornire le cure.<br>\nL’invio facoltativo, esplicito e volontario di posta elettronica ai nostri indirizzi email, comporta la successiva acquisizione dell’indirizzo del mittente, necessario per rispondere alle richieste, nonché degli eventuali altri dati personali inseriti nella missiva.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p><strong>Finalità del trattamento</strong><br>\nI Suoi dati personali sono trattati:<br>\na) senza il Suo consenso espresso (art. 24 lett. a), b), c) Codice Privacy e art. 6 lett. b), e) e art. 9.2 c) GDPR), per le seguenti Finalità di Servizio:<br>\n– fornire i servizi richiesti;<br>\n– concludere i contratti per i servizi del Titolare;<br>\n– adempiere agli obblighi precontrattuali, contrattuali e fiscali derivanti da rapporti con Lei in essere;<br>\n– adempiere agli obblighi previsti dalla legge, da un regolamento, dalla normativa comunitaria o da un ordine dell’Autorità (come ad esempio in materia di antiriciclaggio);<br>\n– esercitare i diritti del Titolare, ad esempio il diritto di difesa in giudizio;<br>\n– quando il trattamento dei dati è necessario per tutelare un interesse vitale dell’interessato o di un’altra persona fisica, qualora l’interessato si trovi nell’incapacità fisica o giuridica di prestare il proprio consenso;<br>\n– quando i dati sanitari e foto, vengono utilizzati a scopo di ricerca e divulgazione scientifica, ma comunque secondo modalità che non rendano identificabili gli interessati;<br>\nb) Solo previo Suo specifico e distinto consenso (artt. 23 e 130 Codice Privacy e art. 7 GDPR), per l’invio di materiale informativo, quali ad esempio: e-mail, posta, sms, contatti telefonici, newsletter, comunicazioni.</p></body></html>"
+          "html": "<p><strong>Finalità del trattamento</strong><br>\nI Suoi dati personali sono trattati:<br>\na) senza il Suo consenso espresso (art. 24 lett. a), b), c) Codice Privacy e art. 6 lett. b), e) e art. 9.2 c) GDPR), per le seguenti Finalità di Servizio:<br>\n– fornire i servizi richiesti;<br>\n– concludere i contratti per i servizi del Titolare;<br>\n– adempiere agli obblighi precontrattuali, contrattuali e fiscali derivanti da rapporti con Lei in essere;<br>\n– adempiere agli obblighi previsti dalla legge, da un regolamento, dalla normativa comunitaria o da un ordine dell’Autorità (come ad esempio in materia di antiriciclaggio);<br>\n– esercitare i diritti del Titolare, ad esempio il diritto di difesa in giudizio;<br>\n– quando il trattamento dei dati è necessario per tutelare un interesse vitale dell’interessato o di un’altra persona fisica, qualora l’interessato si trovi nell’incapacità fisica o giuridica di prestare il proprio consenso;<br>\n– quando i dati sanitari e foto, vengono utilizzati a scopo di ricerca e divulgazione scientifica, ma comunque secondo modalità che non rendano identificabili gli interessati;<br>\nb) Solo previo Suo specifico e distinto consenso (artt. 23 e 130 Codice Privacy e art. 7 GDPR), per l’invio di materiale informativo, quali ad esempio: e-mail, posta, sms, contatti telefonici, newsletter, comunicazioni.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p><strong>Modalità del trattamento</strong><br>\nIl trattamento dei Suoi dati personali è realizzato per mezzo delle operazioni indicate all’art. 4 Codice Privacy e all’art. 4 n. 2) GDPR e precisamente: raccolta, registrazione, organizzazione, conservazione, consultazione, elaborazione, modificazione, selezione, estrazione, raffronto, utilizzo, interconnessione, blocco, comunicazione, cancellazione e distruzione dei dati. I Suoi dati personali sono sottoposti a trattamento sia cartaceo che elettronico e/o automatizzato.<br>\nI dati forniti non verranno ceduti a terzi, a meno che non sia necessario a fornire i servizi richiesti od ad adempiere obblighi di legge.</p></body></html>"
+          "html": "<p><strong>Modalità del trattamento</strong><br>\nIl trattamento dei Suoi dati personali è realizzato per mezzo delle operazioni indicate all’art. 4 Codice Privacy e all’art. 4 n. 2) GDPR e precisamente: raccolta, registrazione, organizzazione, conservazione, consultazione, elaborazione, modificazione, selezione, estrazione, raffronto, utilizzo, interconnessione, blocco, comunicazione, cancellazione e distruzione dei dati. I Suoi dati personali sono sottoposti a trattamento sia cartaceo che elettronico e/o automatizzato.<br>\nI dati forniti non verranno ceduti a terzi, a meno che non sia necessario a fornire i servizi richiesti od ad adempiere obblighi di legge.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p><strong>Trasferimento dei dati all’estero</strong><br>\nI dati personali sono conservati su server e supporti ubicati all’interno dell’Unione Europea.</p></body></html>"
+          "html": "<p><strong>Trasferimento dei dati all’estero</strong><br>\nI dati personali sono conservati su server e supporti ubicati all’interno dell’Unione Europea.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p><strong>Diritti dell’interessato</strong><br>\nNella Sua qualità di interessato, ha i diritti di cui all’art. 7 Codice Privacy e art. 15 GDPR, e precisamente i diritti di:</p></body></html>"
+          "html": "<p><strong>Diritti dell’interessato</strong><br>\nNella Sua qualità di interessato, ha i diritti di cui all’art. 7 Codice Privacy e art. 15 GDPR, e precisamente i diritti di:</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>i. ottenere la conferma dell’esistenza o meno di dati personali che La riguardano, anche se non ancora registrati, e la loro comunicazione in forma intelligibile;</p></body></html>"
+          "html": "<p>i. ottenere la conferma dell’esistenza o meno di dati personali che La riguardano, anche se non ancora registrati, e la loro comunicazione in forma intelligibile;</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>ii. ottenere l’indicazione:<br>\na) dell’origine dei dati personali;<br>\nb) delle finalità e modalità del trattamento;<br>\nc) della logica applicata in caso di trattamento effettuato con l’ausilio di strumenti elettronici;<br>\nd) degli estremi identificativi del titolare, dei responsabili e del rappresentante designato ai sensi dell’art. 5, comma 2 Codice Privacy e art. 3, comma 1, GDPR;<br>\ne) dei soggetti o delle categorie di soggetti ai quali i dati personali possono essere comunicati o che possono venirne a conoscenza in qualità di rappresentante designato nel territorio dello Stato, di responsabili o incaricati;</p></body></html>"
+          "html": "<p>ii. ottenere l’indicazione:<br>\na) dell’origine dei dati personali;<br>\nb) delle finalità e modalità del trattamento;<br>\nc) della logica applicata in caso di trattamento effettuato con l’ausilio di strumenti elettronici;<br>\nd) degli estremi identificativi del titolare, dei responsabili e del rappresentante designato ai sensi dell’art. 5, comma 2 Codice Privacy e art. 3, comma 1, GDPR;<br>\ne) dei soggetti o delle categorie di soggetti ai quali i dati personali possono essere comunicati o che possono venirne a conoscenza in qualità di rappresentante designato nel territorio dello Stato, di responsabili o incaricati;</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>iii. ottenere:<br>\na) l’aggiornamento, la rettificazione ovvero, quando vi ha interesse, l’integrazione dei dati;<br>\nb) la cancellazione, la trasformazione in forma anonima o il blocco dei dati trattati in violazione di legge, compresi quelli di cui non è necessaria la conservazione in relazione agli scopi per i quali i dati sono stati raccolti o successivamente trattati;<br>\nc) l’attestazione che le operazioni di cui alle lettere a) e b) sono state portate a conoscenza, anche per quanto riguarda il loro contenuto, di coloro ai quali i dati sono stati comunicati o diffusi, eccettuato il caso in cui tale adempimento si rivela impossibile o comporta un impiego di mezzi manifestamente sproporzionato rispetto al diritto tutelato;</p></body></html>"
+          "html": "<p>iii. ottenere:<br>\na) l’aggiornamento, la rettificazione ovvero, quando vi ha interesse, l’integrazione dei dati;<br>\nb) la cancellazione, la trasformazione in forma anonima o il blocco dei dati trattati in violazione di legge, compresi quelli di cui non è necessaria la conservazione in relazione agli scopi per i quali i dati sono stati raccolti o successivamente trattati;<br>\nc) l’attestazione che le operazioni di cui alle lettere a) e b) sono state portate a conoscenza, anche per quanto riguarda il loro contenuto, di coloro ai quali i dati sono stati comunicati o diffusi, eccettuato il caso in cui tale adempimento si rivela impossibile o comporta un impiego di mezzi manifestamente sproporzionato rispetto al diritto tutelato;</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>iv. opporsi, in tutto o in parte:<br>\na) per motivi legittimi al trattamento dei dati personali che La riguardano, ancorché pertinenti allo scopo della raccolta;<br>\nb) al trattamento di dati personali che La riguardano a fini di invio di materiale pubblicitario o di vendita diretta o per il compimento di ricerche di mercato o di comunicazione commerciale, mediante l’uso di sistemi automatizzati di chiamata senza l’intervento di un operatore mediante e-mail e/o mediante modalità di marketing tradizionali mediante telefono e/o posta cartacea. Si fa presente che il diritto di opposizione dell’interessato, esposto al precedente punto b), per finalità di marketing diretto mediante modalità automatizzate si estende a quelle tradizionali e che comunque resta salva la possibilità per l’interessato di esercitare il diritto di opposizione anche solo in parte. Pertanto, l’interessato può decidere di ricevere solo comunicazioni mediante modalità tradizionali ovvero solo comunicazioni automatizzate oppure nessuna delle due tipologie di comunicazione. Ove applicabili, ha altresì i diritti di cui agli artt. 16-21 GDPR (Diritto di rettifica, diritto all’oblio, diritto di limitazione di trattamento, diritto alla portabilità dei dati, diritto di opposizione), nonché il diritto di reclamo all’Autorità Garante.</p></body></html>"
+          "html": "<p>iv. opporsi, in tutto o in parte:<br>\na) per motivi legittimi al trattamento dei dati personali che La riguardano, ancorché pertinenti allo scopo della raccolta;<br>\nb) al trattamento di dati personali che La riguardano a fini di invio di materiale pubblicitario o di vendita diretta o per il compimento di ricerche di mercato o di comunicazione commerciale, mediante l’uso di sistemi automatizzati di chiamata senza l’intervento di un operatore mediante e-mail e/o mediante modalità di marketing tradizionali mediante telefono e/o posta cartacea. Si fa presente che il diritto di opposizione dell’interessato, esposto al precedente punto b), per finalità di marketing diretto mediante modalità automatizzate si estende a quelle tradizionali e che comunque resta salva la possibilità per l’interessato di esercitare il diritto di opposizione anche solo in parte. Pertanto, l’interessato può decidere di ricevere solo comunicazioni mediante modalità tradizionali ovvero solo comunicazioni automatizzate oppure nessuna delle due tipologie di comunicazione. Ove applicabili, ha altresì i diritti di cui agli artt. 16-21 GDPR (Diritto di rettifica, diritto all’oblio, diritto di limitazione di trattamento, diritto alla portabilità dei dati, diritto di opposizione), nonché il diritto di reclamo all’Autorità Garante.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p><strong>Modalità di esercizio dei diritti</strong><br>\nPotrà in qualsiasi momento esercitare i diritti inviando:<br>\n– una raccomandata a.r. a Dott. Federzoni e Dott. Granata Odontoiatri Ass. , Via Segantini 25, 41124 Modena;<br>\n– una e-mail all’indirizzo info.federzonigranata@gmail.com .</p></body></html>"
+          "html": "<p><strong>Modalità di esercizio dei diritti</strong><br>\nPotrà in qualsiasi momento esercitare i diritti inviando:<br>\n– una raccomandata a.r. a Dott. Federzoni e Dott. Granata Odontoiatri Ass. , Via Segantini 25, 41124 Modena;<br>\n– una e-mail all’indirizzo info.federzonigranata@gmail.com .</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p><strong>Titolare, responsabili ed incaricati</strong><br>\nIl Titolare del trattamento è Dott. Federzoni e Dott. Granata Odontoiatri Ass., con sede legale in Modena, Via Segantini 25.<br>\nL’elenco aggiornato dei responsabili e degli incaricati al trattamento è custodito presso la sede legale del Titolare del trattamento.</p></body></html>"
+          "html": "<p><strong>Titolare, responsabili ed incaricati</strong><br>\nIl Titolare del trattamento è Dott. Federzoni e Dott. Granata Odontoiatri Ass., con sede legale in Modena, Via Segantini 25.<br>\nL’elenco aggiornato dei responsabili e degli incaricati al trattamento è custodito presso la sede legale del Titolare del trattamento.</p>"
         }
       ]
     },
@@ -2197,11 +2197,11 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Il Dottor Stefano Granata, considerato uno dei massimi esperti in campo implantare, ha deciso di proporre un primo consulto completamente SENZA IMPEGNO che comprende:</p></body></html>"
+          "html": "<p>Il Dottor Stefano Granata, considerato uno dei massimi esperti in campo implantare, ha deciso di proporre un primo consulto completamente SENZA IMPEGNO che comprende:</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Doctor Stefano Granata, considered one of the leading experts in the implant field, has decided to propose a first consultation completely WITHOUT COMMITMENT which includes:</p></body></html>"
+          "html": "<p>Doctor Stefano Granata, considered one of the leading experts in the implant field, has decided to propose a first consultation completely WITHOUT COMMITMENT which includes:</p>"
         }
       ]
     },
@@ -2221,11 +2221,11 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Grazie per aver compilato il form.</p></body></html>"
+          "html": "<p>Grazie per aver compilato il form.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Ti ricontatteremo entro pochi minuti</p></body></html>"
+          "html": "<p>Ti ricontatteremo entro pochi minuti</p>"
         }
       ]
     },
@@ -2256,7 +2256,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Ricostruzioni multiple in composito di paziente bruxista. In questo caso è stata eseguita una ceratura di analisi e tramite l’ausilio di mascherine dedicate, sono state eseguite molteplici otturazioni dirette, prima di passare alla protesi. Le otturazioni sono state provate dal paziente per 6 mesi.</p></body></html>"
+          "html": "<p>Ricostruzioni multiple in composito di paziente bruxista. In questo caso è stata eseguita una ceratura di analisi e tramite l’ausilio di mascherine dedicate, sono state eseguite molteplici otturazioni dirette, prima di passare alla protesi. Le otturazioni sono state provate dal paziente per 6 mesi.</p>"
         },
         {
           "type": "heading",
@@ -2305,7 +2305,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Ricostruzione in composito di dente fratturato.</p></body></html>"
+          "html": "<p>Ricostruzione in composito di dente fratturato.</p>"
         },
         {
           "type": "heading",
@@ -2334,7 +2334,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Ricostruzione in composito di dente fratturato.<br>\nL’utilizzo della diga di gomma è obbligatorio per ottenere i massimi risultati. La contaminazione di liquidi organici come saliva e sangue, pregiudicano l’estetica e la durata delle otturazioni dirette.</p></body></html>"
+          "html": "<p>Ricostruzione in composito di dente fratturato.<br>\nL’utilizzo della diga di gomma è obbligatorio per ottenere i massimi risultati. La contaminazione di liquidi organici come saliva e sangue, pregiudicano l’estetica e la durata delle otturazioni dirette.</p>"
         },
         {
           "type": "heading",
@@ -2373,7 +2373,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Ricostruzione in composito di dente fratturato.<br>\nIn Conservativa ed Endodonzia l’uso della diga è obbligatorio per ottenere controllo batterico e dell’umidità.</p></body></html>"
+          "html": "<p>Ricostruzione in composito di dente fratturato.<br>\nIn Conservativa ed Endodonzia l’uso della diga è obbligatorio per ottenere controllo batterico e dell’umidità.</p>"
         },
         {
           "type": "heading",
@@ -2413,7 +2413,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/estetica/\">Estetica</a></li><li><a href=\"/protesi/\">Protesi</a></li><li><a href=\"/parodontologia/\">Parodontologia</a></li><li><a href=\"/implantologia/\">Implantologia</a></li><li><a href=\"/ortodonzia/\">Ortodonzia</a></li><li><a href=\"/conservativa/\">Conservativa</a></li><li><a href=\"/endodonzia/\">Endodonzia</a></li><li><a href=\"/video/\">Video</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/estetica/\">Estetica</a></li><li><a href=\"/protesi/\">Protesi</a></li><li><a href=\"/parodontologia/\">Parodontologia</a></li><li><a href=\"/implantologia/\">Implantologia</a></li><li><a href=\"/ortodonzia/\">Ortodonzia</a></li><li><a href=\"/conservativa/\">Conservativa</a></li><li><a href=\"/endodonzia/\">Endodonzia</a></li><li><a href=\"/video/\">Video</a></li></ul>"
         }
       ]
     },
@@ -2439,7 +2439,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Da Federzoni Granata lavoriamo da più di 30 anni con competenze specialistiche diverse che ci consentono un approccio completo all’ortodonzia.</p></body></html>"
+          "html": "<p>Da Federzoni Granata lavoriamo da più di 30 anni con competenze specialistiche diverse che ci consentono un approccio completo all’ortodonzia.</p>"
         },
         {
           "type": "heading",
@@ -2458,19 +2458,19 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Indirizzo:<br><strong>Via Giovanni Segantini, 25, 41124 Modena (MO)</strong></p></body></html>"
+          "html": "<p>Indirizzo:<br><strong>Via Giovanni Segantini, 25, 41124 Modena (MO)</strong></p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Telefono:<strong><br><a href=\"tel:+39059345557\">+39 059345557</a></strong> (Modena)</p></body></html>"
+          "html": "<p>Telefono:<strong><br><a href=\"tel:+39059345557\">+39 059345557</a></strong> (Modena)</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Email:<strong><br><a href=\"mailto:info.federzonigranata@gmail.com\">info.federzonigranata@gmail.com</a></strong></p></body></html>"
+          "html": "<p>Email:<strong><br><a href=\"mailto:info.federzonigranata@gmail.com\">info.federzonigranata@gmail.com</a></strong></p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p><strong>ORARI:</strong><br>Dal Lunedì al Venerdì: 10:00 – 19:00<br>Sabato e Domenica: CHIUSO</p></body></html>"
+          "html": "<p><strong>ORARI:</strong><br>Dal Lunedì al Venerdì: 10:00 – 19:00<br>Sabato e Domenica: CHIUSO</p>"
         },
         {
           "type": "heading",
@@ -2479,11 +2479,11 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Indirizzo:<br><strong>Via Guido da Castello 8, 42121 Reggio nell’Emilia (RE)</strong></p></body></html>"
+          "html": "<p>Indirizzo:<br><strong>Via Guido da Castello 8, 42121 Reggio nell’Emilia (RE)</strong></p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Telefono:<br><strong><a href=\"tel:+390522436618\">+39 0522436618</a></strong> (Reggio Emilia)</p></body></html>"
+          "html": "<p>Telefono:<br><strong><a href=\"tel:+390522436618\">+39 0522436618</a></strong> (Reggio Emilia)</p>"
         },
         {
           "type": "heading",
@@ -2502,7 +2502,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>La Dott.sa Federzoni e il Dott. Granata vantano un’esperienza trentennale.</p></body></html>"
+          "html": "<p>La Dott.sa Federzoni e il Dott. Granata vantano un’esperienza trentennale.</p>"
         },
         {
           "type": "image",
@@ -2516,7 +2516,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Il nostro studio vanta le migliori tecnologie nel campo dell’ortodonzia.</p></body></html>"
+          "html": "<p>Il nostro studio vanta le migliori tecnologie nel campo dell’ortodonzia.</p>"
         },
         {
           "type": "image",
@@ -2530,7 +2530,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Il nostro approccio è personalizzato e specifico per ogni cliente</p></body></html>"
+          "html": "<p>Il nostro approccio è personalizzato e specifico per ogni cliente</p>"
         },
         {
           "type": "heading",
@@ -2549,7 +2549,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Laurea con lode in Odontoiatria e Protesi Dentale e abilitazione professionale presso l’Università di Modena nel 1987. Laureata frequentatrice: Reparto di Conservativa ed Endodonzia (Dir. Prof.G. Dondi Dall’Orologio) Clinica Odontoiatrica dell’Università di Bologna; Department of Orthodontics (Dir. Prof. E. Shapiro),Tufts University di Boston; Division d’Orthodontie et de Pédodontie (Dir. Prof. J.P.Joho), Université de Genève. Società scientifiche frequentate: Accademia Italiana di Conservativa, Società Italiana di Endodonzia. Società Italiana di Ortodonzia. Libera professione presso lo Studio dentistico Federzoni Granata di Modena e Reggio Emilia dal 1992 , occupandosi di Pedodonzia, Ortodonzia, Endodonzia e Conservativa.</p></body></html>"
+          "html": "<p>Laurea con lode in Odontoiatria e Protesi Dentale e abilitazione professionale presso l’Università di Modena nel 1987. Laureata frequentatrice: Reparto di Conservativa ed Endodonzia (Dir. Prof.G. Dondi Dall’Orologio) Clinica Odontoiatrica dell’Università di Bologna; Department of Orthodontics (Dir. Prof. E. Shapiro),Tufts University di Boston; Division d’Orthodontie et de Pédodontie (Dir. Prof. J.P.Joho), Université de Genève. Società scientifiche frequentate: Accademia Italiana di Conservativa, Società Italiana di Endodonzia. Società Italiana di Ortodonzia. Libera professione presso lo Studio dentistico Federzoni Granata di Modena e Reggio Emilia dal 1992 , occupandosi di Pedodonzia, Ortodonzia, Endodonzia e Conservativa.</p>"
         },
         {
           "type": "image",
@@ -2563,7 +2563,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Professore a contratto presso l’Università di Padova dal 2019<br>Professore a contratto presso l’Università di Modena e Reggio Emilia 2014-2017<br>Specialista in Protesi riconosciuto dall’EPA, European Prosthodontic Association<br>Socio attivo AIOP, Accademia Italiana di Odontoiatria Protesica<br>Socio attivo IAO, Italian Academy of Osseointegration<br>DDS Certified Speaker DDS, Digital Dental Society<br>Socio Attivo Onorario DI&RA, DIgital Implant and Restorative Academy<br>Socio attivo CAI Academy Computer Aided Implantology<br>Relatore in corsi e congressi nazionali ed internazionali su argomenti legati alla protesi digitale, la chirurgia computer guidata, chirurgia rigenerativa su impianti.<br>Autore di pubblicazioni scientifiche su riviste di fama internazionale</p></body></html>"
+          "html": "<p>Professore a contratto presso l’Università di Padova dal 2019<br>Professore a contratto presso l’Università di Modena e Reggio Emilia 2014-2017<br>Specialista in Protesi riconosciuto dall’EPA, European Prosthodontic Association<br>Socio attivo AIOP, Accademia Italiana di Odontoiatria Protesica<br>Socio attivo IAO, Italian Academy of Osseointegration<br>DDS Certified Speaker DDS, Digital Dental Society<br>Socio Attivo Onorario DI&RA, DIgital Implant and Restorative Academy<br>Socio attivo CAI Academy Computer Aided Implantology<br>Relatore in corsi e congressi nazionali ed internazionali su argomenti legati alla protesi digitale, la chirurgia computer guidata, chirurgia rigenerativa su impianti.<br>Autore di pubblicazioni scientifiche su riviste di fama internazionale</p>"
         },
         {
           "type": "heading",
@@ -2572,7 +2572,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Scopri le opinioni dei nostri pazienti</p></body></html>"
+          "html": "<p>Scopri le opinioni dei nostri pazienti</p>"
         },
         {
           "type": "image",
@@ -2596,27 +2596,27 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Il trattamento ortodontico può iniziare in età pediatrica, solitamente intorno ai 7-9 anni, ma anche in età adulta. Non c’è un’età limite per correggere i denti!</p></body></html>"
+          "html": "<p>Il trattamento ortodontico può iniziare in età pediatrica, solitamente intorno ai 7-9 anni, ma anche in età adulta. Non c’è un’età limite per correggere i denti!</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>La durata del trattamento dipende dalla gravità del caso e dalle esigenze del paziente, ma di solito dura da 12 mesi a 3 anni.</p></body></html>"
+          "html": "<p>La durata del trattamento dipende dalla gravità del caso e dalle esigenze del paziente, ma di solito dura da 12 mesi a 3 anni.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>I benefici includono un sorriso più bello e sicuro di sé, miglioramenti nella funzione masticatoria e una migliore salute generale dei denti e delle gengive.</p></body></html>"
+          "html": "<p>I benefici includono un sorriso più bello e sicuro di sé, miglioramenti nella funzione masticatoria e una migliore salute generale dei denti e delle gengive.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Da Federzoni Granata usiamo tecniche e materiali moderni per garantirti un’esperienza poco invasiva e mai dolorosa.</p></body></html>"
+          "html": "<p>Da Federzoni Granata usiamo tecniche e materiali moderni per garantirti un’esperienza poco invasiva e mai dolorosa.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Ci sono apparecchi fissi e apparecchi rimovibili come gli allineatori trasparenti. Il tipo dipende dalle esigenze del paziente e dalla raccomandazione del dentista.</p></body></html>"
+          "html": "<p>Ci sono apparecchi fissi e apparecchi rimovibili come gli allineatori trasparenti. Il tipo dipende dalle esigenze del paziente e dalla raccomandazione del dentista.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Scrivici su WhatsApp</p></body></html>"
+          "html": "<p>Scrivici su WhatsApp</p>"
         },
         {
           "type": "embed",
@@ -2649,23 +2649,23 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Lo studio dentistico Federzoni Granata, con la sua sede di Reggio Emilia, si occupa di dell’odontoiatria in tutte le sue forme, dall’implantologia computer guidata alla chirurgia, dalle faccette dentali alla cura delle gengive.</p></body></html>"
+          "html": "<p>Lo studio dentistico Federzoni Granata, con la sua sede di Reggio Emilia, si occupa di dell’odontoiatria in tutte le sue forme, dall’implantologia computer guidata alla chirurgia, dalle faccette dentali alla cura delle gengive.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Indirizzo:<br><strong>Via Roma, 17, 42121 Reggio nell’Emilia (RE)</strong></p></body></html>"
+          "html": "<p>Indirizzo:<br><strong>Via Roma, 17, 42121 Reggio nell’Emilia (RE)</strong></p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Telefono:<br><strong><a href=\"tel:+390522436618\">+39 0522436618</a></strong> (Reggio Emilia)</p></body></html>"
+          "html": "<p>Telefono:<br><strong><a href=\"tel:+390522436618\">+39 0522436618</a></strong> (Reggio Emilia)</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Email:<br><strong><a href=\"mailto:info.federzonigranata@gmail.com\">info.federzonigranata@gmail.com</a></strong></p></body></html>"
+          "html": "<p>Email:<br><strong><a href=\"mailto:info.federzonigranata@gmail.com\">info.federzonigranata@gmail.com</a></strong></p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p><strong>ORARI:</strong><br>\nDal Lunedì al Venerdì: 10:00 – 19:00<br>\nSabato e Domenica: CHIUSO</p></body></html>"
+          "html": "<p><strong>ORARI:</strong><br>\nDal Lunedì al Venerdì: 10:00 – 19:00<br>\nSabato e Domenica: CHIUSO</p>"
         },
         {
           "type": "heading",
@@ -2690,15 +2690,15 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Il <strong>tumore sulla lingua</strong> è una manifestazione maligna su cui ancora oggi si indaga in ambito medico-scientifico per ricercarne l’origine e i fattori di rischio.</p></body></html>"
+          "html": "<p>Il <strong>tumore sulla lingua</strong> è una manifestazione maligna su cui ancora oggi si indaga in ambito medico-scientifico per ricercarne l’origine e i fattori di rischio.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Dovete sapere che all’interno del cavo orale sono diversi i tumori che possono attaccare i tessuti, ma quelli che riguardano la lingua <strong>rappresentano il 30% del totale</strong> in questa sede del corpo.</p></body></html>"
+          "html": "<p>Dovete sapere che all’interno del cavo orale sono diversi i tumori che possono attaccare i tessuti, ma quelli che riguardano la lingua <strong>rappresentano il 30% del totale</strong> in questa sede del corpo.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>In questo articolo vi spieghiamo di cosa si tratta, quali sono i sintomi e il trattamento che viene applicato in questa circostanza delicata.</p></body></html>"
+          "html": "<p>In questo articolo vi spieghiamo di cosa si tratta, quali sono i sintomi e il trattamento che viene applicato in questa circostanza delicata.</p>"
         },
         {
           "type": "heading",
@@ -2707,27 +2707,27 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Per meglio comprendere cosa sia questo tipo di patologia, bisogna specificare che a livello generico il tumore o neoplasia non è altro che una <strong>crescita incontrollata di cellule mutate</strong> in un determinato distretto del corpo.</p></body></html>"
+          "html": "<p>Per meglio comprendere cosa sia questo tipo di patologia, bisogna specificare che a livello generico il tumore o neoplasia non è altro che una <strong>crescita incontrollata di cellule mutate</strong> in un determinato distretto del corpo.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Quando la proliferazione delle stesse diventa veloce e aggressiva, si dice che è <strong>maligna</strong> come, per l’appunto, il tumore alla lingua.</p></body></html>"
+          "html": "<p>Quando la proliferazione delle stesse diventa veloce e aggressiva, si dice che è <strong>maligna</strong> come, per l’appunto, il tumore alla lingua.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Tenete presente che i termini cancro, tumore maligno e neoplasia maligna hanno tutti lo stesso significato e possono essere utilizzati come sinonimi.</p></body></html>"
+          "html": "<p>Tenete presente che i termini cancro, tumore maligno e neoplasia maligna hanno tutti lo stesso significato e possono essere utilizzati come sinonimi.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Nel caso di questa patologia il più delle volte presenta delle <strong>cellule squamose</strong> e per questo viene chiamato anche <strong>carcinoma squamoso o spinocellulare</strong>, interessando la superficie della lingua.</p></body></html>"
+          "html": "<p>Nel caso di questa patologia il più delle volte presenta delle <strong>cellule squamose</strong> e per questo viene chiamato anche <strong>carcinoma squamoso o spinocellulare</strong>, interessando la superficie della lingua.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>A proposito di quest’ultima, bisogna precisare che è suddivisa in due parti: la parte che non vediamo e si trova in fondo alla bocca, prende il nome di base. Da qui nasce il <strong>tumore alla gola</strong>.</p></body></html>"
+          "html": "<p>A proposito di quest’ultima, bisogna precisare che è suddivisa in due parti: la parte che non vediamo e si trova in fondo alla bocca, prende il nome di base. Da qui nasce il <strong>tumore alla gola</strong>.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>La parte più esterna, invece, quella ben visibile quando si fa la classica linguaccia, una volta che manifesta cellule del genere darà luogo al <strong>tumore orale</strong>.</p></body></html>"
+          "html": "<p>La parte più esterna, invece, quella ben visibile quando si fa la classica linguaccia, una volta che manifesta cellule del genere darà luogo al <strong>tumore orale</strong>.</p>"
         },
         {
           "type": "heading",
@@ -2736,32 +2736,32 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Come abbiamo già detto, questo tipo di neoplasia è ancora in fase di studio, ma ad oggi si concorda nel definire quali possano essere i principali <strong>fattori di rischio</strong>.</p></body></html>"
+          "html": "<p>Come abbiamo già detto, questo tipo di neoplasia è ancora in fase di studio, ma ad oggi si concorda nel definire quali possano essere i principali <strong>fattori di rischio</strong>.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Eccoli elencati di seguito:</p></body></html>"
+          "html": "<p>Eccoli elencati di seguito:</p>"
         },
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li>Tabacco e alcool;</li><li>Cattiva igiene orale;</li><li>Continua <strong>esposizione a sostanze tossiche</strong>, nel caso di particolari fabbriche;</li><li><strong>Infezione da papilloma virus umano HPV</strong>;</li><li><strong>Dieta povera di sostanze nutritive derivanti da vegetali</strong>;</li><li>Età superiore ai 60 anni.</li></ul></body></html>"
+          "html": "<ul><li>Tabacco e alcool;</li><li>Cattiva igiene orale;</li><li>Continua <strong>esposizione a sostanze tossiche</strong>, nel caso di particolari fabbriche;</li><li><strong>Infezione da papilloma virus umano HPV</strong>;</li><li><strong>Dieta povera di sostanze nutritive derivanti da vegetali</strong>;</li><li>Età superiore ai 60 anni.</li></ul>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Quando si manifesta, anche nelle sue prime fasi, alcuni sintomi sono piuttosto generici e possono facilmente attribuibili ad una banale influenza.</p></body></html>"
+          "html": "<p>Quando si manifesta, anche nelle sue prime fasi, alcuni sintomi sono piuttosto generici e possono facilmente attribuibili ad una banale influenza.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Difatti, si può riscontrare <strong>mal di gola, dolore nella deglutizione e raucedine</strong>; a questi, però si aggiunge una sensazione fastidiosa di avere qualcosa in gola, <strong>sanguinamento ingiustificato</strong> della lingua, ulcere sulla stessa e <strong>dolore alla mandibola</strong>.</p></body></html>"
+          "html": "<p>Difatti, si può riscontrare <strong>mal di gola, dolore nella deglutizione e raucedine</strong>; a questi, però si aggiunge una sensazione fastidiosa di avere qualcosa in gola, <strong>sanguinamento ingiustificato</strong> della lingua, ulcere sulla stessa e <strong>dolore alla mandibola</strong>.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>In ogni caso, se dovesse capitarvi di avvertire dei sintomi particolari e insoliti che destano in voi preoccupazione, vi invitiamo a prendere appuntamento quanto prima presso il nostro <strong><a href=\"/\">Studio Dentistico Federzoni Granata a Modena o a Reggio Emilia</a></strong>.</p></body></html>"
+          "html": "<p>In ogni caso, se dovesse capitarvi di avvertire dei sintomi particolari e insoliti che destano in voi preoccupazione, vi invitiamo a prendere appuntamento quanto prima presso il nostro <strong><a href=\"/\">Studio Dentistico Federzoni Granata a Modena o a Reggio Emilia</a></strong>.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Il tumore sulla lingua, che per sua definizione è considerato maligno, <strong>può portare a conseguenze infauste se non viene diagnosticato in tempo</strong>.</p></body></html>"
+          "html": "<p>Il tumore sulla lingua, che per sua definizione è considerato maligno, <strong>può portare a conseguenze infauste se non viene diagnosticato in tempo</strong>.</p>"
         },
         {
           "type": "heading",
@@ -2770,19 +2770,19 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Per poter capire se i sintomi precedenti siano collegabili ad un tumore alla lingua bisogna effettuare <strong>un’attenta analisi</strong> al cavo orale del paziente, andando a valutare anche <strong>l’anamnesi</strong> per cercare eventuali fattori di rischio.</p></body></html>"
+          "html": "<p>Per poter capire se i sintomi precedenti siano collegabili ad un tumore alla lingua bisogna effettuare <strong>un’attenta analisi</strong> al cavo orale del paziente, andando a valutare anche <strong>l’anamnesi</strong> per cercare eventuali fattori di rischio.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Come specificato in precedenza, infatti, ci sono delle condizioni che possono aumentare la percentuale di sviluppo di questo tipo di neoplasia e bisognerà indagare in tal senso.</p></body></html>"
+          "html": "<p>Come specificato in precedenza, infatti, ci sono delle condizioni che possono aumentare la percentuale di sviluppo di questo tipo di neoplasia e bisognerà indagare in tal senso.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Successivamente, potrebbero essere richiesti degli <strong>esami diagnostici più approfonditi</strong>, per ottenere delle immagini sulla situazione del cavo orale, fra cui TAC e raggi X, anche per ricercare eventuali metastasi nel torace.</p></body></html>"
+          "html": "<p>Successivamente, potrebbero essere richiesti degli <strong>esami diagnostici più approfonditi</strong>, per ottenere delle immagini sulla situazione del cavo orale, fra cui TAC e raggi X, anche per ricercare eventuali metastasi nel torace.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>L’ultima conferma viene data dalla <strong>biopsia del tumore</strong>: si prelevano delle cellule dalla massa per analizzarle in laboratorio e stabilire a quale stadio si trova.</p></body></html>"
+          "html": "<p>L’ultima conferma viene data dalla <strong>biopsia del tumore</strong>: si prelevano delle cellule dalla massa per analizzarle in laboratorio e stabilire a quale stadio si trova.</p>"
         },
         {
           "type": "heading",
@@ -2791,27 +2791,27 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Come per qualsiasi tumore, <strong>non esiste una cura un’univoca</strong> perché per scegliere il trattamento bisogna considerare una serie di fattori, primo fra tutti lo stadio di propagazione della neoplasia (ha interessato i linfonodi vicini oppure è localizzato?).</p></body></html>"
+          "html": "<p>Come per qualsiasi tumore, <strong>non esiste una cura un’univoca</strong> perché per scegliere il trattamento bisogna considerare una serie di fattori, primo fra tutti lo stadio di propagazione della neoplasia (ha interessato i linfonodi vicini oppure è localizzato?).</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Chiarito ciò, si osserva anche dove si concentra la sua diffusione e lo <strong>stato di salute generale del paziente</strong>, perché alcuni trattamenti risultano piuttosto pesanti da affrontare.</p></body></html>"
+          "html": "<p>Chiarito ciò, si osserva anche dove si concentra la sua diffusione e lo <strong>stato di salute generale del paziente</strong>, perché alcuni trattamenti risultano piuttosto pesanti da affrontare.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>In generale, i tre trattamenti fra cui scegliere sono: <strong>rimozione chirurgica del cancro, chemioterapia e radioterapia</strong>.</p></body></html>"
+          "html": "<p>In generale, i tre trattamenti fra cui scegliere sono: <strong>rimozione chirurgica del cancro, chemioterapia e radioterapia</strong>.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Bisogna sottolineare che in base alla gravità o estensione del tumore sulla lingua si possono effettuare anche delle combinazioni dei diversi interventi, per esempio per ridurre la massa e operare con maggior sicurezza.</p></body></html>"
+          "html": "<p>Bisogna sottolineare che in base alla gravità o estensione del tumore sulla lingua si possono effettuare anche delle combinazioni dei diversi interventi, per esempio per ridurre la massa e operare con maggior sicurezza.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>In ogni caso, <strong>la prognosi dipende molto da quanto è stato rilevato in anticipo</strong>, perché nelle fasi iniziali è facilmente esportabile e sicuramente non ha intaccato anche i tessuti circostanti.</p></body></html>"
+          "html": "<p>In ogni caso, <strong>la prognosi dipende molto da quanto è stato rilevato in anticipo</strong>, perché nelle fasi iniziali è facilmente esportabile e sicuramente non ha intaccato anche i tessuti circostanti.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Trattandosi di una neoplasia maligna, se vengono trascurati i primi segnali di allarme, può portare facilmente alla morte, rendendo del tutto inutili le cure di cui sopra.</p></body></html>"
+          "html": "<p>Trattandosi di una neoplasia maligna, se vengono trascurati i primi segnali di allarme, può portare facilmente alla morte, rendendo del tutto inutili le cure di cui sopra.</p>"
         },
         {
           "type": "heading",
@@ -2826,7 +2826,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/dente-anchilosato/\">Dente anchilosato</a></li><li><a href=\"/tumore-sulla-lingua/\">Tumore sulla lingua</a></li><li><a href=\"/carie-denti-da-latte/\">Carie denti da latte</a></li><li><a href=\"/denti-del-giudizio/\">Denti del giudizio</a></li><li><a href=\"/dentiera-fissa-cose-e-vantaggi/\">Dentiera fissa: cos’è e vantaggi</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/dente-anchilosato/\">Dente anchilosato</a></li><li><a href=\"/tumore-sulla-lingua/\">Tumore sulla lingua</a></li><li><a href=\"/carie-denti-da-latte/\">Carie denti da latte</a></li><li><a href=\"/denti-del-giudizio/\">Denti del giudizio</a></li><li><a href=\"/dentiera-fissa-cose-e-vantaggi/\">Dentiera fissa: cos’è e vantaggi</a></li></ul>"
         },
         {
           "type": "heading",
@@ -2841,7 +2841,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/2022/10/\">October 2022</a></li><li><a href=\"/2022/09/\">September 2022</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/2022/10/\">October 2022</a></li><li><a href=\"/2022/09/\">September 2022</a></li></ul>"
         },
         {
           "type": "heading",
@@ -2851,7 +2851,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/category/uncategorized/\">Uncategorized</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/category/uncategorized/\">Uncategorized</a></li></ul>"
         },
         {
           "type": "heading",
@@ -2861,12 +2861,12 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a rel=\"nofollow\" href=\"/wp-login.php\">Log in</a></li><li><a href=\"/feed/\">Entries feed</a></li><li><a href=\"/comments/feed/\">Comments feed</a></li><li><a href=\"https://wordpress.org/\" target=\"_blank\" rel=\"noopener noreferrer\">WordPress.org</a></li></ul></body></html>"
+          "html": "<ul><li><a rel=\"nofollow\" href=\"/wp-login.php\">Log in</a></li><li><a href=\"/feed/\">Entries feed</a></li><li><a href=\"/comments/feed/\">Comments feed</a></li><li><a href=\"https://wordpress.org/\" target=\"_blank\" rel=\"noopener noreferrer\">WordPress.org</a></li></ul>"
         },
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/carie-denti-da-latte/\" rel=\"prev\"><i></i>Prev</a></li><li><a href=\"/dente-anchilosato/\" rel=\"next\">Next<i></i></a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/carie-denti-da-latte/\" rel=\"prev\"><i></i>Prev</a></li><li><a href=\"/dente-anchilosato/\" rel=\"next\">Next<i></i></a></li></ul>"
         }
       ]
     },
@@ -2886,15 +2886,15 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Come per noi adulti anche per i bambini si parla di <strong>carie denti da latte</strong>, una patologia molto più diffusa di quanto si pensi perché viene spesso sottovalutata, dal momento che si insinua nella dentatura non permanente.</p></body></html>"
+          "html": "<p>Come per noi adulti anche per i bambini si parla di <strong>carie denti da latte</strong>, una patologia molto più diffusa di quanto si pensi perché viene spesso sottovalutata, dal momento che si insinua nella dentatura non permanente.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Si tratta di una condizione che andrebbe risolta quanto prima dal dentista perché potrebbe portare ad <strong>importanti conseguenze</strong>, fra cui dolore e difetti estetici.</p></body></html>"
+          "html": "<p>Si tratta di una condizione che andrebbe risolta quanto prima dal dentista perché potrebbe portare ad <strong>importanti conseguenze</strong>, fra cui dolore e difetti estetici.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>In questo articolo vi spieghiamo perché compaiono le carie, come si curano nei piccoli pazienti e come fare per prevenirle.</p></body></html>"
+          "html": "<p>In questo articolo vi spieghiamo perché compaiono le carie, come si curano nei piccoli pazienti e come fare per prevenirle.</p>"
         },
         {
           "type": "heading",
@@ -2903,19 +2903,19 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Prima di concentrarsi sulla dentatura dei bambini, vi spieghiamo brevemente in che cosa consiste una <strong>carie</strong>, il cui esordio e manifestazione rimangono i medesimi anche per noi adulti.</p></body></html>"
+          "html": "<p>Prima di concentrarsi sulla dentatura dei bambini, vi spieghiamo brevemente in che cosa consiste una <strong>carie</strong>, il cui esordio e manifestazione rimangono i medesimi anche per noi adulti.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>La carie per come la conoscete è una <strong>macchia scura</strong> che si presenta sullo smalto, che penetra in profondità nella <strong>dentina</strong> fino a raggiungere la <strong>polpa</strong>. È proprio qui che inizia a far male e a risultare pericolosa.</p></body></html>"
+          "html": "<p>La carie per come la conoscete è una <strong>macchia scura</strong> che si presenta sullo smalto, che penetra in profondità nella <strong>dentina</strong> fino a raggiungere la <strong>polpa</strong>. È proprio qui che inizia a far male e a risultare pericolosa.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>La sua comparsa è dovuta alla proliferazione di determinati <strong>agenti patogeni</strong> che si trovano all’interno nella bocca che, a seguito di reazioni chimiche legate a ciò che ingeriamo, iniziano a proliferare e a scavare nel dente.</p></body></html>"
+          "html": "<p>La sua comparsa è dovuta alla proliferazione di determinati <strong>agenti patogeni</strong> che si trovano all’interno nella bocca che, a seguito di reazioni chimiche legate a ciò che ingeriamo, iniziano a proliferare e a scavare nel dente.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Diversamente da quanto potreste pensare, nelle sue primissime fasi di manifestazione, <strong>la carie è del tutto asintomatica</strong> e per questa ragione in molti non se ne accorgono fin quando non è ormai giunta al suo stadio avanzato.</p></body></html>"
+          "html": "<p>Diversamente da quanto potreste pensare, nelle sue primissime fasi di manifestazione, <strong>la carie è del tutto asintomatica</strong> e per questa ragione in molti non se ne accorgono fin quando non è ormai giunta al suo stadio avanzato.</p>"
         },
         {
           "type": "heading",
@@ -2924,27 +2924,27 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Nel caso dei bambini, come abbiamo già specificato, il principio per cui si manifesta la carie è il medesimo; pertanto, <strong>mangiare tanti cibi zuccherati e dedicarsi poco ad una corretta igiene dentale</strong> sono i principali fattori di rischio.</p></body></html>"
+          "html": "<p>Nel caso dei bambini, come abbiamo già specificato, il principio per cui si manifesta la carie è il medesimo; pertanto, <strong>mangiare tanti cibi zuccherati e dedicarsi poco ad una corretta igiene dentale</strong> sono i principali fattori di rischio.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Con questo non stiamo assolutamente demonizzando lo zucchero in sé: mangiare un cioccolatino non rovinerà certamente i denti dei vostri figli.</p></body></html>"
+          "html": "<p>Con questo non stiamo assolutamente demonizzando lo zucchero in sé: mangiare un cioccolatino non rovinerà certamente i denti dei vostri figli.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Tuttavia, è importante comprendere che ruolo abbia nell’interno processo di formazione della carie: i batteri che si trovano nella <strong>placca</strong>, un residuo di cibo appiccicoso, si nutrono di queste sostanze dolci.</p></body></html>"
+          "html": "<p>Tuttavia, è importante comprendere che ruolo abbia nell’interno processo di formazione della carie: i batteri che si trovano nella <strong>placca</strong>, un residuo di cibo appiccicoso, si nutrono di queste sostanze dolci.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Il prodotto di scarto che ne deriva, chiamato <strong>lattato</strong>, è così acido da riuscire a sciogliere un po’ alla volta prima lo smalto e poi la dentina, lasciando dietro di sé un <strong>piccolo cratere dalla colorazione brunastra</strong>.</p></body></html>"
+          "html": "<p>Il prodotto di scarto che ne deriva, chiamato <strong>lattato</strong>, è così acido da riuscire a sciogliere un po’ alla volta prima lo smalto e poi la dentina, lasciando dietro di sé un <strong>piccolo cratere dalla colorazione brunastra</strong>.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>L’aspetto più preoccupante nei bambini è che avendo i denti meno mineralizzati, la diffusione dell’infezione <strong>avviene più velocemente</strong>.</p></body></html>"
+          "html": "<p>L’aspetto più preoccupante nei bambini è che avendo i denti meno mineralizzati, la diffusione dell’infezione <strong>avviene più velocemente</strong>.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Inoltre, è stato dimostrato che anche una <strong>grave carenza di fluoro</strong> può favorire la comparsa delle carie: in questo caso si può porre rimedio somministrando una terapia preventiva.</p></body></html>"
+          "html": "<p>Inoltre, è stato dimostrato che anche una <strong>grave carenza di fluoro</strong> può favorire la comparsa delle carie: in questo caso si può porre rimedio somministrando una terapia preventiva.</p>"
         },
         {
           "type": "heading",
@@ -2953,23 +2953,23 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p><strong>La cura della carie non è sempre uguale</strong> per tutti e molto dipende dalla fase in cui si trova il processo infiammatorio; per questa ragione vi consigliamo di contattarci quanto prima non appena notate che i denti assumono colorazioni diverse dal consueto.</p></body></html>"
+          "html": "<p><strong>La cura della carie non è sempre uguale</strong> per tutti e molto dipende dalla fase in cui si trova il processo infiammatorio; per questa ragione vi consigliamo di contattarci quanto prima non appena notate che i denti assumono colorazioni diverse dal consueto.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Quando lo scavo nel dente non è così profondo si può procedere con la <strong>rimozione del tessuto infetto</strong> ed una eventuale <strong>otturazione</strong>.</p></body></html>"
+          "html": "<p>Quando lo scavo nel dente non è così profondo si può procedere con la <strong>rimozione del tessuto infetto</strong> ed una eventuale <strong>otturazione</strong>.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Nel caso in cui, invece, la situazione sia stata trascurata per troppo tempo e il dente sia irrimediabilmente danneggiato, è chiaro che si dovrà procedere direttamente con <strong>l’estrazione</strong>.</p></body></html>"
+          "html": "<p>Nel caso in cui, invece, la situazione sia stata trascurata per troppo tempo e il dente sia irrimediabilmente danneggiato, è chiaro che si dovrà procedere direttamente con <strong>l’estrazione</strong>.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Anche se l’intervento potrebbe spaventarvi, dovete sapere che viene effettuato attraverso una <strong>sedazione cosciente </strong>ed è molto più veloce rispetto a quello per gli adulti.</p></body></html>"
+          "html": "<p>Anche se l’intervento potrebbe spaventarvi, dovete sapere che viene effettuato attraverso una <strong>sedazione cosciente </strong>ed è molto più veloce rispetto a quello per gli adulti.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>In questo caso si dovrà fare attenzione a <strong>mantenere comunque libero lo spazio</strong> per favorire l’eruzione dei denti permanenti, evitando che gli altri vicini lo occupino a loro volta.</p></body></html>"
+          "html": "<p>In questo caso si dovrà fare attenzione a <strong>mantenere comunque libero lo spazio</strong> per favorire l’eruzione dei denti permanenti, evitando che gli altri vicini lo occupino a loro volta.</p>"
         },
         {
           "type": "heading",
@@ -2978,31 +2978,31 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Come per noi adulti, la miglior prevenzione per una qualsiasi patologia all’interno della bocca è il <strong>controllo periodico dal dentista</strong>.</p></body></html>"
+          "html": "<p>Come per noi adulti, la miglior prevenzione per una qualsiasi patologia all’interno della bocca è il <strong>controllo periodico dal dentista</strong>.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>I bambini possono effettuare visite <strong>fin dai primi anni di età</strong>, quando i denti da latte sono già tutti comparsi, per verificare la corretta igiene orale e la presenza di eventuali anomalie.</p></body></html>"
+          "html": "<p>I bambini possono effettuare visite <strong>fin dai primi anni di età</strong>, quando i denti da latte sono già tutti comparsi, per verificare la corretta igiene orale e la presenza di eventuali anomalie.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Purtroppo, le carie fanno male anche nei denti da latte e l’infezione si può estendere rapidamente; per questo <strong>sconsigliamo di rimandare la visita</strong> nella speranza che il dente infetto cada da solo.</p></body></html>"
+          "html": "<p>Purtroppo, le carie fanno male anche nei denti da latte e l’infezione si può estendere rapidamente; per questo <strong>sconsigliamo di rimandare la visita</strong> nella speranza che il dente infetto cada da solo.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Poiché uno dei fattori predisponenti è una dieta ricca di zuccheri, vi consigliamo di limitarli e di controllare che i vostri figli <strong>eseguano correttamente le manovre di igiene orale</strong> dopo aver mangiato.</p></body></html>"
+          "html": "<p>Poiché uno dei fattori predisponenti è una dieta ricca di zuccheri, vi consigliamo di limitarli e di controllare che i vostri figli <strong>eseguano correttamente le manovre di igiene orale</strong> dopo aver mangiato.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Ricordate che anche <strong>il</strong><strong>biberon e il ciuccio</strong> possono predisporre allo sviluppo di carie, soprattutto se vengono usati per far addormentare il bambino e contengono sostanze zuccherine.</p></body></html>"
+          "html": "<p>Ricordate che anche <strong>il</strong><strong>biberon e il ciuccio</strong> possono predisporre allo sviluppo di carie, soprattutto se vengono usati per far addormentare il bambino e contengono sostanze zuccherine.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Vuoi sapere se i tuoi figli hanno delle carie?</p></body></html>"
+          "html": "<p>Vuoi sapere se i tuoi figli hanno delle carie?</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Prendi appuntamento presso il nostro <a href=\"/\"><strong>Studio Dentistico Federzoni Granata a Modena e a Reggio Emilia</strong></a>per effettuare una visita e controllare lo stato di salute della loro bocca.</p></body></html>"
+          "html": "<p>Prendi appuntamento presso il nostro <a href=\"/\"><strong>Studio Dentistico Federzoni Granata a Modena e a Reggio Emilia</strong></a>per effettuare una visita e controllare lo stato di salute della loro bocca.</p>"
         },
         {
           "type": "heading",
@@ -3017,7 +3017,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/dente-anchilosato/\">Dente anchilosato</a></li><li><a href=\"/tumore-sulla-lingua/\">Tumore sulla lingua</a></li><li><a href=\"/carie-denti-da-latte/\">Carie denti da latte</a></li><li><a href=\"/denti-del-giudizio/\">Denti del giudizio</a></li><li><a href=\"/dentiera-fissa-cose-e-vantaggi/\">Dentiera fissa: cos’è e vantaggi</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/dente-anchilosato/\">Dente anchilosato</a></li><li><a href=\"/tumore-sulla-lingua/\">Tumore sulla lingua</a></li><li><a href=\"/carie-denti-da-latte/\">Carie denti da latte</a></li><li><a href=\"/denti-del-giudizio/\">Denti del giudizio</a></li><li><a href=\"/dentiera-fissa-cose-e-vantaggi/\">Dentiera fissa: cos’è e vantaggi</a></li></ul>"
         },
         {
           "type": "heading",
@@ -3032,7 +3032,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/2022/10/\">October 2022</a></li><li><a href=\"/2022/09/\">September 2022</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/2022/10/\">October 2022</a></li><li><a href=\"/2022/09/\">September 2022</a></li></ul>"
         },
         {
           "type": "heading",
@@ -3042,7 +3042,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/category/uncategorized/\">Uncategorized</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/category/uncategorized/\">Uncategorized</a></li></ul>"
         },
         {
           "type": "heading",
@@ -3052,12 +3052,12 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a rel=\"nofollow\" href=\"/wp-login.php\">Log in</a></li><li><a href=\"/feed/\">Entries feed</a></li><li><a href=\"/comments/feed/\">Comments feed</a></li><li><a href=\"https://wordpress.org/\" target=\"_blank\" rel=\"noopener noreferrer\">WordPress.org</a></li></ul></body></html>"
+          "html": "<ul><li><a rel=\"nofollow\" href=\"/wp-login.php\">Log in</a></li><li><a href=\"/feed/\">Entries feed</a></li><li><a href=\"/comments/feed/\">Comments feed</a></li><li><a href=\"https://wordpress.org/\" target=\"_blank\" rel=\"noopener noreferrer\">WordPress.org</a></li></ul>"
         },
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/denti-del-giudizio/\" rel=\"prev\"><i></i>Prev</a></li><li><a href=\"/tumore-sulla-lingua/\" rel=\"next\">Next<i></i></a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/denti-del-giudizio/\" rel=\"prev\"><i></i>Prev</a></li><li><a href=\"/tumore-sulla-lingua/\" rel=\"next\">Next<i></i></a></li></ul>"
         }
       ]
     },
@@ -3077,15 +3077,15 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>I <strong>denti del giudizio</strong> sono quelli che più danno problemi all’interno del cavo orale, poiché sono la causa dell’insorgenza di numerosi disagi, primo fra tutti il dolore.</p></body></html>"
+          "html": "<p>I <strong>denti del giudizio</strong> sono quelli che più danno problemi all’interno del cavo orale, poiché sono la causa dell’insorgenza di numerosi disagi, primo fra tutti il dolore.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Sono molti i pazienti che si presentano nel nostro <a href=\"/\"><strong>Studio Dentistico Federzoni Granata</strong></a> accusando un forte disagio in sede, con presenza anche di rigonfiamento della gengiva.</p></body></html>"
+          "html": "<p>Sono molti i pazienti che si presentano nel nostro <a href=\"/\"><strong>Studio Dentistico Federzoni Granata</strong></a> accusando un forte disagio in sede, con presenza anche di rigonfiamento della gengiva.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Ma ci rendiamo conto che su questo argomento ancora esistono numerosi dubbi e perplessità. Vediamo di fare il punto attraverso un breve excursus su questa tipologia di denti e perché la maggior parte delle volte noi dentisti vi consigliamo di estrarli, pur non presentando sintomi evidenti.</p></body></html>"
+          "html": "<p>Ma ci rendiamo conto che su questo argomento ancora esistono numerosi dubbi e perplessità. Vediamo di fare il punto attraverso un breve excursus su questa tipologia di denti e perché la maggior parte delle volte noi dentisti vi consigliamo di estrarli, pur non presentando sintomi evidenti.</p>"
         },
         {
           "type": "heading",
@@ -3094,23 +3094,23 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>I denti del giudizio, chiamati anche <strong>terzi molari</strong> a causa della loro posizione, sono un lascito delle nostre origini: secondo gli studiosi, infatti, sebbene oggi non abbiano una precisa utilità, in passato erano largamente sfruttati.</p></body></html>"
+          "html": "<p>I denti del giudizio, chiamati anche <strong>terzi molari</strong> a causa della loro posizione, sono un lascito delle nostre origini: secondo gli studiosi, infatti, sebbene oggi non abbiano una precisa utilità, in passato erano largamente sfruttati.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Queste perché in origine la nostra alimentazione era basata prevalentemente su <strong>alimenti crudi e difficili da masticare</strong>. Si pensi, per esempio, alla carne o a particolari radici.</p></body></html>"
+          "html": "<p>Queste perché in origine la nostra alimentazione era basata prevalentemente su <strong>alimenti crudi e difficili da masticare</strong>. Si pensi, per esempio, alla carne o a particolari radici.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>In quel determinato contesto, i terzi molari erano indispensabili per riuscire a strappare e masticare con maggior efficacia dei cibi così ostici.</p></body></html>"
+          "html": "<p>In quel determinato contesto, i terzi molari erano indispensabili per riuscire a strappare e masticare con maggior efficacia dei cibi così ostici.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Nel corso del tempo e in relazione ad una dieta più varia, <strong>le dimensioni della mascella e della mandibola sono andate a diminuire</strong>, così come lo spazio messo a disposizione per l’uscita dei denti del giudizio.</p></body></html>"
+          "html": "<p>Nel corso del tempo e in relazione ad una dieta più varia, <strong>le dimensioni della mascella e della mandibola sono andate a diminuire</strong>, così come lo spazio messo a disposizione per l’uscita dei denti del giudizio.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>È per questo motivo che la loro comparsa avviene <strong>solo in età adulta</strong>, generalmente fra i 18 e i 25 anni, quando la bocca ha raggiunto la sua grandezza finita.</p></body></html>"
+          "html": "<p>È per questo motivo che la loro comparsa avviene <strong>solo in età adulta</strong>, generalmente fra i 18 e i 25 anni, quando la bocca ha raggiunto la sua grandezza finita.</p>"
         },
         {
           "type": "heading",
@@ -3119,31 +3119,31 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Come abbiamo appena esposto, si tratta degli unici denti che escono tardivamente, ma proprio per questo <strong>causano problemi evidenti</strong> fin dagli esordi della loro comparsa.</p></body></html>"
+          "html": "<p>Come abbiamo appena esposto, si tratta degli unici denti che escono tardivamente, ma proprio per questo <strong>causano problemi evidenti</strong> fin dagli esordi della loro comparsa.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Tutto ciò è dovuto alla <strong>mancanza di spazio</strong> che influisce negativamente sulla loro posizione; difatti, di solito i dolori sono legati alla direzione che assumono rispetto agli altri denti.</p></body></html>"
+          "html": "<p>Tutto ciò è dovuto alla <strong>mancanza di spazio</strong> che influisce negativamente sulla loro posizione; difatti, di solito i dolori sono legati alla direzione che assumono rispetto agli altri denti.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Difatti, non è infrequente che siano <strong>disposti obliquamente</strong>, se non addirittura orizzontali, andando a spingere i molari immediatamente vicini.</p></body></html>"
+          "html": "<p>Difatti, non è infrequente che siano <strong>disposti obliquamente</strong>, se non addirittura orizzontali, andando a spingere i molari immediatamente vicini.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Può anche succedere che siano effettivamente dritti nella vostra bocca, ma quando vanno ad uscire dalla gengiva, non lo fanno completamente, rimanendo <strong>parzialmente coperti</strong>.</p></body></html>"
+          "html": "<p>Può anche succedere che siano effettivamente dritti nella vostra bocca, ma quando vanno ad uscire dalla gengiva, non lo fanno completamente, rimanendo <strong>parzialmente coperti</strong>.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Questo caso è molto pericoloso per <strong>l’accumulo di scarti alimentari</strong>, i quali favoriscono la proliferazione di batteri che possono formare carie e altre infiammazioni.</p></body></html>"
+          "html": "<p>Questo caso è molto pericoloso per <strong>l’accumulo di scarti alimentari</strong>, i quali favoriscono la proliferazione di batteri che possono formare carie e altre infiammazioni.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Chiaramente, non sempre i denti del giudizio sono causa di eventi avversi: ci sono persone che non si accorgono nemmeno della loro crescita, in quanto si inseriscono perfettamente all’interno della dentatura già formata.</p></body></html>"
+          "html": "<p>Chiaramente, non sempre i denti del giudizio sono causa di eventi avversi: ci sono persone che non si accorgono nemmeno della loro crescita, in quanto si inseriscono perfettamente all’interno della dentatura già formata.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Ci duole informarvi, però, che si tratta di <strong>circostanze meno probabili</strong> e possono anche riguardare solo una parte dei vostri terzi molari.</p></body></html>"
+          "html": "<p>Ci duole informarvi, però, che si tratta di <strong>circostanze meno probabili</strong> e possono anche riguardare solo una parte dei vostri terzi molari.</p>"
         },
         {
           "type": "heading",
@@ -3152,35 +3152,35 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Al giorno d’oggi è sempre più frequente la <strong>pratica dell’<a href=\"/estrazione-dente-del-giudizio/\">estrazione precoce</a></strong>, che prevede la rimozione dei denti del giudizio prima ancora che escano dalla gengiva e causino dei sintomi.</p></body></html>"
+          "html": "<p>Al giorno d’oggi è sempre più frequente la <strong>pratica dell’<a href=\"/estrazione-dente-del-giudizio/\">estrazione precoce</a></strong>, che prevede la rimozione dei denti del giudizio prima ancora che escano dalla gengiva e causino dei sintomi.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Anche se la cosa potrebbe spaventarvi, esiste tutta una <strong>serie di vantaggi</strong> legata a questa scelta per certi aspetti drastica che di solito viene proposta a persone giovanissime.</p></body></html>"
+          "html": "<p>Anche se la cosa potrebbe spaventarvi, esiste tutta una <strong>serie di vantaggi</strong> legata a questa scelta per certi aspetti drastica che di solito viene proposta a persone giovanissime.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Prima di tutto, dovete considerare che a quello stadio i terzi molari non sono pienamente sviluppati e si presentano in <strong>forma germinale</strong>.</p></body></html>"
+          "html": "<p>Prima di tutto, dovete considerare che a quello stadio i terzi molari non sono pienamente sviluppati e si presentano in <strong>forma germinale</strong>.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Questo fa sì che <strong>l’operazione sia decisamente più semplice</strong>, meno rischiosa anche per quanto riguarda eventuali denti vicini e con un recupero nel post operatorio più veloce.</p></body></html>"
+          "html": "<p>Questo fa sì che <strong>l’operazione sia decisamente più semplice</strong>, meno rischiosa anche per quanto riguarda eventuali denti vicini e con un recupero nel post operatorio più veloce.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Andare ad intervenire in una situazione già compromessa vi sottopone a circostanze anche <strong>più dolorose da affrontare</strong>.</p></body></html>"
+          "html": "<p>Andare ad intervenire in una situazione già compromessa vi sottopone a circostanze anche <strong>più dolorose da affrontare</strong>.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Pensate, per esempio, a denti del giudizio che hanno causato infiammazioni oppure delle carie: bisognerà anche ripristinare l’equilibrio dei tessuti infetti, oltre che andare ad estrarre denti già del tutto formati.</p></body></html>"
+          "html": "<p>Pensate, per esempio, a denti del giudizio che hanno causato infiammazioni oppure delle carie: bisognerà anche ripristinare l’equilibrio dei tessuti infetti, oltre che andare ad estrarre denti già del tutto formati.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>In alcuni casi si tratta persino di un <strong>intervento chirurgico più lungo e complesso</strong>, che prevede la rottura del terzo molare per riuscire a rimuoverlo completamente.</p></body></html>"
+          "html": "<p>In alcuni casi si tratta persino di un <strong>intervento chirurgico più lungo e complesso</strong>, che prevede la rottura del terzo molare per riuscire a rimuoverlo completamente.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Per saperne di più sui tuoi denti del giudizio ed effettuare degli esami approfonditi, ti invitiamo a contattare il nostro <strong>Studio Dentistico Federzoni Granata a Modena o a Reggio Emilia</strong>.</p></body></html>"
+          "html": "<p>Per saperne di più sui tuoi denti del giudizio ed effettuare degli esami approfonditi, ti invitiamo a contattare il nostro <strong>Studio Dentistico Federzoni Granata a Modena o a Reggio Emilia</strong>.</p>"
         },
         {
           "type": "heading",
@@ -3195,7 +3195,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/dente-anchilosato/\">Dente anchilosato</a></li><li><a href=\"/tumore-sulla-lingua/\">Tumore sulla lingua</a></li><li><a href=\"/carie-denti-da-latte/\">Carie denti da latte</a></li><li><a href=\"/denti-del-giudizio/\">Denti del giudizio</a></li><li><a href=\"/dentiera-fissa-cose-e-vantaggi/\">Dentiera fissa: cos’è e vantaggi</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/dente-anchilosato/\">Dente anchilosato</a></li><li><a href=\"/tumore-sulla-lingua/\">Tumore sulla lingua</a></li><li><a href=\"/carie-denti-da-latte/\">Carie denti da latte</a></li><li><a href=\"/denti-del-giudizio/\">Denti del giudizio</a></li><li><a href=\"/dentiera-fissa-cose-e-vantaggi/\">Dentiera fissa: cos’è e vantaggi</a></li></ul>"
         },
         {
           "type": "heading",
@@ -3210,7 +3210,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/2022/10/\">October 2022</a></li><li><a href=\"/2022/09/\">September 2022</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/2022/10/\">October 2022</a></li><li><a href=\"/2022/09/\">September 2022</a></li></ul>"
         },
         {
           "type": "heading",
@@ -3220,7 +3220,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/category/uncategorized/\">Uncategorized</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/category/uncategorized/\">Uncategorized</a></li></ul>"
         },
         {
           "type": "heading",
@@ -3230,12 +3230,12 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a rel=\"nofollow\" href=\"/wp-login.php\">Log in</a></li><li><a href=\"/feed/\">Entries feed</a></li><li><a href=\"/comments/feed/\">Comments feed</a></li><li><a href=\"https://wordpress.org/\" target=\"_blank\" rel=\"noopener noreferrer\">WordPress.org</a></li></ul></body></html>"
+          "html": "<ul><li><a rel=\"nofollow\" href=\"/wp-login.php\">Log in</a></li><li><a href=\"/feed/\">Entries feed</a></li><li><a href=\"/comments/feed/\">Comments feed</a></li><li><a href=\"https://wordpress.org/\" target=\"_blank\" rel=\"noopener noreferrer\">WordPress.org</a></li></ul>"
         },
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/dentiera-fissa-cose-e-vantaggi/\" rel=\"prev\"><i></i>Prev</a></li><li><a href=\"/carie-denti-da-latte/\" rel=\"next\">Next<i></i></a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/dentiera-fissa-cose-e-vantaggi/\" rel=\"prev\"><i></i>Prev</a></li><li><a href=\"/carie-denti-da-latte/\" rel=\"next\">Next<i></i></a></li></ul>"
         }
       ]
     },
@@ -3255,19 +3255,19 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Fra le soluzioni per la caduta dei denti con i migliori risultati visibili e duraturi c’è la <strong>dentiera fissa</strong>, la quale per essere applicata necessita della presenza di <strong>impianti </strong>come base di appoggio.</p></body></html>"
+          "html": "<p>Fra le soluzioni per la caduta dei denti con i migliori risultati visibili e duraturi c’è la <strong>dentiera fissa</strong>, la quale per essere applicata necessita della presenza di <strong>impianti </strong>come base di appoggio.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Non tutti hanno ben chiaro di cosa si tratta esattamente e cosa comporta per il paziente scegliere di installarla nella bocca.</p></body></html>"
+          "html": "<p>Non tutti hanno ben chiaro di cosa si tratta esattamente e cosa comporta per il paziente scegliere di installarla nella bocca.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Proprio per questo tante persone ripiegano ancora sulle dentiere mobili, che per quanto possano sembrare comode, presentano comunque dei grossi limiti, come la scomodità e la scarsa aderenza.</p></body></html>"
+          "html": "<p>Proprio per questo tante persone ripiegano ancora sulle dentiere mobili, che per quanto possano sembrare comode, presentano comunque dei grossi limiti, come la scomodità e la scarsa aderenza.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>In questo articolo vediamo di fare luce sull’argomento.</p></body></html>"
+          "html": "<p>In questo articolo vediamo di fare luce sull’argomento.</p>"
         },
         {
           "type": "heading",
@@ -3276,31 +3276,31 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Quando ci si approssima alla vecchiaia è normale che tutto il corpo inizia a risentire del trascorrere del tempo: fra i disagi più diffusi c’è la <strong>perdita dei denti</strong>, un fenomeno che può portare a forte imbarazzo, oltre che difficoltà nella masticazione e comunicazione.</p></body></html>"
+          "html": "<p>Quando ci si approssima alla vecchiaia è normale che tutto il corpo inizia a risentire del trascorrere del tempo: fra i disagi più diffusi c’è la <strong>perdita dei denti</strong>, un fenomeno che può portare a forte imbarazzo, oltre che difficoltà nella masticazione e comunicazione.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Una delle soluzioni su cui si ripiega per compensare la mancanza dei denti sono per esempio le <strong>capsule dentali</strong>, ma per molti potrebbero risultare piuttosto costose, soprattutto se iniziano ad aumentare nel corso del tempo.</p></body></html>"
+          "html": "<p>Una delle soluzioni su cui si ripiega per compensare la mancanza dei denti sono per esempio le <strong>capsule dentali</strong>, ma per molti potrebbero risultare piuttosto costose, soprattutto se iniziano ad aumentare nel corso del tempo.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>L’alternativa più diffusa è senz’altro l’uso della <strong>dentiera</strong>, in particolare quella <strong>mobile</strong>, che ha la funzione di sostituire i denti consentendovi di tornare a svolgere le normali attività di vita quotidiana.</p></body></html>"
+          "html": "<p>L’alternativa più diffusa è senz’altro l’uso della <strong>dentiera</strong>, in particolare quella <strong>mobile</strong>, che ha la funzione di sostituire i denti consentendovi di tornare a svolgere le normali attività di vita quotidiana.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Per quanto sia fabbricata con materiali di alta qualità, tuttavia, ha comunque dei limiti non indifferenti, primo fra tutti la difficoltà di <strong>farla aderire ai tessuti gengivali</strong> per non rischiare di perderla per caso.</p></body></html>"
+          "html": "<p>Per quanto sia fabbricata con materiali di alta qualità, tuttavia, ha comunque dei limiti non indifferenti, primo fra tutti la difficoltà di <strong>farla aderire ai tessuti gengivali</strong> per non rischiare di perderla per caso.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Inoltre, il fatto che sia removibile richiede una particolare attenzione nella conservazione e lavaggio, avendo cura di non farla accidentalmente cadere, il che vi porterebbe a dover pagare anche la riparazione.</p></body></html>"
+          "html": "<p>Inoltre, il fatto che sia removibile richiede una particolare attenzione nella conservazione e lavaggio, avendo cura di non farla accidentalmente cadere, il che vi porterebbe a dover pagare anche la riparazione.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Cosa fare, dunque?</p></body></html>"
+          "html": "<p>Cosa fare, dunque?</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Una delle migliori opzioni in ambito protesico è costituita dalla <strong>dentiera fissa</strong>, che offre molteplici vantaggi e ha la peculiarità di durare a lungo.</p></body></html>"
+          "html": "<p>Una delle migliori opzioni in ambito protesico è costituita dalla <strong>dentiera fissa</strong>, che offre molteplici vantaggi e ha la peculiarità di durare a lungo.</p>"
         },
         {
           "type": "heading",
@@ -3309,27 +3309,27 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>La dentiera fissa totale, conosciuta anche col nome di <strong>Toronto Bridge</strong>, non è altro che un’intera arcata dentale costruita in laboratorio, chiaramente sulla base della vostra struttura gengivale.</p></body></html>"
+          "html": "<p>La dentiera fissa totale, conosciuta anche col nome di <strong>Toronto Bridge</strong>, non è altro che un’intera arcata dentale costruita in laboratorio, chiaramente sulla base della vostra struttura gengivale.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Questa protesi ha il vantaggio di non aver bisogno di essere rimossa per la pulizia, perché si comporta come se fosse parte della vostra bocca, sostituendo definitivamente i denti persi.</p></body></html>"
+          "html": "<p>Questa protesi ha il vantaggio di non aver bisogno di essere rimossa per la pulizia, perché si comporta come se fosse parte della vostra bocca, sostituendo definitivamente i denti persi.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Per potersi agganciare alla gengiva sono necessari degli <strong><a href=\"/implantologia/\">impianti</a> che diano stabilità</strong>, i quali possono essere quattro (<strong>All on Four</strong>) oppure sei (<strong>All on Six</strong>).</p></body></html>"
+          "html": "<p>Per potersi agganciare alla gengiva sono necessari degli <strong><a href=\"/implantologia/\">impianti</a> che diano stabilità</strong>, i quali possono essere quattro (<strong>All on Four</strong>) oppure sei (<strong>All on Six</strong>).</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>In seguito, vedremo quali sono gli aspetti positivi e negativi della dentiera fissa, ma prima ci preme precisare che purtroppo non è una soluzione che si può applicare in tutti i casi. Tutto dipende da quanto <strong>tessuto osseo</strong> è presente nella gengiva.</p></body></html>"
+          "html": "<p>In seguito, vedremo quali sono gli aspetti positivi e negativi della dentiera fissa, ma prima ci preme precisare che purtroppo non è una soluzione che si può applicare in tutti i casi. Tutto dipende da quanto <strong>tessuto osseo</strong> è presente nella gengiva.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Questo perché con la perdita dei denti, l’osso va incontro ad un fenomeno particolare chiamato <strong>atrofia ossea</strong>, ovvero riduce il suo volume, rendendo impossibile l’inserimento di impianti.</p></body></html>"
+          "html": "<p>Questo perché con la perdita dei denti, l’osso va incontro ad un fenomeno particolare chiamato <strong>atrofia ossea</strong>, ovvero riduce il suo volume, rendendo impossibile l’inserimento di impianti.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>In ogni caso, se avete bisogno di maggiori informazioni e capire quale tipo di dentiera si adatta di più alla vostra conformazione orale, vi invitiamo a contattare il nostro <strong>Studio Dentistico Federzoni Granata a Modena (059345557) o a Reggio Emilia (0522436618)</strong>.</p></body></html>"
+          "html": "<p>In ogni caso, se avete bisogno di maggiori informazioni e capire quale tipo di dentiera si adatta di più alla vostra conformazione orale, vi invitiamo a contattare il nostro <strong>Studio Dentistico Federzoni Granata a Modena (059345557) o a Reggio Emilia (0522436618)</strong>.</p>"
         },
         {
           "type": "heading",
@@ -3338,31 +3338,31 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Come abbiamo appena visto, il principale vantaggio della dentiera fissa è quello di aderire perfettamente alle gengive grazie alla presenza degli impianti, il che elimina del tutto il rischio che possa cadere oppure provocare dolore.</p></body></html>"
+          "html": "<p>Come abbiamo appena visto, il principale vantaggio della dentiera fissa è quello di aderire perfettamente alle gengive grazie alla presenza degli impianti, il che elimina del tutto il rischio che possa cadere oppure provocare dolore.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Poiché viene costruita utilizzando materiali di qualità, è destinata a <strong>durare per molti anni</strong>, chiaramente tenendo conto dell’applicazione di comportamenti corretti da parte del paziente.</p></body></html>"
+          "html": "<p>Poiché viene costruita utilizzando materiali di qualità, è destinata a <strong>durare per molti anni</strong>, chiaramente tenendo conto dell’applicazione di comportamenti corretti da parte del paziente.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Il che vuol dire sottoporsi a controlli periodici dal dentista, pulirla adeguatamente anche a casa ed evitare di mordere cibi troppo duri.</p></body></html>"
+          "html": "<p>Il che vuol dire sottoporsi a controlli periodici dal dentista, pulirla adeguatamente anche a casa ed evitare di mordere cibi troppo duri.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Per quanto concerne l’intervento, risulta anche essere uno dei meno preoccupanti, nonostante la sua natura invasiva, perché una volta inseriti gli impianti, si può <strong>applicare nell’immediato una protesi provvisoria</strong>.</p></body></html>"
+          "html": "<p>Per quanto concerne l’intervento, risulta anche essere uno dei meno preoccupanti, nonostante la sua natura invasiva, perché una volta inseriti gli impianti, si può <strong>applicare nell’immediato una protesi provvisoria</strong>.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Il tutto chiaramente previa <strong>anestesia</strong>, quindi senza che sentiate il minimo dolore.</p></body></html>"
+          "html": "<p>Il tutto chiaramente previa <strong>anestesia</strong>, quindi senza che sentiate il minimo dolore.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Fra gli svantaggi più evidenti abbiamo il <strong>costo</strong>, che costringe molte persone a desistere dal sottoporsi a questo trattamento: anche se comunque risulta meno dispendioso rispetto ad altre soluzioni protesiche.</p></body></html>"
+          "html": "<p>Fra gli svantaggi più evidenti abbiamo il <strong>costo</strong>, che costringe molte persone a desistere dal sottoporsi a questo trattamento: anche se comunque risulta meno dispendioso rispetto ad altre soluzioni protesiche.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>In aggiunta, come già anticipato, la dentiera fissa può essere applicata solo in presenza di sufficiente tessuto osseo, altrimenti bisogna procedere con la <strong>rigenerazione ossea</strong>.</p></body></html>"
+          "html": "<p>In aggiunta, come già anticipato, la dentiera fissa può essere applicata solo in presenza di sufficiente tessuto osseo, altrimenti bisogna procedere con la <strong>rigenerazione ossea</strong>.</p>"
         },
         {
           "type": "heading",
@@ -3371,27 +3371,27 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Il fiore all’occhiello del nostro Studio Dentistico Federzoni Granata è proprio l’utilizzo dell’<strong><a href=\"/\">odontoiatria digitale</a></strong> per facilitare l’inserimento degli impianti e provocare meno disagio possibile al paziente.</p></body></html>"
+          "html": "<p>Il fiore all’occhiello del nostro Studio Dentistico Federzoni Granata è proprio l’utilizzo dell’<strong><a href=\"/\">odontoiatria digitale</a></strong> per facilitare l’inserimento degli impianti e provocare meno disagio possibile al paziente.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Se fino a qualche anno fa era necessario procedere attraverso impronte e paste fastidiose in bocca, ad oggi è possibile studiare tutto il trattamento attraverso <strong>software</strong> all’avanguardia.</p></body></html>"
+          "html": "<p>Se fino a qualche anno fa era necessario procedere attraverso impronte e paste fastidiose in bocca, ad oggi è possibile studiare tutto il trattamento attraverso <strong>software</strong> all’avanguardia.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Cosa significa questo per voi?</p></body></html>"
+          "html": "<p>Cosa significa questo per voi?</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Sicuramente una drastica <strong>riduzione delle tempistiche</strong> anche nelle procedure più complesse, come quella che riguarda la creazione di una protesi fissa da agganciare a degli impianti.</p></body></html>"
+          "html": "<p>Sicuramente una drastica <strong>riduzione delle tempistiche</strong> anche nelle procedure più complesse, come quella che riguarda la creazione di una protesi fissa da agganciare a degli impianti.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Questi ultimi, fra l’altro, possono essere inseriti <strong>senza tagli, incisioni o punti dolorosi</strong> da gestire nel post operatorio, grazie a <strong>Guide Chirurgiche costruite in 3D</strong> da software di ultima generazione.</p></body></html>"
+          "html": "<p>Questi ultimi, fra l’altro, possono essere inseriti <strong>senza tagli, incisioni o punti dolorosi</strong> da gestire nel post operatorio, grazie a <strong>Guide Chirurgiche costruite in 3D</strong> da software di ultima generazione.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Per saperne di più, ti invitiamo a dare un’occhiata alla <strong>pagina dedicata</strong> ai nostri strumenti tecnologici di supporto.</p></body></html>"
+          "html": "<p>Per saperne di più, ti invitiamo a dare un’occhiata alla <strong>pagina dedicata</strong> ai nostri strumenti tecnologici di supporto.</p>"
         },
         {
           "type": "heading",
@@ -3406,7 +3406,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/dente-anchilosato/\">Dente anchilosato</a></li><li><a href=\"/tumore-sulla-lingua/\">Tumore sulla lingua</a></li><li><a href=\"/carie-denti-da-latte/\">Carie denti da latte</a></li><li><a href=\"/denti-del-giudizio/\">Denti del giudizio</a></li><li><a href=\"/dentiera-fissa-cose-e-vantaggi/\">Dentiera fissa: cos’è e vantaggi</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/dente-anchilosato/\">Dente anchilosato</a></li><li><a href=\"/tumore-sulla-lingua/\">Tumore sulla lingua</a></li><li><a href=\"/carie-denti-da-latte/\">Carie denti da latte</a></li><li><a href=\"/denti-del-giudizio/\">Denti del giudizio</a></li><li><a href=\"/dentiera-fissa-cose-e-vantaggi/\">Dentiera fissa: cos’è e vantaggi</a></li></ul>"
         },
         {
           "type": "heading",
@@ -3421,7 +3421,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/2022/10/\">October 2022</a></li><li><a href=\"/2022/09/\">September 2022</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/2022/10/\">October 2022</a></li><li><a href=\"/2022/09/\">September 2022</a></li></ul>"
         },
         {
           "type": "heading",
@@ -3431,7 +3431,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/category/uncategorized/\">Uncategorized</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/category/uncategorized/\">Uncategorized</a></li></ul>"
         },
         {
           "type": "heading",
@@ -3441,12 +3441,12 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a rel=\"nofollow\" href=\"/wp-login.php\">Log in</a></li><li><a href=\"/feed/\">Entries feed</a></li><li><a href=\"/comments/feed/\">Comments feed</a></li><li><a href=\"https://wordpress.org/\" target=\"_blank\" rel=\"noopener noreferrer\">WordPress.org</a></li></ul></body></html>"
+          "html": "<ul><li><a rel=\"nofollow\" href=\"/wp-login.php\">Log in</a></li><li><a href=\"/feed/\">Entries feed</a></li><li><a href=\"/comments/feed/\">Comments feed</a></li><li><a href=\"https://wordpress.org/\" target=\"_blank\" rel=\"noopener noreferrer\">WordPress.org</a></li></ul>"
         },
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/protesi-dentarie-mobili-invisibili-vantaggi-e-svantaggi/\" rel=\"prev\"><i></i>Prev</a></li><li><a href=\"/denti-del-giudizio/\" rel=\"next\">Next<i></i></a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/protesi-dentarie-mobili-invisibili-vantaggi-e-svantaggi/\" rel=\"prev\"><i></i>Prev</a></li><li><a href=\"/denti-del-giudizio/\" rel=\"next\">Next<i></i></a></li></ul>"
         }
       ]
     },
@@ -3466,19 +3466,19 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Sono sempre di più le persone che decidono di ricorrere alle <strong><a href=\"/protesi/\">protesi</a> dentarie mobili invisibili</strong>, le quali risolvono il problema della mancanza dei denti e risultano più discrete all’interno della bocca.</p></body></html>"
+          "html": "<p>Sono sempre di più le persone che decidono di ricorrere alle <strong><a href=\"/protesi/\">protesi</a> dentarie mobili invisibili</strong>, le quali risolvono il problema della mancanza dei denti e risultano più discrete all’interno della bocca.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Mai come oggi risulta importante mostrare un sorriso che si avvicina il più possibile alla perfezione, mantenendo comunque una valenza naturale.</p></body></html>"
+          "html": "<p>Mai come oggi risulta importante mostrare un sorriso che si avvicina il più possibile alla perfezione, mantenendo comunque una valenza naturale.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Se prima era solo una prerogativa di chi lavorava a contatto con il pubblico, con l’uso sempre più diffuso dei social networks diventa un’esigenza di tutti poter mostrare una dentatura brillante e giovanile.</p></body></html>"
+          "html": "<p>Se prima era solo una prerogativa di chi lavorava a contatto con il pubblico, con l’uso sempre più diffuso dei social networks diventa un’esigenza di tutti poter mostrare una dentatura brillante e giovanile.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Fra i diversi metodi usati per sopperire alla mancanza di elementi dentali ci sono le protesi. Nel prossimo paragrafo vediamo meglio in cosa consistono.</p></body></html>"
+          "html": "<p>Fra i diversi metodi usati per sopperire alla mancanza di elementi dentali ci sono le protesi. Nel prossimo paragrafo vediamo meglio in cosa consistono.</p>"
         },
         {
           "type": "heading",
@@ -3487,31 +3487,31 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>La perdita dei denti è una condizione fisiologica che interessa tutti gli esseri umani, per quanto vi siate adoperati al fine di mantenere una bocca sempre pulita e correttamente igienizzata.</p></body></html>"
+          "html": "<p>La perdita dei denti è una condizione fisiologica che interessa tutti gli esseri umani, per quanto vi siate adoperati al fine di mantenere una bocca sempre pulita e correttamente igienizzata.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>In generale, si tratta di una condizione che si manifesta prevalentemente in vecchiaia e avviene in maniera graduale, a meno che non sussistano delle patologie o traumi particolarmente gravi.</p></body></html>"
+          "html": "<p>In generale, si tratta di una condizione che si manifesta prevalentemente in vecchiaia e avviene in maniera graduale, a meno che non sussistano delle patologie o traumi particolarmente gravi.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Le protesi dentarie sono la risposta a questo problema che viene chiamato clinicamente <strong>edentulia</strong> e in generale si possono classificare in mobili e fisse.</p></body></html>"
+          "html": "<p>Le protesi dentarie sono la risposta a questo problema che viene chiamato clinicamente <strong>edentulia</strong> e in generale si possono classificare in mobili e fisse.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Sostanzialmente si tratta di <strong>strutture artificiali</strong> realizzate in resina, metallo e ceramica che riprendono in tutto e per tutto l’aspetto dei vostri denti: lo scopo, infatti, è proprio quello di farle passare inosservate.</p></body></html>"
+          "html": "<p>Sostanzialmente si tratta di <strong>strutture artificiali</strong> realizzate in resina, metallo e ceramica che riprendono in tutto e per tutto l’aspetto dei vostri denti: lo scopo, infatti, è proprio quello di farle passare inosservate.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>È chiaro che la scelta di un tipo di protesi piuttosto che un altro dipende molto dal parere del vostro dentista, dopo un’attenta analisi dello stato di salute del cavo orale.</p></body></html>"
+          "html": "<p>È chiaro che la scelta di un tipo di protesi piuttosto che un altro dipende molto dal parere del vostro dentista, dopo un’attenta analisi dello stato di salute del cavo orale.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Per quanto riguarda il nostro <strong>studio dentistico Federzoni Granata a Modena e Reggio Emilia</strong>, è nostra premura offrire al paziente diverse possibilità di scelta che più si adattano alle vostre esigenze.</p></body></html>"
+          "html": "<p>Per quanto riguarda il nostro <strong>studio dentistico Federzoni Granata a Modena e Reggio Emilia</strong>, è nostra premura offrire al paziente diverse possibilità di scelta che più si adattano alle vostre esigenze.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Questo perché siamo consapevoli del fatto che per quanto le protesi fisse rappresentano una soluzione definitiva più apprezzata in termini di risultati, sono comunque più costose e richiedono interventi chirurgici invasivi.</p></body></html>"
+          "html": "<p>Questo perché siamo consapevoli del fatto che per quanto le protesi fisse rappresentano una soluzione definitiva più apprezzata in termini di risultati, sono comunque più costose e richiedono interventi chirurgici invasivi.</p>"
         },
         {
           "type": "heading",
@@ -3520,27 +3520,27 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Una valida alternativa alle protesi fisse sono quelle mobili, perché garantiscono comunque risultati soddisfacenti e hanno <strong>costi decisamente più economici</strong>.</p></body></html>"
+          "html": "<p>Una valida alternativa alle protesi fisse sono quelle mobili, perché garantiscono comunque risultati soddisfacenti e hanno <strong>costi decisamente più economici</strong>.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Dovete sapere, però, che non sono tutte uguali, perché ne esistono di parziali e di totali, in relazione a quanti denti avete perso e bisogna sostituire.</p></body></html>"
+          "html": "<p>Dovete sapere, però, che non sono tutte uguali, perché ne esistono di parziali e di totali, in relazione a quanti denti avete perso e bisogna sostituire.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Per aderire perfettamente alla gengiva, quelle parziali si servono molto della presenza degli altri denti sani, agganciandosi direttamente; quelle totali, invece, spesso ricorrono a paste adesive per poter aderire ai tessuti molli.</p></body></html>"
+          "html": "<p>Per aderire perfettamente alla gengiva, quelle parziali si servono molto della presenza degli altri denti sani, agganciandosi direttamente; quelle totali, invece, spesso ricorrono a paste adesive per poter aderire ai tessuti molli.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Per quanto riguarda le protesi parziali, potete trovarle sia con <strong>ganci in metallo</strong>, sia con strutture completamente in resina o nylon, che pur aderendo ai denti già presenti in bocca, hanno un aspetto identico alle gengive.</p></body></html>"
+          "html": "<p>Per quanto riguarda le protesi parziali, potete trovarle sia con <strong>ganci in metallo</strong>, sia con strutture completamente in resina o nylon, che pur aderendo ai denti già presenti in bocca, hanno un aspetto identico alle gengive.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Ciò che accomuna tutte le strutture mobili, indipendentemente dal loro materiale, è il fatto che richiedono una maggior attenzione nella cura.</p></body></html>"
+          "html": "<p>Ciò che accomuna tutte le strutture mobili, indipendentemente dal loro materiale, è il fatto che richiedono una maggior attenzione nella cura.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Il che significa che quotidianamente vanno rimosse dalla bocca per essere lavate con spazzolino in ogni punto, per evitare che accumuli di cibo possano favorire l’insorgenza di infiammazioni.</p></body></html>"
+          "html": "<p>Il che significa che quotidianamente vanno rimosse dalla bocca per essere lavate con spazzolino in ogni punto, per evitare che accumuli di cibo possano favorire l’insorgenza di infiammazioni.</p>"
         },
         {
           "type": "heading",
@@ -3549,31 +3549,31 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>È chiaro che le protesi dentarie mobili invisibili risultano più piacevoli da guardare rispetto a quelle con ganci in metallo, proprio perché ogni volta che sorridete non si nota la differenza fra denti reali e artificiali.</p></body></html>"
+          "html": "<p>È chiaro che le protesi dentarie mobili invisibili risultano più piacevoli da guardare rispetto a quelle con ganci in metallo, proprio perché ogni volta che sorridete non si nota la differenza fra denti reali e artificiali.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Inoltre, il fatto che non presentino una sorta di “scheletro” per aggrapparsi non le rende meno stabili all’interno della vostra bocca.</p></body></html>"
+          "html": "<p>Inoltre, il fatto che non presentino una sorta di “scheletro” per aggrapparsi non le rende meno stabili all’interno della vostra bocca.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Peraltro, i materiali con cui vengono prodotte sono <strong>altamente biocompatibili</strong>, oltre che termoplastici e molto resistenti, ideali anche per chi soffre di allergie ai metalli.</p></body></html>"
+          "html": "<p>Peraltro, i materiali con cui vengono prodotte sono <strong>altamente biocompatibili</strong>, oltre che termoplastici e molto resistenti, ideali anche per chi soffre di allergie ai metalli.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Tuttavia, bisogna mettere in conto anche i limiti di questo genere di protesi mobili invisibili, ovvero che se dovessero rompersi, <strong>non si potrebbero riparare</strong>, costringendo a sostituire l’intera struttura il prima possibile.</p></body></html>"
+          "html": "<p>Tuttavia, bisogna mettere in conto anche i limiti di questo genere di protesi mobili invisibili, ovvero che se dovessero rompersi, <strong>non si potrebbero riparare</strong>, costringendo a sostituire l’intera struttura il prima possibile.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>In aggiunta, il nylon ha la tendenza a colorarsi con il passare del tempo, per quanto si cerchi di tenere pulito il materiale, rendendo comunque necessaria la sostituzione.</p></body></html>"
+          "html": "<p>In aggiunta, il nylon ha la tendenza a colorarsi con il passare del tempo, per quanto si cerchi di tenere pulito il materiale, rendendo comunque necessaria la sostituzione.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Per concludere, le protesi dentarie mobili invisibili sono una valida alternativa economica a quelle fisse che richiedono interventi chirurgici invasivi per essere inseriti nel tessuto gengivale.</p></body></html>"
+          "html": "<p>Per concludere, le protesi dentarie mobili invisibili sono una valida alternativa economica a quelle fisse che richiedono interventi chirurgici invasivi per essere inseriti nel tessuto gengivale.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Il fatto che siano privi di ganci metallici le rende anche particolarmente flessibili e del tutto invisibili ad ogni vostro sorriso.</p></body></html>"
+          "html": "<p>Il fatto che siano privi di ganci metallici le rende anche particolarmente flessibili e del tutto invisibili ad ogni vostro sorriso.</p>"
         },
         {
           "type": "heading",
@@ -3588,7 +3588,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/dente-anchilosato/\">Dente anchilosato</a></li><li><a href=\"/tumore-sulla-lingua/\">Tumore sulla lingua</a></li><li><a href=\"/carie-denti-da-latte/\">Carie denti da latte</a></li><li><a href=\"/denti-del-giudizio/\">Denti del giudizio</a></li><li><a href=\"/dentiera-fissa-cose-e-vantaggi/\">Dentiera fissa: cos’è e vantaggi</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/dente-anchilosato/\">Dente anchilosato</a></li><li><a href=\"/tumore-sulla-lingua/\">Tumore sulla lingua</a></li><li><a href=\"/carie-denti-da-latte/\">Carie denti da latte</a></li><li><a href=\"/denti-del-giudizio/\">Denti del giudizio</a></li><li><a href=\"/dentiera-fissa-cose-e-vantaggi/\">Dentiera fissa: cos’è e vantaggi</a></li></ul>"
         },
         {
           "type": "heading",
@@ -3603,7 +3603,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/2022/10/\">October 2022</a></li><li><a href=\"/2022/09/\">September 2022</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/2022/10/\">October 2022</a></li><li><a href=\"/2022/09/\">September 2022</a></li></ul>"
         },
         {
           "type": "heading",
@@ -3613,7 +3613,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/category/uncategorized/\">Uncategorized</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/category/uncategorized/\">Uncategorized</a></li></ul>"
         },
         {
           "type": "heading",
@@ -3623,12 +3623,12 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a rel=\"nofollow\" href=\"/wp-login.php\">Log in</a></li><li><a href=\"/feed/\">Entries feed</a></li><li><a href=\"/comments/feed/\">Comments feed</a></li><li><a href=\"https://wordpress.org/\" target=\"_blank\" rel=\"noopener noreferrer\">WordPress.org</a></li></ul></body></html>"
+          "html": "<ul><li><a rel=\"nofollow\" href=\"/wp-login.php\">Log in</a></li><li><a href=\"/feed/\">Entries feed</a></li><li><a href=\"/comments/feed/\">Comments feed</a></li><li><a href=\"https://wordpress.org/\" target=\"_blank\" rel=\"noopener noreferrer\">WordPress.org</a></li></ul>"
         },
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/estrazione-dente-del-giudizio/\" rel=\"prev\"><i></i>Prev</a></li><li><a href=\"/dentiera-fissa-cose-e-vantaggi/\" rel=\"next\">Next<i></i></a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/estrazione-dente-del-giudizio/\" rel=\"prev\"><i></i>Prev</a></li><li><a href=\"/dentiera-fissa-cose-e-vantaggi/\" rel=\"next\">Next<i></i></a></li></ul>"
         }
       ]
     },
@@ -3648,15 +3648,15 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>L’<strong>estrazione dente del giudizio</strong> è un argomento largamente ricercato nel web, principalmente perché suscita nei pazienti notevoli preoccupazioni legate alla possibilità di sentire dolore.</p></body></html>"
+          "html": "<p>L’<strong>estrazione dente del giudizio</strong> è un argomento largamente ricercato nel web, principalmente perché suscita nei pazienti notevoli preoccupazioni legate alla possibilità di sentire dolore.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Si tratta di una procedura che ormai rientra nelle pratiche routinarie per noi dentisti, anche perché considerata l’insorgenza tardiva dei terzi molari, si va a compromettere l’equilibrio che instaurato negli anni all’interno della vostra bocca.</p></body></html>"
+          "html": "<p>Si tratta di una procedura che ormai rientra nelle pratiche routinarie per noi dentisti, anche perché considerata l’insorgenza tardiva dei terzi molari, si va a compromettere l’equilibrio che instaurato negli anni all’interno della vostra bocca.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Questa azione può dare luogo ad una serie di disagi, fra cui il classico dolore ai denti che molti di voi potrebbero già aver sperimentato.</p></body></html>"
+          "html": "<p>Questa azione può dare luogo ad una serie di disagi, fra cui il classico dolore ai denti che molti di voi potrebbero già aver sperimentato.</p>"
         },
         {
           "type": "heading",
@@ -3665,27 +3665,27 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Prima di capire in che modo bisogna operare per estrarre i denti del giudizio, facciamo un breve <em>excursus</em> su quello che riguarda la loro natura.</p></body></html>"
+          "html": "<p>Prima di capire in che modo bisogna operare per estrarre i denti del giudizio, facciamo un breve <em>excursus</em> su quello che riguarda la loro natura.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Per cominciare, il loro nome deriva dal fatto che a differenza degli altri <strong>compaiono durante l’età adulta</strong>, generalmente fra i 18 e i 25 anni; sono quattro, due per ogni lato della bocca.</p></body></html>"
+          "html": "<p>Per cominciare, il loro nome deriva dal fatto che a differenza degli altri <strong>compaiono durante l’età adulta</strong>, generalmente fra i 18 e i 25 anni; sono quattro, due per ogni lato della bocca.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Poiché vanno ad inserirsi all’interno di una dentatura già formata, è molto frequente che causino dei disagi che si manifestano principalmente con il <strong>dolore</strong>.</p></body></html>"
+          "html": "<p>Poiché vanno ad inserirsi all’interno di una dentatura già formata, è molto frequente che causino dei disagi che si manifestano principalmente con il <strong>dolore</strong>.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Ma perché questo succede?</p></body></html>"
+          "html": "<p>Ma perché questo succede?</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>In sostanza, perché questi denti <strong>non hanno abbastanza spazio per uscire</strong>, oppure sono orientati nella direzione sbagliata, andando a spingere sui molari immediatamente vicini.</p></body></html>"
+          "html": "<p>In sostanza, perché questi denti <strong>non hanno abbastanza spazio per uscire</strong>, oppure sono orientati nella direzione sbagliata, andando a spingere sui molari immediatamente vicini.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>In alcuni casi può succedere che effettivamente escano dalla gengiva, ma poiché quest’ultima li ricopre parzialmente, diventano fonte di accumulo di batteri che proliferano causando infezioni.</p></body></html>"
+          "html": "<p>In alcuni casi può succedere che effettivamente escano dalla gengiva, ma poiché quest’ultima li ricopre parzialmente, diventano fonte di accumulo di batteri che proliferano causando infezioni.</p>"
         },
         {
           "type": "heading",
@@ -3694,27 +3694,27 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Nel nostro lavoro la tendenza è sempre quella di <strong>conservare quanto più possibile</strong> i tessuti del paziente, ammesso che non siano infetti o ci siano altre patologie particolari.</p></body></html>"
+          "html": "<p>Nel nostro lavoro la tendenza è sempre quella di <strong>conservare quanto più possibile</strong> i tessuti del paziente, ammesso che non siano infetti o ci siano altre patologie particolari.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Nel caso dei denti del giudizio non si può dire in assoluto che devono essere tolti: in diversi casi capita che escano senza dare nessun sintomo ai pazienti.</p></body></html>"
+          "html": "<p>Nel caso dei denti del giudizio non si può dire in assoluto che devono essere tolti: in diversi casi capita che escano senza dare nessun sintomo ai pazienti.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Vero è che con le più moderne tecnologie si può prevedere eventualmente la difficoltà nella loro insorgenza: con una lastra, per esempio, si può vedere in largo anticipo il loro posizionamento.</p></body></html>"
+          "html": "<p>Vero è che con le più moderne tecnologie si può prevedere eventualmente la difficoltà nella loro insorgenza: con una lastra, per esempio, si può vedere in largo anticipo il loro posizionamento.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Nel nostro <a href=\"/\"><strong>Studio dentistico Federzoni Granata a Modena e Reggio Emilia</strong></a> si può effettuare in qualsiasi momento un’analisi dettagliata della vostra bocca per comprendere se sia il caso di rimuovere preventivamente i denti del giudizio.</p></body></html>"
+          "html": "<p>Nel nostro <a href=\"/\"><strong>Studio dentistico Federzoni Granata a Modena e Reggio Emilia</strong></a> si può effettuare in qualsiasi momento un’analisi dettagliata della vostra bocca per comprendere se sia il caso di rimuovere preventivamente i denti del giudizio.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Quando il dolore compare molto spesso si tratta di una situazione che è stata portata avanti nel tempo ed è stata gestita anche in maniera scorretta, portando allo sviluppo di pericolose infezioni.</p></body></html>"
+          "html": "<p>Quando il dolore compare molto spesso si tratta di una situazione che è stata portata avanti nel tempo ed è stata gestita anche in maniera scorretta, portando allo sviluppo di pericolose infezioni.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Trascurare questi segnali di allarme non è mai una buona idea perché i batteri continueranno a proliferare indisturbati, andando ad <strong>aggredire le strutture circostanti</strong> e peggiorando ulteriormente lo stato infiammatorio.</p></body></html>"
+          "html": "<p>Trascurare questi segnali di allarme non è mai una buona idea perché i batteri continueranno a proliferare indisturbati, andando ad <strong>aggredire le strutture circostanti</strong> e peggiorando ulteriormente lo stato infiammatorio.</p>"
         },
         {
           "type": "heading",
@@ -3723,39 +3723,39 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>La procedura per estrarre il dente del giudizio è un argomento che suscita spesso ansia e timore fra i pazienti, portando a rimandare l’inevitabile per più tempo del previsto.</p></body></html>"
+          "html": "<p>La procedura per estrarre il dente del giudizio è un argomento che suscita spesso ansia e timore fra i pazienti, portando a rimandare l’inevitabile per più tempo del previsto.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Per prima cosa dovete sapere che trattandosi di un intervento chirurgico invasivo, viene eseguito previa <strong>anestesia locale</strong>, ricorrendo in alcuni casi persino alla sedazione cosciente o a quella generale.</p></body></html>"
+          "html": "<p>Per prima cosa dovete sapere che trattandosi di un intervento chirurgico invasivo, viene eseguito previa <strong>anestesia locale</strong>, ricorrendo in alcuni casi persino alla sedazione cosciente o a quella generale.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Il che significa che non avvertirete il minimo dolore durante tutto il trattamento; al più potreste avvertire una <strong>sensazione di fastidio o pressione</strong> nel momento in cui il dente viene effettivamente estratto dalla gengiva.</p></body></html>"
+          "html": "<p>Il che significa che non avvertirete il minimo dolore durante tutto il trattamento; al più potreste avvertire una <strong>sensazione di fastidio o pressione</strong> nel momento in cui il dente viene effettivamente estratto dalla gengiva.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Prima di procedere con l’intervento, però, è nostra premura verificare che ci siano le condizioni per ridurre al minimo il rischio di infezione: in questo senso capita di frequente di effettuare una seduta di igiene professionale prima e di prescrivere un antibiotico come profilassi.</p></body></html>"
+          "html": "<p>Prima di procedere con l’intervento, però, è nostra premura verificare che ci siano le condizioni per ridurre al minimo il rischio di infezione: in questo senso capita di frequente di effettuare una seduta di igiene professionale prima e di prescrivere un antibiotico come profilassi.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>L’estrazione vera e propria, invece, non segue lo stesso iter per tutti i pazienti perché molto dipende da come sono posizionati i vostri denti del giudizio.</p></body></html>"
+          "html": "<p>L’estrazione vera e propria, invece, non segue lo stesso iter per tutti i pazienti perché molto dipende da come sono posizionati i vostri denti del giudizio.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Per esempio, se sono completamente esposti, si possono rimuovere utilizzando<strong> appositi strumenti</strong>; nel caso, in cui siano coperti dalla gengiva, molto probabilmente la si dovrà incidere.</p></body></html>"
+          "html": "<p>Per esempio, se sono completamente esposti, si possono rimuovere utilizzando<strong> appositi strumenti</strong>; nel caso, in cui siano coperti dalla gengiva, molto probabilmente la si dovrà incidere.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Per quanto riguarda i molari inferiori può capitare di dover procedere con la rottura degli stessi per riuscire a rimuoversi, a causa della loro posizione piuttosto scomoda da operare.</p></body></html>"
+          "html": "<p>Per quanto riguarda i molari inferiori può capitare di dover procedere con la rottura degli stessi per riuscire a rimuoversi, a causa della loro posizione piuttosto scomoda da operare.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>In conclusione, l’estrazione dente del giudizio può essere considerato un trattamento preventivo per evitare che uscendo dalla gengiva vada a compromettere l’equilibrio dell’intero cavo orale.</p></body></html>"
+          "html": "<p>In conclusione, l’estrazione dente del giudizio può essere considerato un trattamento preventivo per evitare che uscendo dalla gengiva vada a compromettere l’equilibrio dell’intero cavo orale.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>La procedura di intervento sui terzi molari può cambiare in base alla loro posizione nella vostra bocca, ma in ogni caso è previsto l’uso di anestetici per renderla indolore.</p></body></html>"
+          "html": "<p>La procedura di intervento sui terzi molari può cambiare in base alla loro posizione nella vostra bocca, ma in ogni caso è previsto l’uso di anestetici per renderla indolore.</p>"
         },
         {
           "type": "heading",
@@ -3770,7 +3770,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/dente-anchilosato/\">Dente anchilosato</a></li><li><a href=\"/tumore-sulla-lingua/\">Tumore sulla lingua</a></li><li><a href=\"/carie-denti-da-latte/\">Carie denti da latte</a></li><li><a href=\"/denti-del-giudizio/\">Denti del giudizio</a></li><li><a href=\"/dentiera-fissa-cose-e-vantaggi/\">Dentiera fissa: cos’è e vantaggi</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/dente-anchilosato/\">Dente anchilosato</a></li><li><a href=\"/tumore-sulla-lingua/\">Tumore sulla lingua</a></li><li><a href=\"/carie-denti-da-latte/\">Carie denti da latte</a></li><li><a href=\"/denti-del-giudizio/\">Denti del giudizio</a></li><li><a href=\"/dentiera-fissa-cose-e-vantaggi/\">Dentiera fissa: cos’è e vantaggi</a></li></ul>"
         },
         {
           "type": "heading",
@@ -3785,7 +3785,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/2022/10/\">October 2022</a></li><li><a href=\"/2022/09/\">September 2022</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/2022/10/\">October 2022</a></li><li><a href=\"/2022/09/\">September 2022</a></li></ul>"
         },
         {
           "type": "heading",
@@ -3795,7 +3795,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/category/uncategorized/\">Uncategorized</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/category/uncategorized/\">Uncategorized</a></li></ul>"
         },
         {
           "type": "heading",
@@ -3805,12 +3805,12 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a rel=\"nofollow\" href=\"/wp-login.php\">Log in</a></li><li><a href=\"/feed/\">Entries feed</a></li><li><a href=\"/comments/feed/\">Comments feed</a></li><li><a href=\"https://wordpress.org/\" target=\"_blank\" rel=\"noopener noreferrer\">WordPress.org</a></li></ul></body></html>"
+          "html": "<ul><li><a rel=\"nofollow\" href=\"/wp-login.php\">Log in</a></li><li><a href=\"/feed/\">Entries feed</a></li><li><a href=\"/comments/feed/\">Comments feed</a></li><li><a href=\"https://wordpress.org/\" target=\"_blank\" rel=\"noopener noreferrer\">WordPress.org</a></li></ul>"
         },
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/studio-dentistico-cosa-osservare-per-scegliere-quello-giusto/\" rel=\"prev\"><i></i>Prev</a></li><li><a href=\"/protesi-dentarie-mobili-invisibili-vantaggi-e-svantaggi/\" rel=\"next\">Next<i></i></a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/studio-dentistico-cosa-osservare-per-scegliere-quello-giusto/\" rel=\"prev\"><i></i>Prev</a></li><li><a href=\"/protesi-dentarie-mobili-invisibili-vantaggi-e-svantaggi/\" rel=\"next\">Next<i></i></a></li></ul>"
         }
       ]
     },
@@ -3830,15 +3830,15 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>La <strong>scelta dello studio dentistico</strong> per sottoporsi a dei trattamenti odontoiatrici è più delicata di quanto si pensi ed è importante che sia basata sull’osservazione di diversi fattori.</p></body></html>"
+          "html": "<p>La <strong>scelta dello studio dentistico</strong> per sottoporsi a dei trattamenti odontoiatrici è più delicata di quanto si pensi ed è importante che sia basata sull’osservazione di diversi fattori.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Il discorso funziona in analogia alla cura di una patologia in qualsiasi parte del corpo: tutti noi dovendoci sottoporre ad esami diagnostici o cure particolari, andiamo alla ricerca del professionista che reputiamo migliore per il nostro caso.</p></body></html>"
+          "html": "<p>Il discorso funziona in analogia alla cura di una patologia in qualsiasi parte del corpo: tutti noi dovendoci sottoporre ad esami diagnostici o cure particolari, andiamo alla ricerca del professionista che reputiamo migliore per il nostro caso.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Con l’odontoiatria il discorso è il medesimo, perché gli studi dentistici non sono tutti uguali e in questo articolo vediamo perché.</p></body></html>"
+          "html": "<p>Con l’odontoiatria il discorso è il medesimo, perché gli studi dentistici non sono tutti uguali e in questo articolo vediamo perché.</p>"
         },
         {
           "type": "heading",
@@ -3847,15 +3847,15 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Che sia per una semplice otturazione, oppure per una situazione complessa che andrà sistemata attraverso degli impianti, non bisogna mai lasciare al caso la scelta del professionista.</p></body></html>"
+          "html": "<p>Che sia per una semplice otturazione, oppure per una situazione complessa che andrà sistemata attraverso degli impianti, non bisogna mai lasciare al caso la scelta del professionista.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Questo perché se non doveste trovarvi a vostro agio, oppure nelle mani di una persona incapace di operare, non solo vi ritrovereste con tempi di guarigione più lunghi, ma anche a pagare prestazioni senza esiti positivi.</p></body></html>"
+          "html": "<p>Questo perché se non doveste trovarvi a vostro agio, oppure nelle mani di una persona incapace di operare, non solo vi ritrovereste con tempi di guarigione più lunghi, ma anche a pagare prestazioni senza esiti positivi.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Dunque, cosa analizzare durante la vostra ricerca?</p></body></html>"
+          "html": "<p>Dunque, cosa analizzare durante la vostra ricerca?</p>"
         },
         {
           "type": "heading",
@@ -3864,19 +3864,19 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Il primo aspetto da tenere presente è che <strong>nessuno può operare come dentista se non è regolarmente iscritto all’Albo professionale</strong>.</p></body></html>"
+          "html": "<p>Il primo aspetto da tenere presente è che <strong>nessuno può operare come dentista se non è regolarmente iscritto all’Albo professionale</strong>.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Avendo fra le mani anche solo il cognome, potete effettuare in autonomia la ricerca, inserendolo nel portale online della <strong><a href=\"https://portale.fnomceo.it/cerca-prof/index.php\" target=\"_blank\" rel=\"noopener noreferrer\">Federazione Nazionale dei Medici e degli Odontoiatri</a></strong>: se non dovesse essere presente, significa che questa persona non è abilitata a svolgere questo lavoro.</p></body></html>"
+          "html": "<p>Avendo fra le mani anche solo il cognome, potete effettuare in autonomia la ricerca, inserendolo nel portale online della <strong><a href=\"https://portale.fnomceo.it/cerca-prof/index.php\" target=\"_blank\" rel=\"noopener noreferrer\">Federazione Nazionale dei Medici e degli Odontoiatri</a></strong>: se non dovesse essere presente, significa che questa persona non è abilitata a svolgere questo lavoro.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Molto spesso sono gli stessi studi dentistici che mettono a disposizione sul proprio sito ufficiale una sorta di curriculum per ciascun membro del proprio team, visionabile da chiunque fosse interessato.</p></body></html>"
+          "html": "<p>Molto spesso sono gli stessi studi dentistici che mettono a disposizione sul proprio sito ufficiale una sorta di curriculum per ciascun membro del proprio team, visionabile da chiunque fosse interessato.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Dunque, eventualmente puoi ricavare queste informazioni già solo navigando sulla pagina dello stesso ambulatorio.</p></body></html>"
+          "html": "<p>Dunque, eventualmente puoi ricavare queste informazioni già solo navigando sulla pagina dello stesso ambulatorio.</p>"
         },
         {
           "type": "heading",
@@ -3885,19 +3885,19 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Un altro aspetto da valutare è la sua effettiva competenza, un dato che purtroppo si scopre solo quando opera sulla propria persona.</p></body></html>"
+          "html": "<p>Un altro aspetto da valutare è la sua effettiva competenza, un dato che purtroppo si scopre solo quando opera sulla propria persona.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>In questo caso tornano utili le <strong>recensioni presenti online</strong> dello studio, dove altre persone come voi possono raccontare la loro esperienza consigliando o meno il professionista.</p></body></html>"
+          "html": "<p>In questo caso tornano utili le <strong>recensioni presenti online</strong> dello studio, dove altre persone come voi possono raccontare la loro esperienza consigliando o meno il professionista.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Eventualmente, potete anche consultare amici, parenti o conoscenti che si sono già recati nello studio per chiedere informazioni sui metodi di lavoro e se i trattamenti hanno avuto riscontro positivo.</p></body></html>"
+          "html": "<p>Eventualmente, potete anche consultare amici, parenti o conoscenti che si sono già recati nello studio per chiedere informazioni sui metodi di lavoro e se i trattamenti hanno avuto riscontro positivo.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Se avete intenzione di cercare le opinioni online, fate sempre attenzione a dare credito alle recensioni autentiche, rilasciate da persone reali e non create da bot oppure profili falsi.</p></body></html>"
+          "html": "<p>Se avete intenzione di cercare le opinioni online, fate sempre attenzione a dare credito alle recensioni autentiche, rilasciate da persone reali e non create da bot oppure profili falsi.</p>"
         },
         {
           "type": "heading",
@@ -3906,19 +3906,19 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Per questo punto bisogna chiarire che l’odontoiatria è una branca della medicina vastissima, che comprende un <strong>gran numero di specializzazioni</strong>.</p></body></html>"
+          "html": "<p>Per questo punto bisogna chiarire che l’odontoiatria è una branca della medicina vastissima, che comprende un <strong>gran numero di specializzazioni</strong>.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Il che significa che in base al trattamento a cui dovete sottoporvi, la scelta dovrà vertere sul professionista che si occupa principalmente di quel tipo di patologie, per potervi garantire dei risultati ottimali.</p></body></html>"
+          "html": "<p>Il che significa che in base al trattamento a cui dovete sottoporvi, la scelta dovrà vertere sul professionista che si occupa principalmente di quel tipo di patologie, per potervi garantire dei risultati ottimali.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Per esempio, nel nostro <strong>Studio Dentistico Federzoni Granata a Modena e Reggio Emilia</strong> ci occupiamo da più di trent’anni di numerose aree di competenza, come endodonzia (devitalizzazioni), ortodonzia e allineatori invisibili, parodontologia (cure gengivali) e pedodonzia (odontoiatria infantile), solo per citarne alcuni.</p></body></html>"
+          "html": "<p>Per esempio, nel nostro <strong>Studio Dentistico Federzoni Granata a Modena e Reggio Emilia</strong> ci occupiamo da più di trent’anni di numerose aree di competenza, come endodonzia (devitalizzazioni), ortodonzia e allineatori invisibili, parodontologia (cure gengivali) e pedodonzia (odontoiatria infantile), solo per citarne alcuni.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Pertanto, un altro motivo per navigare nel sito ufficiale dello studio è proprio quello di verificare i relativi campi di competenza e individuare quelli che fanno al caso vostro.</p></body></html>"
+          "html": "<p>Pertanto, un altro motivo per navigare nel sito ufficiale dello studio è proprio quello di verificare i relativi campi di competenza e individuare quelli che fanno al caso vostro.</p>"
         },
         {
           "type": "heading",
@@ -3927,15 +3927,15 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Un aspetto non indifferente è certamente <strong>il luogo in cui si trova il dentista</strong> che volete scegliere: è chiaro che più vicino è, meno strada sarete costretti a percorrere per raggiungerlo.</p></body></html>"
+          "html": "<p>Un aspetto non indifferente è certamente <strong>il luogo in cui si trova il dentista</strong> che volete scegliere: è chiaro che più vicino è, meno strada sarete costretti a percorrere per raggiungerlo.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Al giorno d’oggi, però, all’interno della stessa provincia si possono trovare più professionisti che operano nello stesso settore e per questo vengono osservati altri aspetti per poter fare una scrematura.</p></body></html>"
+          "html": "<p>Al giorno d’oggi, però, all’interno della stessa provincia si possono trovare più professionisti che operano nello stesso settore e per questo vengono osservati altri aspetti per poter fare una scrematura.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Il nostro consiglio è quello di non concentrarsi troppo sulla distanza, ma di guardare tutti i fattori nell’insieme: a volte il dentista che fa per voi potrebbe trovarsi appena fuori mano, senza che ve ne rendiate conto.</p></body></html>"
+          "html": "<p>Il nostro consiglio è quello di non concentrarsi troppo sulla distanza, ma di guardare tutti i fattori nell’insieme: a volte il dentista che fa per voi potrebbe trovarsi appena fuori mano, senza che ve ne rendiate conto.</p>"
         },
         {
           "type": "heading",
@@ -3944,19 +3944,19 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Avete individuato uno studio dentistico che potrebbe fare al caso vostro?</p></body></html>"
+          "html": "<p>Avete individuato uno studio dentistico che potrebbe fare al caso vostro?</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Osservate anche l’ambiente interno, per valutare prima di tutto degli aspetti imprescindibili per dei professionisti del settore, come <strong>locali puliti e accoglienti</strong>, in aggiunta a strumentazione sterilizzata.</p></body></html>"
+          "html": "<p>Osservate anche l’ambiente interno, per valutare prima di tutto degli aspetti imprescindibili per dei professionisti del settore, come <strong>locali puliti e accoglienti</strong>, in aggiunta a strumentazione sterilizzata.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Da non sottovalutare la presenza di <strong>apparecchi particolarmente tecnologici</strong>, indice di utilizzo di tecniche all’avanguardia e al passo con i tempi, soprattutto se si tratta di <strong><a href=\"/\">odontoiatria digitale</a></strong>.</p></body></html>"
+          "html": "<p>Da non sottovalutare la presenza di <strong>apparecchi particolarmente tecnologici</strong>, indice di utilizzo di tecniche all’avanguardia e al passo con i tempi, soprattutto se si tratta di <strong><a href=\"/\">odontoiatria digitale</a></strong>.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Molto spesso di tratta di strumenti innovativi che consentono di risparmiare tempo e situazioni dolorose durante i trattamenti più invasivi.</p></body></html>"
+          "html": "<p>Molto spesso di tratta di strumenti innovativi che consentono di risparmiare tempo e situazioni dolorose durante i trattamenti più invasivi.</p>"
         },
         {
           "type": "heading",
@@ -3965,15 +3965,15 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Un buon dentista deve essere <strong>pronto al dialogo</strong>, saper ascoltare il paziente che ha di fronte e fornire adeguate spiegazioni che siano comprensibili per chiunque.</p></body></html>"
+          "html": "<p>Un buon dentista deve essere <strong>pronto al dialogo</strong>, saper ascoltare il paziente che ha di fronte e fornire adeguate spiegazioni che siano comprensibili per chiunque.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>È un vostro diritto conoscere ogni aspetto del percorso di cura che dovete intraprendere; pertanto, non abbiate timore di porre domande per dissipare i dubbi ed eventuali paure.</p></body></html>"
+          "html": "<p>È un vostro diritto conoscere ogni aspetto del percorso di cura che dovete intraprendere; pertanto, non abbiate timore di porre domande per dissipare i dubbi ed eventuali paure.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Il nostro compito è anche quello di mettervi a vostro agio instaurando una <strong>relazione di fiducia</strong> che vi aiuti a vivere serenamente anche i trattamenti più complessi e invasivi.</p></body></html>"
+          "html": "<p>Il nostro compito è anche quello di mettervi a vostro agio instaurando una <strong>relazione di fiducia</strong> che vi aiuti a vivere serenamente anche i trattamenti più complessi e invasivi.</p>"
         },
         {
           "type": "heading",
@@ -3982,19 +3982,19 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Un ultimo punto fondamentale è la questione economica, che molte persone pongono erroneamente al primo posto, scegliendo studi dentistici che hanno prezzi stracciati senza curarsi di chi effettivamente metterà mani nella vostra dentatura.</p></body></html>"
+          "html": "<p>Un ultimo punto fondamentale è la questione economica, che molte persone pongono erroneamente al primo posto, scegliendo studi dentistici che hanno prezzi stracciati senza curarsi di chi effettivamente metterà mani nella vostra dentatura.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Sappiamo bene che le cure odontoiatriche non sono proprio economiche, ma l’aspetto positivo è che prima di tutto potete <strong>chiedere diversi preventivi</strong> a più studi, con relative spiegazioni sul totale (cure previste, trattamenti, tempistiche).</p></body></html>"
+          "html": "<p>Sappiamo bene che le cure odontoiatriche non sono proprio economiche, ma l’aspetto positivo è che prima di tutto potete <strong>chiedere diversi preventivi</strong> a più studi, con relative spiegazioni sul totale (cure previste, trattamenti, tempistiche).</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>In aggiunta, la maggior parte dei dentisti consente di <strong>pagare con dilazioni</strong>, soprattutto se si tratta di interventi complessi e costosi, come l’inserimento di impianti oppure l’utilizzo di tecnologie innovative.</p></body></html>"
+          "html": "<p>In aggiunta, la maggior parte dei dentisti consente di <strong>pagare con dilazioni</strong>, soprattutto se si tratta di interventi complessi e costosi, come l’inserimento di impianti oppure l’utilizzo di tecnologie innovative.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>In conclusione, la scelta del miglior studio dentistico per voi deve tenere conto di diversi fattori, per avere un quadro più chiaro del professionista a cui vi affidate ed evitare brutte sorprese.</p></body></html>"
+          "html": "<p>In conclusione, la scelta del miglior studio dentistico per voi deve tenere conto di diversi fattori, per avere un quadro più chiaro del professionista a cui vi affidate ed evitare brutte sorprese.</p>"
         },
         {
           "type": "heading",
@@ -4009,7 +4009,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/dente-anchilosato/\">Dente anchilosato</a></li><li><a href=\"/tumore-sulla-lingua/\">Tumore sulla lingua</a></li><li><a href=\"/carie-denti-da-latte/\">Carie denti da latte</a></li><li><a href=\"/denti-del-giudizio/\">Denti del giudizio</a></li><li><a href=\"/dentiera-fissa-cose-e-vantaggi/\">Dentiera fissa: cos’è e vantaggi</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/dente-anchilosato/\">Dente anchilosato</a></li><li><a href=\"/tumore-sulla-lingua/\">Tumore sulla lingua</a></li><li><a href=\"/carie-denti-da-latte/\">Carie denti da latte</a></li><li><a href=\"/denti-del-giudizio/\">Denti del giudizio</a></li><li><a href=\"/dentiera-fissa-cose-e-vantaggi/\">Dentiera fissa: cos’è e vantaggi</a></li></ul>"
         },
         {
           "type": "heading",
@@ -4024,7 +4024,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/2022/10/\">October 2022</a></li><li><a href=\"/2022/09/\">September 2022</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/2022/10/\">October 2022</a></li><li><a href=\"/2022/09/\">September 2022</a></li></ul>"
         },
         {
           "type": "heading",
@@ -4034,7 +4034,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/category/uncategorized/\">Uncategorized</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/category/uncategorized/\">Uncategorized</a></li></ul>"
         },
         {
           "type": "heading",
@@ -4044,12 +4044,12 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a rel=\"nofollow\" href=\"/wp-login.php\">Log in</a></li><li><a href=\"/feed/\">Entries feed</a></li><li><a href=\"/comments/feed/\">Comments feed</a></li><li><a href=\"https://wordpress.org/\" target=\"_blank\" rel=\"noopener noreferrer\">WordPress.org</a></li></ul></body></html>"
+          "html": "<ul><li><a rel=\"nofollow\" href=\"/wp-login.php\">Log in</a></li><li><a href=\"/feed/\">Entries feed</a></li><li><a href=\"/comments/feed/\">Comments feed</a></li><li><a href=\"https://wordpress.org/\" target=\"_blank\" rel=\"noopener noreferrer\">WordPress.org</a></li></ul>"
         },
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><i></i>Prev</li><li><a href=\"/estrazione-dente-del-giudizio/\" rel=\"next\">Next<i></i></a></li></ul></body></html>"
+          "html": "<ul><li><i></i>Prev</li><li><a href=\"/estrazione-dente-del-giudizio/\" rel=\"next\">Next<i></i></a></li></ul>"
         }
       ]
     },
@@ -4069,15 +4069,15 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Un <strong>dente anchilosato</strong> in odontoiatria presenta un’impossibilità a muoversi, dovuta alla fusione della sua radice con il tessuto osseo sottostante.</p></body></html>"
+          "html": "<p>Un <strong>dente anchilosato</strong> in odontoiatria presenta un’impossibilità a muoversi, dovuta alla fusione della sua radice con il tessuto osseo sottostante.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Si tratta di una patologia molto rara su cui si discute ancora oggi riguardo alle origini e per essere diagnosticata necessita di una serie di esami, fra cui delle lastre per poter osservare l’ancoraggio dei denti al tessuto.</p></body></html>"
+          "html": "<p>Si tratta di una patologia molto rara su cui si discute ancora oggi riguardo alle origini e per essere diagnosticata necessita di una serie di esami, fra cui delle lastre per poter osservare l’ancoraggio dei denti al tessuto.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>In questo articolo vediamo come si manifesta e in che modo viene curato.</p></body></html>"
+          "html": "<p>In questo articolo vediamo come si manifesta e in che modo viene curato.</p>"
         },
         {
           "type": "heading",
@@ -4086,23 +4086,23 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p><strong>L’anchilosi dentale</strong> è una patologia che viene spesso attribuita all’età pediatrica perché è più facile riscontrarla in quel periodo, quando i denti permanenti iniziano a fuoriuscire dalla gengiva al posto di quelli da latte.</p></body></html>"
+          "html": "<p><strong>L’anchilosi dentale</strong> è una patologia che viene spesso attribuita all’età pediatrica perché è più facile riscontrarla in quel periodo, quando i denti permanenti iniziano a fuoriuscire dalla gengiva al posto di quelli da latte.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Può succedere che osservando la dentatura del vostro bambino vi rendiate conto che in mezzo ad altri denti ormai del tutto fuori, ci sia un <strong>molare</strong> che risulti sempre fermo allo stesso punto.</p></body></html>"
+          "html": "<p>Può succedere che osservando la dentatura del vostro bambino vi rendiate conto che in mezzo ad altri denti ormai del tutto fuori, ci sia un <strong>molare</strong> che risulti sempre fermo allo stesso punto.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Questo è il caso di un <strong>dente anchilosato</strong>, vuol dire che la sua radice si è fusa con l’osso alveolare, rendendo impossibile il suo movimento verso l’alto, indispensabile per permettergli di erompere dalla gengiva.</p></body></html>"
+          "html": "<p>Questo è il caso di un <strong>dente anchilosato</strong>, vuol dire che la sua radice si è fusa con l’osso alveolare, rendendo impossibile il suo movimento verso l’alto, indispensabile per permettergli di erompere dalla gengiva.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Le cause che determinano questa condizione possono essere diverse e prima di ogni cosa viene presa in considerazione la <strong>componente genetica</strong>, andando a verificare se in famiglia siano presenti altri casi simili.</p></body></html>"
+          "html": "<p>Le cause che determinano questa condizione possono essere diverse e prima di ogni cosa viene presa in considerazione la <strong>componente genetica</strong>, andando a verificare se in famiglia siano presenti altri casi simili.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Ci sono poi altri fattori che possono favorire la sua comparsa, come <strong>gravi traumi, infezioni, alterazioni dello sviluppo osseo, o ancora, disfunzioni metaboliche</strong>.</p></body></html>"
+          "html": "<p>Ci sono poi altri fattori che possono favorire la sua comparsa, come <strong>gravi traumi, infezioni, alterazioni dello sviluppo osseo, o ancora, disfunzioni metaboliche</strong>.</p>"
         },
         {
           "type": "heading",
@@ -4111,31 +4111,31 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Per quanto possa spaventarvi l’idea di sottoporre vostro figlio ad un trattamento ortodontico, facciamo presente che un’anchilosi dentale è una condizione che richiede <strong>un’attenzione urgente</strong> da parte dello specialista.</p></body></html>"
+          "html": "<p>Per quanto possa spaventarvi l’idea di sottoporre vostro figlio ad un trattamento ortodontico, facciamo presente che un’anchilosi dentale è una condizione che richiede <strong>un’attenzione urgente</strong> da parte dello specialista.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Questo perché lo stesso molare che non è in grado di emergere dalla gengiva, può causare dei <strong>problemi anche alle strutture circostanti</strong>, le quali convergeranno fra loro cercando di chiudere il solco che si è creato nella gengiva.</p></body></html>"
+          "html": "<p>Questo perché lo stesso molare che non è in grado di emergere dalla gengiva, può causare dei <strong>problemi anche alle strutture circostanti</strong>, le quali convergeranno fra loro cercando di chiudere il solco che si è creato nella gengiva.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Ciò comporta inevitabilmente ad una <strong>dentatura disallineata</strong>, che a sua volta causerà difficoltà nella masticazione in quella che viene definita <strong>malocclusione</strong>, ovvero una chiusura inadeguata delle fauci.</p></body></html>"
+          "html": "<p>Ciò comporta inevitabilmente ad una <strong>dentatura disallineata</strong>, che a sua volta causerà difficoltà nella masticazione in quella che viene definita <strong>malocclusione</strong>, ovvero una chiusura inadeguata delle fauci.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Tuttavia, non si tratta delle uniche conseguenze che un dente anchilosato è in grado di apportare, perché il fatto che è “nascosto” rende <strong>più difficoltosa la pulizia dentale</strong>, con conseguente accumulo di placca.</p></body></html>"
+          "html": "<p>Tuttavia, non si tratta delle uniche conseguenze che un dente anchilosato è in grado di apportare, perché il fatto che è “nascosto” rende <strong>più difficoltosa la pulizia dentale</strong>, con conseguente accumulo di placca.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Questa causerà nel tempo delle <strong><u><a href=\"/carie-denti-da-latte/\">carie denti da latte</a></u></strong>, andando ad infettare anche le strutture vicine, fino a dar luce ad una vera e propria infiammazione.</p></body></html>"
+          "html": "<p>Questa causerà nel tempo delle <strong><u><a href=\"/carie-denti-da-latte/\">carie denti da latte</a></u></strong>, andando ad infettare anche le strutture vicine, fino a dar luce ad una vera e propria infiammazione.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>I bambini che soffrono di questa rara patologia presentano spesso anche <strong>mal di testa e dolori nell’articolazione temporo-mandibolare</strong>.</p></body></html>"
+          "html": "<p>I bambini che soffrono di questa rara patologia presentano spesso anche <strong>mal di testa e dolori nell’articolazione temporo-mandibolare</strong>.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>È importante comprendere che benché si associ l’anchilosi ai bambini, si tratta di una condizione che può rivelarsi anche in una fase più adulta, dal momento che <strong>i denti permanenti smettono definitivamente di crescere intorno ai vent’anni</strong>.</p></body></html>"
+          "html": "<p>È importante comprendere che benché si associ l’anchilosi ai bambini, si tratta di una condizione che può rivelarsi anche in una fase più adulta, dal momento che <strong>i denti permanenti smettono definitivamente di crescere intorno ai vent’anni</strong>.</p>"
         },
         {
           "type": "heading",
@@ -4144,35 +4144,35 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Per questa condizione non esiste una cura univoca e sempre valida, perché <strong>tutto dipende dall’età del soggetto che ne soffre e da quanto è grave l’anchilosi del dente</strong>.</p></body></html>"
+          "html": "<p>Per questa condizione non esiste una cura univoca e sempre valida, perché <strong>tutto dipende dall’età del soggetto che ne soffre e da quanto è grave l’anchilosi del dente</strong>.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Difatti, in quella che viene definita parziale, si può procedere con una <strong>sublussazione-lussazione</strong>, per poi applicare un apparecchio che aiuti lo stesso dente a trovare il giusto posto all’interno della dentatura in fase di sviluppo.</p></body></html>"
+          "html": "<p>Difatti, in quella che viene definita parziale, si può procedere con una <strong>sublussazione-lussazione</strong>, per poi applicare un apparecchio che aiuti lo stesso dente a trovare il giusto posto all’interno della dentatura in fase di sviluppo.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Quando è invece totale si potrebbe procedere direttamente con l’<strong>estrazione</strong>; trattandosi comunque di denti da latte ci si dovrà assicurare che quello permanente sottostante sia in grado di erompere in maniera corretta, eventualmente attraverso un <strong><u><a href=\"/ortodonzia/\">apparecchio ortodontico</a></u></strong>.</p></body></html>"
+          "html": "<p>Quando è invece totale si potrebbe procedere direttamente con l’<strong>estrazione</strong>; trattandosi comunque di denti da latte ci si dovrà assicurare che quello permanente sottostante sia in grado di erompere in maniera corretta, eventualmente attraverso un <strong><u><a href=\"/ortodonzia/\">apparecchio ortodontico</a></u></strong>.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Discorso diverso, invece, quando <strong>il dente anchilosato è proprio quello permanente</strong>, perché rende la cura decisamente più complessa e lunga da applicare.</p></body></html>"
+          "html": "<p>Discorso diverso, invece, quando <strong>il dente anchilosato è proprio quello permanente</strong>, perché rende la cura decisamente più complessa e lunga da applicare.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Una prima opzione potrebbe essere quella di tentare di salvare il dente attraverso un intervento chirurgico che ha lo scopo di staccarlo dal tessuto osseo e <strong>riposizionarlo correttamente nell’arcata dentale</strong>.</p></body></html>"
+          "html": "<p>Una prima opzione potrebbe essere quella di tentare di salvare il dente attraverso un intervento chirurgico che ha lo scopo di staccarlo dal tessuto osseo e <strong>riposizionarlo correttamente nell’arcata dentale</strong>.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Un’alternativa, invece, è quella di procedere con una vera e propria estrazione e attendere il <strong>completamento dello sviluppo delle ossa mascellari</strong>, al termine del quale si discuterà sul ricorso ad un <strong><u><a href=\"/implantologia/\">impianto</a></u></strong> che sostituirà il dente rimosso.</p></body></html>"
+          "html": "<p>Un’alternativa, invece, è quella di procedere con una vera e propria estrazione e attendere il <strong>completamento dello sviluppo delle ossa mascellari</strong>, al termine del quale si discuterà sul ricorso ad un <strong><u><a href=\"/implantologia/\">impianto</a></u></strong> che sostituirà il dente rimosso.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>In ogni caso, prima di stabilire la procedura da seguire è chiaro che bisogna effettuare un’attenta analisi del quadro clinico.</p></body></html>"
+          "html": "<p>In ogni caso, prima di stabilire la procedura da seguire è chiaro che bisogna effettuare un’attenta analisi del quadro clinico.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<html><head></head><body><p>Se hai il sospetto di soffrire di anchilosi dentale, ti invitiamo a contattare il nostro <strong><u><a href=\"/\">Studio dentistico Federzoni Granata a Modena o a Reggio Emilia</a></u></strong>.</p></body></html>"
+          "html": "<p>Se hai il sospetto di soffrire di anchilosi dentale, ti invitiamo a contattare il nostro <strong><u><a href=\"/\">Studio dentistico Federzoni Granata a Modena o a Reggio Emilia</a></u></strong>.</p>"
         },
         {
           "type": "heading",
@@ -4187,7 +4187,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/dente-anchilosato/\">Dente anchilosato</a></li><li><a href=\"/tumore-sulla-lingua/\">Tumore sulla lingua</a></li><li><a href=\"/carie-denti-da-latte/\">Carie denti da latte</a></li><li><a href=\"/denti-del-giudizio/\">Denti del giudizio</a></li><li><a href=\"/dentiera-fissa-cose-e-vantaggi/\">Dentiera fissa: cos’è e vantaggi</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/dente-anchilosato/\">Dente anchilosato</a></li><li><a href=\"/tumore-sulla-lingua/\">Tumore sulla lingua</a></li><li><a href=\"/carie-denti-da-latte/\">Carie denti da latte</a></li><li><a href=\"/denti-del-giudizio/\">Denti del giudizio</a></li><li><a href=\"/dentiera-fissa-cose-e-vantaggi/\">Dentiera fissa: cos’è e vantaggi</a></li></ul>"
         },
         {
           "type": "heading",
@@ -4202,7 +4202,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/2022/10/\">October 2022</a></li><li><a href=\"/2022/09/\">September 2022</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/2022/10/\">October 2022</a></li><li><a href=\"/2022/09/\">September 2022</a></li></ul>"
         },
         {
           "type": "heading",
@@ -4212,7 +4212,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/category/uncategorized/\">Uncategorized</a></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/category/uncategorized/\">Uncategorized</a></li></ul>"
         },
         {
           "type": "heading",
@@ -4222,12 +4222,12 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a rel=\"nofollow\" href=\"/wp-login.php\">Log in</a></li><li><a href=\"/feed/\">Entries feed</a></li><li><a href=\"/comments/feed/\">Comments feed</a></li><li><a href=\"https://wordpress.org/\" target=\"_blank\" rel=\"noopener noreferrer\">WordPress.org</a></li></ul></body></html>"
+          "html": "<ul><li><a rel=\"nofollow\" href=\"/wp-login.php\">Log in</a></li><li><a href=\"/feed/\">Entries feed</a></li><li><a href=\"/comments/feed/\">Comments feed</a></li><li><a href=\"https://wordpress.org/\" target=\"_blank\" rel=\"noopener noreferrer\">WordPress.org</a></li></ul>"
         },
         {
           "type": "list",
           "ordered": false,
-          "html": "<html><head></head><body><ul><li><a href=\"/tumore-sulla-lingua/\" rel=\"prev\"><i></i>Prev</a></li><li>Next<i></i></li></ul></body></html>"
+          "html": "<ul><li><a href=\"/tumore-sulla-lingua/\" rel=\"prev\"><i></i>Prev</a></li><li>Next<i></i></li></ul>"
         }
       ]
     }

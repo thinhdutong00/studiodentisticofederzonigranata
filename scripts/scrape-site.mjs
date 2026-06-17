@@ -125,7 +125,7 @@ function safeExternalHref(href) {
 }
 
 function sanitizeInlineHtml($, element, assetUrls) {
-  const clone = cheerio.load($.html(element), { decodeEntities: false });
+  const clone = cheerio.load($.html(element), { decodeEntities: false }, false);
   clone('script, style, noscript, iframe, svg, canvas, input, textarea, button').remove();
   clone('*').each((_, node) => {
     const tag = node.tagName?.toLowerCase();
@@ -157,7 +157,7 @@ function sanitizeInlineHtml($, element, assetUrls) {
       for (const attr of Object.keys(node.attribs || {})) $node.removeAttr(attr);
     }
   });
-  return cleanHtml(clone.root().html() || '');
+  return cleanHtml(clone.root().html() || clone.html() || '');
 }
 
 function cleanHtml(value) {
