@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+import ContentPage from '../components/ContentPage.astro';
+import { site } from '../data/site';
+
+export function getStaticPaths() {
+  return site.pages
+    .filter((page) => page.path !== '/')
+    .map((page) => ({
+      params: { slug: page.slug },
+      props: { page },
+    }));
+}
+
+const { page } = Astro.props;
+---
+
+<BaseLayout title={page.title} description={page.description} ogImage={page.ogImage || site.heroImage} canonicalPath={page.path}>
+  <ContentPage page={page} />
+</BaseLayout>

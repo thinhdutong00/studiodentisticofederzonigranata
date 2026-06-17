@@ -1,0 +1,91 @@
+---
+import ContactForm from './ContactForm.astro';
+import { site, type SitePage } from '../data/site';
+
+interface Props {
+  page: SitePage;
+}
+
+const { page } = Astro.props;
+const titleBlock = page.blocks.find((block) => block.type === 'heading');
+const pageTitle = titleBlock?.text || page.navTitle;
+const bodyBlocks = page.path === '/' ? page.blocks : page.blocks.filter((block) => block !== titleBlock);
+---
+
+{page.path === '/' ? (
+  <section class="hero" style={`background-image: url('${site.heroImage}')`}>
+    <div class="container hero-content">
+      <p class="eyebrow">Studio dentistico Federzoni Granata</p>
+      <h1>{pageTitle}</h1>
+      <p>{page.description || site.description}</p>
+    </div>
+  </section>
+) : (
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">{page.kind === 'article' ? 'Approfondimenti' : site.name}</p>
+      <h1>{pageTitle}</h1>
+      {page.description && <p>{page.description}</p>}
+    </div>
+  </section>
+)}
+
+<section class="section">
+  <div class="container content-shell">
+    {page.path === '/' && (
+      <div class="link-grid" aria-label="Casi clinici">
+        {site.clinicalLinks.map((item) => <a class="link-card" href={item.href}>{item.label}<span aria-hidden="true">→</span></a>)}
+      </div>
+    )}
+    <div class="content-body">
+      {bodyBlocks.map((block) => {
+        if (block.type === 'heading') {
+          const Tag = `h${Math.min(Math.max(block.level, 1), 6)}`;
+          return <Tag id={block.id}>{block.text}</Tag>;
+        }
+        if (block.type === 'paragraph') return <p set:html={block.html} />;
+        if (block.type === 'list') return <Fragment set:html={block.html} />;
+        if (block.type === 'html') return <div set:html={block.html} />;
+        if (block.type === 'image') {
+          return (
+            <figure class="content-figure">
+              <img src={block.src} alt={block.alt} loading="lazy" />
+              {block.alt && <figcaption>{block.alt}</figcaption>}
+            </figure>
+          );
+        }
+        if (block.type === 'embed') {
+          return (
+            <div class="content-embed">
+              <p>{block.type === 'video' ? 'Video esterno' : block.type === 'map' ? 'Mappa esterna' : 'Contenuto esterno'}</p>
+              <a class="button" href={block.url} target="_blank" rel="noopener noreferrer">{block.label}</a>
+            </div>
+          );
+        }
+      })}
+
+      {page.kind === 'clinical' && (
+        <div class="link-grid" aria-label="Altre categorie cliniche">
+          {site.clinicalLinks.filter((item) => item.href !== page.path).map((item) => <a class="link-card" href={item.href}>{item.label}<span aria-hidden="true">→</span></a>)}
+        </div>
+      )}
+
+      {page.path === '/' && (
+        <div class="office-grid">
+          {site.offices.map((office) => (
+            <article class="office-card">
+              <h3>{office.title}</h3>
+              <p>{office.address}</p>
+              <p><a href={office.phoneHref}>{office.phone}</a></p>
+              <p><a href={office.emailHref}>{office.email}</a></p>
+              <p>{office.hours}</p>
+              <a class="button" href={office.href}>Dettagli {office.city}</a>
+            </article>
+          ))}
+        </div>
+      )}
+
+      {page.hasContactForm && <ContactForm />}
+    </div>
+  </div>
+</section>

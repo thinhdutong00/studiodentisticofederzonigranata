@@ -1,0 +1,17 @@
+---
+import { site } from '../data/site';
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label={site.name}>
+      <img src={site.logo} alt="Studio dentistico Federzoni Granata" width="400" height="52" />
+    </a>
+    <nav class="primary-nav" aria-label="Navigazione principale">
+      {site.navigation.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+    <nav class="social-nav" aria-label="Canali social">
+      {site.social.map((item) => <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={item.label}>{item.label.slice(0, 2)}</a>)}
+    </nav>
+  </div>
+</header>

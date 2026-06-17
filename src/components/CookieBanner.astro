@@ -1,0 +1,26 @@
+---
+---
+
+<aside class="cookie-banner" data-cookie-banner role="note" aria-label="GDPR Cookie Banner">
+  <p>Usiamo i cookie per fornirti la miglior esperienza d'uso e navigazione sul nostro sito web.</p>
+  <p>Puoi trovare altre informazioni riguardo a quali cookie usiamo nella <a href="/cookie-privacy/">Cookie Policy</a>.</p>
+  <div class="cookie-actions">
+    <button type="button" data-cookie-choice="accept">Accetta</button>
+    <button type="button" class="secondary" data-cookie-choice="reject">Rifiuta</button>
+    <button type="button" class="secondary" data-cookie-choice="settings">Impostazioni</button>
+  </div>
+</aside>
+
+<script>
+  const banner = document.querySelector('[data-cookie-banner]');
+  const storageKey = 'fg-cookie-preference';
+  if (banner && !localStorage.getItem(storageKey)) {
+    banner.classList.add('is-visible');
+  }
+  document.querySelectorAll('[data-cookie-choice]').forEach((button) => {
+    button.addEventListener('click', () => {
+      localStorage.setItem(storageKey, button.getAttribute('data-cookie-choice') || 'set');
+      banner?.classList.remove('is-visible');
+    });
+  });
+</script>

@@ -1,0 +1,39 @@
+---
+---
+
+<section class="contact-form" aria-labelledby="contact-form-title">
+  <h2 id="contact-form-title">Compila il modulo contatti per ulteriori informazioni!</h2>
+  <form data-static-form>
+    <div class="form-grid">
+      <label>Nome
+        <input type="text" name="your-name" placeholder="Nome" autocomplete="given-name" />
+      </label>
+      <label>Cognome
+        <input type="text" name="your-lastname" placeholder="Cognome" autocomplete="family-name" />
+      </label>
+      <label>Telefono
+        <input type="tel" name="your-phone" placeholder="Telefono" autocomplete="tel" />
+      </label>
+      <label>Email
+        <input type="email" name="your-email" placeholder="Email" autocomplete="email" />
+      </label>
+      <label class="full-span">Message
+        <textarea name="your-message" placeholder="Message"></textarea>
+      </label>
+    </div>
+    <label class="checkbox-row">
+      <input type="checkbox" name="acceptance-459" value="1" />
+      <span>Accetto l’informativa sulla privacy policy</span>
+    </label>
+    <button class="button" type="submit">Richiedi Info</button>
+    <p class="form-note">Modulo estetico: l’invio email verrà collegato successivamente con Resend.</p>
+  </form>
+</section>
+
+<script>
+  document.querySelectorAll('[data-static-form]').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+    });
+  });
+</script>

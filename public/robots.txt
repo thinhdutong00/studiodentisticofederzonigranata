@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://studiodentisticofederzonigranata.vercel.app/sitemap.xml
