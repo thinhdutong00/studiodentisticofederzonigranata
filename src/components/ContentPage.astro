@@ -43,7 +43,7 @@ const bodyBlocks = page.path === '/' ? page.blocks : page.blocks.filter((block) 
           const Tag = `h${Math.min(Math.max(block.level, 1), 6)}`;
           return <Tag id={block.id}>{block.text}</Tag>;
         }
-        if (block.type === 'paragraph') return <p set:html={block.html} />;
+        if (block.type === 'paragraph') return <Fragment set:html={block.html} />;
         if (block.type === 'list') return <Fragment set:html={block.html} />;
         if (block.type === 'html') return <div set:html={block.html} />;
         if (block.type === 'image') {
