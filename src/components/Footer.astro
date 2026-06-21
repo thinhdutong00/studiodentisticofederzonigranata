@@ -1,26 +1,48 @@
 ---
 import { site } from '../data/site';
+
+const footerNav = site.navigation.filter((item) => item.label !== 'Home');
 ---
 
 <footer class="site-footer">
   <div class="container footer-inner">
-    <section>
+    <section class="footer-brand">
       <h2>{site.name}</h2>
       <p>{site.description}</p>
-      <p>{site.footerNote}</p>
-      <p><a href="/privacy-policy/">Privacy Policy</a> · <a href="/cookie-privacy/">Cookie Policy</a></p>
+      <div class="footer-social" aria-label="Canali social">
+        {site.social.map((item) => <a href={item.url} target="_blank" rel="noopener noreferrer">{item.label}</a>)}
+      </div>
     </section>
-    {site.offices.map((office) => (
-      <section>
+    <section class="footer-links">
+      <h3>Esplora</h3>
+      <ul>
+        {footerNav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </section>
+    <section class="footer-links">
+      <h3>Trattamenti</h3>
+      <ul>
+        {site.clinicalLinks.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </section>
+    <section class="footer-offices">
+      <h3>Sedi</h3>
+      {site.offices.map((office) => (
+      <article>
         <h3>{office.title}</h3>
         <p>{office.address}</p>
         <p><a href={office.phoneHref}>{office.phone}</a></p>
         <p><a href={office.emailHref}>{office.email}</a></p>
         <p>{office.hours}</p>
-      </section>
-    ))}
+      </article>
+      ))}
+    </section>
   </div>
   <div class="footer-bottom">
-    <div class="container">© {new Date().getFullYear()} {site.name}</div>
+    <div class="container footer-bottom-inner">
+      <span>© {new Date().getFullYear()} {site.name}</span>
+      <span>{site.footerNote}</span>
+      <span><a href="/privacy-policy/">Privacy Policy</a> · <a href="/cookie-privacy/">Cookie Policy</a></span>
+    </div>
   </div>
 </footer>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="title desc">
+  <title id="title">Segnaposto trattamenti cure</title>
+  <desc id="desc">Illustrazione astratta nei colori blu e verde del brand.</desc>
+  <rect width="640" height="420" fill="#f5f7f8"/>
+  <rect x="54" y="48" width="532" height="324" rx="28" fill="#ffffff"/>
+  <path d="M182 112c48 0 88 39 88 88 0 76-60 118-88 118s-88-42-88-118c0-49 39-88 88-88Z" fill="#e9f8f7"/>
+  <path d="M182 146c30 0 54 24 54 54 0 48-36 78-54 78s-54-30-54-78c0-30 24-54 54-54Z" fill="#7db9c5"/>
+  <rect x="334" y="118" width="170" height="54" rx="12" fill="#0c4da2"/>
+  <rect x="334" y="194" width="222" height="24" rx="12" fill="#347cc2" opacity="0.28"/>
+  <rect x="334" y="240" width="170" height="24" rx="12" fill="#87a83d" opacity="0.5"/>
+  <rect x="334" y="286" width="210" height="24" rx="12" fill="#7db9c5" opacity="0.56"/>
+</svg>

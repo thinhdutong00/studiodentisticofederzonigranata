@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="title desc">
+  <title id="title">Segnaposto trattamenti ortodonzia</title>
+  <desc id="desc">Illustrazione astratta nei colori blu del brand.</desc>
+  <rect width="640" height="420" fill="#eef7f9"/>
+  <rect x="52" y="54" width="536" height="312" rx="28" fill="#ffffff"/>
+  <path d="M126 214c56-78 130-78 186 0s130 78 202 0" fill="none" stroke="#0c4da2" stroke-width="20" stroke-linecap="round"/>
+  <path d="M126 258c56-78 130-78 186 0s130 78 202 0" fill="none" stroke="#7db9c5" stroke-width="20" stroke-linecap="round"/>
+  <circle cx="168" cy="184" r="22" fill="#347cc2"/>
+  <circle cx="268" cy="184" r="22" fill="#347cc2"/>
+  <circle cx="372" cy="184" r="22" fill="#347cc2"/>
+  <circle cx="472" cy="184" r="22" fill="#347cc2"/>
+  <rect x="162" y="300" width="316" height="18" rx="9" fill="#0c4da2" opacity="0.18"/>
+</svg>

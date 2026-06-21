@@ -56,6 +56,12 @@ const introParagraphs = [htmlAt(2), htmlAt(3)].filter(Boolean);
 const serviceIntro = htmlAt(4);
 const serviceItems = listItemsFromHtml(htmlAt(5)).map((label) => ({ label }));
 const introImage = imageAt(6, 'Dentista nello studio Federzoni Granata');
+const pathwayItems = [
+  { label: 'Prevenzione', description: 'Controlli, igiene e cure conservative per mantenere il sorriso nel tempo.' },
+  { label: 'Digitale', description: 'Scanner, impronta digitale e progettazione per percorsi più chiari e precisi.' },
+  { label: 'Adulti e bambini', description: 'Approccio multidisciplinare dalla prima infanzia all’età adulta.' },
+  { label: 'Sedi vicine', description: 'Modena e Reggio Emilia con gli stessi standard clinici e relazionali.' },
+];
 
 const digitalIntro = [htmlAt(8), htmlAt(9)].filter(Boolean);
 const digitalFeatures = [
@@ -137,11 +143,18 @@ const videoItems = [
       showForm
     />
 
-    <SectionBand eyebrow="Odontoiatria digitale" title={headingAt(1, 'Odontoiatria digitale per adulti e bambini')} lead="Un approccio multidisciplinare per adulti e bambini, con tecnologie digitali e attenzione costante alla relazione con il paziente.">
+    <SectionBand id="trattamenti" eyebrow="Momenti di cura" title={headingAt(1, 'Odontoiatria digitale per adulti e bambini')} lead="Un approccio multidisciplinare per adulti e bambini, con tecnologie digitali e attenzione costante alla relazione con il paziente." tone="cream">
       <figure class="media-hero-card">
         <img src={editorialMedia.intro.src} alt={editorialMedia.intro.alt} loading="lazy" />
         <figcaption>{editorialMedia.intro.label}</figcaption>
       </figure>
+      <div class="care-paths">
+        <div>
+          <p class="eyebrow">Scegli il percorso</p>
+          <h3>Una cura pensata come esperienza completa, non come singolo appuntamento.</h3>
+        </div>
+        <FeatureCards items={pathwayItems} />
+      </div>
       <div class="intro-layout">
         <div class="intro-copy">
           <div class="rich-text">
@@ -161,7 +174,7 @@ const videoItems = [
       </div>
     </SectionBand>
 
-    <SectionBand id="digitale" eyebrow="Tecnologie" title={headingAt(7, 'Il Digitale: Odontoiatria digitale')} tone="soft">
+    <SectionBand id="digitale" eyebrow="Tecnologie" title={headingAt(7, 'Il Digitale: Odontoiatria digitale')} tone="signal">
       <figure class="media-hero-card media-hero-card-tight">
         <img src={editorialMedia.digitale.src} alt={editorialMedia.digitale.alt} loading="lazy" />
         <figcaption>{editorialMedia.digitale.label}</figcaption>
@@ -220,7 +233,7 @@ const videoItems = [
       </div>
     </SectionBand>
 
-    <SectionBand id="casi-clinici" eyebrow="Casi clinici" title="Casi Clinici" lead="Esempi di lavori eseguiti dallo studio odontoiatrico" tone="blue">
+    <SectionBand id="casi-clinici" eyebrow="Casi clinici" title="Casi Clinici" lead="Esempi di lavori eseguiti dallo studio odontoiatrico" tone="dark">
       <figure class="media-hero-card media-hero-card-tight">
         <img src={editorialMedia.clinici.src} alt={editorialMedia.clinici.alt} loading="lazy" />
         <figcaption>{editorialMedia.clinici.label}</figcaption>
@@ -234,7 +247,7 @@ const videoItems = [
       </div>
     </SectionBand>
 
-    <SectionBand eyebrow="Sedi e contatti" title="Modena e Reggio Emilia" lead="Due studi, un unico percorso di cura. Puoi contattare direttamente la sede più comoda o inviare una richiesta dal sito.">
+    <SectionBand id="sedi" eyebrow="Sedi e contatti" title="Modena e Reggio Emilia" lead="Due studi, un unico percorso di cura. Puoi contattare direttamente la sede più comoda o inviare una richiesta dal sito." tone="cream">
       <figure class="media-hero-card media-hero-card-tight">
         <img src={editorialMedia.sedi.src} alt={editorialMedia.sedi.alt} loading="lazy" />
         <figcaption>{editorialMedia.sedi.label}</figcaption>
@@ -243,7 +256,7 @@ const videoItems = [
       {bandoHtml && <div class="bando-link rich-text" set:html={bandoHtml} />}
     </SectionBand>
 
-    <SectionBand id="contatti" eyebrow="Contatti" title="Compila il modulo contatti per ulteriori informazioni!" tone="soft">
+    <SectionBand id="contatti" eyebrow="Contatti" title="Compila il modulo contatti per ulteriori informazioni!" tone="signal">
       <div class="contact-panel">
         <div class="contact-copy">
           <p>
@@ -279,7 +292,7 @@ const videoItems = [
       </div>
     </SectionBand>
 
-    <SectionBand eyebrow="Canale YouTube" title="Video dello studio" tone="soft">
+    <SectionBand eyebrow="Canale YouTube" title="Video dello studio" tone="cream">
       <div class="video-grid">
         {videoItems.map((video) => (
           <article class="video-card">

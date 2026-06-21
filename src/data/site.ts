@@ -107,6 +107,640 @@ export const site = {
   "footerNote": "Tutte le immagini presenti sul sito sono sotto il copyright dello Studio Dentistico Federzoni Granata",
   "generatedAt": "2026-06-17T18:07:31.249Z",
   "assetCount": 337,
+  "navigationPages": [
+    {
+      "path": "/prima-visita/",
+      "slug": "prima-visita",
+      "kind": "navigation",
+      "title": "Prima visita - Studio dentistico Federzoni Granata",
+      "navTitle": "Prima visita",
+      "description": "Pagina dedicata alla prima visita presso lo Studio Dentistico Federzoni Granata.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Prima visita"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina dedicata in preparazione.</p>"
+        }
+      ]
+    },
+    {
+      "path": "/trattamenti/",
+      "slug": "trattamenti",
+      "kind": "navigation",
+      "title": "Trattamenti - Studio dentistico Federzoni Granata",
+      "navTitle": "Trattamenti",
+      "description": "Tutti i trattamenti dello Studio Dentistico Federzoni Granata.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Trattamenti"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina generale dei trattamenti in preparazione.</p>"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "html": "<ul><li><a href=\"/igiene-orale-prevenzione/\">Igiene orale e Prevenzione</a></li><li><a href=\"/sbiancamento/\">Sbiancamento</a></li><li><a href=\"/conservativa-otturazioni/\">Conservativa (otturazioni)</a></li><li><a href=\"/endodonzia-devitalizzazioni/\">Endodonzia (devitalizzazioni)</a></li><li><a href=\"/pedodonzia-odontoiatria-infantile/\">Pedodonzia (odontoiatria infantile)</a></li><li><a href=\"/ortodonzia-allineatori-invisibili/\">Ortodonzia e Allineatori invisibili (adulti e bimbi)</a></li><li><a href=\"/estetica-diretta-faccette-composito/\">Estetica diretta (faccette in composito)</a></li><li><a href=\"/parodontologia-cure-gengivali/\">Parodontologia (cure gengivali)</a></li><li><a href=\"/protesi-fissa-mobile/\">Protesi fissa e mobile</a></li><li><a href=\"/estetica-indiretta-faccette-porcellana/\">Estetica Indiretta (faccette in porcellana)</a></li><li><a href=\"/chirurgia-stomatologica/\">Chirurgia Stomatologica</a></li><li><a href=\"/implantologia-tradizionale-computer-guidata/\">Implantologia tradizionale e computer guidata</a></li><li><a href=\"/gnatologia-articolazione-temporo-mandibolare/\">Gnatologia (disturbi articolazione temporo-mandibolare)</a></li><li><a href=\"/dispositivi-russamento-apnee-notturne/\">Dispositivi contro il russamento e le apnee notturne</a></li></ul>"
+        }
+      ]
+    },
+    {
+      "path": "/convenzioni/",
+      "slug": "convenzioni",
+      "kind": "navigation",
+      "title": "Convenzioni - Studio dentistico Federzoni Granata",
+      "navTitle": "Convenzioni",
+      "description": "Pagina dedicata alle convenzioni dello Studio Dentistico Federzoni Granata.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Convenzioni"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina dedicata in preparazione.</p>"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "html": "<ul><li><a href=\"/convenzioni-dirette/\">Convenzioni dirette</a></li><li><a href=\"/convenzioni-indirette/\">Convenzioni indirette</a></li></ul>"
+        }
+      ]
+    },
+    {
+      "path": "/convenzioni-dirette/",
+      "slug": "convenzioni-dirette",
+      "kind": "navigation",
+      "title": "Convenzioni dirette - Studio dentistico Federzoni Granata",
+      "navTitle": "Convenzioni dirette",
+      "description": "Pagina dedicata alle convenzioni dirette dello Studio Dentistico Federzoni Granata.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Convenzioni dirette"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina dedicata in preparazione.</p>"
+        }
+      ]
+    },
+    {
+      "path": "/convenzioni-indirette/",
+      "slug": "convenzioni-indirette",
+      "kind": "navigation",
+      "title": "Convenzioni indirette - Studio dentistico Federzoni Granata",
+      "navTitle": "Convenzioni indirette",
+      "description": "Pagina dedicata alle convenzioni indirette dello Studio Dentistico Federzoni Granata.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Convenzioni indirette"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina dedicata in preparazione.</p>"
+        }
+      ]
+    },
+    {
+      "path": "/casi-clinici/",
+      "slug": "casi-clinici",
+      "kind": "navigation",
+      "title": "Casi clinici - Studio dentistico Federzoni Granata",
+      "navTitle": "Casi clinici",
+      "description": "Pagina dedicata ai casi clinici dello Studio Dentistico Federzoni Granata.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Casi clinici"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina dedicata in preparazione.</p>"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "html": "<ul><li><a href=\"/estetica/\">Estetica</a></li><li><a href=\"/protesi/\">Protesi</a></li><li><a href=\"/parodontologia/\">Parodontologia</a></li><li><a href=\"/implantologia/\">Implantologia</a></li><li><a href=\"/ortodonzia/\">Ortodonzia</a></li><li><a href=\"/conservativa/\">Conservativa</a></li><li><a href=\"/endodonzia/\">Endodonzia</a></li><li><a href=\"/video/\">Video</a></li></ul>"
+        }
+      ]
+    },
+    {
+      "path": "/urgenze/",
+      "slug": "urgenze",
+      "kind": "navigation",
+      "title": "Urgenze - Studio dentistico Federzoni Granata",
+      "navTitle": "Urgenze",
+      "description": "Pagina dedicata alle urgenze dello Studio Dentistico Federzoni Granata.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Urgenze"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina dedicata in preparazione.</p>"
+        }
+      ]
+    },
+    {
+      "path": "/informazioni/",
+      "slug": "informazioni",
+      "kind": "navigation",
+      "title": "Informazioni - Studio dentistico Federzoni Granata",
+      "navTitle": "Informazioni",
+      "description": "Informazioni sullo Studio Dentistico Federzoni Granata.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Informazioni"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina dedicata in preparazione.</p>"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "html": "<ul><li><a href=\"/chi-siamo/\">Chi siamo</a></li><li><a href=\"/strumentazioni-attrezzature-tecniche/\">Strumentazioni e attrezzature tecniche</a></li><li><a href=\"/orari-e-sedi/\">Orari e sedi</a></li><li><a href=\"/faq/\">FAQ</a></li></ul>"
+        }
+      ]
+    },
+    {
+      "path": "/chi-siamo/",
+      "slug": "chi-siamo",
+      "kind": "navigation",
+      "title": "Chi siamo - Studio dentistico Federzoni Granata",
+      "navTitle": "Chi siamo",
+      "description": "Pagina dedicata al team dello Studio Dentistico Federzoni Granata.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Chi siamo"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina dedicata in preparazione.</p>"
+        }
+      ]
+    },
+    {
+      "path": "/strumentazioni-attrezzature-tecniche/",
+      "slug": "strumentazioni-attrezzature-tecniche",
+      "kind": "navigation",
+      "title": "Strumentazioni e attrezzature tecniche - Studio dentistico Federzoni Granata",
+      "navTitle": "Strumentazioni e attrezzature tecniche",
+      "description": "Pagina dedicata alle strumentazioni e attrezzature tecniche dello Studio Dentistico Federzoni Granata.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Strumentazioni e attrezzature tecniche"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina dedicata in preparazione.</p>"
+        }
+      ]
+    },
+    {
+      "path": "/orari-e-sedi/",
+      "slug": "orari-e-sedi",
+      "kind": "navigation",
+      "title": "Orari e sedi - Studio dentistico Federzoni Granata",
+      "navTitle": "Orari e sedi",
+      "description": "Pagina dedicata agli orari e alle sedi dello Studio Dentistico Federzoni Granata.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Orari e sedi"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina dedicata in preparazione.</p>"
+        }
+      ]
+    },
+    {
+      "path": "/faq/",
+      "slug": "faq",
+      "kind": "navigation",
+      "title": "FAQ - Studio dentistico Federzoni Granata",
+      "navTitle": "FAQ",
+      "description": "Domande frequenti sullo Studio Dentistico Federzoni Granata.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "FAQ"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina dedicata in preparazione.</p>"
+        }
+      ]
+    }
+  ],
+  "treatmentMenu": [
+    {
+      "id": "prevenzione-estetica",
+      "label": "Prevenzione ed estetica",
+      "image": "/assets/placeholders/trattamenti-prevenzione.svg",
+      "imageAlt": "Segnaposto prevenzione ed estetica dentale",
+      "items": [
+        {
+          "label": "Igiene orale e Prevenzione",
+          "href": "/igiene-orale-prevenzione/"
+        },
+        {
+          "label": "Sbiancamento",
+          "href": "/sbiancamento/"
+        },
+        {
+          "label": "Estetica diretta (faccette in composito)",
+          "href": "/estetica-diretta-faccette-composito/"
+        },
+        {
+          "label": "Estetica Indiretta (faccette in porcellana)",
+          "href": "/estetica-indiretta-faccette-porcellana/"
+        }
+      ]
+    },
+    {
+      "id": "cure-bambini",
+      "label": "Odontoiatria conservativa",
+      "image": "/assets/placeholders/trattamenti-cure.svg",
+      "imageAlt": "Segnaposto cure odontoiatriche e odontoiatria infantile",
+      "items": [
+        {
+          "label": "Conservativa (otturazioni)",
+          "href": "/conservativa-otturazioni/"
+        },
+        {
+          "label": "Endodonzia (devitalizzazioni)",
+          "href": "/endodonzia-devitalizzazioni/"
+        },
+        {
+          "label": "Pedodonzia (odontoiatria infantile)",
+          "href": "/pedodonzia-odontoiatria-infantile/"
+        }
+      ]
+    },
+    {
+      "id": "ortodonzia-funzione",
+      "label": "Ortodonzia e funzione",
+      "image": "/assets/placeholders/trattamenti-ortodonzia.svg",
+      "imageAlt": "Segnaposto ortodonzia, gnatologia e funzione",
+      "items": [
+        {
+          "label": "Ortodonzia e Allineatori invisibili (adulti e bimbi)",
+          "href": "/ortodonzia-allineatori-invisibili/"
+        },
+        {
+          "label": "Gnatologia (disturbi articolazione temporo-mandibolare)",
+          "href": "/gnatologia-articolazione-temporo-mandibolare/"
+        },
+        {
+          "label": "Dispositivi contro il russamento e le apnee notturne",
+          "href": "/dispositivi-russamento-apnee-notturne/"
+        }
+      ]
+    },
+    {
+      "id": "chirurgia-gengive-protesi",
+      "label": "Chirurgia, impianti e protesi",
+      "image": "/assets/placeholders/trattamenti-chirurgia.svg",
+      "imageAlt": "Segnaposto chirurgia, gengive e protesi dentale",
+      "items": [
+        {
+          "label": "Parodontologia (cure gengivali)",
+          "href": "/parodontologia-cure-gengivali/"
+        },
+        {
+          "label": "Protesi fissa e mobile",
+          "href": "/protesi-fissa-mobile/"
+        },
+        {
+          "label": "Chirurgia Stomatologica",
+          "href": "/chirurgia-stomatologica/"
+        },
+        {
+          "label": "Implantologia tradizionale e computer guidata",
+          "href": "/implantologia-tradizionale-computer-guidata/"
+        }
+      ]
+    }
+  ],
+  "treatmentPages": [
+    {
+      "path": "/igiene-orale-prevenzione/",
+      "slug": "igiene-orale-prevenzione",
+      "kind": "treatment",
+      "title": "Igiene orale e Prevenzione - Studio dentistico Federzoni Granata",
+      "navTitle": "Igiene orale e Prevenzione",
+      "description": "Pagina trattamento in preparazione.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Igiene orale e Prevenzione"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina trattamento in preparazione.</p>"
+        }
+      ]
+    },
+    {
+      "path": "/sbiancamento/",
+      "slug": "sbiancamento",
+      "kind": "treatment",
+      "title": "Sbiancamento - Studio dentistico Federzoni Granata",
+      "navTitle": "Sbiancamento",
+      "description": "Pagina trattamento in preparazione.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Sbiancamento"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina trattamento in preparazione.</p>"
+        }
+      ]
+    },
+    {
+      "path": "/conservativa-otturazioni/",
+      "slug": "conservativa-otturazioni",
+      "kind": "treatment",
+      "title": "Conservativa (otturazioni) - Studio dentistico Federzoni Granata",
+      "navTitle": "Conservativa (otturazioni)",
+      "description": "Pagina trattamento in preparazione.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Conservativa (otturazioni)"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina trattamento in preparazione.</p>"
+        }
+      ]
+    },
+    {
+      "path": "/endodonzia-devitalizzazioni/",
+      "slug": "endodonzia-devitalizzazioni",
+      "kind": "treatment",
+      "title": "Endodonzia (devitalizzazioni) - Studio dentistico Federzoni Granata",
+      "navTitle": "Endodonzia (devitalizzazioni)",
+      "description": "Pagina trattamento in preparazione.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Endodonzia (devitalizzazioni)"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina trattamento in preparazione.</p>"
+        }
+      ]
+    },
+    {
+      "path": "/pedodonzia-odontoiatria-infantile/",
+      "slug": "pedodonzia-odontoiatria-infantile",
+      "kind": "treatment",
+      "title": "Pedodonzia (odontoiatria infantile) - Studio dentistico Federzoni Granata",
+      "navTitle": "Pedodonzia (odontoiatria infantile)",
+      "description": "Pagina trattamento in preparazione.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Pedodonzia (odontoiatria infantile)"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina trattamento in preparazione.</p>"
+        }
+      ]
+    },
+    {
+      "path": "/ortodonzia-allineatori-invisibili/",
+      "slug": "ortodonzia-allineatori-invisibili",
+      "kind": "treatment",
+      "title": "Ortodonzia e Allineatori invisibili (adulti e bimbi) - Studio dentistico Federzoni Granata",
+      "navTitle": "Ortodonzia e Allineatori invisibili (adulti e bimbi)",
+      "description": "Pagina trattamento in preparazione.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Ortodonzia e Allineatori invisibili (adulti e bimbi)"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina trattamento in preparazione.</p>"
+        }
+      ]
+    },
+    {
+      "path": "/estetica-diretta-faccette-composito/",
+      "slug": "estetica-diretta-faccette-composito",
+      "kind": "treatment",
+      "title": "Estetica diretta (faccette in composito) - Studio dentistico Federzoni Granata",
+      "navTitle": "Estetica diretta (faccette in composito)",
+      "description": "Pagina trattamento in preparazione.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Estetica diretta (faccette in composito)"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina trattamento in preparazione.</p>"
+        }
+      ]
+    },
+    {
+      "path": "/parodontologia-cure-gengivali/",
+      "slug": "parodontologia-cure-gengivali",
+      "kind": "treatment",
+      "title": "Parodontologia (cure gengivali) - Studio dentistico Federzoni Granata",
+      "navTitle": "Parodontologia (cure gengivali)",
+      "description": "Pagina trattamento in preparazione.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Parodontologia (cure gengivali)"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina trattamento in preparazione.</p>"
+        }
+      ]
+    },
+    {
+      "path": "/protesi-fissa-mobile/",
+      "slug": "protesi-fissa-mobile",
+      "kind": "treatment",
+      "title": "Protesi fissa e mobile - Studio dentistico Federzoni Granata",
+      "navTitle": "Protesi fissa e mobile",
+      "description": "Pagina trattamento in preparazione.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Protesi fissa e mobile"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina trattamento in preparazione.</p>"
+        }
+      ]
+    },
+    {
+      "path": "/estetica-indiretta-faccette-porcellana/",
+      "slug": "estetica-indiretta-faccette-porcellana",
+      "kind": "treatment",
+      "title": "Estetica Indiretta (faccette in porcellana) - Studio dentistico Federzoni Granata",
+      "navTitle": "Estetica Indiretta (faccette in porcellana)",
+      "description": "Pagina trattamento in preparazione.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Estetica Indiretta (faccette in porcellana)"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina trattamento in preparazione.</p>"
+        }
+      ]
+    },
+    {
+      "path": "/chirurgia-stomatologica/",
+      "slug": "chirurgia-stomatologica",
+      "kind": "treatment",
+      "title": "Chirurgia Stomatologica - Studio dentistico Federzoni Granata",
+      "navTitle": "Chirurgia Stomatologica",
+      "description": "Pagina trattamento in preparazione.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Chirurgia Stomatologica"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina trattamento in preparazione.</p>"
+        }
+      ]
+    },
+    {
+      "path": "/implantologia-tradizionale-computer-guidata/",
+      "slug": "implantologia-tradizionale-computer-guidata",
+      "kind": "treatment",
+      "title": "Implantologia tradizionale e computer guidata - Studio dentistico Federzoni Granata",
+      "navTitle": "Implantologia tradizionale e computer guidata",
+      "description": "Pagina trattamento in preparazione.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Implantologia tradizionale e computer guidata"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina trattamento in preparazione.</p>"
+        }
+      ]
+    },
+    {
+      "path": "/gnatologia-articolazione-temporo-mandibolare/",
+      "slug": "gnatologia-articolazione-temporo-mandibolare",
+      "kind": "treatment",
+      "title": "Gnatologia (disturbi articolazione temporo-mandibolare) - Studio dentistico Federzoni Granata",
+      "navTitle": "Gnatologia (disturbi articolazione temporo-mandibolare)",
+      "description": "Pagina trattamento in preparazione.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Gnatologia (disturbi articolazione temporo-mandibolare)"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina trattamento in preparazione.</p>"
+        }
+      ]
+    },
+    {
+      "path": "/dispositivi-russamento-apnee-notturne/",
+      "slug": "dispositivi-russamento-apnee-notturne",
+      "kind": "treatment",
+      "title": "Dispositivi contro il russamento e le apnee notturne - Studio dentistico Federzoni Granata",
+      "navTitle": "Dispositivi contro il russamento e le apnee notturne",
+      "description": "Pagina trattamento in preparazione.",
+      "hasContactForm": false,
+      "blocks": [
+        {
+          "type": "heading",
+          "level": 1,
+          "text": "Dispositivi contro il russamento e le apnee notturne"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Pagina trattamento in preparazione.</p>"
+        }
+      ]
+    }
+  ],
   "pages": [
     {
       "path": "/",
@@ -4234,5 +4868,5 @@ export const site = {
   ]
 } as const;
 
-export type SitePage = (typeof site.pages)[number];
+export type SitePage = (typeof site.pages)[number] | (typeof site.navigationPages)[number] | (typeof site.treatmentPages)[number];
 export type ContentBlock = SitePage['blocks'][number];

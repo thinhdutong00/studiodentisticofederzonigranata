@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="title desc">
+  <title id="title">Segnaposto trattamenti chirurgia</title>
+  <desc id="desc">Illustrazione astratta nei colori blu, acqua e verde del brand.</desc>
+  <rect width="640" height="420" fill="#f5f7f8"/>
+  <rect x="48" y="52" width="544" height="316" rx="26" fill="#ffffff"/>
+  <rect x="108" y="120" width="174" height="174" rx="28" fill="#0c4da2"/>
+  <path d="M150 206h90M195 161v90" stroke="#ffffff" stroke-width="20" stroke-linecap="round"/>
+  <circle cx="412" cy="178" r="64" fill="#7db9c5" opacity="0.8"/>
+  <circle cx="472" cy="238" r="78" fill="#87a83d" opacity="0.24"/>
+  <path d="M344 306h174" stroke="#0c4da2" stroke-width="14" stroke-linecap="round" opacity="0.9"/>
+  <path d="M344 334h122" stroke="#7db9c5" stroke-width="14" stroke-linecap="round" opacity="0.85"/>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="title desc">
+  <title id="title">Segnaposto trattamenti prevenzione</title>
+  <desc id="desc">Illustrazione astratta nei colori blu e acqua del brand.</desc>
+  <rect width="640" height="420" fill="#eef7f9"/>
+  <rect x="48" y="52" width="544" height="316" rx="26" fill="#ffffff"/>
+  <circle cx="184" cy="176" r="78" fill="#7db9c5" opacity="0.72"/>
+  <circle cx="274" cy="226" r="104" fill="#347cc2" opacity="0.16"/>
+  <path d="M392 122h96c22 0 40 18 40 40v96c0 22-18 40-40 40h-96c-22 0-40-18-40-40v-96c0-22 18-40 40-40Z" fill="#0c4da2"/>
+  <path d="M400 210h80M440 170v80" stroke="#ffffff" stroke-width="20" stroke-linecap="round"/>
+  <path d="M120 312h174" stroke="#0c4da2" stroke-width="14" stroke-linecap="round" opacity="0.9"/>
+  <path d="M120 340h250" stroke="#7db9c5" stroke-width="14" stroke-linecap="round" opacity="0.85"/>
+</svg>

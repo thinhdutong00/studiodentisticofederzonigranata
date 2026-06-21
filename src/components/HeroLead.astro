@@ -27,9 +27,17 @@ const {
       <p class="eyebrow">{kicker}</p>
       <h1>{title}</h1>
       {description && <p class="hero-description">{description}</p>}
+      <div class="hero-actions" aria-label="Azioni principali">
+        <a class="button" href="#contatti">Richiedi informazioni</a>
+        <a class="button button-outline button-on-dark" href="#digitale">Scopri le tecnologie</a>
+      </div>
       {showForm && <PillForm variant="compact" />}
       <TrustBar compact={compact} />
     </div>
+    <aside class="hero-signal" aria-label="Percorso di cura">
+      <span>2 sedi</span>
+      <p>Un unico percorso digitale, dalla visita alla progettazione del sorriso.</p>
+    </aside>
     <a class="hero-scroll-cue" href="#digitale" aria-label="Vai alla sezione Il Digitale">
       <img src="/assets/original/2021/03/arrow-scrolldown-black.png" alt="" loading="eager" />
       <span class="sr-only">Scroll down</span>

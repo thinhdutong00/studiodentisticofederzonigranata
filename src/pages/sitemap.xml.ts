@@ -2,7 +2,7 @@ import { site } from '../data/site';
 
 export async function GET({ site: astroSite }: { site: URL }) {
   const base = astroSite || new URL('https://studiodentisticofederzonigranata.vercel.app');
-  const urls = site.pages
+  const urls = [...site.pages, ...site.navigationPages, ...site.treatmentPages]
     .map((page) => {
       const loc = new URL(page.path, base).toString();
       return `<url><loc>${loc}</loc></url>`;

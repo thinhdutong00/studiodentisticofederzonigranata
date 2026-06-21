@@ -1,7 +1,137 @@
 ---
 import { site } from '../data/site';
 
-const navigation = site.navigation.filter((item) => item.label !== 'Home');
+const beforeTreatment = [
+  { label: 'prima visita', href: '/prima-visita/' },
+];
+
+const afterTreatment = [
+  { label: 'urgenze', href: '/urgenze/' },
+];
+
+const treatmentMenu = site.treatmentMenu;
+const menuImages = [
+  '/assets/placeholders/trattamenti-prevenzione.svg',
+  '/assets/placeholders/trattamenti-cure.svg',
+  '/assets/placeholders/trattamenti-ortodonzia.svg',
+  '/assets/placeholders/trattamenti-chirurgia.svg',
+];
+
+const menuImageOverrides: Record<string, { image: string; imageAlt: string; imagePosition?: string }> = {
+  Estetica: {
+    image: '/assets/menu/casi-clinici-estetica.jpg',
+    imageAlt: 'Donna che sorride allo specchio durante una visita estetica',
+    imagePosition: '45% 52%',
+  },
+  Protesi: {
+    image: '/assets/menu/casi-clinici-protesi.png',
+    imageAlt: 'Progettazione digitale di una protesi dentale al computer',
+    imagePosition: '54% 50%',
+  },
+  Parodontologia: {
+    image: '/assets/menu/casi-clinici-parodontologia.png',
+    imageAlt: 'Controllo parodontale su gengive e denti',
+    imagePosition: '54% 48%',
+  },
+  Implantologia: {
+    image: '/assets/menu/casi-clinici-implantologia.png',
+    imageAlt: 'Impianto dentale con corona e gengiva',
+    imagePosition: '50% 52%',
+  },
+  Ortodonzia: {
+    image: '/assets/menu/casi-clinici-ortodonzia.png',
+    imageAlt: 'Allineatore trasparente applicato sul sorriso',
+    imagePosition: '52% 50%',
+  },
+  Conservativa: {
+    image: '/assets/menu/casi-clinici-conservativa.png',
+    imageAlt: 'Restauro conservativo su molare',
+    imagePosition: '52% 48%',
+  },
+  Endodonzia: {
+    image: '/assets/menu/casi-clinici-endodonzia.png',
+    imageAlt: 'Trattamento endodontico su sezione di dente',
+    imagePosition: '50% 48%',
+  },
+  Video: {
+    image: '/assets/menu/casi-clinici-video.jpg',
+    imageAlt: 'Equipe odontoiatrica durante una procedura clinica',
+    imagePosition: '48% 45%',
+  },
+};
+
+const detailDescriptions: Record<string, string> = {
+  'Convenzioni dirette': 'Informazioni sulle convenzioni che permettono la gestione diretta delle prestazioni con enti, fondi o assicurazioni convenzionate.',
+  'Convenzioni indirette': 'Indicazioni per pazienti che desiderano richiedere rimborsi o agevolazioni tramite la propria assicurazione o cassa sanitaria.',
+  Estetica: 'Raccolta di casi dedicati all’armonia del sorriso, al colore, alla forma e alla naturalezza del risultato finale.',
+  Protesi: 'Esempi di riabilitazioni protesiche fisse e mobili, pensate per recuperare funzione masticatoria, stabilità ed estetica.',
+  Parodontologia: 'Casi legati alla salute delle gengive e dei tessuti di sostegno, con percorsi per stabilizzare e proteggere il sorriso.',
+  Implantologia: 'Percorsi clinici con impianti dentali, dalla progettazione alla riabilitazione, anche con approccio digitale guidato.',
+  Ortodonzia: 'Casi di allineamento dentale e correzione funzionale per adulti e bambini, con apparecchi tradizionali o allineatori.',
+  Conservativa: 'Interventi dedicati al recupero dei denti naturali tramite restauri, otturazioni e ricostruzioni conservative.',
+  Endodonzia: 'Casi di cura canalare e salvataggio del dente, quando la polpa dentale è compromessa da carie profonde o traumi.',
+  Video: 'Contenuti video e materiali visuali per osservare più da vicino percorsi, risultati e dettagli dei trattamenti eseguiti.',
+  'Chi siamo': 'Una panoramica sullo studio, sul metodo di lavoro e sull’approccio con cui accompagniamo adulti e bambini nei percorsi odontoiatrici.',
+  'Strumentazioni e attrezzature tecniche': 'Approfondimento sulle tecnologie, sulle attrezzature e sugli strumenti digitali utilizzati per diagnosi, cura e pianificazione.',
+  'Orari e sedi': 'Dettagli pratici su sedi, recapiti, orari di apertura e modalità per raggiungere lo studio di Modena e quello di Reggio Emilia.',
+  FAQ: 'Risposte alle domande più frequenti su visite, trattamenti, appuntamenti, urgenze e organizzazione dello studio.',
+};
+
+const slugFromHref = (href: string) => href.replaceAll('/', '') || 'pagina';
+const itemCategory = (item: { label: string; href: string }, index: number, imageAltPrefix: string) => {
+  const imageOverride = menuImageOverrides[item.label];
+
+  return {
+    id: slugFromHref(item.href),
+    label: item.label,
+    description: detailDescriptions[item.label] || 'Pagina dedicata',
+    image: imageOverride?.image || menuImages[index % menuImages.length],
+    imageAlt: imageOverride?.imageAlt || `${imageAltPrefix} ${item.label}`,
+    imagePosition: imageOverride?.imagePosition,
+    items: [{ ...item, description: 'Pagina dedicata' }],
+  };
+};
+
+const secondaryMenus = [
+  {
+    id: 'conventions',
+    title: 'Convenzioni',
+    triggerLabel: 'convenzioni',
+    href: '/convenzioni/',
+    panelId: 'conventions-sub-menu',
+    tabLabel: 'Categorie convenzioni',
+    kicker: 'Convenzioni',
+    categories: [
+      { label: 'Convenzioni dirette', href: '/convenzioni-dirette/' },
+      { label: 'Convenzioni indirette', href: '/convenzioni-indirette/' },
+    ].map((item, index) => itemCategory(item, index, 'Segnaposto convenzioni')),
+  },
+  {
+    id: 'clinical',
+    title: 'Casi clinici',
+    triggerLabel: 'casi clinici',
+    href: '/casi-clinici/',
+    panelId: 'clinical-sub-menu',
+    tabLabel: 'Categorie casi clinici',
+    kicker: 'Casi clinici',
+    categories: site.clinicalLinks.map((item, index) => itemCategory(item, index, 'Segnaposto casi clinici')),
+  },
+  {
+    id: 'information',
+    title: 'Informazioni',
+    triggerLabel: 'informazioni',
+    href: '/informazioni/',
+    panelId: 'information-sub-menu',
+    tabLabel: 'Categorie informazioni',
+    kicker: 'Informazioni',
+    categories: [
+      { label: 'Chi siamo', href: '/chi-siamo/' },
+      { label: 'Strumentazioni e attrezzature tecniche', href: '/strumentazioni-attrezzature-tecniche/' },
+      { label: 'Orari e sedi', href: '/orari-e-sedi/' },
+      { label: 'FAQ', href: '/faq/' },
+    ].map((item, index) => itemCategory(item, index, 'Segnaposto informazioni')),
+  },
+];
 ---
 
 <header class="site-header">
@@ -9,14 +139,428 @@ const navigation = site.navigation.filter((item) => item.label !== 'Home');
     <a class="brand" href="/" aria-label={site.name}>
       <img src={site.logo} alt="Studio dentistico Federzoni Granata" width="400" height="52" />
     </a>
-    <nav class="primary-nav" aria-label="Navigazione principale">
-      {navigation.map((item) => <a href={item.href}>{item.label}</a>)}
+    <nav id="primary-navigation" class="primary-nav" aria-label="Navigazione principale" data-mobile-menu-panel>
+      {beforeTreatment.map((item) => <a class="primary-nav-link" href={item.href}>{item.label}</a>)}
+      <div class="nav-mega" data-mega-menu data-menu-title="Trattamenti">
+        <a
+          class="primary-nav-link primary-nav-trigger"
+          href="/trattamenti/"
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-controls="treatments-mega-menu"
+          data-mega-trigger
+        >
+          trattamenti
+          <span class="nav-caret" aria-hidden="true"></span>
+        </a>
+        <div class="mobile-drilldown-bar">
+          <button class="mobile-menu-back" type="button" data-mobile-menu-back>
+            <span aria-hidden="true">‹</span>
+            Menu principale
+          </button>
+          <h2 class="mobile-drilldown-title" data-mobile-drilldown-title>Trattamenti</h2>
+        </div>
+        <div id="treatments-mega-menu" class="mega-menu" data-mega-panel>
+          <div class="mega-menu-tabs" role="tablist" aria-label="Categorie trattamenti">
+            {treatmentMenu.map((category, index) => (
+              <button
+                id={`treatment-tab-${category.id}`}
+                class:list={['mega-tab', index === 0 && 'is-active']}
+                type="button"
+                role="tab"
+                aria-selected={index === 0 ? 'true' : 'false'}
+                aria-controls={`treatment-panel-${category.id}`}
+                tabindex={index === 0 ? '0' : '-1'}
+                data-treatment-tab
+                data-target={`treatment-panel-${category.id}`}
+              >
+                <span class="mega-tab-label">{category.label}</span>
+                <span class="mega-tab-count">{category.items.length} trattamenti</span>
+              </button>
+            ))}
+          </div>
+          <div class="mega-menu-content">
+            {treatmentMenu.map((category, index) => (
+              <section
+                id={`treatment-panel-${category.id}`}
+                class:list={['mega-menu-panel', index === 0 && 'is-active']}
+                role="tabpanel"
+                aria-labelledby={`treatment-tab-${category.id}`}
+                hidden={index !== 0}
+                data-treatment-panel
+              >
+                <div class="mega-treatment-grid">
+                  {category.items.map((item) => (
+                    <a class="treatment-card" href={item.href}>
+                      <span class="treatment-card-icon" aria-hidden="true"></span>
+                      <span class="treatment-card-copy">
+                        <span>{item.label}</span>
+                        <small>Pagina in preparazione</small>
+                      </span>
+                    </a>
+                  ))}
+                </div>
+                <aside class="mega-feature mega-feature-image-only" aria-label={`Immagine ${category.label}`}>
+                  <img src={category.image} alt={category.imageAlt} loading="lazy" />
+                </aside>
+              </section>
+            ))}
+          </div>
+        </div>
+      </div>
+      {secondaryMenus.slice(0, 2).map((navMenu) => (
+        <div class="nav-mega" data-mega-menu data-menu-title={navMenu.title}>
+          <a
+            class="primary-nav-link primary-nav-trigger"
+            href={navMenu.href}
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls={navMenu.panelId}
+            data-mega-trigger
+          >
+            {navMenu.triggerLabel}
+            <span class="nav-caret" aria-hidden="true"></span>
+          </a>
+          <div class="mobile-drilldown-bar">
+            <button class="mobile-menu-back" type="button" data-mobile-menu-back>
+              <span aria-hidden="true">‹</span>
+              Menu principale
+            </button>
+            <h2 class="mobile-drilldown-title" data-mobile-drilldown-title>{navMenu.title}</h2>
+          </div>
+          <div id={navMenu.panelId} class="mega-menu" data-mega-panel>
+            <div class="mega-menu-tabs" role="tablist" aria-label={navMenu.tabLabel}>
+              {navMenu.categories.map((category, index) => (
+                <a
+                  id={`${navMenu.id}-tab-${category.id}`}
+                  class:list={['mega-tab', 'mega-tab-link', index === 0 && 'is-active']}
+                  href={category.items[0].href}
+                  role="tab"
+                  aria-selected={index === 0 ? 'true' : 'false'}
+                  aria-controls={`${navMenu.id}-panel-${category.id}`}
+                  tabindex={index === 0 ? '0' : '-1'}
+                  data-treatment-tab
+                  data-target={`${navMenu.id}-panel-${category.id}`}
+                >
+                  <span class="mega-tab-label">{category.label}</span>
+                  <span class="mega-tab-count">Vai alla pagina</span>
+                </a>
+              ))}
+            </div>
+            <div class="mega-menu-content">
+              {navMenu.categories.map((category, index) => (
+                <section
+                  id={`${navMenu.id}-panel-${category.id}`}
+                  class:list={['mega-menu-panel', 'mega-menu-panel-detail', index === 0 && 'is-active']}
+                  role="tabpanel"
+                  aria-labelledby={`${navMenu.id}-tab-${category.id}`}
+                  hidden={index !== 0}
+                  data-treatment-panel
+                >
+                  <div class="detail-menu-copy">
+                    <p class="detail-menu-kicker">{navMenu.kicker}</p>
+                    <h3>{category.label}</h3>
+                    <p>{category.description}</p>
+                    <a class="detail-menu-cta" href={category.items[0].href}>Vai alla pagina</a>
+                  </div>
+                  <aside class="mega-feature mega-feature-image-only" aria-label={`Immagine ${category.label}`}>
+                    <img
+                      src={category.image}
+                      alt={category.imageAlt}
+                      loading="lazy"
+                      style={category.imagePosition ? `object-position: ${category.imagePosition};` : undefined}
+                    />
+                  </aside>
+                </section>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+      {afterTreatment.map((item) => <a class="primary-nav-link" href={item.href}>{item.label}</a>)}
+      {secondaryMenus.slice(2).map((navMenu) => (
+        <div class="nav-mega" data-mega-menu data-menu-title={navMenu.title}>
+          <a
+            class="primary-nav-link primary-nav-trigger"
+            href={navMenu.href}
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls={navMenu.panelId}
+            data-mega-trigger
+          >
+            {navMenu.triggerLabel}
+            <span class="nav-caret" aria-hidden="true"></span>
+          </a>
+          <div class="mobile-drilldown-bar">
+            <button class="mobile-menu-back" type="button" data-mobile-menu-back>
+              <span aria-hidden="true">‹</span>
+              Menu principale
+            </button>
+            <h2 class="mobile-drilldown-title" data-mobile-drilldown-title>{navMenu.title}</h2>
+          </div>
+          <div id={navMenu.panelId} class="mega-menu" data-mega-panel>
+            <div class="mega-menu-tabs" role="tablist" aria-label={navMenu.tabLabel}>
+              {navMenu.categories.map((category, index) => (
+                <a
+                  id={`${navMenu.id}-tab-${category.id}`}
+                  class:list={['mega-tab', 'mega-tab-link', index === 0 && 'is-active']}
+                  href={category.items[0].href}
+                  role="tab"
+                  aria-selected={index === 0 ? 'true' : 'false'}
+                  aria-controls={`${navMenu.id}-panel-${category.id}`}
+                  tabindex={index === 0 ? '0' : '-1'}
+                  data-treatment-tab
+                  data-target={`${navMenu.id}-panel-${category.id}`}
+                >
+                  <span class="mega-tab-label">{category.label}</span>
+                  <span class="mega-tab-count">Vai alla pagina</span>
+                </a>
+              ))}
+            </div>
+            <div class="mega-menu-content">
+              {navMenu.categories.map((category, index) => (
+                <section
+                  id={`${navMenu.id}-panel-${category.id}`}
+                  class:list={['mega-menu-panel', 'mega-menu-panel-detail', index === 0 && 'is-active']}
+                  role="tabpanel"
+                  aria-labelledby={`${navMenu.id}-tab-${category.id}`}
+                  hidden={index !== 0}
+                  data-treatment-panel
+                >
+                  <div class="detail-menu-copy">
+                    <p class="detail-menu-kicker">{navMenu.kicker}</p>
+                    <h3>{category.label}</h3>
+                    <p>{category.description}</p>
+                    <a class="detail-menu-cta" href={category.items[0].href}>Vai alla pagina</a>
+                  </div>
+                  <aside class="mega-feature mega-feature-image-only" aria-label={`Immagine ${category.label}`}>
+                    <img
+                      src={category.image}
+                      alt={category.imageAlt}
+                      loading="lazy"
+                      style={category.imagePosition ? `object-position: ${category.imagePosition};` : undefined}
+                    />
+                  </aside>
+                </section>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+      <a class="button button-small mobile-menu-cta" href="/prima-visita/">Prenota visita</a>
     </nav>
     <div class="header-actions">
-      <nav class="social-nav" aria-label="Canali social">
-        {site.social.map((item) => <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={item.label}>{item.label.slice(0, 2)}</a>)}
-      </nav>
-      <a class="button button-small header-cta" href="/#contatti">Richiedi Info</a>
+      <a class="button button-small header-cta" href="/prima-visita/">Prenota visita</a>
     </div>
+    <button
+      class="mobile-menu-trigger"
+      type="button"
+      aria-label="Apri menu"
+      aria-expanded="false"
+      aria-controls="primary-navigation"
+      data-mobile-menu-trigger
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
   </div>
 </header>
+
+<script>
+  const setupMegaMenus = () => {
+    const header = document.querySelector('.site-header');
+    const mobileTrigger = document.querySelector('[data-mobile-menu-trigger]');
+    const mobilePanel = document.querySelector('[data-mobile-menu-panel]');
+    const menus = document.querySelectorAll('[data-mega-menu]');
+    const mobileQuery = window.matchMedia('(max-width: 900px)');
+
+    const syncMobilePanelState = () => {
+      if (!mobileQuery.matches || !mobilePanel) return;
+
+      const menuList = Array.from(menus);
+      mobilePanel.classList.toggle('has-drilldown', menuList.some((menu) => menu.classList.contains('is-open')));
+      mobilePanel.classList.toggle('has-detail', menuList.some((menu) => menu.classList.contains('is-detail-open')));
+    };
+
+    const setMobileOpen = (isOpen) => {
+      header?.classList.toggle('mobile-menu-open', isOpen);
+      mobileTrigger?.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      mobileTrigger?.setAttribute('aria-label', isOpen ? 'Chiudi menu' : 'Apri menu');
+
+      if (!isOpen) {
+        mobilePanel?.classList.remove('has-drilldown', 'has-detail');
+        menus.forEach((menu) => {
+          menu.classList.remove('is-open', 'is-detail-open');
+          menu.querySelector('[data-mega-trigger]')?.setAttribute('aria-expanded', 'false');
+          const mobileTitle = menu.querySelector('[data-mobile-drilldown-title]');
+          if (mobileTitle) mobileTitle.textContent = menu.dataset.menuTitle || 'Menu';
+        });
+      }
+    };
+
+    if (mobileTrigger && mobilePanel && mobileTrigger.dataset.ready !== 'true') {
+      mobileTrigger.dataset.ready = 'true';
+
+      mobileTrigger.addEventListener('click', (event) => {
+        event.preventDefault();
+        setMobileOpen(!header?.classList.contains('mobile-menu-open'));
+      });
+
+      mobilePanel.addEventListener('click', (event) => {
+        const target = event.target;
+        if (
+          target instanceof Element &&
+          target.closest('a') &&
+          !target.closest('[data-mega-trigger]') &&
+          !target.closest('[data-treatment-tab]')
+        ) {
+          setMobileOpen(false);
+        }
+      });
+
+      document.addEventListener('click', (event) => {
+        const target = event.target;
+        if (target instanceof Node && header && !header.contains(target)) {
+          setMobileOpen(false);
+        }
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') setMobileOpen(false);
+      });
+
+      mobileQuery.addEventListener('change', () => setMobileOpen(false));
+    }
+
+    menus.forEach((menu) => {
+      if (menu.dataset.ready === 'true') return;
+      menu.dataset.ready = 'true';
+
+      const trigger = menu.querySelector('[data-mega-trigger]');
+      const mobileBack = menu.querySelector('[data-mobile-menu-back]');
+      const mobileTitle = menu.querySelector('[data-mobile-drilldown-title]');
+      const defaultMobileTitle = menu.dataset.menuTitle || 'Menu';
+      const tabButtons = Array.from(menu.querySelectorAll('[data-treatment-tab]'));
+      const tabPanels = Array.from(menu.querySelectorAll('[data-treatment-panel]'));
+
+      const setOpen = (isOpen) => {
+        if (isOpen) {
+          menus.forEach((otherMenu) => {
+            if (otherMenu === menu) return;
+            otherMenu.classList.remove('is-open', 'is-detail-open');
+            otherMenu.querySelector('[data-mega-trigger]')?.setAttribute('aria-expanded', 'false');
+            const otherTitle = otherMenu.querySelector('[data-mobile-drilldown-title]');
+            if (otherTitle) otherTitle.textContent = otherMenu.dataset.menuTitle || 'Menu';
+          });
+        }
+
+        menu.classList.toggle('is-open', isOpen);
+        trigger?.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+
+        if (mobileQuery.matches) {
+          if (!isOpen) {
+            menu.classList.remove('is-detail-open');
+            if (mobileTitle) mobileTitle.textContent = defaultMobileTitle;
+          }
+
+          syncMobilePanelState();
+        }
+      };
+
+      const activateTab = (activeTab) => {
+        const targetId = activeTab.dataset.target;
+
+        tabButtons.forEach((tab) => {
+          const isActive = tab === activeTab;
+          tab.classList.toggle('is-active', isActive);
+          tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          tab.setAttribute('tabindex', isActive ? '0' : '-1');
+        });
+
+        tabPanels.forEach((panel) => {
+          const isActive = panel.id === targetId;
+          panel.classList.toggle('is-active', isActive);
+          panel.hidden = !isActive;
+        });
+      };
+
+      const setMobileDetail = (activeTab) => {
+        const label = activeTab.querySelector('.mega-tab-label')?.textContent?.trim() || activeTab.textContent?.trim() || 'Trattamenti';
+        menu.classList.add('is-detail-open');
+        syncMobilePanelState();
+        if (mobileTitle) mobileTitle.textContent = label;
+      };
+
+      trigger?.addEventListener('click', (event) => {
+        if (mobileQuery.matches) {
+          event.preventDefault();
+          const shouldOpen = !menu.classList.contains('is-open');
+          if (shouldOpen) mobilePanel?.classList.remove('has-detail');
+          setOpen(shouldOpen);
+        }
+      });
+
+      mobileBack?.addEventListener('click', () => {
+        if (mobileQuery.matches) setOpen(false);
+      });
+
+      menu.addEventListener('mouseenter', () => {
+        if (!mobileQuery.matches) setOpen(true);
+      });
+
+      menu.addEventListener('mouseleave', () => {
+        if (!mobileQuery.matches) {
+          setOpen(false);
+
+          const activeElement = document.activeElement;
+          if (activeElement instanceof HTMLElement && menu.contains(activeElement)) {
+            activeElement.blur();
+          }
+        }
+      });
+
+      menu.addEventListener('focusin', () => setOpen(true));
+
+      menu.addEventListener('focusout', () => {
+        window.setTimeout(() => {
+          if (!mobileQuery.matches && !menu.contains(document.activeElement)) {
+            setOpen(false);
+          }
+        }, 0);
+      });
+
+      tabButtons.forEach((tab) => {
+        tab.addEventListener('click', (event) => {
+          activateTab(tab);
+          if (mobileQuery.matches) {
+            event.preventDefault();
+            setMobileDetail(tab);
+          }
+        });
+        tab.addEventListener('mouseenter', () => {
+          if (!mobileQuery.matches) activateTab(tab);
+        });
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!menu.contains(event.target)) setOpen(false);
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          setOpen(false);
+          trigger?.focus();
+        }
+      });
+
+      mobileQuery.addEventListener('change', () => setOpen(false));
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupMegaMenus, { once: true });
+  } else {
+    setupMegaMenus();
+  }
+</script>
