@@ -9,7 +9,49 @@ const afterTreatment = [
   { label: 'urgenze', href: '/urgenze/' },
 ];
 
+const slugFromHref = (href: string) => href.replaceAll('/', '') || 'pagina';
+
+const treatmentOrder = [
+  'Igiene orale e Prevenzione',
+  'Sbiancamento',
+  'Conservativa (otturazioni)',
+  'Endodonzia (devitalizzazioni)',
+  'Pedodonzia (odontoiatria infantile)',
+  'Ortodonzia e Allineatori invisibili (adulti e bimbi)',
+  'Estetica diretta (faccette in composito)',
+  'Parodontologia (cure gengivali)',
+  'Protesi fissa e mobile',
+  'Estetica Indiretta (faccette in porcellana)',
+  'Chirurgia Stomatologica',
+  'Implantologia tradizionale e computer guidata',
+  'Gnatologia (disturbi articolazione temporo-mandibolare)',
+  'Dispositivi contro il russamento e le apnee notturne',
+];
+
+const treatmentMenuLabels: Record<string, string> = {
+  'Estetica diretta (faccette in composito)': 'Faccette in composito',
+  'Estetica Indiretta (faccette in porcellana)': 'Faccette in ceramica',
+};
+
+const treatmentCategoryLabels: Record<string, string> = {
+  'Prevenzione ed estetica': 'Estetica e prevenzione',
+};
+
 const treatmentMenu = site.treatmentMenu;
+const treatmentGroups = treatmentMenu.map((category) => ({
+  ...category,
+  label: treatmentCategoryLabels[category.label] || category.label,
+  items: [...category.items]
+    .sort((a, b) => treatmentOrder.indexOf(a.label) - treatmentOrder.indexOf(b.label))
+    .map((item) => ({
+      ...item,
+      menuLabel: treatmentMenuLabels[item.label] || item.label,
+    })),
+}));
+const treatmentGroupColumns = [
+  treatmentGroups.filter((_, index) => index % 2 === 0),
+  treatmentGroups.filter((_, index) => index % 2 === 1),
+];
 const menuImages = [
   '/assets/placeholders/trattamenti-prevenzione.svg',
   '/assets/placeholders/trattamenti-cure.svg',
@@ -98,7 +140,6 @@ const detailDescriptions: Record<string, string> = {
   FAQ: 'Risposte alle domande più frequenti su visite, trattamenti, appuntamenti, urgenze e organizzazione dello studio.',
 };
 
-const slugFromHref = (href: string) => href.replaceAll('/', '') || 'pagina';
 const itemCategory = (item: { label: string; href: string }, index: number, imageAltPrefix: string) => {
   const imageOverride = menuImageOverrides[item.label];
 
@@ -182,50 +223,21 @@ const secondaryMenus = [
           </button>
           <h2 class="mobile-drilldown-title" data-mobile-drilldown-title>Trattamenti</h2>
         </div>
-        <div id="treatments-mega-menu" class="mega-menu" data-mega-panel>
-          <div class="mega-menu-tabs" role="tablist" aria-label="Categorie trattamenti">
-            {treatmentMenu.map((category, index) => (
-              <button
-                id={`treatment-tab-${category.id}`}
-                class:list={['mega-tab', index === 0 && 'is-active']}
-                type="button"
-                role="tab"
-                aria-selected={index === 0 ? 'true' : 'false'}
-                aria-controls={`treatment-panel-${category.id}`}
-                tabindex={index === 0 ? '0' : '-1'}
-                data-treatment-tab
-                data-target={`treatment-panel-${category.id}`}
-              >
-                <span class="mega-tab-label">{category.label}</span>
-                <span class="mega-tab-count">{category.items.length} trattamenti</span>
-              </button>
-            ))}
-          </div>
-          <div class="mega-menu-content">
-            {treatmentMenu.map((category, index) => (
-              <section
-                id={`treatment-panel-${category.id}`}
-                class:list={['mega-menu-panel', index === 0 && 'is-active']}
-                role="tabpanel"
-                aria-labelledby={`treatment-tab-${category.id}`}
-                hidden={index !== 0}
-                data-treatment-panel
-              >
-                <div class="mega-treatment-grid">
-                  {category.items.map((item) => (
-                    <a class="treatment-card" href={item.href}>
-                      <span class="treatment-card-icon" aria-hidden="true"></span>
-                      <span class="treatment-card-copy">
-                        <span>{item.label}</span>
-                        <small>Pagina in preparazione</small>
-                      </span>
-                    </a>
-                  ))}
-                </div>
-                <aside class="mega-feature mega-feature-image-only" aria-label={`Immagine ${category.label}`}>
-                  <img src={category.image} alt={category.imageAlt} loading="lazy" />
-                </aside>
-              </section>
+        <div id="treatments-mega-menu" class="mega-menu treatments-mega-menu" data-mega-panel>
+          <div class="treatments-menu-grid" aria-label="Lista trattamenti per categoria">
+            {treatmentGroupColumns.map((column) => (
+              <div class="treatment-menu-column">
+                {column.map((category) => (
+                  <section class="treatment-menu-group" aria-labelledby={`treatment-group-${category.id}`}>
+                    <h3 id={`treatment-group-${category.id}`}>{category.label}</h3>
+                    <div class="treatment-menu-group-links">
+                      {category.items.map((item) => (
+                        <a class="treatment-menu-link" href={item.href}>{item.menuLabel}</a>
+                      ))}
+                    </div>
+                  </section>
+                ))}
+              </div>
             ))}
           </div>
         </div>
@@ -569,7 +581,8 @@ const secondaryMenus = [
       tabButtons.forEach((tab) => {
         tab.addEventListener('click', (event) => {
           activateTab(tab);
-          if (mobileQuery.matches) {
+          const isDirectLink = tab instanceof HTMLAnchorElement && tab.dataset.directLink === 'true';
+          if (mobileQuery.matches && !isDirectLink) {
             event.preventDefault();
             setMobileDetail(tab);
           }
