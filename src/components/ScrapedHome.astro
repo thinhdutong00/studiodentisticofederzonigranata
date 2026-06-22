@@ -1,0 +1,778 @@
+---
+import { site } from '../data/site';
+
+const heroImage = '/assets/original/2022/03/dentista-modena-reggio-emilia.jpg';
+
+const quickActions = [
+  { label: 'Cerca una prestazione', href: 'https://centrodimedicina.com/servizi-e-prestazioni/' },
+  { label: 'Cerca un medico', href: 'https://centrodimedicina.com/medici/' },
+  { label: 'Cerca una sede', href: 'https://centrodimedicina.com/sedi/' },
+  { label: 'Prenota', href: 'https://centrodimedicina.com/il-tuo-tempo/' },
+];
+
+const treatmentOrder = [
+  'Igiene orale e Prevenzione',
+  'Sbiancamento',
+  'Conservativa (otturazioni)',
+  'Endodonzia (devitalizzazioni)',
+  'Pedodonzia (odontoiatria infantile)',
+  'Ortodonzia e Allineatori invisibili (adulti e bimbi)',
+  'Estetica diretta (faccette in composito)',
+  'Parodontologia (cure gengivali)',
+  'Protesi fissa e mobile',
+  'Estetica Indiretta (faccette in porcellana)',
+  'Chirurgia Stomatologica',
+  'Implantologia tradizionale e computer guidata',
+  'Gnatologia (disturbi articolazione temporo-mandibolare)',
+  'Dispositivi contro il russamento e le apnee notturne',
+];
+
+const treatmentMenuLabels: Record<string, string> = {
+  'Estetica diretta (faccette in composito)': 'Faccette in composito',
+  'Estetica Indiretta (faccette in porcellana)': 'Faccette in ceramica',
+};
+
+const treatmentDescriptions: Record<string, string> = {
+  'Igiene orale e Prevenzione': 'Controlli periodici, sedute di igiene e indicazioni personalizzate per mantenere denti e gengive in salute.',
+  Sbiancamento: 'Trattamenti professionali per migliorare il colore del sorriso in modo controllato e rispettoso dei tessuti dentali.',
+  'Conservativa (otturazioni)': 'Otturazioni, restauri e ricostruzioni per recuperare i denti danneggiati preservando la struttura naturale.',
+  'Endodonzia (devitalizzazioni)': 'Cure canalari e devitalizzazioni per trattare infezioni profonde e salvare il dente quando possibile.',
+  'Pedodonzia (odontoiatria infantile)': 'Percorsi dedicati ai bambini, dalla prevenzione alle prime cure, con attenzione a serenità e fiducia.',
+  'Ortodonzia e Allineatori invisibili (adulti e bimbi)': 'Soluzioni ortodontiche per adulti e bambini, anche con allineatori trasparenti e piani su misura.',
+  'Estetica diretta (faccette in composito)': 'Faccette e restauri diretti in composito per armonizzare forma, proporzioni e naturalezza del sorriso.',
+  'Parodontologia (cure gengivali)': 'Diagnosi e terapie per gengive e tessuti di sostegno, pensate per stabilizzare e proteggere il sorriso.',
+  'Protesi fissa e mobile': 'Soluzioni protesiche fisse o mobili per recuperare estetica, masticazione e comfort quotidiano.',
+  'Estetica Indiretta (faccette in porcellana)': 'Faccette in ceramica e soluzioni estetiche indirette per risultati resistenti, luminosi e naturali.',
+  'Chirurgia Stomatologica': 'Interventi chirurgici del cavo orale, comprese estrazioni e procedure specialistiche pianificate con cura.',
+  'Implantologia tradizionale e computer guidata': 'Impianti dentali tradizionali o guidati digitalmente per sostituire denti mancanti in modo preciso.',
+  'Gnatologia (disturbi articolazione temporo-mandibolare)': 'Valutazione di articolazione, masticazione e bruxismo per migliorare equilibrio e comfort funzionale.',
+  'Dispositivi contro il russamento e le apnee notturne': 'Dispositivi intraorali personalizzati per contribuire alla gestione di russamento e apnee notturne.',
+};
+
+const services = site.treatmentMenu
+  .flatMap((category) => category.items)
+  .sort((a, b) => treatmentOrder.indexOf(a.label) - treatmentOrder.indexOf(b.label))
+  .map((item) => ({
+    title: treatmentMenuLabels[item.label] || item.label,
+    description: treatmentDescriptions[item.label],
+    href: item.href,
+  }));
+
+const featurePanels = [
+  {
+    title: 'Vicini a te e alle tue esigenze di salute.',
+    text: 'Scopri le nostre sedi.',
+    cta: 'Trova la sede più vicina a te',
+    href: 'https://centrodimedicina.com/sedi/',
+    image: '/assets/original/2021/02/HOME.jpg',
+    alt: 'Studio dentistico',
+    align: 'right',
+  },
+  {
+    title: 'L’attenzione dei migliori specialisti.',
+    text: 'Il nostro team di professionisti a tua disposizione.',
+    cta: 'Trova il medico o il professionista',
+    href: 'https://centrodimedicina.com/medici/',
+    image: '/assets/original/2021/01/LO-STUDIO-scaled.jpg',
+    alt: 'Ambiente dello studio',
+    align: 'left',
+  },
+  {
+    title: 'Tecnologia all’avanguardia per una medicina di precisione.',
+    text: 'Esplora i nostri servizi',
+    cta: 'Esplora i nostri servizi',
+    href: 'https://centrodimedicina.com/servizi-e-prestazioni/',
+    image: '/assets/original/2021/03/IL-DIGITALE-scaled.jpg',
+    alt: 'Tecnologia digitale nello studio',
+    align: 'center',
+  },
+  {
+    title: 'Medicina del lavoro, welfare sanitario e convenzioni.',
+    text: 'Scopri i nostri servizi per i tuoi collaboratori.',
+    cta: 'Fondi e convenzioni',
+    href: 'https://centrodimedicina.com/convenzioni-welfare/',
+    image: '/assets/original/2022/05/dentista-reggio-emilia-modena-3.jpg',
+    alt: 'Studio dentistico Modena e Reggio Emilia',
+    align: 'right',
+  },
+];
+
+const insights = [
+  {
+    category: 'Eventi, News & eventi, Tour della prevenzione',
+    title: 'Villorba: genitori e adolescenti al centro dell’incontro con Osvaldo Poli',
+    href: 'https://centrodimedicina.com/villorba-incontro-osvaldo-poli-genitori-adolescenti/',
+  },
+  {
+    category: 'News & eventi',
+    title: 'Giornate Lignanesi di Medicina e Chirurgia della Riproduzione Umana: appuntamento il 25 e 26 maggio 2026',
+    href: 'https://centrodimedicina.com/giornate-lignanesi-di-medicina-e-chirurgia-della-riproduzione-umana-appuntamento-il-25-e-26-maggio-2026/',
+  },
+  {
+    category: 'News, News & eventi',
+    title: 'PROCTOLive 2026 a Mestre: congresso proctologia',
+    href: 'https://centrodimedicina.com/proctolive-2026-mestre-chirurgia-proctologica/',
+  },
+  {
+    category: 'Benessere fisico, Blog',
+    title: 'Emorroidi: quando preoccuparsi e quando si possono trattare senza chirurgia',
+    href: 'https://centrodimedicina.com/emorroidi-quando-preoccuparsi-e-quando-si-possono-trattare-senza-chirurgia/',
+  },
+  {
+    category: 'Benessere fisico, Blog',
+    title: 'Lipedema: come riconoscerlo e trattarlo. Il ruolo della fisioterapia',
+    href: 'https://centrodimedicina.com/lipedema-come-riconoscerlo-e-trattarlo-il-ruolo-della-fisioterapia/',
+  },
+  {
+    category: 'Blog della salute',
+    title: 'Fertilità e nutrizione',
+    href: 'https://centrodimedicina.com/infiammazione-cronica-fertilita-e-nutrizione-perche-proteggere-la-salute-riproduttiva/',
+  },
+];
+---
+
+<div class="scraped-home">
+  <section class="scraped-hero" aria-label="Centro di medicina" style={`--hero-image: url('${heroImage}')`}>
+    <div class="scraped-hero-shade"></div>
+    <div class="scraped-hero-copy">
+      <p class="scraped-pretitle">Centro di medicina</p>
+      <h1>Il network per la tua salute</h1>
+    </div>
+    <a class="scraped-scroll" href="#aiuto">Scorri</a>
+  </section>
+
+  <section id="aiuto" class="booking-section" aria-labelledby="booking-title">
+    <div class="scraped-wrap booking-grid">
+      <div class="booking-intro">
+        <p class="scraped-eyebrow">Come possiamo aiutarti?</p>
+        <h2 id="booking-title">Prenota o chiedi informazioni.</h2>
+        <p>
+          Hai un fondo?
+          <a href="https://centrodimedicina.com/convenzioni-welfare/#layout_page_accordion_text_5">Scopri le prestazioni convenzionate</a>
+        </p>
+      </div>
+
+      <form class="booking-form" aria-label="Ricerca prestazione">
+        <label>
+          <span>Seleziona una prestazione:</span>
+          <select disabled>
+            <option>Digita il nome della prestazione</option>
+          </select>
+        </label>
+        <label>
+          <span>Seleziona una sede:</span>
+          <select disabled>
+            <option>Qualsiasi sede</option>
+          </select>
+        </label>
+        <label>
+          <span>Seleziona un medico:</span>
+          <select disabled>
+            <option>Qualsiasi medico</option>
+          </select>
+        </label>
+        <button type="button" disabled>Cerca</button>
+        <p>
+          Non conosci il nome della prestazione?
+          <a href="https://centrodimedicina.com/servizi-e-prestazioni/">Consulta l’elenco completo</a>
+          oppure
+          <a href="https://centrodimedicina.com/contatti/">Contattaci</a>
+        </p>
+      </form>
+    </div>
+
+    <nav class="quick-actions scraped-wrap" aria-label="Azioni rapide">
+      {quickActions.map((action) => <a href={action.href}>{action.label}</a>)}
+    </nav>
+  </section>
+
+  <section class="services-section" aria-labelledby="services-title">
+    <div class="scraped-wrap">
+      <div class="scraped-section-head">
+        <p class="scraped-eyebrow">Trattamenti dello studio</p>
+        <h2 id="services-title">I nostri trattamenti</h2>
+      </div>
+      <div class="services-rail">
+        {services.map((service, index) => (
+          <a class="service-card" href={service.href}>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <h3>{service.title}</h3>
+            <p>{service.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <div class="feature-stack">
+    {featurePanels.map((panel) => (
+      <section class:list={['visual-panel', `visual-panel-${panel.align}`]}>
+        <figure>
+          <img src={panel.image} alt={panel.alt} loading="lazy" />
+        </figure>
+        <div class="visual-panel-copy">
+          <h2>{panel.title}</h2>
+          <p>{panel.text}</p>
+          <a href={panel.href}>{panel.cta}</a>
+        </div>
+      </section>
+    ))}
+  </div>
+
+  <section class="insights-section" aria-labelledby="insights-title">
+    <div class="scraped-wrap">
+      <div class="insights-head">
+        <h2 id="insights-title">Approfondimenti</h2>
+        <a href="https://centrodimedicina.com/blog/">Tutti gli articoli</a>
+      </div>
+      <div class="insights-grid">
+        {insights.map((item) => (
+          <a class="insight-card" href={item.href}>
+            <span>{item.category}</span>
+            <h3>{item.title}</h3>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="prefooter-section" aria-label="Newsletter e network">
+    <div class="scraped-wrap prefooter-grid">
+      <div class="newsletter-panel">
+        <h2>La newsletter della salute</h2>
+        <p>
+          Prevenzione, cura, sane abitudini, novità: ricevi periodicamente aggiornamenti utili alla tua salute e benessere dal network Centro di medicina.
+        </p>
+        <form class="newsletter-form">
+          <label>
+            <span>Inserisci la tua email</span>
+            <input type="email" placeholder="Il tuo indirizzo email" />
+          </label>
+          <button type="button">Iscriviti ora</button>
+        </form>
+      </div>
+      <div class="network-panel">
+        <h2>Il network per la tua salute</h2>
+        <p>
+          Affidati a Centro di medicina, una rete di cliniche poliambulatoriali private e convenzionate a servizio delle tue esigenze di salute.
+        </p>
+        <a href="https://centrodimedicina.com/about/">Conosci il nostro gruppo</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+  .scraped-home {
+    --cdm-green: #005924;
+    --cdm-green-deep: #003e1a;
+    --cdm-lime: #99c555;
+    --cdm-action: #78c51c;
+    --cdm-paper: #ffffff;
+    --cdm-soft: #f3f6ef;
+    --cdm-text: #005924;
+    background: var(--cdm-paper);
+    color: var(--cdm-text);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    letter-spacing: -0.01em;
+  }
+
+  .scraped-home :global(a) {
+    color: inherit;
+  }
+
+  .scraped-wrap {
+    width: min(1510px, calc(100% - 30px));
+    margin: 0 auto;
+  }
+
+  .scraped-hero {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background-image: var(--hero-image);
+    background-position: center;
+    background-size: cover;
+    color: #fff;
+    isolation: isolate;
+  }
+
+  .scraped-hero-shade {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(180deg, rgba(0, 55, 22, 0.38), rgba(0, 55, 22, 0.66)),
+      linear-gradient(90deg, rgba(0, 55, 22, 0.7), rgba(0, 55, 22, 0.12) 62%, rgba(0, 55, 22, 0.5));
+  }
+
+  .scraped-hero-copy {
+    width: min(1280px, calc(100% - 30px));
+    margin: 0 auto;
+    padding: 150px 0 120px;
+    text-align: center;
+  }
+
+  .scraped-pretitle,
+  .scraped-eyebrow {
+    margin: 0;
+    font-size: clamp(1rem, 1.1vw, 1.125rem);
+    font-weight: 500;
+    line-height: 1.25;
+    text-transform: uppercase;
+  }
+
+  .scraped-pretitle {
+    margin-bottom: 18px;
+    color: #fff;
+  }
+
+  .scraped-hero h1 {
+    max-width: 13ch;
+    margin: 0 auto;
+    color: #fff;
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(4rem, 10vw, 9rem);
+    font-weight: 400;
+    line-height: 0.9;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+  }
+
+  .scraped-scroll {
+    position: absolute;
+    right: 30px;
+    bottom: 28px;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .booking-section {
+    background: var(--cdm-green);
+    color: #fff;
+    padding: 80px 0 28px;
+  }
+
+  .booking-grid {
+    display: grid;
+    grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.4fr);
+    gap: 48px;
+    align-items: start;
+  }
+
+  .booking-intro h2,
+  .scraped-section-head h2,
+  .insights-head h2,
+  .prefooter-section h2 {
+    margin: 10px 0 0;
+    color: inherit;
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(2rem, 4.8vw, 4.75rem);
+    font-weight: 500;
+    line-height: 1.05;
+  }
+
+  .booking-intro p {
+    max-width: 520px;
+    margin: 24px 0 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: clamp(1.1rem, 1.7vw, 1.6rem);
+    font-weight: 500;
+    line-height: 1.35;
+  }
+
+  .booking-intro a,
+  .booking-form a {
+    color: var(--cdm-lime);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  .booking-form {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    align-items: end;
+  }
+
+  .booking-form label {
+    min-width: 0;
+    display: grid;
+    gap: 8px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .booking-form select,
+  .newsletter-form input {
+    width: 100%;
+    min-height: 58px;
+    border: 1px solid rgba(255, 255, 255, 0.38);
+    border-radius: 0;
+    padding: 0 16px;
+    background: #fff;
+    color: var(--cdm-green);
+    font: inherit;
+  }
+
+  .booking-form button,
+  .newsletter-form button {
+    min-height: 58px;
+    border: 0;
+    padding: 0 24px;
+    background: var(--cdm-action);
+    color: #fff;
+    font: inherit;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .booking-form button:disabled,
+  .booking-form select:disabled {
+    cursor: not-allowed;
+    opacity: 1;
+  }
+
+  .booking-form p {
+    grid-column: 1 / -1;
+    margin: 8px 0 0;
+    color: rgba(255, 255, 255, 0.76);
+  }
+
+  .quick-actions {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    margin-top: 48px;
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  .quick-actions a {
+    min-height: 68px;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 62, 26, 0.72);
+    color: #fff;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .services-section,
+  .insights-section {
+    padding: 96px 0;
+    background: #fff;
+  }
+
+  .scraped-section-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 32px;
+    align-items: end;
+    margin-bottom: 42px;
+  }
+
+  .scraped-section-head .scraped-eyebrow {
+    color: var(--cdm-green);
+  }
+
+  .services-rail {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    background: rgba(0, 89, 36, 0.18);
+  }
+
+  .service-card {
+    min-height: 330px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 28px;
+    background: var(--cdm-soft);
+    color: var(--cdm-green);
+    text-decoration: none;
+    transition: background-color 160ms ease, color 160ms ease;
+  }
+
+  .service-card:hover {
+    background: var(--cdm-green);
+    color: #fff;
+  }
+
+  .service-card span {
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+  }
+
+  .service-card h3 {
+    margin: auto 0 0;
+    color: inherit;
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(1.45rem, 2.2vw, 2.25rem);
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  .service-card p {
+    margin: 0;
+    color: currentColor;
+    font-size: 1rem;
+    line-height: 1.35;
+  }
+
+  .feature-stack {
+    background: var(--cdm-green);
+  }
+
+  .visual-panel {
+    min-height: 82svh;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    background: var(--cdm-green);
+    color: #fff;
+  }
+
+  .visual-panel:nth-child(even) {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  }
+
+  .visual-panel:nth-child(even) figure {
+    order: 2;
+  }
+
+  .visual-panel figure {
+    min-height: 100%;
+    margin: 0;
+  }
+
+  .visual-panel img {
+    width: 100%;
+    height: 100%;
+    min-height: 82svh;
+    object-fit: cover;
+  }
+
+  .visual-panel-copy {
+    align-self: center;
+    padding: clamp(36px, 7vw, 110px);
+  }
+
+  .visual-panel-copy h2 {
+    max-width: 14ch;
+    margin: 0;
+    color: #fff;
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(2.8rem, 5.8vw, 5.6rem);
+    font-weight: 400;
+    line-height: 0.98;
+    text-transform: uppercase;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .visual-panel-copy p {
+    max-width: 520px;
+    margin: 28px 0 0;
+    color: var(--cdm-lime);
+    font-size: clamp(1.15rem, 2vw, 1.75rem);
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .visual-panel-copy a,
+  .network-panel a,
+  .insights-head a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 52px;
+    margin-top: 32px;
+    padding: 0 20px;
+    background: var(--cdm-action);
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .insights-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 42px;
+  }
+
+  .insights-head a {
+    margin-top: 0;
+  }
+
+  .insights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    background: rgba(0, 89, 36, 0.18);
+  }
+
+  .insight-card {
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 26px;
+    background: var(--cdm-soft);
+    color: var(--cdm-green);
+    text-decoration: none;
+  }
+
+  .insight-card span {
+    max-width: 40ch;
+    font-size: 0.78rem;
+    font-weight: 800;
+    line-height: 1.25;
+    text-transform: uppercase;
+  }
+
+  .insight-card h3 {
+    margin: 44px 0 0;
+    color: inherit;
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(1.35rem, 2.2vw, 2rem);
+    font-weight: 500;
+    line-height: 1.08;
+  }
+
+  .prefooter-section {
+    padding: 90px 0;
+    background: var(--cdm-green);
+    color: #fff;
+  }
+
+  .prefooter-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 1px;
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  .newsletter-panel,
+  .network-panel {
+    min-height: 420px;
+    padding: clamp(28px, 5vw, 64px);
+    background: var(--cdm-green-deep);
+  }
+
+  .newsletter-panel p,
+  .network-panel p {
+    max-width: 620px;
+    margin: 24px 0 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+    line-height: 1.45;
+  }
+
+  .newsletter-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+    margin-top: 34px;
+  }
+
+  .newsletter-form label {
+    display: grid;
+    gap: 8px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 1160px) {
+    .booking-grid,
+    .visual-panel,
+    .visual-panel:nth-child(even),
+    .prefooter-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .visual-panel:nth-child(even) figure {
+      order: initial;
+    }
+
+    .booking-form,
+    .services-rail,
+    .insights-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 720px) {
+    .scraped-wrap,
+    .scraped-hero-copy {
+      width: min(100% - 30px, 1510px);
+    }
+
+    .scraped-hero-copy {
+      padding: 120px 0 90px;
+    }
+
+    .scraped-hero h1 {
+      font-size: clamp(3.1rem, 17vw, 5rem);
+    }
+
+    .booking-section,
+    .services-section,
+    .insights-section,
+    .prefooter-section {
+      padding: 58px 0;
+    }
+
+    .booking-form,
+    .quick-actions,
+    .services-rail,
+    .insights-grid,
+    .newsletter-form {
+      grid-template-columns: 1fr;
+    }
+
+    .service-card,
+    .insight-card {
+      min-height: 230px;
+      padding: 24px;
+    }
+
+    .visual-panel,
+    .visual-panel img {
+      min-height: auto;
+    }
+
+    .visual-panel-copy {
+      padding: 34px 15px 58px;
+    }
+
+    .visual-panel-copy h2 {
+      max-width: 12ch;
+      font-size: clamp(2.8rem, 16vw, 4.25rem);
+    }
+
+    .insights-head {
+      display: block;
+    }
+
+    .insights-head a {
+      margin-top: 22px;
+    }
+  }
+</style>

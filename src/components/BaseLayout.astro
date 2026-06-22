@@ -26,7 +26,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     <link rel="canonical" href={canonical} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lato:wght@400;700;900&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/png" href="/assets/original/2020/10/cropped-favicon-32x32.png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/assets/original/2020/10/cropped-favicon-180x180.png" />
     <meta property="og:type" content="website" />
@@ -3675,6 +3675,77 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
     .primary-nav.has-detail .mobile-menu-cta {
       display: none;
+    }
+  }
+
+  .site-header {
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    letter-spacing: -0.01em;
+  }
+
+  .site-header .primary-nav,
+  .site-header .primary-nav > a.primary-nav-link,
+  .site-header .primary-nav-trigger,
+  .site-header .mobile-menu-back,
+  .site-header .mobile-drilldown-title,
+  .site-header .mega-tab,
+  .site-header .primary-nav .mega-tab,
+  .site-header .treatment-menu-group h3,
+  .site-header .primary-nav .treatment-menu-link,
+  .site-header .detail-menu-kicker,
+  .site-header .detail-menu-copy h3,
+  .site-header .detail-menu-copy p,
+  .site-header .header-cta,
+  .site-header .primary-nav .detail-menu-cta,
+  .site-header .primary-nav .mobile-menu-cta {
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  .site-header .primary-nav > a.primary-nav-link,
+  .site-header .primary-nav-trigger {
+    font-size: clamp(0.88rem, 1.05vw, 1rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .site-header .mega-tab,
+  .site-header .primary-nav .mega-tab,
+  .site-header .treatment-menu-group h3,
+  .site-header .detail-menu-copy h3 {
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .site-header .primary-nav .treatment-menu-link,
+  .site-header .detail-menu-copy p:not(.detail-menu-kicker) {
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  .site-header .detail-menu-kicker,
+  .site-header .header-cta,
+  .site-header .primary-nav .detail-menu-cta,
+  .site-header .primary-nav .mobile-menu-cta {
+    font-size: clamp(0.9rem, 1vw, 1rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 900px) {
+    .site-header .primary-nav > a.primary-nav-link,
+    .site-header .primary-nav-trigger,
+    .site-header .mega-tab,
+    .site-header .primary-nav .mega-tab,
+    .site-header .primary-nav .treatment-menu-link {
+      font-size: 1rem;
+      font-weight: 400;
+    }
+
+    .site-header .mobile-drilldown-title {
+      font-size: 1.28rem;
+      font-weight: 500;
     }
   }
 
