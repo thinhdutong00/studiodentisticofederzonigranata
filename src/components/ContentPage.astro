@@ -44,17 +44,15 @@ const imageAt = (index: number, fallbackAlt = '') => {
     : undefined;
 };
 
-const listItemsFromHtml = (html: string) =>
-  Array.from(html.matchAll(/<li>(.*?)<\/li>/g)).map((match) =>
-    match[1]
-      .replace(/<[^>]+>/g, '')
-      .replace(/\s+/g, ' ')
-      .trim(),
-  );
-
 const introParagraphs = [htmlAt(2), htmlAt(3)].filter(Boolean);
 const serviceIntro = htmlAt(4);
-const serviceItems = listItemsFromHtml(htmlAt(5)).map((label) => ({ label }));
+const treatmentItems = site.treatmentMenu.flatMap((category) =>
+  category.items.map((item) => ({
+    label: item.label,
+    href: item.href,
+    description: category.label,
+  })),
+);
 const introImage = imageAt(6, 'Dentista nello studio Federzoni Granata');
 const pathwayItems = [
   { label: 'Prevenzione', description: 'Controlli, igiene e cure conservative per mantenere il sorriso nel tempo.' },
@@ -140,10 +138,9 @@ const videoItems = [
       title={cleanHeading(pageTitle)}
       description={page.description || site.description}
       image={site.heroImage}
-      showForm
     />
 
-    <SectionBand id="trattamenti" eyebrow="Momenti di cura" title={headingAt(1, 'Odontoiatria digitale per adulti e bambini')} lead="Un approccio multidisciplinare per adulti e bambini, con tecnologie digitali e attenzione costante alla relazione con il paziente." tone="cream">
+    <SectionBand id="trattamenti" eyebrow="Percorsi di cura" title="I nostri trattamenti" lead="Un approccio multidisciplinare per adulti e bambini, con tecnologie digitali e attenzione costante alla relazione con il paziente." tone="cream">
       <figure class="media-hero-card">
         <img src={editorialMedia.intro.src} alt={editorialMedia.intro.alt} loading="lazy" />
         <figcaption>{editorialMedia.intro.label}</figcaption>
@@ -163,7 +160,7 @@ const videoItems = [
           <div class="services-panel">
             <p class="eyebrow">Terapie e trattamenti</p>
             <div class="rich-text" set:html={serviceIntro} />
-            <FeatureCards items={serviceItems} />
+            <FeatureCards items={treatmentItems} />
           </div>
         </div>
         {introImage && (

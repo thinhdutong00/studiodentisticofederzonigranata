@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+import { site } from '../data/site';
+
+const title = `Richiesta ricevuta - ${site.name}`;
+const description =
+  'La tua richiesta e stata ricevuta dallo Studio Dentistico Federzoni Granata. La segreteria ti ricontattera per confermare la disponibilita.';
+---
+
+<BaseLayout title={title} description={description} ogImage={site.heroImage} canonicalPath="/thank-you-page/">
+  <section class="thank-you-page" aria-labelledby="thank-you-title">
+    <div class="thank-you-shell">
+      <p class="thank-you-kicker">Richiesta inviata</p>
+      <h1 id="thank-you-title">Grazie, abbiamo ricevuto la tua richiesta.</h1>
+      <p>
+        La segreteria dello Studio Dentistico Federzoni Granata ti ricontattera per verificare i dettagli e confermare data e orario della visita.
+      </p>
+
+      <div class="thank-you-actions">
+        <a class="thank-you-btn thank-you-btn-primary" href="/">Torna alla home</a>
+        <a class="thank-you-btn thank-you-btn-outline" href="/#trattamenti">I nostri trattamenti</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  :global(body) {
+    background: #f5f2ef;
+  }
+
+  .thank-you-page {
+    display: grid;
+    min-height: calc(100vh - var(--nav-height));
+    place-items: center;
+    padding: 80px 0;
+    background: #f5f2ef;
+  }
+
+  .thank-you-shell {
+    width: min(900px, calc(100% - 32px));
+    border: 1px solid rgba(30, 55, 183, 0.1);
+    border-radius: 22px;
+    padding: clamp(28px, 6vw, 64px);
+    background: #fff;
+    box-shadow: 0 26px 70px rgba(15, 31, 99, 0.12);
+    text-align: center;
+  }
+
+  .thank-you-kicker {
+    margin: 0 0 12px;
+    color: #1e37b7;
+    font-family: "Montserrat", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .thank-you-shell h1 {
+    max-width: 760px;
+    margin: 0 auto 18px;
+    color: #0f1f63;
+    font-size: clamp(2.35rem, 6vw, 4.5rem);
+  }
+
+  .thank-you-shell p {
+    max-width: 650px;
+    margin: 0 auto;
+    color: #57606f;
+    font-size: 1.12rem;
+    font-weight: 700;
+    line-height: 1.6;
+  }
+
+  .thank-you-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 34px;
+  }
+
+  .thank-you-btn {
+    display: inline-flex;
+    min-height: 54px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    border-radius: 14px;
+    padding: 14px 24px;
+    font-weight: 900;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+  }
+
+  .thank-you-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .thank-you-btn-primary {
+    background: #1e37b7;
+    color: #fff;
+    box-shadow: 0 18px 34px rgba(30, 55, 183, 0.22);
+  }
+
+  .thank-you-btn-primary:hover {
+    background: #0f1f63;
+    color: #fff;
+  }
+
+  .thank-you-btn-outline {
+    border-color: #dfe5f1;
+    background: #fff;
+    color: #1e37b7;
+  }
+
+  .thank-you-btn-outline:hover {
+    border-color: rgba(30, 55, 183, 0.35);
+    background: #f4f6ff;
+    color: #0f1f63;
+  }
+
+  @media (max-width: 560px) {
+    .thank-you-page {
+      padding: 48px 0;
+    }
+
+    .thank-you-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    .thank-you-btn {
+      width: 100%;
+    }
+  }
+</style>

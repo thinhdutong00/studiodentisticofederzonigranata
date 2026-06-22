@@ -284,7 +284,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<ul><li><a href=\"/chi-siamo/\">Chi siamo</a></li><li><a href=\"/strumentazioni-attrezzature-tecniche/\">Strumentazioni e attrezzature tecniche</a></li><li><a href=\"/orari-e-sedi/\">Orari e sedi</a></li><li><a href=\"/faq/\">FAQ</a></li></ul>"
+          "html": "<ul><li><a href=\"/chi-siamo/\">Chi siamo</a></li><li><a href=\"/strumentazioni-attrezzature-tecniche/\">Qualità e Tecnologia</a></li><li><a href=\"/orari-e-sedi/\">Orari e sedi</a></li><li><a href=\"/faq/\">FAQ</a></li></ul>"
         }
       ]
     },
@@ -312,15 +312,15 @@ export const site = {
       "path": "/strumentazioni-attrezzature-tecniche/",
       "slug": "strumentazioni-attrezzature-tecniche",
       "kind": "navigation",
-      "title": "Strumentazioni e attrezzature tecniche - Studio dentistico Federzoni Granata",
-      "navTitle": "Strumentazioni e attrezzature tecniche",
-      "description": "Pagina dedicata alle strumentazioni e attrezzature tecniche dello Studio Dentistico Federzoni Granata.",
+      "title": "Qualità e Tecnologia - Studio dentistico Federzoni Granata",
+      "navTitle": "Qualità e Tecnologia",
+      "description": "Pagina dedicata alla qualità clinica e alle tecnologie dello Studio Dentistico Federzoni Granata.",
       "hasContactForm": false,
       "blocks": [
         {
           "type": "heading",
           "level": 1,
-          "text": "Strumentazioni e attrezzature tecniche"
+          "text": "Qualità e Tecnologia"
         },
         {
           "type": "paragraph",

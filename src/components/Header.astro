@@ -17,7 +17,7 @@ const menuImages = [
   '/assets/placeholders/trattamenti-chirurgia.svg',
 ];
 
-const menuImageOverrides: Record<string, { image: string; imageAlt: string; imagePosition?: string }> = {
+const menuImageOverrides: Record<string, { image: string; imageAlt: string; imagePosition?: string; imageVariant?: 'square' }> = {
   Estetica: {
     image: '/assets/menu/casi-clinici-estetica.jpg',
     imageAlt: 'Donna che sorride allo specchio durante una visita estetica',
@@ -58,6 +58,27 @@ const menuImageOverrides: Record<string, { image: string; imageAlt: string; imag
     imageAlt: 'Equipe odontoiatrica durante una procedura clinica',
     imagePosition: '48% 45%',
   },
+  'Chi siamo': {
+    image: '/assets/original/2021/02/HOME.jpg',
+    imageAlt: 'Studio Dentistico Federzoni Granata',
+    imagePosition: '50% 50%',
+  },
+  'Qualità e Tecnologia': {
+    image: '/assets/menu/qualita-tecnologia.jpg',
+    imageAlt: 'Paziente durante una scansione radiografica digitale',
+    imagePosition: '50% 18%',
+    imageVariant: 'square',
+  },
+  'Orari e sedi': {
+    image: '/assets/original/2022/05/dentista-reggio-emilia-modena-3.jpg',
+    imageAlt: 'Studi dentistici di Modena e Reggio Emilia',
+    imagePosition: '50% 50%',
+  },
+  FAQ: {
+    image: '/assets/menu/faq.jpg',
+    imageAlt: 'Dentista che spiega l’igiene orale a una bambina',
+    imagePosition: '50% 46%',
+  },
 };
 
 const detailDescriptions: Record<string, string> = {
@@ -72,7 +93,7 @@ const detailDescriptions: Record<string, string> = {
   Endodonzia: 'Casi di cura canalare e salvataggio del dente, quando la polpa dentale è compromessa da carie profonde o traumi.',
   Video: 'Contenuti video e materiali visuali per osservare più da vicino percorsi, risultati e dettagli dei trattamenti eseguiti.',
   'Chi siamo': 'Una panoramica sullo studio, sul metodo di lavoro e sull’approccio con cui accompagniamo adulti e bambini nei percorsi odontoiatrici.',
-  'Strumentazioni e attrezzature tecniche': 'Approfondimento sulle tecnologie, sulle attrezzature e sugli strumenti digitali utilizzati per diagnosi, cura e pianificazione.',
+  'Qualità e Tecnologia': 'Approfondimento sulle tecnologie, sulle attrezzature e sugli strumenti digitali utilizzati per diagnosi, cura e pianificazione.',
   'Orari e sedi': 'Dettagli pratici su sedi, recapiti, orari di apertura e modalità per raggiungere lo studio di Modena e quello di Reggio Emilia.',
   FAQ: 'Risposte alle domande più frequenti su visite, trattamenti, appuntamenti, urgenze e organizzazione dello studio.',
 };
@@ -88,6 +109,7 @@ const itemCategory = (item: { label: string; href: string }, index: number, imag
     image: imageOverride?.image || menuImages[index % menuImages.length],
     imageAlt: imageOverride?.imageAlt || `${imageAltPrefix} ${item.label}`,
     imagePosition: imageOverride?.imagePosition,
+    imageVariant: imageOverride?.imageVariant,
     items: [{ ...item, description: 'Pagina dedicata' }],
   };
 };
@@ -126,7 +148,7 @@ const secondaryMenus = [
     kicker: 'Informazioni',
     categories: [
       { label: 'Chi siamo', href: '/chi-siamo/' },
-      { label: 'Strumentazioni e attrezzature tecniche', href: '/strumentazioni-attrezzature-tecniche/' },
+      { label: 'Qualità e Tecnologia', href: '/strumentazioni-attrezzature-tecniche/' },
       { label: 'Orari e sedi', href: '/orari-e-sedi/' },
       { label: 'FAQ', href: '/faq/' },
     ].map((item, index) => itemCategory(item, index, 'Segnaposto informazioni')),
@@ -263,7 +285,14 @@ const secondaryMenus = [
                     <p>{category.description}</p>
                     <a class="detail-menu-cta" href={category.items[0].href}>Vai alla pagina</a>
                   </div>
-                  <aside class="mega-feature mega-feature-image-only" aria-label={`Immagine ${category.label}`}>
+                  <aside
+                    class:list={[
+                      'mega-feature',
+                      'mega-feature-image-only',
+                      category.imageVariant === 'square' && 'mega-feature-image-square',
+                    ]}
+                    aria-label={`Immagine ${category.label}`}
+                  >
                     <img
                       src={category.image}
                       alt={category.imageAlt}
@@ -333,7 +362,14 @@ const secondaryMenus = [
                     <p>{category.description}</p>
                     <a class="detail-menu-cta" href={category.items[0].href}>Vai alla pagina</a>
                   </div>
-                  <aside class="mega-feature mega-feature-image-only" aria-label={`Immagine ${category.label}`}>
+                  <aside
+                    class:list={[
+                      'mega-feature',
+                      'mega-feature-image-only',
+                      category.imageVariant === 'square' && 'mega-feature-image-square',
+                    ]}
+                    aria-label={`Immagine ${category.label}`}
+                  >
                     <img
                       src={category.image}
                       alt={category.imageAlt}
@@ -347,10 +383,10 @@ const secondaryMenus = [
           </div>
         </div>
       ))}
-      <a class="button button-small mobile-menu-cta" href="/prima-visita/">Prenota visita</a>
+      <a class="button button-small mobile-menu-cta" href="/richiesta/">Prenota visita</a>
     </nav>
     <div class="header-actions">
-      <a class="button button-small header-cta" href="/prima-visita/">Prenota visita</a>
+      <a class="button button-small header-cta" href="/richiesta/">Prenota visita</a>
     </div>
     <button
       class="mobile-menu-trigger"
