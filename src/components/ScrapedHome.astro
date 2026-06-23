@@ -81,6 +81,69 @@ const workplaceFeature = {
   ],
 };
 
+const clinicalCarouselDetails: Record<string, { description: string; image: string; imageAlt: string; imagePosition: string }> = {
+  Estetica: {
+    description: 'Casi dedicati all’armonia del sorriso, al colore, alla forma e alla naturalezza del risultato finale.',
+    image: '/assets/menu/casi-clinici-estetica.jpg',
+    imageAlt: 'Donna che sorride allo specchio durante una visita estetica',
+    imagePosition: '45% 52%',
+  },
+  Protesi: {
+    description: 'Riabilitazioni protesiche fisse e mobili per recuperare funzione masticatoria, stabilità ed estetica.',
+    image: '/assets/menu/casi-clinici-protesi.png',
+    imageAlt: 'Progettazione digitale di una protesi dentale al computer',
+    imagePosition: '54% 50%',
+  },
+  Parodontologia: {
+    description: 'Percorsi dedicati alla salute delle gengive e dei tessuti di sostegno del sorriso.',
+    image: '/assets/menu/casi-clinici-parodontologia.png',
+    imageAlt: 'Controllo parodontale su gengive e denti',
+    imagePosition: '54% 48%',
+  },
+  Implantologia: {
+    description: 'Casi con impianti dentali, dalla progettazione alla riabilitazione anche con approccio digitale.',
+    image: '/assets/menu/casi-clinici-implantologia.png',
+    imageAlt: 'Impianto dentale con corona e gengiva',
+    imagePosition: '50% 52%',
+  },
+  Ortodonzia: {
+    description: 'Allineamenti dentali e correzioni funzionali per adulti e bambini, anche con allineatori.',
+    image: '/assets/menu/casi-clinici-ortodonzia.png',
+    imageAlt: 'Allineatore trasparente applicato sul sorriso',
+    imagePosition: '52% 50%',
+  },
+  Conservativa: {
+    description: 'Restauri, otturazioni e ricostruzioni conservative per recuperare i denti naturali.',
+    image: '/assets/menu/casi-clinici-conservativa.png',
+    imageAlt: 'Restauro conservativo su molare',
+    imagePosition: '52% 48%',
+  },
+  Endodonzia: {
+    description: 'Cure canalari e salvataggio del dente quando carie profonde o traumi compromettono la polpa.',
+    image: '/assets/menu/casi-clinici-endodonzia.png',
+    imageAlt: 'Trattamento endodontico su sezione di dente',
+    imagePosition: '50% 48%',
+  },
+  Video: {
+    description: 'Contenuti video per osservare da vicino percorsi, risultati e dettagli dei trattamenti eseguiti.',
+    image: '/assets/menu/casi-clinici-video.jpg',
+    imageAlt: 'Equipe odontoiatrica durante una procedura clinica',
+    imagePosition: '48% 45%',
+  },
+};
+
+const clinicalCarouselItems = site.clinicalLinks.map((item) => {
+  const details = clinicalCarouselDetails[item.label];
+
+  return {
+    ...item,
+    description: details.description,
+    image: details.image,
+    imageAlt: details.imageAlt,
+    imagePosition: details.imagePosition,
+  };
+});
+
 const locationOffices = site.offices.map((office) => {
   const query = encodeURIComponent(office.address);
   const slug = office.city
@@ -258,6 +321,36 @@ const insights = [
     </div>
   </section>
 
+  <section class="clinical-carousel-section" aria-labelledby="clinical-carousel-title" data-clinical-carousel>
+    <div class="clinical-carousel-head">
+      <p class="scraped-eyebrow">I nostri casi clinici</p>
+      <h2 id="clinical-carousel-title">Casi clinici</h2>
+    </div>
+
+    <div class="clinical-carousel-shell">
+      <button class="clinical-carousel-arrow clinical-carousel-arrow-prev" type="button" aria-label="Scorri i casi clinici precedenti" data-clinical-carousel-prev>
+        <span aria-hidden="true">‹</span>
+      </button>
+
+      <div class="clinical-carousel-track" data-clinical-carousel-track>
+        {clinicalCarouselItems.map((item) => (
+          <a class="clinical-carousel-card" href={item.href} style={`--clinical-card-position: ${item.imagePosition};`}>
+            <img src={item.image} alt={item.imageAlt} loading="lazy" />
+            <span class="clinical-carousel-shade" aria-hidden="true"></span>
+            <span class="clinical-carousel-card-copy">
+              <strong>{item.label}</strong>
+              <small>{item.description}</small>
+            </span>
+          </a>
+        ))}
+      </div>
+
+      <button class="clinical-carousel-arrow clinical-carousel-arrow-next" type="button" aria-label="Scorri i casi clinici successivi" data-clinical-carousel-next>
+        <span aria-hidden="true">›</span>
+      </button>
+    </div>
+  </section>
+
   <section class="insights-section" aria-labelledby="insights-title">
     <div class="scraped-wrap">
       <div class="insights-head">
@@ -386,6 +479,40 @@ const insights = [
   </section>
 
   <script>
+    const clinicalCarousels = document.querySelectorAll('[data-clinical-carousel]');
+
+    clinicalCarousels.forEach((carousel) => {
+      const track = carousel.querySelector('[data-clinical-carousel-track]');
+      const prev = carousel.querySelector('[data-clinical-carousel-prev]');
+      const next = carousel.querySelector('[data-clinical-carousel-next]');
+
+      if (!(track instanceof HTMLElement)) return;
+
+      const getScrollAmount = () => {
+        const card = track.querySelector('.clinical-carousel-card');
+        if (!(card instanceof HTMLElement)) return track.clientWidth * 0.78;
+
+        const styles = window.getComputedStyle(track);
+        const gap = Number.parseFloat(styles.columnGap || styles.gap || '0');
+
+        return card.offsetWidth + gap;
+      };
+
+      requestAnimationFrame(() => {
+        if (track.scrollLeft === 0 && track.scrollWidth > track.clientWidth) {
+          track.scrollLeft = getScrollAmount() * 0.45;
+        }
+      });
+
+      prev?.addEventListener('click', () => {
+        track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+      });
+
+      next?.addEventListener('click', () => {
+        track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+      });
+    });
+
     const locationSections = document.querySelectorAll('[data-locations-map-section]');
 
     locationSections.forEach((section) => {
@@ -876,6 +1003,164 @@ const insights = [
     font-size: clamp(1rem, 1.3vw, 1.2rem);
   }
 
+  .clinical-carousel-section {
+    padding: clamp(96px, 9vw, 148px) 0 clamp(74px, 7vw, 108px);
+    background: #fff;
+    color: var(--cdm-green);
+    overflow: hidden;
+  }
+
+  .clinical-carousel-head {
+    width: min(1510px, calc(100% - 30px));
+    margin: 0 auto clamp(54px, 5vw, 78px);
+    text-align: center;
+  }
+
+  .clinical-carousel-head .scraped-eyebrow {
+    color: var(--cdm-green);
+  }
+
+  .clinical-carousel-head h2 {
+    margin: 18px 0 0;
+    color: inherit;
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(3.4rem, 6.2vw, 7rem);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+
+  .clinical-carousel-shell {
+    position: relative;
+  }
+
+  .clinical-carousel-track {
+    display: flex;
+    gap: clamp(18px, 1.8vw, 32px);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-padding-inline: max(30px, calc((100vw - 1510px) / 2));
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-inline: max(30px, calc((100vw - 1510px) / 2));
+  }
+
+  .clinical-carousel-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .clinical-carousel-card {
+    position: relative;
+    flex: 0 0 clamp(330px, 28vw, 490px);
+    min-height: clamp(440px, 44vw, 610px);
+    display: block;
+    overflow: hidden;
+    border-radius: 8px;
+    color: #fff;
+    scroll-snap-align: center;
+    text-decoration: none;
+    isolation: isolate;
+  }
+
+  .clinical-carousel-card img,
+  .clinical-carousel-shade {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .clinical-carousel-card img {
+    z-index: -2;
+    object-fit: cover;
+    object-position: var(--clinical-card-position, center);
+    transform: scale(1.01);
+    transition: transform 260ms ease;
+  }
+
+  .clinical-carousel-shade {
+    z-index: -1;
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0) 38%, rgba(0, 0, 0, 0.62) 100%),
+      linear-gradient(90deg, rgba(0, 65, 28, 0.12), rgba(0, 65, 28, 0.28));
+  }
+
+  .clinical-carousel-card-copy {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: clamp(24px, 2vw, 34px);
+  }
+
+  .clinical-carousel-card-copy strong {
+    display: block;
+    max-width: 11ch;
+    color: #fff;
+    font-size: clamp(2rem, 2.65vw, 3.1rem);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 0.98;
+  }
+
+  .clinical-carousel-card-copy small {
+    display: block;
+    max-width: 34ch;
+    margin-top: 16px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: clamp(1rem, 1.05vw, 1.15rem);
+    font-weight: 400;
+    line-height: 1.25;
+  }
+
+  .clinical-carousel-card:hover img {
+    transform: scale(1.055);
+  }
+
+  .clinical-carousel-arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 3;
+    width: clamp(54px, 4.1vw, 72px);
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.96);
+    color: var(--cdm-green);
+    box-shadow: 0 18px 44px rgba(0, 40, 25, 0.16);
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition:
+      background-color 160ms ease,
+      color 160ms ease,
+      transform 160ms ease;
+  }
+
+  .clinical-carousel-arrow:hover {
+    background: var(--cdm-green);
+    color: #fff;
+    transform: translateY(-50%) scale(1.04);
+  }
+
+  .clinical-carousel-arrow span {
+    display: block;
+    margin-top: -2px;
+    font-size: clamp(2rem, 2.4vw, 2.7rem);
+    font-weight: 300;
+    line-height: 1;
+  }
+
+  .clinical-carousel-arrow-prev {
+    left: clamp(24px, 4.5vw, 88px);
+  }
+
+  .clinical-carousel-arrow-next {
+    right: clamp(24px, 4.5vw, 88px);
+  }
+
   .network-panel a,
   .insights-head a {
     background: var(--cdm-action);
@@ -1288,6 +1573,11 @@ const insights = [
     .insights-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+
+    .clinical-carousel-card {
+      flex-basis: clamp(310px, 42vw, 430px);
+      min-height: 500px;
+    }
   }
 
   @media (max-width: 720px) {
@@ -1307,6 +1597,7 @@ const insights = [
     .booking-section,
     .services-section,
     .feature-stack,
+    .clinical-carousel-section,
     .insights-section,
     .prefooter-section {
       padding: 58px 0;
@@ -1349,6 +1640,49 @@ const insights = [
 
     .feature-hero-copy h2 {
       font-size: clamp(1.9rem, 9vw, 3rem);
+    }
+
+    .clinical-carousel-head {
+      margin-bottom: 34px;
+    }
+
+    .clinical-carousel-head h2 {
+      font-size: clamp(3rem, 16vw, 4.8rem);
+    }
+
+    .clinical-carousel-track {
+      gap: 16px;
+      padding-inline: 15px;
+      scroll-padding-inline: 15px;
+    }
+
+    .clinical-carousel-card {
+      flex-basis: min(82vw, 360px);
+      min-height: 430px;
+    }
+
+    .clinical-carousel-card-copy {
+      padding: 24px;
+    }
+
+    .clinical-carousel-card-copy strong {
+      font-size: clamp(1.9rem, 9vw, 2.7rem);
+    }
+
+    .clinical-carousel-card-copy small {
+      font-size: 0.98rem;
+    }
+
+    .clinical-carousel-arrow {
+      width: 50px;
+    }
+
+    .clinical-carousel-arrow-prev {
+      left: 18px;
+    }
+
+    .clinical-carousel-arrow-next {
+      right: 18px;
     }
 
     .insights-head {
