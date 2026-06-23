@@ -978,7 +978,7 @@ const insights = [
   .locations-section {
     background: #f7fbfc;
     color: var(--ink);
-    font-family: "Lato", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: inherit;
   }
 
   .locations-layout {
@@ -998,10 +998,10 @@ const insights = [
   .locations-eyebrow {
     margin: 0 0 18px;
     color: var(--blue);
-    font-size: 0.82rem;
-    font-weight: 900;
-    letter-spacing: 0.26em;
-    line-height: 1.2;
+    font-size: clamp(1rem, 1.1vw, 1.125rem);
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1.25;
     text-transform: uppercase;
   }
 
