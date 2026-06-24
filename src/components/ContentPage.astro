@@ -38,6 +38,51 @@ const videoItems = [
   { id: 'isanVOgd-wE', title: 'Implantologia rigenerativa', description: 'Corso teorico pratico di implantologia rigenerativa.' },
   { id: 'gCRq49_54IA', title: 'Visita senza impegno', description: 'Perché diagnosi, prognosi e piano di trattamento richiedono tempo.' },
 ];
+
+const faqItems = [
+  {
+    question: 'Come posso prenotare una visita?',
+    answer: 'Puoi usare il modulo di prenotazione online oppure contattare direttamente lo studio. Dopo la richiesta verrai ricontattato per definire sede, disponibilità e motivo della visita.',
+  },
+  {
+    question: 'Cosa devo portare alla prima visita?',
+    answer: 'Porta eventuali radiografie, referti, bite o documentazione clinica recente. Se non hai esami disponibili, lo studio valuterà durante la visita quali approfondimenti siano necessari.',
+  },
+  {
+    question: 'Lo studio segue anche bambini e ragazzi?',
+    answer: 'Sì, sono disponibili percorsi dedicati ai bambini e agli adolescenti, con attenzione alla prevenzione, alla serenità durante la visita e alla valutazione ortodontica quando indicata.',
+  },
+  {
+    question: 'Posso richiedere una visita urgente?',
+    answer: 'Sì. In caso di dolore, trauma o gonfiore puoi inviare una richiesta o chiamare lo studio: il team ti aiuterà a capire la priorità e la prima disponibilità utile.',
+  },
+  {
+    question: 'Quali trattamenti vengono eseguiti nello studio?',
+    answer: 'Lo studio si occupa di prevenzione, igiene, conservativa, endodonzia, ortodonzia, parodontologia, implantologia, protesi, estetica dentale e altri trattamenti odontoiatrici su piano personalizzato.',
+  },
+  {
+    question: 'Sono disponibili allineatori trasparenti?',
+    answer: 'Sì, gli allineatori trasparenti possono essere valutati per adulti e ragazzi. L’indicazione dipende dalla diagnosi ortodontica e dagli obiettivi clinici del singolo caso.',
+  },
+  {
+    question: 'Lo studio lavora con tecnologie digitali?',
+    answer: 'Sì, vengono utilizzate tecnologie digitali per diagnosi, progettazione e pianificazione dei trattamenti, con l’obiettivo di rendere il percorso più preciso e controllato.',
+  },
+  {
+    question: 'Ci sono sedi a Modena e Reggio Emilia?',
+    answer: 'Sì, lo Studio Dentistico Federzoni Granata riceve nelle sedi di Modena e Reggio Emilia. In fase di prenotazione puoi indicare la sede più comoda per te.',
+  },
+  {
+    question: 'Accettate convenzioni o fondi sanitari?',
+    answer: 'Puoi segnalare eventuali convenzioni, assicurazioni o fondi sanitari al momento della richiesta. Lo studio ti indicherà come procedere in base alla tua situazione.',
+  },
+];
+
+const emergencyHeroImage = '/assets/menu/faq.jpg';
+const emergencyCopy = [
+  'Un dolore improvviso, un trauma o un gonfiore non vanno rimandati. Nelle urgenze dentali lo Studio Dentistico Federzoni Granata ti aiuta a capire rapidamente la priorita del problema e il percorso piu adatto per intervenire.',
+  'Puoi inviare una richiesta dedicata indicando sintomi, intensita del dolore, sede preferita e disponibilita. La segreteria raccogliera le informazioni essenziali e ti ricontattera per organizzare la visita urgente nel modo piu rapido possibile.',
+];
 ---
 
 {page.path === '/' ? (
@@ -91,6 +136,53 @@ const videoItems = [
       <FeatureCards items={clinicalItems} numbered />
     </SectionBand>
   </>
+) : page.path === '/faq/' ? (
+  <>
+    <section class="faq-accordion-section" aria-labelledby="faq-accordion-title">
+      <div class="container faq-accordion-wrap">
+        <header class="faq-accordion-head">
+          <p class="eyebrow">Domande frequenti</p>
+          <h2 id="faq-accordion-title">Risposte rapide prima della visita</h2>
+        </header>
+
+        <div class="faq-accordion-list">
+          {faqItems.map((item) => (
+            <details class="faq-accordion-item">
+              <summary>
+                <span>{item.question}</span>
+                <i aria-hidden="true"></i>
+              </summary>
+              <div class="faq-accordion-answer">
+                <p>{item.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  </>
+) : page.path === '/urgenze/' ? (
+  <>
+    <section class="emergency-hero" aria-labelledby="emergency-title">
+      <div class="emergency-hero-inner">
+        <h1 id="emergency-title">Urgenze dentali</h1>
+        <p>Dolore, trauma o gonfiore: raccontaci cosa sta succedendo e ti ricontatteremo per la prima disponibilita utile.</p>
+      </div>
+    </section>
+
+    <figure class="emergency-media">
+      <img src={emergencyHeroImage} alt="Visita odontoiatrica nello studio dentistico" loading="eager" />
+    </figure>
+
+    <section class="emergency-copy-section" aria-label="Informazioni sulle urgenze dentali">
+      <div class="emergency-copy-wrap">
+        {emergencyCopy.map((paragraph) => <p>{paragraph}</p>)}
+        <div class="emergency-cta">
+          <a href="/prenota-urgenza/">Prenota urgenza</a>
+        </div>
+      </div>
+    </section>
+  </>
 ) : (
   <>
     <section class="page-hero">
@@ -142,3 +234,270 @@ const videoItems = [
     </section>
   </>
 )}
+
+<style>
+  .faq-accordion-section {
+    padding: clamp(72px, 8vw, 122px) 0;
+    background: #fff;
+  }
+
+  .emergency-hero {
+    min-height: clamp(560px, 76vh, 840px);
+    display: grid;
+    place-items: center;
+    padding: clamp(84px, 9vw, 150px) 0 clamp(74px, 8vw, 130px);
+    background: #005924;
+    color: #fff;
+    text-align: center;
+  }
+
+  .emergency-hero-inner {
+    width: min(1520px, calc(100% - 48px));
+    margin: 0 auto;
+  }
+
+  .emergency-hero h1 {
+    margin: 0;
+    color: #fff;
+    font-family: "Lato", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: clamp(4.4rem, 10vw, 12.5rem);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    line-height: 0.88;
+    text-transform: uppercase;
+  }
+
+  .emergency-hero p {
+    max-width: 980px;
+    margin: clamp(28px, 3vw, 46px) auto 0;
+    color: #99c555;
+    font-size: clamp(1.35rem, 2vw, 2rem);
+    font-weight: 700;
+    line-height: 1.18;
+  }
+
+  .emergency-media {
+    height: clamp(460px, 62vw, 940px);
+    margin: 0;
+    overflow: hidden;
+    background: #e9eef1;
+  }
+
+  .emergency-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 42%;
+  }
+
+  .emergency-copy-section {
+    padding: clamp(86px, 10vw, 160px) 0 clamp(88px, 9vw, 150px);
+    background: #fff;
+    color: #005924;
+  }
+
+  .emergency-copy-wrap {
+    width: min(1710px, calc(100% - 48px));
+    margin: 0 auto;
+  }
+
+  .emergency-copy-wrap p {
+    max-width: 1580px;
+    margin: 0;
+    color: #005924;
+    font-family: "Lato", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: clamp(2.4rem, 4.5vw, 5.9rem);
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: 0;
+  }
+
+  .emergency-copy-wrap p + p {
+    margin-top: clamp(30px, 4vw, 64px);
+  }
+
+  .emergency-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(48px, 6vw, 88px);
+  }
+
+  .emergency-cta a {
+    display: inline-flex;
+    min-height: 64px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    padding: 0 34px;
+    background: #005924;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 900;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background-color 160ms ease, transform 160ms ease;
+  }
+
+  .emergency-cta a:hover {
+    background: #347cc2;
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  .faq-accordion-wrap {
+    width: min(1500px, calc(100% - 48px));
+  }
+
+  .faq-accordion-head {
+    max-width: 760px;
+    margin-bottom: clamp(34px, 4vw, 58px);
+  }
+
+  .faq-accordion-head h2 {
+    margin: 0;
+    color: var(--blue-dark);
+    font-size: clamp(2.3rem, 5vw, 5.25rem);
+    line-height: 0.98;
+  }
+
+  .faq-accordion-list {
+    border-top: 2px solid var(--blue-dark);
+  }
+
+  .faq-accordion-item {
+    border-bottom: 2px solid var(--blue-dark);
+  }
+
+  .faq-accordion-item summary {
+    min-height: clamp(82px, 6.3vw, 124px);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 44px;
+    gap: 28px;
+    align-items: center;
+    color: var(--blue-dark);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .faq-accordion-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-accordion-item summary span {
+    font-family: "Lato", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: clamp(1.75rem, 3.1vw, 3.55rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: 0;
+  }
+
+  .faq-accordion-item summary i {
+    position: relative;
+    width: 38px;
+    aspect-ratio: 1;
+    justify-self: end;
+    border-radius: 999px;
+    background: var(--blue-dark);
+    color: #fff;
+    transition: background-color 160ms ease, transform 160ms ease;
+  }
+
+  .faq-accordion-item summary i::before,
+  .faq-accordion-item summary i::after {
+    content: "";
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: 15px;
+    height: 2px;
+    border-radius: 999px;
+    background: currentColor;
+    transform: translate(-50%, -50%);
+  }
+
+  .faq-accordion-item summary i::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+    transition: transform 160ms ease;
+  }
+
+  .faq-accordion-item[open] summary i {
+    background: var(--blue);
+    transform: rotate(90deg);
+  }
+
+  .faq-accordion-item[open] summary i::after {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  .faq-accordion-answer {
+    max-width: 900px;
+    margin: -10px 74px clamp(30px, 4vw, 52px) 0;
+    color: #3d4f56;
+    font-size: clamp(1rem, 1.2vw, 1.25rem);
+    line-height: 1.55;
+  }
+
+  .faq-accordion-answer p {
+    margin: 0;
+  }
+
+  @media (max-width: 720px) {
+    .emergency-hero {
+      min-height: auto;
+      padding: 86px 0 78px;
+    }
+
+    .emergency-hero h1 {
+      font-size: clamp(4rem, 18vw, 6.4rem);
+    }
+
+    .emergency-hero p {
+      font-size: clamp(1.15rem, 5vw, 1.55rem);
+    }
+
+    .emergency-media {
+      height: 470px;
+    }
+
+    .emergency-copy-wrap {
+      width: min(100% - 30px, 1710px);
+    }
+
+    .emergency-copy-wrap p {
+      font-size: clamp(2.05rem, 11vw, 3.4rem);
+      line-height: 1.08;
+    }
+
+    .emergency-cta a {
+      width: 100%;
+    }
+
+    .faq-accordion-wrap {
+      width: min(100% - 30px, 1500px);
+    }
+
+    .faq-accordion-head h2 {
+      font-size: clamp(2.1rem, 12vw, 3.8rem);
+    }
+
+    .faq-accordion-item summary {
+      min-height: 86px;
+      grid-template-columns: minmax(0, 1fr) 36px;
+      gap: 18px;
+    }
+
+    .faq-accordion-item summary span {
+      font-size: clamp(1.35rem, 7vw, 2.1rem);
+    }
+
+    .faq-accordion-item summary i {
+      width: 34px;
+    }
+
+    .faq-accordion-answer {
+      margin: -4px 0 30px;
+      font-size: 1rem;
+    }
+  }
+</style>

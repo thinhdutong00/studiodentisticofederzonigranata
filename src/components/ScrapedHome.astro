@@ -1,7 +1,9 @@
 ---
 import { site } from '../data/site';
+import { featuredPatientReviews } from '../data/reviews';
 
 const heroImage = '/assets/original/2022/03/dentista-modena-reggio-emilia.jpg';
+const starsFor = (rating: number) => `${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}`;
 
 const treatmentOrder = [
   'Igiene orale e Prevenzione',
@@ -54,19 +56,19 @@ const services = site.treatmentMenu
 const specialistFeature = {
   title: 'L’attenzione dei migliori specialisti.',
   text: 'Il nostro team di professionisti a tua disposizione.',
-  cta: 'Trova il medico o il professionista',
-  href: 'https://centrodimedicina.com/medici/',
-  image: '/assets/feature-stack/specialisti.jpg',
-  alt: 'Medico che rassicura un paziente durante una visita',
+  cta: 'Guarda il nostro team completo',
+  href: '/chi-siamo/',
+  image: '/assets/original/2021/02/HOME.jpg',
+  alt: 'Dottor Stefano Granata e Dottoressa Chiara Federzoni nello studio dentistico',
 };
 
 const technologyFeature = {
   titleLead: 'Tecnologia all’avanguardia per una',
-  titleAccent: 'medicina di precisione.',
+  titleAccent: 'cura dentale di precisione.',
   text: 'Esplora i nostri servizi',
-  href: 'https://centrodimedicina.com/servizi-e-prestazioni/',
-  image: '/assets/feature-stack/tecnologia.jpg',
-  alt: 'Tecnologia medica avanzata per diagnosi di precisione',
+  href: '/trattamenti/',
+  image: '/assets/feature-stack/tecnologia-studio.jpg',
+  alt: 'Paziente durante una scansione digitale nello studio dentistico',
 };
 
 const workplaceFeature = {
@@ -132,16 +134,30 @@ const clinicalCarouselDetails: Record<string, { description: string; image: stri
   },
 };
 
-const clinicalCarouselItems = site.clinicalLinks.map((item) => {
-  const details = clinicalCarouselDetails[item.label];
+const clinicalCarouselOrder = [
+  'Video',
+  'Estetica',
+  'Protesi',
+  'Parodontologia',
+  'Implantologia',
+  'Conservativa',
+  'Ortodonzia',
+  'Endodonzia',
+];
 
-  return {
+const clinicalCarouselItems = clinicalCarouselOrder.flatMap((label) => {
+  const item = site.clinicalLinks.find((clinicalLink) => clinicalLink.label === label);
+  const details = clinicalCarouselDetails[label];
+
+  if (!item || !details) return [];
+
+  return [{
     ...item,
     description: details.description,
     image: details.image,
     imageAlt: details.imageAlt,
     imagePosition: details.imagePosition,
-  };
+  }];
 });
 
 const locationOffices = site.offices.map((office) => {
@@ -169,93 +185,19 @@ const locationOffices = site.offices.map((office) => {
   };
 });
 
-const insights = [
-  {
-    category: 'Eventi, News & eventi, Tour della prevenzione',
-    title: 'Villorba: genitori e adolescenti al centro dell’incontro con Osvaldo Poli',
-    href: 'https://centrodimedicina.com/villorba-incontro-osvaldo-poli-genitori-adolescenti/',
-  },
-  {
-    category: 'News & eventi',
-    title: 'Giornate Lignanesi di Medicina e Chirurgia della Riproduzione Umana: appuntamento il 25 e 26 maggio 2026',
-    href: 'https://centrodimedicina.com/giornate-lignanesi-di-medicina-e-chirurgia-della-riproduzione-umana-appuntamento-il-25-e-26-maggio-2026/',
-  },
-  {
-    category: 'News, News & eventi',
-    title: 'PROCTOLive 2026 a Mestre: congresso proctologia',
-    href: 'https://centrodimedicina.com/proctolive-2026-mestre-chirurgia-proctologica/',
-  },
-  {
-    category: 'Benessere fisico, Blog',
-    title: 'Emorroidi: quando preoccuparsi e quando si possono trattare senza chirurgia',
-    href: 'https://centrodimedicina.com/emorroidi-quando-preoccuparsi-e-quando-si-possono-trattare-senza-chirurgia/',
-  },
-  {
-    category: 'Benessere fisico, Blog',
-    title: 'Lipedema: come riconoscerlo e trattarlo. Il ruolo della fisioterapia',
-    href: 'https://centrodimedicina.com/lipedema-come-riconoscerlo-e-trattarlo-il-ruolo-della-fisioterapia/',
-  },
-  {
-    category: 'Blog della salute',
-    title: 'Fertilità e nutrizione',
-    href: 'https://centrodimedicina.com/infiammazione-cronica-fertilita-e-nutrizione-perche-proteggere-la-salute-riproduttiva/',
-  },
-];
 ---
 
 <div class="scraped-home">
-  <section class="scraped-hero" aria-label="Centro di medicina" style={`--hero-image: url('${heroImage}')`}>
+  <section class="scraped-hero" aria-label="Studio dentistico Federzoni Granata" style={`--hero-image: url('${heroImage}')`}>
     <div class="scraped-hero-shade"></div>
     <div class="scraped-hero-copy">
-      <p class="scraped-pretitle">Centro di medicina</p>
-      <h1>Il network per la tua salute</h1>
+      <p class="scraped-pretitle">Studio dentistico Federzoni Granata</p>
+      <h1>Odontoiatria digitale per adulti e bambini</h1>
     </div>
-    <a class="scraped-scroll" href="#aiuto">Scorri</a>
+    <a class="scraped-scroll" href="#trattamenti-home">Scorri</a>
   </section>
 
-  <section id="aiuto" class="booking-section" aria-labelledby="booking-title">
-    <div class="scraped-wrap booking-grid">
-      <div class="booking-intro">
-        <p class="scraped-eyebrow">Come possiamo aiutarti?</p>
-        <h2 id="booking-title">Prenota o chiedi informazioni.</h2>
-        <p>
-          Hai un fondo?
-          <a href="https://centrodimedicina.com/convenzioni-welfare/#layout_page_accordion_text_5">Scopri le prestazioni convenzionate</a>
-        </p>
-      </div>
-
-      <form class="booking-form" aria-label="Ricerca prestazione">
-        <label>
-          <span>Seleziona una prestazione:</span>
-          <select disabled>
-            <option>Digita il nome della prestazione</option>
-          </select>
-        </label>
-        <label>
-          <span>Seleziona una sede:</span>
-          <select disabled>
-            <option>Qualsiasi sede</option>
-          </select>
-        </label>
-        <label>
-          <span>Seleziona un medico:</span>
-          <select disabled>
-            <option>Qualsiasi medico</option>
-          </select>
-        </label>
-        <button type="button" disabled>Cerca</button>
-        <p>
-          Non conosci il nome della prestazione?
-          <a href="https://centrodimedicina.com/servizi-e-prestazioni/">Consulta l’elenco completo</a>
-          oppure
-          <a href="https://centrodimedicina.com/contatti/">Contattaci</a>
-        </p>
-      </form>
-    </div>
-
-  </section>
-
-  <section class="services-section" aria-labelledby="services-title">
+  <section id="trattamenti-home" class="services-section" aria-labelledby="services-title">
     <div class="scraped-wrap">
       <div class="scraped-section-head">
         <p class="scraped-eyebrow">Trattamenti dello studio</p>
@@ -323,7 +265,7 @@ const insights = [
 
   <section class="clinical-carousel-section" aria-labelledby="clinical-carousel-title" data-clinical-carousel>
     <div class="clinical-carousel-head">
-      <p class="scraped-eyebrow">I nostri casi clinici</p>
+      <p class="scraped-eyebrow">Guarda i nostri</p>
       <h2 id="clinical-carousel-title">Casi clinici</h2>
     </div>
 
@@ -354,41 +296,43 @@ const insights = [
   <section class="insights-section" aria-labelledby="insights-title">
     <div class="scraped-wrap">
       <div class="insights-head">
-        <h2 id="insights-title">Approfondimenti</h2>
-        <a href="https://centrodimedicina.com/blog/">Tutti gli articoli</a>
+        <h2 id="insights-title">I Nostri Pazienti Dicono</h2>
+        <a href="/recensioni/">Tutte le recensioni</a>
       </div>
       <div class="insights-grid">
-        {insights.map((item) => (
-          <a class="insight-card" href={item.href}>
-            <span>{item.category}</span>
-            <h3>{item.title}</h3>
+        {featuredPatientReviews.map((item) => (
+          <a class="insight-card" href="/recensioni/">
+            <div class="review-card-head">
+              {item.avatar ? (
+                <img class="review-avatar" src={item.avatar} alt={`Foto profilo di ${item.author}`} loading="lazy" />
+              ) : (
+                <span class="review-avatar" aria-hidden="true">{item.initials}</span>
+              )}
+              <div class="review-card-person">
+                <strong>{item.author}</strong>
+                <small>Recensione Google • {item.relativeTime}</small>
+              </div>
+            </div>
+            <span class="review-stars" aria-label={`${item.rating} stelle su 5`}>{starsFor(item.rating)}</span>
+            <p class="review-card-copy">{item.text}</p>
           </a>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="prefooter-section" aria-label="Newsletter e network">
-    <div class="scraped-wrap prefooter-grid">
-      <div class="newsletter-panel">
-        <h2>La newsletter della salute</h2>
+  <section class="prefooter-section" aria-labelledby="prefooter-title">
+    <div class="scraped-wrap prefooter-cta">
+      <div class="prefooter-copy">
+        <p class="prefooter-eyebrow">Prenota la tua visita</p>
+        <h2 id="prefooter-title">Il prossimo passo per la salute del tuo sorriso</h2>
         <p>
-          Prevenzione, cura, sane abitudini, novità: ricevi periodicamente aggiornamenti utili alla tua salute e benessere dal network Centro di medicina.
+          Raccontaci le tue esigenze: lo studio ti ricontatterà per indicarti il percorso più adatto e fissare l’appuntamento nella sede più comoda.
         </p>
-        <form class="newsletter-form">
-          <label>
-            <span>Inserisci la tua email</span>
-            <input type="email" placeholder="Il tuo indirizzo email" />
-          </label>
-          <button type="button">Iscriviti ora</button>
-        </form>
       </div>
-      <div class="network-panel">
-        <h2>Il network per la tua salute</h2>
-        <p>
-          Affidati a Centro di medicina, una rete di cliniche poliambulatoriali private e convenzionate a servizio delle tue esigenze di salute.
-        </p>
-        <a href="https://centrodimedicina.com/about/">Conosci il nostro gruppo</a>
+      <div class="prefooter-action">
+        <a class="prefooter-button" href="/richiesta/">Prenota visita</a>
+        <span>Studi a Modena e Reggio Emilia</span>
       </div>
     </div>
   </section>
@@ -498,11 +442,14 @@ const insights = [
         return card.offsetWidth + gap;
       };
 
-      requestAnimationFrame(() => {
+      const setInitialScroll = () => {
         if (track.scrollLeft === 0 && track.scrollWidth > track.clientWidth) {
-          track.scrollLeft = getScrollAmount() * 0.45;
+          track.scrollLeft = getScrollAmount() * 0.62;
         }
-      });
+      };
+
+      requestAnimationFrame(setInitialScroll);
+      window.addEventListener('load', setInitialScroll, { once: true });
 
       prev?.addEventListener('click', () => {
         track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
@@ -607,8 +554,8 @@ const insights = [
     inset: 0;
     z-index: -1;
     background:
-      linear-gradient(180deg, rgba(0, 55, 22, 0.38), rgba(0, 55, 22, 0.66)),
-      linear-gradient(90deg, rgba(0, 55, 22, 0.7), rgba(0, 55, 22, 0.12) 62%, rgba(0, 55, 22, 0.5));
+      linear-gradient(180deg, rgba(7, 18, 32, 0.2), rgba(7, 18, 32, 0.56)),
+      linear-gradient(90deg, rgba(7, 18, 32, 0.45), rgba(7, 18, 32, 0.08) 62%, rgba(7, 18, 32, 0.42));
   }
 
   .scraped-hero-copy {
@@ -618,18 +565,13 @@ const insights = [
     text-align: center;
   }
 
-  .scraped-pretitle,
-  .scraped-eyebrow {
-    margin: 0;
+  .scraped-pretitle {
+    margin: 0 0 18px;
+    color: #fff;
     font-size: clamp(1rem, 1.1vw, 1.125rem);
     font-weight: 500;
     line-height: 1.25;
     text-transform: uppercase;
-  }
-
-  .scraped-pretitle {
-    margin-bottom: 18px;
-    color: #fff;
   }
 
   .scraped-hero h1 {
@@ -656,20 +598,14 @@ const insights = [
     text-transform: uppercase;
   }
 
-  .booking-section {
-    background: var(--blue-dark);
-    color: #fff;
-    padding: 80px 0;
+  .scraped-eyebrow {
+    margin: 0;
+    font-size: clamp(1rem, 1.1vw, 1.125rem);
+    font-weight: 500;
+    line-height: 1.25;
+    text-transform: uppercase;
   }
 
-  .booking-grid {
-    display: grid;
-    grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.4fr);
-    gap: 48px;
-    align-items: start;
-  }
-
-  .booking-intro h2,
   .scraped-section-head h2,
   .insights-head h2,
   .prefooter-section h2 {
@@ -681,79 +617,13 @@ const insights = [
     line-height: 1.05;
   }
 
-  .booking-intro p {
-    max-width: 520px;
-    margin: 24px 0 0;
-    color: rgba(255, 255, 255, 0.82);
-    font-size: clamp(1.1rem, 1.7vw, 1.6rem);
-    font-weight: 500;
-    line-height: 1.35;
-  }
-
-  .booking-intro a,
-  .booking-form a {
-    color: var(--aqua);
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.2em;
-  }
-
-  .booking-form {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 16px;
-    align-items: end;
-  }
-
-  .booking-form label {
-    min-width: 0;
-    display: grid;
-    gap: 8px;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.85rem;
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-
-  .booking-form select,
-  .newsletter-form input {
-    width: 100%;
-    min-height: 58px;
-    border: 1px solid rgba(255, 255, 255, 0.38);
-    border-radius: 0;
-    padding: 0 16px;
-    background: #fff;
-    color: var(--blue-dark);
-    font: inherit;
-  }
-
-  .booking-form button,
-  .newsletter-form button {
-    min-height: 58px;
-    border: 0;
-    padding: 0 24px;
-    background: var(--blue);
-    color: #fff;
-    font: inherit;
-    font-size: 0.95rem;
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-
-  .booking-form button:disabled,
-  .booking-form select:disabled {
-    cursor: not-allowed;
-    opacity: 1;
-  }
-
-  .booking-form p {
-    grid-column: 1 / -1;
-    margin: 8px 0 0;
-    color: rgba(255, 255, 255, 0.76);
-  }
-
   .services-section,
   .insights-section {
     padding: 96px 0;
+    background: #fff;
+  }
+
+  .services-section {
     background: #fff;
   }
 
@@ -769,11 +639,19 @@ const insights = [
     color: var(--cdm-green);
   }
 
+  .services-section .scraped-section-head .scraped-eyebrow {
+    color: #347cc2;
+  }
+
+  .services-section .scraped-section-head h2 {
+    color: var(--blue-dark);
+  }
+
   .services-rail {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1px;
-    background: rgba(0, 89, 36, 0.18);
+    background: rgba(52, 124, 194, 0.22);
   }
 
   .service-card {
@@ -783,26 +661,31 @@ const insights = [
     justify-content: space-between;
     gap: 24px;
     padding: 28px;
-    background: var(--cdm-soft);
-    color: var(--cdm-green);
+    background: #edf7ff;
+    color: #347cc2;
     text-decoration: none;
     transition: background-color 160ms ease, color 160ms ease;
   }
 
   .service-card:hover {
-    background: var(--cdm-green);
+    background: var(--blue-dark);
     color: #fff;
   }
 
   .service-card span {
+    color: #347cc2;
     font-size: 0.82rem;
     font-weight: 800;
     letter-spacing: 0.08em;
   }
 
+  .service-card:hover span {
+    color: #fff;
+  }
+
   .service-card h3 {
     margin: auto 0 0;
-    color: inherit;
+    color: #347cc2;
     font-family: Inter, ui-sans-serif, system-ui, sans-serif;
     font-size: clamp(1.45rem, 2.2vw, 2.25rem);
     font-weight: 500;
@@ -811,9 +694,14 @@ const insights = [
 
   .service-card p {
     margin: 0;
-    color: currentColor;
+    color: #3f4e4d;
     font-size: 1rem;
     line-height: 1.35;
+  }
+
+  .service-card:hover h3,
+  .service-card:hover p {
+    color: #fff;
   }
 
   @media (min-width: 1161px) {
@@ -824,7 +712,7 @@ const insights = [
 
   .feature-stack {
     padding: clamp(70px, 5.25vw, 88px) 0 clamp(72px, 5.35vw, 90px);
-    background: #eef2e4;
+    background: #edf7ff;
     color: var(--cdm-green);
   }
 
@@ -858,6 +746,10 @@ const insights = [
     object-fit: cover;
   }
 
+  .feature-specialists .feature-image img {
+    object-position: 72% center;
+  }
+
   .feature-copy {
     box-sizing: border-box;
     max-width: 610px;
@@ -886,8 +778,13 @@ const insights = [
     font-size: clamp(2.55rem, 4.2vw, 3.75rem);
   }
 
+  .feature-specialists .feature-copy h2 {
+    color: var(--blue-dark);
+  }
+
   .feature-workplace .feature-copy h2 {
     max-width: 16ch;
+    color: var(--blue-dark);
   }
 
   .feature-copy p {
@@ -899,7 +796,6 @@ const insights = [
   }
 
   .feature-button,
-  .network-panel a,
   .insights-head a {
     display: inline-flex;
     align-items: center;
@@ -930,6 +826,28 @@ const insights = [
     border-color: var(--cdm-green);
     background: rgba(0, 89, 36, 0.08);
     color: var(--cdm-green);
+  }
+
+  .feature-specialists .feature-button {
+    border-color: #347cc2;
+    color: #347cc2;
+  }
+
+  .feature-specialists .feature-button:hover {
+    border-color: #347cc2;
+    background: rgba(52, 124, 194, 0.1);
+    color: #347cc2;
+  }
+
+  .feature-workplace .feature-button {
+    border-color: #347cc2;
+    color: #347cc2;
+  }
+
+  .feature-workplace .feature-button:hover {
+    border-color: #347cc2;
+    background: rgba(52, 124, 194, 0.1);
+    color: #347cc2;
   }
 
   .feature-button-list {
@@ -966,6 +884,7 @@ const insights = [
 
   .feature-hero img {
     object-fit: cover;
+    object-position: center 30%;
   }
 
   .feature-hero-shade {
@@ -993,7 +912,7 @@ const insights = [
 
   .feature-hero-copy strong {
     display: block;
-    color: var(--cdm-lime);
+    color: #1e9bff;
     font-weight: 700;
   }
 
@@ -1017,12 +936,12 @@ const insights = [
   }
 
   .clinical-carousel-head .scraped-eyebrow {
-    color: var(--cdm-green);
+    color: #347cc2;
   }
 
   .clinical-carousel-head h2 {
     margin: 18px 0 0;
-    color: inherit;
+    color: var(--blue-dark);
     font-family: Inter, ui-sans-serif, system-ui, sans-serif;
     font-size: clamp(3.4rem, 6.2vw, 7rem);
     font-weight: 400;
@@ -1040,10 +959,10 @@ const insights = [
     gap: clamp(18px, 1.8vw, 32px);
     overflow-x: auto;
     overscroll-behavior-x: contain;
-    scroll-padding-inline: max(30px, calc((100vw - 1510px) / 2));
-    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 0;
+    scroll-snap-type: none;
     scrollbar-width: none;
-    padding-inline: max(30px, calc((100vw - 1510px) / 2));
+    padding-inline: 0;
   }
 
   .clinical-carousel-track::-webkit-scrollbar {
@@ -1058,7 +977,7 @@ const insights = [
     overflow: hidden;
     border-radius: 8px;
     color: #fff;
-    scroll-snap-align: center;
+    scroll-snap-align: start;
     text-decoration: none;
     isolation: isolate;
   }
@@ -1129,7 +1048,7 @@ const insights = [
     border: 0;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.96);
-    color: var(--cdm-green);
+    color: #347cc2;
     box-shadow: 0 18px 44px rgba(0, 40, 25, 0.16);
     cursor: pointer;
     transform: translateY(-50%);
@@ -1140,7 +1059,7 @@ const insights = [
   }
 
   .clinical-carousel-arrow:hover {
-    background: var(--cdm-green);
+    background: #347cc2;
     color: #fff;
     transform: translateY(-50%) scale(1.04);
   }
@@ -1161,9 +1080,8 @@ const insights = [
     right: clamp(24px, 4.5vw, 88px);
   }
 
-  .network-panel a,
   .insights-head a {
-    background: var(--cdm-action);
+    background: #347cc2;
     color: #fff;
     text-transform: uppercase;
   }
@@ -1176,88 +1094,192 @@ const insights = [
     margin-bottom: 42px;
   }
 
+  .insights-head h2 {
+    color: var(--blue-dark);
+  }
+
   .insights-head a {
     margin-top: 0;
+    background: #347cc2;
+  }
+
+  .insights-head a:hover {
+    background: var(--blue-dark);
   }
 
   .insights-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1px;
-    background: rgba(0, 89, 36, 0.18);
+    background: rgba(52, 124, 194, 0.22);
   }
 
   .insight-card {
-    min-height: 250px;
+    min-height: 310px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding: 26px;
-    background: var(--cdm-soft);
-    color: var(--cdm-green);
+    gap: 22px;
+    padding: 28px;
+    background: #edf7ff;
+    color: #347cc2;
     text-decoration: none;
+    transition: background-color 160ms ease, color 160ms ease;
   }
 
-  .insight-card span {
-    max-width: 40ch;
-    font-size: 0.78rem;
+  .insight-card:hover {
+    background: var(--blue-dark);
+    color: #fff;
+  }
+
+  .review-card-head {
+    display: grid;
+    grid-template-columns: 54px minmax(0, 1fr);
+    gap: 16px;
+    align-items: center;
+  }
+
+  .review-avatar {
+    width: 54px;
+    height: 54px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: #d9f0ff;
+    color: var(--blue-dark);
+    font-size: 1rem;
+    font-weight: 900;
+    line-height: 1;
+    object-fit: cover;
+    text-transform: uppercase;
+  }
+
+  .review-card-person {
+    min-width: 0;
+    display: grid;
+    gap: 4px;
+  }
+
+  .review-card-person strong {
+    color: var(--blue-dark);
+    font-family: Montserrat, "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    font-size: 1.05rem;
     font-weight: 800;
+    line-height: 1.15;
+  }
+
+  .review-card-person small {
+    color: #347cc2;
+    font-size: 0.82rem;
+    font-weight: 800;
+    line-height: 1.3;
+  }
+
+  .review-stars {
+    color: #347cc2;
+    font-size: 1.12rem;
+    letter-spacing: 0.08em;
+    line-height: 1;
+  }
+
+  .review-card-copy {
+    margin: 0;
+    color: #3f4e4d;
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(1.15rem, 1.55vw, 1.45rem);
+    font-weight: 500;
+    line-height: 1.28;
+  }
+
+  .insight-card:hover .review-avatar {
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
+  }
+
+  .insight-card:hover .review-card-person strong,
+  .insight-card:hover .review-card-person small,
+  .insight-card:hover .review-stars,
+  .insight-card:hover .review-card-copy {
+    color: #fff;
+  }
+
+  .prefooter-section {
+    padding: clamp(76px, 8vw, 128px) 0;
+    background: #347cc2;
+    color: #fff;
+  }
+
+  .prefooter-cta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: clamp(34px, 6vw, 96px);
+    align-items: center;
+  }
+
+  .prefooter-copy {
+    max-width: 980px;
+  }
+
+  .prefooter-eyebrow {
+    margin: 0 0 18px;
+    color: rgba(255, 255, 255, 0.74);
+    font-size: clamp(0.9rem, 1vw, 1.05rem);
+    font-weight: 800;
+    letter-spacing: 0.08em;
     line-height: 1.25;
     text-transform: uppercase;
   }
 
-  .insight-card h3 {
-    margin: 44px 0 0;
-    color: inherit;
-    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
-    font-size: clamp(1.35rem, 2.2vw, 2rem);
-    font-weight: 500;
-    line-height: 1.08;
+  .prefooter-copy h2 {
+    max-width: 18ch;
   }
 
-  .prefooter-section {
-    padding: 90px 0;
-    background: var(--cdm-green);
-    color: #fff;
-  }
-
-  .prefooter-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 1px;
-    background: rgba(255, 255, 255, 0.18);
-  }
-
-  .newsletter-panel,
-  .network-panel {
-    min-height: 420px;
-    padding: clamp(28px, 5vw, 64px);
-    background: var(--cdm-green-deep);
-  }
-
-  .newsletter-panel p,
-  .network-panel p {
-    max-width: 620px;
-    margin: 24px 0 0;
+  .prefooter-copy p {
+    max-width: 760px;
+    margin: 26px 0 0;
     color: rgba(255, 255, 255, 0.82);
     font-size: clamp(1.05rem, 1.5vw, 1.35rem);
     line-height: 1.45;
   }
 
-  .newsletter-form {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 12px;
-    margin-top: 34px;
+  .prefooter-action {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 14px;
+    justify-self: end;
   }
 
-  .newsletter-form label {
-    display: grid;
-    gap: 8px;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.8rem;
-    font-weight: 700;
+  .prefooter-section .prefooter-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 62px;
+    border-radius: 999px;
+    padding: 0 32px;
+    background: #fff;
+    color: var(--blue-dark);
+    font-size: 1rem;
+    font-weight: 900;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
     text-transform: uppercase;
+    box-shadow: 0 16px 36px rgba(6, 38, 77, 0.22);
+    transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+  }
+
+  .prefooter-section .prefooter-button:hover {
+    background: #e9f4ff;
+    color: var(--blue-dark);
+    transform: translateY(-1px);
+  }
+
+  .prefooter-action span {
+    color: rgba(255, 255, 255, 0.74);
+    font-size: 0.95rem;
+    line-height: 1.35;
+    text-align: right;
   }
 
   .locations-section {
@@ -1303,15 +1325,16 @@ const insights = [
 
   .location-list {
     display: grid;
-    gap: 18px;
+    gap: 16px;
     margin-top: clamp(34px, 4vw, 52px);
   }
 
   .location-card {
-    border: 1px solid rgba(21, 90, 148, 0.14);
+    position: relative;
+    border: 1px solid rgba(52, 124, 194, 0.22);
     border-radius: 8px;
-    background: #fff;
-    box-shadow: 0 18px 44px rgba(32, 54, 72, 0.08);
+    background: linear-gradient(180deg, #fff 0%, #f7fbff 100%);
+    box-shadow: 0 16px 42px rgba(12, 77, 162, 0.08);
     overflow: hidden;
     transition:
       border-color 180ms ease,
@@ -1319,19 +1342,36 @@ const insights = [
       box-shadow 180ms ease;
   }
 
+  .location-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 5px;
+    background: rgba(52, 124, 194, 0.28);
+    transition:
+      background-color 180ms ease,
+      width 180ms ease;
+  }
+
   .location-card-open {
-    border-color: rgba(21, 90, 148, 0.34);
-    box-shadow: 0 22px 54px rgba(21, 90, 148, 0.14);
+    border-color: rgba(52, 124, 194, 0.52);
+    background: #fff;
+    box-shadow: 0 24px 58px rgba(12, 77, 162, 0.13);
+  }
+
+  .location-card-open::before {
+    width: 6px;
+    background: var(--blue-dark);
   }
 
   .location-card-trigger {
     width: 100%;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 28px;
+    grid-template-columns: minmax(0, 1fr) 38px;
     gap: 18px;
     align-items: center;
     border: 0;
-    padding: clamp(22px, 2.4vw, 30px);
+    padding: clamp(22px, 2.4vw, 30px) clamp(22px, 2.4vw, 30px) clamp(22px, 2.4vw, 30px) clamp(26px, 2.7vw, 36px);
     background: transparent;
     color: var(--blue-dark);
     cursor: pointer;
@@ -1355,7 +1395,7 @@ const insights = [
 
   .location-card-trigger small {
     display: block;
-    color: var(--muted);
+    color: #347cc2;
     font-size: 0.78rem;
     font-weight: 900;
     letter-spacing: 0.13em;
@@ -1364,32 +1404,56 @@ const insights = [
   }
 
   .location-card-trigger i {
-    width: 18px;
-    height: 18px;
+    position: relative;
+    width: 38px;
+    height: 38px;
     justify-self: end;
+    border: 1px solid rgba(52, 124, 194, 0.3);
+    border-radius: 999px;
+    background: #fff;
+    color: #347cc2;
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease;
+  }
+
+  .location-card-trigger i::after {
+    content: "";
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: 9px;
+    height: 9px;
     border-right: 2px solid currentColor;
     border-bottom: 2px solid currentColor;
-    transform: rotate(45deg);
+    transform: translate(-50%, -62%) rotate(45deg);
     transition: transform 180ms ease;
   }
 
   .location-card-open .location-card-trigger {
+    border-bottom: 1px solid rgba(52, 124, 194, 0.18);
+    background: linear-gradient(90deg, rgba(237, 247, 255, 0.95), rgba(255, 255, 255, 0));
+    color: var(--blue-dark);
+  }
+
+  .location-card-open .location-card-trigger small {
+    color: #347cc2;
+  }
+
+  .location-card-open .location-card-trigger i {
+    border-color: #347cc2;
     background: #347cc2;
     color: #fff;
   }
 
-  .location-card-open .location-card-trigger small {
-    color: rgba(255, 255, 255, 0.78);
-  }
-
-  .location-card-open .location-card-trigger i {
-    transform: translateY(5px) rotate(225deg);
+  .location-card-open .location-card-trigger i::after {
+    transform: translate(-50%, -35%) rotate(225deg);
   }
 
   .location-card-panel {
     display: grid;
     gap: 18px;
-    padding: clamp(18px, 1.8vw, 24px) clamp(22px, 2.4vw, 30px) clamp(22px, 2.4vw, 30px);
+    padding: clamp(18px, 1.8vw, 24px) clamp(22px, 2.4vw, 30px) clamp(22px, 2.4vw, 30px) clamp(26px, 2.7vw, 36px);
   }
 
   .location-card-panel[hidden] {
@@ -1404,7 +1468,7 @@ const insights = [
   .location-detail span,
   .location-hours p {
     margin: 0;
-    color: var(--blue-dark);
+    color: #347cc2;
     font-size: 0.72rem;
     font-weight: 900;
     letter-spacing: 0.12em;
@@ -1413,7 +1477,7 @@ const insights = [
 
   .location-detail strong,
   .location-detail a {
-    color: var(--ink);
+    color: #24313a;
     font-size: 1rem;
     font-weight: 800;
     line-height: 1.45;
@@ -1431,7 +1495,7 @@ const insights = [
   .location-hours {
     display: grid;
     gap: 10px;
-    border-top: 1px solid rgba(21, 90, 148, 0.14);
+    border-top: 1px solid rgba(52, 124, 194, 0.16);
     padding-top: 18px;
   }
 
@@ -1440,7 +1504,7 @@ const insights = [
     align-items: baseline;
     justify-content: space-between;
     gap: 22px;
-    color: var(--ink);
+    color: #24313a;
     font-size: 0.96rem;
     line-height: 1.3;
   }
@@ -1465,15 +1529,18 @@ const insights = [
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    border: 1px solid rgba(21, 90, 148, 0.22);
+    border: 1px solid rgba(52, 124, 194, 0.28);
     border-radius: 999px;
     padding: 10px 15px;
+    color: var(--blue-dark);
     font-weight: 900;
+    text-decoration: none;
   }
 
   .location-route:hover {
-    border-color: var(--blue);
-    color: var(--blue);
+    border-color: #347cc2;
+    background: rgba(52, 124, 194, 0.09);
+    color: #347cc2;
   }
 
   .locations-map-stack {
@@ -1542,10 +1609,9 @@ const insights = [
   }
 
   @media (max-width: 1160px) {
-    .booking-grid,
     .feature-split,
     .feature-workplace,
-    .prefooter-grid,
+    .prefooter-cta,
     .locations-layout {
       grid-template-columns: 1fr;
     }
@@ -1568,7 +1634,6 @@ const insights = [
       padding-left: 0;
     }
 
-    .booking-form,
     .services-rail,
     .insights-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1578,11 +1643,19 @@ const insights = [
       flex-basis: clamp(310px, 42vw, 430px);
       min-height: 500px;
     }
+
+    .prefooter-action {
+      align-items: flex-start;
+      justify-self: start;
+    }
+
+    .prefooter-action span {
+      text-align: left;
+    }
   }
 
   @media (max-width: 720px) {
-    .scraped-wrap,
-    .scraped-hero-copy {
+    .scraped-wrap {
       width: min(100% - 30px, 1510px);
     }
 
@@ -1594,7 +1667,6 @@ const insights = [
       font-size: clamp(3.1rem, 17vw, 5rem);
     }
 
-    .booking-section,
     .services-section,
     .feature-stack,
     .clinical-carousel-section,
@@ -1603,10 +1675,8 @@ const insights = [
       padding: 58px 0;
     }
 
-    .booking-form,
     .services-rail,
-    .insights-grid,
-    .newsletter-form {
+    .insights-grid {
       grid-template-columns: 1fr;
     }
 
@@ -1627,6 +1697,11 @@ const insights = [
     .feature-button {
       width: 100%;
       min-width: 0;
+    }
+
+    .prefooter-action,
+    .prefooter-button {
+      width: 100%;
     }
 
     .feature-hero {
@@ -1652,8 +1727,8 @@ const insights = [
 
     .clinical-carousel-track {
       gap: 16px;
-      padding-inline: 15px;
-      scroll-padding-inline: 15px;
+      padding-inline: 0;
+      scroll-padding-inline: 0;
     }
 
     .clinical-carousel-card {
@@ -1702,17 +1777,18 @@ const insights = [
     }
 
     .location-card-trigger {
-      grid-template-columns: minmax(0, 1fr) 24px;
+      grid-template-columns: minmax(0, 1fr) 34px;
       gap: 14px;
-      padding: 22px;
+      padding: 22px 20px 22px 26px;
+    }
+
+    .location-card-trigger i {
+      width: 34px;
+      height: 34px;
     }
 
     .location-card-panel {
-      padding: 18px 22px 22px;
-    }
-
-    .newsletter-form {
-      grid-template-columns: 1fr;
+      padding: 18px 20px 22px 26px;
     }
 
     .location-hours-row {

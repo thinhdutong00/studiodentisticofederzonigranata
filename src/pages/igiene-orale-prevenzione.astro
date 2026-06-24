@@ -1,0 +1,767 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+import { site } from '../data/site';
+
+const title = `Igiene orale e prevenzione | ${site.name}`;
+const description =
+  'Percorsi di igiene orale professionale e prevenzione per mantenere denti e gengive in salute nello Studio Dentistico Federzoni Granata.';
+
+const processCards = [
+  {
+    number: '1.',
+    title: 'Valutazione iniziale',
+    text: 'Controllo di denti, gengive e abitudini quotidiane per personalizzare la seduta.',
+  },
+  {
+    number: '2.',
+    title: 'Igiene professionale',
+    text: 'Rimozione di placca, tartaro e pigmentazioni con strumenti scelti in base al caso.',
+  },
+  {
+    number: '3.',
+    title: 'Prevenzione su misura',
+    text: 'Indicazioni pratiche per mantenere il risultato e programmare i controlli periodici.',
+  },
+];
+
+const serviceCards = [
+  {
+    title: 'Seduta di igiene orale',
+    text: 'Pulizia professionale per rimuovere depositi e ridurre l’infiammazione gengivale.',
+    image: '/assets/original/2021/02/HOME.jpg',
+    href: '/richiesta/',
+  },
+  {
+    title: 'Controllo gengivale',
+    text: 'Valutazione dei tessuti di sostegno e dei segnali precoci di sanguinamento o sensibilità.',
+    image: '/assets/menu/casi-clinici-parodontologia.png',
+    href: '/parodontologia-cure-gengivali/',
+  },
+  {
+    title: 'Prevenzione bambini',
+    text: 'Percorsi semplici e rassicuranti per educare i più piccoli alla cura del sorriso.',
+    image: '/assets/original/2026/04/BEA08719-3-scaled.jpg',
+    href: '/pedodonzia-odontoiatria-infantile/',
+  },
+  {
+    title: 'Richiami periodici',
+    text: 'Programmazione dei controlli in base al rischio individuale e alla salute orale.',
+    image: '/assets/original/2022/03/dentista-modena-reggio-emilia.jpg',
+    href: '/richiesta/',
+  },
+];
+
+const preventionRows = [
+  {
+    title: 'Ablazione del tartaro',
+    text: 'Rimozione professionale del tartaro sopra e sotto gengiva, utile per ridurre irritazione, sanguinamento e accumuli difficili da eliminare a casa.',
+  },
+  {
+    title: 'Lucidatura e rimozione pigmentazioni',
+    text: 'Finitura delle superfici dentali per rendere il sorriso più pulito e ridurre le macchie superficiali causate da alimenti, bevande o fumo.',
+  },
+  {
+    title: 'Istruzioni di igiene domiciliare',
+    text: 'Consigli pratici su spazzolino, filo, scovolini e routine quotidiana, calibrati sulle esigenze della bocca del paziente.',
+  },
+  {
+    title: 'Controllo periodico preventivo',
+    text: 'Verifica dello stato di denti, gengive e restauri per intercettare precocemente carie, infiammazioni o altri segnali da monitorare.',
+  },
+];
+
+const faqRows = [
+  {
+    title: 'Ogni quanto fare l’igiene orale professionale?',
+    text: 'La frequenza varia in base alla situazione clinica. In molti casi è consigliato un richiamo ogni sei mesi, ma il piano viene sempre personalizzato.',
+  },
+  {
+    title: 'La seduta è dolorosa?',
+    text: 'Di solito no. In caso di gengive infiammate o sensibilità dentale lo studio adatta tempi, strumenti e modalità per rendere la seduta più confortevole.',
+  },
+  {
+    title: 'Serve anche se non ho dolore?',
+    text: 'Sì. La prevenzione serve proprio a intercettare problemi prima che diventino sintomatici e a mantenere stabile la salute orale nel tempo.',
+  },
+];
+
+const relatedCards = [
+  {
+    title: 'Sbiancamento',
+    text: 'Trattamenti professionali per migliorare il colore del sorriso in modo controllato.',
+    image: '/assets/menu/casi-clinici-estetica.jpg',
+    href: '/sbiancamento/',
+  },
+  {
+    title: 'Parodontologia',
+    text: 'Diagnosi e terapie dedicate alla salute delle gengive e dei tessuti di sostegno.',
+    image: '/assets/menu/casi-clinici-parodontologia.png',
+    href: '/parodontologia-cure-gengivali/',
+  },
+];
+---
+
+<BaseLayout title={title} description={description} ogImage="/assets/original/2022/03/dentista-modena-reggio-emilia.jpg" canonicalPath="/igiene-orale-prevenzione/">
+  <article class="service-template">
+    <section class="service-hero" aria-labelledby="service-title">
+      <div class="service-wrap service-hero-inner">
+        <p>Studio Dentistico Federzoni Granata</p>
+        <h1 id="service-title">Igiene orale e prevenzione</h1>
+        <span>Controlli periodici e sedute professionali per mantenere denti e gengive in salute.</span>
+      </div>
+    </section>
+
+    <figure class="service-main-image">
+      <img src="/assets/original/2022/03/dentista-modena-reggio-emilia.jpg" alt="Dentisti dello studio durante una valutazione clinica digitale" loading="eager" />
+    </figure>
+
+    <section class="service-intro" aria-label="Introduzione">
+      <div class="service-wrap service-intro-copy">
+        <p>
+          L’igiene orale professionale è la base della prevenzione odontoiatrica: aiuta a mantenere
+          denti e gengive sani, riduce il rischio di infiammazioni e permette di intercettare in anticipo
+          piccoli problemi prima che diventino più complessi.
+        </p>
+        <p>
+          Nel nostro studio la seduta viene personalizzata in base alla situazione del paziente, alla
+          sensibilità, alla presenza di tartaro o pigmentazioni e alle abitudini di igiene quotidiana.
+        </p>
+      </div>
+    </section>
+
+    <section class="service-band service-band-compact" aria-labelledby="process-title">
+      <div class="service-wrap">
+        <div class="service-section-head">
+          <p>Igiene orale e prevenzione</p>
+          <a href="/richiesta/">Prenota una visita</a>
+        </div>
+        <div class="process-grid" id="process-title">
+          {processCards.map((card) => (
+            <article class="process-card">
+              <span>{card.number}</span>
+              <h2>{card.title}</h2>
+              <p>{card.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="service-band" aria-labelledby="services-title">
+      <div class="service-wrap">
+        <div class="service-section-head">
+          <p>Prestazioni</p>
+          <a href="/trattamenti/">Tutti i trattamenti</a>
+        </div>
+        <h2 class="service-band-title" id="services-title">Cosa comprende il percorso</h2>
+        <div class="image-card-rail">
+          {serviceCards.map((card) => (
+            <a class="image-card" href={card.href}>
+              <img src={card.image} alt="" loading="lazy" />
+              <span aria-hidden="true"></span>
+              <strong>{card.title}</strong>
+              <small>{card.text}</small>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="service-band" aria-labelledby="details-title">
+      <div class="service-wrap">
+        <div class="service-section-head">
+          <p>Dettagli del trattamento</p>
+          <a href="/richiesta/">Richiedi informazioni</a>
+        </div>
+        <div class="detail-list" id="details-title">
+          {preventionRows.map((row) => (
+            <article class="detail-row">
+              <div>
+                <h2>{row.title}</h2>
+                <p>{row.text}</p>
+              </div>
+              <a href="/richiesta/">Prenota una visita</a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="service-band service-band-soft" aria-labelledby="faq-title">
+      <div class="service-wrap">
+        <div class="service-section-head">
+          <p>Domande frequenti</p>
+          <a href="/faq/">Vai alle FAQ</a>
+        </div>
+        <h2 class="service-band-title" id="faq-title">Informazioni utili</h2>
+        <div class="accordion-list">
+          {faqRows.map((row, index) => (
+            <details class="accordion-item" open={index === 0}>
+              <summary>
+                <span>{row.title}</span>
+                <i aria-hidden="true"></i>
+              </summary>
+              <p>{row.text}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="service-band" aria-labelledby="related-title">
+      <div class="service-wrap">
+        <p class="service-center-kicker">Continua a scoprire i nostri trattamenti</p>
+        <div class="related-grid" id="related-title">
+          {relatedCards.map((card) => (
+            <a class="related-card" href={card.href}>
+              <img src={card.image} alt="" loading="lazy" />
+              <span aria-hidden="true"></span>
+              <strong>{card.title}</strong>
+              <small>{card.text}</small>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="service-band service-offices" aria-labelledby="offices-title">
+      <div class="service-wrap">
+        <h2 id="offices-title">Sedi correlate</h2>
+        <div class="office-lines">
+          {site.offices.map((office) => (
+            <a href={office.href}>
+              <span>{office.city}</span>
+              <small>{office.address}</small>
+              <i aria-hidden="true">+</i>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="service-newsletter" aria-label="Prenotazione">
+      <div class="service-wrap service-newsletter-box">
+        <div>
+          <h2>Vuoi programmare la tua seduta?</h2>
+          <p>Lascia i tuoi dati: lo studio ti ricontatterà per definire sede e disponibilità.</p>
+        </div>
+        <a href="/richiesta/">Prenota visita</a>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .service-template {
+    --service-blue: var(--blue-dark);
+    --service-accent: #347cc2;
+    --service-soft: #edf7ff;
+    --service-line: rgba(52, 124, 194, 0.24);
+    background: #fff;
+    color: #3f4e4d;
+  }
+
+  .service-wrap {
+    width: min(100% - 48px, 1510px);
+    margin: 0 auto;
+  }
+
+  .service-hero {
+    background: var(--service-blue);
+    color: #fff;
+  }
+
+  .service-hero-inner {
+    min-height: clamp(300px, 35vw, 460px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(48px, 7vw, 98px) 0;
+  }
+
+  .service-hero p,
+  .service-hero span {
+    margin: 0;
+    max-width: 700px;
+    color: rgba(255, 255, 255, 0.76);
+    font-size: clamp(0.82rem, 1vw, 1rem);
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    line-height: 1.35;
+  }
+
+  .service-hero p {
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+
+  .service-hero h1 {
+    max-width: 940px;
+    margin: 0 0 18px;
+    color: #fff;
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(3.4rem, 7.8vw, 8.2rem);
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 0.88;
+    text-transform: uppercase;
+  }
+
+  .service-main-image {
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .service-main-image img {
+    width: 100%;
+    height: clamp(300px, 42vw, 620px);
+    object-fit: cover;
+    object-position: 50% 42%;
+  }
+
+  .service-intro {
+    padding: clamp(44px, 6vw, 86px) 0;
+  }
+
+  .service-intro-copy {
+    max-width: 1060px;
+  }
+
+  .service-intro p {
+    margin: 0;
+    color: var(--service-blue);
+    font-size: clamp(1.15rem, 2vw, 2rem);
+    font-weight: 800;
+    letter-spacing: 0;
+    line-height: 1.18;
+  }
+
+  .service-intro p + p {
+    margin-top: 18px;
+  }
+
+  .service-band {
+    padding: clamp(44px, 6vw, 86px) 0;
+    border-top: 1px solid var(--service-line);
+  }
+
+  .service-band-compact {
+    padding-top: 28px;
+  }
+
+  .service-band-soft {
+    background: #f7fbff;
+  }
+
+  .service-section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 26px;
+  }
+
+  .service-section-head p {
+    margin: 0;
+    color: var(--service-accent);
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .service-section-head a,
+  .detail-row > a,
+  .service-newsletter-box > a {
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--service-accent);
+    padding: 0 18px;
+    background: var(--service-accent);
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 900;
+    line-height: 1.1;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+  }
+
+  .service-section-head a:hover,
+  .detail-row > a:hover,
+  .service-newsletter-box > a:hover {
+    border-color: var(--service-blue);
+    background: var(--service-blue);
+    color: #fff;
+  }
+
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .process-card {
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: clamp(22px, 3vw, 36px);
+    background: var(--service-soft);
+    color: var(--service-blue);
+  }
+
+  .process-card span {
+    display: block;
+    margin-bottom: 20px;
+    color: var(--service-accent);
+    font-size: clamp(3rem, 5vw, 5.1rem);
+    font-weight: 800;
+    line-height: 0.82;
+  }
+
+  .process-card h2,
+  .service-band-title {
+    margin: 0;
+    color: var(--service-blue);
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1;
+  }
+
+  .process-card h2 {
+    max-width: 9ch;
+    font-size: clamp(1.35rem, 2.3vw, 2rem);
+    text-transform: uppercase;
+  }
+
+  .process-card p {
+    max-width: 28ch;
+    margin: 14px 0 0;
+    color: #3f4e4d;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  .service-band-title {
+    margin-bottom: 28px;
+    font-size: clamp(2.4rem, 4.5vw, 4.4rem);
+  }
+
+  .image-card-rail {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .image-card,
+  .related-card {
+    position: relative;
+    min-height: 330px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+    color: #fff;
+    text-decoration: none;
+    isolation: isolate;
+  }
+
+  .image-card img,
+  .image-card span,
+  .related-card img,
+  .related-card span {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .image-card img,
+  .related-card img {
+    z-index: -2;
+    object-fit: cover;
+    transition: transform 240ms ease;
+  }
+
+  .image-card span,
+  .related-card span {
+    z-index: -1;
+    background: linear-gradient(180deg, rgba(9, 31, 48, 0.06) 0%, rgba(12, 41, 64, 0.86) 100%);
+  }
+
+  .image-card strong,
+  .related-card strong {
+    max-width: 12ch;
+    padding: 0 24px;
+    color: #fff;
+    font-size: clamp(1.5rem, 2.4vw, 2.35rem);
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .image-card small,
+  .related-card small {
+    max-width: 33ch;
+    padding: 12px 24px 24px;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .image-card:hover img,
+  .related-card:hover img {
+    transform: scale(1.04);
+  }
+
+  .detail-list {
+    border-top: 1px solid var(--service-line);
+  }
+
+  .detail-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 30px;
+    align-items: center;
+    border-bottom: 1px solid var(--service-line);
+    padding: 24px 0;
+  }
+
+  .detail-row h2 {
+    margin: 0 0 8px;
+    color: var(--service-blue);
+    font-size: clamp(1.15rem, 1.8vw, 1.7rem);
+    font-weight: 800;
+  }
+
+  .detail-row p {
+    max-width: 980px;
+    margin: 0;
+    color: #3f4e4d;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.45;
+  }
+
+  .accordion-list {
+    border-top: 1px solid var(--service-line);
+  }
+
+  .accordion-item {
+    border-bottom: 1px solid var(--service-line);
+    padding: 0;
+  }
+
+  .accordion-item summary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 28px;
+    gap: 18px;
+    align-items: center;
+    padding: 24px 0;
+    color: var(--service-blue);
+    cursor: pointer;
+    font-size: clamp(1.2rem, 2vw, 1.9rem);
+    font-weight: 800;
+    line-height: 1.15;
+    list-style: none;
+  }
+
+  .accordion-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .accordion-item i {
+    position: relative;
+    width: 28px;
+    height: 28px;
+  }
+
+  .accordion-item i::before,
+  .accordion-item i::after {
+    content: "";
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: 16px;
+    height: 2px;
+    background: var(--service-accent);
+    transform: translate(-50%, -50%);
+  }
+
+  .accordion-item i::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+    transition: opacity 120ms ease;
+  }
+
+  .accordion-item[open] i::after {
+    opacity: 0;
+  }
+
+  .accordion-item p {
+    max-width: 940px;
+    margin: -6px 0 26px;
+    color: #3f4e4d;
+    font-weight: 700;
+    line-height: 1.55;
+  }
+
+  .service-center-kicker {
+    margin: 0 0 28px;
+    color: var(--service-blue);
+    font-size: clamp(1.6rem, 3vw, 2.8rem);
+    font-weight: 800;
+    line-height: 1.08;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .related-card {
+    min-height: 390px;
+  }
+
+  .service-offices {
+    padding-top: 48px;
+    text-align: center;
+  }
+
+  .service-offices h2 {
+    margin: 0 0 28px;
+    color: var(--service-blue);
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 800;
+  }
+
+  .office-lines {
+    border-top: 1px solid var(--service-line);
+    text-align: left;
+  }
+
+  .office-lines a {
+    min-height: 64px;
+    display: grid;
+    grid-template-columns: minmax(160px, 0.35fr) minmax(0, 1fr) 32px;
+    gap: 22px;
+    align-items: center;
+    border-bottom: 1px solid var(--service-line);
+    color: var(--service-blue);
+    text-decoration: none;
+  }
+
+  .office-lines span {
+    font-size: 1.1rem;
+    font-weight: 900;
+  }
+
+  .office-lines small {
+    color: #3f4e4d;
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .office-lines i {
+    justify-self: end;
+    color: var(--service-accent);
+    font-style: normal;
+    font-weight: 900;
+  }
+
+  .service-newsletter {
+    padding: 0 0 clamp(56px, 7vw, 100px);
+  }
+
+  .service-newsletter-box {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 28px;
+    align-items: center;
+    padding: clamp(26px, 4vw, 44px);
+    background: var(--service-blue);
+    color: #fff;
+  }
+
+  .service-newsletter-box h2 {
+    margin: 0 0 8px;
+    color: #fff;
+    font-size: clamp(1.7rem, 2.8vw, 3rem);
+    font-weight: 800;
+  }
+
+  .service-newsletter-box p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-weight: 700;
+  }
+
+  .service-newsletter-box > a {
+    border-color: #fff;
+  }
+
+  @media (max-width: 1060px) {
+    .process-grid,
+    .image-card-rail {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .detail-row,
+    .service-newsletter-box {
+      grid-template-columns: 1fr;
+    }
+
+    .detail-row > a,
+    .service-newsletter-box > a {
+      width: fit-content;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .service-wrap {
+      width: min(100% - 30px, 1510px);
+    }
+
+    .service-hero-inner {
+      min-height: 300px;
+      padding: 58px 0;
+    }
+
+    .service-hero h1 {
+      font-size: clamp(3rem, 16vw, 4.8rem);
+    }
+
+    .service-section-head {
+      display: grid;
+      justify-items: start;
+    }
+
+    .process-grid,
+    .image-card-rail,
+    .related-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .image-card,
+    .related-card {
+      min-height: 330px;
+    }
+
+    .office-lines a {
+      grid-template-columns: minmax(0, 1fr) 26px;
+      gap: 10px;
+    }
+
+    .office-lines small {
+      grid-column: 1 / -1;
+      margin-top: -8px;
+    }
+  }
+</style>

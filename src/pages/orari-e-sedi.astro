@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+import LocationsSection from '../components/LocationsSection.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout
+  title={`Orari e sedi | ${site.name}`}
+  description="Indirizzi, recapiti e orari degli studi dentistici Federzoni Granata di Modena e Reggio Emilia."
+  canonicalPath="/orari-e-sedi/"
+>
+  <LocationsSection />
+</BaseLayout>

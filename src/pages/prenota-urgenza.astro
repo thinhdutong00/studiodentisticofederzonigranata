@@ -1,0 +1,673 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+import { site } from '../data/site';
+
+const title = `Prenota urgenza - ${site.name}`;
+const description =
+  'Modulo dedicato alle urgenze dentali dello Studio Dentistico Federzoni Granata.';
+
+const emergencyTypes = [
+  'Dolore forte o pulsante',
+  'Gonfiore, ascesso o infezione',
+  'Trauma o dente rotto',
+  'Perdita di otturazione, corona o protesi',
+  'Problema con apparecchio o allineatore',
+  'Urgenza per un bambino',
+];
+
+const symptomOptions = [
+  'Dolore da meno di 24 ore',
+  'Dolore da piu giorni',
+  'Gonfiore visibile',
+  'Febbre o malessere',
+  'Difficolta a masticare',
+  'Sanguinamento o trauma recente',
+];
+
+const offices = site.offices.map((office) => office.city);
+const availabilityOptions = [
+  'Oggi appena possibile',
+  'Entro 24 ore',
+  'Domani',
+  'Prima disponibilita in settimana',
+];
+
+const emergencyConfigJson = JSON.stringify({
+  emergencyTypes,
+  symptomOptions,
+  offices,
+  availabilityOptions,
+}).replace(/</g, '\\u003c');
+---
+
+<BaseLayout title={title} description={description} ogImage={site.heroImage} canonicalPath="/prenota-urgenza/">
+  <section class="urgent-request-page" aria-labelledby="urgent-step-title">
+    <div class="urgent-request-shell">
+      <form class="urgent-request-form" data-urgent-form novalidate>
+        <script id="urgent-config" type="application/json" set:html={emergencyConfigJson}></script>
+        <input type="hidden" name="emergencyType" data-field="emergencyType" />
+        <input type="hidden" name="symptom" data-field="symptom" />
+        <input type="hidden" name="painLevel" data-field="painLevel" />
+        <input type="hidden" name="office" data-field="office" />
+        <input type="hidden" name="availability" data-field="availability" />
+
+        <div class="urgent-progress" aria-hidden="true">
+          <span data-progress-bar></span>
+        </div>
+
+        <p class="urgent-step-count" data-step-count>Step 1 di 4</p>
+
+        <fieldset class="urgent-step is-active" data-step="0">
+          <legend>
+            <span class="urgent-kicker">Tipo di urgenza</span>
+            <strong id="urgent-step-title">Che cosa sta succedendo?</strong>
+          </legend>
+
+          <div class="urgent-options">
+            {emergencyTypes.map((option) => (
+              <button class="urgent-choice" type="button" data-choice="emergencyType" data-value={option}>
+                {option}
+              </button>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset class="urgent-step" data-step="1" hidden>
+          <legend>
+            <span class="urgent-kicker">Sintomi</span>
+            <strong>Quanto e urgente il problema?</strong>
+          </legend>
+
+          <div class="urgent-options">
+            {symptomOptions.map((option) => (
+              <button class="urgent-choice" type="button" data-choice="symptom" data-value={option}>
+                {option}
+              </button>
+            ))}
+          </div>
+
+          <label class="pain-scale">
+            <span>Intensita del dolore</span>
+            <strong data-pain-label>5 / 10</strong>
+            <input type="range" name="painRange" min="0" max="10" value="5" step="1" data-pain-range />
+          </label>
+        </fieldset>
+
+        <fieldset class="urgent-step" data-step="2" hidden>
+          <legend>
+            <span class="urgent-kicker">Sede e disponibilita</span>
+            <strong>Dove e quando puoi venire?</strong>
+          </legend>
+
+          <div class="urgent-split">
+            <div>
+              <h2>Sede preferita</h2>
+              <div class="urgent-options urgent-options-compact">
+                {offices.map((office) => (
+                  <button class="urgent-choice" type="button" data-choice="office" data-value={office}>
+                    {office}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h2>Disponibilita</h2>
+              <div class="urgent-options urgent-options-compact">
+                {availabilityOptions.map((option) => (
+                  <button class="urgent-choice" type="button" data-choice="availability" data-value={option}>
+                    {option}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="urgent-step" data-step="3" hidden>
+          <legend>
+            <span class="urgent-kicker">Contatti</span>
+            <strong>Lasciaci i dati per ricontattarti</strong>
+          </legend>
+
+          <div class="urgent-field-grid">
+            <label>
+              <span>Nome e cognome</span>
+              <input type="text" name="fullName" autocomplete="name" required />
+            </label>
+            <label>
+              <span>Telefono</span>
+              <input type="tel" name="phone" autocomplete="tel" required />
+            </label>
+            <label class="urgent-field-wide">
+              <span>Email</span>
+              <input type="email" name="email" autocomplete="email" required />
+            </label>
+            <label class="urgent-field-wide">
+              <span>Descrivi brevemente cosa e successo <em>facoltativo</em></span>
+              <textarea name="details" rows="4"></textarea>
+            </label>
+          </div>
+
+          <p class="urgent-privacy">
+            Inviando il modulo autorizzi lo studio a ricontattarti per gestire la richiesta di urgenza.
+          </p>
+        </fieldset>
+
+        <p class="urgent-error" data-urgent-error role="alert" aria-live="polite"></p>
+
+        <div class="urgent-actions">
+          <button class="urgent-btn urgent-btn-outline" type="button" data-prev-step hidden>Indietro</button>
+          <button class="urgent-btn urgent-btn-primary" type="button" data-next-step>Continua</button>
+          <button class="urgent-btn urgent-btn-primary" type="submit" data-submit-urgent hidden>Invia urgenza</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  body {
+    background: #fff;
+  }
+
+  .urgent-request-page {
+    min-height: calc(100vh - var(--nav-height));
+    padding: clamp(30px, 5vw, 64px) 0 80px;
+    background: #fff;
+    color: #173527;
+  }
+
+  .urgent-request-shell {
+    width: min(1180px, calc(100% - 48px));
+    margin: 0 auto;
+  }
+
+  .urgent-request-form {
+    min-height: calc(100vh - var(--nav-height) - 144px);
+  }
+
+  .urgent-progress {
+    height: 8px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #e8efe9;
+  }
+
+  .urgent-progress span {
+    display: block;
+    width: 25%;
+    height: 100%;
+    border-radius: inherit;
+    background: #005924;
+    transition: width 220ms ease;
+  }
+
+  .urgent-step-count {
+    margin: 20px 0 30px;
+    color: #627267;
+    font-weight: 900;
+  }
+
+  .urgent-step {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .urgent-step[hidden] {
+    display: none;
+  }
+
+  .urgent-step legend {
+    width: 100%;
+    margin: 0 0 28px;
+    padding: 0;
+  }
+
+  .urgent-kicker {
+    display: block;
+    margin: 0 0 10px;
+    color: #005924;
+    font-family: "Montserrat", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    font-size: 0.76rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    line-height: 1.35;
+    text-transform: uppercase;
+  }
+
+  .urgent-step legend strong {
+    display: block;
+    max-width: 860px;
+    color: #005924;
+    font-family: "Montserrat", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    font-size: clamp(2rem, 4.4vw, 3.6rem);
+    line-height: 1.05;
+  }
+
+  .urgent-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .urgent-options-compact {
+    grid-template-columns: 1fr;
+  }
+
+  .urgent-choice {
+    min-height: 72px;
+    border: 1px solid #d9e6dc;
+    border-radius: 14px;
+    padding: 18px;
+    background: #fbfdfb;
+    color: #173527;
+    font: inherit;
+    font-weight: 900;
+    line-height: 1.25;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 160ms ease, background 160ms ease, color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+  }
+
+  .urgent-choice:hover {
+    border-color: rgba(0, 89, 36, 0.4);
+    transform: translateY(-1px);
+    box-shadow: 0 14px 30px rgba(0, 89, 36, 0.08);
+  }
+
+  .urgent-choice.is-selected {
+    border-color: #005924;
+    background: #005924;
+    color: #fff;
+    box-shadow: 0 18px 34px rgba(0, 89, 36, 0.2);
+  }
+
+  .pain-scale {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px 18px;
+    align-items: center;
+    margin-top: 28px;
+    border: 1px solid #d9e6dc;
+    border-radius: 16px;
+    padding: 20px;
+    background: #fbfdfb;
+    color: #005924;
+    font-weight: 900;
+  }
+
+  .pain-scale input {
+    grid-column: 1 / -1;
+    width: 100%;
+    accent-color: #005924;
+  }
+
+  .urgent-split {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+  }
+
+  .urgent-split > div {
+    border: 1px solid #d9e6dc;
+    border-radius: 18px;
+    padding: 20px;
+    background: #fbfdfb;
+  }
+
+  .urgent-split h2 {
+    margin: 0 0 16px;
+    color: #005924;
+    font-size: 1.1rem;
+  }
+
+  .urgent-field-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .urgent-field-grid label {
+    display: grid;
+    gap: 8px;
+    color: #173527;
+    font-weight: 900;
+  }
+
+  .urgent-field-grid em {
+    color: #728176;
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  .urgent-field-wide {
+    grid-column: 1 / -1;
+  }
+
+  .urgent-field-grid input,
+  .urgent-field-grid textarea {
+    width: 100%;
+    border: 1px solid #d9e6dc;
+    border-radius: 14px;
+    padding: 15px 16px;
+    background: #fbfdfb;
+    color: #173527;
+    font: inherit;
+    font-weight: 700;
+    outline: none;
+    transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  }
+
+  .urgent-field-grid textarea {
+    resize: vertical;
+  }
+
+  .urgent-field-grid input:focus,
+  .urgent-field-grid textarea:focus {
+    border-color: #005924;
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(0, 89, 36, 0.1);
+  }
+
+  .urgent-field-grid .is-invalid {
+    border-color: #c43b4d;
+    box-shadow: 0 0 0 4px rgba(196, 59, 77, 0.1);
+  }
+
+  .urgent-privacy {
+    margin: 18px 0 0;
+    color: #627267;
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .urgent-error {
+    min-height: 26px;
+    margin: 24px 0 0;
+    color: #c43b4d;
+    font-weight: 900;
+  }
+
+  .urgent-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 26px;
+  }
+
+  .urgent-btn {
+    min-height: 54px;
+    border: 1px solid transparent;
+    border-radius: 14px;
+    padding: 14px 24px;
+    font: inherit;
+    font-weight: 900;
+    cursor: pointer;
+    transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+  }
+
+  .urgent-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .urgent-btn-primary {
+    margin-left: auto;
+    background: #005924;
+    color: #fff;
+    box-shadow: 0 18px 34px rgba(0, 89, 36, 0.2);
+  }
+
+  .urgent-btn-primary:hover {
+    background: #347cc2;
+  }
+
+  .urgent-btn-outline {
+    border-color: #d9e6dc;
+    background: #fff;
+    color: #005924;
+  }
+
+  .urgent-btn-outline:hover {
+    border-color: rgba(0, 89, 36, 0.38);
+    background: #f4faf5;
+  }
+
+  @media (max-width: 860px) {
+    .urgent-request-form {
+      min-height: 0;
+    }
+
+    .urgent-options,
+    .urgent-split,
+    .urgent-field-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .urgent-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    .urgent-btn,
+    .urgent-btn-primary {
+      width: 100%;
+      margin-left: 0;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .urgent-request-shell {
+      width: min(100% - 24px, 1180px);
+    }
+
+    .urgent-step legend strong {
+      font-size: 1.75rem;
+    }
+
+    .urgent-choice,
+    .urgent-split > div,
+    .pain-scale {
+      padding: 14px;
+    }
+  }
+</style>
+
+<script>
+  const urgentForm = document.querySelector('[data-urgent-form]');
+
+  if (urgentForm instanceof HTMLFormElement) {
+    const steps = Array.from(urgentForm.querySelectorAll('[data-step]'));
+    const progressBar = urgentForm.querySelector('[data-progress-bar]');
+    const stepCount = urgentForm.querySelector('[data-step-count]');
+    const errorBox = urgentForm.querySelector('[data-urgent-error]');
+    const prevButton = urgentForm.querySelector('[data-prev-step]');
+    const nextButton = urgentForm.querySelector('[data-next-step]');
+    const submitButton = urgentForm.querySelector('[data-submit-urgent]');
+    const painRange = urgentForm.querySelector('[data-pain-range]');
+    const painLabel = urgentForm.querySelector('[data-pain-label]');
+    const fields = {
+      emergencyType: urgentForm.querySelector('[data-field="emergencyType"]'),
+      symptom: urgentForm.querySelector('[data-field="symptom"]'),
+      painLevel: urgentForm.querySelector('[data-field="painLevel"]'),
+      office: urgentForm.querySelector('[data-field="office"]'),
+      availability: urgentForm.querySelector('[data-field="availability"]'),
+    };
+
+    const state = {
+      step: 0,
+      emergencyType: '',
+      symptom: '',
+      painLevel: '5',
+      office: '',
+      availability: '',
+    };
+
+    const setError = (message = '') => {
+      if (errorBox) {
+        errorBox.textContent = message;
+      }
+    };
+
+    const syncHiddenFields = () => {
+      if (fields.emergencyType) fields.emergencyType.value = state.emergencyType;
+      if (fields.symptom) fields.symptom.value = state.symptom;
+      if (fields.painLevel) fields.painLevel.value = state.painLevel;
+      if (fields.office) fields.office.value = state.office;
+      if (fields.availability) fields.availability.value = state.availability;
+    };
+
+    const renderPain = () => {
+      if (painLabel) {
+        painLabel.textContent = `${state.painLevel} / 10`;
+      }
+    };
+
+    const renderStep = () => {
+      steps.forEach((step, index) => {
+        const isActive = index === state.step;
+        step.toggleAttribute('hidden', !isActive);
+        step.classList.toggle('is-active', isActive);
+      });
+
+      if (progressBar instanceof HTMLElement) {
+        progressBar.style.width = `${((state.step + 1) / steps.length) * 100}%`;
+      }
+      if (stepCount) {
+        stepCount.textContent = `Step ${state.step + 1} di ${steps.length}`;
+      }
+      if (prevButton instanceof HTMLButtonElement) {
+        prevButton.hidden = state.step === 0;
+      }
+      if (nextButton instanceof HTMLButtonElement) {
+        nextButton.hidden = state.step === steps.length - 1;
+      }
+      if (submitButton instanceof HTMLButtonElement) {
+        submitButton.hidden = state.step !== steps.length - 1;
+      }
+
+      setError();
+    };
+
+    const selectChoice = (button) => {
+      if (!(button instanceof HTMLButtonElement)) return;
+      const choiceType = button.dataset.choice;
+      const value = button.dataset.value || button.textContent?.trim() || '';
+
+      if (!choiceType || !(choiceType in state)) return;
+
+      state[choiceType] = value;
+      urgentForm.querySelectorAll(`[data-choice="${choiceType}"]`).forEach((option) => {
+        const isSelected = option === button;
+        option.classList.toggle('is-selected', isSelected);
+        option.setAttribute('aria-pressed', String(isSelected));
+      });
+
+      syncHiddenFields();
+      setError();
+    };
+
+    const markInvalid = (input, invalid) => {
+      if (input instanceof HTMLElement) {
+        input.classList.toggle('is-invalid', invalid);
+      }
+    };
+
+    const validateContactStep = () => {
+      const fullName = urgentForm.elements.namedItem('fullName');
+      const phone = urgentForm.elements.namedItem('phone');
+      const email = urgentForm.elements.namedItem('email');
+      const emailValue = email instanceof HTMLInputElement ? email.value.trim() : '';
+      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue);
+
+      const missingName = !(fullName instanceof HTMLInputElement) || fullName.value.trim().length < 2;
+      const missingPhone = !(phone instanceof HTMLInputElement) || phone.value.trim().length < 6;
+      const missingEmail = !isEmailValid;
+
+      markInvalid(fullName, missingName);
+      markInvalid(phone, missingPhone);
+      markInvalid(email, missingEmail);
+
+      if (missingName || missingPhone || missingEmail) {
+        setError('Compila nome, telefono ed email per inviare la richiesta di urgenza.');
+        return false;
+      }
+
+      return true;
+    };
+
+    const validateCurrentStep = () => {
+      if (state.step === 0 && !state.emergencyType) {
+        setError('Seleziona il tipo di urgenza per continuare.');
+        return false;
+      }
+      if (state.step === 1 && !state.symptom) {
+        setError('Seleziona il sintomo piu vicino alla tua situazione.');
+        return false;
+      }
+      if (state.step === 2 && (!state.office || !state.availability)) {
+        setError('Scegli una sede e una disponibilita.');
+        return false;
+      }
+      if (state.step === 3) {
+        return validateContactStep();
+      }
+
+      setError();
+      return true;
+    };
+
+    urgentForm.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+
+      const choiceButton = target.closest('[data-choice]');
+      if (choiceButton) {
+        selectChoice(choiceButton);
+      }
+    });
+
+    painRange?.addEventListener('input', () => {
+      if (painRange instanceof HTMLInputElement) {
+        state.painLevel = painRange.value;
+        syncHiddenFields();
+        renderPain();
+      }
+    });
+
+    nextButton?.addEventListener('click', () => {
+      if (!validateCurrentStep()) return;
+      state.step = Math.min(state.step + 1, steps.length - 1);
+      renderStep();
+    });
+
+    prevButton?.addEventListener('click', () => {
+      state.step = Math.max(state.step - 1, 0);
+      renderStep();
+    });
+
+    urgentForm.addEventListener('input', (event) => {
+      markInvalid(event.target, false);
+      setError();
+    });
+
+    urgentForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (!validateCurrentStep()) return;
+
+      if (submitButton instanceof HTMLButtonElement) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Invio in corso';
+      }
+
+      window.location.href = '/thank-you-page/';
+    });
+
+    syncHiddenFields();
+    renderPain();
+    renderStep();
+  }
+</script>

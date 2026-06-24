@@ -5,7 +5,7 @@ import { site } from '../data/site';
 
 export function getStaticPaths() {
   return [...site.pages, ...site.navigationPages, ...site.treatmentPages]
-    .filter((page) => page.path !== '/')
+    .filter((page) => page.path !== '/' && page.path !== '/chi-siamo/' && page.path !== '/orari-e-sedi/' && page.path !== '/trattamenti/' && page.path !== '/igiene-orale-prevenzione/')
     .map((page) => ({
       params: { slug: page.slug },
       props: { page },
