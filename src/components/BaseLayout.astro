@@ -59,20 +59,51 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
 <style is:global>
   :root {
-    --ink: #243033;
-    --muted: #657479;
-    --line: #dce6e9;
-    --paper: #ffffff;
-    --soft: #f5f7f8;
-    --soft-blue: #eef7f9;
-    --blue: #347cc2;
-    --blue-dark: #155a94;
-    --aqua: #7db9c5;
-    --green: #87a83d;
-    --green-dark: #6f8b30;
+    --brand-primary-dark: #10283D;
+    --brand-blue: #5E9ACC;
+    --brand-cta: #256D95;
+    --brand-cta-hover: #1E5A7C;
+    --text-dark: #1D1D1D;
+    --muted-text: #5F6F7C;
+    --background: #F7FAFC;
+    --soft-blue-bg: #EEF6FB;
+    --surface-white: #FFFFFF;
+    --border: #D9E7F2;
+    --success: #2E7D5B;
+    --warning: #B7791F;
+    --error: #C94A4A;
+    --brand-primary-dark-rgb: 16, 40, 61;
+    --brand-blue-rgb: 94, 154, 204;
+    --brand-cta-rgb: 37, 109, 149;
+    --brand-cta-hover-rgb: 30, 90, 124;
+    --text-dark-rgb: 29, 29, 29;
+    --muted-text-rgb: 95, 111, 124;
+    --background-rgb: 247, 250, 252;
+    --soft-blue-bg-rgb: 238, 246, 251;
+    --surface-white-rgb: 255, 255, 255;
+    --border-rgb: 217, 231, 242;
+    --success-rgb: 46, 125, 91;
+    --warning-rgb: 183, 121, 31;
+    --error-rgb: 201, 74, 74;
+    --ink: var(--text-dark);
+    --muted: var(--muted-text);
+    --line: var(--border);
+    --paper: var(--background);
+    --surface: var(--surface-white);
+    --soft: var(--background);
+    --soft-blue: var(--soft-blue-bg);
+    --cream: var(--soft-blue-bg);
+    --blue: var(--brand-blue);
+    --blue-dark: var(--brand-primary-dark);
+    --aqua: var(--brand-blue);
+    --green: var(--success);
+    --green-dark: var(--success);
+    --signal: var(--brand-cta);
+    --signal-dark: var(--brand-cta-hover);
+    --signal-soft: var(--soft-blue-bg);
     --nav-height: 84px;
-    --shadow: 0 18px 50px rgba(32, 54, 72, 0.12);
-    --shadow-soft: 0 10px 34px rgba(32, 54, 72, 0.08);
+    --shadow: 0 18px 50px rgba(16, 40, 61, 0.12);
+    --shadow-soft: 0 10px 34px rgba(16, 40, 61, 0.08);
     color-scheme: light;
     font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
@@ -197,7 +228,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     border-radius: 999px;
     padding: 12px 24px;
     background: var(--blue);
-    color: #fff;
+    color: var(--surface-white);
     font: inherit;
     font-weight: 900;
     line-height: 1.2;
@@ -210,7 +241,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   .button:hover,
   button.button:hover {
     background: var(--blue-dark);
-    color: #fff;
+    color: var(--surface-white);
     transform: translateY(-1px);
   }
 
@@ -221,8 +252,8 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   }
 
   .button-outline {
-    border-color: rgba(52, 124, 194, 0.3);
-    background: #fff;
+    border-color: rgba(var(--brand-blue-rgb), 0.3);
+    background: var(--surface-white);
     color: var(--blue);
   }
 
@@ -311,7 +342,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   }
 
   .social-nav a:hover {
-    border-color: rgba(52, 124, 194, 0.45);
+    border-color: rgba(var(--brand-blue-rgb), 0.45);
     background: var(--soft-blue);
   }
 
@@ -322,10 +353,10 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     display: grid;
     align-items: center;
     overflow: hidden;
-    color: #fff;
+    color: var(--surface-white);
     background-color: var(--blue-dark);
     background-image:
-      linear-gradient(90deg, rgba(13, 47, 78, 0.86), rgba(13, 47, 78, 0.58) 52%, rgba(13, 47, 78, 0.32)),
+      linear-gradient(90deg, rgba(var(--brand-primary-dark-rgb), 0.86), rgba(var(--brand-primary-dark-rgb), 0.58) 52%, rgba(var(--brand-primary-dark-rgb), 0.32)),
       var(--hero-image);
     background-position: center;
     background-size: cover;
@@ -341,12 +372,12 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   }
 
   .hero-lead .eyebrow {
-    color: #d8eef2;
+    color: var(--soft-blue-bg);
   }
 
   .hero-lead h1 {
     max-width: 870px;
-    color: #fff;
+    color: var(--surface-white);
     font-size: 4.4rem;
   }
 
@@ -386,9 +417,9 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   .trust-item {
     min-height: 118px;
     padding: 18px;
-    border: 1px solid rgba(52, 124, 194, 0.16);
+    border: 1px solid rgba(var(--brand-blue-rgb), 0.16);
     border-radius: 8px;
-    background: #fff;
+    background: var(--surface-white);
     box-shadow: var(--shadow-soft);
   }
 
@@ -409,7 +440,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
   .hero-lead .trust-item strong,
   .hero-lead .trust-item span {
-    color: #fff;
+    color: var(--surface-white);
   }
 
   .trust-item span {
@@ -462,9 +493,9 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   .contact-form input,
   .contact-form textarea {
     width: 100%;
-    border: 1px solid #cfdee3;
+    border: 1px solid var(--border);
     border-radius: 999px;
-    background: #fff;
+    background: var(--surface-white);
     color: var(--ink);
     font: inherit;
     outline: none;
@@ -487,7 +518,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   .contact-form input:focus,
   .contact-form textarea:focus {
     border-color: var(--blue);
-    box-shadow: 0 0 0 4px rgba(52, 124, 194, 0.12);
+    box-shadow: 0 0 0 4px rgba(var(--brand-blue-rgb), 0.12);
   }
 
   .pill-form-full,
@@ -495,7 +526,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     padding: 32px;
     border: 1px solid var(--line);
     border-radius: 8px;
-    background: #fff;
+    background: var(--surface-white);
     box-shadow: var(--shadow-soft);
   }
 
@@ -562,14 +593,14 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   }
 
   .section-band-dark {
-    background: #10283d;
-    color: #f5fbfc;
+    background: var(--brand-primary-dark);
+    color: var(--soft-blue-bg);
   }
 
   .section-band-dark h2,
   .section-band-dark h3,
   .section-band-dark .section-heading p {
-    color: #fff;
+    color: var(--surface-white);
   }
 
   .section-heading {
@@ -622,7 +653,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     padding: 28px;
     border: 1px solid var(--line);
     border-radius: 8px;
-    background: #fff;
+    background: var(--surface-white);
     box-shadow: var(--shadow-soft);
   }
 
@@ -641,7 +672,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   .content-figure {
     overflow: hidden;
     border-radius: 8px;
-    background: #eef4f5;
+    background: var(--soft-blue-bg);
     box-shadow: var(--shadow);
   }
 
@@ -664,7 +695,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     margin: 0 0 38px;
     overflow: hidden;
     border-radius: 8px;
-    background: #e9f2f4;
+    background: var(--soft-blue-bg);
     box-shadow: var(--shadow);
   }
 
@@ -711,7 +742,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     padding: 22px;
     border: 1px solid var(--line);
     border-radius: 8px;
-    background: #fff;
+    background: var(--surface-white);
     color: var(--ink);
     text-decoration: none;
     box-shadow: var(--shadow-soft);
@@ -719,7 +750,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
   .feature-card-link:hover,
   .link-card:hover {
-    border-color: rgba(52, 124, 194, 0.38);
+    border-color: rgba(var(--brand-blue-rgb), 0.38);
     color: var(--blue-dark);
     transform: translateY(-1px);
   }
@@ -760,7 +791,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     padding: 22px;
     border: 1px solid var(--line);
     border-radius: 8px;
-    background: #fff;
+    background: var(--surface-white);
     box-shadow: var(--shadow-soft);
   }
 
@@ -789,7 +820,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     padding: 22px;
     border: 1px solid var(--line);
     border-radius: 8px;
-    background: #fff;
+    background: var(--surface-white);
     box-shadow: var(--shadow-soft);
   }
 
@@ -816,7 +847,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     overflow: hidden;
     border: 1px solid var(--line);
     border-radius: 8px;
-    background: #fff;
+    background: var(--surface-white);
     box-shadow: var(--shadow-soft);
   }
 
@@ -860,7 +891,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     padding: 26px;
     border: 1px solid var(--line);
     border-radius: 8px;
-    background: #fff;
+    background: var(--surface-white);
     box-shadow: var(--shadow-soft);
   }
 
@@ -900,7 +931,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     padding: 18px 22px;
     border: 1px solid rgba(135, 168, 61, 0.34);
     border-radius: 8px;
-    background: #f8fbf1;
+    background: var(--background);
   }
 
   .bando-link p {
@@ -916,7 +947,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     padding: 28px;
     border: 1px solid var(--line);
     border-radius: 8px;
-    background: #fff;
+    background: var(--surface-white);
     box-shadow: var(--shadow-soft);
   }
 
@@ -936,13 +967,13 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     overflow: hidden;
     border: 1px solid var(--line);
     border-radius: 8px;
-    background: #fff;
+    background: var(--surface-white);
     box-shadow: var(--shadow-soft);
   }
 
   .video-frame {
     aspect-ratio: 16 / 9;
-    background: #10283d;
+    background: var(--brand-primary-dark);
   }
 
   .video-frame iframe {
@@ -1062,13 +1093,13 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   }
 
   .site-footer {
-    background: #10283d;
-    color: #f4f9fb;
+    background: var(--brand-primary-dark);
+    color: var(--soft-blue-bg);
   }
 
   .site-footer h2,
   .site-footer h3 {
-    color: #fff;
+    color: var(--surface-white);
   }
 
   .site-footer p {
@@ -1076,7 +1107,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   }
 
   .site-footer a {
-    color: #d6eef3;
+    color: var(--soft-blue-bg);
   }
 
   .footer-bottom {
@@ -1097,8 +1128,8 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     margin: 0 auto;
     padding: 16px;
     border-radius: 8px;
-    background: #111827;
-    color: #fff;
+    background: var(--brand-primary-dark);
+    color: var(--surface-white);
     box-shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
   }
 
@@ -1122,7 +1153,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     border-radius: 999px;
     padding: 9px 14px;
     background: var(--blue);
-    color: #fff;
+    color: var(--surface-white);
     font: inherit;
     font-weight: 900;
     cursor: pointer;
@@ -1200,7 +1231,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     .hero-lead {
       min-height: 78svh;
       background-image:
-        linear-gradient(180deg, rgba(13, 47, 78, 0.86), rgba(13, 47, 78, 0.64)),
+        linear-gradient(180deg, rgba(var(--brand-primary-dark-rgb), 0.86), rgba(var(--brand-primary-dark-rgb), 0.64)),
         var(--hero-image);
     }
 
@@ -1389,31 +1420,57 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
   /* Campaign-inspired redesign */
   :root {
-    --ink: #243033;
-    --muted: #657479;
-    --line: #dce6e9;
-    --paper: #ffffff;
-    --surface: #ffffff;
-    --soft: #f5f7f8;
-    --soft-blue: #e9f8f7;
-    --cream: #eef3f6;
-    --blue: #347cc2;
-    --blue-dark: #0c4da2;
-    --aqua: #7db9c5;
-    --green: #87a83d;
-    --green-dark: #6f8b30;
-    --signal: #0c4da2;
-    --signal-dark: #155a94;
-    --signal-soft: #eef7f9;
+    --brand-primary-dark: #10283D;
+    --brand-blue: #5E9ACC;
+    --brand-cta: #256D95;
+    --brand-cta-hover: #1E5A7C;
+    --text-dark: #1D1D1D;
+    --muted-text: #5F6F7C;
+    --background: #F7FAFC;
+    --soft-blue-bg: #EEF6FB;
+    --surface-white: #FFFFFF;
+    --border: #D9E7F2;
+    --success: #2E7D5B;
+    --warning: #B7791F;
+    --error: #C94A4A;
+    --brand-primary-dark-rgb: 16, 40, 61;
+    --brand-blue-rgb: 94, 154, 204;
+    --brand-cta-rgb: 37, 109, 149;
+    --brand-cta-hover-rgb: 30, 90, 124;
+    --text-dark-rgb: 29, 29, 29;
+    --muted-text-rgb: 95, 111, 124;
+    --background-rgb: 247, 250, 252;
+    --soft-blue-bg-rgb: 238, 246, 251;
+    --surface-white-rgb: 255, 255, 255;
+    --border-rgb: 217, 231, 242;
+    --success-rgb: 46, 125, 91;
+    --warning-rgb: 183, 121, 31;
+    --error-rgb: 201, 74, 74;
+    --ink: var(--text-dark);
+    --muted: var(--muted-text);
+    --line: var(--border);
+    --paper: var(--background);
+    --surface: var(--surface-white);
+    --soft: var(--background);
+    --soft-blue: var(--soft-blue-bg);
+    --cream: var(--soft-blue-bg);
+    --blue: var(--brand-blue);
+    --blue-dark: var(--brand-primary-dark);
+    --aqua: var(--brand-blue);
+    --green: var(--success);
+    --green-dark: var(--success);
+    --signal: var(--brand-cta);
+    --signal-dark: var(--brand-cta-hover);
+    --signal-soft: var(--soft-blue-bg);
     --nav-height: 102px;
     --radius: 8px;
-    --shadow: 0 22px 60px rgba(36, 48, 51, 0.16);
-    --shadow-soft: 0 14px 34px rgba(36, 48, 51, 0.1);
+    --shadow: 0 22px 60px rgba(16, 40, 61, 0.16);
+    --shadow-soft: 0 14px 34px rgba(16, 40, 61, 0.1);
   }
 
   body {
     background:
-      linear-gradient(180deg, #f5f7f8 0, #ffffff 420px);
+      linear-gradient(180deg, var(--background) 0, var(--surface-white) 420px);
     color: var(--ink);
   }
 
@@ -1459,7 +1516,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     border-radius: var(--radius);
     padding: 13px 24px;
     background: var(--signal);
-    box-shadow: 0 12px 22px rgba(12, 77, 162, 0.16);
+    box-shadow: 0 12px 22px rgba(var(--brand-primary-dark-rgb), 0.16);
   }
 
   .button:hover,
@@ -1474,7 +1531,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   }
 
   .button-outline {
-    border-color: rgba(8, 127, 140, 0.28);
+    border-color: rgba(var(--brand-blue-rgb), 0.28);
     background: var(--surface);
     color: var(--blue-dark);
     box-shadow: none;
@@ -1489,17 +1546,17 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   .button-on-dark {
     border-color: rgba(255, 255, 255, 0.54);
     background: rgba(255, 255, 255, 0.1);
-    color: #fff;
+    color: var(--surface-white);
   }
 
   .button-on-dark:hover {
-    background: #fff;
+    background: var(--surface-white);
     color: var(--signal-dark);
   }
 
   .header-topline {
     background: var(--signal);
-    color: #fff;
+    color: var(--surface-white);
     font-size: 0.82rem;
     font-weight: 900;
   }
@@ -1520,17 +1577,17 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   }
 
   .top-office-links a {
-    color: #fff;
+    color: var(--surface-white);
     text-decoration: none;
   }
 
   .top-office-links a:hover {
-    color: #d8eef2;
+    color: var(--soft-blue-bg);
   }
 
   .site-header {
     background: rgba(255, 255, 255, 0.96);
-    border-bottom: 2px solid rgba(12, 77, 162, 0.1);
+    border-bottom: 2px solid rgba(var(--brand-primary-dark-rgb), 0.1);
   }
 
   .header-inner {
@@ -1566,34 +1623,133 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   }
 
   .social-nav a {
-    border-color: rgba(8, 127, 140, 0.22);
-    background: #fff;
+    border-color: rgba(var(--brand-blue-rgb), 0.22);
+    background: var(--surface-white);
     color: var(--blue-dark);
   }
 
   .social-nav a:hover {
     border-color: var(--signal);
     background: var(--signal);
-    color: #fff;
+    color: var(--surface-white);
   }
 
   .header-cta {
     background: var(--signal);
-    color: #fff;
+    color: var(--surface-white);
     white-space: nowrap;
   }
 
   .header-cta:hover,
   .header-cta:focus-visible {
     background: var(--blue);
-    color: #fff;
+    color: var(--surface-white);
+  }
+
+  .call-dropdown {
+    position: relative;
+  }
+
+  .call-dropdown summary {
+    list-style: none;
+  }
+
+  .call-dropdown summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .call-dropdown-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px solid rgba(var(--brand-primary-dark-rgb), 0.28);
+    background: transparent;
+    color: var(--blue-dark);
+    box-shadow: none;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .call-dropdown-trigger:hover,
+  .call-dropdown-trigger:focus-visible,
+  .call-dropdown[open] .call-dropdown-trigger {
+    border-color: var(--brand-blue);
+    background: var(--soft-blue);
+    color: var(--blue-dark);
+    box-shadow: none;
+    transform: none;
+    outline: 0;
+  }
+
+  .call-dropdown-caret {
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform 160ms ease;
+  }
+
+  .call-dropdown[open] .call-dropdown-caret {
+    transform: translateY(2px) rotate(225deg);
+  }
+
+  .call-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    z-index: 1010;
+    min-width: 280px;
+    display: grid;
+    gap: 4px;
+    padding: 8px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface-white);
+    box-shadow: 0 18px 42px rgba(var(--brand-primary-dark-rgb), 0.16);
+  }
+
+  .call-dropdown-link {
+    display: grid;
+    gap: 4px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    color: var(--text-dark);
+    text-decoration: none;
+  }
+
+  .call-dropdown-link:hover,
+  .call-dropdown-link:focus-visible {
+    background: var(--soft-blue);
+    color: var(--text-dark);
+    outline: 0;
+  }
+
+  .call-dropdown-link span {
+    color: var(--muted-text);
+    font-size: 0.82rem;
+    font-weight: 400;
+    line-height: 1.15;
+  }
+
+  .call-dropdown-link strong {
+    color: var(--blue-dark);
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.15;
+  }
+
+  .mobile-call-dropdown {
+    display: none;
   }
 
   .hero-lead {
     min-height: 82svh;
     background-color: var(--blue-dark);
     background-image:
-      linear-gradient(100deg, rgba(13, 47, 78, 0.94) 0%, rgba(13, 47, 78, 0.8) 42%, rgba(12, 77, 162, 0.42) 76%, rgba(125, 185, 197, 0.18) 100%),
+      linear-gradient(100deg, rgba(var(--brand-primary-dark-rgb), 0.94) 0%, rgba(var(--brand-primary-dark-rgb), 0.8) 42%, rgba(var(--brand-primary-dark-rgb), 0.42) 76%, rgba(var(--brand-blue-rgb), 0.18) 100%),
       var(--hero-image);
     background-position: center;
   }
@@ -1626,13 +1782,13 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     border-radius: 999px;
     padding: 7px 13px;
     background: rgba(255, 255, 255, 0.14);
-    color: #fff;
+    color: var(--surface-white);
   }
 
   .hero-lead h1 {
     max-width: 860px;
     margin-bottom: 20px;
-    color: #fff;
+    color: var(--surface-white);
     font-size: 4.55rem;
   }
 
@@ -1716,7 +1872,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     max-width: 760px;
     border: 0;
     border-radius: var(--radius);
-    background: #fff;
+    background: var(--surface-white);
     box-shadow: 0 18px 44px rgba(7, 63, 74, 0.26);
   }
 
@@ -1724,7 +1880,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   .pill-form textarea,
   .contact-form input,
   .contact-form textarea {
-    border-color: rgba(8, 127, 140, 0.22);
+    border-color: rgba(var(--brand-blue-rgb), 0.22);
   }
 
   .pill-form input:focus,
@@ -1732,7 +1888,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   .contact-form input:focus,
   .contact-form textarea:focus {
     border-color: var(--signal);
-    box-shadow: 0 0 0 4px rgba(12, 77, 162, 0.12);
+    box-shadow: 0 0 0 4px rgba(var(--brand-primary-dark-rgb), 0.12);
   }
 
   .pill-form-full,
@@ -1754,7 +1910,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   }
 
   .section-band-paper {
-    background: #fff;
+    background: var(--surface-white);
   }
 
   .section-band-soft,
@@ -1768,13 +1924,13 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
   .section-band-signal {
     background: var(--signal);
-    color: #fff;
+    color: var(--surface-white);
   }
 
   .section-band-dark {
     background:
-      linear-gradient(135deg, var(--blue-dark), #102b35 70%);
-    color: #f7fbfb;
+      linear-gradient(135deg, var(--blue-dark), var(--brand-primary-dark) 70%);
+    color: var(--surface-white);
   }
 
   .section-band-signal::before,
@@ -1785,7 +1941,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     left: 0;
     width: min(30vw, 360px);
     height: 8px;
-    background: #fff;
+    background: var(--surface-white);
   }
 
   .section-band-signal h2,
@@ -1798,12 +1954,12 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   .section-band-dark p,
   .section-band-dark .section-heading p,
   .section-band-dark .eyebrow {
-    color: #fff;
+    color: var(--surface-white);
   }
 
   .section-band-signal a,
   .section-band-dark a {
-    color: #fff;
+    color: var(--surface-white);
   }
 
   .section-heading {
@@ -1826,7 +1982,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   .section-band-signal .section-heading p:not(.eyebrow),
   .section-band-dark .section-heading h2,
   .section-band-dark .section-heading p:not(.eyebrow) {
-    color: #fff;
+    color: var(--surface-white);
   }
 
   .media-hero-card {
@@ -1852,7 +2008,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     z-index: 1;
     border-radius: var(--radius);
     background: var(--signal);
-    color: #fff;
+    color: var(--surface-white);
   }
 
   .care-paths {
@@ -2009,7 +2165,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     width: 132px;
     padding: 14px;
     border-radius: var(--radius);
-    background: #fff;
+    background: var(--surface-white);
   }
 
   .office-card {
@@ -2029,7 +2185,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     border: 0;
     border-left: 8px solid var(--green);
     border-radius: var(--radius);
-    background: #fff;
+    background: var(--surface-white);
     box-shadow: var(--shadow-soft);
   }
 
@@ -2038,12 +2194,12 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   }
 
   .contact-copy {
-    border-left: 8px solid #fff;
+    border-left: 8px solid var(--surface-white);
     padding-left: 22px;
   }
 
   .contact-copy p {
-    color: #fff;
+    color: var(--surface-white);
     font-weight: 800;
   }
 
@@ -2052,7 +2208,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     overflow: hidden;
     padding: 86px 0 62px;
     background:
-      linear-gradient(90deg, var(--soft) 0%, #fff 72%);
+      linear-gradient(90deg, var(--soft) 0%, var(--surface-white) 72%);
     border-bottom: 0;
   }
 
@@ -2095,7 +2251,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
   .content-body p,
   .content-body li {
-    color: #263f44;
+    color: var(--text-dark);
   }
 
   .content-figure {
@@ -2107,7 +2263,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   }
 
   .content-figure figcaption {
-    background: #fff;
+    background: var(--surface-white);
     color: var(--muted);
     font-weight: 800;
   }
@@ -2115,7 +2271,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   .site-footer {
     position: relative;
     background: var(--blue-dark);
-    color: #f8ffff;
+    color: var(--soft-blue-bg);
   }
 
   .footer-shell {
@@ -2141,7 +2297,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   }
 
   .site-footer a {
-    color: #e9ffff;
+    color: var(--soft-blue-bg);
     text-decoration: none;
   }
 
@@ -2376,7 +2532,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     .hero-lead {
       min-height: 78svh;
       background-image:
-        linear-gradient(180deg, rgba(13, 47, 78, 0.94) 0%, rgba(13, 47, 78, 0.72) 55%, rgba(12, 77, 162, 0.34) 100%),
+        linear-gradient(180deg, rgba(var(--brand-primary-dark-rgb), 0.94) 0%, rgba(var(--brand-primary-dark-rgb), 0.72) 55%, rgba(var(--brand-primary-dark-rgb), 0.34) 100%),
         var(--hero-image);
     }
 
@@ -2585,7 +2741,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   .site-header {
     z-index: 1000;
     background: rgba(255, 255, 255, 0.98);
-    border-bottom: 1px solid rgba(12, 77, 162, 0.12);
+    border-bottom: 1px solid rgba(var(--brand-primary-dark-rgb), 0.12);
     box-shadow: none;
   }
 
@@ -2692,7 +2848,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     overflow: auto;
     border: 0;
     border-radius: 0 0 var(--mega-radius) var(--mega-radius);
-    background: #fff;
+    background: var(--surface-white);
     box-shadow: 0 18px 48px rgba(36, 39, 39, 0.12);
     color: var(--ink);
     opacity: 0;
@@ -2736,7 +2892,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     border-radius: 8px;
     padding: 11px 13px;
     background: transparent;
-    color: #fff;
+    color: var(--surface-white);
     font: inherit;
     font-weight: 900;
     line-height: 1.25;
@@ -2751,7 +2907,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     border-radius: 8px;
     padding: 11px 13px;
     background: transparent;
-    color: #fff;
+    color: var(--surface-white);
     font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
     font-size: 0.82rem;
     font-weight: 900;
@@ -2767,7 +2923,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   .primary-nav .mega-tab:hover,
   .primary-nav .mega-tab:focus-visible,
   .primary-nav .mega-tab.is-active {
-    background: #fff;
+    background: var(--surface-white);
     color: var(--blue);
     outline: 0;
   }
@@ -2776,7 +2932,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     display: grid;
     min-width: 0;
     padding: 28px;
-    background: linear-gradient(90deg, #fff 0%, #fff 62%, var(--signal-soft) 62%, var(--signal-soft) 100%);
+    background: linear-gradient(90deg, var(--surface-white) 0%, var(--surface-white) 62%, var(--signal-soft) 62%, var(--signal-soft) 100%);
     border-radius: 0 0 var(--mega-radius) 0;
     overflow: hidden;
   }
@@ -2803,7 +2959,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     display: block;
     grid-template-columns: none;
     padding: 30px 38px 32px;
-    background: #fff;
+    background: var(--surface-white);
   }
 
   .treatments-menu-grid {
@@ -2821,7 +2977,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   }
 
   .treatment-menu-column + .treatment-menu-column {
-    border-left: 1px solid rgba(12, 77, 162, 0.1);
+    border-left: 1px solid rgba(var(--brand-primary-dark-rgb), 0.1);
     padding-left: 38px;
   }
 
@@ -2849,7 +3005,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     align-items: flex-start;
     padding: 0;
     background: transparent;
-    color: #347cc2;
+    color: var(--brand-blue);
     font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
     font-size: 0.94rem;
     font-weight: 700;
@@ -2886,17 +3042,17 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     display: grid;
     align-content: center;
     gap: 4px;
-    border: 1px solid rgba(12, 77, 162, 0.1);
+    border: 1px solid rgba(var(--brand-primary-dark-rgb), 0.1);
     border-radius: 8px;
     padding: 14px 42px 14px 15px;
-    background: #fff;
+    background: var(--surface-white);
     color: var(--ink);
     font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
     line-height: 1.25;
     text-decoration: none;
     text-transform: none;
     white-space: normal;
-    box-shadow: 0 8px 20px rgba(36, 48, 51, 0.06);
+    box-shadow: 0 8px 20px rgba(var(--brand-primary-dark-rgb), 0.06);
     transition:
       border-color 150ms ease,
       box-shadow 150ms ease,
@@ -2915,9 +3071,9 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
   .primary-nav .treatment-card:hover,
   .primary-nav .treatment-card:focus-visible {
-    border-color: rgba(12, 77, 162, 0.28);
+    border-color: rgba(var(--brand-primary-dark-rgb), 0.28);
     color: var(--blue);
-    box-shadow: 0 12px 26px rgba(36, 48, 51, 0.1);
+    box-shadow: 0 12px 26px rgba(var(--brand-primary-dark-rgb), 0.1);
     transform: translateY(-1px);
     outline: 0;
   }
@@ -3033,20 +3189,20 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     border-radius: 8px;
     padding: 10px 16px;
     background: var(--signal);
-    color: #fff;
+    color: var(--surface-white);
     font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
     font-size: 0.82rem;
     font-weight: 900;
     line-height: 1;
     text-decoration: none;
     white-space: nowrap;
-    box-shadow: 0 10px 18px rgba(12, 77, 162, 0.14);
+    box-shadow: 0 10px 18px rgba(var(--brand-primary-dark-rgb), 0.14);
   }
 
   .primary-nav .detail-menu-cta:hover,
   .primary-nav .detail-menu-cta:focus-visible {
     background: var(--blue);
-    color: #fff;
+    color: var(--surface-white);
     outline: 0;
   }
 
@@ -3164,17 +3320,21 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
       border-radius: 999px;
       padding: 11px 22px;
       background: var(--signal);
-      color: #fff;
+      color: var(--surface-white);
       font-size: 0.94rem;
       text-transform: none;
       white-space: nowrap;
       box-shadow: none;
     }
 
+    .site-header.mobile-menu-open .header-call-dropdown {
+      display: none;
+    }
+
     .mobile-menu-trigger {
       width: 42px;
       height: 42px;
-      border: 1px solid rgba(12, 77, 162, 0.16);
+      border: 1px solid rgba(var(--brand-primary-dark-rgb), 0.16);
       border-radius: 8px;
       display: inline-flex;
       flex-direction: column;
@@ -3183,8 +3343,8 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
       gap: 3px;
       justify-self: end;
       padding: 8px;
-      background: #fff;
-      box-shadow: 0 8px 18px rgba(36, 48, 51, 0.08);
+      background: var(--surface-white);
+      box-shadow: 0 8px 18px rgba(var(--brand-primary-dark-rgb), 0.08);
       color: var(--blue-dark);
       cursor: pointer;
       transition:
@@ -3204,7 +3364,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     .mobile-menu-trigger:hover,
     .mobile-menu-trigger:focus-visible,
     .site-header.mobile-menu-open .mobile-menu-trigger {
-      background: #fff;
+      background: var(--surface-white);
       box-shadow: none;
       outline: 0;
     }
@@ -3252,10 +3412,10 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
       gap: 0;
       overflow: auto;
       border: 0;
-      border-top: 1px solid rgba(36, 48, 51, 0.12);
+      border-top: 1px solid rgba(var(--brand-primary-dark-rgb), 0.12);
       border-radius: 0;
       padding: 26px 18px 28px;
-      background: #fff;
+      background: var(--surface-white);
       box-shadow: none;
       opacity: 0;
       pointer-events: none;
@@ -3287,7 +3447,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
       justify-content: space-between;
       min-height: 64px;
       border-radius: 0;
-      border-bottom: 1px solid rgba(36, 48, 51, 0.12);
+      border-bottom: 1px solid rgba(var(--brand-primary-dark-rgb), 0.12);
       padding: 0;
       background: transparent;
       color: var(--ink);
@@ -3380,7 +3540,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
       gap: 18px;
       margin-bottom: 24px;
       padding: 2px 0 20px;
-      border-bottom: 1px solid rgba(36, 48, 51, 0.12);
+      border-bottom: 1px solid rgba(var(--brand-primary-dark-rgb), 0.12);
     }
 
     .mobile-menu-back {
@@ -3427,7 +3587,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
       overflow: visible;
       padding: 0;
       border-radius: 0;
-      background: #fff;
+      background: var(--surface-white);
     }
 
     .mega-menu-tabs::-webkit-scrollbar {
@@ -3442,7 +3602,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
       grid-template-rows: auto auto;
       align-items: center;
       gap: 12px;
-      border-bottom: 1px solid rgba(36, 48, 51, 0.12);
+      border-bottom: 1px solid rgba(var(--brand-primary-dark-rgb), 0.12);
       border-radius: 0;
       padding: 0;
       background: transparent;
@@ -3462,7 +3622,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
       grid-template-rows: auto auto;
       align-items: center;
       gap: 12px;
-      border-bottom: 1px solid rgba(36, 48, 51, 0.12);
+      border-bottom: 1px solid rgba(var(--brand-primary-dark-rgb), 0.12);
       border-radius: 0;
       padding: 0;
       background: transparent;
@@ -3519,7 +3679,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
       min-width: 0;
       display: none;
       padding: 0;
-      background: #fff;
+      background: var(--surface-white);
       border-radius: 0;
     }
 
@@ -3557,7 +3717,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
       border-radius: 0;
       padding: 0;
       box-shadow: none;
-      color: #347cc2;
+      color: var(--brand-blue);
       font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
       font-size: 1rem;
       font-weight: 700;
@@ -3605,7 +3765,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
       border: 0;
       border-radius: 0;
       padding: 0 30px 0 0;
-      background: #fff;
+      background: var(--surface-white);
       box-shadow: none;
     }
 
@@ -3724,6 +3884,39 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
       border-radius: 0;
     }
 
+    .primary-nav .mobile-call-dropdown {
+      width: 100%;
+      display: block;
+      margin-top: 42px;
+    }
+
+    .primary-nav .mobile-call-trigger {
+      width: 100%;
+      min-height: 58px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--blue-dark);
+      box-shadow: none;
+      justify-content: center;
+    }
+
+    .primary-nav .mobile-call-trigger:hover,
+    .primary-nav .mobile-call-trigger:focus-visible,
+    .primary-nav .mobile-call-dropdown[open] .mobile-call-trigger {
+      border-color: var(--brand-blue);
+      background: var(--soft-blue);
+      color: var(--blue-dark);
+    }
+
+    .primary-nav .mobile-call-dropdown .call-dropdown-menu {
+      position: static;
+      width: 100%;
+      min-width: 0;
+      margin-top: 10px;
+      box-shadow: none;
+    }
+
     .mega-feature-image-square img {
       height: 100%;
       border-radius: 0;
@@ -3733,10 +3926,10 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
       width: 100%;
       min-height: 64px;
       display: flex;
-      margin-top: 42px;
+      margin-top: 12px;
       border-radius: 999px;
       background: var(--signal);
-      color: #fff;
+      color: var(--surface-white);
       justify-content: center;
       align-items: center;
       text-decoration: none;
@@ -3747,10 +3940,14 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     .primary-nav .mobile-menu-cta:hover,
     .primary-nav .mobile-menu-cta:focus-visible {
       background: var(--blue);
-      color: #fff;
+      color: var(--surface-white);
     }
 
     .primary-nav.has-detail .mobile-menu-cta {
+      display: none;
+    }
+
+    .primary-nav.has-detail .mobile-call-dropdown {
       display: none;
     }
   }
@@ -3801,6 +3998,8 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
   .site-header .detail-menu-kicker,
   .site-header .header-cta,
+  .site-header .call-dropdown-trigger,
+  .site-header .call-dropdown-link,
   .site-header .primary-nav .detail-menu-cta,
   .site-header .primary-nav .mobile-menu-cta {
     font-size: clamp(0.9rem, 1vw, 1rem);
@@ -3848,6 +4047,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   .site-header.site-header-overlay .brand img,
   .site-header.site-header-overlay .primary-nav > a.primary-nav-link,
   .site-header.site-header-overlay .primary-nav-trigger,
+  .site-header.site-header-overlay .call-dropdown-trigger,
   .site-header.site-header-overlay .header-cta,
   .site-header.site-header-overlay .mobile-menu-trigger {
     transition:
@@ -3871,7 +4071,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
   .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .primary-nav > a.primary-nav-link,
   .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .primary-nav-trigger {
-    color: #fff;
+    color: var(--surface-white);
   }
 
   .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .primary-nav > a.primary-nav-link:hover,
@@ -3882,13 +4082,28 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .nav-mega:hover .primary-nav-trigger,
   .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .nav-mega:focus-within .primary-nav-trigger {
     background: rgba(255, 255, 255, 0.12);
-    color: #fff;
+    color: var(--surface-white);
   }
 
   .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .header-cta {
-    background: #fff;
+    background: var(--surface-white);
     color: var(--blue-dark);
     box-shadow: none;
+  }
+
+  .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .header-call-trigger {
+    border-color: rgba(var(--surface-white-rgb), 0.9);
+    background: transparent;
+    color: var(--surface-white);
+    box-shadow: none;
+  }
+
+  .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .header-call-trigger:hover,
+  .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .header-call-trigger:focus-visible,
+  .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .header-call-dropdown[open] .header-call-trigger {
+    border-color: var(--surface-white);
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--surface-white);
   }
 
   .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .header-cta:hover,
@@ -3900,7 +4115,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .mobile-menu-trigger {
     border-color: rgba(255, 255, 255, 0.46);
     background: rgba(255, 255, 255, 0.12);
-    color: #fff;
+    color: var(--surface-white);
     box-shadow: none;
   }
 

@@ -339,15 +339,15 @@ const serviceCards = [
 
 <style>
   .about-page {
-    --about-green: #00642d;
-    --about-green-dark: #00451f;
-    --about-blue: #347cc2;
-    --about-ink: #213b3f;
-    --about-muted: #627277;
-    --about-soft: #eff5ea;
-    --about-soft-blue: #edf7ff;
-    --about-line: #dce9df;
-    background: #fff;
+    --about-green: var(--brand-primary-dark);
+    --about-green-dark: var(--brand-primary-dark);
+    --about-blue: var(--brand-blue);
+    --about-ink: var(--text-dark);
+    --about-muted: var(--muted-text);
+    --about-soft: var(--soft-blue-bg);
+    --about-soft-blue: var(--soft-blue-bg);
+    --about-line: var(--border);
+    background: var(--surface-white);
     color: var(--about-ink);
     font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     letter-spacing: 0;
@@ -379,7 +379,7 @@ const serviceCards = [
     background: linear-gradient(
       to bottom,
       var(--about-soft) 0 calc(100% - var(--hero-strip-cut)),
-      #fff calc(100% - var(--hero-strip-cut)) 100%
+      var(--surface-white) calc(100% - var(--hero-strip-cut)) 100%
     );
     color: var(--about-green);
     text-align: center;
@@ -452,7 +452,7 @@ const serviceCards = [
 
   .hero-image-strip figure {
     height: 510px;
-    background: #dfe9e2;
+    background: var(--border);
   }
 
   .hero-image-strip figure:nth-child(2),
@@ -488,7 +488,7 @@ const serviceCards = [
 
   .vision-section {
     padding: 100px 0 106px;
-    background: #fff;
+    background: var(--surface-white);
   }
 
   .text-stack {
@@ -511,7 +511,7 @@ const serviceCards = [
   .text-stack p {
     max-width: 1360px;
     margin: 0;
-    color: #424242;
+    color: var(--text-dark);
     font-size: 2.15rem;
     font-weight: 400;
     line-height: 1.34;
@@ -545,7 +545,7 @@ const serviceCards = [
   .values-section {
     padding: 86px 0 118px;
     background: var(--about-green);
-    color: #fff;
+    color: var(--surface-white);
   }
 
   .values-title-wrap,
@@ -566,7 +566,7 @@ const serviceCards = [
   }
 
   .values-section h2 {
-    color: #fff;
+    color: var(--surface-white);
     font-size: 3.9rem;
     text-align: center;
   }
@@ -578,14 +578,14 @@ const serviceCards = [
   .values-intro {
     max-width: 610px;
     margin-bottom: 58px;
-    border-left: 3px solid #95bd45;
+    border-left: 3px solid var(--brand-blue);
     padding-left: 52px;
   }
 
   .values-eyebrow {
     max-width: 18ch;
     margin: 0 0 24px;
-    color: #95bd45;
+    color: var(--brand-blue);
     font-size: 1.55rem;
     font-weight: 800;
     line-height: 1.08;
@@ -595,7 +595,7 @@ const serviceCards = [
   .values-intro p:not(.values-eyebrow) {
     max-width: 560px;
     margin: 0;
-    color: #fff;
+    color: var(--surface-white);
     font-size: 1.18rem;
     font-weight: 400;
     line-height: 1.55;
@@ -610,7 +610,7 @@ const serviceCards = [
   }
 
   .value-list li {
-    color: #fff;
+    color: var(--surface-white);
     max-width: 15ch;
     font-size: 2.25rem;
     font-weight: 500;
@@ -639,7 +639,7 @@ const serviceCards = [
     border: 0;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.28);
-    color: #fff;
+    color: var(--surface-white);
     font-size: 2rem;
     font-weight: 500;
     line-height: 1;
@@ -649,7 +649,7 @@ const serviceCards = [
 
   .team-carousel-button-next,
   .team-carousel-button:hover {
-    background: #fff;
+    background: var(--surface-white);
     color: var(--about-green);
   }
 
@@ -680,7 +680,7 @@ const serviceCards = [
     overflow: hidden;
     border-radius: 8px;
     background: var(--about-green-dark);
-    color: #fff;
+    color: var(--surface-white);
     scroll-snap-align: start;
     isolation: isolate;
   }
@@ -703,7 +703,7 @@ const serviceCards = [
     z-index: -1;
     background:
       linear-gradient(180deg, rgba(0, 0, 0, 0.02) 24%, rgba(0, 0, 0, 0.68) 100%),
-      linear-gradient(90deg, rgba(0, 68, 30, 0.22), rgba(0, 0, 0, 0));
+      linear-gradient(90deg, rgba(var(--brand-primary-dark-rgb), 0.22), rgba(0, 0, 0, 0));
   }
 
   .team-card-copy {
@@ -717,7 +717,7 @@ const serviceCards = [
   .team-card-copy strong {
     display: block;
     max-width: 10ch;
-    color: #fff;
+    color: var(--surface-white);
     font-size: 2.25rem;
     font-weight: 500;
     line-height: 1.08;
@@ -793,7 +793,7 @@ const serviceCards = [
 
   .network-gallery figure {
     aspect-ratio: 0.92;
-    background: #d8e5df;
+    background: var(--border);
   }
 
   .network-gallery figure:nth-child(1) img {
@@ -830,7 +830,7 @@ const serviceCards = [
 
   .network-foot p {
     margin: 0;
-    color: #4d5350;
+    color: var(--muted-text);
     font-size: 1.42rem;
     line-height: 1.45;
   }
@@ -878,7 +878,7 @@ const serviceCards = [
 
   .offices-section {
     padding: 104px 0 96px;
-    background: #fff;
+    background: var(--surface-white);
     color: var(--about-green);
   }
 
@@ -894,7 +894,7 @@ const serviceCards = [
   .offices-head p {
     max-width: 900px;
     margin: 26px auto 0;
-    color: #3f4e4d;
+    color: var(--text-dark);
     font-size: 1.26rem;
     line-height: 1.48;
   }
@@ -953,7 +953,7 @@ const serviceCards = [
 
   .office-copy p:not(.office-city) {
     margin: 0 0 26px;
-    color: #4a4a4a;
+    color: var(--text-dark);
     font-size: 1.32rem;
     line-height: 1.45;
   }
@@ -983,7 +983,7 @@ const serviceCards = [
     width: 100%;
     aspect-ratio: 1;
     border-radius: 0;
-    background: #eef3f0;
+    background: var(--soft-blue-bg);
   }
 
   .office-image img {
@@ -992,7 +992,7 @@ const serviceCards = [
 
   .discover-section {
     padding: 18px 0 76px;
-    background: #fff;
+    background: var(--surface-white);
     color: var(--about-green);
   }
 
@@ -1018,7 +1018,7 @@ const serviceCards = [
     display: block;
     overflow: hidden;
     border-radius: 8px;
-    color: #fff;
+    color: var(--surface-white);
     text-decoration: none;
     isolation: isolate;
   }
@@ -1040,7 +1040,7 @@ const serviceCards = [
     z-index: -1;
     background:
       linear-gradient(180deg, rgba(0, 0, 0, 0.02) 26%, rgba(0, 0, 0, 0.62) 100%),
-      linear-gradient(90deg, rgba(0, 68, 30, 0.28), rgba(52, 124, 194, 0.18));
+      linear-gradient(90deg, rgba(var(--brand-primary-dark-rgb), 0.28), rgba(var(--brand-blue-rgb), 0.18));
   }
 
   .discover-copy {
@@ -1054,7 +1054,7 @@ const serviceCards = [
   .discover-copy strong {
     display: block;
     max-width: 12ch;
-    color: #fff;
+    color: var(--surface-white);
     font-size: 2.1rem;
     font-weight: 500;
     line-height: 1.03;

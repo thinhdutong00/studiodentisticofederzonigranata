@@ -166,7 +166,7 @@ const locationOffices = site.offices.map((office) => {
 
 <style>
   .locations-section {
-    background: #f7fbfc;
+    background: var(--background);
     color: var(--ink);
     font-family: inherit;
   }
@@ -182,7 +182,7 @@ const locationOffices = site.offices.map((office) => {
     flex-direction: column;
     justify-content: center;
     padding: clamp(58px, 5vw, 84px) clamp(34px, 6vw, 104px);
-    background: linear-gradient(180deg, #ffffff 0%, #f7fbfc 100%);
+    background: linear-gradient(180deg, var(--surface-white) 0%, var(--background) 100%);
   }
 
   .locations-eyebrow {
@@ -214,10 +214,10 @@ const locationOffices = site.offices.map((office) => {
 
   .location-card {
     position: relative;
-    border: 1px solid rgba(52, 124, 194, 0.22);
+    border: 1px solid rgba(var(--brand-blue-rgb), 0.22);
     border-radius: 8px;
-    background: linear-gradient(180deg, #fff 0%, #f7fbff 100%);
-    box-shadow: 0 16px 42px rgba(12, 77, 162, 0.08);
+    background: linear-gradient(180deg, var(--surface-white) 0%, var(--background) 100%);
+    box-shadow: 0 16px 42px rgba(var(--brand-primary-dark-rgb), 0.08);
     overflow: hidden;
     transition:
       border-color 180ms ease,
@@ -230,16 +230,16 @@ const locationOffices = site.offices.map((office) => {
     position: absolute;
     inset: 0 auto 0 0;
     width: 5px;
-    background: rgba(52, 124, 194, 0.28);
+    background: rgba(var(--brand-blue-rgb), 0.28);
     transition:
       background-color 180ms ease,
       width 180ms ease;
   }
 
   .location-card-open {
-    border-color: rgba(52, 124, 194, 0.52);
-    background: #fff;
-    box-shadow: 0 24px 58px rgba(12, 77, 162, 0.13);
+    border-color: rgba(var(--brand-blue-rgb), 0.52);
+    background: var(--surface-white);
+    box-shadow: 0 24px 58px rgba(var(--brand-primary-dark-rgb), 0.13);
   }
 
   .location-card-open::before {
@@ -278,7 +278,7 @@ const locationOffices = site.offices.map((office) => {
 
   .location-card-trigger small {
     display: block;
-    color: #347cc2;
+    color: var(--brand-blue);
     font-size: 0.78rem;
     font-weight: 900;
     letter-spacing: 0.13em;
@@ -291,10 +291,10 @@ const locationOffices = site.offices.map((office) => {
     width: 38px;
     height: 38px;
     justify-self: end;
-    border: 1px solid rgba(52, 124, 194, 0.3);
+    border: 1px solid rgba(var(--brand-blue-rgb), 0.3);
     border-radius: 999px;
-    background: #fff;
-    color: #347cc2;
+    background: var(--surface-white);
+    color: var(--brand-blue);
     transition:
       background-color 180ms ease,
       border-color 180ms ease,
@@ -314,19 +314,19 @@ const locationOffices = site.offices.map((office) => {
   }
 
   .location-card-open .location-card-trigger {
-    border-bottom: 1px solid rgba(52, 124, 194, 0.18);
-    background: linear-gradient(90deg, rgba(237, 247, 255, 0.95), rgba(255, 255, 255, 0));
+    border-bottom: 1px solid rgba(var(--brand-blue-rgb), 0.18);
+    background: linear-gradient(90deg, rgba(var(--soft-blue-bg-rgb), 0.95), rgba(255, 255, 255, 0));
     color: var(--blue-dark);
   }
 
   .location-card-open .location-card-trigger small {
-    color: #347cc2;
+    color: var(--brand-blue);
   }
 
   .location-card-open .location-card-trigger i {
-    border-color: #347cc2;
-    background: #347cc2;
-    color: #fff;
+    border-color: var(--brand-blue);
+    background: var(--brand-blue);
+    color: var(--surface-white);
   }
 
   .location-card-open .location-card-trigger i::after {
@@ -351,7 +351,7 @@ const locationOffices = site.offices.map((office) => {
   .location-detail span,
   .location-hours p {
     margin: 0;
-    color: #347cc2;
+    color: var(--brand-blue);
     font-size: 0.72rem;
     font-weight: 900;
     letter-spacing: 0.12em;
@@ -360,7 +360,7 @@ const locationOffices = site.offices.map((office) => {
 
   .location-detail strong,
   .location-detail a {
-    color: #24313a;
+    color: var(--text-dark);
     font-size: 1rem;
     font-weight: 800;
     line-height: 1.45;
@@ -378,7 +378,7 @@ const locationOffices = site.offices.map((office) => {
   .location-hours {
     display: grid;
     gap: 10px;
-    border-top: 1px solid rgba(52, 124, 194, 0.16);
+    border-top: 1px solid rgba(var(--brand-blue-rgb), 0.16);
     padding-top: 18px;
   }
 
@@ -387,7 +387,7 @@ const locationOffices = site.offices.map((office) => {
     align-items: baseline;
     justify-content: space-between;
     gap: 22px;
-    color: #24313a;
+    color: var(--text-dark);
     font-size: 0.96rem;
     line-height: 1.3;
   }
@@ -404,7 +404,7 @@ const locationOffices = site.offices.map((office) => {
   }
 
   .location-hours-row-closed strong {
-    color: #c54a4a;
+    color: var(--error);
   }
 
   .location-route {
@@ -412,7 +412,7 @@ const locationOffices = site.offices.map((office) => {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    border: 1px solid rgba(52, 124, 194, 0.28);
+    border: 1px solid rgba(var(--brand-blue-rgb), 0.28);
     border-radius: 999px;
     padding: 10px 15px;
     color: var(--blue-dark);
@@ -421,9 +421,9 @@ const locationOffices = site.offices.map((office) => {
   }
 
   .location-route:hover {
-    border-color: #347cc2;
-    background: rgba(52, 124, 194, 0.09);
-    color: #347cc2;
+    border-color: var(--brand-blue);
+    background: rgba(var(--brand-blue-rgb), 0.09);
+    color: var(--brand-blue);
   }
 
   .locations-map-stack {
@@ -465,7 +465,7 @@ const locationOffices = site.offices.map((office) => {
     border-radius: 8px;
     padding: 16px 18px;
     background: rgba(255, 255, 255, 0.94);
-    box-shadow: 0 14px 36px rgba(32, 54, 72, 0.16);
+    box-shadow: 0 14px 36px rgba(var(--brand-primary-dark-rgb), 0.16);
   }
 
   .location-map-caption strong {

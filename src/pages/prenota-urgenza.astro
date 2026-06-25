@@ -168,14 +168,14 @@ const emergencyConfigJson = JSON.stringify({
 
 <style is:global>
   body {
-    background: #fff;
+    background: var(--surface-white);
   }
 
   .urgent-request-page {
     min-height: calc(100vh - var(--nav-height));
     padding: clamp(30px, 5vw, 64px) 0 80px;
-    background: #fff;
-    color: #173527;
+    background: var(--surface-white);
+    color: var(--text-dark);
   }
 
   .urgent-request-shell {
@@ -191,7 +191,7 @@ const emergencyConfigJson = JSON.stringify({
     height: 8px;
     overflow: hidden;
     border-radius: 999px;
-    background: #e8efe9;
+    background: var(--border);
   }
 
   .urgent-progress span {
@@ -199,13 +199,13 @@ const emergencyConfigJson = JSON.stringify({
     width: 25%;
     height: 100%;
     border-radius: inherit;
-    background: #005924;
+    background: var(--brand-primary-dark);
     transition: width 220ms ease;
   }
 
   .urgent-step-count {
     margin: 20px 0 30px;
-    color: #627267;
+    color: var(--muted-text);
     font-weight: 900;
   }
 
@@ -229,7 +229,7 @@ const emergencyConfigJson = JSON.stringify({
   .urgent-kicker {
     display: block;
     margin: 0 0 10px;
-    color: #005924;
+    color: var(--brand-primary-dark);
     font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
     font-size: 0.76rem;
     font-weight: 900;
@@ -241,7 +241,7 @@ const emergencyConfigJson = JSON.stringify({
   .urgent-step legend strong {
     display: block;
     max-width: 860px;
-    color: #005924;
+    color: var(--brand-primary-dark);
     font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
     font-size: clamp(2rem, 4.4vw, 3.6rem);
     line-height: 1.05;
@@ -259,11 +259,11 @@ const emergencyConfigJson = JSON.stringify({
 
   .urgent-choice {
     min-height: 72px;
-    border: 1px solid #d9e6dc;
+    border: 1px solid var(--border);
     border-radius: 14px;
     padding: 18px;
-    background: #fbfdfb;
-    color: #173527;
+    background: var(--surface-white);
+    color: var(--text-dark);
     font: inherit;
     font-weight: 900;
     line-height: 1.25;
@@ -273,16 +273,16 @@ const emergencyConfigJson = JSON.stringify({
   }
 
   .urgent-choice:hover {
-    border-color: rgba(0, 89, 36, 0.4);
+    border-color: rgba(var(--brand-cta-rgb), 0.4);
     transform: translateY(-1px);
-    box-shadow: 0 14px 30px rgba(0, 89, 36, 0.08);
+    box-shadow: 0 14px 30px rgba(var(--brand-cta-rgb), 0.08);
   }
 
   .urgent-choice.is-selected {
-    border-color: #005924;
-    background: #005924;
-    color: #fff;
-    box-shadow: 0 18px 34px rgba(0, 89, 36, 0.2);
+    border-color: var(--brand-primary-dark);
+    background: var(--brand-primary-dark);
+    color: var(--surface-white);
+    box-shadow: 0 18px 34px rgba(var(--brand-cta-rgb), 0.2);
   }
 
   .pain-scale {
@@ -291,18 +291,18 @@ const emergencyConfigJson = JSON.stringify({
     gap: 10px 18px;
     align-items: center;
     margin-top: 28px;
-    border: 1px solid #d9e6dc;
+    border: 1px solid var(--border);
     border-radius: 16px;
     padding: 20px;
-    background: #fbfdfb;
-    color: #005924;
+    background: var(--surface-white);
+    color: var(--brand-primary-dark);
     font-weight: 900;
   }
 
   .pain-scale input {
     grid-column: 1 / -1;
     width: 100%;
-    accent-color: #005924;
+    accent-color: var(--brand-primary-dark);
   }
 
   .urgent-split {
@@ -312,15 +312,15 @@ const emergencyConfigJson = JSON.stringify({
   }
 
   .urgent-split > div {
-    border: 1px solid #d9e6dc;
+    border: 1px solid var(--border);
     border-radius: 18px;
     padding: 20px;
-    background: #fbfdfb;
+    background: var(--surface-white);
   }
 
   .urgent-split h2 {
     margin: 0 0 16px;
-    color: #005924;
+    color: var(--brand-primary-dark);
     font-size: 1.1rem;
   }
 
@@ -333,12 +333,12 @@ const emergencyConfigJson = JSON.stringify({
   .urgent-field-grid label {
     display: grid;
     gap: 8px;
-    color: #173527;
+    color: var(--text-dark);
     font-weight: 900;
   }
 
   .urgent-field-grid em {
-    color: #728176;
+    color: var(--muted-text);
     font-style: normal;
     font-weight: 700;
   }
@@ -350,11 +350,11 @@ const emergencyConfigJson = JSON.stringify({
   .urgent-field-grid input,
   .urgent-field-grid textarea {
     width: 100%;
-    border: 1px solid #d9e6dc;
+    border: 1px solid var(--border);
     border-radius: 14px;
     padding: 15px 16px;
-    background: #fbfdfb;
-    color: #173527;
+    background: var(--surface-white);
+    color: var(--text-dark);
     font: inherit;
     font-weight: 700;
     outline: none;
@@ -367,19 +367,19 @@ const emergencyConfigJson = JSON.stringify({
 
   .urgent-field-grid input:focus,
   .urgent-field-grid textarea:focus {
-    border-color: #005924;
-    background: #fff;
-    box-shadow: 0 0 0 4px rgba(0, 89, 36, 0.1);
+    border-color: var(--brand-primary-dark);
+    background: var(--surface-white);
+    box-shadow: 0 0 0 4px rgba(var(--brand-cta-rgb), 0.1);
   }
 
   .urgent-field-grid .is-invalid {
-    border-color: #c43b4d;
-    box-shadow: 0 0 0 4px rgba(196, 59, 77, 0.1);
+    border-color: var(--error);
+    box-shadow: 0 0 0 4px rgba(var(--error-rgb), 0.1);
   }
 
   .urgent-privacy {
     margin: 18px 0 0;
-    color: #627267;
+    color: var(--muted-text);
     font-size: 0.95rem;
     font-weight: 700;
   }
@@ -387,7 +387,7 @@ const emergencyConfigJson = JSON.stringify({
   .urgent-error {
     min-height: 26px;
     margin: 24px 0 0;
-    color: #c43b4d;
+    color: var(--error);
     font-weight: 900;
   }
 
@@ -416,24 +416,24 @@ const emergencyConfigJson = JSON.stringify({
 
   .urgent-btn-primary {
     margin-left: auto;
-    background: #005924;
-    color: #fff;
-    box-shadow: 0 18px 34px rgba(0, 89, 36, 0.2);
+    background: var(--brand-primary-dark);
+    color: var(--surface-white);
+    box-shadow: 0 18px 34px rgba(var(--brand-cta-rgb), 0.2);
   }
 
   .urgent-btn-primary:hover {
-    background: #347cc2;
+    background: var(--brand-blue);
   }
 
   .urgent-btn-outline {
-    border-color: #d9e6dc;
-    background: #fff;
-    color: #005924;
+    border-color: var(--border);
+    background: var(--surface-white);
+    color: var(--brand-primary-dark);
   }
 
   .urgent-btn-outline:hover {
-    border-color: rgba(0, 89, 36, 0.38);
-    background: #f4faf5;
+    border-color: rgba(var(--brand-cta-rgb), 0.38);
+    background: var(--soft-blue-bg);
   }
 
   @media (max-width: 860px) {

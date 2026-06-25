@@ -193,6 +193,12 @@ const secondaryMenus = [
     ].map((item, index) => itemCategory(item, index, 'Segnaposto informazioni')),
   },
 ];
+
+const callOptions = site.offices.map((office) => ({
+  city: office.city,
+  phone: office.phone,
+  phoneHref: office.phoneHref,
+}));
 ---
 
 <header class:list={['site-header', transparent && 'site-header-overlay', transparent && 'is-over-hero']} data-overlay-header={transparent ? 'true' : undefined}>
@@ -393,9 +399,37 @@ const secondaryMenus = [
           </div>
         </div>
       ))}
+      <details class="call-dropdown mobile-call-dropdown" data-call-dropdown>
+        <summary class="button button-small call-dropdown-trigger mobile-call-trigger">
+          Chiama lo studio
+          <span class="call-dropdown-caret" aria-hidden="true"></span>
+        </summary>
+        <div class="call-dropdown-menu" role="list">
+          {callOptions.map((office) => (
+            <a class="call-dropdown-link" href={office.phoneHref}>
+              <span>Studio {office.city}</span>
+              <strong>{office.phone}</strong>
+            </a>
+          ))}
+        </div>
+      </details>
       <a class="button button-small mobile-menu-cta" href="/richiesta/">Prenota visita</a>
     </nav>
     <div class="header-actions">
+      <details class="call-dropdown header-call-dropdown" data-call-dropdown>
+        <summary class="button button-small call-dropdown-trigger header-call-trigger">
+          Chiama lo studio
+          <span class="call-dropdown-caret" aria-hidden="true"></span>
+        </summary>
+        <div class="call-dropdown-menu" role="list">
+          {callOptions.map((office) => (
+            <a class="call-dropdown-link" href={office.phoneHref}>
+              <span>Studio {office.city}</span>
+              <strong>{office.phone}</strong>
+            </a>
+          ))}
+        </div>
+      </details>
       <a class="button button-small header-cta" href="/richiesta/">Prenota visita</a>
     </div>
     <button
@@ -625,6 +659,43 @@ const secondaryMenus = [
     window.addEventListener('resize', syncHeaderTheme);
   };
 
+  const setupCallDropdowns = () => {
+    const dropdowns = Array.from(document.querySelectorAll('[data-call-dropdown]'));
+
+    dropdowns.forEach((dropdown) => {
+      if (!(dropdown instanceof HTMLDetailsElement) || dropdown.dataset.ready === 'true') return;
+      dropdown.dataset.ready = 'true';
+
+      dropdown.addEventListener('toggle', () => {
+        if (!dropdown.open) return;
+        dropdowns.forEach((otherDropdown) => {
+          if (otherDropdown instanceof HTMLDetailsElement && otherDropdown !== dropdown) {
+            otherDropdown.open = false;
+          }
+        });
+      });
+    });
+
+    document.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof Node)) return;
+
+      dropdowns.forEach((dropdown) => {
+        if (dropdown instanceof HTMLDetailsElement && !dropdown.contains(target)) {
+          dropdown.open = false;
+        }
+      });
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+
+      dropdowns.forEach((dropdown) => {
+        if (dropdown instanceof HTMLDetailsElement) dropdown.open = false;
+      });
+    });
+  };
+
   const setupHeaderVisibility = () => {
     const header = document.querySelector('.site-header');
     if (!(header instanceof HTMLElement)) return;
@@ -676,11 +747,13 @@ const secondaryMenus = [
     document.addEventListener('DOMContentLoaded', () => {
       setupMegaMenus();
       setupOverlayHeader();
+      setupCallDropdowns();
       setupHeaderVisibility();
     }, { once: true });
   } else {
     setupMegaMenus();
     setupOverlayHeader();
+    setupCallDropdowns();
     setupHeaderVisibility();
   }
 </script>

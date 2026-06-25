@@ -259,11 +259,11 @@ const relatedCards = [
 <style>
   .service-template {
     --service-blue: var(--blue-dark);
-    --service-accent: #347cc2;
-    --service-soft: #edf7ff;
-    --service-line: rgba(52, 124, 194, 0.24);
-    background: #fff;
-    color: #3f4e4d;
+    --service-accent: var(--brand-blue);
+    --service-soft: var(--soft-blue-bg);
+    --service-line: rgba(var(--brand-blue-rgb), 0.24);
+    background: var(--surface-white);
+    color: var(--text-dark);
   }
 
   .service-wrap {
@@ -273,7 +273,7 @@ const relatedCards = [
 
   .service-hero {
     background: var(--service-blue);
-    color: #fff;
+    color: var(--surface-white);
   }
 
   .service-hero-inner {
@@ -305,7 +305,7 @@ const relatedCards = [
   .service-hero h1 {
     max-width: 1180px;
     margin: 0 0 18px;
-    color: #fff;
+    color: var(--surface-white);
     font-family: inherit;
     font-size: clamp(3.4rem, 7.8vw, 8.2rem);
     font-weight: 500;
@@ -361,7 +361,7 @@ const relatedCards = [
   }
 
   .service-band-soft {
-    background: #f7fbff;
+    background: var(--background);
   }
 
   .service-section-head {
@@ -392,7 +392,7 @@ const relatedCards = [
     border: 1px solid var(--service-accent);
     padding: 0 18px;
     background: var(--service-accent);
-    color: #fff;
+    color: var(--surface-white);
     font-size: 0.78rem;
     font-weight: 900;
     line-height: 1.1;
@@ -406,7 +406,7 @@ const relatedCards = [
   .service-newsletter-box > a:hover {
     border-color: var(--service-blue);
     background: var(--service-blue);
-    color: #fff;
+    color: var(--surface-white);
   }
 
   .process-grid {
@@ -453,7 +453,7 @@ const relatedCards = [
   .process-card p {
     max-width: 28ch;
     margin: 14px 0 0;
-    color: #3f4e4d;
+    color: var(--text-dark);
     font-size: 0.95rem;
     font-weight: 700;
     line-height: 1.35;
@@ -478,7 +478,7 @@ const relatedCards = [
     flex-direction: column;
     justify-content: flex-end;
     overflow: hidden;
-    color: #fff;
+    color: var(--surface-white);
     text-decoration: none;
     isolation: isolate;
   }
@@ -510,7 +510,7 @@ const relatedCards = [
   .related-card strong {
     max-width: 12ch;
     padding: 0 24px;
-    color: #fff;
+    color: var(--surface-white);
     font-size: clamp(1.5rem, 2.4vw, 2.35rem);
     font-weight: 800;
     line-height: 1;
@@ -554,7 +554,7 @@ const relatedCards = [
   .detail-row p {
     max-width: 980px;
     margin: 0;
-    color: #3f4e4d;
+    color: var(--text-dark);
     font-size: 1rem;
     font-weight: 700;
     line-height: 1.45;
@@ -616,7 +616,7 @@ const relatedCards = [
   .accordion-item p {
     max-width: 940px;
     margin: -6px 0 26px;
-    color: #3f4e4d;
+    color: var(--text-dark);
     font-weight: 700;
     line-height: 1.55;
   }
@@ -675,7 +675,7 @@ const relatedCards = [
   }
 
   .office-lines small {
-    color: #3f4e4d;
+    color: var(--text-dark);
     font-size: 0.95rem;
     font-weight: 700;
   }
@@ -698,12 +698,12 @@ const relatedCards = [
     align-items: center;
     padding: clamp(26px, 4vw, 44px);
     background: var(--service-blue);
-    color: #fff;
+    color: var(--surface-white);
   }
 
   .service-newsletter-box h2 {
     margin: 0 0 8px;
-    color: #fff;
+    color: var(--surface-white);
     font-size: clamp(1.7rem, 2.8vw, 3rem);
     font-weight: 800;
   }
@@ -715,7 +715,7 @@ const relatedCards = [
   }
 
   .service-newsletter-box > a {
-    border-color: #fff;
+    border-color: var(--surface-white);
   }
 
   @media (max-width: 1060px) {

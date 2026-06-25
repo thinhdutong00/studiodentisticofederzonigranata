@@ -114,6 +114,58 @@ const splitAestheticIntro = (html = '') => {
   };
 };
 
+const aestheticFaqItems = [
+  {
+    question: 'Le faccette rovinano i denti?',
+    answer:
+      'Non necessariamente. Prima si valuta quanto smalto è presente, se ci sono vecchie ricostruzioni, come chiudono i denti e se ci sono abitudini come il bruxismo. Quando sono indicate, si lavora in modo conservativo; se il dente non è adatto, si propone un’altra soluzione.',
+  },
+  {
+    question: 'Il risultato rischia di sembrare finto?',
+    answer:
+      'Il progetto parte dal volto, dal sorriso, dal colore dei denti, dalle proporzioni e dalla masticazione. L’obiettivo non è avere denti tutti uguali o troppo bianchi, ma un sorriso naturale e coerente con la persona.',
+  },
+  {
+    question: 'Se ho denti storti o consumati posso fare subito le faccette?',
+    answer:
+      'A volte sì, ma spesso prima bisogna capire se conviene correggere allineamento, usura, gengive o chiusura dei denti. Saltare questa valutazione può rendere il risultato meno stabile nel tempo.',
+  },
+  {
+    question: 'Meglio sbiancamento, composito o ceramica?',
+    answer:
+      'Dipende da cosa vuoi cambiare: colore, forma, lunghezza, spazi tra i denti o vecchie otturazioni visibili. In alcuni casi basta uno sbiancamento o un restauro in composito; in altri la ceramica è più indicata.',
+  },
+  {
+    question: 'Faranno male o i denti diventeranno sensibili?',
+    answer:
+      'La visita serve anche a valutare sensibilità, gengive e quantità di tessuto dentale disponibile. Se prevediamo fastidi, limiti o attenzioni particolari, li spieghiamo prima di iniziare.',
+  },
+  {
+    question: 'Quanto durano e cosa può farle durare meno?',
+    answer:
+      'La durata dipende da materiale, igiene, controlli, masticazione, bruxismo e abitudini quotidiane. Bite, controlli periodici e una buona manutenzione aiutano a proteggere il lavoro nel tempo.',
+  },
+  {
+    question: 'Dopo aver migliorato il sorriso, cosa dovrò considerare?',
+    answer:
+      'Quando il primo problema estetico è risolto possono emergere dettagli come gengive, colore dei denti vicini, vecchie otturazioni, usura o stabilità del morso. Per questo il piano iniziale deve guardare al sorriso completo, non solo al singolo dente.',
+  },
+];
+
+const isAestheticClinicalCardsBlock = (block: SitePage['blocks'][number]) => {
+  if (page.path !== '/estetica/') return false;
+  if (block.type === 'heading') return cleanHeading(block.text) === 'Casi Clinici';
+
+  return (
+    block.type === 'list' &&
+    block.html.includes('/protesi/') &&
+    block.html.includes('/implantologia/') &&
+    block.html.includes('/video/')
+  );
+};
+
+const aestheticBodyBlocks = bodyBlocks.filter((block) => !isAestheticClinicalCardsBlock(block));
+
 const conventionsHeroImage = '/assets/menu/convenzioni-studio.jpg';
 const conventionsSteps = [
   {
@@ -316,7 +368,7 @@ const conventionsSteps = [
     <section class="aesthetic-content-section" aria-label="Contenuto della pagina Estetica">
       <div class="aesthetic-content-wrap">
         <div class="aesthetic-content-body">
-          {bodyBlocks.map((block) => {
+          {aestheticBodyBlocks.map((block) => {
             if (block.type === 'heading') {
               const Tag = `h${Math.min(Math.max(block.level, 1), 6)}`;
               return <Tag id={block.id}>{cleanHeading(block.text)}</Tag>;
@@ -357,6 +409,25 @@ const conventionsSteps = [
             }
           })}
         </div>
+
+        <section class="aesthetic-faq" aria-labelledby="aesthetic-faq-title">
+          <p class="eyebrow">Domande frequenti</p>
+          <h2 id="aesthetic-faq-title">Dubbi prima di scegliere le faccette</h2>
+
+          <div class="aesthetic-faq-list">
+            {aestheticFaqItems.map((item) => (
+              <details class="aesthetic-faq-item">
+                <summary>
+                  <span>{item.question}</span>
+                  <i aria-hidden="true"></i>
+                </summary>
+                <div class="aesthetic-faq-answer">
+                  <p>{item.answer}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
       </div>
     </section>
 
@@ -423,7 +494,7 @@ const conventionsSteps = [
     place-items: center;
     padding: 118px 0 100px;
     background: var(--blue-dark);
-    color: #fff;
+    color: var(--surface-white);
     text-align: center;
   }
 
@@ -435,7 +506,7 @@ const conventionsSteps = [
   .aesthetic-hero h1 {
     max-width: 1260px;
     margin: 0 auto;
-    color: #fff;
+    color: var(--surface-white);
     font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: 7rem;
     font-weight: 400;
@@ -463,7 +534,7 @@ const conventionsSteps = [
     height: clamp(420px, 52vw, 780px);
     margin: 0;
     overflow: hidden;
-    background: #eef3f6;
+    background: var(--soft-blue-bg);
   }
 
   .aesthetic-hero-media img {
@@ -475,7 +546,7 @@ const conventionsSteps = [
 
   .aesthetic-content-section {
     padding: 108px 0 122px;
-    background: #fff;
+    background: var(--surface-white);
   }
 
   .aesthetic-content-wrap {
@@ -484,7 +555,7 @@ const conventionsSteps = [
   }
 
   .aesthetic-content-body {
-    color: #263f44;
+    color: var(--text-dark);
     font-size: 1.12rem;
     line-height: 1.62;
   }
@@ -511,7 +582,7 @@ const conventionsSteps = [
   .aesthetic-intro-text > .aesthetic-intro-support {
     max-width: 1180px;
     margin: clamp(22px, 2.5vw, 34px) 0 0;
-    color: #657479;
+    color: var(--muted-text);
     font-family: inherit;
     font-size: clamp(1.25rem, 1.45vw, 1.55rem);
     font-weight: 500;
@@ -539,8 +610,8 @@ const conventionsSteps = [
     margin: 0 0 74px;
     overflow: hidden;
     border-radius: 8px;
-    background: #f5f7f8;
-    box-shadow: 0 18px 48px rgba(36, 48, 51, 0.12);
+    background: var(--background);
+    box-shadow: 0 18px 48px rgba(var(--brand-primary-dark-rgb), 0.12);
   }
 
   .aesthetic-case-figure img {
@@ -551,45 +622,114 @@ const conventionsSteps = [
 
   .aesthetic-case-figure figcaption {
     padding: 14px 18px;
-    background: #fff;
-    color: #657479;
+    background: var(--surface-white);
+    color: var(--muted-text);
     font-size: 0.92rem;
     font-weight: 800;
     line-height: 1.35;
   }
 
-  :global(.aesthetic-content-body > ul:last-child) {
+  .aesthetic-faq {
+    margin-top: clamp(72px, 8vw, 120px);
+    padding-top: clamp(52px, 6vw, 86px);
+    border-top: 1px solid rgba(var(--brand-primary-dark-rgb), 0.14);
+  }
+
+  .aesthetic-faq > .eyebrow {
+    margin-bottom: 18px;
+    color: var(--aqua);
+  }
+
+  .aesthetic-faq h2 {
+    max-width: 1040px;
+    margin: 0 0 clamp(34px, 4vw, 58px);
+    color: var(--blue-dark);
+    font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: clamp(2.75rem, 4.8vw, 5.7rem);
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 0.98;
+  }
+
+  .aesthetic-faq-list {
+    border-top: 2px solid var(--blue-dark);
+  }
+
+  .aesthetic-faq-item {
+    border-bottom: 2px solid var(--blue-dark);
+  }
+
+  .aesthetic-faq-item summary {
+    min-height: clamp(82px, 6vw, 118px);
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 14px;
-    margin: 24px 0 0;
-    padding: 0;
+    grid-template-columns: minmax(0, 1fr) 42px;
+    gap: clamp(18px, 3vw, 32px);
+    align-items: center;
+    color: var(--blue-dark);
+    cursor: pointer;
     list-style: none;
   }
 
-  :global(.aesthetic-content-body > ul:last-child li) {
+  .aesthetic-faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .aesthetic-faq-item summary span {
+    font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: clamp(1.45rem, 2.45vw, 2.85rem);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: 0;
+  }
+
+  .aesthetic-faq-item summary i {
+    position: relative;
+    width: 38px;
+    aspect-ratio: 1;
+    justify-self: end;
+    border-radius: 999px;
+    background: var(--blue-dark);
+    color: var(--surface-white);
+    transition: background-color 160ms ease, transform 160ms ease;
+  }
+
+  .aesthetic-faq-item summary i::before,
+  .aesthetic-faq-item summary i::after {
+    content: "";
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: 15px;
+    height: 2px;
+    border-radius: 999px;
+    background: currentColor;
+    transform: translate(-50%, -50%);
+  }
+
+  .aesthetic-faq-item summary i::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+    transition: transform 160ms ease;
+  }
+
+  .aesthetic-faq-item[open] summary i {
+    background: var(--blue);
+    transform: rotate(90deg);
+  }
+
+  .aesthetic-faq-item[open] summary i::after {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  .aesthetic-faq-answer {
+    max-width: 900px;
+    margin: -8px 74px clamp(30px, 4vw, 50px) 0;
+    color: var(--muted-text);
+    font-size: clamp(1.05rem, 1.18vw, 1.28rem);
+    font-weight: 500;
+    line-height: 1.45;
+  }
+
+  .aesthetic-faq-answer p {
     margin: 0;
-  }
-
-  :global(.aesthetic-content-body > ul:last-child a) {
-    min-height: 82px;
-    display: flex;
-    align-items: center;
-    border-left: 6px solid var(--blue-dark);
-    border-radius: 8px;
-    padding: 18px;
-    background: #f5f7f8;
-    color: var(--blue-dark);
-    font-weight: 900;
-    line-height: 1.25;
-    text-decoration: none;
-    transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
-  }
-
-  :global(.aesthetic-content-body > ul:last-child a:hover) {
-    background: #e9f8f7;
-    color: var(--blue);
-    transform: translateY(-2px);
   }
 
   .conventions-hero {
@@ -597,8 +737,8 @@ const conventionsSteps = [
     display: grid;
     place-items: center;
     padding: clamp(88px, 9vw, 154px) 0 clamp(76px, 8vw, 132px);
-    background: #10283d;
-    color: #fff;
+    background: var(--brand-primary-dark);
+    color: var(--surface-white);
     text-align: center;
   }
 
@@ -609,7 +749,7 @@ const conventionsSteps = [
 
   .conventions-hero h1 {
     margin: 0;
-    color: #fff;
+    color: var(--surface-white);
     font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: clamp(4.2rem, 11vw, 12.4rem);
     font-weight: 400;
@@ -621,7 +761,7 @@ const conventionsSteps = [
   .conventions-hero p {
     max-width: 940px;
     margin: clamp(30px, 3.4vw, 52px) auto 0;
-    color: #d6eef3;
+    color: var(--soft-blue-bg);
     font-size: clamp(1.35rem, 2vw, 2.05rem);
     font-weight: 700;
     line-height: 1.18;
@@ -631,7 +771,7 @@ const conventionsSteps = [
     height: clamp(390px, 50vw, 780px);
     margin: 0;
     overflow: hidden;
-    background: #e9eef1;
+    background: var(--border);
   }
 
   .conventions-media img {
@@ -643,7 +783,7 @@ const conventionsSteps = [
 
   .conventions-intro {
     padding: clamp(84px, 9vw, 150px) 0;
-    background: #fff;
+    background: var(--surface-white);
   }
 
   .conventions-intro-wrap,
@@ -673,7 +813,7 @@ const conventionsSteps = [
 
   .conventions-copy-grid p {
     margin: 0;
-    color: #3d4f56;
+    color: var(--muted-text);
     font-size: clamp(1.05rem, 1.35vw, 1.34rem);
     line-height: 1.55;
   }
@@ -716,7 +856,7 @@ const conventionsSteps = [
   }
 
   .conventions-step span {
-    color: #7db9c5;
+    color: var(--brand-blue);
     font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
     font-size: 0.84rem;
     font-weight: 800;
@@ -730,15 +870,15 @@ const conventionsSteps = [
 
   .conventions-step p {
     margin: 0;
-    color: #3d4f56;
+    color: var(--muted-text);
     font-size: 1.04rem;
     line-height: 1.55;
   }
 
   .conventions-final-cta {
     padding: clamp(76px, 8vw, 132px) 0;
-    background: #10283d;
-    color: #fff;
+    background: var(--brand-primary-dark);
+    color: var(--surface-white);
   }
 
   .conventions-final-cta-inner {
@@ -749,12 +889,12 @@ const conventionsSteps = [
   }
 
   .conventions-final-cta .eyebrow {
-    color: #d6eef3;
+    color: var(--soft-blue-bg);
   }
 
   .conventions-final-cta h2 {
     max-width: 760px;
-    color: #fff;
+    color: var(--surface-white);
     font-size: clamp(2.2rem, 4.7vw, 4.8rem);
     line-height: 0.98;
   }
@@ -768,18 +908,18 @@ const conventionsSteps = [
 
   .conventions-final-cta .button {
     min-width: 268px;
-    background: #fff;
+    background: var(--surface-white);
     color: var(--blue-dark);
   }
 
   .conventions-final-cta .button:hover {
-    background: #d6eef3;
-    color: #10283d;
+    background: var(--soft-blue-bg);
+    color: var(--brand-primary-dark);
   }
 
   .faq-accordion-section {
     padding: clamp(72px, 8vw, 122px) 0;
-    background: #fff;
+    background: var(--surface-white);
   }
 
   .emergency-hero {
@@ -788,7 +928,7 @@ const conventionsSteps = [
     place-items: center;
     padding: clamp(84px, 9vw, 150px) 0 clamp(74px, 8vw, 130px);
     background: var(--blue-dark);
-    color: #fff;
+    color: var(--surface-white);
     text-align: center;
   }
 
@@ -799,7 +939,7 @@ const conventionsSteps = [
 
   .emergency-hero h1 {
     margin: 0;
-    color: #fff;
+    color: var(--surface-white);
     font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: clamp(4.4rem, 10vw, 12.5rem);
     font-weight: 400;
@@ -821,7 +961,7 @@ const conventionsSteps = [
     height: clamp(460px, 62vw, 940px);
     margin: 0;
     overflow: hidden;
-    background: #e9eef1;
+    background: var(--border);
   }
 
   .emergency-media img {
@@ -833,7 +973,7 @@ const conventionsSteps = [
 
   .emergency-copy-section {
     padding: 108px 0 122px;
-    background: #fff;
+    background: var(--surface-white);
     color: var(--blue-dark);
   }
 
@@ -864,7 +1004,7 @@ const conventionsSteps = [
   .emergency-copy-support {
     max-width: 1180px;
     margin: clamp(22px, 2.5vw, 34px) 0 0;
-    color: #657479;
+    color: var(--muted-text);
     font-size: clamp(1.25rem, 1.45vw, 1.55rem);
     font-weight: 500;
     line-height: 1.38;
@@ -885,7 +1025,7 @@ const conventionsSteps = [
     border-radius: 999px;
     padding: 0 34px;
     background: var(--blue-dark);
-    color: #fff;
+    color: var(--surface-white);
     font-size: 1rem;
     font-weight: 900;
     line-height: 1.2;
@@ -896,8 +1036,8 @@ const conventionsSteps = [
   }
 
   .emergency-cta a:hover {
-    background: #347cc2;
-    color: #fff;
+    background: var(--brand-blue);
+    color: var(--surface-white);
     transform: translateY(-1px);
   }
 
@@ -955,7 +1095,7 @@ const conventionsSteps = [
     justify-self: end;
     border-radius: 999px;
     background: var(--blue-dark);
-    color: #fff;
+    color: var(--surface-white);
     transition: background-color 160ms ease, transform 160ms ease;
   }
 
@@ -988,7 +1128,7 @@ const conventionsSteps = [
   .faq-accordion-answer {
     max-width: 900px;
     margin: -10px 74px clamp(30px, 4vw, 52px) 0;
-    color: #3d4f56;
+    color: var(--muted-text);
     font-size: clamp(1rem, 1.2vw, 1.25rem);
     line-height: 1.55;
   }
@@ -1033,8 +1173,9 @@ const conventionsSteps = [
       font-size: 1.28rem;
     }
 
-    :global(.aesthetic-content-body > ul:last-child) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .aesthetic-faq h2 {
+      max-width: 880px;
+      font-size: 4.15rem;
     }
   }
 
@@ -1100,8 +1241,40 @@ const conventionsSteps = [
       margin-bottom: 52px;
     }
 
-    :global(.aesthetic-content-body > ul:last-child) {
-      grid-template-columns: 1fr;
+    .aesthetic-faq {
+      margin-top: 58px;
+      padding-top: 46px;
+    }
+
+    .aesthetic-faq > .eyebrow {
+      margin-bottom: 14px;
+    }
+
+    .aesthetic-faq h2 {
+      margin-bottom: 26px;
+      font-size: 2.25rem;
+      line-height: 1;
+    }
+
+    .aesthetic-faq-item summary {
+      min-height: 84px;
+      grid-template-columns: minmax(0, 1fr) 34px;
+      gap: 18px;
+    }
+
+    .aesthetic-faq-item summary span {
+      font-size: 1.22rem;
+      line-height: 1.18;
+    }
+
+    .aesthetic-faq-item summary i {
+      width: 34px;
+    }
+
+    .aesthetic-faq-answer {
+      margin: -4px 0 26px;
+      font-size: 1rem;
+      line-height: 1.5;
     }
 
     .conventions-hero {
