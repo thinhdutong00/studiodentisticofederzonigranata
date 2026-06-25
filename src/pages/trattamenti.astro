@@ -99,27 +99,23 @@ const treatments = treatmentCategories
 >
   <div class="treatments-page">
     <section class="treatments-hero" aria-labelledby="treatments-title">
-      <div class="treatments-wrap">
-        <nav class="treatments-breadcrumb" aria-label="Percorso">
-          <a href="/">Home</a>
-          <span aria-hidden="true">/</span>
-          <span>Trattamenti</span>
-        </nav>
-
-        <div class="treatments-hero-copy">
-          <p class="treatments-kicker">Aree cliniche</p>
-          <h1 id="treatments-title">Trattamenti odontoiatrici specialistici.</h1>
+      <div class="treatments-hero-panel">
+        <div class="treatments-wrap treatments-hero-copy">
+          <h1 id="treatments-title">Trattamenti odontoiatrici</h1>
           <p>
             Ogni percorso parte da una valutazione completa e viene costruito intorno alla tua salute orale:
             prevenzione, estetica, funzione e riabilitazione vengono coordinate con tecnologie digitali e attenzione
             alla persona.
           </p>
-          <div class="treatments-hero-actions">
-            <a class="treatments-button treatments-button-primary" href="/richiesta/">Prenota visita</a>
-            <a class="treatments-button treatments-button-secondary" href="/prima-visita/">Prima visita</a>
-          </div>
         </div>
       </div>
+      <figure class="treatments-hero-media">
+        <img
+          src="/assets/original/2022/03/dentista-modena-reggio-emilia.jpg"
+          alt="Valutazione digitale nello Studio Dentistico Federzoni Granata"
+          loading="eager"
+        />
+      </figure>
     </section>
 
     <section class="treatments-directory" aria-labelledby="directory-title">
@@ -217,33 +213,15 @@ const treatments = treatmentCategories
   }
 
   .treatments-hero {
-    padding: 52px 0 72px;
-    background:
-      radial-gradient(circle at 86% 20%, rgba(52, 124, 194, 0.1), transparent 32rem),
-      linear-gradient(180deg, #f8fbfc 0%, #eef6f9 100%);
+    background: #fff;
   }
 
-  .treatments-breadcrumb {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+  .treatments-hero-panel {
+    min-height: clamp(500px, 54vw, 690px);
+    display: grid;
     align-items: center;
-    margin-bottom: 58px;
-    color: var(--treatments-muted);
-    font-size: 0.92rem;
-    font-weight: 700;
-  }
-
-  .treatments-breadcrumb a {
-    text-decoration: none;
-  }
-
-  .treatments-breadcrumb a:hover {
-    color: var(--treatments-blue-dark);
-  }
-
-  .treatments-hero-copy {
-    max-width: 900px;
+    background: var(--treatments-green);
+    color: #fff;
   }
 
   .treatments-kicker {
@@ -267,70 +245,42 @@ const treatments = treatmentCategories
   }
 
   .treatments-hero h1 {
-    max-width: 790px;
-    margin: 0;
-    color: var(--treatments-blue-dark);
+    max-width: 1500px;
+    margin: 0 auto;
+    color: #fff;
     font-family: Inter, ui-sans-serif, system-ui, sans-serif;
-    font-size: 4.6rem;
-    font-weight: 600;
+    font-size: 7.1rem;
+    font-weight: 500;
     letter-spacing: 0;
-    line-height: 0.96;
+    line-height: 0.9;
+    text-align: center;
+    text-wrap: balance;
+    text-transform: uppercase;
   }
 
   .treatments-hero-copy > p:not(.treatments-kicker) {
-    max-width: 760px;
-    margin: 28px 0 0;
-    color: var(--treatments-muted);
-    font-size: 1.28rem;
-    line-height: 1.5;
-  }
-
-  .treatments-hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    margin-top: 34px;
-  }
-
-  .treatments-button {
-    min-height: 52px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    padding: 0 22px;
-    font-weight: 800;
-    line-height: 1.2;
+    max-width: 850px;
+    margin: 36px auto 0;
+    color: #a9c94a;
+    font-size: 2rem;
+    font-weight: 650;
+    line-height: 1.32;
     text-align: center;
-    text-decoration: none;
-    transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
   }
 
-  .treatments-button:hover {
-    transform: translateY(-1px);
+  .treatments-hero-media {
+    margin: 0;
+    height: clamp(320px, 39vw, 540px);
+    overflow: hidden;
+    background: #eef6f9;
   }
 
-  .treatments-button-primary {
-    background: var(--treatments-blue);
-    color: #fff;
-  }
-
-  .treatments-button-primary:hover {
-    background: var(--treatments-blue-dark);
-    color: #fff;
-  }
-
-  .treatments-button-secondary {
-    border-color: rgba(52, 124, 194, 0.28);
-    background: #fff;
-    color: var(--treatments-blue-dark);
-  }
-
-  .treatments-button-secondary:hover {
-    border-color: var(--treatments-blue);
-    background: #edf7ff;
-    color: var(--treatments-blue-dark);
+  .treatments-hero-media img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center 48%;
   }
 
   .treatments-directory {
@@ -602,6 +552,14 @@ const treatments = treatmentCategories
   }
 
   @media (max-width: 1120px) {
+    .treatments-hero h1 {
+      font-size: 5.4rem;
+    }
+
+    .treatments-hero-copy > p:not(.treatments-kicker) {
+      font-size: 1.55rem;
+    }
+
     .directory-head {
       grid-template-columns: 1fr;
       align-items: start;
@@ -626,11 +584,7 @@ const treatments = treatmentCategories
     }
 
     .treatments-hero {
-      padding: 38px 0 58px;
-    }
-
-    .treatments-breadcrumb {
-      margin-bottom: 42px;
+      background: #fff;
     }
 
     .treatments-kicker {
@@ -643,16 +597,12 @@ const treatments = treatmentCategories
     }
 
     .treatments-hero h1 {
-      font-size: 3.15rem;
+      font-size: 2.9rem;
     }
 
     .treatments-hero-copy > p:not(.treatments-kicker) {
-      font-size: 1.08rem;
-    }
-
-    .treatments-hero-actions,
-    .treatments-button {
-      width: 100%;
+      margin-top: 26px;
+      font-size: 1.12rem;
     }
 
     .treatments-directory {

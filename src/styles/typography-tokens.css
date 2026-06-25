@@ -1,0 +1,133 @@
+/*
+  Riferimento tipografico rilevato da:
+  https://centrodimedicina.com/servizi/laboratorio-analisi/
+  Data rilievo: 25 giugno 2026.
+
+  File non importato automaticamente: e' una memoria tecnica per applicare
+  la scala tipografica in modo coerente nei prossimi interventi.
+*/
+
+:root {
+  --ref-font-primary: "Inter", sans-serif;
+  --ref-font-fallback: Helvetica, Arial, sans-serif;
+
+  --ref-letter-spacing: -0.2px;
+  --ref-word-spacing: 0px;
+
+  --ref-nav-size: 16px;
+  --ref-nav-weight: 500;
+  --ref-nav-line: 16px;
+
+  --ref-menu-size: 16px;
+  --ref-menu-weight: 500;
+  --ref-menu-line: 19.2px;
+  --ref-menu-letter-spacing: normal;
+
+  --ref-hero-title-size: 129.6px;
+  --ref-hero-title-inner-size: 113.503px;
+  --ref-hero-title-weight: 400;
+  --ref-hero-title-line: 116.64px;
+  --ref-hero-title-inner-line: 102.153px;
+  --ref-hero-title-transform: uppercase;
+
+  --ref-hero-description-size: 28px;
+  --ref-hero-description-weight: 500;
+  --ref-hero-description-line: 36.4px;
+
+  --ref-hero-bar-size: 18px;
+  --ref-hero-bar-weight: 500;
+  --ref-hero-bar-line: 18px;
+
+  --ref-cta-size: 16px;
+  --ref-cta-weight: 500;
+  --ref-cta-line: 16px;
+  --ref-cta-transform: uppercase;
+
+  --ref-large-body-size: 48px;
+  --ref-large-body-weight: 500;
+  --ref-large-body-line: 57.6px;
+
+  --ref-section-title-size: 24px;
+  --ref-section-title-weight: 500;
+  --ref-section-title-line: 30px;
+
+  --ref-feature-number-size: 128px;
+  --ref-feature-number-weight: 400;
+  --ref-feature-number-line: 128px;
+
+  --ref-feature-title-size: 36px;
+  --ref-feature-title-weight: 500;
+  --ref-feature-title-line: 36px;
+  --ref-feature-title-transform: uppercase;
+
+  --ref-small-action-size: 14px;
+  --ref-small-action-weight: 700;
+  --ref-small-action-line: 14px;
+  --ref-small-action-letter-spacing: normal;
+
+  --ref-carousel-title-size: 60px;
+  --ref-carousel-title-weight: 400;
+  --ref-carousel-title-line: 60px;
+  --ref-carousel-title-transform: uppercase;
+
+  --ref-card-title-size: 32px;
+  --ref-card-title-weight: 500;
+  --ref-card-title-line: 41.6px;
+
+  --ref-card-description-size: 16px;
+  --ref-card-description-weight: 400;
+  --ref-card-description-line: 19.2px;
+
+  --ref-prefooter-title-size: 28px;
+  --ref-prefooter-title-weight: 500;
+  --ref-prefooter-title-line: 36.4px;
+
+  --ref-footer-heading-size: 24px;
+  --ref-footer-heading-weight: 500;
+  --ref-footer-heading-line: 30px;
+
+  --ref-footer-copy-size: 14px;
+  --ref-footer-copy-weight: 400;
+  --ref-footer-copy-line: 21px;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --ref-letter-spacing: -0.16px;
+
+    --ref-menu-size: 14px;
+    --ref-menu-line: 16.8px;
+
+    --ref-hero-title-size: 35.1px;
+    --ref-hero-title-inner-size: 35.1px;
+    --ref-hero-title-line: 35.1px;
+    --ref-hero-title-inner-line: 35.1px;
+
+    --ref-hero-description-size: 20px;
+    --ref-hero-description-line: 25px;
+
+    --ref-large-body-size: 24px;
+    --ref-large-body-line: 28.8px;
+
+    --ref-section-title-size: 20px;
+    --ref-section-title-line: 25px;
+
+    --ref-feature-title-size: 28px;
+    --ref-feature-title-line: 28px;
+
+    --ref-carousel-title-size: 30px;
+    --ref-carousel-title-line: 30px;
+
+    --ref-card-title-size: 20px;
+    --ref-card-title-line: 25px;
+
+    --ref-card-description-size: 14px;
+    --ref-card-description-line: 16.8px;
+
+    --ref-footer-heading-size: 20px;
+    --ref-footer-heading-line: 25px;
+
+    --ref-footer-copy-size: 12px;
+    --ref-footer-copy-line: 18px;
+  }
+}

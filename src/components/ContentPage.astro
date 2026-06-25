@@ -74,7 +74,7 @@ const faqItems = [
   },
   {
     question: 'Accettate convenzioni o fondi sanitari?',
-    answer: 'Lo studio non gestisce convenzioni dirette. Puoi segnalare eventuali fondi, assicurazioni o casse sanitarie: ti indicheremo quale documentazione può essere rilasciata per la richiesta di rimborso.',
+    answer: 'Puoi segnalare eventuali fondi, assicurazioni o casse sanitarie: ti indicheremo quale documentazione può essere rilasciata per la richiesta di rimborso.',
   },
 ];
 
@@ -82,6 +82,22 @@ const emergencyHeroImage = '/assets/menu/faq.jpg';
 const emergencyCopy = [
   'Un dolore improvviso, un trauma o un gonfiore non vanno rimandati. Nelle urgenze dentali lo Studio Dentistico Federzoni Granata ti aiuta a capire rapidamente la priorita del problema e il percorso piu adatto per intervenire.',
   'Puoi inviare una richiesta dedicata indicando sintomi, intensita del dolore, sede preferita e disponibilita. La segreteria raccogliera le informazioni essenziali e ti ricontattera per organizzare la visita urgente nel modo piu rapido possibile.',
+];
+
+const conventionsHeroImage = '/assets/menu/convenzioni-studio.jpg';
+const conventionsSteps = [
+  {
+    title: 'Segnala il tuo fondo',
+    text: 'Quando prenoti la visita puoi indicarci il nome della tua assicurazione, cassa sanitaria o fondo di riferimento.',
+  },
+  {
+    title: 'Verifica la documentazione',
+    text: 'La segreteria ti aiuta a capire quali documenti amministrativi possono essere utili in base alle regole previste dal tuo piano.',
+  },
+  {
+    title: 'Richiedi il rimborso',
+    text: 'Dopo la prestazione potrai presentare la documentazione al tuo ente secondo le modalità stabilite dalla tua copertura sanitaria.',
+  },
 ];
 ---
 
@@ -183,6 +199,65 @@ const emergencyCopy = [
       </div>
     </section>
   </>
+) : page.path === '/convenzioni/' ? (
+  <>
+    <section class="conventions-hero" aria-labelledby="conventions-title">
+      <div class="conventions-hero-inner">
+        <h1 id="conventions-title">Convenzioni</h1>
+        <p>Informazioni chiare per usare fondi sanitari, casse e assicurazioni nel tuo percorso odontoiatrico.</p>
+      </div>
+    </section>
+
+    <figure class="conventions-media">
+      <img src={conventionsHeroImage} alt="Sala operativa dello Studio Dentistico Federzoni Granata" loading="eager" />
+    </figure>
+
+    <section class="conventions-intro" aria-label="Convenzioni dello studio dentistico">
+      <div class="conventions-intro-wrap">
+        <p class="eyebrow">Studio Dentistico Federzoni Granata</p>
+        <p class="conventions-lead">
+          Se hai una copertura sanitaria, un fondo o una cassa assistenziale, lo studio può fornirti la documentazione amministrativa necessaria per presentare la richiesta al tuo ente.
+        </p>
+        <div class="conventions-copy-grid">
+          <p>
+            Ogni piano sanitario ha regole, tempi e modalità proprie. Per questo, durante la prenotazione, ti consigliamo di comunicarci il nome del fondo o dell'assicurazione: potremo orientarti sui documenti che lo studio può rilasciare.
+          </p>
+          <p>
+            Il nostro obiettivo è rendere il passaggio semplice e ordinato: visita, preventivo quando necessario, ricevute e indicazioni amministrative vengono gestiti con attenzione, così hai tutto il necessario per procedere con serenità.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="conventions-process" aria-labelledby="conventions-process-title">
+      <div class="conventions-process-wrap">
+        <div class="conventions-process-head">
+          <p class="eyebrow">Come funziona</p>
+          <h2 id="conventions-process-title">Un percorso semplice, dalla prenotazione alla richiesta</h2>
+        </div>
+        <div class="conventions-step-grid">
+          {conventionsSteps.map((item, index) => (
+            <article class="conventions-step">
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="conventions-final-cta" aria-labelledby="conventions-cta-title">
+      <div class="conventions-final-cta-inner">
+        <div>
+          <p class="eyebrow">Prenotazione</p>
+          <h2 id="conventions-cta-title">Vuoi informazioni sulla tua convenzione?</h2>
+          <p>Compila il modulo di prenotazione e indica il tuo fondo, la tua cassa sanitaria o la tua assicurazione: ti ricontatteremo per organizzare la visita e darti le indicazioni utili.</p>
+        </div>
+        <a class="button button-primary" href="/richiesta/">Vai al modulo di prenotazione</a>
+      </div>
+    </section>
+  </>
 ) : (
   <>
     <section class="page-hero">
@@ -236,6 +311,191 @@ const emergencyCopy = [
 )}
 
 <style>
+  .conventions-hero {
+    min-height: clamp(560px, 70vh, 800px);
+    display: grid;
+    place-items: center;
+    padding: clamp(88px, 9vw, 154px) 0 clamp(76px, 8vw, 132px);
+    background: #005924;
+    color: #fff;
+    text-align: center;
+  }
+
+  .conventions-hero-inner {
+    width: min(1680px, calc(100% - 48px));
+    margin: 0 auto;
+  }
+
+  .conventions-hero h1 {
+    margin: 0;
+    color: #fff;
+    font-family: "Lato", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: clamp(4.2rem, 11vw, 12.4rem);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 0.9;
+    text-transform: uppercase;
+  }
+
+  .conventions-hero p {
+    max-width: 940px;
+    margin: clamp(30px, 3.4vw, 52px) auto 0;
+    color: #a8c65f;
+    font-size: clamp(1.35rem, 2vw, 2.05rem);
+    font-weight: 700;
+    line-height: 1.18;
+  }
+
+  .conventions-media {
+    height: clamp(390px, 50vw, 780px);
+    margin: 0;
+    overflow: hidden;
+    background: #e9eef1;
+  }
+
+  .conventions-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+  }
+
+  .conventions-intro {
+    padding: clamp(84px, 9vw, 150px) 0;
+    background: #fff;
+  }
+
+  .conventions-intro-wrap,
+  .conventions-process-wrap,
+  .conventions-final-cta-inner {
+    width: min(1320px, calc(100% - 48px));
+    margin: 0 auto;
+  }
+
+  .conventions-lead {
+    max-width: 1210px;
+    margin: 0;
+    color: var(--blue-dark);
+    font-family: "Lato", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: clamp(2.15rem, 4.3vw, 5.35rem);
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: 0;
+  }
+
+  .conventions-copy-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(28px, 5vw, 80px);
+    margin-top: clamp(42px, 6vw, 86px);
+  }
+
+  .conventions-copy-grid p {
+    margin: 0;
+    color: #3d4f56;
+    font-size: clamp(1.05rem, 1.35vw, 1.34rem);
+    line-height: 1.55;
+  }
+
+  .conventions-process {
+    padding: clamp(76px, 8vw, 132px) 0;
+    background: var(--soft);
+  }
+
+  .conventions-process-head {
+    max-width: 840px;
+    margin-bottom: clamp(34px, 4vw, 58px);
+  }
+
+  .conventions-process-head h2 {
+    margin: 0;
+    color: var(--blue-dark);
+    font-size: clamp(2.35rem, 4.8vw, 5rem);
+    line-height: 0.98;
+  }
+
+  .conventions-step-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 2px solid rgba(21, 90, 148, 0.26);
+    border-bottom: 2px solid rgba(21, 90, 148, 0.26);
+  }
+
+  .conventions-step {
+    min-height: 310px;
+    display: grid;
+    align-content: start;
+    gap: 18px;
+    padding: clamp(26px, 3vw, 44px);
+    border-right: 1px solid rgba(21, 90, 148, 0.2);
+  }
+
+  .conventions-step:last-child {
+    border-right: 0;
+  }
+
+  .conventions-step span {
+    color: var(--green-dark);
+    font-family: "Montserrat", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    font-size: 0.84rem;
+    font-weight: 800;
+  }
+
+  .conventions-step h3 {
+    margin: 0;
+    color: var(--blue);
+    font-size: clamp(1.45rem, 2vw, 2rem);
+  }
+
+  .conventions-step p {
+    margin: 0;
+    color: #3d4f56;
+    font-size: 1.04rem;
+    line-height: 1.55;
+  }
+
+  .conventions-final-cta {
+    padding: clamp(76px, 8vw, 132px) 0;
+    background: #10283d;
+    color: #fff;
+  }
+
+  .conventions-final-cta-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: clamp(28px, 5vw, 80px);
+    align-items: center;
+  }
+
+  .conventions-final-cta .eyebrow {
+    color: #a8c65f;
+  }
+
+  .conventions-final-cta h2 {
+    max-width: 760px;
+    color: #fff;
+    font-size: clamp(2.2rem, 4.7vw, 4.8rem);
+    line-height: 0.98;
+  }
+
+  .conventions-final-cta p:not(.eyebrow) {
+    max-width: 760px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: clamp(1.05rem, 1.25vw, 1.22rem);
+  }
+
+  .conventions-final-cta .button {
+    min-width: 268px;
+    background: #fff;
+    color: var(--blue-dark);
+  }
+
+  .conventions-final-cta .button:hover {
+    background: #a8c65f;
+    color: #10283d;
+  }
+
   .faq-accordion-section {
     padding: clamp(72px, 8vw, 122px) 0;
     background: #fff;
@@ -443,6 +703,64 @@ const emergencyCopy = [
   }
 
   @media (max-width: 720px) {
+    .conventions-hero {
+      min-height: auto;
+      padding: 86px 0 78px;
+    }
+
+    .conventions-hero-inner,
+    .conventions-intro-wrap,
+    .conventions-process-wrap,
+    .conventions-final-cta-inner {
+      width: min(100% - 30px, 1320px);
+    }
+
+    .conventions-hero h1 {
+      font-size: clamp(3rem, 14vw, 5.3rem);
+      line-height: 0.95;
+      overflow-wrap: anywhere;
+    }
+
+    .conventions-hero p {
+      font-size: clamp(1.12rem, 5vw, 1.48rem);
+    }
+
+    .conventions-media {
+      height: 430px;
+    }
+
+    .conventions-intro,
+    .conventions-process,
+    .conventions-final-cta {
+      padding: 68px 0;
+    }
+
+    .conventions-lead {
+      font-size: clamp(2rem, 10vw, 3.35rem);
+    }
+
+    .conventions-copy-grid,
+    .conventions-step-grid,
+    .conventions-final-cta-inner {
+      grid-template-columns: 1fr;
+    }
+
+    .conventions-step-grid {
+      border-bottom: 0;
+    }
+
+    .conventions-step {
+      min-height: auto;
+      border-right: 0;
+      border-bottom: 2px solid rgba(21, 90, 148, 0.2);
+      padding: 28px 0;
+    }
+
+    .conventions-final-cta .button {
+      width: 100%;
+      min-width: 0;
+    }
+
     .emergency-hero {
       min-height: auto;
       padding: 86px 0 78px;

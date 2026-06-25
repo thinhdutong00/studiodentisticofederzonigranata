@@ -159,7 +159,7 @@ export const site = {
       "kind": "navigation",
       "title": "Convenzioni - Studio dentistico Federzoni Granata",
       "navTitle": "Convenzioni",
-      "description": "Informazioni sulle convenzioni dello Studio Dentistico Federzoni Granata.",
+      "description": "Informazioni su fondi sanitari, casse e assicurazioni per i pazienti dello Studio Dentistico Federzoni Granata.",
       "hasContactForm": false,
       "blocks": [
         {
@@ -169,15 +169,15 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<p>Lo Studio Dentistico Federzoni Granata non gestisce convenzioni dirette con enti, fondi o assicurazioni.</p>"
+          "html": "<p>Se hai una copertura sanitaria, un fondo o una cassa assistenziale, lo studio può fornirti la documentazione amministrativa necessaria per presentare la richiesta al tuo ente.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<p>Il paziente salda la prestazione direttamente allo studio e, quando previsto dalla propria assicurazione, cassa sanitaria o fondo, può richiedere il rimborso secondo le regole del proprio ente.</p>"
+          "html": "<p>Ogni piano sanitario ha regole, tempi e modalità proprie. Per questo, durante la prenotazione, ti consigliamo di comunicarci il nome del fondo o dell'assicurazione.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<p>Al momento della prenotazione puoi segnalarci il tuo fondo o la tua assicurazione. Ti indicheremo quale documentazione amministrativa può essere rilasciata per la richiesta di rimborso.</p>"
+          "html": "<p>La segreteria ti aiuterà a capire quali documenti possono essere utili, così potrai procedere con la tua richiesta in modo ordinato.</p>"
         }
       ]
     },
