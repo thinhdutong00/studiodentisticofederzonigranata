@@ -1,6 +1,12 @@
 ---
 import { site } from '../data/site';
 
+interface Props {
+  transparent?: boolean;
+}
+
+const { transparent = false } = Astro.props;
+
 const beforeTreatment = [
   { label: 'prima visita', href: '/prima-visita/' },
 ];
@@ -189,7 +195,7 @@ const secondaryMenus = [
 ];
 ---
 
-<header class="site-header">
+<header class:list={['site-header', transparent && 'site-header-overlay', transparent && 'is-over-hero']} data-overlay-header={transparent ? 'true' : undefined}>
   <div class="container header-inner">
     <a class="brand" href="/" aria-label={site.name}>
       <img src={site.logo} alt="Studio dentistico Federzoni Granata" width="400" height="52" />
@@ -599,9 +605,32 @@ const secondaryMenus = [
     });
   };
 
+  const setupOverlayHeader = () => {
+    const header = document.querySelector('[data-overlay-header="true"]');
+    if (!(header instanceof HTMLElement)) return;
+
+    const boundary = document.querySelector('[data-transparent-header-region]') || document.querySelector('main > *:first-child');
+    if (!(boundary instanceof HTMLElement)) return;
+
+    const syncHeaderTheme = () => {
+      const headerHeight = header.offsetHeight || 0;
+      const isOverColor = boundary.getBoundingClientRect().bottom > headerHeight + 1;
+      const menuIsOpen = header.classList.contains('mobile-menu-open');
+      header.classList.toggle('is-over-hero', isOverColor && !menuIsOpen);
+    };
+
+    syncHeaderTheme();
+    window.addEventListener('scroll', syncHeaderTheme, { passive: true });
+    window.addEventListener('resize', syncHeaderTheme);
+  };
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setupMegaMenus, { once: true });
+    document.addEventListener('DOMContentLoaded', () => {
+      setupMegaMenus();
+      setupOverlayHeader();
+    }, { once: true });
   } else {
     setupMegaMenus();
+    setupOverlayHeader();
   }
 </script>

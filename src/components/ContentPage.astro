@@ -83,6 +83,7 @@ const emergencyCopy = [
   'Un dolore improvviso, un trauma o un gonfiore non vanno rimandati. Nelle urgenze dentali lo Studio Dentistico Federzoni Granata ti aiuta a capire rapidamente la priorita del problema e il percorso piu adatto per intervenire.',
   'Puoi inviare una richiesta dedicata indicando sintomi, intensita del dolore, sede preferita e disponibilita. La segreteria raccogliera le informazioni essenziali e ti ricontattera per organizzare la visita urgente nel modo piu rapido possibile.',
 ];
+const aestheticHeroImage = '/assets/menu/casi-clinici-estetica.jpg';
 
 const conventionsHeroImage = '/assets/menu/convenzioni-studio.jpg';
 const conventionsSteps = [
@@ -258,6 +259,51 @@ const conventionsSteps = [
       </div>
     </section>
   </>
+) : page.path === '/estetica/' ? (
+  <>
+    <section class="aesthetic-hero" aria-labelledby="aesthetic-title">
+      <div class="aesthetic-hero-inner">
+        <h1 id="aesthetic-title">Estetica dentale</h1>
+        {page.description && <p>{page.description}</p>}
+      </div>
+    </section>
+
+    <figure class="aesthetic-hero-media">
+      <img src={aestheticHeroImage} alt="Paziente durante una visita di estetica dentale" loading="eager" />
+    </figure>
+
+    <section class="aesthetic-content-section" aria-label="Contenuto della pagina Estetica">
+      <div class="aesthetic-content-wrap">
+        <div class="aesthetic-content-body">
+          {bodyBlocks.map((block) => {
+            if (block.type === 'heading') {
+              const Tag = `h${Math.min(Math.max(block.level, 1), 6)}`;
+              return <Tag id={block.id}>{cleanHeading(block.text)}</Tag>;
+            }
+            if (block.type === 'paragraph') return <Fragment set:html={block.html} />;
+            if (block.type === 'list') return <Fragment set:html={block.html} />;
+            if (block.type === 'html') return <div set:html={block.html} />;
+            if (block.type === 'image') {
+              return (
+                <figure class="aesthetic-case-figure">
+                  <img src={block.src} alt={block.alt} loading="lazy" />
+                  {block.alt && <figcaption>{block.alt}</figcaption>}
+                </figure>
+              );
+            }
+            if (block.type === 'embed') {
+              return (
+                <div class="content-embed">
+                  <p>Contenuto esterno</p>
+                  <a class="button" href={block.url} target="_blank" rel="noopener noreferrer">{block.label}</a>
+                </div>
+              );
+            }
+          })}
+        </div>
+      </div>
+    </section>
+  </>
 ) : (
   <>
     <section class="page-hero">
@@ -311,12 +357,163 @@ const conventionsSteps = [
 )}
 
 <style>
+  .aesthetic-hero {
+    min-height: clamp(560px, 68vh, 810px);
+    display: grid;
+    place-items: center;
+    padding: 118px 0 100px;
+    background: var(--blue-dark);
+    color: #fff;
+    text-align: center;
+  }
+
+  .aesthetic-hero-inner {
+    width: min(1700px, calc(100% - 56px));
+    margin: 0 auto;
+  }
+
+  .aesthetic-hero h1 {
+    max-width: 1260px;
+    margin: 0 auto;
+    color: #fff;
+    font-family: "Lato", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 7rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 0.88;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  .aesthetic-hero p {
+    max-width: 980px;
+    margin: 38px auto 0;
+    color: var(--aqua);
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.18;
+  }
+
+  .aesthetic-hero-media {
+    height: clamp(420px, 52vw, 780px);
+    margin: 0;
+    overflow: hidden;
+    background: #eef3f6;
+  }
+
+  .aesthetic-hero-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 48%;
+  }
+
+  .aesthetic-content-section {
+    padding: 108px 0 122px;
+    background: #fff;
+  }
+
+  .aesthetic-content-wrap {
+    width: min(1240px, calc(100% - 56px));
+    margin: 0 auto;
+  }
+
+  .aesthetic-content-body {
+    color: #263f44;
+    font-size: 1.12rem;
+    line-height: 1.62;
+  }
+
+  :global(.aesthetic-content-body > p:first-child) {
+    max-width: 1120px;
+    margin: 0 0 88px;
+    color: var(--blue-dark);
+    font-family: "Lato", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 4.45rem;
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: 0;
+  }
+
+  :global(.aesthetic-content-body p) {
+    margin: 0 0 22px;
+  }
+
+  .aesthetic-content-body h2,
+  .aesthetic-content-body h3 {
+    margin: 78px 0 24px;
+    color: var(--blue-dark);
+    font-size: 2.25rem;
+    line-height: 1.05;
+  }
+
+  .aesthetic-content-body h3:first-of-type {
+    margin-top: 0;
+  }
+
+  .aesthetic-case-figure {
+    margin: 0 0 74px;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #f5f7f8;
+    box-shadow: 0 18px 48px rgba(36, 48, 51, 0.12);
+  }
+
+  .aesthetic-case-figure img {
+    width: 100%;
+    max-height: 780px;
+    object-fit: cover;
+  }
+
+  .aesthetic-case-figure figcaption {
+    padding: 14px 18px;
+    background: #fff;
+    color: #657479;
+    font-size: 0.92rem;
+    font-weight: 800;
+    line-height: 1.35;
+  }
+
+  :global(.aesthetic-content-body > ul:last-child) {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin: 24px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  :global(.aesthetic-content-body > ul:last-child li) {
+    margin: 0;
+  }
+
+  :global(.aesthetic-content-body > ul:last-child a) {
+    min-height: 82px;
+    display: flex;
+    align-items: center;
+    border-left: 6px solid var(--blue-dark);
+    border-radius: 8px;
+    padding: 18px;
+    background: #f5f7f8;
+    color: var(--blue-dark);
+    font-weight: 900;
+    line-height: 1.25;
+    text-decoration: none;
+    transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+  }
+
+  :global(.aesthetic-content-body > ul:last-child a:hover) {
+    background: #e9f8f7;
+    color: var(--blue);
+    transform: translateY(-2px);
+  }
+
   .conventions-hero {
     min-height: clamp(560px, 70vh, 800px);
     display: grid;
     place-items: center;
     padding: clamp(88px, 9vw, 154px) 0 clamp(76px, 8vw, 132px);
-    background: #005924;
+    background: #10283d;
     color: #fff;
     text-align: center;
   }
@@ -340,7 +537,7 @@ const conventionsSteps = [
   .conventions-hero p {
     max-width: 940px;
     margin: clamp(30px, 3.4vw, 52px) auto 0;
-    color: #a8c65f;
+    color: #d6eef3;
     font-size: clamp(1.35rem, 2vw, 2.05rem);
     font-weight: 700;
     line-height: 1.18;
@@ -435,8 +632,8 @@ const conventionsSteps = [
   }
 
   .conventions-step span {
-    color: var(--green-dark);
-    font-family: "Montserrat", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    color: #7db9c5;
+    font-family: "Lato", ui-sans-serif, system-ui, sans-serif;
     font-size: 0.84rem;
     font-weight: 800;
   }
@@ -468,7 +665,7 @@ const conventionsSteps = [
   }
 
   .conventions-final-cta .eyebrow {
-    color: #a8c65f;
+    color: #d6eef3;
   }
 
   .conventions-final-cta h2 {
@@ -492,7 +689,7 @@ const conventionsSteps = [
   }
 
   .conventions-final-cta .button:hover {
-    background: #a8c65f;
+    background: #d6eef3;
     color: #10283d;
   }
 
@@ -702,7 +899,92 @@ const conventionsSteps = [
     margin: 0;
   }
 
+  @media (min-width: 1500px) {
+    .aesthetic-hero h1 {
+      max-width: 1580px;
+      font-size: 8.8rem;
+    }
+
+    .aesthetic-hero p {
+      font-size: 1.9rem;
+    }
+  }
+
+  @media (max-width: 1180px) {
+    .aesthetic-hero h1 {
+      font-size: 5.75rem;
+    }
+
+    .aesthetic-hero p {
+      font-size: 1.55rem;
+    }
+
+    :global(.aesthetic-content-body > p:first-child) {
+      font-size: 3.45rem;
+    }
+
+    :global(.aesthetic-content-body > ul:last-child) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
   @media (max-width: 720px) {
+    .aesthetic-hero {
+      min-height: auto;
+      padding: 86px 0 78px;
+    }
+
+    .aesthetic-hero-inner,
+    .aesthetic-content-wrap {
+      width: min(100% - 30px, 1240px);
+    }
+
+    .aesthetic-hero h1 {
+      font-size: 3.15rem;
+      line-height: 0.96;
+      overflow-wrap: anywhere;
+    }
+
+    .aesthetic-hero p {
+      margin-top: 28px;
+      font-size: 1.18rem;
+    }
+
+    .aesthetic-hero-media {
+      height: 430px;
+    }
+
+    .aesthetic-hero-media img {
+      object-position: 50% 50%;
+    }
+
+    .aesthetic-content-section {
+      padding: 66px 0 76px;
+    }
+
+    .aesthetic-content-body {
+      font-size: 1.02rem;
+    }
+
+    :global(.aesthetic-content-body > p:first-child) {
+      margin-bottom: 58px;
+      font-size: 2.22rem;
+    }
+
+    .aesthetic-content-body h2,
+    .aesthetic-content-body h3 {
+      margin-top: 54px;
+      font-size: 1.58rem;
+    }
+
+    .aesthetic-case-figure {
+      margin-bottom: 52px;
+    }
+
+    :global(.aesthetic-content-body > ul:last-child) {
+      grid-template-columns: 1fr;
+    }
+
     .conventions-hero {
       min-height: auto;
       padding: 86px 0 78px;
