@@ -14,6 +14,7 @@ const { page } = Astro.props;
 const titleBlock = page.blocks.find((block) => block.type === 'heading');
 const pageTitle = titleBlock?.text || page.navTitle;
 const bodyBlocks = page.path === '/' ? page.blocks : page.blocks.filter((block) => block !== titleBlock);
+const hasStickyCta = page.kind === 'treatment' || page.kind === 'clinical';
 
 const cleanHeading = (text = '') =>
   text
@@ -21,6 +22,8 @@ const cleanHeading = (text = '') =>
     .replace(/Dottor(?=[A-ZÀ-Ý])/g, 'Dottor ')
     .replace('Casi CliniciEsempi di lavori eseguiti dallo studio odontoiatrico', 'Casi Clinici')
     .trim();
+
+const stickyCtaTitle = page.path === '/estetica/' ? 'Estetica dentale' : cleanHeading(pageTitle);
 
 const clinicalItems = site.clinicalLinks.map((item) => ({ label: item.label, href: item.href }));
 
@@ -80,9 +83,15 @@ const faqItems = [
 ];
 
 const emergencyHeroImage = '/assets/menu/faq.jpg';
-const emergencyCopy = [
-  'Un dolore improvviso, un trauma o un gonfiore non vanno rimandati. Nelle urgenze dentali lo Studio Dentistico Federzoni Granata ti aiuta a capire rapidamente la priorita del problema e il percorso piu adatto per intervenire.',
-  'Puoi inviare una richiesta dedicata indicando sintomi, intensita del dolore, sede preferita e disponibilita. La segreteria raccogliera le informazioni essenziali e ti ricontattera per organizzare la visita urgente nel modo piu rapido possibile.',
+const emergencyCopyBlocks = [
+  {
+    lead: 'Un dolore improvviso, un trauma o un gonfiore non vanno rimandati.',
+    support: 'Nelle urgenze dentali lo Studio Dentistico Federzoni Granata ti aiuta a capire rapidamente la priorita del problema e il percorso piu adatto per intervenire.',
+  },
+  {
+    lead: 'Puoi inviare una richiesta dedicata indicando sintomi, intensita del dolore, sede preferita e disponibilita.',
+    support: 'La segreteria raccogliera le informazioni essenziali e ti ricontattera per organizzare la visita urgente nel modo piu rapido possibile.',
+  },
 ];
 const aestheticHeroImage = '/assets/menu/casi-clinici-estetica.jpg';
 const aestheticIntroLaminae =
@@ -213,7 +222,14 @@ const conventionsSteps = [
 
     <section class="emergency-copy-section" aria-label="Informazioni sulle urgenze dentali">
       <div class="emergency-copy-wrap">
-        {emergencyCopy.map((paragraph) => <p>{paragraph}</p>)}
+        <div class="emergency-copy-body">
+          {emergencyCopyBlocks.map((block) => (
+            <div class="emergency-copy-block">
+              <p class="emergency-copy-lead">{block.lead}</p>
+              <p class="emergency-copy-support">{block.support}</p>
+            </div>
+          ))}
+        </div>
         <div class="emergency-cta">
           <a href="/prenota-urgenza/">Prenota urgenza</a>
         </div>
@@ -281,7 +297,7 @@ const conventionsSteps = [
   </>
 ) : page.path === '/estetica/' ? (
   <>
-    <section class="aesthetic-hero" aria-labelledby="aesthetic-title" data-transparent-header-region>
+    <section class="aesthetic-hero" aria-labelledby="aesthetic-title" data-transparent-header-region data-treatment-sticky-hero>
       <div class="aesthetic-hero-inner">
         <h1 id="aesthetic-title">Estetica dentale</h1>
         <p class="aesthetic-hero-description">
@@ -343,10 +359,12 @@ const conventionsSteps = [
         </div>
       </div>
     </section>
+
+    <TreatmentStickyCta treatment={stickyCtaTitle} />
   </>
 ) : (
   <>
-    <section class="page-hero" data-treatment-sticky-hero={page.kind === 'treatment' ? '' : undefined}>
+    <section class="page-hero" data-treatment-sticky-hero={hasStickyCta ? '' : undefined}>
       <div class="container">
         <p class="eyebrow">{page.kind === 'article' ? 'Approfondimenti' : site.name}</p>
         <h1>{cleanHeading(pageTitle)}</h1>
@@ -394,7 +412,7 @@ const conventionsSteps = [
       </div>
     </section>
 
-    {page.kind === 'treatment' && <TreatmentStickyCta treatment={cleanHeading(pageTitle)} />}
+    {hasStickyCta && <TreatmentStickyCta treatment={stickyCtaTitle} />}
   </>
 )}
 
@@ -814,29 +832,43 @@ const conventionsSteps = [
   }
 
   .emergency-copy-section {
-    padding: clamp(86px, 10vw, 160px) 0 clamp(88px, 9vw, 150px);
+    padding: 108px 0 122px;
     background: #fff;
     color: var(--blue-dark);
   }
 
   .emergency-copy-wrap {
-    width: min(1710px, calc(100% - 48px));
+    width: min(1240px, calc(100% - 56px));
     margin: 0 auto;
   }
 
-  .emergency-copy-wrap p {
-    max-width: 1580px;
+  .emergency-copy-body {
+    max-width: 1480px;
+    margin: 0 auto;
+  }
+
+  .emergency-copy-block + .emergency-copy-block {
+    margin-top: clamp(30px, 3.2vw, 48px);
+  }
+
+  .emergency-copy-lead {
     margin: 0;
     color: var(--blue-dark);
     font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    font-size: clamp(2.4rem, 4.5vw, 5.9rem);
+    font-size: clamp(2.85rem, 3.35vw, 3.85rem);
     font-weight: 400;
-    line-height: 1.08;
+    line-height: 1.12;
     letter-spacing: 0;
   }
 
-  .emergency-copy-wrap p + p {
-    margin-top: clamp(30px, 4vw, 64px);
+  .emergency-copy-support {
+    max-width: 1180px;
+    margin: clamp(22px, 2.5vw, 34px) 0 0;
+    color: #657479;
+    font-size: clamp(1.25rem, 1.45vw, 1.55rem);
+    font-weight: 500;
+    line-height: 1.38;
+    letter-spacing: 0;
   }
 
   .emergency-cta {
@@ -990,11 +1022,13 @@ const conventionsSteps = [
     }
 
     .aesthetic-intro-text > .aesthetic-intro-lead,
-    .aesthetic-intro-text > .aesthetic-intro-feature {
+    .aesthetic-intro-text > .aesthetic-intro-feature,
+    .emergency-copy-lead {
       font-size: 3.45rem;
     }
 
-    .aesthetic-intro-text > .aesthetic-intro-support {
+    .aesthetic-intro-text > .aesthetic-intro-support,
+    .emergency-copy-support {
       max-width: 960px;
       font-size: 1.28rem;
     }
@@ -1034,7 +1068,8 @@ const conventionsSteps = [
       object-position: 50% 50%;
     }
 
-    .aesthetic-content-section {
+    .aesthetic-content-section,
+    .emergency-copy-section {
       padding: 66px 0 76px;
     }
 
@@ -1145,12 +1180,19 @@ const conventionsSteps = [
     }
 
     .emergency-copy-wrap {
-      width: min(100% - 30px, 1710px);
+      width: min(100% - 30px, 1240px);
     }
 
-    .emergency-copy-wrap p {
-      font-size: clamp(2.05rem, 11vw, 3.4rem);
-      line-height: 1.08;
+    .emergency-copy-body {
+      margin-bottom: 58px;
+    }
+
+    .emergency-copy-lead {
+      font-size: 2.22rem;
+    }
+
+    .emergency-copy-support {
+      font-size: 1.05rem;
     }
 
     .emergency-cta a {
