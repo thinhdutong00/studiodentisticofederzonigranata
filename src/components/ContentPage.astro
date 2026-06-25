@@ -85,6 +85,25 @@ const emergencyCopy = [
   'Puoi inviare una richiesta dedicata indicando sintomi, intensita del dolore, sede preferita e disponibilita. La segreteria raccogliera le informazioni essenziali e ti ricontattera per organizzare la visita urgente nel modo piu rapido possibile.',
 ];
 const aestheticHeroImage = '/assets/menu/casi-clinici-estetica.jpg';
+const aestheticIntroLaminae =
+  'Sono delle lamine di spessore inferiore o uguali al millimetro in media, che vengono posizionate all’esterno dei denti per cambiarne forma colore lunghezza.';
+const aestheticIntroFunction = 'Le faccette sono un’ausilio per migliorare anatomia e funzione della masticazione';
+const aestheticIntroFinal =
+  'A volte invece entrano a far parte della “cosmesi dentale”, quando vogliamo correggere discromie non altrimenti migliorabili con gli sbiancamenti, o quando vogliamo chiudere spazi eccessivi tra i denti (diastemi).';
+const aestheticIntroTail = `${aestheticIntroLaminae} ${aestheticIntroFunction}, ${aestheticIntroFinal.charAt(0).toLowerCase()}${aestheticIntroFinal.slice(1)}`;
+
+const splitAestheticIntro = (html = '') => {
+  const text = html.replace(/^<p>/, '').replace(/<\/p>$/, '').trim();
+
+  if (!text.includes(aestheticIntroTail)) return null;
+
+  return {
+    lead: text.replace(aestheticIntroTail, '').trim(),
+    laminae: aestheticIntroLaminae,
+    function: aestheticIntroFunction,
+    final: aestheticIntroFinal,
+  };
+};
 
 const conventionsHeroImage = '/assets/menu/convenzioni-studio.jpg';
 const conventionsSteps = [
@@ -265,7 +284,11 @@ const conventionsSteps = [
     <section class="aesthetic-hero" aria-labelledby="aesthetic-title" data-transparent-header-region>
       <div class="aesthetic-hero-inner">
         <h1 id="aesthetic-title">Estetica dentale</h1>
-        {page.description && <p>{page.description}</p>}
+        <p class="aesthetic-hero-description">
+          <span>L’odontoiatria estetica, non ha solo lo scopo di migliorare l’estetica del sorriso</span>
+          <span>ma anche la funzionalità dei denti. Spesso fa uso delle faccette dentali, lamine di spessore inferiore o uguali al millimetro in media,</span>
+          <span>che vengono posizionate all’esterno dei denti per cambiarne forma, colore e lunghezza.</span>
+        </p>
       </div>
     </section>
 
@@ -281,7 +304,22 @@ const conventionsSteps = [
               const Tag = `h${Math.min(Math.max(block.level, 1), 6)}`;
               return <Tag id={block.id}>{cleanHeading(block.text)}</Tag>;
             }
-            if (block.type === 'paragraph') return <Fragment set:html={block.html} />;
+            if (block.type === 'paragraph') {
+              const intro = splitAestheticIntro(block.html);
+
+              if (intro) {
+                return (
+                  <div class="aesthetic-intro-text">
+                    <p class="aesthetic-intro-lead">{intro.lead}</p>
+                    <p class="aesthetic-intro-support">{intro.laminae}</p>
+                    <p class="aesthetic-intro-feature">{intro.function}</p>
+                    <p class="aesthetic-intro-support">{intro.final}</p>
+                  </div>
+                );
+              }
+
+              return <Fragment set:html={block.html} />;
+            }
             if (block.type === 'list') return <Fragment set:html={block.html} />;
             if (block.type === 'html') return <div set:html={block.html} />;
             if (block.type === 'image') {
@@ -389,12 +427,16 @@ const conventionsSteps = [
   }
 
   .aesthetic-hero p {
-    max-width: 980px;
+    max-width: 1180px;
     margin: 38px auto 0;
     color: var(--aqua);
-    font-size: 1.75rem;
+    font-size: 1.62rem;
     font-weight: 700;
     line-height: 1.18;
+  }
+
+  .aesthetic-hero-description span {
+    display: block;
   }
 
   .aesthetic-hero-media {
@@ -427,14 +469,33 @@ const conventionsSteps = [
     line-height: 1.62;
   }
 
-  :global(.aesthetic-content-body > p:first-child) {
-    max-width: 1120px;
-    margin: 0 0 88px;
+  .aesthetic-intro-text {
+    max-width: 1480px;
+    margin: 0 auto 88px;
+  }
+
+  .aesthetic-intro-text > .aesthetic-intro-lead,
+  .aesthetic-intro-text > .aesthetic-intro-feature {
     color: var(--blue-dark);
     font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    font-size: 4.45rem;
+    font-size: clamp(2.85rem, 3.35vw, 3.85rem);
     font-weight: 400;
-    line-height: 1.08;
+    line-height: 1.12;
+    letter-spacing: 0;
+  }
+
+  .aesthetic-intro-text > .aesthetic-intro-feature {
+    margin-top: clamp(30px, 3.2vw, 48px);
+  }
+
+  .aesthetic-intro-text > .aesthetic-intro-support {
+    max-width: 1180px;
+    margin: clamp(22px, 2.5vw, 34px) 0 0;
+    color: #657479;
+    font-family: inherit;
+    font-size: clamp(1.25rem, 1.45vw, 1.55rem);
+    font-weight: 500;
+    line-height: 1.38;
     letter-spacing: 0;
   }
 
@@ -922,8 +983,14 @@ const conventionsSteps = [
       font-size: 1.55rem;
     }
 
-    :global(.aesthetic-content-body > p:first-child) {
+    .aesthetic-intro-text > .aesthetic-intro-lead,
+    .aesthetic-intro-text > .aesthetic-intro-feature {
       font-size: 3.45rem;
+    }
+
+    .aesthetic-intro-text > .aesthetic-intro-support {
+      max-width: 960px;
+      font-size: 1.28rem;
     }
 
     :global(.aesthetic-content-body > ul:last-child) {
@@ -969,9 +1036,17 @@ const conventionsSteps = [
       font-size: 1.02rem;
     }
 
-    :global(.aesthetic-content-body > p:first-child) {
+    .aesthetic-intro-text {
       margin-bottom: 58px;
+    }
+
+    .aesthetic-intro-text > .aesthetic-intro-lead,
+    .aesthetic-intro-text > .aesthetic-intro-feature {
       font-size: 2.22rem;
+    }
+
+    .aesthetic-intro-text > .aesthetic-intro-support {
+      font-size: 1.05rem;
     }
 
     .aesthetic-content-body h2,
