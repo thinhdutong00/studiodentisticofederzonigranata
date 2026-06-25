@@ -431,6 +431,7 @@ const secondaryMenus = [
 
     const setMobileOpen = (isOpen) => {
       header?.classList.toggle('mobile-menu-open', isOpen);
+      if (isOpen) header?.classList.remove('is-hidden');
       mobileTrigger?.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       mobileTrigger?.setAttribute('aria-label', isOpen ? 'Chiudi menu' : 'Apri menu');
 
@@ -624,13 +625,62 @@ const secondaryMenus = [
     window.addEventListener('resize', syncHeaderTheme);
   };
 
+  const setupHeaderVisibility = () => {
+    const header = document.querySelector('.site-header');
+    if (!(header instanceof HTMLElement)) return;
+
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    const shouldKeepVisible = () =>
+      header.classList.contains('mobile-menu-open') ||
+      header.matches(':focus-within') ||
+      Boolean(header.querySelector('.nav-mega.is-open'));
+
+    const syncHeaderVisibility = () => {
+      const currentScrollY = Math.max(0, window.scrollY);
+      const delta = currentScrollY - lastScrollY;
+      const hideAfter = (header.offsetHeight || 0) + 32;
+
+      if (currentScrollY <= 4 || shouldKeepVisible()) {
+        header.classList.remove('is-hidden');
+        lastScrollY = currentScrollY;
+        ticking = false;
+        return;
+      }
+
+      if (Math.abs(delta) > 6) {
+        header.classList.toggle('is-hidden', delta > 0 && currentScrollY > hideAfter);
+        lastScrollY = currentScrollY;
+      }
+
+      ticking = false;
+    };
+
+    const requestSync = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(syncHeaderVisibility);
+    };
+
+    syncHeaderVisibility();
+    window.addEventListener('scroll', requestSync, { passive: true });
+    window.addEventListener('resize', () => {
+      header.classList.remove('is-hidden');
+      lastScrollY = Math.max(0, window.scrollY);
+      requestSync();
+    });
+  };
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       setupMegaMenus();
       setupOverlayHeader();
+      setupHeaderVisibility();
     }, { once: true });
   } else {
     setupMegaMenus();
     setupOverlayHeader();
+    setupHeaderVisibility();
   }
 </script>

@@ -180,7 +180,7 @@ const conventionsSteps = [
   </>
 ) : page.path === '/urgenze/' ? (
   <>
-    <section class="emergency-hero" aria-labelledby="emergency-title">
+    <section class="emergency-hero" aria-labelledby="emergency-title" data-transparent-header-region>
       <div class="emergency-hero-inner">
         <h1 id="emergency-title">Urgenze dentali</h1>
         <p>Dolore, trauma o gonfiore: raccontaci cosa sta succedendo e ti ricontatteremo per la prima disponibilita utile.</p>
@@ -202,7 +202,7 @@ const conventionsSteps = [
   </>
 ) : page.path === '/convenzioni/' ? (
   <>
-    <section class="conventions-hero" aria-labelledby="conventions-title">
+    <section class="conventions-hero" aria-labelledby="conventions-title" data-transparent-header-region>
       <div class="conventions-hero-inner">
         <h1 id="conventions-title">Convenzioni</h1>
         <p>Informazioni chiare per usare fondi sanitari, casse e assicurazioni nel tuo percorso odontoiatrico.</p>
@@ -261,7 +261,7 @@ const conventionsSteps = [
   </>
 ) : page.path === '/estetica/' ? (
   <>
-    <section class="aesthetic-hero" aria-labelledby="aesthetic-title">
+    <section class="aesthetic-hero" aria-labelledby="aesthetic-title" data-transparent-header-region>
       <div class="aesthetic-hero-inner">
         <h1 id="aesthetic-title">Estetica dentale</h1>
         {page.description && <p>{page.description}</p>}

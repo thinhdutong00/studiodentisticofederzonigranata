@@ -3810,6 +3810,17 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     text-transform: uppercase;
   }
 
+  .site-header {
+    transform: translateY(0);
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      backdrop-filter 180ms ease,
+      transform 220ms ease;
+    will-change: transform;
+  }
+
   .site-header.site-header-overlay {
     position: fixed;
     right: 0;
@@ -3819,7 +3830,19 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
       background-color 180ms ease,
       border-color 180ms ease,
       box-shadow 180ms ease,
-      backdrop-filter 180ms ease;
+      backdrop-filter 180ms ease,
+      transform 220ms ease;
+  }
+
+  .site-header.is-hidden {
+    pointer-events: none;
+    transform: translateY(calc(-100% - 2px));
+  }
+
+  .site-header.mobile-menu-open,
+  .site-header:focus-within {
+    pointer-events: auto;
+    transform: translateY(0);
   }
 
   .site-header.site-header-overlay .brand img,

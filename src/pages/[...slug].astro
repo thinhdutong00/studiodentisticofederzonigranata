@@ -13,8 +13,11 @@ export function getStaticPaths() {
 }
 
 const { page } = Astro.props;
+
+const transparentHeaderPaths = new Set(['/urgenze/', '/convenzioni/', '/estetica/']);
+const transparentHeader = transparentHeaderPaths.has(page.path);
 ---
 
-<BaseLayout title={page.title} description={page.description} ogImage={page.ogImage || site.heroImage} canonicalPath={page.path}>
+<BaseLayout title={page.title} description={page.description} ogImage={page.ogImage || site.heroImage} canonicalPath={page.path} transparentHeader={transparentHeader}>
   <ContentPage page={page} />
 </BaseLayout>
