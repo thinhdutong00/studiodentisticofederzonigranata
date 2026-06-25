@@ -1,0 +1,959 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+import { site } from '../data/site';
+
+const pageDescription =
+  'Prima visita odontoiatrica a Modena e Reggio Emilia: diagnosi chiara, priorità, tempi e costi prima di iniziare.';
+
+const intentButtons = [
+  { label: 'Dolore o urgenza', href: '/prenota-urgenza/' },
+  { label: 'Impianti', href: '/richiesta/' },
+  { label: 'Controllo generale', href: '/richiesta/' },
+  { label: 'Secondo parere', href: '/richiesta/' },
+];
+
+const visitSteps = [
+  {
+    title: 'Partiamo dal tuo motivo',
+    text: 'Dolore, gengive, impianti, estetica, controllo o secondo parere. Prima ascoltiamo cosa ti porta qui.',
+  },
+  {
+    title: 'Guardiamo storia ed esami',
+    text: 'Farmaci, allergie, cure già fatte e radiografie aiutano a leggere il problema nel contesto giusto.',
+  },
+  {
+    title: 'Controlliamo la bocca',
+    text: 'Valutiamo denti, gengive, mucose, masticazione, vecchie cure e segnali che possono essere ancora silenziosi.',
+  },
+  {
+    title: 'Ti diamo una direzione',
+    text: 'Diagnosi, priorità, opzioni, tempi e costi: prima di iniziare devi sapere cosa aspettarti.',
+  },
+];
+
+const evaluationAreas = [
+  {
+    label: 'Il problema principale',
+    text: 'Da dove nasce il disturbo, il dubbio o il desiderio che ti porta in studio.',
+  },
+  {
+    label: 'Denti e gengive',
+    text: 'Carie, vecchie cure, fratture, infiammazione, sanguinamento e stabilità.',
+  },
+  {
+    label: 'Radiografie ed esami',
+    text: 'Valutiamo ciò che hai già. Se serve altro, lo indichiamo in modo mirato.',
+  },
+  {
+    label: 'Opzioni di cura',
+    text: 'Quando ci sono più strade, spieghiamo vantaggi, limiti e senso clinico.',
+  },
+  {
+    label: 'Priorità e tempi',
+    text: 'Non tutto va fatto subito. Distinguiamo urgenze, priorità e controlli.',
+  },
+  {
+    label: 'Preventivo',
+    text: 'Il piano viene collegato a tempi e costi, prima della decisione.',
+  },
+];
+
+const preparationItems = [
+  'Radiografie, TAC, referti o preventivi già ricevuti.',
+  'Farmaci assunti e allergie note.',
+  'Bite, apparecchi, mascherine o protesi.',
+  'Domande, dubbi, paure o obiettivi estetici.',
+];
+
+const goodReasons = [
+  {
+    title: 'Mi fa male un dente',
+    text: 'Capire l’origine del dolore aiuta a decidere subito cosa fare.',
+  },
+  {
+    title: 'Ho le gengive che sanguinano',
+    text: 'Il sanguinamento è un segnale. Va letto, non normalizzato.',
+  },
+  {
+    title: 'Voglio sapere se mi servono impianti',
+    text: 'Valutiamo denti mancanti, osso, gengive e alternative possibili.',
+  },
+  {
+    title: 'Vorrei raddrizzare i denti',
+    text: 'Allineatori e apparecchi partono da diagnosi e obiettivi realistici.',
+  },
+  {
+    title: 'Mi interessano faccette o estetica',
+    text: 'Prima dell’estetica guardiamo salute, funzione e aspettative.',
+  },
+  {
+    title: 'Voglio un controllo generale',
+    text: 'Anche senza dolore, un controllo può intercettare problemi iniziali.',
+  },
+  {
+    title: 'Non vado dal dentista da anni',
+    text: 'Si riparte senza giudizio. Una priorità alla volta.',
+  },
+  {
+    title: 'Ho un preventivo e voglio un secondo parere',
+    text: 'Rileggiamo diagnosi, opzioni, tempi e senso del piano proposto.',
+  },
+];
+
+const offices = site.offices.map((office) => ({
+  ...office,
+  mapHref: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(office.address)}`,
+}));
+---
+
+<BaseLayout
+  title={`Prima visita | ${site.name}`}
+  description={pageDescription}
+  ogImage="/assets/original/2022/03/dentista-modena-reggio-emilia.jpg"
+  canonicalPath="/prima-visita/"
+>
+  <div class="first-visit-page">
+    <section class="fv-hero" aria-labelledby="first-visit-title">
+      <div class="fv-hero-panel">
+        <div class="fv-wrap fv-hero-inner">
+          <div class="fv-hero-copy">
+            <p class="fv-kicker">Prima visita odontoiatrica</p>
+            <h1 id="first-visit-title">Prima visita</h1>
+            <p>
+              Dolore, gengive, impianti, denti storti, estetica, controllo o secondo parere.
+              Ti diciamo cosa c’è, cosa serve e cosa aspettarti prima di iniziare.
+            </p>
+            <div class="fv-intent-links" aria-label="Richieste frequenti">
+              {intentButtons.map((item) => <a href={item.href}>{item.label}</a>)}
+            </div>
+          </div>
+        </div>
+      </div>
+      <figure class="fv-hero-media">
+        <img src="/assets/original/2022/03/dentista-modena-reggio-emilia.jpg" alt="Visita nello Studio Dentistico Federzoni Granata" loading="eager" />
+      </figure>
+    </section>
+
+    <section class="fv-intro" aria-labelledby="intro-title">
+      <div class="fv-wrap fv-intro-grid">
+        <div>
+          <p class="fv-kicker">Il punto di partenza</p>
+          <h2 id="intro-title">Partiamo da ciò che ti serve</h2>
+        </div>
+        <div class="fv-intro-copy">
+          <p>
+            Prima visita non vuol dire “vieni senza motivo”. Vuol dire: ti valutiamo per la prima volta nel nostro studio.
+          </p>
+          <p>
+            Tu porti un problema, un desiderio o un dubbio. Noi lo traduciamo in diagnosi, priorità e piano di cura.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="come-funziona" class="fv-steps-section" aria-labelledby="steps-title">
+      <div class="fv-wrap">
+        <div class="fv-section-head">
+          <p class="fv-kicker">Come si svolge</p>
+          <h2 id="steps-title">Cosa succede durante la prima visita</h2>
+        </div>
+
+        <div class="fv-step-rail">
+          {visitSteps.map((step, index) => (
+            <article class="fv-step-card">
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="fv-split fv-split-soft" aria-labelledby="diagnosis-title">
+      <div class="fv-wrap fv-split-grid">
+        <figure class="fv-split-image">
+          <img src="/assets/feature-stack/tecnologia-studio.jpg" alt="Tecnologia digitale per la valutazione odontoiatrica" loading="eager" />
+        </figure>
+        <div class="fv-split-copy">
+          <p class="fv-kicker">Diagnosi prima del piano</p>
+          <h2 id="diagnosis-title">Meno dubbi, più direzione</h2>
+          <p>
+            Una buona visita trasforma un problema confuso in informazioni utili: diagnosi, urgenza, opzioni, esami necessari.
+          </p>
+          <p>
+            Se il percorso richiede più passaggi, lo diciamo. Prima si capisce, poi si decide.
+          </p>
+          <a class="fv-inline-link" href="/trattamenti/">Scopri i trattamenti</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="fv-evaluation" aria-labelledby="evaluation-title">
+      <div class="fv-wrap">
+        <div class="fv-section-head fv-section-head-centered">
+          <p class="fv-kicker">Cosa valutiamo</p>
+          <h2 id="evaluation-title">La visita serve a mettere ordine</h2>
+          <p>
+            Dal sintomo al piano. Dal dubbio alla scelta. Senza improvvisare.
+          </p>
+        </div>
+
+        <div class="fv-evaluation-grid">
+          {evaluationAreas.map((area) => (
+            <article class="fv-evaluation-card">
+              <strong>{area.label}</strong>
+              <p>{area.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="fv-trust-band" aria-labelledby="trust-title">
+      <div class="fv-wrap fv-trust-grid">
+        <div>
+          <p class="fv-kicker">Un approccio chiaro</p>
+          <h2 id="trust-title">Non serve aspettare il dolore</h2>
+        </div>
+        <div class="fv-trust-copy">
+          <p>
+            Molti problemi dentali restano silenziosi: carie iniziali, gengive infiammate, vecchie otturazioni, denti instabili.
+          </p>
+          <p>
+            Controllare non significa curare tutto. Significa sapere cosa osservare e cosa affrontare.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="fv-reasons-section" aria-labelledby="reasons-title">
+      <div class="fv-wrap">
+        <div class="fv-section-head">
+          <p class="fv-kicker">Quando prenotarla</p>
+          <h2 id="reasons-title">Qual è il tuo motivo?</h2>
+        </div>
+
+        <div class="fv-reasons-grid">
+          {goodReasons.map((reason) => (
+            <article class="fv-reason-card">
+              <h3>{reason.title}</h3>
+              <p>{reason.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="fv-split" aria-labelledby="prepare-title">
+      <div class="fv-wrap fv-split-grid fv-split-grid-reverse">
+        <div class="fv-split-copy">
+          <p class="fv-kicker">Prima dell'appuntamento</p>
+          <h2 id="prepare-title">Cosa portare alla prima visita</h2>
+          <p>
+            Se hai documenti recenti, portali. Se non hai nulla, va bene: partiamo dalla visita.
+          </p>
+          <ul class="fv-prep-list">
+            {preparationItems.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+        <figure class="fv-split-image">
+          <img src="/assets/original/2021/02/HOME.jpg" alt="Dottor Stefano Granata e Dottoressa Chiara Federzoni" loading="eager" />
+        </figure>
+      </div>
+    </section>
+
+    <section class="fv-final" aria-labelledby="final-title">
+      <div class="fv-wrap fv-final-inner">
+        <div>
+          <p class="fv-kicker">Prenota la tua prima visita</p>
+          <h2 id="final-title">Prenota dal tuo motivo</h2>
+          <p>
+            Dolore, controllo, gengive, impianti, estetica, denti storti o secondo parere.
+            Ti richiamiamo e fissiamo l’appuntamento nella sede più comoda.
+          </p>
+        </div>
+        <div class="fv-final-actions">
+          <a class="fv-button fv-button-primary" href="/richiesta/">Prenota visita</a>
+          <div class="fv-office-list" aria-label="Sedi dello studio">
+            {offices.map((office) => (
+              <a href={office.mapHref} target="_blank" rel="noreferrer">
+                <strong>{office.city}</strong>
+                <span>{office.address}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .first-visit-page {
+    --fv-blue: #155a94;
+    --fv-blue-bright: #347cc2;
+    --fv-blue-soft: #edf7ff;
+    --fv-ink: #13364f;
+    --fv-muted: #536875;
+    --fv-line: rgba(52, 124, 194, 0.2);
+    background: #fff;
+    color: var(--fv-ink);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    letter-spacing: 0;
+  }
+
+  .first-visit-page :global(a) {
+    color: inherit;
+  }
+
+  .fv-wrap {
+    width: min(1510px, calc(100% - 30px));
+    margin: 0 auto;
+  }
+
+  .fv-hero {
+    background: #fff;
+    color: #fff;
+  }
+
+  .fv-hero-panel {
+    min-height: calc(78svh - var(--nav-height));
+    display: grid;
+    background: var(--fv-blue);
+  }
+
+  .fv-hero-inner {
+    min-height: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 96px 0;
+  }
+
+  .fv-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.84rem;
+    font-weight: 800;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .fv-breadcrumb a {
+    text-decoration: none;
+  }
+
+  .fv-breadcrumb a:hover {
+    color: #fff;
+  }
+
+  .fv-hero-copy {
+    width: min(100%, 1360px);
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .fv-kicker {
+    margin: 0 0 14px;
+    color: var(--fv-blue-bright);
+    font-size: 0.88rem;
+    font-weight: 900;
+    letter-spacing: 0;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .fv-hero .fv-kicker,
+  .fv-final .fv-kicker {
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .fv-hero h1 {
+    max-width: none;
+    margin: 0;
+    color: #fff;
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(4.8rem, 10.6vw, 10.75rem);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 0.88;
+    text-transform: uppercase;
+  }
+
+  .fv-hero-copy > p:not(.fv-kicker) {
+    max-width: 880px;
+    margin: 34px auto 0;
+    color: #b9d6f0;
+    font-size: clamp(1.2rem, 1.75vw, 1.65rem);
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .fv-hero-media {
+    height: clamp(360px, 42vw, 620px);
+    margin: 0;
+    overflow: hidden;
+    background: #d9eaf8;
+  }
+
+  .fv-hero-media img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center 42%;
+  }
+
+  .fv-actions,
+  .fv-final-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .fv-actions {
+    margin-top: 34px;
+  }
+
+  .fv-intent-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    max-width: 760px;
+    margin: 22px auto 0;
+  }
+
+  .fv-intent-links a {
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 999px;
+    padding: 0 14px;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 0.84rem;
+    font-weight: 800;
+    line-height: 1.2;
+    text-decoration: none;
+  }
+
+  .fv-intent-links a:hover {
+    border-color: rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
+  }
+
+  .fv-button {
+    min-height: 54px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 0 22px;
+    font-weight: 900;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+  }
+
+  .fv-button:hover {
+    transform: translateY(-1px);
+  }
+
+  .fv-button-primary {
+    background: var(--fv-blue);
+    color: #fff;
+  }
+
+  .fv-button-primary:hover {
+    background: #0f4878;
+    color: #fff;
+  }
+
+  .fv-button-secondary {
+    border-color: rgba(255, 255, 255, 0.55);
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
+
+  .fv-button-secondary:hover {
+    border-color: #fff;
+    background: #fff;
+    color: var(--fv-blue);
+  }
+
+  .fv-intro,
+  .fv-steps-section,
+  .fv-evaluation,
+  .fv-reasons-section {
+    padding: 92px 0;
+  }
+
+  .fv-intro {
+    background: #fff;
+  }
+
+  .fv-intro-grid,
+  .fv-trust-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+    gap: 70px;
+    align-items: start;
+  }
+
+  .fv-intro h2,
+  .fv-section-head h2,
+  .fv-split-copy h2,
+  .fv-trust-grid h2,
+  .fv-final h2 {
+    margin: 0;
+    color: var(--fv-blue);
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    font-size: 3.75rem;
+    font-weight: 550;
+    letter-spacing: 0;
+    line-height: 1;
+  }
+
+  .fv-intro-copy p,
+  .fv-split-copy p,
+  .fv-trust-copy p,
+  .fv-section-head > p,
+  .fv-final p {
+    margin: 0;
+    color: var(--fv-muted);
+    font-size: 1.08rem;
+    line-height: 1.62;
+  }
+
+  .fv-intro-copy {
+    display: grid;
+    gap: 22px;
+  }
+
+  .fv-steps-section {
+    background: #fff;
+  }
+
+  .fv-section-head {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(320px, 0.5fr);
+    gap: 42px;
+    align-items: end;
+    margin-bottom: 42px;
+  }
+
+  .fv-section-head-centered {
+    max-width: 880px;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+  }
+
+  .fv-section-head-centered h2 {
+    margin-top: 0;
+  }
+
+  .fv-section-head-centered > p {
+    margin-top: 22px;
+  }
+
+  .fv-step-rail {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--fv-line);
+  }
+
+  .fv-step-card {
+    min-height: 360px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 22px;
+    padding: 28px;
+    background: var(--fv-blue-soft);
+    color: var(--fv-blue);
+  }
+
+  .fv-step-card span {
+    color: var(--fv-blue-bright);
+    font-size: 0.86rem;
+    font-weight: 900;
+    line-height: 1.2;
+  }
+
+  .fv-step-card h3 {
+    margin: auto 0 0;
+    color: var(--fv-blue);
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    font-size: 2rem;
+    font-weight: 550;
+    letter-spacing: 0;
+    line-height: 1.02;
+  }
+
+  .fv-step-card p,
+  .fv-evaluation-card p,
+  .fv-reason-card p {
+    margin: 0;
+    color: #425867;
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+
+  .fv-split {
+    padding: 92px 0;
+    background: #fff;
+  }
+
+  .fv-split-soft {
+    background: var(--fv-blue-soft);
+  }
+
+  .fv-split-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
+    gap: 86px;
+    align-items: center;
+  }
+
+  .fv-split-grid-reverse {
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1fr);
+  }
+
+  .fv-split-image {
+    margin: 0;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+
+  .fv-split-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .fv-split-copy {
+    max-width: 640px;
+  }
+
+  .fv-split-copy p {
+    margin-top: 22px;
+  }
+
+  .fv-inline-link {
+    min-height: 52px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+    border: 1px solid rgba(52, 124, 194, 0.42);
+    border-radius: 8px;
+    padding: 0 20px;
+    color: var(--fv-blue-bright);
+    font-weight: 900;
+    text-decoration: none;
+  }
+
+  .fv-inline-link:hover {
+    background: rgba(52, 124, 194, 0.1);
+    color: var(--fv-blue);
+  }
+
+  .fv-evaluation {
+    background: #fff;
+  }
+
+  .fv-evaluation-grid,
+  .fv-reasons-grid {
+    display: grid;
+    gap: 1px;
+    margin-top: 44px;
+    background: var(--fv-line);
+  }
+
+  .fv-evaluation-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .fv-reasons-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .fv-evaluation-card,
+  .fv-reason-card {
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 20px;
+    padding: 28px;
+    background: #fff;
+  }
+
+  .fv-evaluation-card strong,
+  .fv-reason-card h3 {
+    margin: 0;
+    color: var(--fv-blue);
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    font-size: 1.55rem;
+    font-weight: 650;
+    letter-spacing: 0;
+    line-height: 1.05;
+  }
+
+  .fv-trust-band {
+    padding: 90px 0;
+    background: var(--fv-blue);
+    color: #fff;
+  }
+
+  .fv-trust-band .fv-kicker,
+  .fv-trust-band h2,
+  .fv-trust-copy p {
+    color: #fff;
+  }
+
+  .fv-trust-copy {
+    display: grid;
+    gap: 22px;
+  }
+
+  .fv-reasons-section {
+    background: var(--fv-blue-soft);
+  }
+
+  .fv-reason-card {
+    background: #fff;
+  }
+
+  .fv-prep-list {
+    display: grid;
+    gap: 14px;
+    margin: 28px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .fv-prep-list li {
+    position: relative;
+    padding-left: 26px;
+    color: var(--fv-muted);
+    font-size: 1.04rem;
+    line-height: 1.5;
+  }
+
+  .fv-prep-list li::before {
+    content: "";
+    position: absolute;
+    top: 0.62em;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--fv-blue-bright);
+  }
+
+  .fv-final {
+    padding: 86px 0;
+    background: var(--fv-blue);
+    color: #fff;
+  }
+
+  .fv-final-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.98fr) minmax(340px, 0.62fr);
+    gap: 64px;
+    align-items: center;
+  }
+
+  .fv-final h2,
+  .fv-final p {
+    color: #fff;
+  }
+
+  .fv-final p {
+    max-width: 780px;
+    margin-top: 22px;
+    color: rgba(255, 255, 255, 0.84);
+  }
+
+  .fv-final .fv-button-primary {
+    background: #fff;
+    color: var(--fv-blue);
+  }
+
+  .fv-final .fv-button-primary:hover {
+    background: var(--fv-blue-soft);
+    color: var(--fv-blue);
+  }
+
+  .fv-final-actions {
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+
+  .fv-office-list {
+    display: grid;
+    gap: 10px;
+    min-width: min(100%, 360px);
+  }
+
+  .fv-office-list a {
+    display: grid;
+    gap: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 8px;
+    padding: 14px 16px;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .fv-office-list a:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .fv-office-list strong {
+    font-size: 0.98rem;
+    line-height: 1.2;
+  }
+
+  .fv-office-list span {
+    color: rgba(255, 255, 255, 0.76);
+    font-size: 0.9rem;
+    line-height: 1.35;
+  }
+
+  @media (max-width: 1120px) {
+    .fv-hero-panel {
+      min-height: 620px;
+    }
+
+    .fv-hero h1 {
+      font-size: clamp(4.6rem, 11vw, 7rem);
+    }
+
+    .fv-intro-grid,
+    .fv-trust-grid,
+    .fv-section-head,
+    .fv-split-grid,
+    .fv-split-grid-reverse,
+    .fv-final-inner {
+      grid-template-columns: 1fr;
+      gap: 42px;
+    }
+
+    .fv-step-rail,
+    .fv-evaluation-grid,
+    .fv-reasons-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .fv-split-image {
+      max-height: 620px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .fv-wrap {
+      width: min(100% - 22px, 1510px);
+    }
+
+    .fv-hero-panel {
+      min-height: 560px;
+    }
+
+    .fv-hero-inner {
+      padding: 64px 0;
+    }
+
+    .fv-hero-copy {
+      padding-top: 0;
+    }
+
+    .fv-hero h1 {
+      font-size: 3.35rem;
+      line-height: 0.92;
+    }
+
+    .fv-hero-copy > p:not(.fv-kicker) {
+      font-size: 1.05rem;
+      line-height: 1.32;
+    }
+
+    .fv-hero-media {
+      height: 310px;
+    }
+
+    .fv-intro,
+    .fv-steps-section,
+    .fv-evaluation,
+    .fv-reasons-section,
+    .fv-split,
+    .fv-trust-band,
+    .fv-final {
+      padding: 62px 0;
+    }
+
+    .fv-intro h2,
+    .fv-section-head h2,
+    .fv-split-copy h2,
+    .fv-trust-grid h2,
+    .fv-final h2 {
+      font-size: 2.35rem;
+      line-height: 1.04;
+    }
+
+    .fv-section-head {
+      margin-bottom: 30px;
+    }
+
+    .fv-step-rail,
+    .fv-evaluation-grid,
+    .fv-reasons-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .fv-intent-links a {
+      flex: 1 1 calc(50% - 10px);
+      justify-content: center;
+      text-align: center;
+    }
+
+    .fv-step-card,
+    .fv-evaluation-card,
+    .fv-reason-card {
+      min-height: auto;
+      padding: 24px;
+    }
+
+    .fv-step-card h3 {
+      font-size: 1.7rem;
+    }
+
+    .fv-split-grid-reverse .fv-split-image {
+      order: -1;
+    }
+
+    .fv-actions,
+    .fv-final-actions {
+      align-items: stretch;
+    }
+
+    .fv-button {
+      width: 100%;
+    }
+  }
+</style>

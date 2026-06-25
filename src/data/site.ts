@@ -114,7 +114,7 @@ export const site = {
       "kind": "navigation",
       "title": "Prima visita - Studio dentistico Federzoni Granata",
       "navTitle": "Prima visita",
-      "description": "Pagina dedicata alla prima visita presso lo Studio Dentistico Federzoni Granata.",
+      "description": "Prima visita odontoiatrica a Modena e Reggio Emilia: diagnosi chiara, priorità, tempi e costi prima di iniziare.",
       "hasContactForm": false,
       "blocks": [
         {
@@ -159,7 +159,7 @@ export const site = {
       "kind": "navigation",
       "title": "Convenzioni - Studio dentistico Federzoni Granata",
       "navTitle": "Convenzioni",
-      "description": "Pagina dedicata alle convenzioni dello Studio Dentistico Federzoni Granata.",
+      "description": "Informazioni sulle convenzioni dello Studio Dentistico Federzoni Granata.",
       "hasContactForm": false,
       "blocks": [
         {
@@ -169,52 +169,15 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<p>Pagina dedicata in preparazione.</p>"
-        },
-        {
-          "type": "list",
-          "ordered": false,
-          "html": "<ul><li><a href=\"/convenzioni-dirette/\">Convenzioni dirette</a></li><li><a href=\"/convenzioni-indirette/\">Convenzioni indirette</a></li></ul>"
-        }
-      ]
-    },
-    {
-      "path": "/convenzioni-dirette/",
-      "slug": "convenzioni-dirette",
-      "kind": "navigation",
-      "title": "Convenzioni dirette - Studio dentistico Federzoni Granata",
-      "navTitle": "Convenzioni dirette",
-      "description": "Pagina dedicata alle convenzioni dirette dello Studio Dentistico Federzoni Granata.",
-      "hasContactForm": false,
-      "blocks": [
-        {
-          "type": "heading",
-          "level": 1,
-          "text": "Convenzioni dirette"
+          "html": "<p>Lo Studio Dentistico Federzoni Granata non gestisce convenzioni dirette con enti, fondi o assicurazioni.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<p>Pagina dedicata in preparazione.</p>"
-        }
-      ]
-    },
-    {
-      "path": "/convenzioni-indirette/",
-      "slug": "convenzioni-indirette",
-      "kind": "navigation",
-      "title": "Convenzioni indirette - Studio dentistico Federzoni Granata",
-      "navTitle": "Convenzioni indirette",
-      "description": "Pagina dedicata alle convenzioni indirette dello Studio Dentistico Federzoni Granata.",
-      "hasContactForm": false,
-      "blocks": [
-        {
-          "type": "heading",
-          "level": 1,
-          "text": "Convenzioni indirette"
+          "html": "<p>Il paziente salda la prestazione direttamente allo studio e, quando previsto dalla propria assicurazione, cassa sanitaria o fondo, può richiedere il rimborso secondo le regole del proprio ente.</p>"
         },
         {
           "type": "paragraph",
-          "html": "<p>Pagina dedicata in preparazione.</p>"
+          "html": "<p>Al momento della prenotazione puoi segnalarci il tuo fondo o la tua assicurazione. Ti indicheremo quale documentazione amministrativa può essere rilasciata per la richiesta di rimborso.</p>"
         }
       ]
     },
@@ -284,7 +247,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<ul><li><a href=\"/chi-siamo/\">Chi siamo</a></li><li><a href=\"/strumentazioni-attrezzature-tecniche/\">Qualità e Tecnologia</a></li><li><a href=\"/orari-e-sedi/\">Orari e sedi</a></li><li><a href=\"/faq/\">FAQ</a></li></ul>"
+          "html": "<ul><li><a href=\"/chi-siamo/\">Chi siamo</a></li><li><a href=\"/strumentazioni-attrezzature-tecniche/\">Qualità e Tecnologia</a></li><li><a href=\"/orari-e-sedi/\">Orari e sedi</a></li><li><a href=\"/convenzioni/\">Convenzioni</a></li><li><a href=\"/faq/\">FAQ</a></li></ul>"
         }
       ]
     },

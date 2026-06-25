@@ -116,6 +116,11 @@ const menuImageOverrides: Record<string, { image: string; imageAlt: string; imag
     imageAlt: 'Studi dentistici di Modena e Reggio Emilia',
     imagePosition: '50% 50%',
   },
+  Convenzioni: {
+    image: '/assets/menu/convenzioni-studio.jpg',
+    imageAlt: 'Sala operativa dello Studio Dentistico Federzoni Granata',
+    imagePosition: '50% 50%',
+  },
   FAQ: {
     image: '/assets/menu/faq.jpg',
     imageAlt: 'Dentista che spiega l’igiene orale a una bambina',
@@ -124,8 +129,7 @@ const menuImageOverrides: Record<string, { image: string; imageAlt: string; imag
 };
 
 const detailDescriptions: Record<string, string> = {
-  'Convenzioni dirette': 'Informazioni sulle convenzioni che permettono la gestione diretta delle prestazioni con enti, fondi o assicurazioni convenzionate.',
-  'Convenzioni indirette': 'Indicazioni per pazienti che desiderano richiedere rimborsi o agevolazioni tramite la propria assicurazione o cassa sanitaria.',
+  Convenzioni: 'Informazioni sulle convenzioni e sulla documentazione utile per richiedere eventuali rimborsi al proprio fondo, ente o assicurazione.',
   Estetica: 'Raccolta di casi dedicati all’armonia del sorriso, al colore, alla forma e alla naturalezza del risultato finale.',
   Protesi: 'Esempi di riabilitazioni protesiche fisse e mobili, pensate per recuperare funzione masticatoria, stabilità ed estetica.',
   Parodontologia: 'Casi legati alla salute delle gengive e dei tessuti di sostegno, con percorsi per stabilizzare e proteggere il sorriso.',
@@ -157,19 +161,6 @@ const itemCategory = (item: { label: string; href: string }, index: number, imag
 
 const secondaryMenus = [
   {
-    id: 'conventions',
-    title: 'Convenzioni',
-    triggerLabel: 'convenzioni',
-    href: '/convenzioni/',
-    panelId: 'conventions-sub-menu',
-    tabLabel: 'Categorie convenzioni',
-    kicker: 'Convenzioni',
-    categories: [
-      { label: 'Convenzioni dirette', href: '/convenzioni-dirette/' },
-      { label: 'Convenzioni indirette', href: '/convenzioni-indirette/' },
-    ].map((item, index) => itemCategory(item, index, 'Segnaposto convenzioni')),
-  },
-  {
     id: 'clinical',
     title: 'Casi clinici',
     triggerLabel: 'casi clinici',
@@ -191,6 +182,7 @@ const secondaryMenus = [
       { label: 'Chi siamo', href: '/chi-siamo/' },
       { label: 'Qualità e Tecnologia', href: '/strumentazioni-attrezzature-tecniche/' },
       { label: 'Orari e sedi', href: '/orari-e-sedi/' },
+      { label: 'Convenzioni', href: '/convenzioni/' },
       { label: 'FAQ', href: '/faq/' },
     ].map((item, index) => itemCategory(item, index, 'Segnaposto informazioni')),
   },
@@ -242,7 +234,7 @@ const secondaryMenus = [
           </div>
         </div>
       </div>
-      {secondaryMenus.slice(0, 2).map((navMenu) => (
+      {secondaryMenus.slice(0, 1).map((navMenu) => (
         <div class="nav-mega" data-mega-menu data-menu-title={navMenu.title}>
           <a
             class="primary-nav-link primary-nav-trigger"
@@ -319,7 +311,7 @@ const secondaryMenus = [
         </div>
       ))}
       {afterTreatment.map((item) => <a class="primary-nav-link" href={item.href}>{item.label}</a>)}
-      {secondaryMenus.slice(2).map((navMenu) => (
+      {secondaryMenus.slice(1).map((navMenu) => (
         <div class="nav-mega" data-mega-menu data-menu-title={navMenu.title}>
           <a
             class="primary-nav-link primary-nav-trigger"
