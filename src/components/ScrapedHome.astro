@@ -432,6 +432,36 @@ const locationOffices = site.offices.map((office) => {
 
       if (!(track instanceof HTMLElement)) return;
 
+      const originalCards = Array.from(track.querySelectorAll('.clinical-carousel-card')).filter(
+        (card) => card instanceof HTMLElement,
+      );
+
+      if (originalCards.length < 2) return;
+
+      const cloneCard = (card) => {
+        const clone = card.cloneNode(true);
+        if (clone instanceof HTMLElement) {
+          clone.dataset.carouselClone = 'true';
+          clone.setAttribute('aria-hidden', 'true');
+          clone.setAttribute('tabindex', '-1');
+        }
+        return clone;
+      };
+
+      const beforeClones = originalCards.map(cloneCard);
+      const afterClones = originalCards.map(cloneCard);
+
+      beforeClones
+        .slice()
+        .reverse()
+        .forEach((clone) => track.insertBefore(clone, track.firstChild));
+      afterClones.forEach((clone) => track.appendChild(clone));
+
+      const firstOriginal = originalCards[0];
+      const firstAfterClone = afterClones[0];
+
+      if (!(firstOriginal instanceof HTMLElement) || !(firstAfterClone instanceof HTMLElement)) return;
+
       const getScrollAmount = () => {
         const card = track.querySelector('.clinical-carousel-card');
         if (!(card instanceof HTMLElement)) return track.clientWidth * 0.78;
@@ -442,21 +472,57 @@ const locationOffices = site.offices.map((office) => {
         return card.offsetWidth + gap;
       };
 
-      const setInitialScroll = () => {
-        if (track.scrollLeft === 0 && track.scrollWidth > track.clientWidth) {
-          track.scrollLeft = getScrollAmount() * 0.62;
+      const getLoopMetrics = () => {
+        const start = firstOriginal.offsetLeft;
+        const width = firstAfterClone.offsetLeft - start;
+
+        return { start, width };
+      };
+
+      const normalizeLoopPosition = () => {
+        const { start, width } = getLoopMetrics();
+        if (width <= 0) return;
+
+        while (track.scrollLeft < start) {
+          track.scrollLeft += width;
+        }
+
+        while (track.scrollLeft >= start + width) {
+          track.scrollLeft -= width;
         }
       };
 
+      const setInitialScroll = () => {
+        track.scrollLeft = getLoopMetrics().start + firstOriginal.offsetWidth / 2;
+      };
+
+      const scrollLoop = (direction) => {
+        normalizeLoopPosition();
+        track.scrollBy({ left: direction * getScrollAmount(), behavior: 'smooth' });
+        window.setTimeout(normalizeLoopPosition, 420);
+      };
+
+      let scrollFrame = 0;
+
+      track.addEventListener(
+        'scroll',
+        () => {
+          window.cancelAnimationFrame(scrollFrame);
+          scrollFrame = window.requestAnimationFrame(normalizeLoopPosition);
+        },
+        { passive: true },
+      );
+
       requestAnimationFrame(setInitialScroll);
       window.addEventListener('load', setInitialScroll, { once: true });
+      window.addEventListener('resize', () => requestAnimationFrame(setInitialScroll));
 
       prev?.addEventListener('click', () => {
-        track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+        scrollLoop(-1);
       });
 
       next?.addEventListener('click', () => {
-        track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+        scrollLoop(1);
       });
     });
 
