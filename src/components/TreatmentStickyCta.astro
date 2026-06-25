@@ -21,8 +21,11 @@ const requestHref = href || `/richiesta/?trattamento=${encodeURIComponent(treatm
       if (!(bar instanceof HTMLElement)) return;
 
       const hero = document.querySelector('[data-treatment-sticky-hero]');
+      const footerEnd = document.querySelector('.footer-bottom') || document.querySelector('.site-footer');
       const action = bar.querySelector('a');
       let ticking = false;
+      let lastScrollY = window.scrollY;
+      let isScrollingUp = false;
 
       const setVisible = (isVisible) => {
         bar.classList.toggle('is-visible', isVisible);
@@ -37,15 +40,24 @@ const requestHref = href || `/richiesta/?trattamento=${encodeURIComponent(treatm
       };
 
       const syncVisibility = () => {
-        const showBar = hero instanceof HTMLElement
+        const isAfterHero = hero instanceof HTMLElement
           ? hero.getBoundingClientRect().bottom <= 0
           : window.scrollY > 420;
+        const barHeight = bar.offsetHeight || 86;
+        const footerEndReached = footerEnd instanceof HTMLElement
+          ? footerEnd.getBoundingClientRect().top <= window.innerHeight - Math.min(barHeight, 110)
+          : false;
+        const showBar = isAfterHero && (!footerEndReached || isScrollingUp);
 
         setVisible(showBar);
         ticking = false;
       };
 
       const requestSync = () => {
+        const currentScrollY = window.scrollY;
+        isScrollingUp = currentScrollY < lastScrollY;
+        lastScrollY = currentScrollY;
+
         if (ticking) return;
         ticking = true;
         window.requestAnimationFrame(syncVisibility);
@@ -73,7 +85,7 @@ const requestHref = href || `/richiesta/?trattamento=${encodeURIComponent(treatm
     z-index: 70;
     border-top: 1px solid rgba(0, 0, 0, 0.08);
     background: rgba(255, 255, 255, 0.97);
-    box-shadow: 0 -8px 28px rgba(17, 24, 39, 0.14);
+    box-shadow: 0 -8px 28px rgba(12, 77, 162, 0.16);
     opacity: 0;
     pointer-events: none;
     transform: translateY(112%);
@@ -98,7 +110,7 @@ const requestHref = href || `/richiesta/?trattamento=${encodeURIComponent(treatm
 
   .treatment-sticky-cta p {
     margin: 0;
-    color: #00642d;
+    color: var(--blue-dark);
     font-size: clamp(1rem, 1.35vw, 1.28rem);
     font-weight: 800;
     letter-spacing: 0.02em;
@@ -115,7 +127,7 @@ const requestHref = href || `/richiesta/?trattamento=${encodeURIComponent(treatm
     border: 0;
     border-radius: 4px;
     padding: 0 28px;
-    background: #69ce10;
+    background: var(--blue-dark);
     color: #fff;
     font-size: clamp(0.82rem, 1vw, 1rem);
     font-weight: 800;
@@ -128,7 +140,7 @@ const requestHref = href || `/richiesta/?trattamento=${encodeURIComponent(treatm
 
   .treatment-sticky-cta a:hover,
   .treatment-sticky-cta a:focus-visible {
-    background: #56b80b;
+    background: var(--blue);
     color: #fff;
     transform: translateY(-1px);
   }
