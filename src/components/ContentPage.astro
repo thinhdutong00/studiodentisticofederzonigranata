@@ -285,9 +285,9 @@ const conventionsSteps = [
       <div class="aesthetic-hero-inner">
         <h1 id="aesthetic-title">Estetica dentale</h1>
         <p class="aesthetic-hero-description">
-          <span>L’odontoiatria estetica, non ha solo lo scopo di migliorare l’estetica del sorriso</span>
-          <span>ma anche la funzionalità dei denti. Spesso fa uso delle faccette dentali, lamine di spessore inferiore o uguali al millimetro in media,</span>
-          <span>che vengono posizionate all’esterno dei denti per cambiarne forma, colore e lunghezza.</span>
+          <span>L’odontoiatria estetica, non ha solo lo scopo di migliorare l’estetica del sorriso ma anche</span>
+          <span>la funzionalità dei denti. Spesso fa uso delle faccette dentali, lamine di spessore inferiore</span>
+          <span>o uguali al millimetro in media, che vengono posizionate all’esterno dei denti per cambiarne forma, colore e lunghezza.</span>
         </p>
       </div>
     </section>
@@ -427,16 +427,17 @@ const conventionsSteps = [
   }
 
   .aesthetic-hero p {
-    max-width: 1180px;
+    max-width: 1460px;
     margin: 38px auto 0;
     color: var(--aqua);
-    font-size: 1.62rem;
+    font-size: clamp(1.25rem, 1.45vw, 1.62rem);
     font-weight: 700;
     line-height: 1.18;
   }
 
   .aesthetic-hero-description span {
     display: block;
+    white-space: nowrap;
   }
 
   .aesthetic-hero-media {
@@ -981,6 +982,10 @@ const conventionsSteps = [
 
     .aesthetic-hero p {
       font-size: 1.55rem;
+    }
+
+    .aesthetic-hero-description span {
+      white-space: normal;
     }
 
     .aesthetic-intro-text > .aesthetic-intro-lead,
