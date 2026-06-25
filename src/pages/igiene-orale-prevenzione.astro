@@ -107,7 +107,10 @@ const relatedCards = [
     <section class="service-hero" aria-labelledby="service-title" data-transparent-header-region data-treatment-sticky-hero>
       <div class="service-wrap service-hero-inner">
         <p>Studio Dentistico Federzoni Granata</p>
-        <h1 id="service-title">Igiene orale e prevenzione</h1>
+        <h1 id="service-title">
+          <span>Igiene orale</span>
+          <span>e prevenzione</span>
+        </h1>
         <span>Controlli periodici e sedute professionali per mantenere denti e gengive in salute.</span>
       </div>
     </section>
@@ -277,12 +280,14 @@ const relatedCards = [
     min-height: clamp(300px, 35vw, 460px);
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
     padding: clamp(48px, 7vw, 98px) 0;
+    text-align: center;
   }
 
-  .service-hero p,
-  .service-hero span {
+  .service-hero-inner > p,
+  .service-hero-inner > span {
     margin: 0;
     max-width: 700px;
     color: rgba(255, 255, 255, 0.76);
@@ -298,15 +303,19 @@ const relatedCards = [
   }
 
   .service-hero h1 {
-    max-width: 940px;
+    max-width: 1180px;
     margin: 0 0 18px;
     color: #fff;
-    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    font-family: inherit;
     font-size: clamp(3.4rem, 7.8vw, 8.2rem);
     font-weight: 500;
     letter-spacing: 0;
     line-height: 0.88;
     text-transform: uppercase;
+  }
+
+  .service-hero h1 span {
+    display: block;
   }
 
   .service-main-image {
