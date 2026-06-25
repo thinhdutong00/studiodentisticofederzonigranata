@@ -1,0 +1,155 @@
+---
+interface Props {
+  treatment: string;
+  href?: string;
+}
+
+const { treatment, href } = Astro.props;
+const requestHref = href || `/richiesta/?trattamento=${encodeURIComponent(treatment)}`;
+---
+
+<aside class="treatment-sticky-cta" data-treatment-sticky-cta aria-hidden="true">
+  <div class="treatment-sticky-cta-inner">
+    <p>{treatment}</p>
+    <a href={requestHref} tabindex="-1">Richiedi informazioni</a>
+  </div>
+</aside>
+
+<script>
+  const setupTreatmentStickyCtas = () => {
+    document.querySelectorAll('[data-treatment-sticky-cta]').forEach((bar) => {
+      if (!(bar instanceof HTMLElement)) return;
+
+      const hero = document.querySelector('[data-treatment-sticky-hero]');
+      const action = bar.querySelector('a');
+      let ticking = false;
+
+      const setVisible = (isVisible) => {
+        bar.classList.toggle('is-visible', isVisible);
+        bar.setAttribute('aria-hidden', String(!isVisible));
+        if (action instanceof HTMLAnchorElement) {
+          if (isVisible) {
+            action.removeAttribute('tabindex');
+          } else {
+            action.setAttribute('tabindex', '-1');
+          }
+        }
+      };
+
+      const syncVisibility = () => {
+        const showBar = hero instanceof HTMLElement
+          ? hero.getBoundingClientRect().bottom <= 0
+          : window.scrollY > 420;
+
+        setVisible(showBar);
+        ticking = false;
+      };
+
+      const requestSync = () => {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(syncVisibility);
+      };
+
+      syncVisibility();
+      window.addEventListener('scroll', requestSync, { passive: true });
+      window.addEventListener('resize', requestSync);
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupTreatmentStickyCtas, { once: true });
+  } else {
+    setupTreatmentStickyCtas();
+  }
+</script>
+
+<style>
+  .treatment-sticky-cta {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 70;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.97);
+    box-shadow: 0 -8px 28px rgba(17, 24, 39, 0.14);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(112%);
+    transition: opacity 180ms ease, transform 220ms ease;
+  }
+
+  .treatment-sticky-cta.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .treatment-sticky-cta-inner {
+    width: min(100% - 56px, 1840px);
+    min-height: 86px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 24px;
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  .treatment-sticky-cta p {
+    margin: 0;
+    color: #00642d;
+    font-size: clamp(1rem, 1.35vw, 1.28rem);
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    line-height: 1.12;
+    text-transform: uppercase;
+  }
+
+  .treatment-sticky-cta a {
+    min-width: min(260px, 42vw);
+    min-height: 56px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 4px;
+    padding: 0 28px;
+    background: #69ce10;
+    color: #fff;
+    font-size: clamp(0.82rem, 1vw, 1rem);
+    font-weight: 800;
+    line-height: 1;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background-color 160ms ease, transform 160ms ease;
+  }
+
+  .treatment-sticky-cta a:hover,
+  .treatment-sticky-cta a:focus-visible {
+    background: #56b80b;
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 720px) {
+    .treatment-sticky-cta-inner {
+      width: min(100% - 28px, 1840px);
+      min-height: 112px;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      padding: 12px 0;
+    }
+
+    .treatment-sticky-cta p {
+      font-size: 0.9rem;
+    }
+
+    .treatment-sticky-cta a {
+      width: 100%;
+      min-width: 0;
+      min-height: 48px;
+    }
+  }
+</style>

@@ -3,6 +3,7 @@ import ContactForm from './ContactForm.astro';
 import FeatureCards from './FeatureCards.astro';
 import ScrapedHome from './ScrapedHome.astro';
 import SectionBand from './SectionBand.astro';
+import TreatmentStickyCta from './TreatmentStickyCta.astro';
 import { site, type SitePage } from '../data/site';
 
 interface Props {
@@ -306,7 +307,7 @@ const conventionsSteps = [
   </>
 ) : (
   <>
-    <section class="page-hero">
+    <section class="page-hero" data-treatment-sticky-hero={page.kind === 'treatment' ? '' : undefined}>
       <div class="container">
         <p class="eyebrow">{page.kind === 'article' ? 'Approfondimenti' : site.name}</p>
         <h1>{cleanHeading(pageTitle)}</h1>
@@ -353,6 +354,8 @@ const conventionsSteps = [
         </div>
       </div>
     </section>
+
+    {page.kind === 'treatment' && <TreatmentStickyCta treatment={cleanHeading(pageTitle)} />}
   </>
 )}
 

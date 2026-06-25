@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
+import TreatmentStickyCta from '../components/TreatmentStickyCta.astro';
 import { site } from '../data/site';
 
 const title = `Igiene orale e prevenzione | ${site.name}`;
@@ -103,7 +104,7 @@ const relatedCards = [
 
 <BaseLayout title={title} description={description} ogImage="/assets/original/2022/03/dentista-modena-reggio-emilia.jpg" canonicalPath="/igiene-orale-prevenzione/" transparentHeader>
   <article class="service-template">
-    <section class="service-hero" aria-labelledby="service-title" data-transparent-header-region>
+    <section class="service-hero" aria-labelledby="service-title" data-transparent-header-region data-treatment-sticky-hero>
       <div class="service-wrap service-hero-inner">
         <p>Studio Dentistico Federzoni Granata</p>
         <h1 id="service-title">Igiene orale e prevenzione</h1>
@@ -249,6 +250,7 @@ const relatedCards = [
       </div>
     </section>
   </article>
+  <TreatmentStickyCta treatment="Igiene orale e prevenzione" />
 </BaseLayout>
 
 <style>

@@ -883,6 +883,30 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
       setError();
     };
 
+    const normalizeLabel = (value = '') =>
+      value
+        .toString()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .toLowerCase();
+
+    const preselectTreatmentFromUrl = () => {
+      const requestedTreatment = new URLSearchParams(window.location.search).get('trattamento');
+      if (!requestedTreatment) return;
+
+      const normalizedRequest = normalizeLabel(requestedTreatment);
+      const matchingButton = Array.from(form.querySelectorAll('[data-choice="treatment"]')).find((button) => {
+        if (!(button instanceof HTMLButtonElement)) return false;
+        return normalizeLabel(button.dataset.treatmentLabel) === normalizedRequest;
+      });
+
+      if (matchingButton instanceof HTMLButtonElement) {
+        selectChoice(matchingButton);
+      }
+    };
+
     const markInvalid = (input, invalid) => {
       if (input instanceof HTMLElement) {
         input.classList.toggle('is-invalid', invalid);
@@ -1002,6 +1026,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
       window.location.href = '/thank-you-page/';
     });
 
+    preselectTreatmentFromUrl();
     renderProblemOptions();
     renderCalendar();
     renderSlots();
