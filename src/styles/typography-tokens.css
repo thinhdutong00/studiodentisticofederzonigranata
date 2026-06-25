@@ -8,7 +8,7 @@
 */
 
 :root {
-  --ref-font-primary: "Lato", sans-serif;
+  --ref-font-primary: "Inter", sans-serif;
   --ref-font-fallback: Helvetica, Arial, sans-serif;
 
   --ref-letter-spacing: -0.2px;
