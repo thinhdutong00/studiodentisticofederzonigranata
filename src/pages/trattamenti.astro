@@ -133,18 +133,6 @@ const treatments = treatmentCategories
           </p>
         </div>
 
-        <div class="category-strip" aria-label="Categorie dei trattamenti">
-          {treatmentCategories.map((category) => (
-            <article class="category-pill">
-              <img src={category.image} alt="" loading="lazy" />
-              <span>
-                <strong>{category.displayLabel}</strong>
-                <small>{category.summary}</small>
-              </span>
-            </article>
-          ))}
-        </div>
-
         <div class="treatment-grid">
           {treatments.map((treatment, index) => {
             const palette = cardPalette[index % cardPalette.length];
@@ -156,9 +144,6 @@ const treatments = treatmentCategories
                 style={`--card-bg: ${palette.bg}; --card-accent: ${palette.accent}; --card-line: ${palette.line};`}
               >
                 <span class="card-jump" aria-hidden="true">↗</span>
-                <span class="card-media" aria-hidden="true">
-                  <img src={treatment.categoryImage} alt="" loading="lazy" />
-                </span>
                 <span class="card-category">{treatment.categoryLabel}</span>
                 <h3>{treatment.title}</h3>
                 <p>{treatment.description}</p>
@@ -199,10 +184,12 @@ const treatments = treatmentCategories
     --treatments-muted: var(--muted-text);
     --treatments-soft: var(--background);
     --treatments-line: var(--border);
+    --treatments-letter-spacing: -0.2px;
     background: var(--surface-white);
     color: var(--treatments-ink);
-    font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    letter-spacing: 0;
+    font-family: "Inter", sans-serif;
+    letter-spacing: var(--treatments-letter-spacing);
+    word-spacing: 0;
   }
 
   .treatments-page :global(a) {
@@ -232,10 +219,10 @@ const treatments = treatmentCategories
     align-items: center;
     margin: 0 0 24px;
     color: var(--treatments-blue);
-    font-size: 0.84rem;
-    font-weight: 900;
-    letter-spacing: 0.08em;
-    line-height: 1.25;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: var(--treatments-letter-spacing);
+    line-height: 18px;
     text-transform: uppercase;
   }
 
@@ -250,10 +237,10 @@ const treatments = treatmentCategories
     max-width: 1500px;
     margin: 0 auto;
     color: var(--surface-white);
-    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
-    font-size: 7.1rem;
-    font-weight: 500;
-    letter-spacing: 0;
+    font-family: "Inter", sans-serif;
+    font-size: clamp(56px, 8.7vw, 129.6px);
+    font-weight: 400;
+    letter-spacing: var(--treatments-letter-spacing);
     line-height: 0.9;
     text-align: center;
     text-wrap: balance;
@@ -265,8 +252,9 @@ const treatments = treatmentCategories
     margin: 36px auto 0;
     color: var(--aqua);
     font-size: 2rem;
-    font-weight: 650;
-    line-height: 1.32;
+    font-weight: 500;
+    letter-spacing: var(--treatments-letter-spacing);
+    line-height: 1.3;
     text-align: center;
   }
 
@@ -286,7 +274,7 @@ const treatments = treatmentCategories
   }
 
   .treatments-directory {
-    padding: 82px 0 98px;
+    padding: 92px 0 104px;
     background: var(--surface-white);
   }
 
@@ -302,74 +290,31 @@ const treatments = treatmentCategories
     max-width: 720px;
     margin: 0;
     color: var(--treatments-blue-dark);
-    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
-    font-size: 3.1rem;
-    font-weight: 600;
-    letter-spacing: 0;
+    font-family: "Inter", sans-serif;
+    font-size: clamp(2.75rem, 4.35vw, 5rem);
+    font-weight: 400;
+    letter-spacing: var(--treatments-letter-spacing);
     line-height: 1;
   }
 
   .directory-head > p {
     margin: 0;
     color: var(--treatments-muted);
-    font-size: 1.08rem;
-    line-height: 1.5;
-  }
-
-  .category-strip {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 12px;
-    margin-bottom: 34px;
-  }
-
-  .category-pill {
-    min-height: 122px;
-    display: grid;
-    grid-template-columns: 64px minmax(0, 1fr);
-    gap: 16px;
-    align-items: center;
-    border: 1px solid var(--treatments-line);
-    border-radius: 8px;
-    padding: 16px;
-    background: var(--surface-white);
-  }
-
-  .category-pill img {
-    width: 64px;
-    aspect-ratio: 1;
-    border-radius: 8px;
-    object-fit: cover;
-  }
-
-  .category-pill strong,
-  .category-pill small {
-    display: block;
-  }
-
-  .category-pill strong {
-    color: var(--treatments-blue-dark);
-    font-size: 1rem;
-    font-weight: 800;
-    line-height: 1.15;
-  }
-
-  .category-pill small {
-    margin-top: 7px;
-    color: var(--treatments-muted);
-    font-size: 0.88rem;
-    line-height: 1.35;
+    font-size: clamp(1.05rem, 1.3vw, 1.28rem);
+    font-weight: 400;
+    letter-spacing: var(--treatments-letter-spacing);
+    line-height: 1.45;
   }
 
   .treatment-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
+    gap: 28px;
   }
 
   .treatment-card,
   .consult-card {
-    min-height: 342px;
+    min-height: 330px;
     border-radius: 8px;
   }
 
@@ -378,7 +323,7 @@ const treatments = treatmentCategories
     display: flex;
     flex-direction: column;
     gap: 18px;
-    padding: 28px;
+    padding: 34px 32px 30px;
     overflow: hidden;
     border: 1px solid var(--card-line);
     background: var(--card-bg);
@@ -403,50 +348,37 @@ const treatments = treatmentCategories
     line-height: 1;
   }
 
-  .card-media {
-    width: 82px;
-    height: 60px;
-    display: block;
-    border-radius: 8px;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.55);
-  }
-
-  .card-media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
   .card-category {
     width: fit-content;
     border-radius: 999px;
     padding: 7px 10px;
     background: rgba(255, 255, 255, 0.62);
     color: var(--card-accent);
-    font-size: 0.76rem;
-    font-weight: 900;
-    letter-spacing: 0.04em;
-    line-height: 1.2;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: var(--treatments-letter-spacing);
+    line-height: 14px;
     text-transform: uppercase;
   }
 
   .treatment-card h3 {
     max-width: 12ch;
-    margin: auto 0 0;
+    margin: 8px 0 0;
     color: var(--treatments-blue-dark);
-    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
-    font-size: 1.78rem;
-    font-weight: 650;
-    letter-spacing: 0;
-    line-height: 1.02;
+    font-family: "Inter", sans-serif;
+    font-size: clamp(1.55rem, 2.05vw, 2rem);
+    font-weight: 500;
+    letter-spacing: var(--treatments-letter-spacing);
+    line-height: 1.3;
   }
 
   .treatment-card p {
     margin: 0;
     color: var(--text-dark);
-    font-size: 1rem;
-    line-height: 1.42;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: var(--treatments-letter-spacing);
+    line-height: 1.45;
   }
 
   .card-action {
@@ -458,10 +390,10 @@ const treatments = treatmentCategories
     border-top: 1px solid var(--card-line);
     padding-top: 18px;
     color: var(--treatments-blue-dark);
-    font-size: 0.78rem;
-    font-weight: 900;
-    letter-spacing: 0.08em;
-    line-height: 1.2;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: var(--treatments-letter-spacing);
+    line-height: 16px;
     text-transform: uppercase;
   }
 
@@ -479,10 +411,10 @@ const treatments = treatmentCategories
   .consult-label {
     margin: 0;
     color: rgba(255, 255, 255, 0.72);
-    font-size: 0.78rem;
-    font-weight: 900;
-    letter-spacing: 0.08em;
-    line-height: 1.2;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: var(--treatments-letter-spacing);
+    line-height: 16px;
     text-transform: uppercase;
   }
 
@@ -490,18 +422,20 @@ const treatments = treatmentCategories
     max-width: 10ch;
     margin: 0;
     color: var(--surface-white);
-    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
-    font-size: 2.05rem;
-    font-weight: 700;
-    letter-spacing: 0;
-    line-height: 1.04;
+    font-family: "Inter", sans-serif;
+    font-size: clamp(1.65rem, 2.15vw, 2.25rem);
+    font-weight: 500;
+    letter-spacing: var(--treatments-letter-spacing);
+    line-height: 1.25;
   }
 
   .consult-card p:not(.consult-label) {
     margin: 0;
     color: rgba(255, 255, 255, 0.82);
-    font-size: 1rem;
-    line-height: 1.5;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: var(--treatments-letter-spacing);
+    line-height: 1.45;
   }
 
   .consult-card a {
@@ -515,13 +449,13 @@ const treatments = treatmentCategories
     padding: 0 24px;
     background: var(--surface-white);
     color: var(--treatments-blue-dark);
-    font-size: 1.03rem;
-    font-weight: 700;
-    letter-spacing: 0;
-    line-height: 1.2;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: var(--treatments-letter-spacing);
+    line-height: 16px;
     text-align: center;
     text-decoration: none;
-    text-transform: none;
+    text-transform: uppercase;
     transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
   }
 
@@ -545,10 +479,10 @@ const treatments = treatmentCategories
     border-top: 1px solid var(--treatments-line);
     padding-top: 28px;
     color: var(--treatments-muted);
-    font-size: 0.88rem;
-    font-weight: 900;
-    letter-spacing: 0.06em;
-    line-height: 1.3;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: var(--treatments-letter-spacing);
+    line-height: 1.5;
     text-transform: uppercase;
   }
 
@@ -578,16 +512,16 @@ const treatments = treatmentCategories
       max-width: 760px;
     }
 
-    .category-strip {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
     .treatment-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
   @media (max-width: 760px) {
+    .treatments-page {
+      --treatments-letter-spacing: -0.16px;
+    }
+
     .treatments-wrap {
       width: min(100% - 30px, 1240px);
     }
@@ -598,7 +532,8 @@ const treatments = treatmentCategories
 
     .treatments-kicker {
       margin-bottom: 18px;
-      font-size: 0.78rem;
+      font-size: 16px;
+      line-height: 16px;
     }
 
     .treatments-kicker::before {
@@ -606,12 +541,14 @@ const treatments = treatmentCategories
     }
 
     .treatments-hero h1 {
-      font-size: 2.9rem;
+      font-size: clamp(35.1px, 13vw, 56px);
+      line-height: 1;
     }
 
     .treatments-hero-copy > p:not(.treatments-kicker) {
       margin-top: 26px;
-      font-size: 1.12rem;
+      font-size: 20px;
+      line-height: 1.25;
     }
 
     .treatments-directory {
@@ -619,16 +556,12 @@ const treatments = treatmentCategories
     }
 
     .directory-head h2 {
-      font-size: 2.35rem;
+      font-size: 30px;
+      line-height: 1;
     }
 
-    .category-strip,
     .treatment-grid {
       grid-template-columns: 1fr;
-    }
-
-    .category-pill {
-      min-height: 106px;
     }
 
     .treatment-card,
@@ -639,12 +572,14 @@ const treatments = treatmentCategories
 
     .treatment-card h3 {
       max-width: 14ch;
-      font-size: 1.58rem;
+      font-size: 20px;
+      line-height: 1.25;
     }
 
     .consult-card h3 {
       max-width: none;
-      font-size: 1.82rem;
+      font-size: 20px;
+      line-height: 1.25;
     }
 
     .directory-foot {
