@@ -510,6 +510,185 @@ const firstVisitConfigJson = JSON.stringify({
       flex: 1 1 100%;
     }
   }
+
+  .first-visit-request-page {
+    padding: clamp(50px, 7vw, 96px) 0 96px;
+    background: var(--background);
+  }
+
+  .first-visit-request-shell {
+    width: min(890px, calc(100% - 32px));
+  }
+
+  .first-visit-request-head {
+    margin: 0 0 18px;
+  }
+
+  .first-visit-request-head p,
+  .first-visit-request-head span {
+    display: none;
+  }
+
+  .first-visit-request-head h1 {
+    max-width: 900px;
+    color: var(--text-dark);
+    font-size: clamp(2.25rem, 6vw, 4.5rem);
+    font-weight: 800;
+    letter-spacing: 0;
+    line-height: 0.96;
+    text-transform: none;
+  }
+
+  .first-visit-request-form {
+    min-height: auto;
+    overflow: visible;
+    border-radius: 20px;
+    padding: clamp(28px, 4vw, 40px);
+    box-shadow: 0 28px 70px rgba(var(--brand-primary-dark-rgb), 0.1);
+  }
+
+  .first-visit-progress {
+    height: 8px;
+    margin-bottom: 20px;
+    background: rgba(var(--brand-blue-rgb), 0.18);
+  }
+
+  .first-visit-progress span {
+    background: var(--brand-cta);
+  }
+
+  .first-visit-step-count {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .first-visit-kicker {
+    display: block;
+    margin-bottom: 12px;
+    color: var(--brand-cta);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+  }
+
+  .first-visit-step legend {
+    display: block;
+    margin-bottom: 22px;
+  }
+
+  .first-visit-step legend strong {
+    display: block;
+    color: var(--text-dark);
+    font-size: clamp(1.65rem, 3vw, 2rem);
+    font-weight: 800;
+    letter-spacing: 0;
+    line-height: 1.08;
+  }
+
+  .first-visit-options,
+  .first-visit-options-compact {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .first-visit-choice {
+    position: relative;
+    min-height: 74px;
+    border-color: rgba(var(--brand-primary-dark-rgb), 0.14);
+    border-radius: 14px;
+    padding: 20px 76px 20px 20px;
+    background: var(--surface-white);
+    color: var(--text-dark);
+    font-size: 1rem;
+    font-weight: 800;
+    box-shadow: none;
+  }
+
+  .first-visit-choice::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    width: 34px;
+    height: 34px;
+    border: 4px solid rgba(var(--brand-primary-dark-rgb), 0.24);
+    border-radius: 999px;
+    transform: translateY(-50%);
+    transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  }
+
+  .first-visit-choice:hover {
+    border-color: rgba(var(--brand-cta-rgb), 0.38);
+    background: var(--surface-white);
+    color: var(--text-dark);
+    box-shadow: 0 14px 28px rgba(var(--brand-primary-dark-rgb), 0.08);
+    transform: translateY(-1px);
+  }
+
+  .first-visit-choice.is-selected {
+    border-color: var(--brand-cta);
+    background: var(--brand-cta);
+    color: var(--surface-white);
+    box-shadow: 0 18px 34px rgba(var(--brand-cta-rgb), 0.22);
+  }
+
+  .first-visit-choice.is-selected::after {
+    border-color: var(--surface-white);
+    background: var(--surface-white);
+    box-shadow: inset 0 0 0 8px var(--brand-cta);
+  }
+
+  .first-visit-btn {
+    border-radius: 14px;
+    font-weight: 800;
+  }
+
+  .first-visit-btn[hidden] {
+    display: none !important;
+  }
+
+  .first-visit-btn-primary {
+    background: var(--brand-cta);
+    box-shadow: 0 18px 34px rgba(var(--brand-cta-rgb), 0.22);
+  }
+
+  .first-visit-btn-primary:hover {
+    background: var(--brand-cta-hover);
+  }
+
+  @media (max-width: 620px) {
+    .first-visit-request-page {
+      padding: 34px 0 70px;
+    }
+
+    .first-visit-request-shell {
+      width: min(100% - 32px, 890px);
+    }
+
+    .first-visit-request-head h1 {
+      font-size: clamp(2rem, 11vw, 3.35rem);
+    }
+
+    .first-visit-request-form {
+      padding: 24px;
+      border-radius: 18px;
+    }
+
+    .first-visit-choice {
+      min-height: 68px;
+      padding: 18px 66px 18px 16px;
+    }
+
+    .first-visit-choice::after {
+      right: 16px;
+      width: 34px;
+      height: 34px;
+    }
+  }
 </style>
 
 <script>
