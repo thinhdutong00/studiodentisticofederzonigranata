@@ -156,7 +156,7 @@ const offices = site.offices.map((office) => ({
       <div class="fv-wrap">
         <div class="fv-section-head">
           <p class="fv-kicker">Come si svolge</p>
-          <h2 id="steps-title">Cosa succede durante la prima visita</h2>
+          <h2 id="steps-title">La tua prima visita</h2>
         </div>
 
         <div class="fv-step-rail">
@@ -580,7 +580,7 @@ const offices = site.offices.map((office) => ({
 
   .fv-section-head {
     display: grid;
-    grid-template-columns: minmax(0, 0.85fr) minmax(320px, 0.5fr);
+    grid-template-columns: minmax(0, 0.65fr) minmax(420px, 0.8fr);
     gap: 42px;
     align-items: end;
     margin-bottom: 42px;
@@ -702,6 +702,15 @@ const offices = site.offices.map((office) => ({
 
   .fv-step-cta .fv-button {
     min-width: min(100%, 304px);
+    border-color: var(--fv-blue);
+    background: var(--surface-white);
+    color: var(--fv-blue);
+  }
+
+  .fv-step-cta .fv-button:hover {
+    border-color: var(--brand-cta-hover);
+    background: var(--surface-white);
+    color: var(--brand-cta-hover);
   }
 
   .fv-split {
