@@ -612,7 +612,7 @@ const offices = site.offices.map((office) => ({
   }
 
   .fv-step-card {
-    min-height: clamp(360px, 25vw, 440px);
+    min-height: clamp(280px, 18vw, 340px);
     display: grid;
     grid-template-rows: auto 1fr auto;
     gap: clamp(20px, 2.4vw, 34px);
@@ -620,6 +620,10 @@ const offices = site.offices.map((office) => ({
     padding: clamp(28px, 2.4vw, 42px);
     background: var(--fv-step-bg, rgba(var(--brand-blue-rgb), 0.1));
     color: var(--fv-ink);
+  }
+
+  .fv-step-card:has(.fv-step-more[open]) {
+    min-height: clamp(380px, 24vw, 460px);
   }
 
   .fv-step-card:nth-child(2n) {
