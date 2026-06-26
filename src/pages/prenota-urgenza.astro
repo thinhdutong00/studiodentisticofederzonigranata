@@ -41,6 +41,11 @@ const emergencyConfigJson = JSON.stringify({
 ---
 
 <BaseLayout title={title} description={description} ogImage={site.heroImage} canonicalPath="/prenota-urgenza/">
+  <a class="multistep-backbar" href="/" data-urgent-back>
+    <span aria-hidden="true">‹</span>
+    <strong>Indietro</strong>
+  </a>
+
   <section class="urgent-request-page" aria-labelledby="urgent-step-title">
     <div class="urgent-request-shell">
       <header class="urgent-request-head">
@@ -161,8 +166,6 @@ const emergencyConfigJson = JSON.stringify({
         <p class="urgent-error" data-urgent-error role="alert" aria-live="polite"></p>
 
         <div class="urgent-actions">
-          <button class="urgent-btn urgent-btn-outline" type="button" data-prev-step hidden>Indietro</button>
-          <button class="urgent-btn urgent-btn-primary" type="button" data-next-step>Continua <span aria-hidden="true">↗</span></button>
           <button class="urgent-btn urgent-btn-primary" type="submit" data-submit-urgent hidden>Invia urgenza <span aria-hidden="true">↗</span></button>
         </div>
       </form>
@@ -173,6 +176,43 @@ const emergencyConfigJson = JSON.stringify({
 <style is:global>
   body {
     background: var(--surface-white);
+  }
+
+  .site-header {
+    display: none !important;
+  }
+
+  .multistep-backbar {
+    min-height: clamp(88px, 8vw, 112px);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 clamp(24px, 4vw, 52px);
+    background: var(--brand-primary-dark);
+    color: var(--surface-white);
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(1.55rem, 3vw, 2.35rem);
+    font-weight: 800;
+    line-height: 1;
+    text-decoration: none;
+  }
+
+  .multistep-backbar span {
+    display: inline-flex;
+    align-items: center;
+    font-size: 1.45em;
+    font-weight: 500;
+    line-height: 0.75;
+  }
+
+  .multistep-backbar strong {
+    font: inherit;
+  }
+
+  .multistep-backbar:hover,
+  .multistep-backbar:focus-visible {
+    background: var(--brand-cta-hover);
+    color: var(--surface-white);
   }
 
   .urgent-request-page {
@@ -400,6 +440,10 @@ const emergencyConfigJson = JSON.stringify({
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 12px;
+    margin-top: 0;
+  }
+
+  .urgent-actions:has(.urgent-btn:not([hidden])) {
     margin-top: 26px;
   }
 
@@ -473,6 +517,13 @@ const emergencyConfigJson = JSON.stringify({
   }
 
   @media (max-width: 520px) {
+    .multistep-backbar {
+      min-height: 86px;
+      gap: 12px;
+      padding: 0 22px;
+      font-size: 1.72rem;
+    }
+
     .urgent-request-shell {
       width: min(100% - 24px, 1180px);
     }
@@ -676,8 +727,7 @@ const emergencyConfigJson = JSON.stringify({
     const progressBar = urgentForm.querySelector('[data-progress-bar]');
     const stepCount = urgentForm.querySelector('[data-step-count]');
     const errorBox = urgentForm.querySelector('[data-urgent-error]');
-    const prevButton = urgentForm.querySelector('[data-prev-step]');
-    const nextButton = urgentForm.querySelector('[data-next-step]');
+    const topBackButton = document.querySelector('[data-urgent-back]');
     const submitButton = urgentForm.querySelector('[data-submit-urgent]');
     const painRange = urgentForm.querySelector('[data-pain-range]');
     const painLabel = urgentForm.querySelector('[data-pain-label]');
@@ -697,6 +747,7 @@ const emergencyConfigJson = JSON.stringify({
       office: '',
       availability: '',
     };
+    let autoAdvanceTimer = 0;
 
     const setError = (message = '') => {
       if (errorBox) {
@@ -731,17 +782,34 @@ const emergencyConfigJson = JSON.stringify({
       if (stepCount) {
         stepCount.textContent = `Step ${state.step + 1} di ${steps.length}`;
       }
-      if (prevButton instanceof HTMLButtonElement) {
-        prevButton.hidden = state.step === 0;
-      }
-      if (nextButton instanceof HTMLButtonElement) {
-        nextButton.hidden = state.step === steps.length - 1;
-      }
       if (submitButton instanceof HTMLButtonElement) {
         submitButton.hidden = state.step !== steps.length - 1;
       }
 
       setError();
+    };
+
+    const goToStep = (stepIndex) => {
+      window.clearTimeout(autoAdvanceTimer);
+      state.step = Math.max(0, Math.min(stepIndex, steps.length - 1));
+      renderStep();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const autoAdvance = () => {
+      window.clearTimeout(autoAdvanceTimer);
+      autoAdvanceTimer = window.setTimeout(() => {
+        goToStep(state.step + 1);
+      }, 170);
+    };
+
+    const leaveForm = () => {
+      if (window.history.length > 1) {
+        window.history.back();
+        return;
+      }
+
+      window.location.href = '/';
     };
 
     const selectChoice = (button) => {
@@ -819,6 +887,9 @@ const emergencyConfigJson = JSON.stringify({
       const choiceButton = target.closest('[data-choice]');
       if (choiceButton) {
         selectChoice(choiceButton);
+        if (state.step < 2 || (state.step === 2 && state.office && state.availability)) {
+          autoAdvance();
+        }
       }
     });
 
@@ -830,15 +901,14 @@ const emergencyConfigJson = JSON.stringify({
       }
     });
 
-    nextButton?.addEventListener('click', () => {
-      if (!validateCurrentStep()) return;
-      state.step = Math.min(state.step + 1, steps.length - 1);
-      renderStep();
-    });
+    topBackButton?.addEventListener('click', (event) => {
+      event.preventDefault();
+      if (state.step === 0) {
+        leaveForm();
+        return;
+      }
 
-    prevButton?.addEventListener('click', () => {
-      state.step = Math.max(state.step - 1, 0);
-      renderStep();
+      goToStep(state.step - 1);
     });
 
     urgentForm.addEventListener('input', (event) => {

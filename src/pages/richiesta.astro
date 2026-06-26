@@ -52,6 +52,11 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 ---
 
 <BaseLayout title={title} description={description} ogImage={site.heroImage} canonicalPath="/richiesta/">
+  <a class="multistep-backbar" href="/" data-request-back>
+    <span aria-hidden="true">‹</span>
+    <strong>Indietro</strong>
+  </a>
+
   <section class="request-page" aria-labelledby="request-step-title">
     <div class="request-shell">
       <header class="request-head">
@@ -177,8 +182,6 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
         <p class="request-error" data-request-error role="alert" aria-live="polite"></p>
 
         <div class="request-actions">
-          <button class="request-btn request-btn-outline" type="button" data-prev-step hidden>Indietro</button>
-          <button class="request-btn request-btn-primary" type="button" data-next-step>Continua <span aria-hidden="true">↗</span></button>
           <button class="request-btn request-btn-primary" type="submit" data-submit-request hidden>Invia la richiesta <span aria-hidden="true">↗</span></button>
         </div>
       </form>
@@ -189,6 +192,43 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 <style is:global>
   body {
     background: var(--surface-white);
+  }
+
+  .site-header {
+    display: none !important;
+  }
+
+  .multistep-backbar {
+    min-height: clamp(88px, 8vw, 112px);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 clamp(24px, 4vw, 52px);
+    background: var(--brand-primary-dark);
+    color: var(--surface-white);
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(1.55rem, 3vw, 2.35rem);
+    font-weight: 800;
+    line-height: 1;
+    text-decoration: none;
+  }
+
+  .multistep-backbar span {
+    display: inline-flex;
+    align-items: center;
+    font-size: 1.45em;
+    font-weight: 500;
+    line-height: 0.75;
+  }
+
+  .multistep-backbar strong {
+    font: inherit;
+  }
+
+  .multistep-backbar:hover,
+  .multistep-backbar:focus-visible {
+    background: var(--brand-cta-hover);
+    color: var(--surface-white);
   }
 
   .request-page {
@@ -539,6 +579,10 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 12px;
+    margin-top: 0;
+  }
+
+  .request-actions:has(.request-btn:not([hidden])) {
     margin-top: 26px;
   }
 
@@ -621,6 +665,13 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
   }
 
   @media (max-width: 520px) {
+    .multistep-backbar {
+      min-height: 86px;
+      gap: 12px;
+      padding: 0 22px;
+      font-size: 1.72rem;
+    }
+
     .request-shell {
       width: min(100% - 24px, 1180px);
     }
@@ -862,8 +913,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
     const progressBar = form.querySelector('[data-progress-bar]');
     const stepCount = form.querySelector('[data-step-count]');
     const errorBox = form.querySelector('[data-request-error]');
-    const prevButton = form.querySelector('[data-prev-step]');
-    const nextButton = form.querySelector('[data-next-step]');
+    const topBackButton = document.querySelector('[data-request-back]');
     const submitButton = form.querySelector('[data-submit-request]');
     const selectedTreatment = form.querySelector('[data-selected-treatment]');
     const problemOptions = form.querySelector('[data-problem-options]');
@@ -890,6 +940,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
       preferredDate: '',
       preferredTime: '',
     };
+    let autoAdvanceTimer = 0;
 
     const formatMonth = new Intl.DateTimeFormat('it-IT', { month: 'long', year: 'numeric' });
     const formatDay = new Intl.DateTimeFormat('it-IT', { weekday: 'long', day: 'numeric', month: 'long' });
@@ -1042,17 +1093,34 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
       if (stepCount) {
         stepCount.textContent = `Step ${state.step + 1} di ${steps.length}`;
       }
-      if (prevButton instanceof HTMLButtonElement) {
-        prevButton.hidden = state.step === 0;
-      }
-      if (nextButton instanceof HTMLButtonElement) {
-        nextButton.hidden = state.step === steps.length - 1;
-      }
       if (submitButton instanceof HTMLButtonElement) {
         submitButton.hidden = state.step !== steps.length - 1;
       }
 
       setError();
+    };
+
+    const goToStep = (stepIndex) => {
+      window.clearTimeout(autoAdvanceTimer);
+      state.step = Math.max(0, Math.min(stepIndex, steps.length - 1));
+      renderStep();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const autoAdvance = () => {
+      window.clearTimeout(autoAdvanceTimer);
+      autoAdvanceTimer = window.setTimeout(() => {
+        goToStep(state.step + 1);
+      }, 170);
+    };
+
+    const leaveForm = () => {
+      if (window.history.length > 1) {
+        window.history.back();
+        return;
+      }
+
+      window.location.href = '/';
     };
 
     const selectChoice = (button) => {
@@ -1111,6 +1179,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 
       if (matchingButton instanceof HTMLButtonElement) {
         selectChoice(matchingButton);
+        state.step = Math.min(1, steps.length - 1);
       }
     };
 
@@ -1171,6 +1240,9 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
       const choiceButton = target.closest('[data-choice]');
       if (choiceButton) {
         selectChoice(choiceButton);
+        if (state.step < 2) {
+          autoAdvance();
+        }
         return;
       }
 
@@ -1192,18 +1264,20 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
         syncHiddenFields();
         renderSlots();
         setError();
+        if (state.preferredDate && state.preferredTime) {
+          autoAdvance();
+        }
       }
     });
 
-    nextButton?.addEventListener('click', () => {
-      if (!validateCurrentStep()) return;
-      state.step = Math.min(state.step + 1, steps.length - 1);
-      renderStep();
-    });
+    topBackButton?.addEventListener('click', (event) => {
+      event.preventDefault();
+      if (state.step === 0) {
+        leaveForm();
+        return;
+      }
 
-    prevButton?.addEventListener('click', () => {
-      state.step = Math.max(state.step - 1, 0);
-      renderStep();
+      goToStep(state.step - 1);
     });
 
     calendarPrev?.addEventListener('click', () => {
