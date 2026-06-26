@@ -262,8 +262,12 @@ const relatedCards = [
     --service-accent: var(--brand-blue);
     --service-soft: var(--soft-blue-bg);
     --service-line: rgba(var(--brand-blue-rgb), 0.24);
+    --service-letter-spacing: -0.2px;
     background: var(--surface-white);
     color: var(--text-dark);
+    font-family: Inter, sans-serif;
+    letter-spacing: var(--service-letter-spacing);
+    word-spacing: 0;
   }
 
   .service-wrap {
@@ -291,26 +295,31 @@ const relatedCards = [
     margin: 0;
     max-width: 700px;
     color: rgba(255, 255, 255, 0.76);
-    font-size: clamp(0.82rem, 1vw, 1rem);
-    font-weight: 800;
-    letter-spacing: 0.02em;
-    line-height: 1.35;
+    font-weight: 500;
+    letter-spacing: var(--service-letter-spacing);
   }
 
-  .service-hero p {
+  .service-hero-inner > p {
     margin-bottom: 18px;
+    font-size: 18px;
+    line-height: 18px;
     text-transform: uppercase;
+  }
+
+  .service-hero-inner > span {
+    font-size: clamp(20px, 1.95vw, 28px);
+    line-height: 1.3;
   }
 
   .service-hero h1 {
     max-width: 1180px;
     margin: 0 0 18px;
     color: var(--surface-white);
-    font-family: inherit;
-    font-size: clamp(3.4rem, 7.8vw, 8.2rem);
-    font-weight: 500;
-    letter-spacing: 0;
-    line-height: 0.88;
+    font-family: Inter, sans-serif;
+    font-size: clamp(56px, 7.8vw, 129.6px);
+    font-weight: 400;
+    letter-spacing: var(--service-letter-spacing);
+    line-height: 0.9;
     text-transform: uppercase;
   }
 
@@ -341,10 +350,10 @@ const relatedCards = [
   .service-intro p {
     margin: 0;
     color: var(--service-blue);
-    font-size: clamp(1.15rem, 2vw, 2rem);
-    font-weight: 800;
-    letter-spacing: 0;
-    line-height: 1.18;
+    font-size: clamp(28px, 3.2vw, 48px);
+    font-weight: 500;
+    letter-spacing: var(--service-letter-spacing);
+    line-height: 1.2;
   }
 
   .service-intro p + p {
@@ -375,10 +384,10 @@ const relatedCards = [
   .service-section-head p {
     margin: 0;
     color: var(--service-accent);
-    font-size: 0.78rem;
-    font-weight: 900;
-    letter-spacing: 0.04em;
-    line-height: 1.2;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: var(--service-letter-spacing);
+    line-height: 18px;
     text-transform: uppercase;
   }
 
@@ -396,11 +405,12 @@ const relatedCards = [
     padding: 0 24px;
     background: transparent;
     color: var(--service-blue);
-    font-size: 1.03rem;
-    font-weight: 700;
-    line-height: 1.2;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: var(--service-letter-spacing);
+    line-height: 16px;
     text-decoration: none;
-    text-transform: none;
+    text-transform: uppercase;
     transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
   }
 
@@ -439,24 +449,24 @@ const relatedCards = [
     display: block;
     margin-bottom: 20px;
     color: var(--service-accent);
-    font-size: clamp(3rem, 5vw, 5.1rem);
-    font-weight: 800;
-    line-height: 0.82;
+    font-size: clamp(84px, 6.6vw, 128px);
+    font-weight: 400;
+    line-height: 1;
   }
 
   .process-card h2,
   .service-band-title {
     margin: 0;
     color: var(--service-blue);
-    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
-    font-weight: 600;
-    letter-spacing: 0;
+    font-family: Inter, sans-serif;
+    font-weight: 500;
+    letter-spacing: var(--service-letter-spacing);
     line-height: 1;
   }
 
   .process-card h2 {
     max-width: 9ch;
-    font-size: clamp(1.35rem, 2.3vw, 2rem);
+    font-size: clamp(28px, 2.35vw, 36px);
     text-transform: uppercase;
   }
 
@@ -464,14 +474,17 @@ const relatedCards = [
     max-width: 28ch;
     margin: 14px 0 0;
     color: var(--text-dark);
-    font-size: 0.95rem;
-    font-weight: 700;
-    line-height: 1.35;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.2;
   }
 
   .service-band-title {
     margin-bottom: 28px;
-    font-size: clamp(2.4rem, 4.5vw, 4.4rem);
+    font-size: clamp(32px, 4.2vw, 60px);
+    font-weight: 400;
+    line-height: 1;
+    text-transform: uppercase;
   }
 
   .image-card-rail {
@@ -521,9 +534,9 @@ const relatedCards = [
     max-width: 12ch;
     padding: 0 24px;
     color: var(--surface-white);
-    font-size: clamp(1.5rem, 2.4vw, 2.35rem);
-    font-weight: 800;
-    line-height: 1;
+    font-size: clamp(24px, 2.1vw, 32px);
+    font-weight: 500;
+    line-height: 1.3;
   }
 
   .image-card small,
@@ -531,9 +544,9 @@ const relatedCards = [
     max-width: 33ch;
     padding: 12px 24px 24px;
     color: rgba(255, 255, 255, 0.88);
-    font-size: 0.95rem;
-    font-weight: 700;
-    line-height: 1.25;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.2;
   }
 
   .image-card:hover img,
@@ -557,17 +570,18 @@ const relatedCards = [
   .detail-row h2 {
     margin: 0 0 8px;
     color: var(--service-blue);
-    font-size: clamp(1.15rem, 1.8vw, 1.7rem);
-    font-weight: 800;
+    font-size: clamp(20px, 1.65vw, 24px);
+    font-weight: 500;
+    line-height: 1.25;
   }
 
   .detail-row p {
     max-width: 980px;
     margin: 0;
     color: var(--text-dark);
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 1.45;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
   }
 
   .accordion-list {
@@ -587,9 +601,9 @@ const relatedCards = [
     padding: 24px 0;
     color: var(--service-blue);
     cursor: pointer;
-    font-size: clamp(1.2rem, 2vw, 1.9rem);
-    font-weight: 800;
-    line-height: 1.15;
+    font-size: clamp(20px, 1.85vw, 28px);
+    font-weight: 500;
+    line-height: 1.3;
     list-style: none;
   }
 
@@ -627,16 +641,17 @@ const relatedCards = [
     max-width: 940px;
     margin: -6px 0 26px;
     color: var(--text-dark);
-    font-weight: 700;
-    line-height: 1.55;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
   }
 
   .service-center-kicker {
     margin: 0 0 28px;
     color: var(--service-blue);
-    font-size: clamp(1.6rem, 3vw, 2.8rem);
-    font-weight: 800;
-    line-height: 1.08;
+    font-size: clamp(30px, 4.1vw, 60px);
+    font-weight: 400;
+    line-height: 1;
     text-align: center;
     text-transform: uppercase;
   }
@@ -659,8 +674,9 @@ const relatedCards = [
   .service-offices h2 {
     margin: 0 0 28px;
     color: var(--service-blue);
-    font-size: clamp(2rem, 3vw, 3rem);
-    font-weight: 800;
+    font-size: clamp(28px, 3vw, 48px);
+    font-weight: 500;
+    line-height: 1.2;
   }
 
   .office-lines {
@@ -680,21 +696,22 @@ const relatedCards = [
   }
 
   .office-lines span {
-    font-size: 1.1rem;
-    font-weight: 900;
+    font-size: 16px;
+    font-weight: 500;
   }
 
   .office-lines small {
     color: var(--text-dark);
-    font-size: 0.95rem;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
   }
 
   .office-lines i {
     justify-self: end;
     color: var(--service-accent);
     font-style: normal;
-    font-weight: 900;
+    font-weight: 500;
   }
 
   .service-newsletter {
@@ -714,14 +731,17 @@ const relatedCards = [
   .service-newsletter-box h2 {
     margin: 0 0 8px;
     color: var(--surface-white);
-    font-size: clamp(1.7rem, 2.8vw, 3rem);
-    font-weight: 800;
+    font-size: clamp(28px, 2.2vw, 36px);
+    font-weight: 500;
+    line-height: 1.3;
   }
 
   .service-newsletter-box p {
     margin: 0;
     color: rgba(255, 255, 255, 0.82);
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
   }
 
   .service-newsletter-box > a {
@@ -748,6 +768,10 @@ const relatedCards = [
   }
 
   @media (max-width: 720px) {
+    .service-template {
+      --service-letter-spacing: -0.16px;
+    }
+
     .service-wrap {
       width: min(100% - 30px, 1510px);
     }
@@ -758,7 +782,51 @@ const relatedCards = [
     }
 
     .service-hero h1 {
-      font-size: clamp(3rem, 16vw, 4.8rem);
+      font-size: clamp(35.1px, 14vw, 56px);
+      line-height: 1;
+    }
+
+    .service-hero-inner > p {
+      font-size: 16px;
+      line-height: 16px;
+    }
+
+    .service-hero-inner > span {
+      font-size: 20px;
+      line-height: 1.25;
+    }
+
+    .service-intro p {
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .service-section-head p {
+      font-size: 16px;
+      line-height: 16px;
+    }
+
+    .service-band-title,
+    .service-center-kicker {
+      font-size: 30px;
+      line-height: 1;
+    }
+
+    .process-card h2 {
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .image-card strong,
+    .related-card strong {
+      font-size: 20px;
+      line-height: 1.25;
+    }
+
+    .image-card small,
+    .related-card small {
+      font-size: 14px;
+      line-height: 1.2;
     }
 
     .service-section-head {
