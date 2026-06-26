@@ -18,7 +18,7 @@ const visitSteps = [
     text: 'Apriamo la cartella anamnestica e raccogliamo salute generale, farmaci, allergie, interventi e cure precedenti. Ogni dettaglio è un piccolo indizio che aiuta a leggere il quadro intero.',
   },
   {
-    title: 'Ascolto e desideri',
+    title: 'Ascolto ed aspettative',
     text: 'Diamo spazio a esigenze, timori e aspettative: cosa senti, cosa vorresti cambiare, cosa immagini per il tuo sorriso. Poi presentiamo i trattamenti possibili, con parole semplici e senza fretta.',
   },
   {
@@ -613,6 +613,7 @@ const offices = site.offices.map((office) => ({
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: clamp(18px, 1.8vw, 34px);
+    align-items: start;
     background: transparent;
   }
 
