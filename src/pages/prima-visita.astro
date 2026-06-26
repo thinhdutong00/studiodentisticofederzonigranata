@@ -165,12 +165,14 @@ const offices = site.offices.map((office) => ({
               <span class="fv-step-number">{index + 1}.</span>
               <div class="fv-step-body">
                 <h3>{step.title}</h3>
-                <p>{step.text}</p>
               </div>
-              <a class="fv-step-link" href="#evaluation-title" aria-label={`Leggi di più: ${step.title}`}>
-                Leggi di più
-                <span aria-hidden="true">+</span>
-              </a>
+              <details class="fv-step-more">
+                <summary class="fv-step-link" aria-label={`Leggi di più: ${step.title}`}>
+                  Leggi di più
+                  <span aria-hidden="true">+</span>
+                </summary>
+                <p>{step.text}</p>
+              </details>
             </article>
           ))}
         </div>
@@ -649,7 +651,7 @@ const offices = site.offices.map((office) => ({
     text-transform: none;
   }
 
-  .fv-step-card p,
+  .fv-step-more p,
   .fv-evaluation-card p,
   .fv-reason-card p {
     margin: 0;
@@ -658,8 +660,9 @@ const offices = site.offices.map((office) => ({
     line-height: 1.45;
   }
 
-  .fv-step-card p {
+  .fv-step-more p {
     max-width: 420px;
+    margin-top: 18px;
     color: var(--fv-muted);
     font-weight: 400;
     line-height: 1.38;
@@ -675,6 +678,12 @@ const offices = site.offices.map((office) => ({
     font-weight: 600;
     line-height: 1;
     text-decoration: none;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .fv-step-link::-webkit-details-marker {
+    display: none;
   }
 
   .fv-step-link span {
@@ -688,6 +697,11 @@ const offices = site.offices.map((office) => ({
     font-size: 1.05rem;
     font-weight: 500;
     line-height: 1;
+    transition: transform 160ms ease;
+  }
+
+  .fv-step-more[open] .fv-step-link span {
+    transform: rotate(45deg);
   }
 
   .fv-step-link:hover {

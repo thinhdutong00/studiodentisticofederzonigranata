@@ -477,7 +477,14 @@ const clinicalShowcasePages: Record<string, ClinicalShowcasePage> = {
 
 const clinicalShowcase = clinicalShowcasePages[page.path];
 const clinicalShowcaseTitle = clinicalShowcase?.title ?? cleanHeading(pageTitle);
-const clinicalShowcaseKeepsParagraphs = page.path === '/protesi/';
+const clinicalShowcaseKeepsParagraphs = new Set([
+  '/protesi/',
+  '/parodontologia/',
+  '/implantologia/',
+  '/ortodonzia/',
+  '/conservativa/',
+  '/endodonzia/',
+]).has(page.path);
 const clinicalShowcaseBodyBlocks = bodyBlocks.filter((block) => {
   if (!clinicalShowcase) return true;
   if (block.type === 'heading' && cleanHeading(block.text) === 'Casi Clinici') return false;
