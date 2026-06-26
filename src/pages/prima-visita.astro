@@ -5,11 +5,14 @@ import { site } from '../data/site';
 const pageDescription =
   'Prima visita odontoiatrica a Modena e Reggio Emilia: diagnosi chiara, priorità, tempi e costi prima di iniziare.';
 
+const firstVisitFormPath = '/prenota-prima-visita/';
+const firstVisitFormHref = (reason: string) => `${firstVisitFormPath}?motivo=${encodeURIComponent(reason)}`;
+
 const intentButtons = [
-  { label: 'Dolore o urgenza', href: '/prenota-urgenza/' },
-  { label: 'Impianti', href: '/richiesta/' },
-  { label: 'Controllo generale', href: '/richiesta/' },
-  { label: 'Secondo parere', href: '/richiesta/' },
+  { label: 'Dolore o urgenza', href: firstVisitFormHref('Dolore o urgenza') },
+  { label: 'Impianti', href: firstVisitFormHref('Impianti') },
+  { label: 'Controllo generale', href: firstVisitFormHref('Controllo generale') },
+  { label: 'Secondo parere', href: firstVisitFormHref('Secondo parere') },
 ];
 
 const visitSteps = [
@@ -245,7 +248,7 @@ const offices = site.offices.map((office) => ({
         </div>
 
         <div class="fv-step-cta">
-          <a class="fv-button fv-button-primary" href="/richiesta/">Richiedi informazioni <span aria-hidden="true">↗</span></a>
+          <a class="fv-button fv-button-primary" href={firstVisitFormPath}>Richiedi informazioni <span aria-hidden="true">↗</span></a>
         </div>
       </div>
     </section>
@@ -303,7 +306,7 @@ const offices = site.offices.map((office) => ({
           <p>
             Controllare non significa curare tutto. Significa sapere cosa osservare e cosa affrontare.
           </p>
-          <a class="fv-button fv-trust-cta" href="/richiesta/">Prenota una visita <span aria-hidden="true">↗</span></a>
+          <a class="fv-button fv-trust-cta" href={firstVisitFormPath}>Prenota una visita <span aria-hidden="true">↗</span></a>
         </div>
       </div>
     </section>
@@ -365,7 +368,7 @@ const offices = site.offices.map((office) => ({
           </p>
         </div>
         <div class="fv-final-actions">
-          <a class="fv-button fv-button-primary" href="/richiesta/">Prenota visita <span aria-hidden="true">↗</span></a>
+          <a class="fv-button fv-button-primary" href={firstVisitFormPath}>Prenota visita <span aria-hidden="true">↗</span></a>
           <div class="fv-office-list" aria-label="Sedi dello studio">
             {offices.map((office) => (
               <a href={office.mapHref} target="_blank" rel="noreferrer">

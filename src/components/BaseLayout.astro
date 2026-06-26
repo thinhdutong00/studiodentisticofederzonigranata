@@ -2320,8 +2320,13 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
   .site-footer {
     position: relative;
+    --footer-line: rgba(var(--brand-blue-rgb), 0.28);
+    --footer-letter-spacing: -0.2px;
     background: var(--blue-dark);
     color: var(--soft-blue-bg);
+    font-family: "Inter", sans-serif;
+    letter-spacing: var(--footer-letter-spacing);
+    word-spacing: 0;
   }
 
   .footer-shell {
@@ -2335,11 +2340,12 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   }
 
   .site-footer h2 {
-    margin: 0 0 34px;
-    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
-    font-size: clamp(1.25rem, 1.9vw, 1.75rem);
-    font-weight: 800;
-    line-height: 1.15;
+    margin: 0 0 36px;
+    font-family: "Inter", sans-serif;
+    font-size: clamp(1.25rem, 1.35vw, 1.5rem);
+    font-weight: 500;
+    letter-spacing: var(--footer-letter-spacing);
+    line-height: 1.25;
   }
 
   .site-footer p {
@@ -2348,6 +2354,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
   .site-footer a {
     color: var(--soft-blue-bg);
+    font-weight: 400;
     text-decoration: none;
   }
 
@@ -2358,46 +2365,50 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   .footer-menu-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
-    border-left: 1px solid rgba(255, 255, 255, 0.16);
+    border-left: 1px solid var(--footer-line);
+    border-bottom: 1px solid var(--footer-line);
   }
 
   .footer-links {
-    min-height: 430px;
-    padding: clamp(42px, 4vw, 64px) clamp(34px, 3vw, 52px);
-    border-right: 1px solid rgba(255, 255, 255, 0.16);
+    min-height: 492px;
+    padding: clamp(58px, 4.8vw, 88px) clamp(36px, 3.2vw, 58px);
+    border-right: 1px solid var(--footer-line);
   }
 
   .footer-links ul {
     display: grid;
-    gap: 18px;
+    gap: 17px;
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
   .footer-links a {
-    font-size: 1.03rem;
-    line-height: 1.35;
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: var(--footer-letter-spacing);
+    line-height: 1.5;
   }
 
   .footer-social-row {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    border-left: 1px solid var(--footer-line);
+    border-right: 1px solid var(--footer-line);
+    border-bottom: 1px solid var(--footer-line);
   }
 
   .footer-social-block {
-    min-height: 140px;
+    min-height: 152px;
     display: grid;
-    grid-template-columns: minmax(360px, 0.75fr) minmax(0, 1fr);
+    grid-template-columns: minmax(300px, 0.82fr) minmax(0, 1fr);
     align-items: center;
-    gap: 24px;
-    padding: 32px clamp(34px, 3vw, 52px);
+    gap: clamp(22px, 2.4vw, 42px);
+    padding: 36px clamp(36px, 3.2vw, 58px);
   }
 
   .footer-social-block + .footer-social-block {
-    border-left: 1px solid rgba(255, 255, 255, 0.16);
+    border-left: 1px solid var(--footer-line);
   }
 
   .footer-social-block h2 {
@@ -2406,8 +2417,8 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
   .footer-social {
     display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
+    flex-wrap: nowrap;
+    gap: 12px;
     align-items: center;
   }
 
@@ -2419,7 +2430,10 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 999px;
     padding: 8px 12px;
-    font-weight: 900;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: var(--footer-letter-spacing);
+    line-height: 1;
   }
 
   .footer-social a:hover {
@@ -2428,12 +2442,14 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
   .footer-article-block > a {
     justify-self: end;
-    font-size: 1.03rem;
-    font-weight: 800;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: var(--footer-letter-spacing);
+    line-height: 1.5;
   }
 
   .footer-bottom {
-    padding: 34px 0 38px;
+    padding: 34px 0 40px;
     border-top: 0;
   }
 
@@ -2444,8 +2460,14 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     gap: 18px 28px;
     align-items: start;
     color: rgba(255, 255, 255, 0.76);
-    font-size: 0.95rem;
-    line-height: 1.45;
+    font-size: 0.875rem;
+    font-weight: 400;
+    letter-spacing: var(--footer-letter-spacing);
+    line-height: 1.5;
+  }
+
+  .footer-bottom-inner a {
+    font-weight: 400;
   }
 
   @media (max-width: 1160px) {
@@ -2465,7 +2487,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
     .footer-social-block + .footer-social-block {
       border-left: 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.16);
+      border-top: 1px solid var(--footer-line);
     }
 
     .footer-article-block > a {
@@ -2474,6 +2496,10 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   }
 
   @media (max-width: 640px) {
+    .site-footer {
+      --footer-letter-spacing: -0.16px;
+    }
+
     .footer-shell,
     .footer-bottom-inner {
       width: min(100% - 32px, 1828px);
@@ -2482,12 +2508,13 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     .footer-menu-grid {
       grid-template-columns: 1fr;
       border-left: 0;
+      border-bottom: 1px solid var(--footer-line);
     }
 
     .footer-links {
       min-height: auto;
       border-right: 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.16);
+      border-top: 1px solid var(--footer-line);
       padding: 34px 0;
     }
 
@@ -2498,6 +2525,15 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     .footer-social-block {
       grid-template-columns: 1fr;
       padding: 30px 0;
+    }
+
+    .footer-social-row {
+      border-left: 0;
+      border-right: 0;
+    }
+
+    .footer-social {
+      flex-wrap: wrap;
     }
 
     .footer-bottom {
