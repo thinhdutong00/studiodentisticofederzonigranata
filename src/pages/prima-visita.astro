@@ -303,6 +303,7 @@ const offices = site.offices.map((office) => ({
           <p>
             Controllare non significa curare tutto. Significa sapere cosa osservare e cosa affrontare.
           </p>
+          <a class="fv-button fv-trust-cta" href="/richiesta/">Prenota una visita <span aria-hidden="true">↗</span></a>
         </div>
       </div>
     </section>
@@ -1084,6 +1085,20 @@ const offices = site.offices.map((office) => ({
   .fv-trust-copy {
     display: grid;
     gap: 22px;
+  }
+
+  .fv-trust-band .fv-trust-cta {
+    width: fit-content;
+    margin-top: 10px;
+    border-color: rgba(var(--surface-white-rgb), 0.72);
+    background: var(--surface-white);
+    color: var(--fv-blue);
+  }
+
+  .fv-trust-band .fv-trust-cta:hover {
+    border-color: var(--surface-white);
+    background: var(--fv-blue-soft);
+    color: var(--brand-cta-hover);
   }
 
   .fv-reasons-section {
