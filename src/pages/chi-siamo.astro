@@ -4,20 +4,20 @@ import { site } from '../data/site';
 
 const heroImages = [
   {
+    src: '/assets/chi-siamo/hero-bambina-visita-color.png',
+    alt: 'Bambina durante una visita odontoiatrica',
+  },
+  {
+    src: '/assets/chi-siamo/hero-controllo-sorriso.png',
+    alt: 'Controllo del sorriso con specchio in studio dentistico',
+  },
+  {
+    src: '/assets/chi-siamo/hero-procedura-clinica.jpg',
+    alt: 'Equipe odontoiatrica durante una procedura clinica',
+  },
+  {
     src: '/assets/original/2021/02/HOME.jpg',
     alt: 'Dottor Stefano Granata e Dottoressa Chiara Federzoni nello studio dentistico',
-  },
-  {
-    src: '/assets/feature-stack/tecnologia-studio.jpg',
-    alt: 'Paziente durante una scansione digitale del sorriso',
-  },
-  {
-    src: '/assets/original/2021/01/06-A-foto-impronta-digitale.jpeg',
-    alt: 'Scanner intraorale e progettazione digitale del sorriso',
-  },
-  {
-    src: '/assets/menu/qualita-tecnologia.jpg',
-    alt: 'Diagnostica digitale nello studio dentistico',
   },
 ];
 
@@ -70,8 +70,8 @@ const networkImages = [
     alt: 'Dettaglio luminoso degli ambienti dello studio',
   },
   {
-    src: '/assets/original/2022/03/dentista-modena-reggio-emilia.jpg',
-    alt: 'Ambulatorio durante una valutazione digitale',
+    src: '/assets/chi-siamo/network-ambulatori-modena.png',
+    alt: 'Ambulatori dello Studio Dentistico Federzoni Granata',
   },
 ];
 
@@ -316,24 +316,150 @@ const serviceCards = [
     const previous = carousel.querySelector('[data-carousel-prev]');
     const next = carousel.querySelector('[data-carousel-next]');
     const track = carousel.querySelector('.team-carousel-track');
-    const firstCard = carousel.querySelector('.team-card');
+    const originalCards = Array.from(carousel.querySelectorAll('.team-card')).filter(
+      (card) => card instanceof HTMLElement,
+    );
 
-    if (!viewport || !previous || !next || !track || !firstCard) return;
+    if (
+      !(viewport instanceof HTMLElement) ||
+      !(previous instanceof HTMLButtonElement) ||
+      !(next instanceof HTMLButtonElement) ||
+      !(track instanceof HTMLElement) ||
+      originalCards.length < 2
+    ) {
+      return;
+    }
+
+    const cloneCard = (card) => {
+      const clone = card.cloneNode(true);
+      if (clone instanceof HTMLElement) {
+        clone.dataset.carouselClone = 'true';
+        clone.setAttribute('aria-hidden', 'true');
+      }
+      return clone;
+    };
+
+    const beforeClones = originalCards.map(cloneCard);
+    const afterClones = originalCards.map(cloneCard);
+
+    beforeClones
+      .slice()
+      .reverse()
+      .forEach((clone) => track.insertBefore(clone, track.firstChild));
+    afterClones.forEach((clone) => track.appendChild(clone));
+
+    const originalCount = originalCards.length;
+    let currentIndex = originalCount;
+    let autoplay = 0;
+    let isAnimating = false;
+    let isPaused = false;
+    let resizeFrame = 0;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     const getStep = () => {
-      const cardWidth = firstCard.getBoundingClientRect().width;
+      const cardWidth = originalCards[0].getBoundingClientRect().width;
       const styles = window.getComputedStyle(track);
       const gap = Number.parseFloat(styles.columnGap || styles.gap || '0');
       return cardWidth + (Number.isNaN(gap) ? 0 : gap);
     };
 
+    const setPosition = (animate = true) => {
+      track.style.transition = animate ? 'transform 520ms ease' : 'none';
+      track.style.transform = `translate3d(${-currentIndex * getStep()}px, 0, 0)`;
+    };
+
+    const stopAutoplay = () => {
+      if (!autoplay) return;
+      window.clearInterval(autoplay);
+      autoplay = 0;
+    };
+
+    const pauseAutoplay = () => {
+      isPaused = true;
+      stopAutoplay();
+    };
+
+    const resumeAutoplay = () => {
+      isPaused = false;
+      startAutoplay();
+    };
+
+    const startAutoplay = () => {
+      if (autoplay || isPaused || document.hidden || prefersReducedMotion.matches) return;
+      autoplay = window.setInterval(() => moveCarousel(1), 3600);
+    };
+
+    const restartAutoplay = () => {
+      stopAutoplay();
+      startAutoplay();
+    };
+
+    const moveCarousel = (direction) => {
+      if (isAnimating) return;
+      isAnimating = true;
+      currentIndex += direction;
+      setPosition(true);
+    };
+
+    track.addEventListener('transitionend', (event) => {
+      if (event.target !== track) return;
+
+      if (currentIndex >= originalCount * 2) {
+        currentIndex -= originalCount;
+        setPosition(false);
+      }
+
+      if (currentIndex < originalCount) {
+        currentIndex += originalCount;
+        setPosition(false);
+      }
+
+      isAnimating = false;
+    });
+
     previous.addEventListener('click', () => {
-      viewport.scrollBy({ left: -getStep(), behavior: 'smooth' });
+      moveCarousel(-1);
+      restartAutoplay();
     });
 
     next.addEventListener('click', () => {
-      viewport.scrollBy({ left: getStep(), behavior: 'smooth' });
+      moveCarousel(1);
+      restartAutoplay();
     });
+
+    carousel.addEventListener('pointerenter', pauseAutoplay);
+    carousel.addEventListener('pointerleave', resumeAutoplay);
+    carousel.addEventListener('mouseenter', pauseAutoplay);
+    carousel.addEventListener('mouseleave', resumeAutoplay);
+
+    carousel.addEventListener('focusin', () => {
+      pauseAutoplay();
+    });
+
+    carousel.addEventListener('focusout', () => {
+      resumeAutoplay();
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        stopAutoplay();
+      } else {
+        startAutoplay();
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      window.cancelAnimationFrame(resizeFrame);
+      resizeFrame = window.requestAnimationFrame(() => setPosition(false));
+    });
+
+    setPosition(false);
+    requestAnimationFrame(() => setPosition(false));
+    startAutoplay();
+    window.addEventListener('load', () => {
+      setPosition(false);
+      startAutoplay();
+    }, { once: true });
   });
 </script>
 
@@ -374,7 +500,7 @@ const serviceCards = [
   }
 
   .about-hero {
-    --hero-strip-cut: 580px;
+    --hero-strip-cut: 325px;
     padding: 126px 0 0;
     background: linear-gradient(
       to bottom,
@@ -436,7 +562,7 @@ const serviceCards = [
 
   .hero-image-strip {
     display: grid;
-    grid-template-columns: 0.96fr 1.17fr 1.17fr 0.96fr;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     align-items: center;
     gap: 22px;
     margin-top: 300px;
@@ -451,13 +577,13 @@ const serviceCards = [
   }
 
   .hero-image-strip figure {
-    height: 510px;
+    height: clamp(540px, 34vw, 680px);
     background: var(--border);
   }
 
   .hero-image-strip figure:nth-child(2),
   .hero-image-strip figure:nth-child(4) {
-    height: 650px;
+    height: clamp(620px, 38vw, 760px);
   }
 
   .hero-image-strip img,
@@ -471,19 +597,19 @@ const serviceCards = [
   }
 
   .hero-image-strip figure:nth-child(1) img {
-    object-position: 70% center;
+    object-position: 62% center;
   }
 
   .hero-image-strip figure:nth-child(2) img {
-    object-position: 50% 35%;
+    object-position: 49% center;
   }
 
   .hero-image-strip figure:nth-child(3) img {
-    object-position: center;
+    object-position: 46% center;
   }
 
   .hero-image-strip figure:nth-child(4) img {
-    object-position: 44% center;
+    object-position: 70% center;
   }
 
   .vision-section {
@@ -634,17 +760,34 @@ const serviceCards = [
   .team-carousel-button {
     width: 48px;
     height: 48px;
-    display: inline-grid;
-    place-items: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     border: 0;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.28);
     color: var(--surface-white);
-    font-size: 2rem;
+    font-size: 0;
     font-weight: 500;
-    line-height: 1;
+    line-height: 0;
+    padding: 0;
     cursor: pointer;
     transition: background-color 160ms ease, color 160ms ease;
+  }
+
+  .team-carousel-button::before {
+    content: '←';
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    font-size: 2rem;
+    line-height: 1;
+    transform: translateY(-1px);
+  }
+
+  .team-carousel-button-next::before {
+    content: '→';
   }
 
   .team-carousel-button-next,
@@ -656,11 +799,7 @@ const serviceCards = [
   .team-carousel-viewport {
     width: 100%;
     min-width: 0;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-behavior: smooth;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
+    overflow: hidden;
   }
 
   .team-carousel-viewport::-webkit-scrollbar {
@@ -671,6 +810,8 @@ const serviceCards = [
     display: flex;
     gap: 24px;
     min-width: max-content;
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
   }
 
   .team-card {
@@ -681,7 +822,6 @@ const serviceCards = [
     border-radius: 8px;
     background: var(--about-green-dark);
     color: var(--surface-white);
-    scroll-snap-align: start;
     isolation: isolate;
   }
 
@@ -841,7 +981,7 @@ const serviceCards = [
     align-items: center;
     justify-content: center;
     min-height: 44px;
-    border: 1px solid rgba(0, 100, 45, 0.36);
+    border: 1px solid rgba(var(--brand-primary-dark-rgb), 0.34);
     border-radius: 8px;
     padding: 0 18px;
     color: var(--about-green);
@@ -854,8 +994,8 @@ const serviceCards = [
 
   .network-foot a:hover,
   .office-actions a:hover {
-    border-color: var(--about-green);
-    background: rgba(0, 100, 45, 0.08);
+    border-color: var(--blue-dark);
+    background: rgba(var(--brand-primary-dark-rgb), 0.06);
     color: var(--about-green);
   }
 
@@ -864,7 +1004,7 @@ const serviceCards = [
     width: min(100%, 304px);
     min-height: 68px;
     margin-top: 38px;
-    border-color: rgba(0, 100, 45, 0.72);
+    border-color: rgba(var(--brand-primary-dark-rgb), 0.52);
     border-radius: 12px;
     padding: 0 24px;
     font-size: 1.03rem;
@@ -967,7 +1107,7 @@ const serviceCards = [
     justify-content: space-between;
     width: min(100%, 304px);
     min-height: 68px;
-    border-color: rgba(0, 100, 45, 0.72);
+    border-color: rgba(var(--brand-primary-dark-rgb), 0.52);
     border-radius: 12px;
     padding: 0 24px;
     font-size: 1.03rem;
@@ -1118,7 +1258,7 @@ const serviceCards = [
     .hero-image-strip figure:nth-child(2),
     .hero-image-strip figure:nth-child(4) {
       height: auto;
-      aspect-ratio: 1.05;
+      aspect-ratio: 3 / 4;
     }
 
     .text-stack {
@@ -1325,7 +1465,7 @@ const serviceCards = [
     .hero-image-strip figure,
     .hero-image-strip figure:nth-child(2),
     .hero-image-strip figure:nth-child(4) {
-      aspect-ratio: 1.25;
+      aspect-ratio: 3 / 4;
     }
 
     .vision-section,
@@ -1397,6 +1537,9 @@ const serviceCards = [
     .team-carousel-button {
       width: 42px;
       height: 42px;
+    }
+
+    .team-carousel-button::before {
       font-size: 1.7rem;
     }
 

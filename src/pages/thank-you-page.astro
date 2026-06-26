@@ -17,8 +17,8 @@ const description =
       </p>
 
       <div class="thank-you-actions">
-        <a class="thank-you-btn thank-you-btn-primary" href="/">Torna alla home</a>
-        <a class="thank-you-btn thank-you-btn-outline" href="/#trattamenti">I nostri trattamenti</a>
+        <a class="thank-you-btn thank-you-btn-primary" href="/">Torna alla home <span aria-hidden="true">↗</span></a>
+        <a class="thank-you-btn thank-you-btn-outline" href="/#trattamenti">I nostri trattamenti <span aria-hidden="true">↗</span></a>
       </div>
     </div>
   </section>
@@ -83,13 +83,17 @@ const description =
 
   .thank-you-btn {
     display: inline-flex;
-    min-height: 54px;
+    width: min(100%, 304px);
+    min-height: 68px;
     align-items: center;
-    justify-content: center;
-    border: 1px solid transparent;
-    border-radius: 14px;
-    padding: 14px 24px;
-    font-weight: 900;
+    justify-content: space-between;
+    gap: 18px;
+    border: 1px solid rgba(var(--brand-primary-dark-rgb), 0.52);
+    border-radius: 12px;
+    padding: 0 24px;
+    color: var(--brand-primary-dark);
+    font-size: 1.03rem;
+    font-weight: 700;
     line-height: 1.2;
     text-align: center;
     text-decoration: none;
@@ -101,26 +105,31 @@ const description =
   }
 
   .thank-you-btn-primary {
-    background: var(--brand-cta);
-    color: var(--surface-white);
-    box-shadow: 0 18px 34px rgba(var(--brand-cta-rgb), 0.22);
+    background: transparent;
+    color: var(--brand-primary-dark);
+    box-shadow: none;
   }
 
   .thank-you-btn-primary:hover {
-    background: var(--brand-primary-dark);
-    color: var(--surface-white);
+    background: rgba(var(--brand-primary-dark-rgb), 0.06);
+    color: var(--brand-primary-dark);
   }
 
   .thank-you-btn-outline {
-    border-color: var(--border);
-    background: var(--surface-white);
-    color: var(--brand-cta);
+    border-color: rgba(var(--brand-primary-dark-rgb), 0.52);
+    background: transparent;
+    color: var(--brand-primary-dark);
   }
 
   .thank-you-btn-outline:hover {
-    border-color: rgba(var(--brand-cta-rgb), 0.35);
-    background: var(--soft-blue-bg);
+    border-color: var(--brand-primary-dark);
+    background: rgba(var(--brand-primary-dark-rgb), 0.06);
     color: var(--brand-primary-dark);
+  }
+
+  .thank-you-btn span {
+    font-size: 1.45rem;
+    line-height: 1;
   }
 
   @media (max-width: 560px) {

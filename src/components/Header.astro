@@ -199,53 +199,28 @@ const callOptions = site.offices.map((office) => ({
   phone: office.phone,
   phoneHref: office.phoneHref,
 }));
+
+const siteMenuTreatments = treatmentGroups.flatMap((category) => category.items.map((item) => ({
+  label: item.menuLabel,
+  href: item.href,
+})));
+
+const siteMenuInformation = [
+  { label: 'Chi siamo', href: '/chi-siamo/' },
+  { label: 'Qualità e Tecnologia', href: '/strumentazioni-attrezzature-tecniche/' },
+  { label: 'Orari e sedi', href: '/orari-e-sedi/' },
+  { label: 'Convenzioni', href: '/convenzioni/' },
+  { label: 'FAQ', href: '/faq/' },
+];
 ---
 
-<header class:list={['site-header', transparent && 'site-header-overlay', transparent && 'is-over-hero']} data-overlay-header={transparent ? 'true' : undefined}>
+<header class:list={['site-header', transparent && 'site-header-overlay', transparent && 'is-over-hero']} data-overlay-header={transparent ? 'true' : undefined} data-site-menu-root>
   <div class="container header-inner">
     <a class="brand" href="/" aria-label={site.name}>
       <img src={site.logo} alt="Studio dentistico Federzoni Granata" width="400" height="52" />
     </a>
-    <nav id="primary-navigation" class="primary-nav" aria-label="Navigazione principale" data-mobile-menu-panel>
+    <nav id="primary-navigation" class="primary-nav" aria-label="Navigazione principale">
       {beforeTreatment.map((item) => <a class="primary-nav-link" href={item.href}>{item.label}</a>)}
-      <div class="nav-mega" data-mega-menu data-menu-title="Trattamenti">
-        <a
-          class="primary-nav-link primary-nav-trigger"
-          href="/trattamenti/"
-          aria-haspopup="true"
-          aria-expanded="false"
-          aria-controls="treatments-mega-menu"
-          data-mega-trigger
-        >
-          trattamenti
-          <span class="nav-caret" aria-hidden="true"></span>
-        </a>
-        <div class="mobile-drilldown-bar">
-          <button class="mobile-menu-back" type="button" data-mobile-menu-back>
-            <span aria-hidden="true">‹</span>
-            Menu principale
-          </button>
-          <h2 class="mobile-drilldown-title" data-mobile-drilldown-title>Trattamenti</h2>
-        </div>
-        <div id="treatments-mega-menu" class="mega-menu treatments-mega-menu" data-mega-panel>
-          <div class="treatments-menu-grid" aria-label="Lista trattamenti per categoria">
-            {treatmentGroupColumns.map((column) => (
-              <div class="treatment-menu-column">
-                {column.map((category) => (
-                  <section class="treatment-menu-group" aria-labelledby={`treatment-group-${category.id}`}>
-                    <h3 id={`treatment-group-${category.id}`}>{category.label}</h3>
-                    <div class="treatment-menu-group-links">
-                      {category.items.map((item) => (
-                        <a class="treatment-menu-link" href={item.href}>{item.menuLabel}</a>
-                      ))}
-                    </div>
-                  </section>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
       {secondaryMenus.slice(0, 1).map((navMenu) => (
         <div class="nav-mega" data-mega-menu data-menu-title={navMenu.title}>
           <a
@@ -281,7 +256,7 @@ const callOptions = site.offices.map((office) => ({
                   data-target={`${navMenu.id}-panel-${category.id}`}
                 >
                   <span class="mega-tab-label">{category.label}</span>
-                  <span class="mega-tab-count">Vai alla pagina</span>
+                  <span class="mega-tab-count">Vai alla pagina <span aria-hidden="true">↗</span></span>
                 </a>
               ))}
             </div>
@@ -299,7 +274,7 @@ const callOptions = site.offices.map((office) => ({
                     <p class="detail-menu-kicker">{navMenu.kicker}</p>
                     <h3>{category.label}</h3>
                     <p>{category.description}</p>
-                    <a class="detail-menu-cta" href={category.items[0].href}>Vai alla pagina</a>
+                    <a class="detail-menu-cta" href={category.items[0].href}>Vai alla pagina <span aria-hidden="true">↗</span></a>
                   </div>
                   <aside
                     class:list={[
@@ -323,97 +298,6 @@ const callOptions = site.offices.map((office) => ({
         </div>
       ))}
       {afterTreatment.map((item) => <a class="primary-nav-link" href={item.href}>{item.label}</a>)}
-      {secondaryMenus.slice(1).map((navMenu) => (
-        <div class="nav-mega" data-mega-menu data-menu-title={navMenu.title}>
-          <a
-            class="primary-nav-link primary-nav-trigger"
-            href={navMenu.href}
-            aria-haspopup="true"
-            aria-expanded="false"
-            aria-controls={navMenu.panelId}
-            data-mega-trigger
-          >
-            {navMenu.triggerLabel}
-            <span class="nav-caret" aria-hidden="true"></span>
-          </a>
-          <div class="mobile-drilldown-bar">
-            <button class="mobile-menu-back" type="button" data-mobile-menu-back>
-              <span aria-hidden="true">‹</span>
-              Menu principale
-            </button>
-            <h2 class="mobile-drilldown-title" data-mobile-drilldown-title>{navMenu.title}</h2>
-          </div>
-          <div id={navMenu.panelId} class="mega-menu" data-mega-panel>
-            <div class="mega-menu-tabs" role="tablist" aria-label={navMenu.tabLabel}>
-              {navMenu.categories.map((category, index) => (
-                <a
-                  id={`${navMenu.id}-tab-${category.id}`}
-                  class:list={['mega-tab', 'mega-tab-link', index === 0 && 'is-active']}
-                  href={category.items[0].href}
-                  role="tab"
-                  aria-selected={index === 0 ? 'true' : 'false'}
-                  aria-controls={`${navMenu.id}-panel-${category.id}`}
-                  tabindex={index === 0 ? '0' : '-1'}
-                  data-treatment-tab
-                  data-target={`${navMenu.id}-panel-${category.id}`}
-                >
-                  <span class="mega-tab-label">{category.label}</span>
-                  <span class="mega-tab-count">Vai alla pagina</span>
-                </a>
-              ))}
-            </div>
-            <div class="mega-menu-content">
-              {navMenu.categories.map((category, index) => (
-                <section
-                  id={`${navMenu.id}-panel-${category.id}`}
-                  class:list={['mega-menu-panel', 'mega-menu-panel-detail', index === 0 && 'is-active']}
-                  role="tabpanel"
-                  aria-labelledby={`${navMenu.id}-tab-${category.id}`}
-                  hidden={index !== 0}
-                  data-treatment-panel
-                >
-                  <div class="detail-menu-copy">
-                    <p class="detail-menu-kicker">{navMenu.kicker}</p>
-                    <h3>{category.label}</h3>
-                    <p>{category.description}</p>
-                    <a class="detail-menu-cta" href={category.items[0].href}>Vai alla pagina</a>
-                  </div>
-                  <aside
-                    class:list={[
-                      'mega-feature',
-                      'mega-feature-image-only',
-                      category.imageVariant === 'square' && 'mega-feature-image-square',
-                    ]}
-                    aria-label={`Immagine ${category.label}`}
-                  >
-                    <img
-                      src={category.image}
-                      alt={category.imageAlt}
-                      loading="lazy"
-                      style={category.imagePosition ? `object-position: ${category.imagePosition};` : undefined}
-                    />
-                  </aside>
-                </section>
-              ))}
-            </div>
-          </div>
-        </div>
-      ))}
-      <details class="call-dropdown mobile-call-dropdown" data-call-dropdown>
-        <summary class="button button-small call-dropdown-trigger mobile-call-trigger">
-          Chiama lo studio
-          <span class="call-dropdown-caret" aria-hidden="true"></span>
-        </summary>
-        <div class="call-dropdown-menu" role="list">
-          {callOptions.map((office) => (
-            <a class="call-dropdown-link" href={office.phoneHref}>
-              <span>Studio {office.city}</span>
-              <strong>{office.phone}</strong>
-            </a>
-          ))}
-        </div>
-      </details>
-      <a class="button button-small mobile-menu-cta" href="/richiesta/">Prenota visita</a>
     </nav>
     <div class="header-actions">
       <details class="call-dropdown header-call-dropdown" data-call-dropdown>
@@ -430,21 +314,50 @@ const callOptions = site.offices.map((office) => ({
           ))}
         </div>
       </details>
-      <a class="button button-small header-cta" href="/richiesta/">Prenota visita</a>
+      <a class="button button-small header-cta" href="/richiesta/">Prenota visita <span aria-hidden="true">↗</span></a>
     </div>
     <button
-      class="mobile-menu-trigger"
+      class="site-menu-trigger"
       type="button"
       aria-label="Apri menu"
       aria-expanded="false"
-      aria-controls="primary-navigation"
-      data-mobile-menu-trigger
+      aria-controls="site-menu-panel"
+      data-site-menu-trigger
     >
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
+      <span class="site-menu-icon" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+      <span class="site-menu-trigger-label">Menu</span>
     </button>
   </div>
+  <div class="site-menu-backdrop" data-site-menu-close></div>
+  <aside id="site-menu-panel" class="site-menu-panel" aria-label="Menu principale" aria-hidden="true" data-site-menu-panel>
+    <button class="site-menu-close" type="button" data-site-menu-close>
+      <span aria-hidden="true">×</span>
+      Chiudi
+    </button>
+    <div class="site-menu-scroll">
+      <section class="site-menu-section" aria-labelledby="site-menu-treatments">
+        <h2 id="site-menu-treatments">Trattamenti</h2>
+        <div class="site-menu-links">
+          {siteMenuTreatments.map((item) => (
+                <a href={item.href}>{item.label} <span class="site-menu-link-arrow" aria-hidden="true">→</span></a>
+          ))}
+        </div>
+        <a class="site-menu-all-link" href="/trattamenti/">Tutti i trattamenti <span aria-hidden="true">↗</span></a>
+      </section>
+      <section class="site-menu-section" aria-labelledby="site-menu-information">
+        <h2 id="site-menu-information">Informazioni</h2>
+        <div class="site-menu-links">
+          {siteMenuInformation.map((item) => (
+                <a href={item.href}>{item.label} <span class="site-menu-link-arrow" aria-hidden="true">→</span></a>
+          ))}
+        </div>
+      </section>
+    </div>
+  </aside>
 </header>
 
 <script>
@@ -524,8 +437,17 @@ const callOptions = site.offices.map((office) => ({
       const defaultMobileTitle = menu.dataset.menuTitle || 'Menu';
       const tabButtons = Array.from(menu.querySelectorAll('[data-treatment-tab]'));
       const tabPanels = Array.from(menu.querySelectorAll('[data-treatment-panel]'));
+      let closeMenuTimeout;
+
+      const clearCloseDelay = () => {
+        if (!closeMenuTimeout) return;
+        window.clearTimeout(closeMenuTimeout);
+        closeMenuTimeout = undefined;
+      };
 
       const setOpen = (isOpen) => {
+        if (isOpen) clearCloseDelay();
+
         if (isOpen) {
           menus.forEach((otherMenu) => {
             if (otherMenu === menu) return;
@@ -547,6 +469,20 @@ const callOptions = site.offices.map((office) => ({
 
           syncMobilePanelState();
         }
+      };
+
+      const closeDesktopMenu = () => {
+        setOpen(false);
+
+        const activeElement = document.activeElement;
+        if (activeElement instanceof HTMLElement && menu.contains(activeElement)) {
+          activeElement.blur();
+        }
+      };
+
+      const scheduleDesktopClose = () => {
+        clearCloseDelay();
+        closeMenuTimeout = window.setTimeout(closeDesktopMenu, 180);
       };
 
       const activateTab = (activeTab) => {
@@ -587,21 +523,20 @@ const callOptions = site.offices.map((office) => ({
       });
 
       menu.addEventListener('mouseenter', () => {
-        if (!mobileQuery.matches) setOpen(true);
-      });
-
-      menu.addEventListener('mouseleave', () => {
         if (!mobileQuery.matches) {
-          setOpen(false);
-
-          const activeElement = document.activeElement;
-          if (activeElement instanceof HTMLElement && menu.contains(activeElement)) {
-            activeElement.blur();
-          }
+          clearCloseDelay();
+          setOpen(true);
         }
       });
 
-      menu.addEventListener('focusin', () => setOpen(true));
+      menu.addEventListener('mouseleave', () => {
+        if (!mobileQuery.matches) scheduleDesktopClose();
+      });
+
+      menu.addEventListener('focusin', () => {
+        clearCloseDelay();
+        setOpen(true);
+      });
 
       menu.addEventListener('focusout', () => {
         window.setTimeout(() => {
@@ -626,17 +561,22 @@ const callOptions = site.offices.map((office) => ({
       });
 
       document.addEventListener('click', (event) => {
+        clearCloseDelay();
         if (!menu.contains(event.target)) setOpen(false);
       });
 
       document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
+          clearCloseDelay();
           setOpen(false);
           trigger?.focus();
         }
       });
 
-      mobileQuery.addEventListener('change', () => setOpen(false));
+      mobileQuery.addEventListener('change', () => {
+        clearCloseDelay();
+        setOpen(false);
+      });
     });
   };
 
@@ -650,13 +590,51 @@ const callOptions = site.offices.map((office) => ({
     const syncHeaderTheme = () => {
       const headerHeight = header.offsetHeight || 0;
       const isOverColor = boundary.getBoundingClientRect().bottom > headerHeight + 1;
-      const menuIsOpen = header.classList.contains('mobile-menu-open');
+      const menuIsOpen = header.classList.contains('mobile-menu-open') || header.classList.contains('site-menu-open');
       header.classList.toggle('is-over-hero', isOverColor && !menuIsOpen);
     };
 
     syncHeaderTheme();
     window.addEventListener('scroll', syncHeaderTheme, { passive: true });
     window.addEventListener('resize', syncHeaderTheme);
+  };
+
+  const setupSiteMenu = () => {
+    const header = document.querySelector('[data-site-menu-root]');
+    const trigger = document.querySelector('[data-site-menu-trigger]');
+    const panel = document.querySelector('[data-site-menu-panel]');
+    const closeTargets = document.querySelectorAll('[data-site-menu-close]');
+
+    if (!(header instanceof HTMLElement) || !(trigger instanceof HTMLButtonElement) || !(panel instanceof HTMLElement)) {
+      return;
+    }
+
+    const setOpen = (isOpen) => {
+      header.classList.toggle('site-menu-open', isOpen);
+      document.documentElement.classList.toggle('site-menu-lock', isOpen);
+      document.body.classList.toggle('site-menu-lock', isOpen);
+      trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      trigger.setAttribute('aria-label', isOpen ? 'Chiudi menu' : 'Apri menu');
+      panel.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+      if (isOpen) header.classList.remove('is-hidden');
+    };
+
+    trigger.addEventListener('click', () => {
+      setOpen(!header.classList.contains('site-menu-open'));
+    });
+
+    closeTargets.forEach((target) => {
+      target.addEventListener('click', () => setOpen(false));
+    });
+
+    panel.addEventListener('click', (event) => {
+      const target = event.target;
+      if (target instanceof Element && target.closest('a')) setOpen(false);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setOpen(false);
+    });
   };
 
   const setupCallDropdowns = () => {
@@ -705,6 +683,7 @@ const callOptions = site.offices.map((office) => ({
 
     const shouldKeepVisible = () =>
       header.classList.contains('mobile-menu-open') ||
+      header.classList.contains('site-menu-open') ||
       header.matches(':focus-within') ||
       Boolean(header.querySelector('.nav-mega.is-open'));
 
@@ -747,12 +726,14 @@ const callOptions = site.offices.map((office) => ({
     document.addEventListener('DOMContentLoaded', () => {
       setupMegaMenus();
       setupOverlayHeader();
+      setupSiteMenu();
       setupCallDropdowns();
       setupHeaderVisibility();
     }, { once: true });
   } else {
     setupMegaMenus();
     setupOverlayHeader();
+    setupSiteMenu();
     setupCallDropdowns();
     setupHeaderVisibility();
   }

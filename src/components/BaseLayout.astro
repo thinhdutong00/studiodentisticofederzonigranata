@@ -1554,6 +1554,56 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     color: var(--signal-dark);
   }
 
+  main a.button,
+  main button.button {
+    width: min(100%, 304px);
+    min-height: 68px;
+    justify-content: space-between;
+    gap: 18px;
+    border: 1px solid rgba(var(--brand-primary-dark-rgb), 0.52);
+    border-radius: 12px;
+    padding: 0 24px;
+    background: transparent;
+    box-shadow: none;
+    color: var(--brand-primary-dark);
+    font-size: 1.03rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-transform: none;
+  }
+
+  main a.button:hover,
+  main a.button:focus-visible,
+  main button.button:hover,
+  main button.button:focus-visible {
+    border-color: var(--brand-primary-dark);
+    background: rgba(var(--brand-primary-dark-rgb), 0.06);
+    color: var(--brand-primary-dark);
+    transform: translateY(-1px);
+  }
+
+  main a.button > span[aria-hidden="true"],
+  main button.button > span[aria-hidden="true"] {
+    font-size: 1.45rem;
+    line-height: 1;
+  }
+
+  main a.button.button-on-dark,
+  main button.button.button-on-dark {
+    border-color: rgba(var(--surface-white-rgb), 0.64);
+    background: transparent;
+    color: var(--surface-white);
+  }
+
+  main a.button.button-on-dark:hover,
+  main a.button.button-on-dark:focus-visible,
+  main button.button.button-on-dark:hover,
+  main button.button.button-on-dark:focus-visible {
+    border-color: var(--surface-white);
+    background: rgba(var(--surface-white-rgb), 0.12);
+    color: var(--surface-white);
+  }
+
   .header-topline {
     background: var(--signal);
     color: var(--surface-white);
@@ -2846,10 +2896,12 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     width: min(1180px, calc(100vw - 64px));
     max-height: calc(100vh - var(--nav-height) - 24px);
     overflow: auto;
-    border: 0;
+    border: 1px solid rgba(var(--brand-blue-rgb), 0.24);
     border-radius: 0 0 var(--mega-radius) var(--mega-radius);
     background: var(--surface-white);
-    box-shadow: 0 18px 48px rgba(36, 39, 39, 0.12);
+    box-shadow:
+      0 28px 80px rgba(var(--brand-primary-dark-rgb), 0.18),
+      0 0 0 1px rgba(255, 255, 255, 0.7);
     color: var(--ink);
     opacity: 0;
     pointer-events: none;
@@ -2881,7 +2933,10 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     align-content: start;
     gap: 8px;
     padding: 28px 18px 28px 28px;
-    background: var(--blue-dark);
+    background:
+      linear-gradient(180deg, rgba(var(--brand-blue-rgb), 0.16), rgba(var(--brand-blue-rgb), 0.08)),
+      var(--surface-white);
+    border-right: 1px solid rgba(var(--brand-blue-rgb), 0.26);
     border-radius: 0 0 0 var(--mega-radius);
   }
 
@@ -2892,9 +2947,9 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     border-radius: 8px;
     padding: 11px 13px;
     background: transparent;
-    color: var(--surface-white);
+    color: var(--blue-dark);
     font: inherit;
-    font-weight: 900;
+    font-weight: 700;
     line-height: 1.25;
     text-align: left;
     text-decoration: none;
@@ -2907,10 +2962,10 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     border-radius: 8px;
     padding: 11px 13px;
     background: transparent;
-    color: var(--surface-white);
+    color: var(--blue-dark);
     font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
     font-size: 0.82rem;
-    font-weight: 900;
+    font-weight: 700;
     line-height: 1.25;
     text-align: left;
     text-decoration: none;
@@ -2924,7 +2979,8 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   .primary-nav .mega-tab:focus-visible,
   .primary-nav .mega-tab.is-active {
     background: var(--surface-white);
-    color: var(--blue);
+    color: var(--brand-cta);
+    box-shadow: 0 10px 24px rgba(var(--brand-primary-dark-rgb), 0.08);
     outline: 0;
   }
 
@@ -3186,6 +3242,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 9px;
     border-radius: 8px;
     padding: 10px 16px;
     background: var(--signal);
@@ -3204,6 +3261,12 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     background: var(--blue);
     color: var(--surface-white);
     outline: 0;
+  }
+
+  .primary-nav .detail-menu-cta span,
+  .mega-tab-count span {
+    font-size: 1em;
+    line-height: 1;
   }
 
   .mega-feature-image-only {
@@ -4147,6 +4210,601 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
     .mega-feature {
       grid-template-columns: 1fr;
+    }
+  }
+
+  html.site-menu-lock,
+  body.site-menu-lock {
+    overflow: hidden;
+  }
+
+  .site-header .header-inner {
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    position: relative;
+    z-index: 1003;
+  }
+
+  .site-header .primary-nav {
+    justify-content: flex-end;
+    justify-self: end;
+    gap: clamp(18px, 2.2vw, 34px);
+    overflow: visible;
+  }
+
+  .site-header .primary-nav > .nav-mega {
+    width: auto;
+    min-height: var(--nav-height);
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .site-header .mega-menu {
+    grid-template-columns: 360px minmax(0, 1fr);
+  }
+
+  .site-header .mega-menu-tabs {
+    gap: 4px;
+    padding: 22px 18px 22px 28px;
+  }
+
+  .site-header .mega-tab,
+  .site-header .primary-nav .mega-tab {
+    min-height: 50px;
+    padding: 12px 18px;
+    font-size: clamp(1.12rem, 1.16vw, 1.24rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .site-header .mega-tab-label {
+    line-height: 1.2;
+  }
+
+  .site-header .detail-menu-copy {
+    min-height: 280px;
+    gap: 14px;
+    padding: 18px 14px 8px 0;
+  }
+
+  .site-header .detail-menu-kicker {
+    color: var(--brand-cta);
+    font-size: clamp(0.95rem, 1.02vw, 1.08rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: 0.02em;
+  }
+
+  .site-header .detail-menu-copy h3 {
+    color: var(--blue-dark);
+    font-size: clamp(1.75rem, 2vw, 2.16rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+
+  .site-header .detail-menu-copy p:not(.detail-menu-kicker) {
+    max-width: 48ch;
+    color: var(--muted);
+    font-size: clamp(1.08rem, 1.22vw, 1.24rem);
+    font-weight: 500;
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+  }
+
+  .site-header .primary-nav > a.primary-nav-link,
+  .site-header .primary-nav-trigger {
+    position: relative;
+    width: auto;
+    min-height: auto;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: var(--blue-dark);
+    font-size: clamp(0.9rem, 1vw, 1rem);
+    font-weight: 500;
+    line-height: 1;
+    text-transform: none;
+  }
+
+  .site-header .primary-nav > a.primary-nav-link::after {
+    content: none;
+  }
+
+  .site-header .primary-nav > a.primary-nav-link::before,
+  .site-header .primary-nav-trigger::before {
+    content: "";
+    position: absolute;
+    right: 50%;
+    bottom: -9px;
+    left: 50%;
+    height: 2px;
+    border-radius: 999px;
+    background: currentColor;
+    transition:
+      right 180ms ease,
+      left 180ms ease;
+  }
+
+  .site-header .primary-nav > a.primary-nav-link:hover,
+  .site-header .primary-nav > a.primary-nav-link:focus-visible,
+  .site-header .primary-nav-trigger:hover,
+  .site-header .primary-nav-trigger:focus-visible,
+  .site-header .nav-mega.is-open .primary-nav-trigger,
+  .site-header .nav-mega:hover .primary-nav-trigger,
+  .site-header .nav-mega:focus-within .primary-nav-trigger {
+    background: transparent;
+    color: var(--brand-blue);
+    outline: 0;
+  }
+
+  .site-header .primary-nav > a.primary-nav-link:hover::before,
+  .site-header .primary-nav > a.primary-nav-link:focus-visible::before,
+  .site-header .primary-nav-trigger:hover::before,
+  .site-header .primary-nav-trigger:focus-visible::before,
+  .site-header .nav-mega.is-open .primary-nav-trigger::before,
+  .site-header .nav-mega:hover .primary-nav-trigger::before,
+  .site-header .nav-mega:focus-within .primary-nav-trigger::before {
+    right: 0;
+    left: 0;
+  }
+
+  .site-header .header-actions {
+    align-items: center;
+    gap: clamp(18px, 2vw, 30px);
+  }
+
+  .site-header .header-call-dropdown {
+    position: relative;
+  }
+
+  .site-header .header-call-trigger,
+  .site-header .header-cta {
+    position: relative;
+    min-height: auto;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+    color: var(--blue-dark);
+    font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: clamp(0.9rem, 1vw, 1rem);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    text-transform: none;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .site-header .header-call-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+  }
+
+  .site-header .header-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .site-header .header-cta span {
+    font-size: 0.95em;
+    line-height: 1;
+  }
+
+  .site-header .header-call-trigger::before,
+  .site-header .header-cta::before {
+    content: "";
+    position: absolute;
+    right: 50%;
+    bottom: -9px;
+    left: 50%;
+    height: 2px;
+    border-radius: 999px;
+    background: currentColor;
+    transition:
+      right 180ms ease,
+      left 180ms ease;
+  }
+
+  .site-header .header-call-trigger:hover,
+  .site-header .header-call-trigger:focus-visible,
+  .site-header .header-call-dropdown[open] .header-call-trigger,
+  .site-header .header-cta:hover,
+  .site-header .header-cta:focus-visible {
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+    color: var(--brand-blue);
+    outline: 0;
+    transform: none;
+  }
+
+  .site-header .header-call-trigger:hover::before,
+  .site-header .header-call-trigger:focus-visible::before,
+  .site-header .header-call-dropdown[open] .header-call-trigger::before,
+  .site-header .header-cta:hover::before,
+  .site-header .header-cta:focus-visible::before {
+    right: 0;
+    left: 0;
+  }
+
+  .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .header-call-trigger,
+  .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .header-cta {
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+    color: var(--surface-white);
+  }
+
+  .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .header-call-trigger:hover,
+  .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .header-call-trigger:focus-visible,
+  .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .header-call-dropdown[open] .header-call-trigger,
+  .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .header-cta:hover,
+  .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .header-cta:focus-visible {
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+    color: var(--soft-blue-bg);
+  }
+
+  .site-menu-trigger {
+    min-height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 0;
+    border-radius: 8px;
+    padding: 9px 0 9px 10px;
+    background: transparent;
+    color: var(--blue-dark);
+    font: inherit;
+    font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: clamp(0.9rem, 1vw, 1rem);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+  }
+
+  .site-menu-trigger:hover,
+  .site-menu-trigger:focus-visible,
+  .site-header.site-menu-open .site-menu-trigger {
+    color: var(--brand-blue);
+    outline: 0;
+  }
+
+  .site-menu-icon {
+    width: 22px;
+    display: inline-grid;
+    gap: 4px;
+  }
+
+  .site-menu-icon span {
+    width: 22px;
+    height: 2px;
+    display: block;
+    border-radius: 999px;
+    background: currentColor;
+  }
+
+  .site-menu-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1001;
+    background: rgba(0, 0, 0, 0.72);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+  }
+
+  .site-menu-panel {
+    position: fixed;
+    top: 16px;
+    right: clamp(12px, 2vw, 24px);
+    bottom: 16px;
+    z-index: 1004;
+    width: min(540px, calc(100vw - 32px));
+    height: calc(100dvh - 32px);
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 10px;
+    border-radius: 10px;
+    padding: 28px 36px 34px;
+    background: var(--brand-cta);
+    color: var(--surface-white);
+    box-shadow: 0 28px 70px rgba(var(--brand-primary-dark-rgb), 0.34);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(18px);
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease,
+      visibility 180ms ease;
+    visibility: hidden;
+  }
+
+  .site-header.site-menu-open .site-menu-backdrop,
+  .site-header.site-menu-open .site-menu-panel {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+    visibility: visible;
+  }
+
+  .site-menu-close {
+    justify-self: end;
+    min-height: 32px;
+    border: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0;
+    background: transparent;
+    color: var(--surface-white);
+    font: inherit;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .site-menu-close span {
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 0.7;
+  }
+
+  .site-menu-close:hover,
+  .site-menu-close:focus-visible {
+    color: var(--soft-blue-bg);
+    outline: 0;
+  }
+
+  .site-menu-scroll {
+    min-height: 0;
+    overflow: auto;
+    padding: 6px 0 4px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(var(--surface-white-rgb), 0.45) transparent;
+  }
+
+  .site-menu-section {
+    display: grid;
+    gap: 18px;
+    padding: 0 0 34px;
+  }
+
+  .site-menu-section + .site-menu-section {
+    padding-top: 4px;
+  }
+
+  .site-menu-section h2 {
+    margin: 0;
+    color: var(--surface-white);
+    font-size: clamp(1.35rem, 2vw, 1.85rem);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+
+  .site-menu-section h2::after {
+    content: "";
+    width: clamp(48px, 5vw, 86px);
+    height: 3px;
+    display: block;
+    margin-top: 10px;
+    border-radius: 999px;
+    background: rgba(var(--brand-blue-rgb), 0.9);
+  }
+
+  .site-menu-links {
+    display: grid;
+    gap: 13px;
+  }
+
+  .site-menu-links a,
+  .site-menu-all-link {
+    position: relative;
+    width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 3px;
+    color: var(--surface-white);
+    font-size: clamp(1rem, 1.15vw, 1.12rem);
+    font-weight: 400;
+    line-height: 1.25;
+    text-decoration: none;
+  }
+
+  .site-menu-links a::after,
+  .site-menu-all-link::after {
+    content: "";
+    position: absolute;
+    right: 50%;
+    bottom: -3px;
+    left: 50%;
+    height: 2px;
+    border-radius: 999px;
+    background: currentColor;
+    transition:
+      right 180ms ease,
+      left 180ms ease;
+  }
+
+  .site-menu-links a:hover,
+  .site-menu-links a:focus-visible,
+  .site-menu-all-link:hover,
+  .site-menu-all-link:focus-visible {
+    color: var(--soft-blue-bg);
+    outline: 0;
+  }
+
+  .site-menu-links a:hover::after,
+  .site-menu-links a:focus-visible::after,
+  .site-menu-all-link:hover::after,
+  .site-menu-all-link:focus-visible::after {
+    right: 0;
+    left: 0;
+  }
+
+  .site-menu-all-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 2px;
+    font-weight: 500;
+  }
+
+  .site-menu-all-link span {
+    width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-white);
+    color: var(--brand-cta);
+    font-size: 0.78rem;
+    line-height: 1;
+  }
+
+  .site-menu-link-arrow {
+    color: currentColor;
+    font-size: 0.82em;
+    line-height: 1;
+  }
+
+  .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .site-menu-trigger {
+    color: var(--surface-white);
+  }
+
+  .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .site-menu-trigger:hover,
+  .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .site-menu-trigger:focus-visible,
+  .site-header.site-header-overlay.is-over-hero.site-menu-open:not(.mobile-menu-open) .site-menu-trigger {
+    color: var(--soft-blue-bg);
+  }
+
+  .site-header.site-menu-open {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    background: transparent;
+    border-bottom-color: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    pointer-events: auto;
+    transform: none;
+    will-change: auto;
+  }
+
+  .site-header.site-menu-open .brand img {
+    filter: brightness(0) invert(1);
+  }
+
+  .site-header.site-menu-open .primary-nav,
+  .site-header.site-menu-open .header-actions,
+  .site-header.site-menu-open .site-menu-trigger {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @media (max-width: 1180px) {
+    .site-header .primary-nav {
+      justify-content: flex-end;
+    }
+  }
+
+  @media (max-width: 980px) {
+    .site-header .header-inner {
+      grid-template-columns: auto minmax(0, 1fr) auto auto;
+      gap: 12px;
+    }
+
+    .site-header .primary-nav {
+      display: none;
+      position: static;
+      width: auto;
+      height: auto;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      opacity: 1;
+      pointer-events: auto;
+      transform: none;
+      visibility: visible;
+    }
+
+    .site-header .header-actions {
+      display: inline-flex;
+      justify-self: end;
+    }
+
+    .site-header .header-call-dropdown {
+      display: none;
+    }
+
+    .site-header .header-cta {
+      min-height: auto;
+      padding: 0;
+      font-size: 0.88rem;
+      white-space: nowrap;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .site-menu-panel {
+      top: calc(var(--nav-height) + 8px);
+      right: 8px;
+      bottom: 8px;
+      left: 8px;
+      width: auto;
+      height: calc(100dvh - var(--nav-height) - 16px);
+      border-radius: 8px;
+      padding: 22px 24px 28px;
+    }
+
+    .site-header .brand img {
+      width: 168px;
+      max-width: 42vw;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .site-header .header-inner {
+      gap: 8px;
+    }
+
+    .site-header .brand img {
+      width: 150px;
+      max-width: 40vw;
+    }
+
+    .site-header .header-cta {
+      padding-inline: 0;
+      font-size: 0.78rem;
+    }
+
+    .site-menu-trigger {
+      gap: 8px;
+      padding-left: 4px;
+      font-size: 0.84rem;
+    }
+
+    .site-menu-icon,
+    .site-menu-icon span {
+      width: 20px;
     }
   }
 </style>

@@ -25,7 +25,7 @@ const {
         <span>Telefono</span>
         <input type="tel" name="your-phone" placeholder="Telefono" autocomplete="tel" />
       </label>
-      <button class="button button-primary" type="submit">Richiedi Info</button>
+      <button class="button button-primary" type="submit">Richiedi Info <span aria-hidden="true">↗</span></button>
     </div>
   ) : (
     <>
@@ -50,7 +50,7 @@ const {
         <input type="checkbox" name="acceptance-459" value="1" />
         <span>Accetto l’informativa sulla privacy policy</span>
       </label>
-      <button class="button button-primary" type="submit">Richiedi Info</button>
+      <button class="button button-primary" type="submit">Richiedi Info <span aria-hidden="true">↗</span></button>
     </>
   )}
   {note && <p class="form-note">{note}</p>}

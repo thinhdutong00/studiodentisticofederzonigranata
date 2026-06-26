@@ -176,7 +176,7 @@ const treatments = treatmentCategories
               Raccontaci cosa ti serve: il team ti aiuta a individuare il percorso più adatto tra prevenzione,
               estetica, ortodonzia, chirurgia o riabilitazione.
             </p>
-            <a href="/richiesta/">Richiedi una visita</a>
+            <a href="/richiesta/">Richiedi una visita <span aria-hidden="true">↗</span></a>
           </aside>
         </div>
 
@@ -504,28 +504,35 @@ const treatments = treatmentCategories
   }
 
   .consult-card a {
-    min-height: 52px;
+    min-height: 68px;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    padding: 0 18px;
+    justify-content: space-between;
+    gap: 18px;
+    border: 1px solid rgba(var(--surface-white-rgb), 0.64);
+    border-radius: 12px;
+    padding: 0 24px;
     background: var(--surface-white);
     color: var(--treatments-blue-dark);
-    font-size: 0.86rem;
-    font-weight: 900;
-    letter-spacing: 0.06em;
+    font-size: 1.03rem;
+    font-weight: 700;
+    letter-spacing: 0;
     line-height: 1.2;
     text-align: center;
     text-decoration: none;
-    text-transform: uppercase;
-    transition: background-color 160ms ease, transform 160ms ease;
+    text-transform: none;
+    transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
   }
 
   .consult-card a:hover {
     background: var(--soft-blue-bg);
     color: var(--treatments-blue-dark);
     transform: translateY(-1px);
+  }
+
+  .consult-card a span {
+    font-size: 1.45rem;
+    line-height: 1;
   }
 
   .directory-foot {

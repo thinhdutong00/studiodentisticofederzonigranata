@@ -174,8 +174,8 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 
         <div class="request-actions">
           <button class="request-btn request-btn-outline" type="button" data-prev-step hidden>Indietro</button>
-          <button class="request-btn request-btn-primary" type="button" data-next-step>Continua</button>
-          <button class="request-btn request-btn-primary" type="submit" data-submit-request hidden>Invia la richiesta</button>
+          <button class="request-btn request-btn-primary" type="button" data-next-step>Continua <span aria-hidden="true">↗</span></button>
+          <button class="request-btn request-btn-primary" type="submit" data-submit-request hidden>Invia la richiesta <span aria-hidden="true">↗</span></button>
         </div>
       </form>
     </div>
@@ -540,6 +540,10 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 
   .request-btn {
     min-height: 54px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     border: 1px solid transparent;
     border-radius: 14px;
     padding: 14px 24px;
@@ -547,6 +551,11 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
     font-weight: 900;
     cursor: pointer;
     transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+  }
+
+  .request-btn span {
+    font-size: 1.1em;
+    line-height: 1;
   }
 
   .request-btn:hover {

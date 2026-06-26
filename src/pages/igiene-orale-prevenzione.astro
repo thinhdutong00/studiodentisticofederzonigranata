@@ -137,7 +137,7 @@ const relatedCards = [
       <div class="service-wrap">
         <div class="service-section-head">
           <p>Igiene orale e prevenzione</p>
-          <a href="/richiesta/">Prenota una visita</a>
+          <a href="/richiesta/">Prenota una visita <span aria-hidden="true">↗</span></a>
         </div>
         <div class="process-grid" id="process-title">
           {processCards.map((card) => (
@@ -155,7 +155,7 @@ const relatedCards = [
       <div class="service-wrap">
         <div class="service-section-head">
           <p>Prestazioni</p>
-          <a href="/trattamenti/">Tutti i trattamenti</a>
+          <a href="/trattamenti/">Tutti i trattamenti <span aria-hidden="true">↗</span></a>
         </div>
         <h2 class="service-band-title" id="services-title">Cosa comprende il percorso</h2>
         <div class="image-card-rail">
@@ -175,7 +175,7 @@ const relatedCards = [
       <div class="service-wrap">
         <div class="service-section-head">
           <p>Dettagli del trattamento</p>
-          <a href="/richiesta/">Richiedi informazioni</a>
+          <a href="/richiesta/">Richiedi informazioni <span aria-hidden="true">↗</span></a>
         </div>
         <div class="detail-list" id="details-title">
           {preventionRows.map((row) => (
@@ -184,7 +184,7 @@ const relatedCards = [
                 <h2>{row.title}</h2>
                 <p>{row.text}</p>
               </div>
-              <a href="/richiesta/">Prenota una visita</a>
+              <a href="/richiesta/">Prenota una visita <span aria-hidden="true">↗</span></a>
             </article>
           ))}
         </div>
@@ -195,7 +195,7 @@ const relatedCards = [
       <div class="service-wrap">
         <div class="service-section-head">
           <p>Domande frequenti</p>
-          <a href="/faq/">Vai alle FAQ</a>
+          <a href="/faq/">Vai alle FAQ <span aria-hidden="true">↗</span></a>
         </div>
         <h2 class="service-band-title" id="faq-title">Informazioni utili</h2>
         <div class="accordion-list">
@@ -249,7 +249,7 @@ const relatedCards = [
           <h2>Vuoi programmare la tua seduta?</h2>
           <p>Lascia i tuoi dati: lo studio ti ricontatterà per definire sede e disponibilità.</p>
         </div>
-        <a href="/richiesta/">Prenota visita</a>
+        <a href="/richiesta/">Prenota visita <span aria-hidden="true">↗</span></a>
       </div>
     </section>
   </article>
@@ -385,28 +385,38 @@ const relatedCards = [
   .service-section-head a,
   .detail-row > a,
   .service-newsletter-box > a {
+    width: min(100%, 304px);
     display: inline-flex;
-    min-height: 42px;
+    min-height: 68px;
     align-items: center;
-    justify-content: center;
-    border: 1px solid var(--service-accent);
-    padding: 0 18px;
-    background: var(--service-accent);
-    color: var(--surface-white);
-    font-size: 0.78rem;
-    font-weight: 900;
-    line-height: 1.1;
+    justify-content: space-between;
+    gap: 18px;
+    border: 1px solid rgba(var(--brand-primary-dark-rgb), 0.52);
+    border-radius: 12px;
+    padding: 0 24px;
+    background: transparent;
+    color: var(--service-blue);
+    font-size: 1.03rem;
+    font-weight: 700;
+    line-height: 1.2;
     text-decoration: none;
-    text-transform: uppercase;
+    text-transform: none;
     transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+  }
+
+  .service-section-head a > span[aria-hidden="true"],
+  .detail-row > a > span[aria-hidden="true"],
+  .service-newsletter-box > a > span[aria-hidden="true"] {
+    font-size: 1.45rem;
+    line-height: 1;
   }
 
   .service-section-head a:hover,
   .detail-row > a:hover,
   .service-newsletter-box > a:hover {
     border-color: var(--service-blue);
-    background: var(--service-blue);
-    color: var(--surface-white);
+    background: rgba(var(--brand-primary-dark-rgb), 0.06);
+    color: var(--service-blue);
   }
 
   .process-grid {
@@ -715,7 +725,9 @@ const relatedCards = [
   }
 
   .service-newsletter-box > a {
-    border-color: var(--surface-white);
+    border-color: rgba(var(--surface-white-rgb), 0.64);
+    background: var(--surface-white);
+    color: var(--service-blue);
   }
 
   @media (max-width: 1060px) {

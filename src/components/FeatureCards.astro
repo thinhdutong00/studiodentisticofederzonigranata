@@ -20,7 +20,7 @@ const { items, numbered = false } = Astro.props;
         <span class="feature-index">{numbered ? String(index + 1).padStart(2, '0') : '✓'}</span>
         <strong>{item.label}</strong>
         {item.description && <small>{item.description}</small>}
-        <span class="feature-card-action" aria-hidden="true">Scopri</span>
+        <span class="feature-card-action" aria-hidden="true">Scopri ↗</span>
       </a>
     ) : (
       <article class="feature-card">

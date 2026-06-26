@@ -104,7 +104,7 @@ const locationOffices = site.offices.map((office) => {
           <div class="location-map-caption">
             <strong data-location-map-city>{locationOffices[0].city}</strong>
             <span data-location-map-address>{locationOffices[0].address}</span>
-            <a href={locationOffices[0].mapHref} target="_blank" rel="noreferrer" data-location-map-link>Apri su Google Maps</a>
+            <a href={locationOffices[0].mapHref} target="_blank" rel="noreferrer" data-location-map-link>Apri su Google Maps <span aria-hidden="true">↗</span></a>
           </div>
         </article>
       )}
@@ -484,11 +484,20 @@ const locationOffices = site.offices.map((office) => {
 
   .location-map-caption a {
     width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     margin-top: 6px;
     color: var(--blue-dark);
     font-size: 0.9rem;
     font-weight: 900;
     text-decoration: none;
+  }
+
+  .location-map-caption a span {
+    color: currentColor;
+    font-size: 1.05em;
+    line-height: 1;
   }
 
   @media (max-width: 1160px) {

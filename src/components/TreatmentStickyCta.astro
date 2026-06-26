@@ -11,7 +11,7 @@ const requestHref = href || `/richiesta/?trattamento=${encodeURIComponent(treatm
 <aside class="treatment-sticky-cta" data-treatment-sticky-cta aria-hidden="true">
   <div class="treatment-sticky-cta-inner">
     <p>{treatment}</p>
-    <a href={requestHref} tabindex="-1">Richiedi informazioni</a>
+    <a href={requestHref} tabindex="-1">Richiedi informazioni <span aria-hidden="true">↗</span></a>
   </div>
 </aside>
 
@@ -124,6 +124,7 @@ const requestHref = href || `/richiesta/?trattamento=${encodeURIComponent(treatm
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 10px;
     border: 0;
     border-radius: 4px;
     padding: 0 28px;
@@ -143,6 +144,11 @@ const requestHref = href || `/richiesta/?trattamento=${encodeURIComponent(treatm
     background: var(--blue);
     color: var(--surface-white);
     transform: translateY(-1px);
+  }
+
+  .treatment-sticky-cta a span {
+    font-size: 1.18rem;
+    line-height: 1;
   }
 
   @media (max-width: 720px) {

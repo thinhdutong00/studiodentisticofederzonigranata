@@ -93,78 +93,469 @@ const emergencyCopyBlocks = [
     support: 'La segreteria raccogliera le informazioni essenziali e ti ricontattera per organizzare la visita urgente nel modo piu rapido possibile.',
   },
 ];
-const aestheticHeroImage = '/assets/menu/casi-clinici-estetica.jpg';
-const aestheticIntroLaminae =
-  'Sono delle lamine di spessore inferiore o uguali al millimetro in media, che vengono posizionate all’esterno dei denti per cambiarne forma colore lunghezza.';
-const aestheticIntroFunction = 'Le faccette sono un’ausilio per migliorare anatomia e funzione della masticazione';
-const aestheticIntroFinal =
-  'A volte invece entrano a far parte della “cosmesi dentale”, quando vogliamo correggere discromie non altrimenti migliorabili con gli sbiancamenti, o quando vogliamo chiudere spazi eccessivi tra i denti (diastemi).';
-const aestheticIntroTail = `${aestheticIntroLaminae} ${aestheticIntroFunction}, ${aestheticIntroFinal.charAt(0).toLowerCase()}${aestheticIntroFinal.slice(1)}`;
-
-const splitAestheticIntro = (html = '') => {
-  const text = html.replace(/^<p>/, '').replace(/<\/p>$/, '').trim();
-
-  if (!text.includes(aestheticIntroTail)) return null;
-
-  return {
-    lead: text.replace(aestheticIntroTail, '').trim(),
-    laminae: aestheticIntroLaminae,
-    function: aestheticIntroFunction,
-    final: aestheticIntroFinal,
-  };
+type ClinicalFaqItem = {
+  question: string;
+  answer: string;
 };
 
-const aestheticFaqItems = [
-  {
-    question: 'Le faccette rovinano i denti?',
-    answer:
-      'Non necessariamente. Prima si valuta quanto smalto è presente, se ci sono vecchie ricostruzioni, come chiudono i denti e se ci sono abitudini come il bruxismo. Quando sono indicate, si lavora in modo conservativo; se il dente non è adatto, si propone un’altra soluzione.',
-  },
-  {
-    question: 'Il risultato rischia di sembrare finto?',
-    answer:
-      'Il progetto parte dal volto, dal sorriso, dal colore dei denti, dalle proporzioni e dalla masticazione. L’obiettivo non è avere denti tutti uguali o troppo bianchi, ma un sorriso naturale e coerente con la persona.',
-  },
-  {
-    question: 'Se ho denti storti o consumati posso fare subito le faccette?',
-    answer:
-      'A volte sì, ma spesso prima bisogna capire se conviene correggere allineamento, usura, gengive o chiusura dei denti. Saltare questa valutazione può rendere il risultato meno stabile nel tempo.',
-  },
-  {
-    question: 'Meglio sbiancamento, composito o ceramica?',
-    answer:
-      'Dipende da cosa vuoi cambiare: colore, forma, lunghezza, spazi tra i denti o vecchie otturazioni visibili. In alcuni casi basta uno sbiancamento o un restauro in composito; in altri la ceramica è più indicata.',
-  },
-  {
-    question: 'Faranno male o i denti diventeranno sensibili?',
-    answer:
-      'La visita serve anche a valutare sensibilità, gengive e quantità di tessuto dentale disponibile. Se prevediamo fastidi, limiti o attenzioni particolari, li spieghiamo prima di iniziare.',
-  },
-  {
-    question: 'Quanto durano e cosa può farle durare meno?',
-    answer:
-      'La durata dipende da materiale, igiene, controlli, masticazione, bruxismo e abitudini quotidiane. Bite, controlli periodici e una buona manutenzione aiutano a proteggere il lavoro nel tempo.',
-  },
-  {
-    question: 'Dopo aver migliorato il sorriso, cosa dovrò considerare?',
-    answer:
-      'Quando il primo problema estetico è risolto possono emergere dettagli come gengive, colore dei denti vicini, vecchie otturazioni, usura o stabilità del morso. Per questo il piano iniziale deve guardare al sorriso completo, non solo al singolo dente.',
-  },
-];
+type SiteBlock = SitePage['blocks'][number];
+type SiteParagraphBlock = Extract<SiteBlock, { type: 'paragraph' }>;
 
-const isAestheticClinicalCardsBlock = (block: SitePage['blocks'][number]) => {
-  if (page.path !== '/estetica/') return false;
-  if (block.type === 'heading') return cleanHeading(block.text) === 'Casi Clinici';
+type ClinicalShowcasePage = {
+  title: string;
+  heroImage: string;
+  heroAlt: string;
+  heroImagePosition?: string;
+  heroLines: string[];
+  intro: {
+    lead: string;
+    support: string;
+    feature: string;
+    final: string;
+  };
+  faqTitle: string;
+  faq: ClinicalFaqItem[];
+};
 
-  return (
+const clinicalShowcasePages: Record<string, ClinicalShowcasePage> = {
+  '/estetica/': {
+    title: 'Estetica dentale',
+    heroImage: '/assets/menu/casi-clinici-estetica.jpg',
+    heroAlt: 'Paziente durante una visita di estetica dentale',
+    heroImagePosition: 'center 48%',
+    heroLines: [
+      'L’odontoiatria estetica non serve solo a migliorare il sorriso.',
+      'Serve a rispettare forma, funzione, colore e naturalezza.',
+      'Prima si valuta cosa cambiare e cosa proteggere.',
+    ],
+    intro: {
+      lead: 'Un sorriso più armonico nasce da una diagnosi, non da un modello uguale per tutti.',
+      support: 'Valutiamo denti, gengive, colore, proporzioni, masticazione e aspettative.',
+      feature: 'Prima si decide cosa serve davvero',
+      final: 'Sbiancamento, composito, ceramica o un percorso combinato: ogni scelta ha indicazioni, limiti e tempi da chiarire prima di iniziare.',
+    },
+    faqTitle: 'Dubbi prima di scegliere le faccette',
+    faq: [
+      {
+        question: 'Le faccette rovinano i denti?',
+        answer:
+          'Non necessariamente. Prima si valuta quanto smalto è presente, se ci sono vecchie ricostruzioni, come chiudono i denti e se ci sono abitudini come il bruxismo. Quando sono indicate, si lavora in modo conservativo; se il dente non è adatto, si propone un’altra soluzione.',
+      },
+      {
+        question: 'Il risultato rischia di sembrare finto?',
+        answer:
+          'Il progetto parte dal volto, dal sorriso, dal colore dei denti, dalle proporzioni e dalla masticazione. L’obiettivo non è avere denti tutti uguali o troppo bianchi, ma un sorriso naturale e coerente con la persona.',
+      },
+      {
+        question: 'Se ho denti storti o consumati posso fare subito le faccette?',
+        answer:
+          'A volte sì, ma spesso prima bisogna capire se conviene correggere allineamento, usura, gengive o chiusura dei denti. Saltare questa valutazione può rendere il risultato meno stabile nel tempo.',
+      },
+      {
+        question: 'Meglio sbiancamento, composito o ceramica?',
+        answer:
+          'Dipende da cosa vuoi cambiare: colore, forma, lunghezza, spazi tra i denti o vecchie otturazioni visibili. In alcuni casi basta uno sbiancamento o un restauro in composito; in altri la ceramica è più indicata.',
+      },
+      {
+        question: 'Faranno male o i denti diventeranno sensibili?',
+        answer:
+          'La visita serve anche a valutare sensibilità, gengive e quantità di tessuto dentale disponibile. Se prevediamo fastidi, limiti o attenzioni particolari, li spieghiamo prima di iniziare.',
+      },
+      {
+        question: 'Quanto durano e cosa può farle durare meno?',
+        answer:
+          'La durata dipende da materiale, igiene, controlli, masticazione, bruxismo e abitudini quotidiane. Bite, controlli periodici e una buona manutenzione aiutano a proteggere il lavoro nel tempo.',
+      },
+      {
+        question: 'Dopo aver migliorato il sorriso, cosa dovrò considerare?',
+        answer:
+          'Quando il primo problema estetico è risolto possono emergere dettagli come gengive, colore dei denti vicini, vecchie otturazioni, usura o stabilità del morso. Per questo il piano iniziale deve guardare al sorriso completo, non solo al singolo dente.',
+      },
+    ],
+  },
+  '/protesi/': {
+    title: 'Protesi',
+    heroImage: '/assets/menu/casi-clinici-protesi.png',
+    heroAlt: 'Progettazione digitale di una protesi dentale al computer',
+    heroImagePosition: '54% 50%',
+    heroLines: [
+      'Riabilitazioni progettate per recuperare stabilità, comfort e naturalezza del sorriso. Dalla singola corona ai casi più complessi, scegliamo la soluzione dopo una diagnosi chiara.',
+    ],
+    intro: {
+      lead: 'Non è solo sostituire un dente.',
+      support:
+        'È il modo in cui ricostruiamo equilibrio, masticazione ed estetica quando uno o più denti sono compromessi o mancanti. Ogni riabilitazione parte da una diagnosi completa: valutiamo denti residui, gengive, occlusione, spazio disponibile e aspettative, così la soluzione non sia solo bella da vedere ma stabile e sostenibile nel tempo.',
+      feature: 'Prima la diagnosi, poi la soluzione.',
+      final:
+        'Non esiste un’unica risposta valida per tutti. In alcuni casi basta un ponte adesivo o una faccetta, in altri servono corona, provvisorio, impianto o una riabilitazione più ampia. La scelta viene costruita passo dopo passo, spiegando cosa possiamo conservare, cosa va sostituito e quali tempi servono per arrivare a un risultato naturale.',
+    },
+    faqTitle: 'Dubbi prima di una riabilitazione protesica',
+    faq: [
+      {
+        question: 'Meglio corona, ponte o impianto?',
+        answer:
+          'Dipende dal dente residuo, dall’osso, dai denti vicini, dalla gengiva e dalla funzione. La visita serve a confrontare le opzioni senza partire dalla soluzione già pronta.',
+      },
+      {
+        question: 'Il dente va sempre limato molto?',
+        answer:
+          'No. Alcune soluzioni richiedono preparazioni minime, altre più importanti. Il punto è conservare ciò che è sano e creare spazio solo quando serve davvero.',
+      },
+      {
+        question: 'Una corona o un ponte si vedono?',
+        answer:
+          'L’obiettivo è integrare colore, forma e proporzioni con i denti vicini. La naturalezza dipende dalla diagnosi, dal materiale e dal progetto protesico.',
+      },
+      {
+        question: 'Quanto dura una protesi?',
+        answer:
+          'Dipende da igiene, controlli, masticazione, bruxismo, materiali e qualità dei denti di supporto. La manutenzione è parte del trattamento.',
+      },
+      {
+        question: 'Posso avere prima un provvisorio?',
+        answer:
+          'Spesso sì. Il provvisorio aiuta a proteggere, masticare e valutare forma, comfort ed estetica prima della soluzione definitiva.',
+      },
+      {
+        question: 'Se ho poco osso o gengiva, cosa succede?',
+        answer:
+          'Prima si valuta il supporto. A volte serve rigenerare o modificare il piano; altre volte una soluzione protesica diversa è più indicata.',
+      },
+    ],
+  },
+  '/parodontologia/': {
+    title: 'Parodontologia',
+    heroImage: '/assets/menu/casi-clinici-parodontologia.png',
+    heroAlt: 'Controllo parodontale su gengive e denti',
+    heroImagePosition: '54% 48%',
+    heroLines: [
+      'Gengive che sanguinano, denti mobili o recessioni non sono dettagli.',
+      'La parodontologia stabilizza i tessuti che sostengono i denti.',
+      'Prima si capisce cosa si può conservare.',
+    ],
+    intro: {
+      lead: 'Prima di parlare di estetica, protesi o impianti, bisogna capire se denti e gengive sono stabili.',
+      support: 'Misuriamo tasche, mobilità, sanguinamento, recessioni e qualità dell’igiene quotidiana.',
+      feature: 'L’obiettivo è conservare ciò che può essere conservato',
+      final: 'Quando la situazione è sotto controllo, si può ragionare su estetica, chirurgia mucogengivale, protesi o riabilitazioni più complete.',
+    },
+    faqTitle: 'Domande frequenti su gengive e parodontite',
+    faq: [
+      {
+        question: 'Se le gengive sanguinano devo preoccuparmi?',
+        answer:
+          'Il sanguinamento non va ignorato. Può dipendere da infiammazione gengivale o da problemi più profondi: la visita serve a capire la causa e la priorità.',
+      },
+      {
+        question: 'Parodontite significa perdere i denti?',
+        answer:
+          'Non sempre. Se diagnosticata e controllata, molti denti possono essere mantenuti. Il punto è stabilizzare la malattia prima che avanzi.',
+      },
+      {
+        question: 'Le gengive ritirate tornano come prima?',
+        answer:
+          'Dipende dal tipo di recessione, dallo spessore dei tessuti e dalla causa. In alcuni casi si può migliorare sensibilità, estetica e protezione della radice.',
+      },
+      {
+        question: 'Posso mettere impianti se ho la parodontite?',
+        answer:
+          'Prima va controllata la malattia parodontale. Inserire impianti in una bocca instabile aumenta il rischio di problemi nel tempo.',
+      },
+      {
+        question: 'Quando serve la chirurgia gengivale?',
+        answer:
+          'Serve quando la terapia non chirurgica non basta o quando bisogna correggere recessioni, difetti gengivali o tessuti poco stabili.',
+      },
+      {
+        question: 'Dopo la cura devo fare controlli frequenti?',
+        answer:
+          'Sì. La parodontite richiede mantenimento: sedute periodiche, igiene domiciliare corretta e controlli personalizzati.',
+      },
+    ],
+  },
+  '/implantologia/': {
+    title: 'Implantologia',
+    heroImage: '/assets/menu/casi-clinici-implantologia.png',
+    heroAlt: 'Impianto dentale con corona e gengiva',
+    heroImagePosition: '50% 52%',
+    heroLines: [
+      'Quando uno o più denti mancano, gli impianti possono restituire denti fissi e masticazione.',
+      'Prima si studiano osso, gengiva, occlusione e protesi finale.',
+      'La chirurgia viene dopo il progetto.',
+    ],
+    intro: {
+      lead: 'L’implantologia funziona quando è pianificata con precisione.',
+      support: 'Non si valuta solo l’impianto, ma lo spazio disponibile, i tessuti, la masticazione e il risultato protesico.',
+      feature: 'Il progetto viene prima della chirurgia',
+      final: 'In alcuni casi si può lavorare con chirurgia guidata, rigenerazione o carico immediato; in altri è più prudente procedere per fasi.',
+    },
+    faqTitle: 'Dubbi prima degli impianti dentali',
+    faq: [
+      {
+        question: 'L’intervento di implantologia fa male?',
+        answer:
+          'La chirurgia viene programmata per essere controllata e gestibile. Durante la visita si valutano tecnica, tempi, anestesia e decorso atteso.',
+      },
+      {
+        question: 'I denti fissi in giornata sono sempre possibili?',
+        answer:
+          'No. Dipende da osso, stabilità degli impianti, tipo di riabilitazione e condizioni generali. Quando non è indicato, forzare i tempi non aiuta.',
+      },
+      {
+        question: 'Se mi hanno detto che ho poco osso?',
+        answer:
+          'Serve una valutazione radiologica e clinica. A volte si può rigenerare, a volte si cambia progetto, a volte esistono alternative più semplici.',
+      },
+      {
+        question: 'Quanto dura un impianto?',
+        answer:
+          'La durata dipende da igiene, controlli, fumo, carichi masticatori, salute gengivale e qualità della protesi. Gli impianti vanno mantenuti come i denti.',
+      },
+      {
+        question: 'Meglio salvare un dente o mettere un impianto?',
+        answer:
+          'Quando un dente è recuperabile in modo prevedibile, conservarlo può essere la scelta migliore. L’impianto è una soluzione, non una scorciatoia.',
+      },
+      {
+        question: 'Posso sostituire una vecchia protesi mobile?',
+        answer:
+          'Spesso sì, ma prima si valutano osso, gengive, spazio, estetica e aspettative. Il piano può essere fisso, rimovibile o combinato.',
+      },
+    ],
+  },
+  '/ortodonzia/': {
+    title: 'Ortodonzia',
+    heroImage: '/assets/menu/casi-clinici-ortodonzia.png',
+    heroAlt: 'Allineatore trasparente applicato sul sorriso',
+    heroImagePosition: '52% 50%',
+    heroLines: [
+      'Denti storti, spazi, affollamento o morso scorretto non sono solo estetica.',
+      'Allineare significa migliorare sorriso, funzione e stabilità.',
+      'Mascherine o apparecchio si scelgono dopo la diagnosi.',
+    ],
+    intro: {
+      lead: 'L’ortodonzia parte da una diagnosi completa.',
+      support: 'Valutiamo denti, arcate, profilo, masticazione, igiene e crescita nei pazienti più giovani.',
+      feature: 'Il dispositivo non è il punto di partenza',
+      final: 'Gli allineatori sono una possibilità, ma non sempre la più indicata: contano i movimenti necessari, la collaborazione e la stabilità finale.',
+    },
+    faqTitle: 'Domande frequenti su ortodonzia e allineatori',
+    faq: [
+      {
+        question: 'Gli allineatori trasparenti vanno bene per tutti?',
+        answer:
+          'No. Sono molto utili in molti casi, ma non sostituiscono la diagnosi. Prima si valuta che tipo di movimento serve e quanto è prevedibile.',
+      },
+      {
+        question: 'Sono troppo adulto per l’ortodonzia?',
+        answer:
+          'L’età da sola non è un limite. Conta la salute di denti e gengive, la motivazione e il tipo di correzione necessaria.',
+      },
+      {
+        question: 'Quanto dura un trattamento ortodontico?',
+        answer:
+          'Dipende da affollamento, morso, obiettivi e collaborazione. Dopo la visita si può stimare un percorso realistico.',
+      },
+      {
+        question: 'Fa male spostare i denti?',
+        answer:
+          'Si può avvertire pressione o fastidio nei primi giorni dopo l’attivazione o il cambio mascherina. Di solito è temporaneo.',
+      },
+      {
+        question: 'Cosa succede dopo aver finito?',
+        answer:
+          'Serve una contenzione. I denti tendono a muoversi nel tempo: mantenere il risultato è parte del trattamento.',
+      },
+      {
+        question: 'Quando portare un bambino a controllo?',
+        answer:
+          'Una valutazione precoce aiuta a intercettare crescita, morso, respirazione e abitudini. Non sempre si interviene subito, ma si decide quando ha senso farlo.',
+      },
+    ],
+  },
+  '/conservativa/': {
+    title: 'Conservativa',
+    heroImage: '/assets/menu/casi-clinici-conservativa.png',
+    heroAlt: 'Restauro conservativo su molare',
+    heroImagePosition: '52% 48%',
+    heroLines: [
+      'Carie, fratture e vecchie otturazioni si trattano prima che diventino problemi più grandi.',
+      'Conservare significa salvare tessuto sano.',
+      'Forma, funzione ed estetica devono tornare insieme.',
+    ],
+    intro: {
+      lead: 'La conservativa è la cura del dente naturale.',
+      support: 'Si lavora su carie, fratture, usura e restauri infiltrati, mantenendo più struttura sana possibile.',
+      feature: 'Il dettaglio cambia la durata',
+      final: 'Isolamento, adesione, scelta del materiale e controllo dell’occlusione fanno la differenza tra una semplice otturazione e un restauro stabile.',
+    },
+    faqTitle: 'Dubbi su carie, fratture e ricostruzioni',
+    faq: [
+      {
+        question: 'Una vecchia otturazione va sempre cambiata?',
+        answer:
+          'No. Si cambia se è infiltrata, fratturata, non sigilla più o crea problemi estetici o funzionali. La visita serve a distinguere controllo da intervento.',
+      },
+      {
+        question: 'Il composito dura nel tempo?',
+        answer:
+          'Sì, se indicato e mantenuto. Durata e stabilità dipendono da isolamento, adesione, carichi masticatori, igiene e controlli.',
+      },
+      {
+        question: 'Un dente fratturato si può salvare?',
+        answer:
+          'Spesso sì, ma dipende da profondità della frattura, quantità di dente residuo e coinvolgimento della polpa. Prima si valuta la prognosi.',
+      },
+      {
+        question: 'Perché usate la diga di gomma?',
+        answer:
+          'Per isolare il dente da saliva e umidità. Migliora controllo, adesione e precisione del restauro.',
+      },
+      {
+        question: 'Se la carie non fa male devo curarla?',
+        answer:
+          'Sì, se è attiva. Molte carie iniziali non fanno male: aspettare può significare arrivare a devitalizzazione o ricostruzioni più complesse.',
+      },
+      {
+        question: 'Dopo un restauro può esserci sensibilità?',
+        answer:
+          'Può succedere per un periodo limitato. Se persiste, va controllata occlusione, profondità della lesione e risposta del dente.',
+      },
+    ],
+  },
+  '/endodonzia/': {
+    title: 'Endodonzia',
+    heroImage: '/assets/menu/casi-clinici-endodonzia.png',
+    heroAlt: 'Trattamento endodontico su sezione di dente',
+    heroImagePosition: '50% 48%',
+    heroLines: [
+      'Quando la polpa del dente è infiammata o infetta, la cura canalare può evitare l’estrazione.',
+      'Il dolore va capito, non solo spento.',
+      'Dopo la cura, il dente va protetto.',
+    ],
+    intro: {
+      lead: 'L’endodonzia serve a salvare denti compromessi in profondità.',
+      support: 'Si valutano dolore, radiografie, lesioni, vecchie cure e quantità di dente residuo.',
+      feature: 'Il canale si cura, il dente si ricostruisce',
+      final: 'Dopo la terapia canalare va pianificata una chiusura stabile: restauro, intarsio o corona dipendono da quanto dente rimane.',
+    },
+    faqTitle: 'Domande frequenti sulla devitalizzazione',
+    faq: [
+      {
+        question: 'La devitalizzazione fa male?',
+        answer:
+          'L’obiettivo è togliere il dolore, non crearne altro. Con anestesia e diagnosi corretta la seduta è generalmente gestibile.',
+      },
+      {
+        question: 'Un dente devitalizzato dura?',
+        answer:
+          'Può durare a lungo se la cura canalare è corretta e se il dente viene ricostruito e protetto nel modo giusto.',
+      },
+      {
+        question: 'Perché un dente già curato può fare ancora male?',
+        answer:
+          'Può esserci una lesione residua, una frattura, un canale non trattato o una ricostruzione non più sigillante. Va rivalutato con esami mirati.',
+      },
+      {
+        question: 'Quando serve rifare una cura canalare?',
+        answer:
+          'Quando una vecchia terapia non sigilla più o quando la lesione non guarisce. Il ritrattamento si valuta caso per caso.',
+      },
+      {
+        question: 'Meglio devitalizzare o togliere il dente?',
+        answer:
+          'Se il dente è recuperabile in modo prevedibile, salvarlo può essere la scelta più conservativa. L’estrazione si valuta quando la prognosi è sfavorevole.',
+      },
+      {
+        question: 'Dopo la devitalizzazione serve una corona?',
+        answer:
+          'Non sempre, ma spesso sì quando manca molta struttura. Il rischio maggiore non è il canale, ma la frattura del dente non protetto.',
+      },
+    ],
+  },
+};
+
+const clinicalShowcase = clinicalShowcasePages[page.path];
+const clinicalShowcaseTitle = clinicalShowcase?.title ?? cleanHeading(pageTitle);
+const clinicalShowcaseKeepsParagraphs = page.path === '/protesi/';
+const clinicalShowcaseBodyBlocks = bodyBlocks.filter((block) => {
+  if (!clinicalShowcase) return true;
+  if (block.type === 'heading' && cleanHeading(block.text) === 'Casi Clinici') return false;
+  if (block.type === 'paragraph' && !clinicalShowcaseKeepsParagraphs) return false;
+
+  const isClinicalLinkList =
     block.type === 'list' &&
     block.html.includes('/protesi/') &&
     block.html.includes('/implantologia/') &&
-    block.html.includes('/video/')
-  );
+    block.html.includes('/video/');
+
+  return !isClinicalLinkList;
+});
+type ClinicalMediaGroup = {
+  label: string;
+  notes: SiteParagraphBlock[];
+  images: Extract<SiteBlock, { type: 'image' }>[];
 };
 
-const aestheticBodyBlocks = bodyBlocks.filter((block) => !isAestheticClinicalCardsBlock(block));
+type ClinicalRenderItem =
+  | { type: 'block'; block: SiteBlock }
+  | { type: 'mediaGrid'; groups: ClinicalMediaGroup[] };
+
+const buildClinicalRenderItems = (blocks: SiteBlock[]): ClinicalRenderItem[] => {
+  const items: ClinicalRenderItem[] = [];
+  let index = 0;
+
+  while (index < blocks.length) {
+    const block = blocks[index];
+
+    if (block.type === 'heading' && block.level >= 4) {
+      const groups: ClinicalMediaGroup[] = [];
+
+      const flushGroups = () => {
+        if (groups.length === 0) return;
+        items.push({ type: 'mediaGrid', groups: [...groups] });
+        groups.length = 0;
+      };
+
+      while (index < blocks.length) {
+        const labelBlock = blocks[index];
+        if (labelBlock.type !== 'heading' || labelBlock.level < 4) break;
+
+        const label = cleanHeading(labelBlock.text);
+        const notes: SiteParagraphBlock[] = [];
+        const images: Extract<SiteBlock, { type: 'image' }>[] = [];
+        index += 1;
+
+        while (index < blocks.length && blocks[index].type !== 'heading') {
+          if (blocks[index].type === 'paragraph') {
+            notes.push(blocks[index] as SiteParagraphBlock);
+          }
+          if (blocks[index].type === 'image') {
+            images.push(blocks[index] as Extract<SiteBlock, { type: 'image' }>);
+          }
+          index += 1;
+        }
+
+        if (notes.length > 0 || images.length > 0) {
+          groups.push({ label, notes, images });
+        } else {
+          flushGroups();
+          items.push({ type: 'block', block: labelBlock });
+        }
+      }
+
+      flushGroups();
+      continue;
+    }
+
+    items.push({ type: 'block', block });
+    index += 1;
+  }
+
+  return items;
+};
+
+const clinicalShowcaseRenderItems = buildClinicalRenderItems(clinicalShowcaseBodyBlocks);
 
 const conventionsHeroImage = '/assets/menu/convenzioni-studio.jpg';
 const conventionsSteps = [
@@ -203,7 +594,7 @@ const conventionsSteps = [
           <h2>{videoChannelTitle}</h2>
           {videoLeadHtml && <div class="rich-text" set:html={videoLeadHtml} />}
         </div>
-        <a class="button button-outline" href="https://www.youtube.com/channel/UCO-D1kTMKZIFAE2oT6maghg/" target="_blank" rel="noopener noreferrer">Apri il canale</a>
+        <a class="button button-outline" href="https://www.youtube.com/channel/UCO-D1kTMKZIFAE2oT6maghg/" target="_blank" rel="noopener noreferrer">Apri il canale <span aria-hidden="true">↗</span></a>
       </div>
     </SectionBand>
 
@@ -283,7 +674,7 @@ const conventionsSteps = [
           ))}
         </div>
         <div class="emergency-cta">
-          <a href="/prenota-urgenza/">Prenota urgenza</a>
+          <a href="/prenota-urgenza/">Prenota urgenza <span aria-hidden="true">↗</span></a>
         </div>
       </div>
     </section>
@@ -343,51 +734,105 @@ const conventionsSteps = [
           <h2 id="conventions-cta-title">Vuoi informazioni sulla tua convenzione?</h2>
           <p>Compila il modulo di prenotazione e indica il tuo fondo, la tua cassa sanitaria o la tua assicurazione: ti ricontatteremo per organizzare la visita e darti le indicazioni utili.</p>
         </div>
-        <a class="button button-primary" href="/richiesta/">Vai al modulo di prenotazione</a>
+        <a class="button button-primary" href="/richiesta/">Vai al modulo di prenotazione <span aria-hidden="true">↗</span></a>
       </div>
     </section>
   </>
-) : page.path === '/estetica/' ? (
+) : clinicalShowcase ? (
   <>
     <section class="aesthetic-hero" aria-labelledby="aesthetic-title" data-transparent-header-region data-treatment-sticky-hero>
       <div class="aesthetic-hero-inner">
-        <h1 id="aesthetic-title">Estetica dentale</h1>
+        <h1 id="aesthetic-title">{clinicalShowcaseTitle}</h1>
         <p class="aesthetic-hero-description">
-          <span>L’odontoiatria estetica, non ha solo lo scopo di migliorare l’estetica del sorriso</span>
-          <span>ma anche la funzionalità dei denti. Spesso fa uso delle faccette dentali,</span>
-          <span>lamine di spessore inferiore o uguali al millimetro in media, che vengono</span>
-          <span>posizionate all’esterno dei denti per cambiarne forma, colore e lunghezza.</span>
+          {clinicalShowcase.heroLines.join(' ')}
         </p>
       </div>
     </section>
 
     <figure class="aesthetic-hero-media">
-      <img src={aestheticHeroImage} alt="Paziente durante una visita di estetica dentale" loading="eager" />
+      <img
+        src={clinicalShowcase.heroImage}
+        alt={clinicalShowcase.heroAlt}
+        loading="eager"
+        style={`object-position: ${clinicalShowcase.heroImagePosition ?? 'center 48%'}`}
+      />
     </figure>
 
-    <section class="aesthetic-content-section" aria-label="Contenuto della pagina Estetica">
+    <section class="aesthetic-content-section" aria-label={`Contenuto della pagina ${clinicalShowcaseTitle}`}>
       <div class="aesthetic-content-wrap">
         <div class="aesthetic-content-body">
-          {aestheticBodyBlocks.map((block) => {
+          <div class="aesthetic-intro-text">
+            <article class="aesthetic-intro-block">
+              <h2>{clinicalShowcase.intro.lead}</h2>
+              <p>{clinicalShowcase.intro.support}</p>
+            </article>
+            <article class="aesthetic-intro-block">
+              <h2>{clinicalShowcase.intro.feature}</h2>
+              <p>{clinicalShowcase.intro.final}</p>
+            </article>
+          </div>
+
+          {clinicalShowcaseRenderItems.map((item) => {
+            if (item.type === 'mediaGrid') {
+              return (
+                <div class="clinical-media-grid">
+                  {item.groups.map((group) => (
+                    <article class="clinical-media-column">
+                      <h4>{group.label}</h4>
+                      {group.notes.length > 0 && (
+                        <div class="clinical-media-notes">
+                          {group.notes.map((note) => (
+                            <div class="clinical-media-note" set:html={note.html} />
+                          ))}
+                        </div>
+                      )}
+                      <div class="clinical-media-column-images">
+                        {group.images.length > 1 ? (
+                          <div class="clinical-image-carousel" data-clinical-carousel>
+                            <div class="clinical-image-track" data-clinical-carousel-track>
+                              {group.images.map((image, imageIndex) => (
+                                <figure
+                                  class="aesthetic-case-figure clinical-carousel-slide"
+                                  data-clinical-carousel-slide
+                                  aria-hidden={imageIndex === 0 ? 'false' : 'true'}
+                                >
+                                  <img src={image.src} alt={image.alt} loading="lazy" />
+                                  {image.alt && <figcaption>{image.alt}</figcaption>}
+                                </figure>
+                              ))}
+                            </div>
+                            <button class="clinical-carousel-button clinical-carousel-button-prev" type="button" aria-label={`${group.label}: immagine precedente`} data-clinical-carousel-prev>
+                              <span aria-hidden="true">&lsaquo;</span>
+                            </button>
+                            <button class="clinical-carousel-button clinical-carousel-button-next" type="button" aria-label={`${group.label}: immagine successiva`} data-clinical-carousel-next>
+                              <span aria-hidden="true">&rsaquo;</span>
+                            </button>
+                          </div>
+                        ) : (
+                          group.images.map((image) => (
+                            <figure class="aesthetic-case-figure">
+                              <img src={image.src} alt={image.alt} loading="lazy" />
+                              {image.alt && <figcaption>{image.alt}</figcaption>}
+                            </figure>
+                          ))
+                        )}
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              );
+            }
+
+            const { block } = item;
+
             if (block.type === 'heading') {
-              const Tag = `h${Math.min(Math.max(block.level, 1), 6)}`;
-              return <Tag id={block.id}>{cleanHeading(block.text)}</Tag>;
+              const headingText = cleanHeading(block.text);
+              const headingLevel = /^Caso\s+\d+/i.test(headingText) ? 3 : Math.min(Math.max(block.level, 1), 6);
+              const Tag = `h${headingLevel}`;
+              return <Tag id={block.id}>{headingText}</Tag>;
             }
             if (block.type === 'paragraph') {
-              const intro = splitAestheticIntro(block.html);
-
-              if (intro) {
-                return (
-                  <div class="aesthetic-intro-text">
-                    <p class="aesthetic-intro-lead">{intro.lead}</p>
-                    <p class="aesthetic-intro-support">{intro.laminae}</p>
-                    <p class="aesthetic-intro-feature">{intro.function}</p>
-                    <p class="aesthetic-intro-support">{intro.final}</p>
-                  </div>
-                );
-              }
-
-              return <Fragment set:html={block.html} />;
+              return <div class="clinical-case-copy" set:html={block.html} />;
             }
             if (block.type === 'list') return <Fragment set:html={block.html} />;
             if (block.type === 'html') return <div set:html={block.html} />;
@@ -403,7 +848,7 @@ const conventionsSteps = [
               return (
                 <div class="content-embed">
                   <p>Contenuto esterno</p>
-                  <a class="button" href={block.url} target="_blank" rel="noopener noreferrer">{block.label}</a>
+                  <a class="button" href={block.url} target="_blank" rel="noopener noreferrer">{block.label} <span aria-hidden="true">↗</span></a>
                 </div>
               );
             }
@@ -412,10 +857,10 @@ const conventionsSteps = [
 
         <section class="aesthetic-faq" aria-labelledby="aesthetic-faq-title">
           <p class="eyebrow">Domande frequenti</p>
-          <h2 id="aesthetic-faq-title">Dubbi prima di scegliere le faccette</h2>
+          <h2 id="aesthetic-faq-title">{clinicalShowcase.faqTitle}</h2>
 
           <div class="aesthetic-faq-list">
-            {aestheticFaqItems.map((item) => (
+            {clinicalShowcase.faq.map((item) => (
               <details class="aesthetic-faq-item">
                 <summary>
                   <span>{item.question}</span>
@@ -466,7 +911,7 @@ const conventionsSteps = [
               return (
                 <div class="content-embed">
                   <p>Contenuto esterno</p>
-                  <a class="button" href={block.url} target="_blank" rel="noopener noreferrer">{block.label}</a>
+                  <a class="button" href={block.url} target="_blank" rel="noopener noreferrer">{block.label} <span aria-hidden="true">↗</span></a>
                 </div>
               );
             }
@@ -486,6 +931,82 @@ const conventionsSteps = [
     {hasStickyCta && <TreatmentStickyCta treatment={stickyCtaTitle} />}
   </>
 )}
+
+<script>
+  const initClinicalCarousels = () => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    document.querySelectorAll('[data-clinical-carousel]').forEach((carousel) => {
+      if (!(carousel instanceof HTMLElement) || carousel.dataset.carouselReady === 'true') return;
+
+      const track = carousel.querySelector('[data-clinical-carousel-track]');
+      const slides = Array.from(carousel.querySelectorAll('[data-clinical-carousel-slide]'));
+      const prevButton = carousel.querySelector('[data-clinical-carousel-prev]');
+      const nextButton = carousel.querySelector('[data-clinical-carousel-next]');
+
+      if (!(track instanceof HTMLElement) || slides.length < 2) return;
+
+      carousel.dataset.carouselReady = 'true';
+      let currentIndex = 0;
+      let timer = 0;
+
+      const update = () => {
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        slides.forEach((slide, index) => {
+          if (slide instanceof HTMLElement) {
+            slide.setAttribute('aria-hidden', String(index !== currentIndex));
+          }
+        });
+      };
+
+      const goTo = (nextIndex) => {
+        currentIndex = (nextIndex + slides.length) % slides.length;
+        update();
+      };
+
+      const stop = () => {
+        if (timer) window.clearInterval(timer);
+        timer = 0;
+      };
+
+      const start = () => {
+        if (reduceMotion) return;
+        stop();
+        timer = window.setInterval(() => goTo(currentIndex + 1), 4200);
+      };
+
+      if (prevButton instanceof HTMLButtonElement) {
+        prevButton.addEventListener('click', () => {
+          stop();
+          goTo(currentIndex - 1);
+          start();
+        });
+      }
+
+      if (nextButton instanceof HTMLButtonElement) {
+        nextButton.addEventListener('click', () => {
+          stop();
+          goTo(currentIndex + 1);
+          start();
+        });
+      }
+
+      carousel.addEventListener('mouseenter', stop);
+      carousel.addEventListener('mouseleave', start);
+      carousel.addEventListener('focusin', stop);
+      carousel.addEventListener('focusout', start);
+
+      update();
+      start();
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initClinicalCarousels, { once: true });
+  } else {
+    initClinicalCarousels();
+  }
+</script>
 
 <style>
   .aesthetic-hero {
@@ -517,17 +1038,13 @@ const conventionsSteps = [
   }
 
   .aesthetic-hero p {
-    max-width: 1260px;
+    max-width: 980px;
     margin: 38px auto 0;
     color: var(--aqua);
     font-size: clamp(1.25rem, 1.45vw, 1.62rem);
     font-weight: 700;
     line-height: 1.18;
-  }
-
-  .aesthetic-hero-description span {
-    display: block;
-    white-space: nowrap;
+    text-wrap: balance;
   }
 
   .aesthetic-hero-media {
@@ -545,12 +1062,12 @@ const conventionsSteps = [
   }
 
   .aesthetic-content-section {
-    padding: 108px 0 122px;
+    padding: 100px 0 122px;
     background: var(--surface-white);
   }
 
   .aesthetic-content-wrap {
-    width: min(1240px, calc(100% - 56px));
+    width: min(1400px, calc(100% - 220px));
     margin: 0 auto;
   }
 
@@ -561,32 +1078,36 @@ const conventionsSteps = [
   }
 
   .aesthetic-intro-text {
-    max-width: 1480px;
+    max-width: none;
     margin: 0 auto 88px;
+    display: grid;
+    gap: 142px;
   }
 
-  .aesthetic-intro-text > .aesthetic-intro-lead,
-  .aesthetic-intro-text > .aesthetic-intro-feature {
+  .aesthetic-content-body .aesthetic-intro-block h2 {
+    margin: 0 0 60px;
+    padding: 0;
     color: var(--blue-dark);
     font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    font-size: clamp(2.85rem, 3.35vw, 3.85rem);
-    font-weight: 400;
-    line-height: 1.12;
+    font-size: 3.65rem;
+    font-weight: 500;
+    line-height: 1.08;
     letter-spacing: 0;
   }
 
-  .aesthetic-intro-text > .aesthetic-intro-feature {
-    margin-top: clamp(30px, 3.2vw, 48px);
+  .aesthetic-content-body .aesthetic-intro-block h2::before,
+  .aesthetic-content-body .aesthetic-intro-block h2::after {
+    content: none;
   }
 
-  .aesthetic-intro-text > .aesthetic-intro-support {
-    max-width: 1180px;
-    margin: clamp(22px, 2.5vw, 34px) 0 0;
-    color: var(--muted-text);
+  .aesthetic-content-body .aesthetic-intro-block p {
+    max-width: 1360px;
+    margin: 0;
+    color: var(--text-dark);
     font-family: inherit;
-    font-size: clamp(1.25rem, 1.45vw, 1.55rem);
-    font-weight: 500;
-    line-height: 1.38;
+    font-size: 2.15rem;
+    font-weight: 400;
+    line-height: 1.34;
     letter-spacing: 0;
   }
 
@@ -597,13 +1118,88 @@ const conventionsSteps = [
   .aesthetic-content-body h2,
   .aesthetic-content-body h3 {
     margin: 78px 0 24px;
-    color: var(--blue-dark);
+    font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: 2.25rem;
+    font-weight: 500;
     line-height: 1.05;
+    letter-spacing: 0;
+    word-spacing: 0;
+  }
+
+  .aesthetic-content-body h2 {
+    position: relative;
+    padding-left: clamp(18px, 1.8vw, 26px);
+    color: var(--brand-cta);
+  }
+
+  .aesthetic-content-body h2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.1em;
+    width: 6px;
+    height: 0.92em;
+    border-radius: 999px;
+    background: linear-gradient(180deg, var(--brand-blue), var(--brand-cta));
+  }
+
+  .aesthetic-content-body h2::after {
+    content: "";
+    display: block;
+    width: clamp(64px, 6vw, 112px);
+    height: 3px;
+    margin-top: 18px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--brand-blue), rgba(var(--brand-blue-rgb), 0));
+  }
+
+  .aesthetic-content-body h3 {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--brand-blue);
+  }
+
+  .aesthetic-content-body h3::before {
+    content: "";
+    flex: 0 0 auto;
+    width: clamp(28px, 3vw, 48px);
+    height: 3px;
+    border-radius: 999px;
+    background: currentColor;
+  }
+
+  .aesthetic-content-body h4 {
+    width: fit-content;
+    margin: 28px 0 16px;
+    border: 1px solid rgba(var(--brand-primary-dark-rgb), 0.16);
+    border-radius: 999px;
+    padding: 8px 14px;
+    color: var(--aqua);
+    font-size: 0.92rem;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: uppercase;
   }
 
   .aesthetic-content-body h3:first-of-type {
     margin-top: 0;
+  }
+
+  .clinical-case-copy {
+    max-width: 1040px;
+    margin: -6px 0 clamp(24px, 3vw, 42px);
+    color: var(--muted-text);
+  }
+
+  .clinical-case-copy :global(p) {
+    margin: 0;
+    font-size: clamp(1.08rem, 1.25vw, 1.32rem);
+    font-weight: 400;
+    line-height: 1.45;
+    letter-spacing: 0;
+    word-spacing: 0;
   }
 
   .aesthetic-case-figure {
@@ -625,8 +1221,132 @@ const conventionsSteps = [
     background: var(--surface-white);
     color: var(--muted-text);
     font-size: 0.92rem;
-    font-weight: 800;
+    font-weight: 500;
     line-height: 1.35;
+    letter-spacing: 0;
+    word-spacing: 0;
+  }
+
+  .clinical-media-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(18px, 2vw, 30px);
+    align-items: start;
+    margin: 0 0 74px;
+  }
+
+  .clinical-media-column {
+    min-width: 0;
+  }
+
+  .clinical-media-column h4 {
+    margin-top: 0;
+    margin-bottom: 14px;
+  }
+
+  .clinical-media-notes {
+    margin: -2px 0 16px;
+    color: var(--muted-text);
+  }
+
+  .clinical-media-note :global(p) {
+    margin: 0;
+    font-size: clamp(0.98rem, 1.08vw, 1.14rem);
+    font-weight: 400;
+    line-height: 1.45;
+    letter-spacing: 0;
+    word-spacing: 0;
+  }
+
+  .clinical-media-note + .clinical-media-note {
+    margin-top: 10px;
+  }
+
+  .clinical-media-column-images {
+    --clinical-media-frame-height: clamp(320px, 26vw, 420px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+    gap: clamp(16px, 1.6vw, 24px);
+    align-items: start;
+  }
+
+  .clinical-media-grid .aesthetic-case-figure {
+    margin: 0;
+  }
+
+  .clinical-media-grid .aesthetic-case-figure img {
+    height: var(--clinical-media-frame-height);
+    max-height: none;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .clinical-image-carousel {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    background: var(--background);
+    box-shadow: 0 18px 48px rgba(var(--brand-primary-dark-rgb), 0.12);
+  }
+
+  .clinical-image-track {
+    display: flex;
+    transition: transform 420ms ease;
+    will-change: transform;
+  }
+
+  .clinical-carousel-slide {
+    flex: 0 0 100%;
+    min-width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .clinical-carousel-slide img {
+    width: 100%;
+    height: var(--clinical-media-frame-height);
+    max-height: none;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    background: var(--background);
+  }
+
+  .clinical-carousel-button {
+    position: absolute;
+    top: calc(50% - 28px);
+    z-index: 2;
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(var(--brand-primary-dark-rgb), 0.14);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.94);
+    color: var(--blue-dark);
+    cursor: pointer;
+    font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1;
+    box-shadow: 0 12px 28px rgba(var(--brand-primary-dark-rgb), 0.14);
+    transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+  }
+
+  .clinical-carousel-button:hover {
+    background: var(--blue-dark);
+    color: var(--surface-white);
+    transform: translateY(-1px);
+  }
+
+  .clinical-carousel-button-prev {
+    left: 14px;
+  }
+
+  .clinical-carousel-button-next {
+    right: 14px;
   }
 
   .aesthetic-faq {
@@ -907,13 +1627,31 @@ const conventionsSteps = [
   }
 
   .conventions-final-cta .button {
-    min-width: 268px;
+    min-width: min(100%, 304px);
+    min-height: 68px;
+    justify-content: space-between;
+    border: 1px solid rgba(var(--surface-white-rgb), 0.64);
+    border-radius: 12px;
+    padding: 0 24px;
     background: var(--surface-white);
     color: var(--blue-dark);
+    box-shadow: none;
+    font-size: 1.03rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-transform: none;
   }
 
   .conventions-final-cta .button:hover {
     background: var(--soft-blue-bg);
+    color: var(--blue-dark);
+    transform: translateY(-1px);
+  }
+
+  .conventions-final-cta .button span,
+  .emergency-cta a span {
+    font-size: 1.45rem;
+    line-height: 1;
     color: var(--brand-primary-dark);
   }
 
@@ -1018,26 +1756,29 @@ const conventionsSteps = [
   }
 
   .emergency-cta a {
+    width: min(100%, 304px);
     display: inline-flex;
-    min-height: 64px;
+    min-height: 68px;
     align-items: center;
-    justify-content: center;
-    border-radius: 999px;
-    padding: 0 34px;
-    background: var(--blue-dark);
-    color: var(--surface-white);
-    font-size: 1rem;
-    font-weight: 900;
+    justify-content: space-between;
+    border: 1px solid rgba(var(--brand-primary-dark-rgb), 0.52);
+    border-radius: 12px;
+    padding: 0 24px;
+    background: transparent;
+    color: var(--blue-dark);
+    font-size: 1.03rem;
+    font-weight: 700;
     line-height: 1.2;
     text-align: center;
     text-decoration: none;
-    text-transform: uppercase;
-    transition: background-color 160ms ease, transform 160ms ease;
+    text-transform: none;
+    transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
   }
 
   .emergency-cta a:hover {
-    background: var(--brand-blue);
-    color: var(--surface-white);
+    border-color: var(--blue-dark);
+    background: rgba(var(--brand-primary-dark-rgb), 0.06);
+    color: var(--blue-dark);
     transform: translateY(-1px);
   }
 
@@ -1149,6 +1890,10 @@ const conventionsSteps = [
   }
 
   @media (max-width: 1180px) {
+    .aesthetic-content-wrap {
+      width: min(100% - 64px, 900px);
+    }
+
     .aesthetic-hero h1 {
       font-size: 5.75rem;
     }
@@ -1157,17 +1902,24 @@ const conventionsSteps = [
       font-size: 1.55rem;
     }
 
-    .aesthetic-hero-description span {
-      white-space: normal;
+    .aesthetic-intro-text {
+      gap: 76px;
     }
 
-    .aesthetic-intro-text > .aesthetic-intro-lead,
-    .aesthetic-intro-text > .aesthetic-intro-feature,
+    .aesthetic-content-body .aesthetic-intro-block h2 {
+      margin-bottom: 36px;
+      font-size: 2.8rem;
+    }
+
+    .aesthetic-content-body .aesthetic-intro-block p {
+      font-size: 1.34rem;
+      line-height: 1.45;
+    }
+
     .emergency-copy-lead {
       font-size: 3.45rem;
     }
 
-    .aesthetic-intro-text > .aesthetic-intro-support,
     .emergency-copy-support {
       max-width: 960px;
       font-size: 1.28rem;
@@ -1220,15 +1972,18 @@ const conventionsSteps = [
 
     .aesthetic-intro-text {
       margin-bottom: 58px;
+      gap: 52px;
     }
 
-    .aesthetic-intro-text > .aesthetic-intro-lead,
-    .aesthetic-intro-text > .aesthetic-intro-feature {
-      font-size: 2.22rem;
+    .aesthetic-content-body .aesthetic-intro-block h2 {
+      margin-bottom: 22px;
+      font-size: 2rem;
+      line-height: 1.12;
     }
 
-    .aesthetic-intro-text > .aesthetic-intro-support {
-      font-size: 1.05rem;
+    .aesthetic-content-body .aesthetic-intro-block p {
+      font-size: 1.02rem;
+      line-height: 1.55;
     }
 
     .aesthetic-content-body h2,
@@ -1239,6 +1994,17 @@ const conventionsSteps = [
 
     .aesthetic-case-figure {
       margin-bottom: 52px;
+    }
+
+    .clinical-media-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-bottom: 52px;
+    }
+
+    .clinical-media-column-images {
+      grid-template-columns: 1fr;
+      gap: 18px;
     }
 
     .aesthetic-faq {

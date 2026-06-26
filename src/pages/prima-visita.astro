@@ -162,11 +162,21 @@ const offices = site.offices.map((office) => ({
         <div class="fv-step-rail">
           {visitSteps.map((step, index) => (
             <article class="fv-step-card">
-              <span>{String(index + 1).padStart(2, '0')}</span>
-              <h3>{step.title}</h3>
-              <p>{step.text}</p>
+              <span class="fv-step-number">{index + 1}.</span>
+              <div class="fv-step-body">
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
+              </div>
+              <a class="fv-step-link" href="#evaluation-title" aria-label={`Leggi di più: ${step.title}`}>
+                Leggi di più
+                <span aria-hidden="true">+</span>
+              </a>
             </article>
           ))}
+        </div>
+
+        <div class="fv-step-cta">
+          <a class="fv-button fv-button-primary" href="/richiesta/">Richiedi informazioni <span aria-hidden="true">↗</span></a>
         </div>
       </div>
     </section>
@@ -185,7 +195,7 @@ const offices = site.offices.map((office) => ({
           <p>
             Se il percorso richiede più passaggi, lo diciamo. Prima si capisce, poi si decide.
           </p>
-          <a class="fv-inline-link" href="/trattamenti/">Scopri i trattamenti</a>
+          <a class="fv-inline-link" href="/trattamenti/">Scopri i trattamenti <span aria-hidden="true">↗</span></a>
         </div>
       </div>
     </section>
@@ -268,14 +278,19 @@ const offices = site.offices.map((office) => ({
       <div class="fv-wrap fv-final-inner">
         <div>
           <p class="fv-kicker">Prenota la tua prima visita</p>
-          <h2 id="final-title">Prenota dal tuo motivo</h2>
+          <h2 id="final-title" aria-label="Hai un dubbio? Iniziamo da lì">
+            <span>Hai un dubbio?</span>
+            <span>Iniziamo da lì</span>
+          </h2>
           <p>
-            Dolore, controllo, gengive, impianti, estetica, denti storti o secondo parere.
-            Ti richiamiamo e fissiamo l’appuntamento nella sede più comoda.
+            Se hai dolore, un controllo rimandato, gengive che sanguinano,
+            denti storti, impianti o estetica da valutare, raccontaci cosa sta succedendo.
+            Ti richiamiamo noi, ascoltiamo il motivo della richiesta e troviamo
+            l’appuntamento più comodo tra Modena e Reggio Emilia.
           </p>
         </div>
         <div class="fv-final-actions">
-          <a class="fv-button fv-button-primary" href="/richiesta/">Prenota visita</a>
+          <a class="fv-button fv-button-primary" href="/richiesta/">Prenota visita <span aria-hidden="true">↗</span></a>
           <div class="fv-office-list" aria-label="Sedi dello studio">
             {offices.map((office) => (
               <a href={office.mapHref} target="_blank" rel="noreferrer">
@@ -452,30 +467,48 @@ const offices = site.offices.map((office) => ({
   }
 
   .fv-button {
-    min-height: 54px;
+    min-width: min(100%, 286px);
+    min-height: 58px;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    border: 1px solid transparent;
+    justify-content: space-between;
+    gap: 16px;
+    border: 1px solid rgba(var(--brand-primary-dark-rgb), 0.52);
     border-radius: 8px;
-    padding: 0 22px;
-    font-weight: 900;
-    line-height: 1.2;
+    padding: 0 24px;
+    background: transparent;
+    color: var(--fv-blue);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1;
     text-align: center;
     text-decoration: none;
+    text-transform: uppercase;
     transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
   }
 
+  .fv-button > span[aria-hidden="true"],
+  .fv-inline-link > span[aria-hidden="true"] {
+    font-size: 1.45rem;
+    line-height: 1;
+  }
+
   .fv-button:hover {
+    border-color: var(--fv-blue);
+    background: rgba(var(--brand-primary-dark-rgb), 0.06);
+    color: var(--fv-blue);
     transform: translateY(-1px);
   }
 
   .fv-button-primary {
+    border-color: var(--fv-blue);
     background: var(--fv-blue);
     color: var(--surface-white);
   }
 
   .fv-button-primary:hover {
+    border-color: var(--brand-cta-hover);
     background: var(--brand-cta-hover);
     color: var(--surface-white);
   }
@@ -572,36 +605,48 @@ const offices = site.offices.map((office) => ({
   .fv-step-rail {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1px;
-    background: var(--fv-line);
+    gap: clamp(18px, 1.8vw, 34px);
+    background: transparent;
   }
 
   .fv-step-card {
-    min-height: 360px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 22px;
-    padding: 28px;
-    background: var(--fv-blue-soft);
-    color: var(--fv-blue);
+    min-height: clamp(360px, 25vw, 440px);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: clamp(20px, 2.4vw, 34px);
+    border-radius: 8px;
+    padding: clamp(28px, 2.4vw, 42px);
+    background: var(--fv-step-bg, rgba(var(--brand-blue-rgb), 0.1));
+    color: var(--fv-ink);
   }
 
-  .fv-step-card span {
-    color: var(--fv-blue-bright);
-    font-size: 0.86rem;
-    font-weight: 900;
-    line-height: 1.2;
+  .fv-step-card:nth-child(2n) {
+    --fv-step-bg: rgba(var(--brand-cta-rgb), 0.08);
+  }
+
+  .fv-step-number {
+    color: var(--fv-blue);
+    font-size: clamp(4.8rem, 5.9vw, 7.2rem);
+    font-weight: 400;
+    line-height: 0.84;
+  }
+
+  .fv-step-body {
+    display: grid;
+    align-self: end;
+    gap: 20px;
   }
 
   .fv-step-card h3 {
-    margin: auto 0 0;
+    max-width: 290px;
+    margin: 0;
     color: var(--fv-blue);
     font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
-    font-size: 2rem;
-    font-weight: 550;
+    font-size: clamp(1.55rem, 1.75vw, 2.2rem);
+    font-weight: 500;
     letter-spacing: 0;
-    line-height: 1.02;
+    line-height: 1.03;
+    text-transform: none;
   }
 
   .fv-step-card p,
@@ -611,6 +656,52 @@ const offices = site.offices.map((office) => ({
     color: var(--muted-text);
     font-size: 1rem;
     line-height: 1.45;
+  }
+
+  .fv-step-card p {
+    max-width: 420px;
+    color: var(--fv-muted);
+    font-weight: 400;
+    line-height: 1.38;
+  }
+
+  .fv-step-link {
+    width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--fv-blue);
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+  }
+
+  .fv-step-link span {
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  .fv-step-link:hover {
+    color: var(--brand-cta-hover);
+  }
+
+  .fv-step-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(42px, 5vw, 72px);
+  }
+
+  .fv-step-cta .fv-button {
+    min-width: min(100%, 304px);
   }
 
   .fv-split {
@@ -658,7 +749,8 @@ const offices = site.offices.map((office) => ({
     min-height: 52px;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    gap: 14px;
     margin-top: 30px;
     border: 1px solid rgba(var(--brand-blue-rgb), 0.42);
     border-radius: 8px;
@@ -785,6 +877,10 @@ const offices = site.offices.map((office) => ({
     color: var(--surface-white);
   }
 
+  .fv-final h2 span {
+    display: block;
+  }
+
   .fv-final p {
     max-width: 780px;
     margin-top: 22px;
@@ -792,6 +888,7 @@ const offices = site.offices.map((office) => ({
   }
 
   .fv-final .fv-button-primary {
+    border-color: rgba(var(--surface-white-rgb), 0.64);
     background: var(--surface-white);
     color: var(--fv-blue);
   }
@@ -837,6 +934,12 @@ const offices = site.offices.map((office) => ({
     line-height: 1.35;
   }
 
+  @media (max-width: 1400px) {
+    .fv-step-rail {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
   @media (max-width: 1120px) {
     .fv-hero-panel {
       min-height: 620px;
@@ -856,7 +959,6 @@ const offices = site.offices.map((office) => ({
       gap: 42px;
     }
 
-    .fv-step-rail,
     .fv-evaluation-grid,
     .fv-reasons-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));

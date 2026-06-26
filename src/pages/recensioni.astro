@@ -16,7 +16,7 @@ const starsFor = (rating: number) => `${'★'.repeat(rating)}${'☆'.repeat(5 - 
       <p class="reviews-eyebrow">Recensioni dei pazienti</p>
       <div class="reviews-head">
         <h1 id="reviews-title">I Nostri Pazienti Dicono</h1>
-        <a href="/richiesta/">Prenota visita</a>
+        <a href="/richiesta/">Prenota visita <span aria-hidden="true">↗</span></a>
       </div>
 
       <div class="reviews-grid">
@@ -87,21 +87,34 @@ const starsFor = (rating: number) => `${'★'.repeat(rating)}${'☆'.repeat(5 - 
 
   .reviews-head a {
     display: inline-flex;
-    min-height: 58px;
+    width: min(100%, 304px);
+    min-height: 68px;
     align-items: center;
-    justify-content: center;
-    padding: 0 28px;
-    background: var(--brand-blue);
-    color: var(--surface-white);
-    font-weight: 900;
+    justify-content: space-between;
+    gap: 18px;
+    border: 1px solid rgba(var(--brand-primary-dark-rgb), 0.52);
+    border-radius: 12px;
+    padding: 0 24px;
+    background: transparent;
+    color: var(--blue-dark);
+    font-size: 1.03rem;
+    font-weight: 700;
+    line-height: 1.2;
     text-decoration: none;
-    text-transform: uppercase;
-    transition: background-color 160ms ease, color 160ms ease;
+    text-transform: none;
+    transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
   }
 
   .reviews-head a:hover {
-    background: var(--blue-dark);
-    color: var(--surface-white);
+    border-color: var(--blue-dark);
+    background: rgba(var(--brand-primary-dark-rgb), 0.06);
+    color: var(--blue-dark);
+    transform: translateY(-1px);
+  }
+
+  .reviews-head a span {
+    font-size: 1.45rem;
+    line-height: 1;
   }
 
   .reviews-grid {

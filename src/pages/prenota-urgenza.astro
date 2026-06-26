@@ -158,8 +158,8 @@ const emergencyConfigJson = JSON.stringify({
 
         <div class="urgent-actions">
           <button class="urgent-btn urgent-btn-outline" type="button" data-prev-step hidden>Indietro</button>
-          <button class="urgent-btn urgent-btn-primary" type="button" data-next-step>Continua</button>
-          <button class="urgent-btn urgent-btn-primary" type="submit" data-submit-urgent hidden>Invia urgenza</button>
+          <button class="urgent-btn urgent-btn-primary" type="button" data-next-step>Continua <span aria-hidden="true">↗</span></button>
+          <button class="urgent-btn urgent-btn-primary" type="submit" data-submit-urgent hidden>Invia urgenza <span aria-hidden="true">↗</span></button>
         </div>
       </form>
     </div>
@@ -401,6 +401,10 @@ const emergencyConfigJson = JSON.stringify({
 
   .urgent-btn {
     min-height: 54px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     border: 1px solid transparent;
     border-radius: 14px;
     padding: 14px 24px;
@@ -408,6 +412,11 @@ const emergencyConfigJson = JSON.stringify({
     font-weight: 900;
     cursor: pointer;
     transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+  }
+
+  .urgent-btn span {
+    font-size: 1.1em;
+    line-height: 1;
   }
 
   .urgent-btn:hover {
