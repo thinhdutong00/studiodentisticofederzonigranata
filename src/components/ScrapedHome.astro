@@ -73,14 +73,15 @@ const technologyFeature = {
 };
 
 const workplaceFeature = {
-  title: 'Medicina del lavoro, welfare sanitario e convenzioni.',
-  text: 'Scopri i nostri servizi per i tuoi collaboratori.',
-  image: '/assets/feature-stack/welfare.jpg',
-  alt: 'Blocchi con icone dedicate al welfare sanitario',
+  title: 'Non denti da catalogo, ma un sorriso che sembri tuo,',
+  titleEnd: 'solo migliore.',
+  text: '',
+  image: '/assets/feature-stack/gazzetta-modena-stefano-granata.jpg',
+  alt: 'Pagina della Gazzetta di Modena con articolo su Stefano Granata',
   links: [
-    { label: 'La prevenzione in azienda', href: 'https://centrodimedicina.com/medicina-del-lavoro/' },
-    { label: 'Fondi e convenzioni', href: 'https://centrodimedicina.com/convenzioni-welfare/' },
-    { label: 'Welfare sanitario e convenzioni', href: 'https://centrodimedicina.com/convenzioni-welfare/' },
+    { label: 'Un piano chiaro prima di qualsiasi trattamento', href: '/trattamenti/' },
+    { label: 'Oltre 30 anni di esperienza per proteggere salute, funzione ed estetica', href: '/chi-siamo/' },
+    { label: 'Un sorriso studiato sul tuo viso, non su uno standard', href: '/casi-clinici/' },
   ],
 };
 
@@ -189,7 +190,7 @@ const locationOffices = site.offices.map((office) => {
 ---
 
 <div class="scraped-home">
-  <section class="scraped-hero" aria-label="Studio dentistico Federzoni Granata" style={`--hero-image: url('${heroImage}')`}>
+  <section class="scraped-hero" aria-label="Studio dentistico Federzoni Granata" style={`--hero-image: url('${heroImage}')`} data-transparent-header-region>
     <div class="scraped-hero-shade"></div>
     <div class="scraped-hero-copy">
       <p class="scraped-pretitle">Studio dentistico Federzoni Granata</p>
@@ -249,8 +250,10 @@ const locationOffices = site.offices.map((office) => {
           <img src={workplaceFeature.image} alt={workplaceFeature.alt} loading="eager" />
         </figure>
         <div class="feature-copy">
-          <h2>{workplaceFeature.title}</h2>
-          <p>{workplaceFeature.text}</p>
+          <h2>
+            {workplaceFeature.title} <span class="feature-title-nowrap">{workplaceFeature.titleEnd}</span>
+          </h2>
+          {workplaceFeature.text && <p>{workplaceFeature.text}</p>}
           <div class="feature-button-list">
             {workplaceFeature.links.map((link) => (
               <a class="feature-button" href={link.href}>
@@ -854,6 +857,18 @@ const locationOffices = site.offices.map((office) => {
     color: var(--blue-dark);
   }
 
+  .feature-title-nowrap {
+    white-space: nowrap;
+  }
+
+  .feature-workplace .feature-image {
+    background: var(--surface-white);
+  }
+
+  .feature-workplace .feature-image img {
+    object-fit: contain;
+  }
+
   .feature-copy p {
     max-width: 520px;
     margin: 18px 0 0;
@@ -1275,7 +1290,7 @@ const locationOffices = site.offices.map((office) => {
 
   .prefooter-section {
     padding: clamp(76px, 8vw, 128px) 0;
-    background: var(--brand-blue);
+    background: var(--brand-primary-dark);
     color: var(--surface-white);
   }
 

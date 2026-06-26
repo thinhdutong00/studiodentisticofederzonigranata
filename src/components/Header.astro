@@ -4,9 +4,10 @@ import { formatParentheticalDetail } from '../utils/formatParentheticalDetail';
 
 interface Props {
   transparent?: boolean;
+  ctaHref?: string;
 }
 
-const { transparent = false } = Astro.props;
+const { transparent = false, ctaHref = '/richiesta/' } = Astro.props;
 
 const beforeTreatment = [
   { label: 'prima visita', href: '/prima-visita/' },
@@ -315,7 +316,7 @@ const siteMenuInformation = [
           ))}
         </div>
       </details>
-      <a class="button button-small header-cta" href="/richiesta/">Prenota visita <span aria-hidden="true">↗</span></a>
+      <a class="button button-small header-cta" href={ctaHref}>Prenota visita <span aria-hidden="true">↗</span></a>
     </div>
     <button
       class="site-menu-trigger"

@@ -7,6 +7,6 @@ const page = site.pages.find((item) => item.path === '/');
 if (!page) throw new Error('Homepage data not found');
 ---
 
-<BaseLayout title={page.title} description={page.description} ogImage={page.ogImage || site.heroImage} canonicalPath="/">
+<BaseLayout title={page.title} description={page.description} ogImage={page.ogImage || site.heroImage} canonicalPath="/" transparentHeader>
   <ContentPage page={page} />
 </BaseLayout>

@@ -43,7 +43,13 @@ const firstVisitConfigJson = JSON.stringify({
 }).replace(/</g, '\\u003c');
 ---
 
-<BaseLayout title={title} description={description} ogImage={site.heroImage} canonicalPath="/prenota-prima-visita/">
+<BaseLayout
+  title={title}
+  description={description}
+  ogImage={site.heroImage}
+  canonicalPath="/prenota-prima-visita/"
+  headerCtaHref="/prenota-prima-visita/"
+>
   <section class="first-visit-request-page" aria-labelledby="first-visit-request-title">
     <div class="first-visit-request-shell">
       <header class="first-visit-request-head">

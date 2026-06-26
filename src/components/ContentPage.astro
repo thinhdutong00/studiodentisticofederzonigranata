@@ -564,7 +564,7 @@ const buildClinicalRenderItems = (blocks: SiteBlock[]): ClinicalRenderItem[] => 
 
 const clinicalShowcaseRenderItems = buildClinicalRenderItems(clinicalShowcaseBodyBlocks);
 
-const conventionsHeroImage = '/assets/menu/convenzioni-studio.jpg';
+const conventionsHeroImage = '/assets/menu/convenzioni-studio-ambulatorio.png';
 const conventionsSteps = [
   {
     title: 'Segnala il tuo fondo',
@@ -579,6 +579,91 @@ const conventionsSteps = [
     text: 'Dopo la prestazione potrai presentare la documentazione al tuo ente secondo le modalità stabilite dalla tua copertura sanitaria.',
   },
 ];
+
+const officePageConfigs = {
+  '/modena/': {
+    city: 'Modena',
+    heroTitle: 'Modena',
+    heroDescription:
+      'Una sede storica dello Studio Dentistico Federzoni Granata per visite, prevenzione e percorsi odontoiatrici coordinati.',
+    heroImage: '/assets/chi-siamo/sede-modena-ambulatorio.png',
+    heroAlt: 'Ambulatorio dello Studio Dentistico Federzoni Granata di Modena',
+    heroImagePosition: '50% 50%',
+    lead: 'A Modena trovi uno studio organizzato per trasformare ogni esigenza in un piano di cura chiaro.',
+    copy: [
+      'Lo studio segue adulti e bambini in tutte le principali aree dell’odontoiatria: prevenzione, igiene, conservativa, endodonzia, ortodonzia, parodontologia, implantologia, protesi ed estetica dentale.',
+      'La prima visita serve a capire priorità, diagnosi e tempi del percorso. Dalla tecnologia digitale ai controlli periodici, l’obiettivo è costruire cure misurabili, comprensibili e sostenibili nel tempo.',
+    ],
+    details: [
+      {
+        label: 'Indirizzo',
+        title: 'Via Giovanni Segantini, 25',
+        text: '41124 Modena (MO)',
+        href: 'https://www.google.com/maps/search/?api=1&query=Via%20Giovanni%20Segantini%2025%2041124%20Modena',
+      },
+      {
+        label: 'Telefono',
+        title: '+39 059 345557',
+        text: 'Chiama lo studio di Modena',
+        href: 'tel:+39059345557',
+      },
+      {
+        label: 'Email',
+        title: 'info.federzonigranata@gmail.com',
+        text: 'Scrivi alla segreteria',
+        href: 'mailto:info.federzonigranata@gmail.com',
+      },
+      {
+        label: 'Orari',
+        title: '10:00 – 19:00',
+        text: 'Dal lunedì al venerdì. Sabato e domenica chiuso.',
+        href: undefined,
+      },
+    ],
+  },
+  '/reggio-emilia/': {
+    city: 'Reggio Emilia',
+    heroTitle: 'Reggio Emilia',
+    heroDescription:
+      'Lo stesso metodo clinico dello Studio Dentistico Federzoni Granata, in una sede dedicata a diagnosi e continuità di cura.',
+    heroImage: '/assets/original/2022/03/dentista-modena-reggio-emilia.jpg',
+    heroAlt: 'Dottor Stefano Granata e Dottoressa Chiara Federzoni durante una valutazione digitale',
+    heroImagePosition: '50% 48%',
+    lead: 'A Reggio Emilia la visita diventa il punto di partenza per capire bene il caso e decidere con calma.',
+    copy: [
+      'La sede accoglie pazienti che cercano un percorso odontoiatrico completo: dalla valutazione iniziale alla prevenzione, fino ai trattamenti specialistici quando servono.',
+      'Ascolto, diagnosi e spiegazione del piano vengono prima dell’intervento. Così ogni scelta, dai tempi ai costi, resta comprensibile e collegata alle reali priorità cliniche.',
+    ],
+    details: [
+      {
+        label: 'Indirizzo',
+        title: 'Via Roma, 17',
+        text: '42121 Reggio nell’Emilia (RE)',
+        href: 'https://www.google.com/maps/search/?api=1&query=Via%20Roma%2017%2042121%20Reggio%20nell%27Emilia',
+      },
+      {
+        label: 'Telefono',
+        title: '+39 0522 436618',
+        text: 'Chiama lo studio di Reggio Emilia',
+        href: 'tel:+390522436618',
+      },
+      {
+        label: 'Email',
+        title: 'info.federzonigranata@gmail.com',
+        text: 'Scrivi alla segreteria',
+        href: 'mailto:info.federzonigranata@gmail.com',
+      },
+      {
+        label: 'Orari',
+        title: '10:00 – 19:00',
+        text: 'Dal lunedì al venerdì. Sabato e domenica chiuso.',
+        href: undefined,
+      },
+    ],
+  },
+} as const;
+
+const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs];
 ---
 
 {page.path === '/' ? (
@@ -742,6 +827,68 @@ const conventionsSteps = [
           <p>Compila il modulo di prenotazione e indica il tuo fondo, la tua cassa sanitaria o la tua assicurazione: ti ricontatteremo per organizzare la visita e darti le indicazioni utili.</p>
         </div>
         <a class="button button-primary" href="/richiesta/">Vai al modulo di prenotazione <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </>
+) : officePage ? (
+  <>
+    <section class="office-hero" aria-labelledby="office-title" data-transparent-header-region>
+      <div class="office-hero-inner">
+        <h1 id="office-title">{officePage.heroTitle}</h1>
+        <p>{officePage.heroDescription}</p>
+      </div>
+    </section>
+
+    <figure class="office-media">
+      <img
+        src={officePage.heroImage}
+        alt={officePage.heroAlt}
+        loading="eager"
+        style={`object-position: ${officePage.heroImagePosition};`}
+      />
+    </figure>
+
+    <section class="office-intro" aria-label={`Studio dentistico di ${officePage.city}`}>
+      <div class="office-intro-wrap">
+        <p class="eyebrow">Studio Dentistico Federzoni Granata</p>
+        <p class="office-lead">{officePage.lead}</p>
+        <div class="office-copy-grid">
+          {officePage.copy.map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="office-details-section" aria-labelledby="office-details-title">
+      <div class="office-details-wrap">
+        <div class="office-details-head">
+          <p class="eyebrow">Informazioni pratiche</p>
+          <h2 id="office-details-title">Come raggiungere lo studio di {officePage.city}</h2>
+        </div>
+        <div class="office-detail-grid">
+          {officePage.details.map((detail, index) => (
+            <article class="office-detail-card">
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <p>{detail.label}</p>
+              <h3>{detail.href ? <a href={detail.href} target={detail.href.startsWith('http') ? '_blank' : undefined} rel={detail.href.startsWith('http') ? 'noreferrer' : undefined}>{detail.title}</a> : detail.title}</h3>
+              <small>{detail.text}</small>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="office-contact-section" aria-labelledby="office-contact-title">
+      <div class="office-contact-wrap">
+        <div class="office-contact-copy">
+          <p class="eyebrow">Prenotazione</p>
+          <h2 id="office-contact-title">Prenota una visita nello studio di {officePage.city}</h2>
+          <p>
+            Raccontaci il motivo della richiesta e indica la sede più comoda: la segreteria ti ricontatterà per fissare l’appuntamento e darti le prime indicazioni utili.
+          </p>
+        </div>
+        {page.hasContactForm && <ContactForm />}
       </div>
     </section>
   </>
@@ -1546,9 +1693,9 @@ const conventionsSteps = [
     margin: 0;
     color: var(--blue-dark);
     font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    font-size: clamp(2.15rem, 4.3vw, 5.35rem);
+    font-size: 3.65rem;
     font-weight: 500;
-    line-height: 1.12;
+    line-height: 1.08;
     letter-spacing: var(--conventions-letter-spacing);
   }
 
@@ -1710,6 +1857,264 @@ const conventionsSteps = [
     font-size: 1.45rem;
     line-height: 1;
     color: var(--brand-primary-dark);
+  }
+
+  .office-hero,
+  .office-intro,
+  .office-details-section,
+  .office-contact-section {
+    --office-letter-spacing: -0.2px;
+    font-family: "Inter", sans-serif;
+    letter-spacing: var(--office-letter-spacing);
+    word-spacing: 0;
+  }
+
+  .office-hero {
+    min-height: clamp(560px, 70vh, 800px);
+    display: grid;
+    place-items: center;
+    padding: clamp(88px, 9vw, 154px) 0 clamp(76px, 8vw, 132px);
+    background: var(--brand-primary-dark);
+    color: var(--surface-white);
+    text-align: center;
+  }
+
+  .office-hero-inner {
+    width: min(1680px, calc(100% - 48px));
+    margin: 0 auto;
+  }
+
+  .office-hero h1 {
+    max-width: 1580px;
+    margin: 0 auto;
+    color: var(--surface-white);
+    font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: clamp(4.2rem, 10.6vw, 12.1rem);
+    font-weight: 400;
+    letter-spacing: var(--office-letter-spacing);
+    line-height: 0.9;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  .office-hero p {
+    max-width: 980px;
+    margin: clamp(30px, 3.4vw, 52px) auto 0;
+    color: var(--soft-blue-bg);
+    font-size: clamp(1.35rem, 2vw, 2.05rem);
+    font-weight: 500;
+    letter-spacing: var(--office-letter-spacing);
+    line-height: 1.28;
+  }
+
+  .office-media {
+    height: clamp(390px, 50vw, 780px);
+    margin: 0;
+    overflow: hidden;
+    background: var(--border);
+  }
+
+  .office-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .office-intro {
+    padding: clamp(84px, 9vw, 150px) 0;
+    background: var(--surface-white);
+  }
+
+  .office-intro .eyebrow,
+  .office-details-section .eyebrow,
+  .office-contact-section .eyebrow {
+    margin-bottom: 18px;
+    font-family: "Inter", sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: var(--office-letter-spacing);
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .office-intro-wrap,
+  .office-details-wrap,
+  .office-contact-wrap {
+    width: min(1320px, calc(100% - 48px));
+    margin: 0 auto;
+  }
+
+  .office-lead {
+    max-width: 1210px;
+    margin: 0;
+    color: var(--blue-dark);
+    font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: clamp(2.15rem, 4.3vw, 5.35rem);
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: var(--office-letter-spacing);
+  }
+
+  .office-copy-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(28px, 5vw, 80px);
+    margin-top: clamp(42px, 6vw, 86px);
+  }
+
+  .office-copy-grid p {
+    margin: 0;
+    color: var(--muted-text);
+    font-size: clamp(1.05rem, 1.35vw, 1.34rem);
+    font-weight: 400;
+    letter-spacing: var(--office-letter-spacing);
+    line-height: 1.45;
+  }
+
+  .office-details-section {
+    padding: clamp(76px, 8vw, 132px) 0;
+    background: var(--soft);
+  }
+
+  .office-details-head {
+    max-width: 920px;
+    margin-bottom: clamp(34px, 4vw, 58px);
+  }
+
+  .office-details-head h2 {
+    margin: 0;
+    color: var(--blue-dark);
+    font-family: "Inter", sans-serif;
+    font-size: clamp(2.25rem, 4.2vw, 4.45rem);
+    font-weight: 400;
+    letter-spacing: var(--office-letter-spacing);
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+
+  .office-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-top: 2px solid rgba(21, 90, 148, 0.26);
+    border-bottom: 2px solid rgba(21, 90, 148, 0.26);
+  }
+
+  .office-detail-card {
+    min-height: 300px;
+    display: grid;
+    align-content: start;
+    gap: 16px;
+    padding: clamp(24px, 2.8vw, 42px);
+    border-right: 1px solid rgba(21, 90, 148, 0.2);
+  }
+
+  .office-detail-card:last-child {
+    border-right: 0;
+  }
+
+  .office-detail-card > span,
+  .office-detail-card > p {
+    margin: 0;
+    color: var(--brand-blue);
+    font-family: "Inter", sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: var(--office-letter-spacing);
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .office-detail-card h3 {
+    margin: 6px 0 0;
+    color: var(--blue);
+    font-family: "Inter", sans-serif;
+    font-size: clamp(1.32rem, 1.65vw, 1.8rem);
+    font-weight: 500;
+    letter-spacing: var(--office-letter-spacing);
+    line-height: 1.22;
+  }
+
+  .office-detail-card a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .office-detail-card a:hover {
+    color: var(--brand-cta-hover);
+  }
+
+  .office-detail-card small {
+    color: var(--muted-text);
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: var(--office-letter-spacing);
+    line-height: 1.45;
+  }
+
+  .office-contact-section {
+    padding: clamp(76px, 8vw, 132px) 0;
+    background: var(--brand-primary-dark);
+    color: var(--surface-white);
+  }
+
+  .office-contact-wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(420px, 0.72fr);
+    gap: clamp(32px, 5vw, 86px);
+    align-items: start;
+  }
+
+  .office-contact-copy h2 {
+    max-width: 780px;
+    margin: 0;
+    color: var(--surface-white);
+    font-family: "Inter", sans-serif;
+    font-size: clamp(2.2rem, 4.7vw, 4.8rem);
+    font-weight: 500;
+    letter-spacing: var(--office-letter-spacing);
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+
+  .office-contact-copy p:not(.eyebrow) {
+    max-width: 760px;
+    margin: clamp(24px, 3vw, 34px) 0 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: clamp(1.05rem, 1.25vw, 1.22rem);
+    font-weight: 400;
+    letter-spacing: var(--office-letter-spacing);
+    line-height: 1.42;
+  }
+
+  .office-contact-section .contact-form {
+    margin: 0;
+    border: 1px solid rgba(var(--surface-white-rgb), 0.18);
+    border-radius: 12px;
+    padding: clamp(24px, 3vw, 42px);
+    background: var(--surface-white);
+    color: var(--blue-dark);
+    box-shadow: none;
+  }
+
+  .office-contact-section .contact-form h2 {
+    color: var(--blue-dark);
+    font-family: "Inter", sans-serif;
+    font-size: clamp(1.55rem, 2.1vw, 2.2rem);
+    font-weight: 500;
+    letter-spacing: var(--office-letter-spacing);
+    line-height: 1.08;
+  }
+
+  .office-contact-section .contact-form .button {
+    min-height: 58px;
+    background: var(--brand-cta);
+    color: var(--surface-white);
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: var(--office-letter-spacing);
+    line-height: 16px;
+    text-transform: uppercase;
   }
 
   .faq-accordion-section {
@@ -1982,9 +2387,25 @@ const conventionsSteps = [
       font-size: 1.28rem;
     }
 
+    .conventions-lead {
+      font-size: 2.8rem;
+    }
+
     .aesthetic-faq h2 {
       max-width: 880px;
       font-size: 4.15rem;
+    }
+
+    .office-detail-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .office-detail-card:nth-child(2n) {
+      border-right: 0;
+    }
+
+    .office-contact-wrap {
+      grid-template-columns: 1fr;
     }
   }
 
@@ -1992,8 +2413,13 @@ const conventionsSteps = [
     .conventions-hero,
     .conventions-intro,
     .conventions-process,
-    .conventions-final-cta {
+    .conventions-final-cta,
+    .office-hero,
+    .office-intro,
+    .office-details-section,
+    .office-contact-section {
       --conventions-letter-spacing: -0.16px;
+      --office-letter-spacing: -0.16px;
     }
 
     .aesthetic-hero {
@@ -2112,10 +2538,19 @@ const conventionsSteps = [
       padding: 86px 0 78px;
     }
 
+    .office-hero {
+      min-height: auto;
+      padding: 86px 0 78px;
+    }
+
     .conventions-hero-inner,
     .conventions-intro-wrap,
     .conventions-process-wrap,
-    .conventions-final-cta-inner {
+    .conventions-final-cta-inner,
+    .office-hero-inner,
+    .office-intro-wrap,
+    .office-details-wrap,
+    .office-contact-wrap {
       width: min(100% - 30px, 1320px);
     }
 
@@ -2125,7 +2560,17 @@ const conventionsSteps = [
       overflow-wrap: anywhere;
     }
 
+    .office-hero h1 {
+      font-size: clamp(3rem, 14vw, 5.3rem);
+      line-height: 0.95;
+      overflow-wrap: anywhere;
+    }
+
     .conventions-hero p {
+      font-size: clamp(1.12rem, 5vw, 1.48rem);
+    }
+
+    .office-hero p {
       font-size: clamp(1.12rem, 5vw, 1.48rem);
     }
 
@@ -2133,31 +2578,57 @@ const conventionsSteps = [
       height: 430px;
     }
 
+    .office-media {
+      height: 430px;
+    }
+
     .conventions-intro,
     .conventions-process,
-    .conventions-final-cta {
+    .conventions-final-cta,
+    .office-intro,
+    .office-details-section,
+    .office-contact-section {
       padding: 68px 0;
     }
 
     .conventions-lead {
+      font-size: 2rem;
+      line-height: 1.12;
+    }
+
+    .office-lead {
       font-size: clamp(2rem, 10vw, 3.35rem);
     }
 
     .conventions-copy-grid,
     .conventions-step-grid,
-    .conventions-final-cta-inner {
+    .conventions-final-cta-inner,
+    .office-copy-grid,
+    .office-detail-grid,
+    .office-contact-wrap {
       grid-template-columns: 1fr;
     }
 
-    .conventions-step-grid {
+    .conventions-step-grid,
+    .office-detail-grid {
       border-bottom: 0;
     }
 
-    .conventions-step {
+    .conventions-step,
+    .office-detail-card {
       min-height: auto;
       border-right: 0;
       border-bottom: 2px solid rgba(21, 90, 148, 0.2);
       padding: 28px 0;
+    }
+
+    .office-details-head h2,
+    .office-contact-copy h2 {
+      font-size: clamp(2rem, 10vw, 3.35rem);
+    }
+
+    .office-contact-section .contact-form {
+      padding: 24px;
     }
 
     .conventions-final-cta .button {
