@@ -50,12 +50,48 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     <meta name="twitter:image" content={new URL(ogImage, canonical).toString()} />
   </head>
   <body>
+    <div class="site-preloader" data-site-preloader aria-hidden="true">
+      <img src="/assets/original/2020/10/cropped-favicon-180x180.png" alt="" width="72" height="72" decoding="async" />
+    </div>
+    <noscript><style>.site-preloader { display: none !important; }</style></noscript>
     <Header transparent={transparentHeader} ctaHref={headerCtaHref} />
     <main>
       <slot />
     </main>
     <Footer />
     <CookieBanner />
+    <script is:inline>
+      (() => {
+        const preloader = document.querySelector('[data-site-preloader]');
+        if (!preloader) return;
+
+        const minVisibleMs = 280;
+        const maxVisibleMs = 850;
+        const fadeMs = 180;
+        const startedAt = performance.now();
+
+        const removePreloader = () => {
+          if (preloader.dataset.done === 'true') return;
+          preloader.dataset.done = 'true';
+          preloader.classList.add('is-hiding');
+          window.setTimeout(() => preloader.remove(), fadeMs);
+        };
+
+        const hidePreloader = () => {
+          const wait = Math.max(0, minVisibleMs - (performance.now() - startedAt));
+          window.setTimeout(removePreloader, wait);
+        };
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', hidePreloader, { once: true });
+        } else {
+          hidePreloader();
+        }
+
+        window.addEventListener('load', hidePreloader, { once: true });
+        window.setTimeout(removePreloader, maxVisibleMs);
+      })();
+    </script>
   </body>
 </html>
 
@@ -112,6 +148,55 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
   * {
     box-sizing: border-box;
+  }
+
+  .site-preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: grid;
+    place-items: center;
+    background: var(--surface-white, #fff);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity 180ms ease, visibility 180ms ease;
+  }
+
+  .site-preloader img {
+    width: clamp(58px, 5vw, 82px);
+    height: auto;
+    display: block;
+    animation: sitePreloaderPulse 760ms ease-in-out infinite;
+  }
+
+  .site-preloader.is-hiding {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  @keyframes sitePreloaderPulse {
+    0%,
+    100% {
+      transform: scale(0.96);
+      opacity: 0.82;
+    }
+
+    50% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-preloader {
+      transition: none;
+    }
+
+    .site-preloader img {
+      animation: none;
+    }
   }
 
   html {

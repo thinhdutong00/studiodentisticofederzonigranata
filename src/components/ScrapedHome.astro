@@ -68,8 +68,8 @@ const technologyFeature = {
   titleAccent: 'cura dentale di precisione.',
   text: 'Esplora i nostri servizi',
   href: '/trattamenti/',
-  image: '/assets/feature-stack/tecnologia-studio.jpg',
-  alt: 'Paziente durante una scansione digitale nello studio dentistico',
+  image: '/assets/original/2021/03/IL-DIGITALE-scaled.jpg',
+  alt: 'Schermo computer con pianificazione digitale di una cura dentale',
 };
 
 const workplaceFeature = {
@@ -204,8 +204,8 @@ const locationOffices = site.offices.map((office) => {
           <span>Prenota una valutazione</span>
           <span aria-hidden="true">↗</span>
         </a>
-        <a class="scraped-hero-button scraped-hero-button-secondary" href="#metodo-studio">
-          <span>Scopri il nostro metodo</span>
+        <a class="scraped-hero-button scraped-hero-button-secondary" href="/trattamenti/">
+          <span>I nostri trattamenti</span>
           <span aria-hidden="true">↗</span>
         </a>
       </div>
@@ -715,9 +715,9 @@ const locationOffices = site.offices.map((office) => {
   }
 
   .scraped-hero-button-primary {
-    border-color: var(--surface-white);
-    background: var(--surface-white);
-    color: var(--brand-primary-dark);
+    border-color: var(--brand-cta);
+    background: var(--brand-cta);
+    color: var(--surface-white);
   }
 
   .scraped-hero-button-secondary {
@@ -731,8 +731,9 @@ const locationOffices = site.offices.map((office) => {
 
   .scraped-hero-button-primary:hover,
   .scraped-hero-button-primary:focus-visible {
-    background: var(--soft-blue-bg);
-    border-color: var(--soft-blue-bg);
+    background: var(--brand-cta-hover);
+    border-color: var(--brand-cta-hover);
+    color: var(--surface-white);
   }
 
   .scraped-hero-button-secondary:hover,
