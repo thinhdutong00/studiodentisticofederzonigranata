@@ -318,7 +318,7 @@ const offices = site.offices.map((office) => ({
           {goodReasons.map((reason) => (
             <article class="fv-reason-card">
               <span class="fv-reason-icon" aria-hidden="true">
-                <svg viewBox="0 0 48 48" focusable="false" set:html={reason.icon} />
+                <svg viewBox="0 0 48 48" aria-hidden="true" role="presentation" focusable="false" set:html={reason.icon} />
               </span>
               <div class="fv-reason-copy">
                 <h3>{reason.title}</h3>
