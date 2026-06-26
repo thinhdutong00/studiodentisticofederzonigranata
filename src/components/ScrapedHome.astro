@@ -194,7 +194,11 @@ const locationOffices = site.offices.map((office) => {
     <div class="scraped-hero-shade"></div>
     <div class="scraped-hero-copy">
       <p class="scraped-pretitle">Studio dentistico a Modena e Reggio Emilia · Oltre 30 anni di esperienza</p>
-      <h1>Un sorriso che sembri tuo, solo migliore.</h1>
+      <h1>
+        <span class="scraped-hero-title-line">Un sorriso</span>
+        <span class="scraped-hero-title-line">che sembri tuo,</span>
+        <span class="scraped-hero-title-line">solo migliore.</span>
+      </h1>
       <p class="scraped-hero-description">
         Curiamo salute, funzione ed estetica della bocca per adulti e bambini con un piano chiaro prima di iniziare,
         spiegazioni semplici e risultati naturali pensati sul tuo viso.
@@ -659,7 +663,7 @@ const locationOffices = site.offices.map((office) => {
   }
 
   .scraped-hero h1 {
-    max-width: 980px;
+    max-width: 1180px;
     margin: 0 auto;
     color: var(--surface-white);
     font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -669,6 +673,11 @@ const locationOffices = site.offices.map((office) => {
     letter-spacing: -0.2px;
     overflow-wrap: normal;
     hyphens: none;
+  }
+
+  .scraped-hero-title-line {
+    display: block;
+    white-space: nowrap;
   }
 
   .scraped-hero-description {
@@ -951,7 +960,8 @@ const locationOffices = site.offices.map((office) => {
   }
 
   .feature-workplace .feature-image img {
-    object-fit: contain;
+    object-fit: cover;
+    object-position: center center;
   }
 
   .feature-copy p {
@@ -1030,6 +1040,12 @@ const locationOffices = site.offices.map((office) => {
   .feature-button-list .feature-button {
     width: 100%;
     margin-top: 0;
+  }
+
+  @media (min-width: 1161px) {
+    .feature-workplace .feature-button-list {
+      width: min(100%, 480px);
+    }
   }
 
   .feature-hero {
@@ -1855,7 +1871,7 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .scraped-hero h1 {
-      font-size: clamp(3rem, 14vw, 4.75rem);
+      font-size: clamp(2.25rem, 11vw, 4.75rem);
       line-height: 0.98;
     }
 
