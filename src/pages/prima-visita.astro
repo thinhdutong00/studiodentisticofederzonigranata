@@ -14,20 +14,20 @@ const intentButtons = [
 
 const visitSteps = [
   {
-    title: 'Partiamo dal tuo motivo',
-    text: 'Dolore, gengive, impianti, estetica, controllo o secondo parere. Prima ascoltiamo cosa ti porta qui.',
+    title: 'La tua storia clinica',
+    text: 'Apriamo la cartella anamnestica e raccogliamo salute generale, farmaci, allergie, interventi e cure precedenti. Ogni dettaglio è un piccolo indizio che aiuta a leggere il quadro intero.',
   },
   {
-    title: 'Guardiamo storia ed esami',
-    text: 'Farmaci, allergie, cure già fatte e radiografie aiutano a leggere il problema nel contesto giusto.',
+    title: 'Ascolto e desideri',
+    text: 'Diamo spazio a esigenze, timori e aspettative: cosa senti, cosa vorresti cambiare, cosa immagini per il tuo sorriso. Poi presentiamo i trattamenti possibili, con parole semplici e senza fretta.',
   },
   {
-    title: 'Controlliamo la bocca',
-    text: 'Valutiamo denti, gengive, mucose, masticazione, vecchie cure e segnali che possono essere ancora silenziosi.',
+    title: 'Check orale specialistico',
+    text: 'Lo specialista esegue la visita del cavo orale e, quando serve, una radiografia computer guidata. Sullo schermo osserviamo in tempo reale denti, gengive e tessuti, come una mappa appena illuminata.',
   },
   {
-    title: 'Ti diamo una direzione',
-    text: 'Diagnosi, priorità, opzioni, tempi e costi: prima di iniziare devi sapere cosa aspettarti.',
+    title: 'Confronto dell’esame',
+    text: 'Rileggiamo insieme ciò che è emerso, arriviamo a conclusioni chiare e valutiamo i percorsi possibili in base ai risultati. La scelta nasce dal confronto, non dalla fretta.',
   },
 ];
 
@@ -154,7 +154,7 @@ const offices = site.offices.map((office) => ({
 
     <section id="come-funziona" class="fv-steps-section" aria-labelledby="steps-title">
       <div class="fv-wrap">
-        <div class="fv-section-head">
+        <div class="fv-section-head fv-section-head-right">
           <p class="fv-kicker">Come si svolge</p>
           <h2 id="steps-title">La tua prima visita</h2>
         </div>
@@ -190,7 +190,7 @@ const offices = site.offices.map((office) => ({
         </figure>
         <div class="fv-split-copy">
           <p class="fv-kicker">Diagnosi prima del piano</p>
-          <h2 id="diagnosis-title">Meno dubbi, più direzione</h2>
+          <h2 id="diagnosis-title">Prima capiamo il caso, poi costruiamo il percorso</h2>
           <p>
             Una buona visita trasforma un problema confuso in informazioni utili: diagnosi, urgenza, opzioni, esami necessari.
           </p>
@@ -586,6 +586,11 @@ const offices = site.offices.map((office) => ({
     gap: 42px;
     align-items: end;
     margin-bottom: 42px;
+  }
+
+  .fv-section-head-right h2 {
+    justify-self: end;
+    text-align: right;
   }
 
   .fv-section-head-centered {
