@@ -1,5 +1,6 @@
 ---
 import { site } from '../data/site';
+import { formatParentheticalDetail } from '../utils/formatParentheticalDetail';
 
 interface Props {
   transparent?: boolean;
@@ -51,7 +52,7 @@ const treatmentGroups = treatmentMenu.map((category) => ({
     .sort((a, b) => treatmentOrder.indexOf(a.label) - treatmentOrder.indexOf(b.label))
     .map((item) => ({
       ...item,
-      menuLabel: treatmentMenuLabels[item.label] || item.label,
+      menuLabel: treatmentMenuLabels[item.label] || formatParentheticalDetail(item.label),
     })),
 }));
 const treatmentGroupColumns = [

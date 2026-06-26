@@ -1,6 +1,7 @@
 ---
 import { site } from '../data/site';
 import { featuredPatientReviews } from '../data/reviews';
+import { formatParentheticalDetail } from '../utils/formatParentheticalDetail';
 
 const heroImage = '/assets/original/2022/03/dentista-modena-reggio-emilia.jpg';
 const starsFor = (rating: number) => `${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}`;
@@ -48,7 +49,7 @@ const services = site.treatmentMenu
   .flatMap((category) => category.items)
   .sort((a, b) => treatmentOrder.indexOf(a.label) - treatmentOrder.indexOf(b.label))
   .map((item) => ({
-    title: treatmentMenuLabels[item.label] || item.label,
+    title: treatmentMenuLabels[item.label] || formatParentheticalDetail(item.label),
     description: treatmentDescriptions[item.label],
     href: item.href,
   }));

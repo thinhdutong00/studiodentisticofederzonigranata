@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
 import { site } from '../data/site';
+import { formatParentheticalDetail } from '../utils/formatParentheticalDetail';
 
 const treatmentOrder = [
   'Igiene orale e Prevenzione',
@@ -80,7 +81,7 @@ const treatments = treatmentCategories
   .flatMap((category) =>
     category.items.map((item) => ({
       ...item,
-      title: treatmentMenuLabels[item.label] || item.label,
+      title: treatmentMenuLabels[item.label] || formatParentheticalDetail(item.label),
       description: treatmentDescriptions[item.label],
       categoryLabel: category.displayLabel,
       categorySummary: category.summary,
