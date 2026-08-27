@@ -9,12 +9,9 @@ interface Props {
 
 const { transparent = false, ctaHref = '/richiesta/' } = Astro.props;
 
-const beforeTreatment = [
-  { label: 'prima visita', href: '/prima-visita/' },
-];
-
 const afterTreatment = [
-  { label: 'urgenze', href: '/urgenze/' },
+  { label: 'trattamenti', href: '/trattamenti/' },
+  { label: 'lo studio', href: '/chi-siamo/' },
 ];
 
 const slugFromHref = (href: string) => href.replaceAll('/', '') || 'pagina';
@@ -202,6 +199,8 @@ const callOptions = site.offices.map((office) => ({
   phoneHref: office.phoneHref,
 }));
 
+const experienceMessage = 'Studio dentistico a Modena e Reggio Emilia · Oltre 35 anni di esperienza';
+
 const siteMenuTreatments = treatmentGroups.flatMap((category) => category.items.map((item) => ({
   label: item.menuLabel,
   href: item.href,
@@ -210,19 +209,27 @@ const siteMenuTreatments = treatmentGroups.flatMap((category) => category.items.
 const siteMenuInformation = [
   { label: 'Chi siamo', href: '/chi-siamo/' },
   { label: 'Qualità e Tecnologia', href: '/strumentazioni-attrezzature-tecniche/' },
+  { label: 'Prima visita', href: '/prima-visita/' },
   { label: 'Orari e sedi', href: '/orari-e-sedi/' },
   { label: 'Convenzioni', href: '/convenzioni/' },
+  { label: 'Urgenze', href: '/urgenze/' },
   { label: 'FAQ', href: '/faq/' },
 ];
 ---
 
 <header class:list={['site-header', transparent && 'site-header-overlay', transparent && 'is-over-hero']} data-overlay-header={transparent ? 'true' : undefined} data-site-menu-root>
+  <div class="header-experience-bar" role="note">
+    <span class="sr-only">{experienceMessage}</span>
+    <div class="header-experience-track" aria-hidden="true">
+      <span class="header-experience-message">{experienceMessage}</span>
+      <span class="header-experience-message">{experienceMessage}</span>
+    </div>
+  </div>
   <div class="container header-inner">
     <a class="brand" href="/" aria-label={site.name}>
       <img src={site.logo} alt="Studio dentistico Federzoni Granata" width="400" height="52" />
     </a>
     <nav id="primary-navigation" class="primary-nav" aria-label="Navigazione principale">
-      {beforeTreatment.map((item) => <a class="primary-nav-link" href={item.href}>{item.label}</a>)}
       {secondaryMenus.slice(0, 1).map((navMenu) => (
         <div class="nav-mega" data-mega-menu data-menu-title={navMenu.title}>
           <a
@@ -641,10 +648,36 @@ const siteMenuInformation = [
 
   const setupCallDropdowns = () => {
     const dropdowns = Array.from(document.querySelectorAll('[data-call-dropdown]'));
+    const hoverQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
 
     dropdowns.forEach((dropdown) => {
       if (!(dropdown instanceof HTMLDetailsElement) || dropdown.dataset.ready === 'true') return;
       dropdown.dataset.ready = 'true';
+      let closeTimeout;
+
+      const clearCloseDelay = () => {
+        if (!closeTimeout) return;
+        window.clearTimeout(closeTimeout);
+        closeTimeout = undefined;
+      };
+
+      const openOnHover = () => {
+        if (!hoverQuery.matches) return;
+        clearCloseDelay();
+        dropdown.open = true;
+      };
+
+      const closeAfterHover = () => {
+        if (!hoverQuery.matches) return;
+        clearCloseDelay();
+        closeTimeout = window.setTimeout(() => {
+          dropdown.open = false;
+          closeTimeout = undefined;
+        }, 180);
+      };
+
+      dropdown.addEventListener('mouseenter', openOnHover);
+      dropdown.addEventListener('mouseleave', closeAfterHover);
 
       dropdown.addEventListener('toggle', () => {
         if (!dropdown.open) return;

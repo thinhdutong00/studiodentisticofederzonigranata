@@ -1,0 +1,377 @@
+---
+import TreatmentIcon from './TreatmentIcon.astro';
+
+interface Service {
+  title: string;
+  description?: string;
+  href: string;
+}
+
+interface Props {
+  services: Service[];
+}
+
+const { services } = Astro.props;
+
+const iconByHref: Record<string, string> = {
+  '/igiene-orale-prevenzione/': 'hygiene',
+  '/sbiancamento/': 'whitening',
+  '/conservativa-otturazioni/': 'filling',
+  '/endodonzia-devitalizzazioni/': 'endodontics',
+  '/pedodonzia-odontoiatria-infantile/': 'pediatric',
+  '/ortodonzia-allineatori-invisibili/': 'orthodontics',
+  '/estetica-diretta-faccette-composito/': 'composite',
+  '/parodontologia-cure-gengivali/': 'periodontology',
+  '/protesi-fissa-mobile/': 'prosthesis',
+  '/estetica-indiretta-faccette-porcellana/': 'ceramic',
+  '/chirurgia-stomatologica/': 'surgery',
+  '/implantologia-tradizionale-computer-guidata/': 'implantology',
+  '/gnatologia-articolazione-temporo-mandibolare/': 'gnathology',
+  '/dispositivi-russamento-apnee-notturne/': 'sleep',
+};
+
+const featuredTreatmentHrefs = [
+  '/igiene-orale-prevenzione/',
+  '/conservativa-otturazioni/',
+  '/endodonzia-devitalizzazioni/',
+  '/ortodonzia-allineatori-invisibili/',
+  '/implantologia-tradizionale-computer-guidata/',
+  '/estetica-indiretta-faccette-porcellana/',
+];
+
+const featuredServices = featuredTreatmentHrefs.flatMap((href) => {
+  const service = services.find((item) => item.href === href);
+  return service ? [service] : [];
+});
+
+const remainingServices = services.filter((service) => !featuredTreatmentHrefs.includes(service.href));
+const orderedServices = [...featuredServices, ...remainingServices];
+---
+
+<section id="trattamenti-home" class="home-treatments" aria-labelledby="home-treatments-title" data-home-treatments>
+  <div class="home-treatments-wrap">
+    <header class="home-treatments-head">
+      <p class="home-treatments-kicker"><span>Trattamenti dello studio</span></p>
+      <h2 id="home-treatments-title">trattamenti per la tua <span>salute orale</span></h2>
+    </header>
+
+    <div id="home-treatments-grid" class="home-treatments-grid">
+      {orderedServices.map((service, index) => (
+        <a
+          class="home-treatment-card"
+          href={service.href}
+          hidden={index >= featuredTreatmentHrefs.length}
+          data-treatment-extra={index >= featuredTreatmentHrefs.length ? '' : undefined}
+        >
+          <span class="home-treatment-icon">
+            <TreatmentIcon icon={iconByHref[service.href] || 'hygiene'} />
+          </span>
+          <h3>{service.title}</h3>
+          {service.description && <p>{service.description}</p>}
+        </a>
+      ))}
+    </div>
+
+    <div class="home-treatments-action">
+      <button
+        class="home-treatments-toggle"
+        type="button"
+        aria-controls="home-treatments-grid"
+        aria-expanded="false"
+        data-treatments-toggle
+      >
+        Guarda tutti i trattamenti
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('[data-home-treatments]').forEach((section) => {
+    if (!(section instanceof HTMLElement) || section.dataset.homeTreatmentsReady === 'true') return;
+    section.dataset.homeTreatmentsReady = 'true';
+
+    const button = section.querySelector('[data-treatments-toggle]');
+    const extraCards = Array.from(section.querySelectorAll('[data-treatment-extra]'));
+
+    if (!(button instanceof HTMLButtonElement) || extraCards.length === 0) return;
+
+    button.addEventListener('click', () => {
+      const expanded = button.getAttribute('aria-expanded') === 'true';
+      const nextExpanded = !expanded;
+
+      extraCards.forEach((card) => {
+        if (card instanceof HTMLElement) card.hidden = !nextExpanded;
+      });
+
+      button.setAttribute('aria-expanded', String(nextExpanded));
+      button.textContent = nextExpanded ? 'Mostra meno' : 'Guarda tutti i trattamenti';
+    });
+  });
+</script>
+
+<style>
+  .home-treatments {
+    padding: clamp(86px, 7vw, 118px) 0 clamp(92px, 7.4vw, 124px);
+    background:
+      radial-gradient(circle at 50% 25%, rgba(var(--soft-blue-bg-rgb), 0.92), transparent 38%),
+      linear-gradient(180deg, var(--surface-white) 0%, var(--background) 100%);
+    color: var(--text-dark);
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -0.2px;
+    word-spacing: 0;
+  }
+
+  .home-treatments-wrap {
+    width: min(1460px, calc(100% - 40px));
+    margin: 0 auto;
+  }
+
+  .home-treatments-head {
+    max-width: 940px;
+    margin: 0 auto clamp(52px, 5vw, 74px);
+    text-align: center;
+  }
+
+  .home-treatments-kicker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin: 0 0 26px;
+    color: var(--brand-blue);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .home-treatments-kicker::before,
+  .home-treatments-kicker::after {
+    content: "";
+    width: 38px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .home-treatments-head h2 {
+    margin: 0;
+    color: var(--brand-primary-dark);
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(3rem, 5vw, 5.25rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 0.98;
+    text-wrap: balance;
+  }
+
+  .home-treatments-head h2 span {
+    display: block;
+    color: var(--brand-blue);
+  }
+
+  .home-treatments-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+  }
+
+  .home-treatment-card {
+    min-height: 318px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid var(--border);
+    border-radius: 32px;
+    padding: 34px 36px 38px;
+    background: rgba(var(--surface-white-rgb), 0.94);
+    color: var(--brand-primary-dark);
+    text-decoration: none;
+    box-shadow: 0 18px 44px rgba(var(--brand-primary-dark-rgb), 0.035);
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      transform 180ms ease;
+  }
+
+  .home-treatment-card[hidden] {
+    display: none;
+  }
+
+  .home-treatment-card:hover,
+  .home-treatment-card:focus-visible {
+    border-color: rgba(var(--brand-blue-rgb), 0.72);
+    box-shadow: 0 24px 58px rgba(var(--brand-primary-dark-rgb), 0.1);
+    transform: translateY(-4px);
+  }
+
+  .home-treatment-card:focus-visible {
+    outline: 3px solid rgba(var(--brand-cta-rgb), 0.28);
+    outline-offset: 4px;
+  }
+
+  .home-treatment-icon {
+    width: 66px;
+    height: 66px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(var(--brand-blue-rgb), 0.12);
+    border-radius: 18px;
+    background: var(--background);
+    color: var(--brand-cta);
+    box-shadow: 0 4px 10px rgba(var(--brand-primary-dark-rgb), 0.09);
+    transition:
+      background-color 180ms ease,
+      color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .home-treatment-card:hover .home-treatment-icon,
+  .home-treatment-card:focus-visible .home-treatment-icon {
+    background: var(--soft-blue-bg);
+    color: var(--brand-primary-dark);
+    transform: scale(1.04);
+  }
+
+  .home-treatment-card h3 {
+    margin: 36px 0 0;
+    color: var(--brand-primary-dark);
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(1.25rem, 1.55vw, 1.55rem);
+    font-weight: 500;
+    letter-spacing: -0.2px;
+    line-height: 1.15;
+  }
+
+  .home-treatment-card p {
+    margin: 18px 0 0;
+    color: var(--muted-text);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: -0.2px;
+    line-height: 1.5;
+  }
+
+  .home-treatments-action {
+    display: flex;
+    justify-content: center;
+    margin-top: 48px;
+  }
+
+  .home-treatments-toggle {
+    min-height: 58px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--brand-cta);
+    border-radius: 8px;
+    padding: 0 28px;
+    background: var(--brand-cta);
+    color: var(--surface-white);
+    cursor: pointer;
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.2px;
+    line-height: 16px;
+    text-transform: uppercase;
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .home-treatments-toggle:hover,
+  .home-treatments-toggle:focus-visible {
+    border-color: var(--brand-cta-hover);
+    background: var(--brand-cta-hover);
+    transform: translateY(-2px);
+  }
+
+  .home-treatments-toggle:focus-visible {
+    outline: 3px solid rgba(var(--brand-cta-rgb), 0.28);
+    outline-offset: 4px;
+  }
+
+  @media (max-width: 1060px) {
+    .home-treatments-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 680px) {
+    .home-treatments {
+      padding: 68px 0 76px;
+      letter-spacing: -0.16px;
+    }
+
+    .home-treatments-wrap {
+      width: min(100% - 30px, 1460px);
+    }
+
+    .home-treatments-head {
+      margin-bottom: 40px;
+    }
+
+    .home-treatments-kicker {
+      gap: 12px;
+      margin-bottom: 20px;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+    }
+
+    .home-treatments-kicker::before,
+    .home-treatments-kicker::after {
+      width: 24px;
+    }
+
+    .home-treatments-head h2 {
+      font-size: clamp(2.4rem, 12vw, 3.7rem);
+      letter-spacing: -0.025em;
+      line-height: 1;
+    }
+
+    .home-treatments-grid {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .home-treatment-card {
+      min-height: 0;
+      border-radius: 24px;
+      padding: 26px;
+    }
+
+    .home-treatment-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+    }
+
+    .home-treatment-card h3 {
+      margin-top: 28px;
+      font-size: 20px;
+      letter-spacing: -0.16px;
+      line-height: 1.25;
+    }
+
+    .home-treatment-card p {
+      margin-top: 14px;
+      font-size: 14px;
+      letter-spacing: -0.16px;
+      line-height: 1.45;
+    }
+
+    .home-treatments-action {
+      margin-top: 34px;
+    }
+
+    .home-treatments-toggle {
+      width: 100%;
+      min-height: 56px;
+      padding-inline: 20px;
+      letter-spacing: -0.16px;
+    }
+  }
+</style>

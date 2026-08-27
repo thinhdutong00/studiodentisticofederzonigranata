@@ -1,0 +1,265 @@
+---
+import { site } from '../data/site';
+import TreatmentIcon from './TreatmentIcon.astro';
+
+const clinicalCategories = site.clinicalLinks;
+const iconByClinicalLabel: Record<string, string> = {
+  Estetica: 'ceramic',
+  Protesi: 'prosthesis',
+  Parodontologia: 'periodontology',
+  Implantologia: 'implantology',
+  Ortodonzia: 'orthodontics',
+  Conservativa: 'filling',
+  Endodonzia: 'endodontics',
+  Video: 'video',
+};
+---
+
+<section id="casi-clinici" class="clinical-cases-section" aria-labelledby="clinical-cases-title">
+  <div class="clinical-cases-container">
+    <header class="clinical-cases-header">
+      <h1>Casi clinici</h1>
+      <h2 id="clinical-cases-title">Esempi di lavori eseguiti dallo studio odontoiatrico</h2>
+      <span aria-hidden="true"></span>
+    </header>
+
+    <div class="clinical-cases-intro">
+      <p>
+        La documentazione clinica esposta in questo sito, è il capitolo più importante per il nostro studio dentistico.
+        Riteniamo che le foto siano molto più eloquenti delle parole, soprattutto per i non addetti ai lavori.
+      </p>
+      <p>
+        I casi esposti sono quelli di routine del nostro studio, un piccolo riassunto delle terapie più comuni. Si tratta
+        spesso di casi multidisciplinari, in cui i vari professionisti si sono intervallati in sinergia sul paziente,
+        ciascuno con la propria esperienza e conoscenza specialistica.
+      </p>
+    </div>
+
+    <nav class="clinical-cases-navigation" aria-label="Categorie dei casi clinici">
+      <ul class="clinical-cases-grid">
+        {clinicalCategories.map((category) => (
+          <li>
+            <a href={category.href}>
+              <span class="clinical-cases-mark" aria-hidden="true">
+                <TreatmentIcon icon={iconByClinicalLabel[category.label] || 'hygiene'} />
+              </span>
+              <span class="clinical-cases-label">{category.label}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</section>
+
+<style>
+  .clinical-cases-section {
+    scroll-margin-top: 96px;
+    padding: clamp(76px, 7vw, 112px) 0 clamp(88px, 8vw, 128px);
+    background: var(--surface-white);
+    color: var(--text-dark);
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -0.2px;
+    word-spacing: 0;
+  }
+
+  .clinical-cases-container {
+    width: min(1280px, calc(100% - 64px));
+    margin: 0 auto;
+  }
+
+  .clinical-cases-header {
+    text-align: center;
+  }
+
+  .clinical-cases-header h1 {
+    margin: 0;
+    color: var(--blue-dark);
+    font-size: clamp(2rem, 4.8vw, 4.75rem);
+    font-weight: 500;
+    line-height: 1.05;
+  }
+
+  .clinical-cases-header h2 {
+    max-width: 1040px;
+    margin: 22px auto 0;
+    color: var(--brand-blue);
+    font-size: clamp(1.25rem, 2vw, 2rem);
+    font-weight: 500;
+    line-height: 1.25;
+  }
+
+  .clinical-cases-header > span {
+    width: 96px;
+    height: 2px;
+    display: block;
+    margin: 38px auto 0;
+    background: var(--brand-blue);
+  }
+
+  .clinical-cases-intro {
+    margin-top: 40px;
+    color: var(--muted-text);
+    font-size: clamp(1rem, 1.12vw, 1.125rem);
+    font-weight: 400;
+    line-height: 1.65;
+  }
+
+  .clinical-cases-intro p {
+    margin: 0;
+  }
+
+  .clinical-cases-intro p + p {
+    margin-top: 2px;
+  }
+
+  .clinical-cases-navigation {
+    margin-top: clamp(60px, 6vw, 82px);
+  }
+
+  .clinical-cases-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: clamp(36px, 5vw, 80px);
+    row-gap: clamp(36px, 4vw, 58px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .clinical-cases-grid li {
+    min-width: 0;
+  }
+
+  .clinical-cases-grid a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--brand-blue);
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .clinical-cases-mark {
+    width: min(100%, 220px);
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(var(--brand-blue-rgb), 0.12);
+    border-radius: 36px;
+    background: var(--background);
+    color: var(--brand-cta);
+    box-shadow: 0 8px 22px rgba(var(--brand-primary-dark-rgb), 0.09);
+    transition:
+      background-color 180ms ease,
+      color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .clinical-cases-mark :global(.treatment-icon) {
+    width: 140px;
+    height: 140px;
+  }
+
+  .clinical-cases-label {
+    margin-top: 14px;
+    font-size: clamp(1rem, 1.4vw, 1.35rem);
+    font-weight: 500;
+    line-height: 1.15;
+    text-transform: uppercase;
+    transition: color 180ms ease;
+  }
+
+  .clinical-cases-grid a:hover .clinical-cases-mark,
+  .clinical-cases-grid a:focus-visible .clinical-cases-mark {
+    background: var(--soft-blue-bg);
+    color: var(--brand-primary-dark);
+    transform: translateY(-4px);
+  }
+
+  .clinical-cases-grid a:hover .clinical-cases-label,
+  .clinical-cases-grid a:focus-visible .clinical-cases-label {
+    color: var(--brand-cta-hover);
+  }
+
+  .clinical-cases-grid a:focus-visible {
+    border-radius: 4px;
+    outline: 3px solid rgba(var(--brand-cta-rgb), 0.3);
+    outline-offset: 6px;
+  }
+
+  @media (max-width: 960px) {
+    .clinical-cases-container {
+      width: min(760px, calc(100% - 48px));
+    }
+
+    .clinical-cases-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: clamp(32px, 8vw, 72px);
+    }
+
+    .clinical-cases-mark {
+      width: min(100%, 210px);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .clinical-cases-section {
+      padding: 58px 0 72px;
+      letter-spacing: -0.16px;
+    }
+
+    .clinical-cases-container {
+      width: min(100% - 30px, 520px);
+    }
+
+    .clinical-cases-header h1 {
+      font-size: 2rem;
+    }
+
+    .clinical-cases-header h2 {
+      margin-top: 16px;
+      font-size: 1.25rem;
+      line-height: 1.25;
+    }
+
+    .clinical-cases-header > span {
+      width: 72px;
+      margin-top: 28px;
+    }
+
+    .clinical-cases-intro {
+      margin-top: 30px;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .clinical-cases-intro p + p {
+      margin-top: 10px;
+    }
+
+    .clinical-cases-navigation {
+      margin-top: 46px;
+    }
+
+    .clinical-cases-grid {
+      column-gap: 20px;
+      row-gap: 34px;
+    }
+
+    .clinical-cases-mark {
+      width: min(100%, 150px);
+      border-radius: 28px;
+    }
+
+    .clinical-cases-mark :global(.treatment-icon) {
+      width: 96px;
+      height: 96px;
+    }
+
+    .clinical-cases-label {
+      margin-top: 14px;
+      font-size: 0.9rem;
+    }
+  }
+</style>

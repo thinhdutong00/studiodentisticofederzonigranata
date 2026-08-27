@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
+import ClinicalCasesCarousel from '../components/ClinicalCasesCarousel.astro';
 import { site } from '../data/site';
 
 const heroImages = [
@@ -105,22 +106,6 @@ const officeDetails: Record<string, { label: string; title: string; description:
   },
 };
 
-const serviceCards = [
-  {
-    title: 'Trattamenti odontoiatrici',
-    text: 'Prevenzione, estetica, chirurgia, implantologia, ortodonzia e riabilitazioni pensate su misura.',
-    href: '/trattamenti/',
-    image: '/assets/original/2021/01/06-E-foto-chir-guidata-1.jpeg',
-    alt: 'Pianificazione digitale di un trattamento odontoiatrico',
-  },
-  {
-    title: 'Qualità e tecnologia',
-    text: 'Strumenti digitali per diagnosi, pianificazione e controllo dei percorsi clinici.',
-    href: '/strumentazioni-attrezzature-tecniche/',
-    image: '/assets/feature-stack/tecnologia-studio.jpg',
-    alt: 'Tecnologia diagnostica digitale nello studio dentistico',
-  },
-];
 ---
 
 <BaseLayout
@@ -290,23 +275,7 @@ const serviceCards = [
       </div>
     </section>
 
-    <section class="discover-section" aria-labelledby="discover-title">
-      <div class="about-wrap discover-head">
-        <h2 id="discover-title">Continua a scoprire i nostri servizi</h2>
-      </div>
-      <div class="about-wrap discover-grid">
-        {serviceCards.map((card) => (
-          <a class="discover-card" href={card.href}>
-            <img src={card.image} alt={card.alt} loading="eager" />
-            <span class="discover-shade" aria-hidden="true"></span>
-            <span class="discover-copy">
-              <strong>{card.title}</strong>
-              <small>{card.text}</small>
-            </span>
-          </a>
-        ))}
-      </div>
-    </section>
+    <ClinicalCasesCarousel />
   </div>
 </BaseLayout>
 

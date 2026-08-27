@@ -1,7 +1,10 @@
 ---
 import { site } from '../data/site';
+import { videoItems } from '../data/videos';
 import { featuredPatientReviews } from '../data/reviews';
 import { formatParentheticalDetail } from '../utils/formatParentheticalDetail';
+import ClinicalCasesOriginalGrid from './ClinicalCasesOriginalGrid.astro';
+import HomeTreatments from './HomeTreatments.astro';
 
 const heroImage = '/assets/original/2021/02/HOME.jpg';
 const starsFor = (rating: number) => `${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}`;
@@ -56,8 +59,8 @@ const services = site.treatmentMenu
 
 const specialistFeature = {
   title: 'L’attenzione dei migliori specialisti.',
-  text: 'Il nostro team di professionisti a tua disposizione.',
-  cta: 'Guarda il nostro team completo',
+  text: 'Siamo professionisti con oltre 35 anni di esperienza e riconoscimenti dalle più prestigiose società scientifiche nazionali e internazionali.',
+  cta: 'Guarda i nostri Cv',
   href: '/chi-siamo/',
   image: '/assets/original/2021/02/HOME.jpg',
   alt: 'Dottor Stefano Granata e Dottoressa Chiara Federzoni nello studio dentistico',
@@ -66,101 +69,22 @@ const specialistFeature = {
 const technologyFeature = {
   titleLead: 'Tecnologia all’avanguardia per una',
   titleAccent: 'cura dentale di precisione.',
-  text: 'Esplora i nostri servizi',
-  href: '/trattamenti/',
+  text: 'Scopri di più',
+  href: '/strumentazioni-attrezzature-tecniche/',
   image: '/assets/original/2021/03/IL-DIGITALE-scaled.jpg',
   alt: 'Schermo computer con pianificazione digitale di una cura dentale',
 };
 
 const workplaceFeature = {
-  title: 'Non denti da catalogo, ma un sorriso che sembri tuo,',
-  titleEnd: 'solo migliore.',
-  text: '',
+  title: 'La prima visita comincia dall’ascolto.',
+  titleEnd: '',
+  text: 'Ascoltiamo le tue esigenze, raccogliamo tutte le informazioni necessarie e definiamo insieme un percorso di cura chiaro e personalizzato.',
   image: '/assets/feature-stack/paziente-scanner-digitale.jpg',
   alt: 'Paziente durante una scansione digitale del sorriso',
   links: [
-    { label: 'Un piano chiaro prima di qualsiasi trattamento', href: '/trattamenti/' },
-    { label: 'Oltre 30 anni di esperienza per proteggere salute, funzione ed estetica', href: '/chi-siamo/' },
-    { label: 'Un sorriso studiato sul tuo viso, non su uno standard', href: '/casi-clinici/' },
+    { label: 'Scopri come si svolge', href: '/prima-visita/' },
   ],
 };
-
-const clinicalCarouselDetails: Record<string, { description: string; image: string; imageAlt: string; imagePosition: string }> = {
-  Estetica: {
-    description: 'Casi dedicati all’armonia del sorriso, al colore, alla forma e alla naturalezza del risultato finale.',
-    image: '/assets/menu/casi-clinici-estetica.jpg',
-    imageAlt: 'Donna che sorride allo specchio durante una visita estetica',
-    imagePosition: '45% 52%',
-  },
-  Protesi: {
-    description: 'Riabilitazioni protesiche fisse e mobili per recuperare funzione masticatoria, stabilità ed estetica.',
-    image: '/assets/menu/casi-clinici-protesi.png',
-    imageAlt: 'Progettazione digitale di una protesi dentale al computer',
-    imagePosition: '54% 50%',
-  },
-  Parodontologia: {
-    description: 'Percorsi dedicati alla salute delle gengive e dei tessuti di sostegno del sorriso.',
-    image: '/assets/menu/casi-clinici-parodontologia.png',
-    imageAlt: 'Controllo parodontale su gengive e denti',
-    imagePosition: '54% 48%',
-  },
-  Implantologia: {
-    description: 'Casi con impianti dentali, dalla progettazione alla riabilitazione anche con approccio digitale.',
-    image: '/assets/menu/casi-clinici-implantologia.png',
-    imageAlt: 'Impianto dentale con corona e gengiva',
-    imagePosition: '50% 52%',
-  },
-  Ortodonzia: {
-    description: 'Allineamenti dentali e correzioni funzionali per adulti e bambini, anche con allineatori.',
-    image: '/assets/menu/casi-clinici-ortodonzia.png',
-    imageAlt: 'Allineatore trasparente applicato sul sorriso',
-    imagePosition: '52% 50%',
-  },
-  Conservativa: {
-    description: 'Restauri, otturazioni e ricostruzioni conservative per recuperare i denti naturali.',
-    image: '/assets/menu/casi-clinici-conservativa.png',
-    imageAlt: 'Restauro conservativo su molare',
-    imagePosition: '52% 48%',
-  },
-  Endodonzia: {
-    description: 'Cure canalari e salvataggio del dente quando carie profonde o traumi compromettono la polpa.',
-    image: '/assets/menu/casi-clinici-endodonzia.png',
-    imageAlt: 'Trattamento endodontico su sezione di dente',
-    imagePosition: '50% 48%',
-  },
-  Video: {
-    description: 'Contenuti video per osservare da vicino percorsi, risultati e dettagli dei trattamenti eseguiti.',
-    image: '/assets/menu/casi-clinici-video.jpg',
-    imageAlt: 'Equipe odontoiatrica durante una procedura clinica',
-    imagePosition: '48% 45%',
-  },
-};
-
-const clinicalCarouselOrder = [
-  'Video',
-  'Estetica',
-  'Protesi',
-  'Parodontologia',
-  'Implantologia',
-  'Conservativa',
-  'Ortodonzia',
-  'Endodonzia',
-];
-
-const clinicalCarouselItems = clinicalCarouselOrder.flatMap((label) => {
-  const item = site.clinicalLinks.find((clinicalLink) => clinicalLink.label === label);
-  const details = clinicalCarouselDetails[label];
-
-  if (!item || !details) return [];
-
-  return [{
-    ...item,
-    description: details.description,
-    image: details.image,
-    imageAlt: details.imageAlt,
-    imagePosition: details.imagePosition,
-  }];
-});
 
 const locationOffices = site.offices.map((office) => {
   const query = encodeURIComponent(office.address);
@@ -193,7 +117,7 @@ const locationOffices = site.offices.map((office) => {
   <section class="scraped-hero" aria-label="Studio dentistico Federzoni Granata" style={`--hero-image: url('${heroImage}')`} data-transparent-header-region>
     <div class="scraped-hero-shade"></div>
     <div class="scraped-hero-copy">
-      <p class="scraped-pretitle">Studio dentistico a Modena e Reggio Emilia · Oltre 30 anni di esperienza</p>
+      <p class="scraped-pretitle">Studio dentistico a Modena e Reggio Emilia · Oltre 35 anni di esperienza</p>
       <h1>
         <span class="scraped-hero-title-line">il tuo benessere</span>
         <span class="scraped-hero-title-line">inizia da un sorriso</span>
@@ -216,37 +140,27 @@ const locationOffices = site.offices.map((office) => {
     <a class="scraped-scroll" href="#trattamenti-home">Scorri</a>
   </section>
 
-  <section id="trattamenti-home" class="services-section" aria-labelledby="services-title">
-    <div class="scraped-wrap">
-      <div class="scraped-section-head">
-        <p class="scraped-eyebrow">Trattamenti dello studio</p>
-        <h2 id="services-title">I nostri trattamenti</h2>
-      </div>
-      <div class="services-rail">
-        {services.map((service, index) => (
-          <a class="service-card" href={service.href}>
-            <span>{String(index + 1).padStart(2, '0')}</span>
-            <h3>{service.title}</h3>
-            <p>{service.description}</p>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
+  <HomeTreatments services={services} />
 
   <section class="feature-stack" id="metodo-studio" aria-label="Servizi e valore dello studio">
     <div class="scraped-wrap feature-stack-inner">
       <section class="feature-split feature-specialists">
         <div class="feature-copy">
-          <h2>{specialistFeature.title}</h2>
-          <p>{specialistFeature.text}</p>
-          <a class="feature-button" href={specialistFeature.href}>
-            {specialistFeature.cta}
-            <span aria-hidden="true">↗</span>
-          </a>
+          <h2>
+            {workplaceFeature.title}{workplaceFeature.titleEnd && <> <span class="feature-title-nowrap">{workplaceFeature.titleEnd}</span></>}
+          </h2>
+          {workplaceFeature.text && <p>{workplaceFeature.text}</p>}
+          <div class="feature-button-list">
+            {workplaceFeature.links.map((link) => (
+              <a class="feature-button" href={link.href}>
+                {link.label}
+                <span aria-hidden="true">↗</span>
+              </a>
+            ))}
+          </div>
         </div>
         <figure class="feature-image">
-          <img src={specialistFeature.image} alt={specialistFeature.alt} loading="eager" />
+          <img src={workplaceFeature.image} alt={workplaceFeature.alt} loading="eager" />
         </figure>
       </section>
 
@@ -264,55 +178,21 @@ const locationOffices = site.offices.map((office) => {
 
       <section class="feature-split feature-workplace">
         <figure class="feature-image">
-          <img src={workplaceFeature.image} alt={workplaceFeature.alt} loading="eager" />
+          <img src={specialistFeature.image} alt={specialistFeature.alt} loading="eager" />
         </figure>
         <div class="feature-copy">
-          <h2>
-            {workplaceFeature.title} <span class="feature-title-nowrap">{workplaceFeature.titleEnd}</span>
-          </h2>
-          {workplaceFeature.text && <p>{workplaceFeature.text}</p>}
-          <div class="feature-button-list">
-            {workplaceFeature.links.map((link) => (
-              <a class="feature-button" href={link.href}>
-                {link.label}
-                <span aria-hidden="true">↗</span>
-              </a>
-            ))}
-          </div>
+          <h2>{specialistFeature.title}</h2>
+          <p>{specialistFeature.text}</p>
+          <a class="feature-button" href={specialistFeature.href}>
+            {specialistFeature.cta}
+            <span aria-hidden="true">↗</span>
+          </a>
         </div>
       </section>
     </div>
   </section>
 
-  <section class="clinical-carousel-section" aria-labelledby="clinical-carousel-title" data-clinical-carousel>
-    <div class="clinical-carousel-head">
-      <p class="scraped-eyebrow">Guarda i nostri</p>
-      <h2 id="clinical-carousel-title">Casi clinici</h2>
-    </div>
-
-    <div class="clinical-carousel-shell">
-      <button class="clinical-carousel-arrow clinical-carousel-arrow-prev" type="button" aria-label="Scorri i casi clinici precedenti" data-clinical-carousel-prev>
-        <span aria-hidden="true">‹</span>
-      </button>
-
-      <div class="clinical-carousel-track" data-clinical-carousel-track>
-        {clinicalCarouselItems.map((item) => (
-          <a class="clinical-carousel-card" href={item.href} style={`--clinical-card-position: ${item.imagePosition};`}>
-            <img src={item.image} alt={item.imageAlt} loading="lazy" />
-            <span class="clinical-carousel-shade" aria-hidden="true"></span>
-            <span class="clinical-carousel-card-copy">
-              <strong>{item.label}</strong>
-              <small>{item.description}</small>
-            </span>
-          </a>
-        ))}
-      </div>
-
-      <button class="clinical-carousel-arrow clinical-carousel-arrow-next" type="button" aria-label="Scorri i casi clinici successivi" data-clinical-carousel-next>
-        <span aria-hidden="true">›</span>
-      </button>
-    </div>
-  </section>
+  <ClinicalCasesOriginalGrid />
 
   <section class="insights-section" aria-labelledby="insights-title">
     <div class="scraped-wrap">
@@ -341,6 +221,65 @@ const locationOffices = site.offices.map((office) => {
       </div>
     </div>
   </section>
+
+  <section id="video-home" class="clinical-carousel-section video-carousel-section" aria-labelledby="video-carousel-title" data-clinical-carousel data-carousel-continuous-speed="42" data-video-gallery>
+    <div class="clinical-carousel-head">
+      <svg class="video-carousel-youtube-logo" viewBox="0 0 68 48" role="img" aria-label="YouTube">
+        <path d="M66.6 7.5a8.3 8.3 0 0 0-5.8-5.9C55.6.2 34 .2 34 .2S12.4.2 7.2 1.6a8.3 8.3 0 0 0-5.8 5.9C0 12.7 0 24 0 24s0 11.3 1.4 16.5a8.3 8.3 0 0 0 5.8 5.9C12.4 47.8 34 47.8 34 47.8s21.6 0 26.8-1.4a8.3 8.3 0 0 0 5.8-5.9C68 35.3 68 24 68 24s0-11.3-1.4-16.5Z" fill="#ff0000"></path>
+        <path d="m27.2 34.2 17.9-10.2-17.9-10.2v20.4Z" fill="#fff"></path>
+      </svg>
+      <p class="scraped-eyebrow">Guarda i nostri</p>
+      <h2 id="video-carousel-title">Video</h2>
+    </div>
+
+    <div class="clinical-carousel-shell">
+      <div class="clinical-carousel-track" data-clinical-carousel-track>
+        {videoItems.map((video) => (
+          <button
+            class="clinical-carousel-card video-carousel-card"
+            type="button"
+            aria-label={`Riproduci il video: ${video.title}`}
+            data-video-id={video.id}
+            data-video-title={video.title}>
+            <img src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`} alt="" loading="lazy" />
+            <span class="clinical-carousel-shade" aria-hidden="true"></span>
+            <span class="video-carousel-play" aria-hidden="true">▶</span>
+            <span class="clinical-carousel-card-copy">
+              <strong>{video.title}</strong>
+              <small>{video.description}</small>
+            </span>
+          </button>
+        ))}
+      </div>
+
+      <div class="video-carousel-controls" aria-label="Controlli del carosello video">
+        <button class="clinical-carousel-arrow clinical-carousel-arrow-prev" type="button" aria-label="Scorri i video precedenti" data-clinical-carousel-prev>
+          <span aria-hidden="true">‹</span>
+        </button>
+
+        <button class="clinical-carousel-arrow clinical-carousel-arrow-next" type="button" aria-label="Scorri i video successivi" data-clinical-carousel-next>
+          <span aria-hidden="true">›</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <dialog class="video-dialog" aria-labelledby="video-dialog-title" data-video-dialog>
+    <div class="video-dialog-panel">
+      <div class="video-dialog-toolbar">
+        <h2 id="video-dialog-title" data-video-dialog-title>Video</h2>
+        <button type="button" aria-label="Chiudi il video" data-video-dialog-close>×</button>
+      </div>
+      <div class="video-dialog-frame">
+        <iframe
+          src=""
+          title=""
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          data-video-player></iframe>
+      </div>
+    </div>
+  </dialog>
 
   <section class="prefooter-section" aria-labelledby="prefooter-title">
     <div class="scraped-wrap prefooter-cta">
@@ -523,6 +462,49 @@ const locationOffices = site.offices.map((office) => {
         window.setTimeout(normalizeLoopPosition, 420);
       };
 
+      const autoplaySpeed = Number.parseFloat(carousel.getAttribute('data-carousel-continuous-speed') || '');
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      let autoplayFrame = 0;
+      let previousAutoplayTime = 0;
+      let autoplaySuspended = false;
+
+      const stopAutoplay = () => {
+        window.cancelAnimationFrame(autoplayFrame);
+        autoplayFrame = 0;
+        previousAutoplayTime = 0;
+      };
+
+      const isAutoplayBlocked = () =>
+        !Number.isFinite(autoplaySpeed) ||
+        autoplaySpeed <= 0 ||
+        reducedMotion.matches ||
+        document.hidden ||
+        autoplaySuspended ||
+        carousel.contains(document.activeElement);
+
+      const runAutoplay = (timestamp) => {
+        if (isAutoplayBlocked()) {
+          stopAutoplay();
+          return;
+        }
+
+        if (previousAutoplayTime > 0) {
+          const elapsed = Math.min(timestamp - previousAutoplayTime, 50);
+          track.scrollLeft += autoplaySpeed * (elapsed / 1000);
+          normalizeLoopPosition();
+        }
+
+        previousAutoplayTime = timestamp;
+        autoplayFrame = window.requestAnimationFrame(runAutoplay);
+      };
+
+      const scheduleAutoplay = () => {
+        stopAutoplay();
+        if (isAutoplayBlocked()) return;
+
+        autoplayFrame = window.requestAnimationFrame(runAutoplay);
+      };
+
       let scrollFrame = 0;
 
       track.addEventListener(
@@ -534,17 +516,98 @@ const locationOffices = site.offices.map((office) => {
         { passive: true },
       );
 
-      requestAnimationFrame(setInitialScroll);
+      requestAnimationFrame(() => {
+        setInitialScroll();
+        scheduleAutoplay();
+      });
       window.addEventListener('load', setInitialScroll, { once: true });
-      window.addEventListener('resize', () => requestAnimationFrame(setInitialScroll));
+      window.addEventListener('resize', () => {
+        requestAnimationFrame(setInitialScroll);
+        scheduleAutoplay();
+      });
 
       prev?.addEventListener('click', () => {
         scrollLoop(-1);
+        scheduleAutoplay();
       });
 
       next?.addEventListener('click', () => {
         scrollLoop(1);
+        scheduleAutoplay();
       });
+
+      carousel.addEventListener('focusin', stopAutoplay);
+      carousel.addEventListener('focusout', () => requestAnimationFrame(scheduleAutoplay));
+      carousel.addEventListener('carousel-autoplay-pause', () => {
+        autoplaySuspended = true;
+        stopAutoplay();
+      });
+      carousel.addEventListener('carousel-autoplay-resume', () => {
+        autoplaySuspended = false;
+        scheduleAutoplay();
+      });
+      document.addEventListener('visibilitychange', scheduleAutoplay);
+      reducedMotion.addEventListener('change', scheduleAutoplay);
+    });
+
+    const videoDialog = document.querySelector('[data-video-dialog]');
+    const videoPlayer = videoDialog?.querySelector('[data-video-player]');
+    const videoDialogTitle = videoDialog?.querySelector('[data-video-dialog-title]');
+    const videoDialogClose = videoDialog?.querySelector('[data-video-dialog-close]');
+    let activeVideoGallery = null;
+
+    const closeVideoDialog = () => {
+      if (videoDialog instanceof HTMLDialogElement && videoDialog.open) {
+        videoDialog.close();
+      }
+
+      if (videoPlayer instanceof HTMLIFrameElement) {
+        videoPlayer.src = '';
+      }
+
+      activeVideoGallery?.dispatchEvent(new Event('carousel-autoplay-resume'));
+      activeVideoGallery = null;
+    };
+
+    document.querySelectorAll('[data-video-gallery]').forEach((gallery) => {
+      gallery.addEventListener('click', (event) => {
+        const target = event.target instanceof Element ? event.target.closest('[data-video-id]') : null;
+
+        if (!(target instanceof HTMLElement) || !(videoDialog instanceof HTMLDialogElement)) return;
+
+        const videoId = target.dataset.videoId;
+        const videoTitle = target.dataset.videoTitle || 'Video dello studio';
+
+        if (!videoId || !(videoPlayer instanceof HTMLIFrameElement)) return;
+
+        videoPlayer.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
+        videoPlayer.title = videoTitle;
+
+        if (videoDialogTitle) {
+          videoDialogTitle.textContent = videoTitle;
+        }
+
+        activeVideoGallery = gallery;
+        gallery.dispatchEvent(new Event('carousel-autoplay-pause'));
+        videoDialog.showModal();
+      });
+    });
+
+    videoDialogClose?.addEventListener('click', closeVideoDialog);
+
+    videoDialog?.addEventListener('click', (event) => {
+      if (event.target === videoDialog) {
+        closeVideoDialog();
+      }
+    });
+
+    videoDialog?.addEventListener('close', () => {
+      if (videoPlayer instanceof HTMLIFrameElement) {
+        videoPlayer.src = '';
+      }
+
+      activeVideoGallery?.dispatchEvent(new Event('carousel-autoplay-resume'));
+      activeVideoGallery = null;
     });
 
     const locationSections = document.querySelectorAll('[data-locations-map-section]');
@@ -627,7 +690,8 @@ const locationOffices = site.offices.map((office) => {
     position: relative;
     min-height: 100svh;
     display: grid;
-    place-items: center;
+    align-items: end;
+    justify-items: start;
     overflow: hidden;
     background-image: var(--hero-image);
     background-position: center;
@@ -647,8 +711,8 @@ const locationOffices = site.offices.map((office) => {
 
   .scraped-hero-copy {
     width: min(1320px, calc(100% - 56px));
-    margin: 0 auto;
-    padding: 150px 0 120px;
+    margin: 0 0 0 max(28px, calc((100% - 1320px) / 2));
+    padding: 150px 0 clamp(56px, 7vh, 84px);
     text-align: left;
   }
 
@@ -666,10 +730,10 @@ const locationOffices = site.offices.map((office) => {
     margin: 0;
     color: var(--surface-white);
     font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
-    font-size: clamp(4rem, 7.4vw, 7.9rem);
+    font-size: clamp(3.5rem, 5.9vw, 6.25rem);
     font-weight: 400;
     line-height: 0.94;
-    letter-spacing: -0.2px;
+    letter-spacing: -0.025em;
     overflow-wrap: normal;
     hyphens: none;
   }
@@ -684,8 +748,8 @@ const locationOffices = site.offices.map((office) => {
     margin: 28px 0 0;
     color: rgba(255, 255, 255, 0.88);
     font-size: clamp(1.05rem, 1.45vw, 1.38rem);
-    font-weight: 500;
-    line-height: 1.3;
+    font-weight: 300;
+    line-height: 1.4;
     letter-spacing: -0.2px;
   }
 
@@ -1124,6 +1188,13 @@ const locationOffices = site.offices.map((office) => {
     color: var(--brand-blue);
   }
 
+  .video-carousel-youtube-logo {
+    display: block;
+    width: clamp(48px, 3.6vw, 62px);
+    height: auto;
+    margin: 0 auto 18px;
+  }
+
   .clinical-carousel-head h2 {
     margin: 18px 0 0;
     color: var(--blue-dark);
@@ -1222,6 +1293,51 @@ const locationOffices = site.offices.map((office) => {
     transform: scale(1.055);
   }
 
+  .video-carousel-card {
+    border: 0;
+    padding: 0;
+    background: var(--blue-dark);
+    cursor: pointer;
+    font: inherit;
+    text-align: left;
+  }
+
+  .video-carousel-card img {
+    object-position: center;
+    transition: transform 260ms ease, filter 180ms ease;
+  }
+
+  .video-carousel-card:hover img,
+  .video-carousel-card:focus-visible img {
+    filter: brightness(0.8);
+  }
+
+  .video-carousel-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    width: clamp(64px, 5vw, 82px);
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 999px;
+    background: rgba(var(--brand-primary-dark-rgb), 0.78);
+    color: var(--surface-white);
+    font-size: clamp(1.25rem, 1.55vw, 1.7rem);
+    line-height: 1;
+    padding-left: 4px;
+    transform: translate(-50%, -50%);
+    transition: background-color 160ms ease, transform 160ms ease;
+  }
+
+  .video-carousel-card:hover .video-carousel-play,
+  .video-carousel-card:focus-visible .video-carousel-play {
+    background: var(--brand-blue);
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+
   .clinical-carousel-arrow {
     position: absolute;
     top: 50%;
@@ -1249,6 +1365,42 @@ const locationOffices = site.offices.map((office) => {
     transform: translateY(-50%) scale(1.04);
   }
 
+  .video-carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: clamp(24px, 3vw, 40px);
+  }
+
+  .video-carousel-section .clinical-carousel-arrow {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: clamp(48px, 3.6vw, 60px);
+    border: 1px solid rgba(var(--brand-blue-rgb), 0.24);
+    background: rgba(var(--brand-blue-rgb), 0.14);
+    color: rgba(var(--brand-primary-dark-rgb), 0.78);
+    box-shadow: 0 14px 36px rgba(var(--brand-primary-dark-rgb), 0.12);
+    opacity: 0.82;
+    backdrop-filter: blur(6px);
+    transform: none;
+    transition:
+      background-color 160ms ease,
+      color 160ms ease,
+      opacity 160ms ease,
+      transform 160ms ease;
+  }
+
+  .video-carousel-section .clinical-carousel-arrow:hover,
+  .video-carousel-section .clinical-carousel-arrow:focus-visible {
+    background: var(--brand-blue);
+    color: var(--surface-white);
+    opacity: 0.94;
+    transform: scale(1.04);
+  }
+
   .clinical-carousel-arrow span {
     display: block;
     margin-top: -2px;
@@ -1263,6 +1415,83 @@ const locationOffices = site.offices.map((office) => {
 
   .clinical-carousel-arrow-next {
     right: clamp(24px, 4.5vw, 88px);
+  }
+
+  .video-dialog {
+    width: min(1040px, calc(100% - 32px));
+    max-width: none;
+    border: 0;
+    border-radius: 12px;
+    padding: 0;
+    background: transparent;
+    color: var(--surface-white);
+    overflow: visible;
+  }
+
+  .video-dialog::backdrop {
+    background: rgba(var(--brand-primary-dark-rgb), 0.86);
+    backdrop-filter: blur(6px);
+  }
+
+  .video-dialog-panel {
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    background: var(--brand-primary-dark);
+    box-shadow: 0 28px 90px rgba(0, 0, 0, 0.42);
+  }
+
+  .video-dialog-toolbar {
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 14px 18px 14px 24px;
+  }
+
+  .video-dialog-toolbar h2 {
+    margin: 0;
+    color: var(--surface-white);
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .video-dialog-toolbar button {
+    width: 42px;
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--surface-white);
+    cursor: pointer;
+    font: inherit;
+    font-size: 1.8rem;
+    font-weight: 300;
+    line-height: 1;
+  }
+
+  .video-dialog-toolbar button:hover,
+  .video-dialog-toolbar button:focus-visible {
+    border-color: var(--brand-blue);
+    background: var(--brand-blue);
+  }
+
+  .video-dialog-frame {
+    aspect-ratio: 16 / 9;
+    background: #000;
+  }
+
+  .video-dialog-frame iframe {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: 0;
   }
 
   .insights-head a {
@@ -1535,26 +1764,10 @@ const locationOffices = site.offices.map((office) => {
       box-shadow 180ms ease;
   }
 
-  .location-card::before {
-    content: "";
-    position: absolute;
-    inset: 0 auto 0 0;
-    width: 5px;
-    background: rgba(var(--brand-blue-rgb), 0.28);
-    transition:
-      background-color 180ms ease,
-      width 180ms ease;
-  }
-
   .location-card-open {
     border-color: rgba(var(--brand-blue-rgb), 0.52);
     background: var(--surface-white);
     box-shadow: 0 24px 58px rgba(var(--brand-primary-dark-rgb), 0.13);
-  }
-
-  .location-card-open::before {
-    width: 6px;
-    background: var(--blue-dark);
   }
 
   .location-card-trigger {
@@ -1625,7 +1838,7 @@ const locationOffices = site.offices.map((office) => {
 
   .location-card-open .location-card-trigger {
     border-bottom: 1px solid rgba(var(--brand-blue-rgb), 0.18);
-    background: linear-gradient(90deg, rgba(var(--soft-blue-bg-rgb), 0.95), rgba(255, 255, 255, 0));
+    background: var(--surface-white);
     color: var(--blue-dark);
   }
 
@@ -1748,7 +1961,6 @@ const locationOffices = site.offices.map((office) => {
     height: 100%;
     margin: 0;
     overflow: hidden;
-    border-left: 1px solid rgba(21, 90, 148, 0.12);
     isolation: isolate;
   }
 
@@ -1825,7 +2037,6 @@ const locationOffices = site.offices.map((office) => {
 
     .location-map-card {
       min-height: 420px;
-      border-left: 0;
     }
 
     .feature-copy {
@@ -1863,7 +2074,8 @@ const locationOffices = site.offices.map((office) => {
 
     .scraped-hero-copy {
       width: min(100% - 28px, 1320px);
-      padding: 120px 0 90px;
+      margin-left: 14px;
+      padding: 120px 0 64px;
     }
 
     .scraped-pretitle {
@@ -1871,14 +2083,14 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .scraped-hero h1 {
-      font-size: clamp(2rem, 10.2vw, 4.75rem);
+      font-size: clamp(1.9rem, 9.2vw, 4.25rem);
       line-height: 0.98;
     }
 
     .scraped-hero-description {
       margin-top: 22px;
       font-size: 1rem;
-      line-height: 1.34;
+      line-height: 1.4;
     }
 
     .scraped-hero-actions {
