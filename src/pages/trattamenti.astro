@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
+import TreatmentIcon from '../components/TreatmentIcon.astro';
 import { site } from '../data/site';
 import { formatParentheticalDetail } from '../utils/formatParentheticalDetail';
 
@@ -46,47 +47,34 @@ const treatmentDescriptions: Record<string, string> = {
   'Dispositivi contro il russamento e le apnee notturne': 'Dispositivi intraorali personalizzati per contribuire alla gestione di russamento e apnee notturne.',
 };
 
-const categoryLabels: Record<string, string> = {
-  'Prevenzione ed estetica': 'Estetica e prevenzione',
+const iconByHref: Record<string, string> = {
+  '/igiene-orale-prevenzione/': 'hygiene',
+  '/sbiancamento/': 'whitening',
+  '/conservativa-otturazioni/': 'filling',
+  '/endodonzia-devitalizzazioni/': 'endodontics',
+  '/pedodonzia-odontoiatria-infantile/': 'pediatric',
+  '/ortodonzia-allineatori-invisibili/': 'orthodontics',
+  '/estetica-diretta-faccette-composito/': 'composite',
+  '/parodontologia-cure-gengivali/': 'periodontology',
+  '/protesi-fissa-mobile/': 'prosthesis',
+  '/estetica-indiretta-faccette-porcellana/': 'ceramic',
+  '/chirurgia-stomatologica/': 'surgery',
+  '/implantologia-tradizionale-computer-guidata/': 'implantology',
+  '/gnatologia-articolazione-temporo-mandibolare/': 'gnathology',
+  '/dispositivi-russamento-apnee-notturne/': 'sleep',
 };
-
-const categorySummaries: Record<string, string> = {
-  'Prevenzione ed estetica': 'Controllo, igiene e armonia estetica del sorriso.',
-  'Odontoiatria conservativa': 'Cure per mantenere i denti naturali sani e funzionali.',
-  'Ortodonzia e funzione': 'Allineamento, articolazione e benessere della masticazione.',
-  'Chirurgia, impianti e protesi': 'Riabilitazioni complesse, impianti e salute gengivale.',
-};
-
-const cardPalette = [
-  { bg: 'var(--soft-blue-bg)', accent: 'var(--brand-blue)', line: 'rgba(var(--brand-blue-rgb), 0.2)' },
-  { bg: 'var(--soft-blue-bg)', accent: 'var(--brand-blue)', line: 'rgba(var(--brand-blue-rgb), 0.2)' },
-  { bg: 'var(--soft-blue-bg)', accent: 'var(--brand-blue)', line: 'rgba(var(--brand-blue-rgb), 0.18)' },
-  { bg: 'var(--soft-blue-bg)', accent: 'var(--warning)', line: 'rgba(var(--warning-rgb), 0.2)' },
-  { bg: 'var(--soft-blue-bg)', accent: 'var(--success)', line: 'rgba(var(--success-rgb), 0.18)' },
-  { bg: 'var(--soft-blue-bg)', accent: 'var(--error)', line: 'rgba(var(--error-rgb), 0.18)' },
-];
 
 const treatmentRank = (label: string) => {
   const index = treatmentOrder.indexOf(label);
   return index === -1 ? Number.MAX_SAFE_INTEGER : index;
 };
 
-const treatmentCategories = site.treatmentMenu.map((category) => ({
-  ...category,
-  displayLabel: categoryLabels[category.label] || category.label,
-  summary: categorySummaries[category.label],
-}));
-
-const treatments = treatmentCategories
+const treatments = site.treatmentMenu
   .flatMap((category) =>
     category.items.map((item) => ({
       ...item,
       title: treatmentMenuLabels[item.label] || formatParentheticalDetail(item.label),
       description: treatmentDescriptions[item.label],
-      categoryLabel: category.displayLabel,
-      categorySummary: category.summary,
-      categoryImage: category.image,
-      categoryImageAlt: category.imageAlt,
     })),
   )
   .sort((a, b) => treatmentRank(a.label) - treatmentRank(b.label));
@@ -103,21 +91,9 @@ const treatments = treatmentCategories
     <section class="treatments-hero" aria-labelledby="treatments-title">
       <div class="treatments-hero-panel" data-transparent-header-region>
         <div class="treatments-wrap treatments-hero-copy">
-          <h1 id="treatments-title">Trattamenti odontoiatrici</h1>
-          <p>
-            Ogni percorso parte da una valutazione completa e viene costruito intorno alla tua salute orale:
-            prevenzione, estetica, funzione e riabilitazione vengono coordinate con tecnologie digitali e attenzione
-            alla persona.
-          </p>
+          <h1 id="treatments-title">Odontoiatria completa</h1>
         </div>
       </div>
-      <figure class="treatments-hero-media">
-        <img
-          src="/assets/original/2022/03/dentista-modena-reggio-emilia.jpg"
-          alt="Valutazione digitale nello Studio Dentistico Federzoni Granata"
-          loading="eager"
-        />
-      </figure>
     </section>
 
     <section class="treatments-directory" aria-labelledby="directory-title">
@@ -125,35 +101,20 @@ const treatments = treatmentCategories
         <div class="directory-head">
           <div>
             <p class="treatments-kicker">I percorsi dello studio</p>
-            <h2 id="directory-title">Scegli la sezione più adatta</h2>
+            <h2 id="directory-title">trattamenti per la tua <span>salute orale</span></h2>
           </div>
-          <p>
-            Le card raccolgono le principali aree di trattamento dello studio e portano alle schede dedicate, dove
-            approfondire indicazioni, obiettivi e modalità di cura.
-          </p>
         </div>
 
         <div class="treatment-grid">
-          {treatments.map((treatment, index) => {
-            const palette = cardPalette[index % cardPalette.length];
-
-            return (
-              <a
-                class="treatment-card"
-                href={treatment.href}
-                style={`--card-bg: ${palette.bg}; --card-accent: ${palette.accent}; --card-line: ${palette.line};`}
-              >
-                <span class="card-jump" aria-hidden="true">↗</span>
-                <span class="card-category">{treatment.categoryLabel}</span>
-                <h3>{treatment.title}</h3>
-                <p>{treatment.description}</p>
-                <span class="card-action">
-                  Vai alla sezione
-                  <span aria-hidden="true">→</span>
-                </span>
-              </a>
-            );
-          })}
+          {treatments.map((treatment) => (
+            <a class="treatment-card" href={treatment.href}>
+              <span class="treatment-icon-wrap">
+                <TreatmentIcon icon={iconByHref[treatment.href] || 'hygiene'} />
+              </span>
+              <h3>{treatment.title}</h3>
+              <p>{treatment.description}</p>
+            </a>
+          ))}
 
           <aside class="consult-card">
             <p class="consult-label">Valutazione clinica</p>
@@ -206,7 +167,7 @@ const treatments = treatmentCategories
   }
 
   .treatments-hero-panel {
-    min-height: clamp(500px, 54vw, 690px);
+    min-height: clamp(460px, 49vw, 620px);
     display: grid;
     align-items: center;
     background: var(--treatments-hero-bg);
@@ -247,63 +208,51 @@ const treatments = treatmentCategories
     text-transform: uppercase;
   }
 
-  .treatments-hero-copy > p:not(.treatments-kicker) {
-    max-width: 1280px;
-    margin: 36px auto 0;
-    color: var(--aqua);
-    font-size: 2rem;
-    font-weight: 500;
-    letter-spacing: var(--treatments-letter-spacing);
-    line-height: 1.3;
-    text-align: center;
-  }
-
-  .treatments-hero-media {
-    margin: 0;
-    height: clamp(320px, 39vw, 540px);
-    overflow: hidden;
-    background: var(--soft-blue-bg);
-  }
-
-  .treatments-hero-media img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-    object-position: center 48%;
-  }
-
   .treatments-directory {
     padding: 92px 0 104px;
-    background: var(--surface-white);
+    background:
+      radial-gradient(circle at 50% 12%, rgba(var(--soft-blue-bg-rgb), 0.92), transparent 34%),
+      linear-gradient(180deg, var(--surface-white) 0%, var(--background) 100%);
   }
 
   .directory-head {
-    display: grid;
-    grid-template-columns: minmax(0, 0.95fr) minmax(340px, 0.6fr);
-    gap: 42px;
-    align-items: end;
-    margin-bottom: 34px;
+    max-width: 940px;
+    margin: 0 auto clamp(52px, 5vw, 74px);
+    text-align: center;
   }
 
-  .directory-head h2 {
-    max-width: 720px;
-    margin: 0;
-    color: var(--treatments-blue-dark);
-    font-family: "Inter", sans-serif;
-    font-size: clamp(2.75rem, 4.35vw, 5rem);
-    font-weight: 400;
-    letter-spacing: var(--treatments-letter-spacing);
+  .directory-head .treatments-kicker {
+    justify-content: center;
+    gap: 18px;
+    margin-bottom: 26px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
     line-height: 1;
   }
 
-  .directory-head > p {
+  .directory-head .treatments-kicker::before,
+  .directory-head .treatments-kicker::after {
+    content: "";
+    width: 38px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .directory-head h2 {
     margin: 0;
-    color: var(--treatments-muted);
-    font-size: clamp(1.05rem, 1.3vw, 1.28rem);
-    font-weight: 400;
-    letter-spacing: var(--treatments-letter-spacing);
-    line-height: 1.45;
+    color: var(--brand-primary-dark);
+    font-family: "Inter", sans-serif;
+    font-size: clamp(3rem, 5vw, 5.25rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 0.98;
+    text-wrap: balance;
+  }
+
+  .directory-head h2 span {
+    display: block;
+    color: var(--brand-blue);
   }
 
   .treatment-grid {
@@ -314,87 +263,78 @@ const treatments = treatmentCategories
 
   .treatment-card,
   .consult-card {
-    min-height: 330px;
-    border-radius: 8px;
+    min-height: 318px;
+    border-radius: 32px;
   }
 
   .treatment-card {
-    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 18px;
-    padding: 34px 32px 30px;
-    overflow: hidden;
-    border: 1px solid var(--card-line);
-    background: var(--card-bg);
-    color: var(--treatments-ink);
+    align-items: flex-start;
+    border: 1px solid var(--border);
+    padding: 34px 36px 38px;
+    background: rgba(var(--surface-white-rgb), 0.94);
+    color: var(--brand-primary-dark);
     text-decoration: none;
-    box-shadow: 0 16px 42px rgba(var(--brand-primary-dark-rgb), 0.08);
-    transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+    box-shadow: 0 18px 44px rgba(var(--brand-primary-dark-rgb), 0.035);
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      transform 180ms ease;
   }
 
-  .treatment-card:hover {
-    border-color: color-mix(in srgb, var(--card-accent) 50%, white);
-    box-shadow: 0 22px 54px rgba(var(--brand-primary-dark-rgb), 0.14);
-    transform: translateY(-3px);
+  .treatment-card:hover,
+  .treatment-card:focus-visible {
+    border-color: rgba(var(--brand-blue-rgb), 0.72);
+    box-shadow: 0 24px 58px rgba(var(--brand-primary-dark-rgb), 0.1);
+    transform: translateY(-4px);
   }
 
-  .card-jump {
-    position: absolute;
-    top: 22px;
-    right: 24px;
-    color: color-mix(in srgb, var(--card-accent) 65%, white);
-    font-size: 1.28rem;
-    line-height: 1;
+  .treatment-card:focus-visible {
+    outline: 3px solid rgba(var(--brand-cta-rgb), 0.28);
+    outline-offset: 4px;
   }
 
-  .card-category {
-    width: fit-content;
-    border-radius: 999px;
-    padding: 7px 10px;
-    background: rgba(255, 255, 255, 0.62);
-    color: var(--card-accent);
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: var(--treatments-letter-spacing);
-    line-height: 14px;
-    text-transform: uppercase;
+  .treatment-icon-wrap {
+    width: 66px;
+    height: 66px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(var(--brand-blue-rgb), 0.12);
+    border-radius: 18px;
+    background: var(--background);
+    color: var(--brand-cta);
+    box-shadow: 0 4px 10px rgba(var(--brand-primary-dark-rgb), 0.09);
+    transition:
+      background-color 180ms ease,
+      color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .treatment-card:hover .treatment-icon-wrap,
+  .treatment-card:focus-visible .treatment-icon-wrap {
+    background: var(--soft-blue-bg);
+    color: var(--brand-primary-dark);
+    transform: scale(1.04);
   }
 
   .treatment-card h3 {
-    max-width: 12ch;
-    margin: 8px 0 0;
-    color: var(--treatments-blue-dark);
+    margin: 36px 0 0;
+    color: var(--brand-primary-dark);
     font-family: "Inter", sans-serif;
-    font-size: clamp(1.55rem, 2.05vw, 2rem);
+    font-size: clamp(1.25rem, 1.55vw, 1.55rem);
     font-weight: 500;
     letter-spacing: var(--treatments-letter-spacing);
-    line-height: 1.3;
+    line-height: 1.15;
   }
 
   .treatment-card p {
-    margin: 0;
-    color: var(--text-dark);
+    margin: 18px 0 0;
+    color: var(--muted-text);
     font-size: 16px;
     font-weight: 400;
     letter-spacing: var(--treatments-letter-spacing);
-    line-height: 1.45;
-  }
-
-  .card-action {
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    align-items: center;
-    margin-top: auto;
-    border-top: 1px solid var(--card-line);
-    padding-top: 18px;
-    color: var(--treatments-blue-dark);
-    font-size: 16px;
-    font-weight: 500;
-    letter-spacing: var(--treatments-letter-spacing);
-    line-height: 16px;
-    text-transform: uppercase;
+    line-height: 1.5;
   }
 
   .consult-card {
@@ -499,19 +439,6 @@ const treatments = treatmentCategories
       font-size: 5.4rem;
     }
 
-    .treatments-hero-copy > p:not(.treatments-kicker) {
-      font-size: 1.55rem;
-    }
-
-    .directory-head {
-      grid-template-columns: 1fr;
-      align-items: start;
-    }
-
-    .directory-head > p {
-      max-width: 760px;
-    }
-
     .treatment-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -541,22 +468,33 @@ const treatments = treatmentCategories
     }
 
     .treatments-hero h1 {
-      font-size: clamp(35.1px, 13vw, 56px);
+      font-size: clamp(35.1px, 11vw, 50px);
       line-height: 1;
-    }
-
-    .treatments-hero-copy > p:not(.treatments-kicker) {
-      margin-top: 26px;
-      font-size: 20px;
-      line-height: 1.25;
     }
 
     .treatments-directory {
       padding: 58px 0 68px;
     }
 
+    .directory-head {
+      margin-bottom: 40px;
+    }
+
+    .directory-head .treatments-kicker {
+      gap: 12px;
+      margin-bottom: 20px;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+    }
+
+    .directory-head .treatments-kicker::before,
+    .directory-head .treatments-kicker::after {
+      width: 24px;
+    }
+
     .directory-head h2 {
-      font-size: 30px;
+      font-size: clamp(2.4rem, 12vw, 3.7rem);
+      letter-spacing: -0.025em;
       line-height: 1;
     }
 
@@ -566,14 +504,27 @@ const treatments = treatmentCategories
 
     .treatment-card,
     .consult-card {
-      min-height: 298px;
-      padding: 24px;
+      min-height: 0;
+      border-radius: 24px;
+      padding: 26px;
+    }
+
+    .treatment-icon-wrap {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
     }
 
     .treatment-card h3 {
-      max-width: 14ch;
+      margin-top: 28px;
       font-size: 20px;
       line-height: 1.25;
+    }
+
+    .treatment-card p {
+      margin-top: 14px;
+      font-size: 14px;
+      line-height: 1.45;
     }
 
     .consult-card h3 {

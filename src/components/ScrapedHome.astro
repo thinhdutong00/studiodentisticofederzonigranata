@@ -284,14 +284,14 @@ const locationOffices = site.offices.map((office) => {
   <section class="prefooter-section" aria-labelledby="prefooter-title">
     <div class="scraped-wrap prefooter-cta">
       <div class="prefooter-copy">
-        <p class="prefooter-eyebrow">Prenota la tua visita</p>
-        <h2 id="prefooter-title">Il prossimo passo per la salute del tuo sorriso</h2>
+        <p class="prefooter-eyebrow">INIZIA DA QUI</p>
+        <h2 id="prefooter-title">Cosa vorresti migliorare del tuo sorriso?</h2>
         <p>
-          Raccontaci le tue esigenze: lo studio ti ricontatterà per indicarti il percorso più adatto e fissare l’appuntamento nella sede più comoda.
+          Raccontaci la tua esigenza. Ti ricontatteremo per indicarti il percorso più adatto e organizzare la tua visita.
         </p>
       </div>
       <div class="prefooter-action">
-        <a class="prefooter-button" href="/richiesta/">Prenota visita <span aria-hidden="true">↗</span></a>
+        <a class="prefooter-button" href="/richiesta/">Raccontaci la tua esigenza <span aria-hidden="true">↗</span></a>
         <span>Studi a Modena e Reggio Emilia</span>
       </div>
     </div>
@@ -1618,16 +1618,34 @@ const locationOffices = site.offices.map((office) => {
   }
 
   .prefooter-section {
+    position: relative;
     padding: clamp(76px, 8vw, 128px) 0;
+    overflow: hidden;
     background: var(--brand-primary-dark);
     color: var(--surface-white);
+    isolation: isolate;
+  }
+
+  .prefooter-section::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    width: min(58vw, 1100px);
+    background: url('/assets/cta/dental-instruments-transparent.png') right bottom / contain no-repeat;
+    opacity: 0.66;
+    pointer-events: none;
   }
 
   .prefooter-cta {
+    position: relative;
+    z-index: 1;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: clamp(34px, 6vw, 96px);
-    align-items: center;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(28px, 3vw, 42px);
+    align-items: start;
   }
 
   .prefooter-copy {
@@ -1646,6 +1664,7 @@ const locationOffices = site.offices.map((office) => {
 
   .prefooter-copy h2 {
     max-width: 18ch;
+    letter-spacing: -0.025em;
   }
 
   .prefooter-copy p {
@@ -1659,9 +1678,9 @@ const locationOffices = site.offices.map((office) => {
   .prefooter-action {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start;
     gap: 14px;
-    justify-self: end;
+    justify-self: start;
   }
 
   .prefooter-section .prefooter-button {
@@ -1701,7 +1720,7 @@ const locationOffices = site.offices.map((office) => {
     color: rgba(255, 255, 255, 0.74);
     font-size: 0.95rem;
     line-height: 1.35;
-    text-align: right;
+    text-align: left;
   }
 
   .locations-section {
@@ -1794,7 +1813,7 @@ const locationOffices = site.offices.map((office) => {
     margin-top: 5px;
     font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
     font-size: clamp(1.25rem, 1.55vw, 1.75rem);
-    font-weight: 600;
+    font-weight: 400;
     letter-spacing: 0;
     line-height: 1.08;
   }
@@ -1803,7 +1822,7 @@ const locationOffices = site.offices.map((office) => {
     display: block;
     color: var(--brand-blue);
     font-size: 0.78rem;
-    font-weight: 900;
+    font-weight: 400;
     letter-spacing: 0.13em;
     line-height: 1.2;
     text-transform: uppercase;
@@ -1885,7 +1904,7 @@ const locationOffices = site.offices.map((office) => {
   .location-detail a {
     color: var(--text-dark);
     font-size: 1rem;
-    font-weight: 800;
+    font-weight: 400;
     line-height: 1.45;
   }
 
@@ -1922,12 +1941,13 @@ const locationOffices = site.offices.map((office) => {
 
   .location-hours-row strong {
     color: var(--blue-dark);
-    font-weight: 900;
+    font-weight: 400;
     text-align: right;
   }
 
   .location-hours-row-closed strong {
     color: var(--brand-blue);
+    font-weight: 900;
   }
 
   .location-route {
@@ -1994,13 +2014,14 @@ const locationOffices = site.offices.map((office) => {
     color: var(--blue-dark);
     font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
     font-size: 1.05rem;
-    font-weight: 600;
+    font-weight: 400;
     letter-spacing: 0;
   }
 
   .location-map-caption span {
     color: var(--muted);
     font-size: 0.92rem;
+    font-weight: 400;
     line-height: 1.35;
   }
 
@@ -2070,6 +2091,13 @@ const locationOffices = site.offices.map((office) => {
   @media (max-width: 720px) {
     .scraped-wrap {
       width: min(100% - 30px, 1510px);
+    }
+
+    .prefooter-section::after {
+      top: auto;
+      width: 100%;
+      height: 52%;
+      opacity: 0.18;
     }
 
     .scraped-hero-copy {

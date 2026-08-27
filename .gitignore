@@ -1,5 +1,7 @@
 # build output
 dist/
+output/
+.playwright-cli/
 # generated types
 .astro/
 
