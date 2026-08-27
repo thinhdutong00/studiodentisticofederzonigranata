@@ -2,7 +2,6 @@
 import Header from './Header.astro';
 import Footer from './Footer.astro';
 import CookieBanner from './CookieBanner.astro';
-import MaintenancePage from './MaintenancePage.astro';
 import { site } from '../data/site';
 
 interface Props {
@@ -23,13 +22,7 @@ const {
   headerCtaHref = '/richiesta/',
 } = Astro.props;
 
-const isMaintenanceMode = import.meta.env.MAINTENANCE_MODE === 'true';
-const maintenanceTitle = `Sito in manutenzione | ${site.name}`;
-const maintenanceDescription = 'Stiamo aggiornando il sito. Torneremo online al più presto.';
-const documentTitle = isMaintenanceMode ? maintenanceTitle : title;
-const documentDescription = isMaintenanceMode ? maintenanceDescription : description;
-const documentCanonicalPath = isMaintenanceMode ? '/' : canonicalPath;
-const canonical = new URL(documentCanonicalPath, Astro.site || 'https://studiodentisticofederzonigranata.vercel.app').toString();
+const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentisticofederzonigranata.vercel.app').toString();
 ---
 
 <!doctype html>
@@ -38,87 +31,68 @@ const canonical = new URL(documentCanonicalPath, Astro.site || 'https://studiode
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <title>{documentTitle}</title>
-    <meta name="description" content={documentDescription} />
-    {isMaintenanceMode && <meta name="robots" content="noindex, nofollow" />}
+    <title>{title}</title>
+    <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {
-      !isMaintenanceMode && (
-        <Fragment>
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-        </Fragment>
-      )
-    }
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/png" href="/assets/original/2020/10/cropped-favicon-32x32.png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/assets/original/2020/10/cropped-favicon-180x180.png" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content={documentTitle} />
-    <meta property="og:description" content={documentDescription} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:image" content={new URL(ogImage, canonical).toString()} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={documentTitle} />
-    <meta name="twitter:description" content={documentDescription} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={new URL(ogImage, canonical).toString()} />
   </head>
   <body>
-    {
-      isMaintenanceMode ? (
-        <MaintenancePage />
-      ) : (
-        <Fragment>
-          <div class="site-preloader" data-site-preloader aria-hidden="true">
-            <img src="/assets/original/2020/10/cropped-favicon-180x180.png" alt="" width="72" height="72" decoding="async" />
-          </div>
-          <noscript><style>.site-preloader { display: none !important; }</style></noscript>
-          <Header transparent={transparentHeader} ctaHref={headerCtaHref} />
-          <main>
-            <slot />
-          </main>
-          <Footer />
-          <CookieBanner />
-        </Fragment>
-      )
-    }
-    {
-      !isMaintenanceMode && (
-        <script is:inline>
-          (() => {
-            const preloader = document.querySelector('[data-site-preloader]');
-            if (!preloader) return;
+    <div class="site-preloader" data-site-preloader aria-hidden="true">
+      <img src="/assets/original/2020/10/cropped-favicon-180x180.png" alt="" width="72" height="72" decoding="async" />
+    </div>
+    <noscript><style>.site-preloader { display: none !important; }</style></noscript>
+    <Header transparent={transparentHeader} ctaHref={headerCtaHref} />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+    <CookieBanner />
+    <script is:inline>
+      (() => {
+        const preloader = document.querySelector('[data-site-preloader]');
+        if (!preloader) return;
 
-            const minVisibleMs = 280;
-            const maxVisibleMs = 850;
-            const fadeMs = 180;
-            const startedAt = performance.now();
+        const minVisibleMs = 280;
+        const maxVisibleMs = 850;
+        const fadeMs = 180;
+        const startedAt = performance.now();
 
-            const removePreloader = () => {
-              if (preloader.dataset.done === 'true') return;
-              preloader.dataset.done = 'true';
-              preloader.classList.add('is-hiding');
-              window.setTimeout(() => preloader.remove(), fadeMs);
-            };
+        const removePreloader = () => {
+          if (preloader.dataset.done === 'true') return;
+          preloader.dataset.done = 'true';
+          preloader.classList.add('is-hiding');
+          window.setTimeout(() => preloader.remove(), fadeMs);
+        };
 
-            const hidePreloader = () => {
-              const wait = Math.max(0, minVisibleMs - (performance.now() - startedAt));
-              window.setTimeout(removePreloader, wait);
-            };
+        const hidePreloader = () => {
+          const wait = Math.max(0, minVisibleMs - (performance.now() - startedAt));
+          window.setTimeout(removePreloader, wait);
+        };
 
-            if (document.readyState === 'loading') {
-              document.addEventListener('DOMContentLoaded', hidePreloader, { once: true });
-            } else {
-              hidePreloader();
-            }
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', hidePreloader, { once: true });
+        } else {
+          hidePreloader();
+        }
 
-            window.addEventListener('load', hidePreloader, { once: true });
-            window.setTimeout(removePreloader, maxVisibleMs);
-          })();
-        </script>
-      )
-    }
+        window.addEventListener('load', hidePreloader, { once: true });
+        window.setTimeout(removePreloader, maxVisibleMs);
+      })();
+    </script>
   </body>
 </html>
 
