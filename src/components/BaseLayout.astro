@@ -4391,6 +4391,14 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     z-index: 1003;
   }
 
+  @media (min-width: 1121px) {
+    .site-header .header-inner {
+      width: 100%;
+      max-width: none;
+      padding-inline: clamp(28px, 3vw, 56px);
+    }
+  }
+
   .site-header .primary-nav {
     justify-content: flex-end;
     justify-self: end;
