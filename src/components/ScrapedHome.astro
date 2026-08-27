@@ -195,9 +195,8 @@ const locationOffices = site.offices.map((office) => {
     <div class="scraped-hero-copy">
       <p class="scraped-pretitle">Studio dentistico a Modena e Reggio Emilia · Oltre 30 anni di esperienza</p>
       <h1>
-        <span class="scraped-hero-title-line">Un sorriso</span>
-        <span class="scraped-hero-title-line">che sembri tuo,</span>
-        <span class="scraped-hero-title-line">solo migliore.</span>
+        <span class="scraped-hero-title-line">il tuo benessere</span>
+        <span class="scraped-hero-title-line">inizia da un sorriso</span>
       </h1>
       <p class="scraped-hero-description">
         Curiamo salute, funzione ed estetica della bocca per adulti e bambini con un piano chiaro prima di iniziare,
@@ -647,10 +646,10 @@ const locationOffices = site.offices.map((office) => {
   }
 
   .scraped-hero-copy {
-    width: min(1180px, calc(100% - 30px));
+    width: min(1320px, calc(100% - 56px));
     margin: 0 auto;
     padding: 150px 0 120px;
-    text-align: center;
+    text-align: left;
   }
 
   .scraped-pretitle {
@@ -663,8 +662,8 @@ const locationOffices = site.offices.map((office) => {
   }
 
   .scraped-hero h1 {
-    max-width: 1180px;
-    margin: 0 auto;
+    max-width: 1320px;
+    margin: 0;
     color: var(--surface-white);
     font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
     font-size: clamp(4rem, 7.4vw, 7.9rem);
@@ -682,7 +681,7 @@ const locationOffices = site.offices.map((office) => {
 
   .scraped-hero-description {
     max-width: 760px;
-    margin: 28px auto 0;
+    margin: 28px 0 0;
     color: rgba(255, 255, 255, 0.88);
     font-size: clamp(1.05rem, 1.45vw, 1.38rem);
     font-weight: 500;
@@ -693,7 +692,7 @@ const locationOffices = site.offices.map((office) => {
   .scraped-hero-actions {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 14px;
     margin-top: 34px;
   }
@@ -1863,6 +1862,7 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .scraped-hero-copy {
+      width: min(100% - 28px, 1320px);
       padding: 120px 0 90px;
     }
 
@@ -1871,7 +1871,7 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .scraped-hero h1 {
-      font-size: clamp(2.25rem, 11vw, 4.75rem);
+      font-size: clamp(2rem, 10.2vw, 4.75rem);
       line-height: 0.98;
     }
 
@@ -2026,6 +2026,12 @@ const locationOffices = site.offices.map((office) => {
 
     .location-map-card {
       min-height: 360px;
+    }
+  }
+
+  @media (max-width: 340px) {
+    .scraped-hero-title-line {
+      white-space: normal;
     }
   }
 </style>
