@@ -323,23 +323,23 @@ const siteMenuInformation = [
           ))}
         </div>
       </details>
+      <button
+        class="site-menu-trigger"
+        type="button"
+        aria-label="Apri menu"
+        aria-expanded="false"
+        aria-controls="site-menu-panel"
+        data-site-menu-trigger
+      >
+        <span class="site-menu-icon" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+        <span class="site-menu-trigger-label">Menu</span>
+      </button>
       <a class="button button-small header-cta" href={ctaHref}>Prenota visita <span aria-hidden="true">↗</span></a>
     </div>
-    <button
-      class="site-menu-trigger"
-      type="button"
-      aria-label="Apri menu"
-      aria-expanded="false"
-      aria-controls="site-menu-panel"
-      data-site-menu-trigger
-    >
-      <span class="site-menu-icon" aria-hidden="true">
-        <span></span>
-        <span></span>
-        <span></span>
-      </span>
-      <span class="site-menu-trigger-label">Menu</span>
-    </button>
   </div>
   <div class="site-menu-backdrop" data-site-menu-close></div>
   <aside id="site-menu-panel" class="site-menu-panel" aria-label="Menu principale" aria-hidden="true" data-site-menu-panel>
