@@ -1,0 +1,181 @@
+---
+interface Props {
+  title: string;
+  href?: string;
+}
+
+const { title, href = '/richiesta/' } = Astro.props;
+---
+
+<section class="treatment-prefooter" aria-labelledby="treatment-prefooter-title">
+  <div class="treatment-prefooter-wrap treatment-prefooter-inner">
+    <div class="treatment-prefooter-copy">
+      <p class="treatment-prefooter-eyebrow">Inizia da qui</p>
+      <h2 id="treatment-prefooter-title">{title}</h2>
+      <p class="treatment-prefooter-lead">
+        Raccontaci la tua esigenza. Ti ricontatteremo per indicarti il percorso più adatto e organizzare la tua visita.
+      </p>
+    </div>
+
+    <div class="treatment-prefooter-action">
+      <a href={href}>Raccontaci la tua esigenza <span aria-hidden="true">↗</span></a>
+      <span>Studi a Modena e Reggio Emilia</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .treatment-prefooter {
+    position: relative;
+    padding: clamp(76px, 8vw, 128px) 0;
+    overflow: hidden;
+    background: var(--background);
+    color: var(--brand-primary-dark);
+    isolation: isolate;
+    font-family: Inter, sans-serif;
+    letter-spacing: -0.2px;
+    word-spacing: 0;
+  }
+
+  .treatment-prefooter::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 0 auto;
+    z-index: 0;
+    width: min(58vw, 1100px);
+    background: url('/assets/cta/dental-instruments-transparent.png') right bottom / contain no-repeat;
+    opacity: 0.66;
+    pointer-events: none;
+  }
+
+  .treatment-prefooter-wrap {
+    width: min(1510px, calc(100% - 30px));
+    margin: 0 auto;
+  }
+
+  .treatment-prefooter-inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(28px, 3vw, 42px);
+    align-items: start;
+  }
+
+  .treatment-prefooter-copy {
+    max-width: 980px;
+  }
+
+  .treatment-prefooter-eyebrow {
+    margin: 0 0 18px;
+    color: var(--muted-text);
+    font-size: clamp(0.9rem, 1vw, 1.05rem);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    line-height: 1.25;
+    text-transform: uppercase;
+  }
+
+  .treatment-prefooter h2 {
+    max-width: 18ch;
+    margin: 10px 0 0;
+    color: var(--brand-primary-dark);
+    font-family: Inter, sans-serif;
+    font-size: clamp(2rem, 4.8vw, 4.75rem);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+  }
+
+  .treatment-prefooter-lead {
+    max-width: 760px;
+    margin: 26px 0 0;
+    color: var(--muted-text);
+    font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+    font-weight: 400;
+    line-height: 1.45;
+  }
+
+  .treatment-prefooter-action {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    justify-self: start;
+  }
+
+  .treatment-prefooter-action a {
+    width: min(100%, 304px);
+    min-height: 68px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid rgba(var(--brand-primary-dark-rgb), 0.14);
+    border-radius: 12px;
+    padding: 0 24px;
+    background: var(--surface-white);
+    box-shadow: 0 16px 36px rgba(var(--brand-primary-dark-rgb), 0.12);
+    color: var(--brand-primary-dark);
+    font-size: 1.03rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+  }
+
+  .treatment-prefooter-action a:hover,
+  .treatment-prefooter-action a:focus-visible {
+    background: var(--soft-blue-bg);
+    color: var(--brand-primary-dark);
+    transform: translateY(-1px);
+  }
+
+  .treatment-prefooter-action a:focus-visible {
+    outline: 3px solid var(--brand-blue);
+    outline-offset: 4px;
+  }
+
+  .treatment-prefooter-action a span {
+    color: var(--brand-primary-dark);
+    font-size: 1.45rem;
+    line-height: 1;
+  }
+
+  .treatment-prefooter-action > span {
+    color: var(--muted-text);
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.35;
+    text-align: left;
+  }
+
+  @media (max-width: 720px) {
+    .treatment-prefooter {
+      padding: 58px 0;
+      letter-spacing: -0.16px;
+    }
+
+    .treatment-prefooter::after {
+      top: auto;
+      width: 100%;
+      height: 52%;
+      opacity: 0.18;
+    }
+
+    .treatment-prefooter-action,
+    .treatment-prefooter-action a {
+      width: 100%;
+    }
+
+    .treatment-prefooter h2 {
+      overflow-wrap: anywhere;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .treatment-prefooter-action a {
+      transition: none;
+    }
+  }
+</style>

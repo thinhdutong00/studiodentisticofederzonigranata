@@ -1,0 +1,640 @@
+---
+import ClinicalCasesCarousel from './ClinicalCasesCarousel.astro';
+import TreatmentPrefooterCta from './TreatmentPrefooterCta.astro';
+import { site } from '../data/site';
+import type { TreatmentMarketingConfig } from '../data/treatmentMarketing';
+
+interface Props {
+  config: TreatmentMarketingConfig;
+}
+
+const { config } = Astro.props;
+const requestHref = `/richiesta/?trattamento=${encodeURIComponent(config.requestLabel)}`;
+const informationSections = [
+  ...config.sections,
+  {
+    title: 'Domande frequenti',
+    faqs: config.faqs,
+  },
+];
+const heroTitleClass = config.heroTitle.length > 35 ? 'is-extra-long' : config.heroTitle.length > 25 ? 'is-long' : '';
+---
+
+<article class="treatment-marketing">
+  <section class="treatment-hero" aria-labelledby="treatment-title" data-transparent-header-region>
+    <div class="treatment-wrap treatment-hero-grid">
+      <div class="treatment-hero-copy">
+        <p class="treatment-kicker">{config.kicker}</p>
+        <h1 id="treatment-title" class={heroTitleClass}>{config.heroTitle}</h1>
+        <p class="treatment-lead">{config.lead}</p>
+        <ul class="treatment-trust-list" aria-label="Caratteristiche del percorso">
+          {config.trustItems.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+
+      <form class="treatment-form" aria-labelledby="treatment-form-title" aria-describedby="treatment-form-note">
+        <p class="treatment-form-eyebrow">Richiedi una valutazione</p>
+        <h2 id="treatment-form-title">Parliamo delle tue esigenze</h2>
+
+        <label for="treatment-office">Sede preferita</label>
+        <div class="treatment-select-wrap">
+          <select id="treatment-office" name="office">
+            <option value="">Scegli una sede</option>
+            {site.offices.map((office) => <option value={office.city}>{office.city}</option>)}
+          </select>
+        </div>
+
+        <label for="treatment-reason">Motivo della richiesta</label>
+        <div class="treatment-select-wrap">
+          <select id="treatment-reason" name="reason">
+            <option value="">Da valutare insieme</option>
+            {config.formOptions.map((option) => <option value={option}>{option}</option>)}
+          </select>
+        </div>
+
+        <button type="button" aria-disabled="true">
+          Richiedi informazioni <span aria-hidden="true">↗</span>
+        </button>
+        <p class="treatment-form-note" id="treatment-form-note">
+          Modulo dimostrativo: l’invio non è ancora attivo.
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <section class="treatment-information" aria-label={`Informazioni su ${config.heroTitle}`}>
+    <div class="treatment-wrap">
+      {informationSections.map((section, index) => (
+        <details class="treatment-detail" name="treatment-information" open={index === 0}>
+          <summary>
+            <span>{section.title}</span>
+            <i aria-hidden="true"></i>
+          </summary>
+          <div class="treatment-detail-content">
+            {'paragraphs' in section && section.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+            {'faqs' in section && section.faqs && (
+              <div class="treatment-faq-grid">
+                {section.faqs.map((item) => (
+                  <article>
+                    <h3>{item.question}</h3>
+                    <p>{item.answer}</p>
+                  </article>
+                ))}
+              </div>
+            )}
+          </div>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="treatment-pathway" aria-labelledby="treatment-pathway-title">
+    <div class="treatment-wrap">
+      <div class="treatment-section-heading">
+        <p class="treatment-kicker">Un percorso chiaro</p>
+        <h2 id="treatment-pathway-title">{config.pathwayTitle}</h2>
+        <p>{config.pathwayLead}</p>
+      </div>
+
+      <div class="treatment-pathway-grid">
+        {config.pathwayCards.map((card, index) => (
+          <article>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <h3>{card.title}</h3>
+            <p>{card.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {config.clinicalCase && <ClinicalCasesCarousel initialCase={config.clinicalCase} />}
+
+  <TreatmentPrefooterCta title={config.finalTitle} href={requestHref} />
+</article>
+
+<style>
+  .treatment-marketing {
+    --tm-dark: var(--brand-primary-dark);
+    --tm-accent: var(--brand-blue);
+    --tm-cta: var(--brand-cta);
+    --tm-cta-hover: var(--brand-cta-hover);
+    --tm-line: rgba(var(--brand-cta-rgb), 0.72);
+    --tm-letter-spacing: -0.2px;
+    background: var(--surface-white);
+    color: var(--text-dark);
+    font-family: Inter, sans-serif;
+    letter-spacing: var(--tm-letter-spacing);
+    word-spacing: 0;
+  }
+
+  .treatment-wrap {
+    width: min(100% - 48px, 1540px);
+    margin: 0 auto;
+  }
+
+  .treatment-hero {
+    min-height: clamp(690px, 82svh, 900px);
+    display: grid;
+    align-items: center;
+    background:
+      radial-gradient(circle at 20% 82%, rgba(var(--brand-blue-rgb), 0.18), transparent 32%),
+      var(--tm-dark);
+    color: var(--surface-white);
+  }
+
+  .treatment-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(360px, 0.65fr);
+    gap: clamp(56px, 8vw, 130px);
+    align-items: center;
+    padding: clamp(150px, 14vw, 205px) 0 clamp(70px, 8vw, 110px);
+  }
+
+  .treatment-hero-copy {
+    max-width: 1020px;
+  }
+
+  .treatment-kicker,
+  .treatment-form-eyebrow {
+    margin: 0 0 20px;
+    color: var(--tm-accent);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: var(--tm-letter-spacing);
+    line-height: 16px;
+    text-transform: uppercase;
+  }
+
+  .treatment-hero h1 {
+    max-width: 12ch;
+    margin: 0;
+    color: var(--surface-white);
+    font-family: Inter, sans-serif;
+    font-size: clamp(62px, 6.7vw, 108px);
+    font-weight: 300;
+    letter-spacing: var(--tm-letter-spacing);
+    line-height: 0.92;
+    overflow-wrap: normal;
+    text-transform: uppercase;
+  }
+
+  .treatment-hero h1.is-long {
+    max-width: 14ch;
+    font-size: clamp(54px, 5.7vw, 90px);
+  }
+
+  .treatment-hero h1.is-extra-long {
+    max-width: 16ch;
+    font-size: clamp(48px, 4.9vw, 78px);
+    line-height: 0.96;
+  }
+
+  .treatment-lead {
+    max-width: 900px;
+    margin: 34px 0 0;
+    color: var(--tm-accent);
+    font-size: clamp(22px, 2vw, 30px);
+    font-weight: 500;
+    letter-spacing: var(--tm-letter-spacing);
+    line-height: 1.28;
+  }
+
+  .treatment-trust-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+    margin: 32px 0 0;
+    padding: 0;
+    color: rgba(var(--surface-white-rgb), 0.78);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4;
+    list-style: none;
+  }
+
+  .treatment-trust-list li {
+    position: relative;
+    padding-left: 17px;
+  }
+
+  .treatment-trust-list li::before {
+    content: "";
+    position: absolute;
+    top: 0.55em;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--tm-accent);
+  }
+
+  .treatment-form {
+    align-self: center;
+    padding: clamp(28px, 3vw, 42px);
+    border-radius: 10px;
+    background: var(--surface-white);
+    box-shadow: 0 22px 70px rgba(5, 20, 33, 0.22);
+    color: var(--text-dark);
+  }
+
+  .treatment-form-eyebrow {
+    margin-bottom: 10px;
+    color: var(--tm-cta);
+  }
+
+  .treatment-form h2 {
+    margin: 0 0 30px;
+    color: var(--tm-dark);
+    font-size: clamp(28px, 2.25vw, 36px);
+    font-weight: 500;
+    letter-spacing: var(--tm-letter-spacing);
+    line-height: 1.15;
+  }
+
+  .treatment-form label {
+    display: block;
+    margin: 18px 0 8px;
+    color: var(--muted-text);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .treatment-select-wrap {
+    position: relative;
+  }
+
+  .treatment-select-wrap::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    width: 9px;
+    height: 9px;
+    border-right: 2px solid var(--tm-dark);
+    border-bottom: 2px solid var(--tm-dark);
+    pointer-events: none;
+    transform: translateY(-70%) rotate(45deg);
+  }
+
+  .treatment-form select {
+    width: 100%;
+    min-height: 62px;
+    appearance: none;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 0 52px 0 18px;
+    background: var(--surface-white);
+    color: var(--text-dark);
+    font: inherit;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: var(--tm-letter-spacing);
+  }
+
+  .treatment-form select:focus-visible {
+    border-color: var(--tm-cta);
+    outline: 3px solid rgba(var(--brand-cta-rgb), 0.18);
+  }
+
+  .treatment-form button {
+    width: 100%;
+    min-height: 64px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 28px;
+    border: 1px solid var(--tm-cta);
+    border-radius: 7px;
+    padding: 0 20px;
+    background: var(--tm-cta);
+    color: var(--surface-white);
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: var(--tm-letter-spacing);
+    line-height: 16px;
+    text-transform: uppercase;
+    cursor: not-allowed;
+  }
+
+  .treatment-form button span {
+    font-size: 22px;
+  }
+
+  .treatment-form-note {
+    margin: 14px 0 0;
+    color: var(--muted-text);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  .treatment-information {
+    padding: clamp(70px, 7vw, 108px) 0;
+    background: var(--surface-white);
+  }
+
+  .treatment-detail {
+    border-bottom: 2px solid var(--tm-line);
+  }
+
+  .treatment-detail:first-child {
+    border-top: 2px solid var(--tm-line);
+  }
+
+  .treatment-detail summary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 40px;
+    gap: 24px;
+    align-items: center;
+    padding: clamp(24px, 3vw, 42px) 0;
+    color: var(--tm-cta-hover);
+    cursor: pointer;
+    font-size: clamp(36px, 4vw, 64px);
+    font-weight: 500;
+    letter-spacing: var(--tm-letter-spacing);
+    line-height: 1.08;
+    list-style: none;
+  }
+
+  .treatment-detail summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .treatment-detail summary:focus-visible {
+    outline: 3px solid rgba(var(--brand-cta-rgb), 0.24);
+    outline-offset: 7px;
+  }
+
+  .treatment-detail i {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--tm-cta);
+  }
+
+  .treatment-detail i::before,
+  .treatment-detail i::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 15px;
+    height: 2px;
+    background: var(--surface-white);
+    transform: translate(-50%, -50%);
+  }
+
+  .treatment-detail i::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+    transition: opacity 140ms ease;
+  }
+
+  .treatment-detail[open] i::after {
+    opacity: 0;
+  }
+
+  .treatment-detail-content {
+    max-width: 1040px;
+    padding: 0 0 clamp(36px, 5vw, 70px);
+  }
+
+  .treatment-detail-content > p {
+    margin: 0;
+    color: var(--text-dark);
+    font-size: clamp(18px, 1.55vw, 24px);
+    font-weight: 400;
+    letter-spacing: var(--tm-letter-spacing);
+    line-height: 1.48;
+  }
+
+  .treatment-detail-content > p + p {
+    margin-top: 18px;
+  }
+
+  .treatment-faq-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .treatment-faq-grid article {
+    padding: 26px;
+    background: var(--soft-blue-bg);
+  }
+
+  .treatment-faq-grid h3 {
+    margin: 0 0 12px;
+    color: var(--tm-dark);
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: var(--tm-letter-spacing);
+    line-height: 1.25;
+  }
+
+  .treatment-faq-grid p {
+    margin: 0;
+    color: var(--text-dark);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .treatment-pathway {
+    padding: clamp(72px, 8vw, 120px) 0;
+    background: var(--soft-blue-bg);
+  }
+
+  .treatment-section-heading {
+    max-width: 1050px;
+  }
+
+  .treatment-section-heading h2 {
+    max-width: 16ch;
+    margin: 0;
+    color: var(--tm-dark);
+    font-size: clamp(42px, 5.2vw, 78px);
+    font-weight: 400;
+    letter-spacing: var(--tm-letter-spacing);
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .treatment-section-heading > p:last-child {
+    max-width: 850px;
+    margin: 28px 0 0;
+    color: var(--muted-text);
+    font-size: clamp(18px, 1.6vw, 24px);
+    font-weight: 400;
+    line-height: 1.45;
+  }
+
+  .treatment-pathway-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: clamp(44px, 6vw, 78px);
+  }
+
+  .treatment-pathway-grid article {
+    min-height: 310px;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(26px, 3vw, 40px);
+    background: var(--surface-white);
+  }
+
+  .treatment-pathway-grid article > span {
+    color: var(--tm-accent);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  .treatment-pathway-grid h3 {
+    max-width: 12ch;
+    margin: auto 0 14px;
+    color: var(--tm-dark);
+    font-size: clamp(26px, 2.2vw, 34px);
+    font-weight: 500;
+    letter-spacing: var(--tm-letter-spacing);
+    line-height: 1.12;
+  }
+
+  .treatment-pathway-grid p {
+    max-width: 34ch;
+    margin: 0;
+    color: var(--muted-text);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.45;
+  }
+
+  @media (max-width: 980px) {
+    .treatment-hero-grid {
+      grid-template-columns: 1fr;
+      gap: 50px;
+    }
+
+    .treatment-form {
+      width: min(100%, 660px);
+    }
+
+    .treatment-pathway-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .treatment-pathway-grid article {
+      min-height: 240px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .treatment-marketing {
+      --tm-letter-spacing: -0.16px;
+    }
+
+    .treatment-wrap {
+      width: min(100% - 30px, 1540px);
+    }
+
+    .treatment-hero {
+      min-height: auto;
+    }
+
+    .treatment-hero-grid {
+      gap: 38px;
+      padding: 158px 0 56px;
+    }
+
+    .treatment-kicker,
+    .treatment-form-eyebrow {
+      margin-bottom: 14px;
+      font-size: 14px;
+      line-height: 14px;
+    }
+
+    .treatment-hero h1,
+    .treatment-hero h1.is-long,
+    .treatment-hero h1.is-extra-long {
+      max-width: none;
+      font-size: clamp(34px, 10.7vw, 46px);
+      line-height: 0.98;
+      overflow-wrap: anywhere;
+    }
+
+    .treatment-lead {
+      margin-top: 24px;
+      font-size: 20px;
+      line-height: 1.25;
+    }
+
+    .treatment-trust-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .treatment-form {
+      padding: 24px 20px;
+      border-radius: 8px;
+    }
+
+    .treatment-form h2 {
+      margin-bottom: 24px;
+      font-size: 28px;
+    }
+
+    .treatment-form select,
+    .treatment-form button {
+      min-height: 58px;
+    }
+
+    .treatment-information {
+      padding: 56px 0;
+    }
+
+    .treatment-detail summary {
+      grid-template-columns: minmax(0, 1fr) 32px;
+      gap: 16px;
+      padding: 24px 0;
+      font-size: clamp(28px, 8vw, 38px);
+    }
+
+    .treatment-detail i {
+      width: 30px;
+      height: 30px;
+    }
+
+    .treatment-detail-content {
+      padding-bottom: 36px;
+    }
+
+    .treatment-detail-content > p {
+      font-size: 17px;
+      line-height: 1.5;
+    }
+
+    .treatment-faq-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .treatment-faq-grid article {
+      padding: 22px 20px;
+    }
+
+    .treatment-section-heading h2 {
+      font-size: 40px;
+    }
+
+    .treatment-pathway-grid article {
+      min-height: 230px;
+    }
+
+  }
+</style>

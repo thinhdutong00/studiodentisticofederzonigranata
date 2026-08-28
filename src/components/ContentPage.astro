@@ -1,6 +1,7 @@
 ---
 import ContactForm from './ContactForm.astro';
-import FeatureCards from './FeatureCards.astro';
+import ClinicalCasesCarousel from './ClinicalCasesCarousel.astro';
+import ClinicalCasesOriginalGrid from './ClinicalCasesOriginalGrid.astro';
 import ScrapedHome from './ScrapedHome.astro';
 import SectionBand from './SectionBand.astro';
 import TreatmentStickyCta from './TreatmentStickyCta.astro';
@@ -26,12 +27,11 @@ const cleanHeading = (text = '') =>
 
 const stickyCtaTitle = page.path === '/estetica/' ? 'Estetica dentale' : cleanHeading(pageTitle);
 
-const clinicalItems = site.clinicalLinks.map((item) => ({ label: item.label, href: item.href }));
-
 const videoBlocks = page.path === '/video/' ? page.blocks : [];
-const videoIntroHtml = videoBlocks[1] && 'html' in videoBlocks[1] ? videoBlocks[1].html : '';
 const videoLeadHtml = videoBlocks[3] && 'html' in videoBlocks[3] ? videoBlocks[3].html : '';
 const videoChannelTitle = videoBlocks[4]?.type === 'heading' ? videoBlocks[4].text : 'Studio Dentistico Federzoni Granata';
+const hasImmersiveLegalHero = page.path === '/privacy-policy/' || page.path === '/cookie-privacy/';
+const legalHeroKicker = page.path === '/cookie-privacy/' ? 'Cookie' : 'Privacy';
 const faqItems = [
   {
     question: 'Come posso prenotare una visita?',
@@ -684,27 +684,30 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
 
 {page.path === '/' ? (
   <ScrapedHome />
+) : page.path === '/casi-clinici/' ? (
+  <ClinicalCasesOriginalGrid />
 ) : page.path === '/video/' ? (
   <>
-    <section class="page-hero">
-      <div class="container">
-        <p class="eyebrow">{site.name}</p>
-        <h1>{cleanHeading(pageTitle)}</h1>
-        {page.description && <p>{page.description}</p>}
+    <section class="video-hero" aria-labelledby="video-hero-title" data-transparent-header-region>
+      <div class="video-hero-inner">
+        <p class="video-hero-kicker">Video</p>
+        <h1 id="video-hero-title">Scopri il nostro studio dentistico!</h1>
+        <p class="video-hero-lead">Guarda i contenuti video dello Studio Dentistico Federzoni Granata e approfondisci tecnologie, trattamenti e casi clinici.</p>
       </div>
     </section>
 
-    <SectionBand eyebrow="Video" title="Scopri il nostro studio dentistico!" lead="Guarda i contenuti video dello Studio Dentistico Federzoni Granata e approfondisci tecnologie, trattamenti e casi clinici.">
-      {videoIntroHtml && <div class="rich-text container-narrow" set:html={videoIntroHtml} />}
+    <section class="video-channel-section" aria-labelledby="video-channel-title">
+      <div class="video-channel-inner">
       <div class="youtube-channel-card">
         <div>
           <p class="eyebrow">YouTube</p>
-          <h2>{videoChannelTitle}</h2>
+          <h2 id="video-channel-title">{videoChannelTitle}</h2>
           {videoLeadHtml && <div class="rich-text" set:html={videoLeadHtml} />}
         </div>
         <a class="button button-outline" href="https://www.youtube.com/channel/UCO-D1kTMKZIFAE2oT6maghg/" target="_blank" rel="noopener noreferrer">Apri il canale <span aria-hidden="true">↗</span></a>
       </div>
-    </SectionBand>
+      </div>
+    </section>
 
     <SectionBand eyebrow="Canale YouTube" title="Video dello studio" tone="cream">
       <div class="video-grid">
@@ -729,9 +732,7 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
       </div>
     </SectionBand>
 
-    <SectionBand eyebrow="Casi Clinici" title="Categorie cliniche">
-      <FeatureCards items={clinicalItems} numbered />
-    </SectionBand>
+    <ClinicalCasesCarousel />
   </>
 ) : page.path === '/faq/' ? (
   <>
@@ -1046,13 +1047,23 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
   </>
 ) : (
   <>
-    <section class="page-hero" data-treatment-sticky-hero={hasStickyCta ? '' : undefined}>
-      <div class="container">
-        <p class="eyebrow">{page.kind === 'article' ? 'Approfondimenti' : site.name}</p>
-        <h1>{cleanHeading(pageTitle)}</h1>
-        {page.description && <p>{page.description}</p>}
-      </div>
-    </section>
+    {hasImmersiveLegalHero ? (
+      <section class="video-hero" aria-labelledby="legal-hero-title" data-transparent-header-region>
+        <div class="video-hero-inner">
+          <p class="video-hero-kicker">{legalHeroKicker}</p>
+          <h1 id="legal-hero-title">{cleanHeading(pageTitle)}</h1>
+          {page.description && <p class="video-hero-lead">{page.description}</p>}
+        </div>
+      </section>
+    ) : (
+      <section class="page-hero" data-treatment-sticky-hero={hasStickyCta ? '' : undefined}>
+        <div class="container">
+          <p class="eyebrow">{page.kind === 'article' ? 'Approfondimenti' : site.name}</p>
+          <h1>{cleanHeading(pageTitle)}</h1>
+          {page.description && <p>{page.description}</p>}
+        </div>
+      </section>
+    )}
 
     <section class="section">
       <div class="container content-shell">
@@ -1175,6 +1186,121 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
 </script>
 
 <style>
+  .video-hero {
+    min-height: clamp(620px, 58vw, 760px);
+    display: grid;
+    place-items: center;
+    padding: clamp(154px, 14vw, 190px) 0 clamp(92px, 9vw, 126px);
+    background: var(--brand-primary-dark);
+    color: var(--surface-white);
+    font-family: "Inter", sans-serif;
+    letter-spacing: -0.2px;
+    text-align: center;
+    word-spacing: 0;
+  }
+
+  .video-hero-inner {
+    width: min(1500px, calc(100% - 64px));
+    margin: 0 auto;
+  }
+
+  .video-hero-kicker {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 30px;
+    color: var(--brand-blue);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 18px;
+    text-transform: uppercase;
+  }
+
+  .video-hero-kicker::before,
+  .video-hero-kicker::after {
+    content: "";
+    width: 52px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .video-hero h1 {
+    max-width: 1450px;
+    margin: 0 auto;
+    color: var(--surface-white);
+    font-family: "Inter", sans-serif;
+    font-size: clamp(58px, 7.3vw, 112px);
+    font-weight: 400;
+    letter-spacing: -0.2px;
+    line-height: 0.92;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  .video-hero-lead {
+    max-width: 1000px;
+    margin: 36px auto 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: clamp(1.12rem, 1.35vw, 1.4rem);
+    font-weight: 500;
+    line-height: 1.28;
+    text-wrap: balance;
+  }
+
+  .video-channel-section {
+    padding: clamp(64px, 7vw, 96px) 0;
+    background: linear-gradient(180deg, var(--surface-white) 0%, var(--background) 100%);
+  }
+
+  .video-channel-inner {
+    width: min(1500px, calc(100% - 64px));
+    margin: 0 auto;
+  }
+
+  .video-channel-section .youtube-channel-card {
+    margin-top: 0;
+  }
+
+  @media (max-width: 720px) {
+    .video-hero {
+      min-height: 590px;
+      padding: 132px 0 82px;
+      letter-spacing: -0.16px;
+    }
+
+    .video-hero-inner,
+    .video-channel-inner {
+      width: min(100% - 30px, 1500px);
+    }
+
+    .video-hero-kicker {
+      gap: 12px;
+      margin-bottom: 24px;
+      font-size: 15px;
+    }
+
+    .video-hero-kicker::before,
+    .video-hero-kicker::after {
+      width: 34px;
+    }
+
+    .video-hero h1 {
+      font-size: clamp(3.25rem, 15vw, 5rem);
+      letter-spacing: -0.16px;
+      line-height: 0.94;
+    }
+
+    .video-hero-lead {
+      margin-top: 28px;
+      font-size: 1.05rem;
+    }
+
+    .video-channel-section {
+      padding: 52px 0 64px;
+    }
+  }
+
   .aesthetic-hero {
     min-height: clamp(560px, 68vh, 810px);
     display: grid;

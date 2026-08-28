@@ -1,7 +1,9 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
 import ContentPage from '../components/ContentPage.astro';
+import TreatmentMarketingPage from '../components/TreatmentMarketingPage.astro';
 import { site } from '../data/site';
+import { treatmentMarketingPages } from '../data/treatmentMarketing';
 
 export function getStaticPaths() {
   return [...site.pages, ...site.navigationPages, ...site.treatmentPages]
@@ -14,10 +16,36 @@ export function getStaticPaths() {
 
 const { page } = Astro.props;
 
-const transparentHeaderPaths = new Set(['/urgenze/', '/convenzioni/', '/estetica/', '/modena/', '/reggio-emilia/']);
-const transparentHeader = transparentHeaderPaths.has(page.path);
+const transparentHeaderPaths = new Set([
+  '/urgenze/',
+  '/convenzioni/',
+  '/estetica/',
+  '/modena/',
+  '/reggio-emilia/',
+  '/video/',
+  '/privacy-policy/',
+  '/cookie-privacy/',
+]);
+const treatmentMarketing =
+  page.kind === 'treatment' && page.path in treatmentMarketingPages
+    ? treatmentMarketingPages[page.path as keyof typeof treatmentMarketingPages]
+    : undefined;
+const transparentHeader = Boolean(treatmentMarketing) || transparentHeaderPaths.has(page.path);
+const layoutTitle = treatmentMarketing ? `${treatmentMarketing.seoTitle} | ${site.name}` : page.title;
+const layoutDescription = treatmentMarketing?.description || page.description;
+const layoutOgImage = treatmentMarketing?.ogImage || page.ogImage || site.heroImage;
+const headerCtaHref = treatmentMarketing
+  ? `/richiesta/?trattamento=${encodeURIComponent(treatmentMarketing.requestLabel)}`
+  : '/richiesta/';
 ---
 
-<BaseLayout title={page.title} description={page.description} ogImage={page.ogImage || site.heroImage} canonicalPath={page.path} transparentHeader={transparentHeader}>
-  <ContentPage page={page} />
+<BaseLayout
+  title={layoutTitle}
+  description={layoutDescription}
+  ogImage={layoutOgImage}
+  canonicalPath={page.path}
+  transparentHeader={transparentHeader}
+  headerCtaHref={headerCtaHref}
+>
+  {treatmentMarketing ? <TreatmentMarketingPage config={treatmentMarketing} /> : <ContentPage page={page} />}
 </BaseLayout>

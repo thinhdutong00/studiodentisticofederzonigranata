@@ -459,7 +459,7 @@ const officeDetails: Record<string, { label: string; title: string; description:
 
   .about-kicker {
     margin: 0 0 52px;
-    color: var(--about-green);
+    color: inherit;
     font-size: 1rem;
     font-weight: 700;
     letter-spacing: 0;
@@ -473,10 +473,10 @@ const officeDetails: Record<string, { label: string; title: string; description:
     padding: 126px 0 0;
     background: linear-gradient(
       to bottom,
-      var(--about-soft) 0 calc(100% - var(--hero-strip-cut)),
+      var(--about-green) 0 calc(100% - var(--hero-strip-cut)),
       var(--surface-white) calc(100% - var(--hero-strip-cut)) 100%
     );
-    color: var(--about-green);
+    color: var(--surface-white);
     text-align: center;
   }
 
@@ -515,7 +515,7 @@ const officeDetails: Record<string, { label: string; title: string; description:
   .about-lead {
     max-width: 1420px;
     margin: 68px auto 0;
-    color: var(--about-green);
+    color: inherit;
     font-size: 2.02rem;
     font-weight: 400;
     line-height: 1.43;
@@ -534,7 +534,7 @@ const officeDetails: Record<string, { label: string; title: string; description:
     grid-template-columns: repeat(4, minmax(0, 1fr));
     align-items: center;
     gap: 22px;
-    margin-top: 300px;
+    margin-top: 160px;
   }
 
   .hero-image-strip figure,
@@ -682,7 +682,7 @@ const officeDetails: Record<string, { label: string; title: string; description:
     margin: 0 0 24px;
     color: var(--brand-blue);
     font-size: 1.55rem;
-    font-weight: 800;
+    font-weight: 400;
     line-height: 1.08;
     text-transform: uppercase;
   }
@@ -851,7 +851,7 @@ const officeDetails: Record<string, { label: string; title: string; description:
 
   .network-section {
     padding: 118px 0 0;
-    background: var(--about-soft);
+    background: var(--background);
     color: var(--about-green);
   }
 

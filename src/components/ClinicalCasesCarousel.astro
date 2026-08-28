@@ -1,5 +1,12 @@
 ---
 import { site } from '../data/site';
+import type { TreatmentClinicalCase } from '../data/treatmentMarketing';
+
+interface Props {
+  initialCase?: TreatmentClinicalCase;
+}
+
+const { initialCase } = Astro.props;
 
 const caseDetails: Record<string, { description: string; image: string; imageAlt: string; imagePosition: string }> = {
   Estetica: {
@@ -60,7 +67,12 @@ const cases = caseOrder.flatMap((label) => {
 });
 ---
 
-<section class="clinical-carousel-section" aria-labelledby="clinical-carousel-title" data-cases-carousel>
+<section
+  class="clinical-carousel-section"
+  aria-labelledby="clinical-carousel-title"
+  data-cases-carousel
+  data-initial-case={initialCase}
+>
   <div class="clinical-carousel-head">
     <p>Guarda i nostri</p>
     <h2 id="clinical-carousel-title">Casi clinici</h2>
@@ -73,7 +85,12 @@ const cases = caseOrder.flatMap((label) => {
 
     <div class="clinical-carousel-track" data-cases-carousel-track>
       {cases.map((item) => (
-        <a class="clinical-carousel-card" href={item.href} style={`--clinical-card-position: ${item.imagePosition};`}>
+        <a
+          class="clinical-carousel-card"
+          href={item.href}
+          data-case-label={item.label}
+          style={`--clinical-card-position: ${item.imagePosition};`}
+        >
           <img src={item.image} alt={item.imageAlt} loading="lazy" />
           <span class="clinical-carousel-shade" aria-hidden="true"></span>
           <span class="clinical-carousel-card-copy">
@@ -132,6 +149,11 @@ const cases = caseOrder.flatMap((label) => {
       return card.offsetWidth + gap;
     };
 
+    const getTrackGap = () => {
+      const styles = window.getComputedStyle(track);
+      return Number.parseFloat(styles.columnGap || styles.gap || '0');
+    };
+
     const getLoopMetrics = () => ({
       start: firstOriginal.offsetLeft,
       width: firstAfterClone.offsetLeft - firstOriginal.offsetLeft,
@@ -145,6 +167,20 @@ const cases = caseOrder.flatMap((label) => {
     };
 
     const setInitialScroll = () => {
+      const requestedCase = carousel instanceof HTMLElement ? carousel.dataset.initialCase : undefined;
+      const requestedCard = requestedCase
+        ? originalCards.find(
+            (card) => card instanceof HTMLElement && card.dataset.caseLabel === requestedCase,
+          )
+        : undefined;
+
+      if (requestedCard instanceof HTMLElement) {
+        const isMobile = window.matchMedia('(max-width: 720px)').matches;
+        const leadingInset = isMobile ? 15 : requestedCard.offsetWidth / 2 + getTrackGap();
+        track.scrollLeft = requestedCard.offsetLeft - leadingInset;
+        return;
+      }
+
       track.scrollLeft = getLoopMetrics().start + firstOriginal.offsetWidth / 2;
     };
 

@@ -1,6 +1,7 @@
 ---
 import { site } from '../data/site';
 import { formatParentheticalDetail } from '../utils/formatParentheticalDetail';
+import TreatmentIcon from './TreatmentIcon.astro';
 
 interface Props {
   transparent?: boolean;
@@ -9,10 +10,8 @@ interface Props {
 
 const { transparent = false, ctaHref = '/richiesta/' } = Astro.props;
 
-const afterTreatment = [
-  { label: 'trattamenti', href: '/trattamenti/' },
-  { label: 'lo studio', href: '/chi-siamo/' },
-];
+const beforeClinical = [{ label: 'Informazioni', href: '/chi-siamo/' }];
+const afterClinical = [{ label: 'Trattamenti', href: '/trattamenti/' }];
 
 const slugFromHref = (href: string) => href.replaceAll('/', '') || 'pagina';
 
@@ -24,9 +23,9 @@ const treatmentOrder = [
   'Pedodonzia (odontoiatria infantile)',
   'Ortodonzia e Allineatori invisibili (adulti e bimbi)',
   'Estetica diretta (faccette in composito)',
+  'Estetica Indiretta (faccette in porcellana)',
   'Parodontologia (cure gengivali)',
   'Protesi fissa e mobile',
-  'Estetica Indiretta (faccette in porcellana)',
   'Chirurgia Stomatologica',
   'Implantologia tradizionale e computer guidata',
   'Gnatologia (disturbi articolazione temporo-mandibolare)',
@@ -42,6 +41,17 @@ const treatmentMenuLabels: Record<string, string> = {
   'Parodontologia (cure gengivali)': 'Parodontologia',
   'Estetica Indiretta (faccette in porcellana)': 'Faccette in ceramica',
   'Gnatologia (disturbi articolazione temporo-mandibolare)': 'Gnatologia',
+};
+
+const clinicalIconByLabel: Record<string, string> = {
+  Estetica: 'ceramic',
+  Protesi: 'prosthesis',
+  Parodontologia: 'periodontology',
+  Implantologia: 'implantology',
+  Ortodonzia: 'orthodontics',
+  Conservativa: 'filling',
+  Endodonzia: 'endodontics',
+  Video: 'video',
 };
 
 const treatmentCategoryLabels: Record<string, string> = {
@@ -174,7 +184,7 @@ const secondaryMenus = [
   {
     id: 'clinical',
     title: 'Casi clinici',
-    triggerLabel: 'casi clinici',
+    triggerLabel: 'Casi clinici',
     href: '/casi-clinici/',
     panelId: 'clinical-sub-menu',
     tabLabel: 'Categorie casi clinici',
@@ -207,10 +217,13 @@ const callOptions = site.offices.map((office) => ({
 
 const experienceMessage = 'Studio dentistico a Modena e Reggio Emilia · Oltre 35 anni di esperienza';
 
-const siteMenuTreatments = treatmentGroups.flatMap((category) => category.items.map((item) => ({
-  label: item.menuLabel,
-  href: item.href,
-})));
+const siteMenuTreatments = treatmentGroups
+  .flatMap((category) => category.items)
+  .sort((a, b) => treatmentOrder.indexOf(a.label) - treatmentOrder.indexOf(b.label))
+  .map((item) => ({
+    label: item.menuLabel,
+    href: item.href,
+  }));
 
 const siteMenuInformation = [
   { label: 'Chi siamo', href: '/chi-siamo/' },
@@ -219,6 +232,7 @@ const siteMenuInformation = [
   { label: 'Orari e sedi', href: '/orari-e-sedi/' },
   { label: 'Convenzioni', href: '/convenzioni/' },
   { label: 'Urgenze', href: '/urgenze/' },
+  { label: 'Video', href: '/video/' },
   { label: 'FAQ', href: '/faq/' },
 ];
 ---
@@ -236,6 +250,7 @@ const siteMenuInformation = [
       <img src={site.logo} alt="Studio dentistico Federzoni Granata" width="400" height="52" />
     </a>
     <nav id="primary-navigation" class="primary-nav" aria-label="Navigazione principale">
+      {beforeClinical.map((item) => <a class="primary-nav-link" href={item.href}>{item.label}</a>)}
       {secondaryMenus.slice(0, 1).map((navMenu) => (
         <div class="nav-mega" data-mega-menu data-menu-title={navMenu.title}>
           <a
@@ -256,69 +271,36 @@ const siteMenuInformation = [
             </button>
             <h2 class="mobile-drilldown-title" data-mobile-drilldown-title>{navMenu.title}</h2>
           </div>
-          <div id={navMenu.panelId} class="mega-menu" data-mega-panel>
-            <div class="mega-menu-tabs" role="tablist" aria-label={navMenu.tabLabel}>
-              {navMenu.categories.map((category, index) => (
-                <a
-                  id={`${navMenu.id}-tab-${category.id}`}
-                  class:list={['mega-tab', 'mega-tab-link', index === 0 && 'is-active']}
-                  href={category.items[0].href}
-                  role="tab"
-                  aria-selected={index === 0 ? 'true' : 'false'}
-                  aria-controls={`${navMenu.id}-panel-${category.id}`}
-                  tabindex={index === 0 ? '0' : '-1'}
-                  data-treatment-tab
-                  data-target={`${navMenu.id}-panel-${category.id}`}
-                >
-                  <span class="mega-tab-label">{category.label}</span>
-                  <span class="mega-tab-count">Vai alla pagina <span aria-hidden="true">↗</span></span>
+          <div id={navMenu.panelId} class="mega-menu clinical-mega-menu" data-mega-panel>
+            <nav class="clinical-mega-grid" aria-label={navMenu.tabLabel}>
+              {navMenu.categories.map((category) => (
+                <a class="clinical-mega-card" href={category.items[0].href}>
+                  <span class="clinical-mega-icon" aria-hidden="true">
+                    <TreatmentIcon icon={clinicalIconByLabel[category.label] || 'hygiene'} />
+                  </span>
+                  <span class="clinical-mega-label">{category.label}</span>
+                  <span class="clinical-mega-arrow" aria-hidden="true">↗</span>
                 </a>
               ))}
-            </div>
-            <div class="mega-menu-content">
-              {navMenu.categories.map((category, index) => (
-                <section
-                  id={`${navMenu.id}-panel-${category.id}`}
-                  class:list={['mega-menu-panel', 'mega-menu-panel-detail', index === 0 && 'is-active']}
-                  role="tabpanel"
-                  aria-labelledby={`${navMenu.id}-tab-${category.id}`}
-                  hidden={index !== 0}
-                  data-treatment-panel
-                >
-                  <div class="detail-menu-copy">
-                    <p class="detail-menu-kicker">{navMenu.kicker}</p>
-                    <h3>{category.label}</h3>
-                    <p>{category.description}</p>
-                    <a class="detail-menu-cta" href={category.items[0].href}>Vai alla pagina <span aria-hidden="true">↗</span></a>
-                  </div>
-                  <aside
-                    class:list={[
-                      'mega-feature',
-                      'mega-feature-image-only',
-                      category.imageVariant === 'square' && 'mega-feature-image-square',
-                    ]}
-                    aria-label={`Immagine ${category.label}`}
-                  >
-                    <img
-                      src={category.image}
-                      alt={category.imageAlt}
-                      loading="lazy"
-                      style={category.imagePosition ? `object-position: ${category.imagePosition};` : undefined}
-                    />
-                  </aside>
-                </section>
-              ))}
+            </nav>
+            <div class="clinical-mega-heading">
+              <h2>Scegli una categoria</h2>
+              <a href={navMenu.href}>Vedi tutti i casi <span aria-hidden="true">↗</span></a>
             </div>
           </div>
         </div>
       ))}
-      {afterTreatment.map((item) => <a class="primary-nav-link" href={item.href}>{item.label}</a>)}
+      {afterClinical.map((item) => <a class="primary-nav-link" href={item.href}>{item.label}</a>)}
     </nav>
     <div class="header-actions">
       <details class="call-dropdown header-call-dropdown" data-call-dropdown>
         <summary class="button button-small call-dropdown-trigger header-call-trigger">
-          Chiama lo studio
-          <span class="call-dropdown-caret" aria-hidden="true"></span>
+          <span class="header-call-phone-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.35 1.91.66 2.82a2 2 0 0 1-.45 2.11L8.05 9.92a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.31 1.86.53 2.82.66A2 2 0 0 1 22 16.92Z"></path>
+            </svg>
+          </span>
+          <span class="header-call-label">Chiama lo studio</span>
         </summary>
         <div class="call-dropdown-menu" role="list">
           {callOptions.map((office) => (
@@ -637,15 +619,54 @@ const siteMenuInformation = [
     const header = document.querySelector('[data-overlay-header="true"]');
     if (!(header instanceof HTMLElement)) return;
 
-    const boundary = document.querySelector('[data-transparent-header-region]') || document.querySelector('main > *:first-child');
-    if (!(boundary instanceof HTMLElement)) return;
+    const topThreshold = 1;
+    let wasAtPageTop = Math.max(0, window.scrollY) <= topThreshold;
+
+    const cancelTopTransition = () => {
+      header.classList.remove('is-exiting-for-transparent', 'is-entering-transparent');
+    };
+
+    const startTopTransition = () => {
+      cancelTopTransition();
+      header.classList.remove('is-over-hero', 'is-hidden');
+      header.classList.add('is-exiting-for-transparent');
+    };
 
     const syncHeaderTheme = () => {
-      const headerHeight = header.offsetHeight || 0;
-      const isOverColor = boundary.getBoundingClientRect().bottom > headerHeight + 1;
+      const isAtPageTop = Math.max(0, window.scrollY) <= topThreshold;
       const menuIsOpen = header.classList.contains('mobile-menu-open') || header.classList.contains('site-menu-open');
-      header.classList.toggle('is-over-hero', isOverColor && !menuIsOpen);
+
+      if (menuIsOpen) {
+        cancelTopTransition();
+        header.classList.remove('is-over-hero');
+      } else if (isAtPageTop && !wasAtPageTop) {
+        startTopTransition();
+      } else if (!isAtPageTop) {
+        cancelTopTransition();
+        header.classList.remove('is-over-hero');
+      } else if (!header.classList.contains('is-exiting-for-transparent') && !header.classList.contains('is-entering-transparent')) {
+        header.classList.add('is-over-hero');
+      }
+
+      wasAtPageTop = isAtPageTop;
     };
+
+    header.addEventListener('animationend', (event) => {
+      if (event.target !== header) return;
+
+      if (header.classList.contains('is-exiting-for-transparent')) {
+        header.classList.remove('is-exiting-for-transparent');
+
+        const isStillAtPageTop = Math.max(0, window.scrollY) <= topThreshold;
+        const menuIsOpen = header.classList.contains('mobile-menu-open') || header.classList.contains('site-menu-open');
+        if (!isStillAtPageTop || menuIsOpen) return;
+
+        header.classList.add('is-over-hero', 'is-entering-transparent');
+        return;
+      }
+
+      header.classList.remove('is-entering-transparent');
+    });
 
     syncHeaderTheme();
     window.addEventListener('scroll', syncHeaderTheme, { passive: true });

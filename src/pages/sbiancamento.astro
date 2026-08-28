@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
+import TreatmentPrefooterCta from '../components/TreatmentPrefooterCta.astro';
 import { site } from '../data/site';
 
 const title = `Sbiancamento dentale | ${site.name}`;
@@ -184,17 +185,10 @@ const pathwayCards = [
       </div>
     </section>
 
-    <section class="whitening-final-cta" aria-labelledby="whitening-final-title">
-      <div class="whitening-wrap whitening-final-grid">
-        <div>
-          <p class="whitening-kicker">Vuoi capire se è adatto a te?</p>
-          <h2 id="whitening-final-title">Inizia da una valutazione del tuo sorriso.</h2>
-        </div>
-        <a href="/richiesta/?trattamento=Sbiancamento">
-          Prenota una visita <span aria-hidden="true">↗</span>
-        </a>
-      </div>
-    </section>
+    <TreatmentPrefooterCta
+      title="Valutiamo come rendere più luminoso il tuo sorriso."
+      href="/richiesta/?trattamento=Sbiancamento"
+    />
   </article>
 </BaseLayout>
 
@@ -588,60 +582,6 @@ const pathwayCards = [
     line-height: 1.45;
   }
 
-  .whitening-final-cta {
-    padding: clamp(56px, 6vw, 86px) 0;
-    background: var(--whitening-dark);
-    color: var(--surface-white);
-  }
-
-  .whitening-final-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 44px;
-    align-items: end;
-  }
-
-  .whitening-final-cta h2 {
-    max-width: 18ch;
-    margin: 0;
-    color: var(--surface-white);
-    font-size: clamp(36px, 4.6vw, 70px);
-    font-weight: 400;
-    letter-spacing: var(--whitening-letter-spacing);
-    line-height: 1.04;
-  }
-
-  .whitening-final-cta a {
-    width: min(100%, 310px);
-    min-height: 68px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 22px;
-    border-radius: 7px;
-    padding: 0 24px;
-    background: var(--whitening-cta);
-    color: var(--surface-white);
-    font-size: 16px;
-    font-weight: 500;
-    letter-spacing: var(--whitening-letter-spacing);
-    line-height: 16px;
-    text-decoration: none;
-    text-transform: uppercase;
-    transition: background-color 160ms ease, transform 160ms ease;
-  }
-
-  .whitening-final-cta a:hover,
-  .whitening-final-cta a:focus-visible {
-    background: var(--whitening-cta-hover);
-    color: var(--surface-white);
-    transform: translateY(-2px);
-  }
-
-  .whitening-final-cta a span {
-    font-size: 22px;
-  }
-
   @media (max-width: 980px) {
     .whitening-hero-grid {
       grid-template-columns: 1fr;
@@ -765,19 +705,5 @@ const pathwayCards = [
       min-height: 230px;
     }
 
-    .whitening-final-grid {
-      grid-template-columns: 1fr;
-      align-items: start;
-    }
-
-    .whitening-final-cta h2 {
-      font-size: 38px;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .whitening-final-cta a {
-      transition: none;
-    }
   }
 </style>
