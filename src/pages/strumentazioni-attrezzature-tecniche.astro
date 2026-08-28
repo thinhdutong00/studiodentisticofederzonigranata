@@ -1,0 +1,729 @@
+---
+import BaseLayout from '../components/BaseLayout.astro';
+import TreatmentPrefooterCta from '../components/TreatmentPrefooterCta.astro';
+import { site } from '../data/site';
+
+const technologies = [
+  {
+    id: 'impronta-digitale',
+    number: '01',
+    eyebrow: 'Scansione intraorale',
+    title: 'Impronta digitale',
+    image: '/assets/original/2021/01/06-A-foto-impronta-digitale.jpeg',
+    alt: 'Scanner intraorale e ricostruzione digitale tridimensionale dei denti',
+    body:
+      'Non è più necessario utilizzare portaimpronta e paste fastidiose in bocca. Niente sensazioni sgradevoli: una <strong>telecamera 3D</strong> riprende denti, impianti e gengive. I file sono inviati telematicamente in laboratorio.',
+    note: 'Acquisizione precisa, digitale e condivisibile.',
+  },
+  {
+    id: 'scanner-facciale',
+    number: '02',
+    eyebrow: 'Progettazione del volto',
+    title: 'Scanner facciale',
+    image: '/assets/original/2021/02/06-D-foto-scanner-facc-1-uai-1280x960-1.jpeg',
+    alt: 'Elaborazione tridimensionale del volto per la progettazione del sorriso',
+    body:
+      'Lo scanner facciale è uno strumento innovativo. Permette di inserire il <strong>volto 3D</strong> del paziente e di elaborare il piano di trattamento. È come avere il paziente sempre in studio e in laboratorio per costruire il suo sorriso personalizzato.',
+    note: 'Il progetto viene costruito sulle proporzioni della persona.',
+    whiteBackground: true,
+  },
+  {
+    id: 'chirurgia-guidata',
+    number: '03',
+    eyebrow: 'Implantologia digitale',
+    title: 'Chirurgia guidata',
+    image: '/assets/original/2021/01/06-E-foto-chir-guidata-1.jpeg',
+    alt: 'Software di chirurgia guidata e guida chirurgica digitale per impianti',
+    body:
+      'Il chirurgo esegue un intervento virtuale al computer inserendo gli impianti con un <strong>software di chirurgia guidata</strong>. Una tecnologia 3D costruisce poi una guida chirurgica che permette di inserire gli <strong>impianti in bocca senza tagli, senza dolore, rapidamente e di caricarli con un provvisorio fisso in giornata</strong>.',
+    note: 'La chirurgia viene pianificata prima dell’intervento.',
+  },
+  {
+    id: 'sorriso-virtuale',
+    number: '04',
+    eyebrow: 'Previsualizzazione estetica',
+    title: 'Sorriso virtuale',
+    image: '/assets/original/2021/01/06-H-sorriso-virtuale-foto-1.jpg',
+    alt: 'Simulazione digitale del sorriso prima e dopo il trattamento',
+    body:
+      'Utilizziamo un software per l’elaborazione del <strong>sorriso virtuale</strong>. Il paziente vede il suo sorriso prima di iniziare la terapia. Riteniamo questa analisi fondamentale per la comprensione del piano di trattamento e per personalizzare il sorriso.',
+    note: 'Vedere il progetto aiuta a comprenderlo e condividerlo.',
+  },
+  {
+    id: 'tac-cone-beam',
+    number: '05',
+    eyebrow: 'Diagnostica tridimensionale',
+    title: 'TAC Cone Beam',
+    image: '/assets/original/2026/04/BEA08719-3-scaled.jpg',
+    alt: 'Paziente durante un esame radiografico TAC Cone Beam nello studio',
+    body:
+      'CBCT a fascio conico di ultima generazione. Permette di ottenere <strong>immagini 3D nitide e precise</strong>, con una dose di radiazioni più bassa, circa il 50% in meno rispetto a una TAC convenzionale.',
+    note: 'Immagini tridimensionali per una valutazione più precisa.',
+    imageClass: 'is-cover',
+    whiteBackground: true,
+  },
+];
+---
+
+<BaseLayout
+  title={`Odontoiatria digitale e tecnologie | ${site.name}`}
+  description="Scanner intraorale, scanner facciale, chirurgia guidata, sorriso virtuale e TAC Cone Beam negli studi dentistici Federzoni Granata."
+  ogImage="/assets/original/2021/03/IL-DIGITALE-scaled.jpg"
+  canonicalPath="/strumentazioni-attrezzature-tecniche/"
+  transparentHeader
+>
+  <div class="technology-page">
+    <section class="technology-hero" aria-labelledby="technology-title" data-transparent-header-region>
+      <img
+        class="technology-hero-image"
+        src="/assets/original/2021/03/IL-DIGITALE-scaled.jpg"
+        alt="Pianificazione digitale di un trattamento implantare al computer"
+        loading="eager"
+      />
+      <div class="technology-hero-shade" aria-hidden="true"></div>
+      <div class="technology-wrap technology-hero-content">
+        <p class="technology-kicker">Qualità e tecnologia</p>
+        <h1 id="technology-title"><span>Odontoiatria</span><span>digitale</span></h1>
+        <p class="technology-hero-lead">
+          Strumenti digitali per osservare meglio, progettare con precisione e rendere ogni fase del piano di trattamento più chiara.
+        </p>
+        <div class="technology-hero-actions">
+          <a class="technology-primary-link" href="#tecnologie">Scopri le tecnologie <span aria-hidden="true">↓</span></a>
+          <a class="technology-text-link" href="/richiesta/">Richiedi informazioni <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="technology-intro" aria-labelledby="technology-intro-title">
+      <div class="technology-wrap technology-intro-grid">
+        <div class="technology-intro-heading">
+          <p class="technology-kicker">Il digitale</p>
+          <h2 id="technology-intro-title">Precisione digitale in ogni fase</h2>
+        </div>
+        <div class="technology-intro-copy">
+          <p>
+            Tra i punti di forza della nostra attività professionale c’è l’impiego di strumentazioni e attrezzature
+            tecniche di ultima generazione, integrate da aggiornamenti e supportate da metodiche di intervento innovative.
+          </p>
+          <p>
+            In implantologia utilizziamo software e sistemi CAD-CAM specifici, con i quali è possibile progettare la
+            chirurgia e <strong>l’inserzione degli impianti dentali senza tagli e punti di sutura, con carico immediato
+            anche nell’arco della giornata e una notevole riduzione del dolore e del disagio post-operatorio.</strong>
+          </p>
+          <p>
+            L’implantologia computer guidata può ridurre in modo significativo i tempi di intervento e favorire un rapido
+            recupero delle funzionalità. Il supporto visivo digitale consente inoltre di approfondire il piano di trattamento
+            e previsualizzare il sorriso virtuale.
+          </p>
+        </div>
+      </div>
+      <div class="technology-wrap project-note">
+        <div>
+          <span class="project-note-label">Progetto di digitalizzazione</span>
+          <p>Realizzato grazie alla Coesione Italia 21–27 Emilia-Romagna, Unione Europea, Stato e Regione Emilia-Romagna.</p>
+        </div>
+        <a href="/assets/original/2024/10/bando-emilia-romagna-digitalizzazione-poster-A3-pdf.pdf">
+          Consulta il progetto <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
+
+    <section id="tecnologie" class="technology-showcase" aria-label="Tecnologie e attrezzature digitali">
+      <div class="technology-wrap">
+        {technologies.map((technology, index) => (
+          <article
+            id={technology.id}
+            class:list={[
+              'technology-feature',
+              index % 2 === 1 && 'is-reverse',
+              technology.whiteBackground && 'has-white-background',
+            ]}
+          >
+            <figure class:list={['technology-media', technology.imageClass]}>
+              <img src={technology.image} alt={technology.alt} loading={index < 2 ? 'eager' : 'lazy'} />
+            </figure>
+            <div class="technology-feature-copy">
+              <div class="technology-feature-topline">
+                <span>{technology.number}.</span>
+                <p>{technology.eyebrow}</p>
+              </div>
+              <h2>{technology.title}</h2>
+              <p class="technology-feature-body" set:html={technology.body}></p>
+              <p class="technology-feature-note">
+                <span aria-hidden="true"></span>{technology.note}
+              </p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <TreatmentPrefooterCta
+      title="Scopri i trattamenti per il tuo sorriso."
+      href="/trattamenti/"
+      eyebrow="I nostri trattamenti"
+      lead="Dalla prevenzione alle riabilitazioni più complesse: esplora i percorsi dedicati alla salute, alla funzione e all’estetica del sorriso."
+      ctaLabel="Vedi tutti i trattamenti"
+      note="Percorsi per adulti e bambini"
+    />
+  </div>
+</BaseLayout>
+
+<style>
+  .technology-page {
+    overflow: hidden;
+    background: var(--surface-white);
+    color: var(--text-dark);
+    font-family: Inter, sans-serif;
+    letter-spacing: -0.2px;
+    word-spacing: 0;
+  }
+
+  .technology-page :global(*) {
+    word-spacing: 0;
+  }
+
+  .technology-page :global(a) {
+    text-decoration: none;
+  }
+
+  .technology-wrap {
+    width: min(1510px, calc(100% - 64px));
+    margin-inline: auto;
+  }
+
+  .technology-kicker {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .technology-hero {
+    position: relative;
+    min-height: min(94svh, 960px);
+    display: grid;
+    align-items: end;
+    isolation: isolate;
+    background: var(--brand-primary-dark);
+    color: var(--surface-white);
+  }
+
+  .technology-hero-image,
+  .technology-hero-shade {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .technology-hero-image {
+    z-index: -2;
+    object-fit: cover;
+    object-position: 56% center;
+  }
+
+  .technology-hero-shade {
+    z-index: -1;
+    background:
+      linear-gradient(90deg, rgba(16, 40, 61, 0.96) 0%, rgba(16, 40, 61, 0.86) 41%, rgba(16, 40, 61, 0.34) 74%, rgba(16, 40, 61, 0.2) 100%),
+      linear-gradient(0deg, rgba(16, 40, 61, 0.72) 0%, transparent 42%);
+  }
+
+  .technology-hero-content {
+    padding: clamp(180px, 21vh, 270px) 0 clamp(46px, 6vh, 76px);
+  }
+
+  .technology-hero .technology-kicker {
+    color: rgba(255, 255, 255, 0.76);
+  }
+
+  .technology-hero h1 {
+    max-width: 11ch;
+    margin: 24px 0 34px;
+    color: var(--surface-white);
+    font-size: clamp(4rem, 7.2vw, 7.6rem);
+    font-weight: 400;
+    letter-spacing: -0.045em;
+    line-height: 0.87;
+    text-transform: uppercase;
+  }
+
+  .technology-hero h1 span {
+    display: block;
+  }
+
+  .technology-hero-lead {
+    max-width: 760px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: clamp(1.25rem, 2vw, 1.8rem);
+    font-weight: 400;
+    line-height: 1.28;
+  }
+
+  .technology-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 22px;
+    margin-top: 42px;
+  }
+
+  .technology-primary-link {
+    width: min(100%, 290px);
+    min-height: 62px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 0 22px;
+    background: var(--surface-white);
+    color: var(--brand-primary-dark);
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1;
+    text-transform: uppercase;
+    transition: background-color 160ms ease, transform 160ms ease;
+  }
+
+  .technology-primary-link:hover,
+  .technology-primary-link:focus-visible {
+    background: var(--soft-blue-bg);
+    color: var(--brand-primary-dark);
+    transform: translateY(-2px);
+  }
+
+  .technology-text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 8px 0;
+    color: var(--surface-white);
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .technology-text-link:hover,
+  .technology-text-link:focus-visible {
+    border-color: var(--surface-white);
+    color: var(--surface-white);
+  }
+
+  .technology-primary-link:focus-visible,
+  .technology-text-link:focus-visible,
+  .project-note a:focus-visible {
+    outline: 3px solid var(--brand-blue);
+    outline-offset: 4px;
+  }
+
+  .technology-intro {
+    padding: clamp(90px, 10vw, 160px) 0 clamp(70px, 8vw, 120px);
+    background: var(--surface-white);
+  }
+
+  .technology-intro-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.84fr) minmax(460px, 1.16fr);
+    gap: clamp(48px, 8vw, 150px);
+    align-items: start;
+  }
+
+  .technology-intro-heading {
+    position: sticky;
+    top: 120px;
+  }
+
+  .technology-intro-heading .technology-kicker {
+    color: var(--brand-blue);
+  }
+
+  .technology-intro h2 {
+    margin: 24px 0 0;
+    color: var(--brand-primary-dark);
+    font-size: clamp(3rem, 5.5vw, 6.1rem);
+    font-weight: 500;
+    letter-spacing: -0.045em;
+    line-height: 0.98;
+  }
+
+  .technology-intro-copy {
+    display: grid;
+    gap: 26px;
+  }
+
+  .technology-intro-copy p {
+    margin: 0;
+    color: var(--muted-text);
+    font-size: clamp(1.08rem, 1.4vw, 1.32rem);
+    font-weight: 400;
+    line-height: 1.55;
+  }
+
+  .technology-intro-copy p:first-child {
+    color: var(--text-dark);
+    font-size: clamp(1.35rem, 2vw, 1.9rem);
+    font-weight: 500;
+    line-height: 1.32;
+  }
+
+  .technology-intro-copy strong {
+    color: var(--brand-primary-dark);
+    font-weight: 600;
+  }
+
+  .project-note {
+    margin-top: clamp(64px, 8vw, 118px);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 36px;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 0;
+  }
+
+  .project-note-label {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--brand-primary-dark);
+    font-size: 0.86rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .project-note p {
+    margin: 0;
+    color: var(--muted-text);
+    font-size: 0.97rem;
+    line-height: 1.5;
+  }
+
+  .project-note a {
+    display: inline-flex;
+    align-items: center;
+    gap: 28px;
+    border-bottom: 1px solid var(--brand-cta);
+    padding: 8px 0;
+    color: var(--brand-cta);
+    font-size: 0.98rem;
+    font-weight: 500;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .project-note a:hover {
+    color: var(--brand-cta-hover);
+  }
+
+  .technology-showcase {
+    padding: clamp(28px, 4vw, 60px) 0 clamp(90px, 10vw, 160px);
+    background: var(--background);
+  }
+
+  .technology-feature {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(380px, 0.92fr);
+    gap: clamp(48px, 7vw, 130px);
+    align-items: center;
+    scroll-margin-top: 100px;
+    border-top: 1px solid var(--border);
+    padding: clamp(72px, 8vw, 132px) 0;
+  }
+
+  .technology-feature.has-white-background::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 50%;
+    z-index: -1;
+    width: 100vw;
+    background: var(--surface-white);
+    transform: translateX(-50%);
+  }
+
+  .technology-feature:first-child {
+    border-top: 0;
+  }
+
+  .technology-feature.is-reverse {
+    grid-template-columns: minmax(380px, 0.92fr) minmax(0, 1.08fr);
+  }
+
+  .technology-feature.is-reverse .technology-media {
+    order: 2;
+  }
+
+  .technology-feature.is-reverse .technology-feature-copy {
+    order: 1;
+  }
+
+  .technology-media {
+    position: relative;
+    aspect-ratio: 1.32 / 1;
+    margin: 0;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--surface-white);
+  }
+
+  .technology-media::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 74px;
+    height: 7px;
+    background: var(--brand-blue);
+  }
+
+  .technology-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .technology-media.is-cover img {
+    object-fit: cover;
+    object-position: center 42%;
+  }
+
+  .technology-feature-copy {
+    max-width: 660px;
+  }
+
+  .technology-feature-topline {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .technology-feature-topline > span {
+    color: var(--brand-blue);
+    font-size: 0.86rem;
+    font-weight: 700;
+  }
+
+  .technology-feature-topline p {
+    margin: 0;
+    color: var(--muted-text);
+    font-size: 0.84rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .technology-feature h2 {
+    margin: 26px 0 30px;
+    color: var(--brand-primary-dark);
+    font-size: clamp(2.4rem, 4.4vw, 5rem);
+    font-weight: 500;
+    letter-spacing: -0.045em;
+    line-height: 0.98;
+  }
+
+  .technology-feature-body {
+    margin: 0;
+    color: var(--muted-text);
+    font-size: clamp(1.05rem, 1.35vw, 1.26rem);
+    font-weight: 400;
+    line-height: 1.55;
+  }
+
+  .technology-feature-body :global(strong) {
+    color: var(--text-dark);
+    font-weight: 600;
+  }
+
+  .technology-feature-note {
+    margin: 36px 0 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    color: var(--brand-primary-dark);
+    font-size: 0.98rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .technology-feature-note span {
+    width: 36px;
+    height: 1px;
+    flex: 0 0 auto;
+    margin-top: 0.7em;
+    background: var(--brand-blue);
+  }
+
+  @media (max-width: 1080px) {
+    .technology-wrap {
+      width: min(100% - 48px, 1510px);
+    }
+
+    .technology-feature,
+    .technology-feature.is-reverse {
+      grid-template-columns: minmax(0, 1fr) minmax(340px, 0.88fr);
+      gap: 52px;
+    }
+  }
+
+  @media (max-width: 820px) {
+    .technology-page {
+      letter-spacing: -0.16px;
+    }
+
+    .technology-wrap {
+      width: min(100% - 32px, 1510px);
+    }
+
+    .technology-hero {
+      min-height: 760px;
+    }
+
+    .technology-hero-image {
+      object-position: 68% center;
+    }
+
+    .technology-hero-shade {
+      background:
+        linear-gradient(90deg, rgba(16, 40, 61, 0.96) 0%, rgba(16, 40, 61, 0.72) 72%, rgba(16, 40, 61, 0.52) 100%),
+        linear-gradient(0deg, rgba(16, 40, 61, 0.88) 0%, transparent 52%);
+    }
+
+    .technology-hero-content {
+      padding: 160px 0 42px;
+    }
+
+    .technology-hero h1 {
+      margin-top: 20px;
+      font-size: clamp(2.75rem, 11.5vw, 5.2rem);
+      letter-spacing: -0.04em;
+      line-height: 0.92;
+    }
+
+    .technology-hero-actions {
+      align-items: flex-start;
+      margin-top: 34px;
+    }
+
+    .technology-intro-grid {
+      grid-template-columns: 1fr;
+      gap: 42px;
+    }
+
+    .technology-intro-heading {
+      position: static;
+    }
+
+    .project-note {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .project-note a {
+      width: fit-content;
+    }
+
+    .technology-feature,
+    .technology-feature.is-reverse {
+      grid-template-columns: 1fr;
+      gap: 42px;
+    }
+
+    .technology-feature.is-reverse .technology-media,
+    .technology-feature.is-reverse .technology-feature-copy {
+      order: initial;
+    }
+
+    .technology-feature-copy {
+      max-width: 720px;
+    }
+
+  }
+
+  @media (max-width: 560px) {
+    .technology-hero {
+      min-height: 720px;
+    }
+
+    .technology-hero-image {
+      object-position: 61% center;
+    }
+
+    .technology-hero-lead {
+      font-size: 1.18rem;
+      line-height: 1.3;
+    }
+
+    .technology-hero-actions {
+      display: grid;
+      gap: 14px;
+    }
+
+    .technology-primary-link {
+      width: 100%;
+    }
+
+    .technology-text-link {
+      width: fit-content;
+    }
+
+    .technology-intro {
+      padding-top: 76px;
+    }
+
+    .technology-intro h2 {
+      font-size: clamp(2.4rem, 12vw, 3.5rem);
+      line-height: 1;
+    }
+
+    .technology-intro-copy p:first-child {
+      font-size: 1.24rem;
+    }
+
+    .technology-showcase {
+      padding-top: 12px;
+    }
+
+    .technology-feature,
+    .technology-feature.is-reverse {
+      gap: 34px;
+      padding: 58px 0;
+    }
+
+    .technology-media {
+      aspect-ratio: 1.18 / 1;
+    }
+
+    .technology-feature h2 {
+      margin: 20px 0 24px;
+      font-size: clamp(2.2rem, 11vw, 3.1rem);
+      line-height: 1;
+    }
+
+    .technology-feature-body {
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .technology-feature-note {
+      margin-top: 28px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .technology-primary-link {
+      transition: none;
+    }
+  }
+</style>

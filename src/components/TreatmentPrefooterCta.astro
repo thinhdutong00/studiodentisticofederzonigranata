@@ -2,24 +2,33 @@
 interface Props {
   title: string;
   href?: string;
+  eyebrow?: string;
+  lead?: string;
+  ctaLabel?: string;
+  note?: string;
 }
 
-const { title, href = '/richiesta/' } = Astro.props;
+const {
+  title,
+  href = '/richiesta/',
+  eyebrow = 'Inizia da qui',
+  lead = 'Raccontaci la tua esigenza. Ti ricontatteremo per indicarti il percorso più adatto e organizzare la tua visita.',
+  ctaLabel = 'Raccontaci la tua esigenza',
+  note = 'Studi a Modena e Reggio Emilia',
+} = Astro.props;
 ---
 
 <section class="treatment-prefooter" aria-labelledby="treatment-prefooter-title">
   <div class="treatment-prefooter-wrap treatment-prefooter-inner">
     <div class="treatment-prefooter-copy">
-      <p class="treatment-prefooter-eyebrow">Inizia da qui</p>
+      <p class="treatment-prefooter-eyebrow">{eyebrow}</p>
       <h2 id="treatment-prefooter-title">{title}</h2>
-      <p class="treatment-prefooter-lead">
-        Raccontaci la tua esigenza. Ti ricontatteremo per indicarti il percorso più adatto e organizzare la tua visita.
-      </p>
+      <p class="treatment-prefooter-lead">{lead}</p>
     </div>
 
     <div class="treatment-prefooter-action">
-      <a href={href}>Raccontaci la tua esigenza <span aria-hidden="true">↗</span></a>
-      <span>Studi a Modena e Reggio Emilia</span>
+      <a href={href}>{ctaLabel} <span aria-hidden="true">↗</span></a>
+      <span>{note}</span>
     </div>
   </div>
 </section>

@@ -4,6 +4,7 @@ import ClinicalCasesCarousel from './ClinicalCasesCarousel.astro';
 import ClinicalCasesOriginalGrid from './ClinicalCasesOriginalGrid.astro';
 import ScrapedHome from './ScrapedHome.astro';
 import SectionBand from './SectionBand.astro';
+import TreatmentPrefooterCta from './TreatmentPrefooterCta.astro';
 import TreatmentStickyCta from './TreatmentStickyCta.astro';
 import { site, type SitePage } from '../data/site';
 import { videoItems } from '../data/videos';
@@ -583,14 +584,17 @@ const clinicalShowcaseRenderItems = buildClinicalRenderItems(clinicalShowcaseBod
 const conventionsHeroImage = '/assets/menu/convenzioni-studio-ambulatorio.png';
 const conventionsSteps = [
   {
+    icon: '<rect x="7" y="10" width="34" height="28" rx="4"/><circle cx="17" cy="21" r="4"/><path d="M11.5 31c1.4-3.3 3.2-5 5.5-5s4.1 1.7 5.5 5M27 18h8M27 24h8M27 30h5"/>',
     title: 'Segnala il tuo fondo',
     text: 'Quando prenoti la visita puoi indicarci il nome della tua assicurazione, cassa sanitaria o fondo di riferimento.',
   },
   {
+    icon: '<path d="M12 6h16l8 8v28H12V6Z"/><path d="M28 6v8h8M18 22h12M18 28h7M18 35l3 3 7-7"/>',
     title: 'Verifica la documentazione',
     text: 'La segreteria ti aiuta a capire quali documenti amministrativi possono essere utili in base alle regole previste dal tuo piano.',
   },
   {
+    icon: '<circle cx="21" cy="25" r="11"/><path d="M23.5 19.5a6 6 0 1 0 0 11M16.5 23h7M16.5 27h6.5M32 9h9v9M41 9 32 18"/>',
     title: 'Richiedi il rimborso',
     text: 'Dopo la prestazione potrai presentare la documentazione al tuo ente secondo le modalità stabilite dalla tua copertura sanitaria.',
   },
@@ -789,7 +793,6 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
     <section class="conventions-hero" aria-labelledby="conventions-title" data-transparent-header-region>
       <div class="conventions-hero-inner">
         <h1 id="conventions-title">Convenzioni</h1>
-        <p>Informazioni chiare per usare fondi sanitari, casse e assicurazioni nel tuo percorso odontoiatrico.</p>
       </div>
     </section>
 
@@ -797,10 +800,13 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
       <img src={conventionsHeroImage} alt="Sala operativa dello Studio Dentistico Federzoni Granata" loading="eager" />
     </figure>
 
-    <section class="conventions-intro" aria-label="Convenzioni dello studio dentistico">
+    <section class="conventions-intro" aria-labelledby="conventions-intro-title">
       <div class="conventions-intro-wrap">
         <p class="eyebrow">Studio Dentistico Federzoni Granata</p>
-        <p class="conventions-lead">
+        <h2 class="conventions-lead" id="conventions-intro-title">
+          Informazioni chiare per usare fondi sanitari, casse e assicurazioni nel tuo percorso odontoiatrico.
+        </h2>
+        <p class="conventions-subtitle">
           Se hai una copertura sanitaria, un fondo o una cassa assistenziale, lo studio può fornirti la documentazione amministrativa necessaria per presentare la richiesta al tuo ente.
         </p>
         <div class="conventions-copy-grid">
@@ -821,9 +827,11 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
           <h2 id="conventions-process-title">Un percorso semplice, dalla prenotazione alla richiesta</h2>
         </div>
         <div class="conventions-step-grid">
-          {conventionsSteps.map((item, index) => (
+          {conventionsSteps.map((item) => (
             <article class="conventions-step">
-              <span>{String(index + 1).padStart(2, '0')}</span>
+              <span class="conventions-step-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" role="presentation" focusable="false" set:html={item.icon} />
+              </span>
               <h3>{item.title}</h3>
               <p>{item.text}</p>
             </article>
@@ -832,16 +840,14 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
       </div>
     </section>
 
-    <section class="conventions-final-cta" aria-labelledby="conventions-cta-title">
-      <div class="conventions-final-cta-inner">
-        <div>
-          <p class="eyebrow">Prenotazione</p>
-          <h2 id="conventions-cta-title">Vuoi informazioni sulla tua convenzione?</h2>
-          <p>Compila il modulo di prenotazione e indica il tuo fondo, la tua cassa sanitaria o la tua assicurazione: ti ricontatteremo per organizzare la visita e darti le indicazioni utili.</p>
-        </div>
-        <a class="button button-primary" href="/richiesta/">Vai al modulo di prenotazione <span aria-hidden="true">↗</span></a>
-      </div>
-    </section>
+    <TreatmentPrefooterCta
+      eyebrow="Trattamenti"
+      title="Scopri i trattamenti dello studio"
+      lead="Esplora le soluzioni dedicate alla prevenzione, alla cura e all’estetica del sorriso e approfondisci il percorso più adatto alle tue esigenze."
+      href="/trattamenti/"
+      ctaLabel="Scopri i trattamenti"
+      note="Percorsi per adulti e bambini"
+    />
   </>
 ) : officePage ? (
   <>
@@ -1762,10 +1768,10 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
 
   .conventions-hero {
     --conventions-letter-spacing: -0.2px;
-    min-height: clamp(560px, 70vh, 800px);
+    min-height: clamp(480px, 58vh, 660px);
     display: grid;
     place-items: center;
-    padding: clamp(88px, 9vw, 154px) 0 clamp(76px, 8vw, 132px);
+    padding: clamp(80px, 7vw, 118px) 0 clamp(44px, 4vw, 68px);
     background: var(--brand-primary-dark);
     color: var(--surface-white);
     font-family: "Inter", sans-serif;
@@ -1783,21 +1789,11 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
     margin: 0;
     color: var(--surface-white);
     font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    font-size: clamp(4.2rem, 11vw, 12.4rem);
+    font-size: clamp(3.75rem, 7.5vw, 8.5rem);
     font-weight: 400;
     letter-spacing: var(--conventions-letter-spacing);
     line-height: 0.9;
     text-transform: uppercase;
-  }
-
-  .conventions-hero p {
-    max-width: 940px;
-    margin: clamp(30px, 3.4vw, 52px) auto 0;
-    color: var(--soft-blue-bg);
-    font-size: clamp(1.35rem, 2vw, 2.05rem);
-    font-weight: 500;
-    letter-spacing: var(--conventions-letter-spacing);
-    line-height: 1.28;
   }
 
   .conventions-media {
@@ -1816,7 +1812,7 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
 
   .conventions-intro {
     --conventions-letter-spacing: -0.2px;
-    padding: clamp(84px, 9vw, 150px) 0;
+    padding: clamp(72px, 6.5vw, 108px) 0 clamp(80px, 7vw, 116px);
     background: var(--surface-white);
     font-family: "Inter", sans-serif;
     letter-spacing: var(--conventions-letter-spacing);
@@ -1824,9 +1820,8 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
   }
 
   .conventions-intro .eyebrow,
-  .conventions-process .eyebrow,
-  .conventions-final-cta .eyebrow {
-    margin-bottom: 18px;
+  .conventions-process .eyebrow {
+    margin-bottom: clamp(18px, 1.6vw, 24px);
     font-family: "Inter", sans-serif;
     font-size: 1rem;
     font-weight: 500;
@@ -1836,8 +1831,7 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
   }
 
   .conventions-intro-wrap,
-  .conventions-process-wrap,
-  .conventions-final-cta-inner {
+  .conventions-process-wrap {
     width: min(1320px, calc(100% - 48px));
     margin: 0 auto;
   }
@@ -1850,14 +1844,24 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
     font-size: 3.65rem;
     font-weight: 500;
     line-height: 1.08;
+    letter-spacing: -0.025em;
+  }
+
+  .conventions-subtitle {
+    max-width: 1050px;
+    margin: clamp(24px, 2.3vw, 34px) 0 0;
+    color: var(--muted-text);
+    font-size: clamp(1.25rem, 1.65vw, 1.7rem);
+    font-weight: 500;
     letter-spacing: var(--conventions-letter-spacing);
+    line-height: 1.35;
   }
 
   .conventions-copy-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: clamp(28px, 5vw, 80px);
-    margin-top: clamp(42px, 6vw, 86px);
+    margin-top: clamp(42px, 4.2vw, 62px);
   }
 
   .conventions-copy-grid p {
@@ -1913,13 +1917,27 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
     border-right: 0;
   }
 
-  .conventions-step span {
+  .conventions-step-icon {
+    width: 58px;
+    height: 58px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: rgba(var(--brand-blue-rgb), 0.12);
+    box-shadow: inset 0 0 0 1px rgba(var(--brand-blue-rgb), 0.22);
     color: var(--brand-blue);
-    font-family: "Inter", sans-serif;
-    font-size: 1rem;
-    font-weight: 500;
-    letter-spacing: var(--conventions-letter-spacing);
-    line-height: 1;
+  }
+
+  .conventions-step-icon svg {
+    width: 36px;
+    height: 36px;
+    display: block;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
   }
 
   .conventions-step h3 {
@@ -1941,72 +1959,6 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
     line-height: 1.45;
   }
 
-  .conventions-final-cta {
-    --conventions-letter-spacing: -0.2px;
-    padding: clamp(76px, 8vw, 132px) 0;
-    background: var(--brand-primary-dark);
-    color: var(--surface-white);
-    font-family: "Inter", sans-serif;
-    letter-spacing: var(--conventions-letter-spacing);
-    word-spacing: 0;
-  }
-
-  .conventions-final-cta-inner {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: clamp(28px, 5vw, 80px);
-    align-items: center;
-  }
-
-  .conventions-final-cta .eyebrow {
-    color: var(--soft-blue-bg);
-  }
-
-  .conventions-final-cta h2 {
-    max-width: 760px;
-    color: var(--surface-white);
-    font-family: "Inter", sans-serif;
-    font-size: clamp(2.2rem, 4.7vw, 4.8rem);
-    font-weight: 500;
-    letter-spacing: var(--conventions-letter-spacing);
-    line-height: 1.02;
-  }
-
-  .conventions-final-cta p:not(.eyebrow) {
-    max-width: 760px;
-    margin: 0;
-    color: rgba(255, 255, 255, 0.82);
-    font-size: clamp(1.05rem, 1.25vw, 1.22rem);
-    font-weight: 400;
-    letter-spacing: var(--conventions-letter-spacing);
-    line-height: 1.42;
-  }
-
-  .conventions-final-cta .button {
-    min-width: min(100%, 304px);
-    min-height: 68px;
-    justify-content: space-between;
-    border: 1px solid rgba(var(--surface-white-rgb), 0.64);
-    border-radius: 12px;
-    padding: 0 24px;
-    background: var(--surface-white);
-    color: var(--blue-dark);
-    box-shadow: none;
-    font-family: "Inter", sans-serif;
-    font-size: 16px;
-    font-weight: 500;
-    letter-spacing: var(--conventions-letter-spacing);
-    line-height: 16px;
-    text-transform: uppercase;
-  }
-
-  .conventions-final-cta .button:hover {
-    background: var(--soft-blue-bg);
-    color: var(--blue-dark);
-    transform: translateY(-1px);
-  }
-
-  .conventions-final-cta .button span,
   .emergency-cta a span {
     font-size: 1.45rem;
     line-height: 1;
@@ -2280,6 +2232,14 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
     word-spacing: 0;
   }
 
+  .emergency-hero,
+  .emergency-copy-section {
+    --emergency-letter-spacing: -0.2px;
+    font-family: "Inter", sans-serif;
+    letter-spacing: var(--emergency-letter-spacing);
+    word-spacing: 0;
+  }
+
   .emergency-hero {
     min-height: clamp(560px, 76vh, 840px);
     display: grid;
@@ -2298,10 +2258,10 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
   .emergency-hero h1 {
     margin: 0;
     color: var(--surface-white);
-    font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: clamp(4.4rem, 10vw, 12.5rem);
     font-weight: 400;
-    letter-spacing: 0.02em;
+    letter-spacing: var(--emergency-letter-spacing);
     line-height: 0.88;
     text-transform: uppercase;
   }
@@ -2311,8 +2271,9 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
     margin: clamp(28px, 3vw, 46px) auto 0;
     color: var(--aqua);
     font-size: clamp(1.35rem, 2vw, 2rem);
-    font-weight: 700;
-    line-height: 1.18;
+    font-weight: 400;
+    letter-spacing: var(--emergency-letter-spacing);
+    line-height: 1.28;
   }
 
   .emergency-copy-section {
@@ -2338,11 +2299,11 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
   .emergency-copy-lead {
     margin: 0;
     color: var(--blue-dark);
-    font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: clamp(2.85rem, 3.35vw, 3.85rem);
-    font-weight: 400;
+    font-weight: 500;
     line-height: 1.12;
-    letter-spacing: 0;
+    letter-spacing: var(--emergency-letter-spacing);
   }
 
   .emergency-copy-support {
@@ -2350,9 +2311,9 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
     margin: clamp(22px, 2.5vw, 34px) 0 0;
     color: var(--muted-text);
     font-size: clamp(1.25rem, 1.45vw, 1.55rem);
-    font-weight: 500;
+    font-weight: 400;
     line-height: 1.38;
-    letter-spacing: 0;
+    letter-spacing: var(--emergency-letter-spacing);
   }
 
   .emergency-cta {
@@ -2373,7 +2334,8 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
     background: transparent;
     color: var(--blue-dark);
     font-size: 1.03rem;
-    font-weight: 700;
+    font-weight: 500;
+    letter-spacing: var(--emergency-letter-spacing);
     line-height: 1.2;
     text-align: center;
     text-decoration: none;
@@ -2575,15 +2537,17 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
     .conventions-hero,
     .conventions-intro,
     .conventions-process,
-    .conventions-final-cta,
     .office-hero,
     .office-intro,
     .office-details-section,
     .office-contact-section,
-    .faq-accordion-section {
+    .faq-accordion-section,
+    .emergency-hero,
+    .emergency-copy-section {
       --conventions-letter-spacing: -0.16px;
       --office-letter-spacing: -0.16px;
       --faq-letter-spacing: -0.16px;
+      --emergency-letter-spacing: -0.16px;
     }
 
     .aesthetic-hero {
@@ -2699,7 +2663,7 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
 
     .conventions-hero {
       min-height: auto;
-      padding: 86px 0 78px;
+      padding: 72px 0 54px;
     }
 
     .office-hero {
@@ -2710,7 +2674,6 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
     .conventions-hero-inner,
     .conventions-intro-wrap,
     .conventions-process-wrap,
-    .conventions-final-cta-inner,
     .office-hero-inner,
     .office-intro-wrap,
     .office-details-wrap,
@@ -2719,7 +2682,7 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
     }
 
     .conventions-hero h1 {
-      font-size: clamp(3rem, 14vw, 5.3rem);
+      font-size: clamp(2.75rem, 11vw, 4.2rem);
       line-height: 0.95;
       overflow-wrap: anywhere;
     }
@@ -2728,10 +2691,6 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
       font-size: clamp(3rem, 14vw, 5.3rem);
       line-height: 0.95;
       overflow-wrap: anywhere;
-    }
-
-    .conventions-hero p {
-      font-size: clamp(1.12rem, 5vw, 1.48rem);
     }
 
     .office-hero p {
@@ -2748,7 +2707,6 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
 
     .conventions-intro,
     .conventions-process,
-    .conventions-final-cta,
     .office-intro,
     .office-details-section,
     .office-contact-section {
@@ -2760,13 +2718,22 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
       line-height: 1.12;
     }
 
+    .conventions-subtitle {
+      margin-top: 24px;
+      font-size: 1.18rem;
+      line-height: 1.4;
+    }
+
+    .conventions-copy-grid {
+      margin-top: 38px;
+    }
+
     .office-lead {
       font-size: clamp(2rem, 10vw, 3.35rem);
     }
 
     .conventions-copy-grid,
     .conventions-step-grid,
-    .conventions-final-cta-inner,
     .office-copy-grid,
     .office-detail-grid,
     .office-contact-wrap {
@@ -2793,11 +2760,6 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
 
     .office-contact-section .contact-form {
       padding: 24px;
-    }
-
-    .conventions-final-cta .button {
-      width: 100%;
-      min-width: 0;
     }
 
     .emergency-hero {

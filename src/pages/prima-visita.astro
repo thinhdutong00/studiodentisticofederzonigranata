@@ -6,56 +6,86 @@ const pageDescription =
   'Prima visita odontoiatrica a Modena e Reggio Emilia: diagnosi chiara, priorità, tempi e costi prima di iniziare.';
 
 const firstVisitFormPath = '/prenota-prima-visita/';
-const firstVisitFormHref = (reason: string) => `${firstVisitFormPath}?motivo=${encodeURIComponent(reason)}`;
-
-const intentButtons = [
-  { label: 'Dolore o urgenza', href: firstVisitFormHref('Dolore o urgenza') },
-  { label: 'Impianti', href: firstVisitFormHref('Impianti') },
-  { label: 'Controllo generale', href: firstVisitFormHref('Controllo generale') },
-  { label: 'Secondo parere', href: firstVisitFormHref('Secondo parere') },
-];
 
 const visitSteps = [
   {
     title: 'La tua storia clinica',
-    text: 'Apriamo la cartella anamnestica e raccogliamo salute generale, farmaci, allergie, interventi e cure precedenti. Ogni dettaglio è un piccolo indizio che aiuta a leggere il quadro intero.',
+    text: 'Raccogliamo informazioni su salute, farmaci, allergie e cure precedenti.',
   },
   {
-    title: 'Ascolto ed aspettative',
-    text: 'Diamo spazio a esigenze, timori e aspettative: cosa senti, cosa vorresti cambiare, cosa immagini per il tuo sorriso. Poi presentiamo i trattamenti possibili, con parole semplici e senza fretta.',
+    title: 'Ascolto e aspettative',
+    text: 'Ascoltiamo il problema, i dubbi e il risultato che vorresti ottenere.',
   },
   {
-    title: 'Check orale specialistico',
-    text: 'Lo specialista esegue la visita del cavo orale e, quando serve, una radiografia computer guidata. Sullo schermo osserviamo in tempo reale denti, gengive e tessuti, come una mappa appena illuminata.',
+    title: 'Controllo orale',
+    text: 'Controlliamo denti, gengive e tessuti. Se serve, indichiamo gli esami utili.',
   },
   {
-    title: 'Confronto dell’esame',
-    text: 'Rileggiamo insieme ciò che è emerso, arriviamo a conclusioni chiare e valutiamo i percorsi possibili in base ai risultati. La scelta nasce dal confronto, non dalla fretta.',
+    title: 'Valutazione e piano di cura',
+    text: 'Ti spieghiamo cosa abbiamo rilevato, le priorità e le possibili cure.',
   },
 ];
 
+const evaluationIcons = {
+  mainProblem: `
+    <circle cx="21" cy="21" r="10" />
+    <path d="m28.5 28.5 8 8" />
+    <path d="M18.3 18.5a3.1 3.1 0 0 1 6 1.3c0 2.4-3.3 2.7-3.3 5" />
+    <circle cx="21" cy="28.5" r="1" fill="currentColor" stroke="none" />
+  `,
+  teethAndGums: `
+    <path d="M17.5 8.5c2.7-1.2 4.8.4 6.5 1.1 1.7-.7 3.8-2.3 6.5-1.1 5.5 2.4 6.2 9.8 3.1 15.4-1.3 2.4-2.1 4.8-2.5 7.5-.7 4.4-2.2 8.1-5 8.1-1.7 0-2.3-2.3-2.7-4.8-.3-2.1-.8-4.1-1.4-4.1s-1.1 2-1.4 4.1c-.4 2.5-1 4.8-2.7 4.8-2.8 0-4.3-3.7-5-8.1-.4-2.7-1.2-5.1-2.5-7.5-3.1-5.6-2.4-13 3.1-15.4Z" />
+  `,
+  exams: `
+    <rect x="9" y="9" width="30" height="30" rx="4" />
+    <path d="M15 21v-6h6M27 15h6v6M33 27v6h-6M21 33h-6v-6" />
+    <circle cx="24" cy="24" r="4" />
+  `,
+  treatmentOptions: `
+    <path d="M10 24h11" />
+    <path d="M21 24c5 0 5-9 10-9h6" />
+    <path d="M21 24c5 0 5 9 10 9h6" />
+    <path d="m33 11 4 4-4 4M33 29l4 4-4 4" />
+  `,
+  priorities: `
+    <circle cx="24" cy="26" r="12" />
+    <path d="M24 19v7l5 3M18 9h12M24 9v5" />
+  `,
+  quote: `
+    <path d="M12 8h24v32l-4-2.5-4 2.5-4-2.5-4 2.5-4-2.5-4 2.5V8Z" />
+    <path d="M18 16h12M18 22h12M26 29h5M26 34h5" />
+    <circle cx="19" cy="31.5" r="3.5" />
+  `,
+};
+
 const evaluationAreas = [
   {
+    icon: evaluationIcons.mainProblem,
     label: 'Il problema principale',
     text: 'Da dove nasce il disturbo, il dubbio o il desiderio che ti porta in studio.',
   },
   {
+    icon: evaluationIcons.teethAndGums,
     label: 'Denti e gengive',
     text: 'Carie, vecchie cure, fratture, infiammazione, sanguinamento e stabilità.',
   },
   {
+    icon: evaluationIcons.exams,
     label: 'Radiografie ed esami',
     text: 'Valutiamo ciò che hai già. Se serve altro, lo indichiamo in modo mirato.',
   },
   {
+    icon: evaluationIcons.treatmentOptions,
     label: 'Opzioni di cura',
     text: 'Quando ci sono più strade, spieghiamo vantaggi, limiti e senso clinico.',
   },
   {
+    icon: evaluationIcons.priorities,
     label: 'Priorità e tempi',
     text: 'Non tutto va fatto subito. Distinguiamo urgenze, priorità e controlli.',
   },
   {
+    icon: evaluationIcons.quote,
     label: 'Preventivo',
     text: 'Il piano viene collegato a tempi e costi, prima della decisione.',
   },
@@ -193,32 +223,12 @@ const offices = site.offices.map((office) => ({
               Dolore, gengive, impianti, denti storti, estetica, controllo o secondo parere.
               Ti diciamo cosa c’è, cosa serve e cosa aspettarti prima di iniziare.
             </p>
-            <div class="fv-intent-links" aria-label="Richieste frequenti">
-              {intentButtons.map((item) => <a href={item.href}>{item.label}</a>)}
-            </div>
           </div>
         </div>
       </div>
       <figure class="fv-hero-media">
         <img src="/assets/original/2022/03/dentista-modena-reggio-emilia.jpg" alt="Visita nello Studio Dentistico Federzoni Granata" loading="eager" />
       </figure>
-    </section>
-
-    <section class="fv-intro" aria-labelledby="intro-title">
-      <div class="fv-wrap fv-intro-grid">
-        <div>
-          <p class="fv-kicker">Il punto di partenza</p>
-          <h2 id="intro-title">Partiamo da ciò che ti serve</h2>
-        </div>
-        <div class="fv-intro-copy">
-          <p>
-            Prima visita non vuol dire “vieni senza motivo”. Vuol dire: ti valutiamo per la prima volta nel nostro studio.
-          </p>
-          <p>
-            Tu porti un problema, un desiderio o un dubbio. Noi lo traduciamo in diagnosi, priorità e piano di cura.
-          </p>
-        </div>
-      </div>
     </section>
 
     <section id="come-funziona" class="fv-steps-section" aria-labelledby="steps-title">
@@ -234,16 +244,8 @@ const offices = site.offices.map((office) => ({
               <span class="fv-step-number">{index + 1}.</span>
               <div class="fv-step-body">
                 <h3>{step.title}</h3>
+                <p>{step.text}</p>
               </div>
-              <details class="fv-step-more">
-                <summary class="fv-step-link" aria-label={`Leggi di più: ${step.title}`}>
-                  Leggi di più
-                  <span aria-hidden="true">+</span>
-                </summary>
-                <div class="fv-step-more-panel">
-                  <p>{step.text}</p>
-                </div>
-              </details>
             </article>
           ))}
         </div>
@@ -286,8 +288,13 @@ const offices = site.offices.map((office) => ({
         <div class="fv-evaluation-grid">
           {evaluationAreas.map((area) => (
             <article class="fv-evaluation-card">
-              <strong>{area.label}</strong>
-              <p>{area.text}</p>
+              <span class="fv-evaluation-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" aria-hidden="true" role="presentation" focusable="false" set:html={area.icon} />
+              </span>
+              <div class="fv-evaluation-copy">
+                <strong>{area.label}</strong>
+                <p>{area.text}</p>
+              </div>
             </article>
           ))}
         </div>
@@ -384,101 +391,6 @@ const offices = site.offices.map((office) => ({
   </div>
 </BaseLayout>
 
-<script>
-  const visitStepDetails = Array.from(document.querySelectorAll('.fv-step-more')).filter(
-    (step): step is HTMLDetailsElement => step instanceof HTMLDetailsElement,
-  );
-  const reduceVisitStepMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  const getVisitStepPanel = (step: HTMLDetailsElement) => step.querySelector<HTMLElement>('.fv-step-more-panel');
-  const onVisitStepHeightEnd = (panel: HTMLElement, callback: () => void) => {
-    const handleTransitionEnd = (event: TransitionEvent) => {
-      if (event.propertyName !== 'height') return;
-      panel.removeEventListener('transitionend', handleTransitionEnd);
-      callback();
-    };
-
-    panel.addEventListener('transitionend', handleTransitionEnd);
-  };
-
-  const openVisitStep = (step: HTMLDetailsElement) => {
-    const panel = getVisitStepPanel(step);
-    if (!panel) {
-      step.open = true;
-      return;
-    }
-
-    step.open = true;
-
-    if (reduceVisitStepMotion) {
-      panel.style.height = 'auto';
-      panel.style.opacity = '1';
-      panel.style.transform = 'translateY(0)';
-      return;
-    }
-
-    panel.style.height = '0px';
-    panel.style.opacity = '0';
-    panel.style.transform = 'translateY(-6px)';
-
-    requestAnimationFrame(() => {
-      panel.style.height = `${panel.scrollHeight}px`;
-      panel.style.opacity = '1';
-      panel.style.transform = 'translateY(0)';
-    });
-
-    onVisitStepHeightEnd(panel, () => {
-      if (step.open) panel.style.height = 'auto';
-    });
-  };
-
-  const closeVisitStep = (step: HTMLDetailsElement) => {
-    const panel = getVisitStepPanel(step);
-    if (!step.open || !panel) {
-      step.open = false;
-      return;
-    }
-
-    if (reduceVisitStepMotion) {
-      panel.style.height = '0px';
-      panel.style.opacity = '0';
-      panel.style.transform = 'translateY(-6px)';
-      step.open = false;
-      return;
-    }
-
-    panel.style.height = `${panel.offsetHeight}px`;
-    panel.style.opacity = '1';
-    panel.style.transform = 'translateY(0)';
-
-    requestAnimationFrame(() => {
-      panel.style.height = '0px';
-      panel.style.opacity = '0';
-      panel.style.transform = 'translateY(-6px)';
-    });
-
-    onVisitStepHeightEnd(panel, () => {
-      step.open = false;
-    });
-  };
-
-  visitStepDetails.forEach((currentStep) => {
-    currentStep.querySelector('summary')?.addEventListener('click', (event) => {
-      event.preventDefault();
-
-      if (currentStep.open) {
-        closeVisitStep(currentStep);
-        return;
-      }
-
-      visitStepDetails.forEach((step) => {
-        if (step !== currentStep) closeVisitStep(step);
-      });
-      openVisitStep(currentStep);
-    });
-  });
-</script>
-
 <style>
   .first-visit-page {
     --fv-blue: var(--brand-cta);
@@ -487,6 +399,7 @@ const offices = site.offices.map((office) => ({
     --fv-ink: var(--brand-primary-dark);
     --fv-muted: var(--muted-text);
     --fv-line: rgba(var(--brand-blue-rgb), 0.2);
+    --fv-description-size: clamp(1.05rem, 1.15vw, 1.12rem);
     background: var(--surface-white);
     color: var(--fv-ink);
     font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -508,7 +421,7 @@ const offices = site.offices.map((office) => ({
   }
 
   .fv-hero-panel {
-    min-height: calc(78svh - var(--nav-height));
+    min-height: calc(65svh - var(--nav-height));
     display: grid;
     background: var(--blue-dark);
   }
@@ -518,7 +431,7 @@ const offices = site.offices.map((office) => ({
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 96px 0;
+    padding: 150px 0 42px;
   }
 
   .fv-breadcrumb {
@@ -551,7 +464,7 @@ const offices = site.offices.map((office) => ({
     margin: 0 0 14px;
     color: var(--fv-blue-bright);
     font-size: 0.88rem;
-    font-weight: 900;
+    font-weight: 400;
     letter-spacing: 0;
     line-height: 1.2;
     text-transform: uppercase;
@@ -560,6 +473,11 @@ const offices = site.offices.map((office) => ({
   .fv-hero .fv-kicker,
   .fv-final .fv-kicker {
     color: var(--aqua);
+  }
+
+  .fv-hero .fv-kicker {
+    margin-bottom: 24px;
+    font-size: 1rem;
   }
 
   .fv-hero h1 {
@@ -575,11 +493,12 @@ const offices = site.offices.map((office) => ({
   }
 
   .fv-hero-copy > p:not(.fv-kicker) {
+    display: none;
     max-width: 880px;
     margin: 34px auto 0;
     color: var(--aqua);
     font-size: clamp(1.2rem, 1.75vw, 1.65rem);
-    font-weight: 700;
+    font-weight: 400;
     line-height: 1.25;
   }
 
@@ -608,36 +527,6 @@ const offices = site.offices.map((office) => ({
 
   .fv-actions {
     margin-top: 34px;
-  }
-
-  .fv-intent-links {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    max-width: 760px;
-    margin: 22px auto 0;
-  }
-
-  .fv-intent-links a {
-    min-height: 38px;
-    display: inline-flex;
-    align-items: center;
-    border: 1px solid rgba(var(--brand-blue-rgb), 0.42);
-    border-radius: 999px;
-    padding: 0 14px;
-    background: rgba(var(--brand-blue-rgb), 0.12);
-    color: var(--soft-blue-bg);
-    font-size: 0.84rem;
-    font-weight: 800;
-    line-height: 1.2;
-    text-decoration: none;
-  }
-
-  .fv-intent-links a:hover {
-    border-color: rgba(var(--brand-blue-rgb), 0.74);
-    background: rgba(var(--brand-blue-rgb), 0.2);
-    color: var(--surface-white);
   }
 
   .fv-button {
@@ -699,18 +588,12 @@ const offices = site.offices.map((office) => ({
     color: var(--fv-blue);
   }
 
-  .fv-intro,
   .fv-steps-section,
   .fv-evaluation,
   .fv-reasons-section {
     padding: 92px 0;
   }
 
-  .fv-intro {
-    background: var(--surface-white);
-  }
-
-  .fv-intro-grid,
   .fv-trust-grid {
     display: grid;
     grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
@@ -718,7 +601,6 @@ const offices = site.offices.map((office) => ({
     align-items: start;
   }
 
-  .fv-intro h2,
   .fv-section-head h2,
   .fv-split-copy h2,
   .fv-trust-grid h2,
@@ -732,20 +614,14 @@ const offices = site.offices.map((office) => ({
     line-height: 1;
   }
 
-  .fv-intro-copy p,
   .fv-split-copy p,
   .fv-trust-copy p,
   .fv-section-head > p,
   .fv-final p {
     margin: 0;
     color: var(--fv-muted);
-    font-size: 1.08rem;
+    font-size: var(--fv-description-size);
     line-height: 1.62;
-  }
-
-  .fv-intro-copy {
-    display: grid;
-    gap: 22px;
   }
 
   .fv-steps-section {
@@ -790,18 +666,14 @@ const offices = site.offices.map((office) => ({
   }
 
   .fv-step-card {
-    min-height: clamp(280px, 18vw, 340px);
+    min-height: clamp(330px, 22vw, 400px);
     display: grid;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: auto 1fr;
     gap: clamp(20px, 2.4vw, 34px);
     border-radius: 8px;
     padding: clamp(28px, 2.4vw, 42px);
     background: var(--fv-step-bg, rgba(var(--brand-blue-rgb), 0.1));
     color: var(--fv-ink);
-  }
-
-  .fv-step-card:has(.fv-step-more[open]) {
-    min-height: clamp(380px, 24vw, 460px);
   }
 
   .fv-step-card:nth-child(2n) {
@@ -818,7 +690,7 @@ const offices = site.offices.map((office) => ({
   .fv-step-body {
     display: grid;
     align-self: end;
-    gap: 20px;
+    gap: 18px;
   }
 
   .fv-step-card h3 {
@@ -833,81 +705,20 @@ const offices = site.offices.map((office) => ({
     text-transform: none;
   }
 
-  .fv-step-more-panel p,
+  .fv-step-body p,
   .fv-evaluation-card p,
   .fv-reason-card p {
     margin: 0;
     color: var(--muted-text);
-    font-size: 1rem;
+    font-size: var(--fv-description-size);
     line-height: 1.45;
   }
 
-  .fv-step-more-panel {
-    height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(-6px);
-    transition: height 260ms ease, opacity 180ms ease, transform 260ms ease;
-    will-change: height, opacity, transform;
-  }
-
-  .fv-step-more[open] .fv-step-more-panel {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .fv-step-more-panel p {
+  .fv-step-body p {
     max-width: 420px;
-    margin-top: 18px;
     color: var(--fv-muted);
     font-weight: 400;
-    line-height: 1.38;
-  }
-
-  .fv-step-link {
-    width: fit-content;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--fv-blue);
-    font-size: 0.95rem;
-    font-weight: 600;
-    line-height: 1;
-    text-decoration: none;
-    list-style: none;
-    cursor: pointer;
-  }
-
-  .fv-step-link::-webkit-details-marker {
-    display: none;
-  }
-
-  .fv-step-link span {
-    width: 22px;
-    height: 22px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid currentColor;
-    border-radius: 50%;
-    font-size: 1.05rem;
-    font-weight: 500;
-    line-height: 1;
-    transition: transform 160ms ease;
-  }
-
-  .fv-step-more[open] .fv-step-link span {
-    transform: rotate(45deg);
-  }
-
-  .fv-step-link:hover {
-    color: var(--brand-cta-hover);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .fv-step-more-panel {
-      transition: none;
-    }
+    line-height: 1.45;
   }
 
   .fv-step-cta {
@@ -970,6 +781,23 @@ const offices = site.offices.map((office) => ({
     margin-top: 22px;
   }
 
+  .fv-split-soft .fv-kicker {
+    margin: 0 0 28px;
+  }
+
+  .fv-split-grid-reverse .fv-kicker {
+    margin: 0 0 28px;
+  }
+
+  #diagnosis-title,
+  #steps-title,
+  #evaluation-title,
+  #trust-title,
+  #reasons-title,
+  #final-title {
+    letter-spacing: -0.035em;
+  }
+
   .fv-inline-link {
     min-height: 52px;
     display: inline-flex;
@@ -1000,6 +828,10 @@ const offices = site.offices.map((office) => ({
     background: var(--surface-white);
   }
 
+  .fv-evaluation .fv-section-head .fv-kicker {
+    margin: 0 0 28px;
+  }
+
   .fv-evaluation-grid,
   .fv-reasons-grid {
     display: grid;
@@ -1019,12 +851,15 @@ const offices = site.offices.map((office) => ({
   .fv-evaluation-card,
   .fv-reason-card {
     min-height: 250px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    gap: 20px;
     padding: 28px;
     background: var(--surface-white);
+  }
+
+  .fv-evaluation-card {
+    min-height: 290px;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 28px;
   }
 
   .fv-reason-card {
@@ -1034,6 +869,7 @@ const offices = site.offices.map((office) => ({
     gap: 28px;
   }
 
+  .fv-evaluation-icon,
   .fv-reason-icon {
     width: 58px;
     height: 58px;
@@ -1046,12 +882,14 @@ const offices = site.offices.map((office) => ({
     color: var(--fv-blue);
   }
 
+  .fv-evaluation-card:nth-child(2n) .fv-evaluation-icon,
   .fv-reason-card:nth-child(2n) .fv-reason-icon {
     background: rgba(var(--brand-cta-rgb), 0.1);
     box-shadow: inset 0 0 0 1px rgba(var(--brand-cta-rgb), 0.2);
     color: var(--brand-cta-hover);
   }
 
+  .fv-evaluation-icon svg,
   .fv-reason-icon svg {
     width: 36px;
     height: 36px;
@@ -1063,6 +901,7 @@ const offices = site.offices.map((office) => ({
     stroke-width: 2;
   }
 
+  .fv-evaluation-copy,
   .fv-reason-copy {
     align-self: end;
     display: grid;
@@ -1082,7 +921,7 @@ const offices = site.offices.map((office) => ({
 
   .fv-trust-band {
     padding: 90px 0;
-    background: var(--fv-blue);
+    background: var(--brand-primary-dark);
     color: var(--surface-white);
   }
 
@@ -1131,7 +970,7 @@ const offices = site.offices.map((office) => ({
     position: relative;
     padding-left: 26px;
     color: var(--fv-muted);
-    font-size: 1.04rem;
+    font-size: var(--fv-description-size);
     line-height: 1.5;
   }
 
@@ -1148,8 +987,8 @@ const offices = site.offices.map((office) => ({
 
   .fv-final {
     padding: 86px 0;
-    background: var(--fv-blue);
-    color: var(--surface-white);
+    background: var(--blue-dark);
+    color: var(--soft-blue-bg);
   }
 
   .fv-final-inner {
@@ -1159,9 +998,8 @@ const offices = site.offices.map((office) => ({
     align-items: center;
   }
 
-  .fv-final h2,
-  .fv-final p {
-    color: var(--surface-white);
+  .fv-final h2 {
+    color: var(--aqua);
   }
 
   .fv-final h2 span {
@@ -1171,18 +1009,24 @@ const offices = site.offices.map((office) => ({
   .fv-final p {
     max-width: 780px;
     margin-top: 22px;
-    color: rgba(255, 255, 255, 0.84);
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .fv-final .fv-kicker {
+    margin: 0 0 28px;
+    color: var(--surface-white);
   }
 
   .fv-final .fv-button-primary {
-    border-color: rgba(var(--surface-white-rgb), 0.64);
-    background: var(--surface-white);
-    color: var(--fv-blue);
+    border-color: var(--soft-blue-bg);
+    background: var(--soft-blue-bg);
+    color: var(--blue-dark);
   }
 
   .fv-final .fv-button-primary:hover {
-    background: var(--fv-blue-soft);
-    color: var(--fv-blue);
+    border-color: var(--aqua);
+    background: var(--aqua);
+    color: var(--blue-dark);
   }
 
   .fv-final-actions {
@@ -1199,15 +1043,16 @@ const offices = site.offices.map((office) => ({
   .fv-office-list a {
     display: grid;
     gap: 4px;
-    border: 1px solid rgba(255, 255, 255, 0.24);
+    border: 1px solid rgba(var(--brand-blue-rgb), 0.28);
     border-radius: 8px;
     padding: 14px 16px;
-    color: var(--surface-white);
+    background: transparent;
+    color: var(--soft-blue-bg);
     text-decoration: none;
   }
 
   .fv-office-list a:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(var(--brand-blue-rgb), 0.12);
   }
 
   .fv-office-list strong {
@@ -1216,7 +1061,7 @@ const offices = site.offices.map((office) => ({
   }
 
   .fv-office-list span {
-    color: rgba(255, 255, 255, 0.76);
+    color: rgba(255, 255, 255, 0.78);
     font-size: 0.9rem;
     line-height: 1.35;
   }
@@ -1236,7 +1081,6 @@ const offices = site.offices.map((office) => ({
       font-size: clamp(4.6rem, 11vw, 7rem);
     }
 
-    .fv-intro-grid,
     .fv-trust-grid,
     .fv-section-head,
     .fv-split-grid,
@@ -1262,15 +1106,20 @@ const offices = site.offices.map((office) => ({
     }
 
     .fv-hero-panel {
-      min-height: 560px;
+      min-height: 460px;
     }
 
     .fv-hero-inner {
-      padding: 64px 0;
+      padding: 72px 0 40px;
     }
 
     .fv-hero-copy {
       padding-top: 0;
+    }
+
+    .fv-hero .fv-kicker {
+      margin-bottom: 20px;
+      font-size: 0.92rem;
     }
 
     .fv-hero h1 {
@@ -1279,6 +1128,7 @@ const offices = site.offices.map((office) => ({
     }
 
     .fv-hero-copy > p:not(.fv-kicker) {
+      display: block;
       font-size: 1.05rem;
       line-height: 1.32;
     }
@@ -1287,7 +1137,6 @@ const offices = site.offices.map((office) => ({
       height: 310px;
     }
 
-    .fv-intro,
     .fv-steps-section,
     .fv-evaluation,
     .fv-reasons-section,
@@ -1297,7 +1146,6 @@ const offices = site.offices.map((office) => ({
       padding: 62px 0;
     }
 
-    .fv-intro h2,
     .fv-section-head h2,
     .fv-split-copy h2,
     .fv-trust-grid h2,
@@ -1310,16 +1158,26 @@ const offices = site.offices.map((office) => ({
       margin-bottom: 30px;
     }
 
+    .fv-split-soft .fv-kicker {
+      margin-bottom: 20px;
+    }
+
+    .fv-split-grid-reverse .fv-kicker {
+      margin-bottom: 20px;
+    }
+
+    .fv-evaluation .fv-section-head .fv-kicker {
+      margin-bottom: 20px;
+    }
+
+    .fv-final .fv-kicker {
+      margin-bottom: 20px;
+    }
+
     .fv-step-rail,
     .fv-evaluation-grid,
     .fv-reasons-grid {
       grid-template-columns: 1fr;
-    }
-
-    .fv-intent-links a {
-      flex: 1 1 calc(50% - 10px);
-      justify-content: center;
-      text-align: center;
     }
 
     .fv-step-card,
