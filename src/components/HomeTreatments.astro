@@ -46,9 +46,30 @@ const featuredServices = featuredTreatmentHrefs.flatMap((href) => {
 
 const remainingServices = services.filter((service) => !featuredTreatmentHrefs.includes(service.href));
 const orderedServices = [...featuredServices, ...remainingServices];
+const mobileTreatmentOrder = [
+  '/ortodonzia-allineatori-invisibili/',
+  '/implantologia-tradizionale-computer-guidata/',
+  '/estetica-indiretta-faccette-porcellana/',
+  '/estetica-diretta-faccette-composito/',
+];
+const mobileOrderedServices = [
+  ...mobileTreatmentOrder.flatMap((href) => {
+    const service = orderedServices.find((item) => item.href === href);
+    return service ? [service] : [];
+  }),
+  ...orderedServices.filter((service) => !mobileTreatmentOrder.includes(service.href)),
+];
+const mobileOrderByHref = new Map(mobileOrderedServices.map((service, index) => [service.href, index]));
 ---
 
-<section id="trattamenti-home" class="home-treatments" aria-labelledby="home-treatments-title" data-home-treatments>
+<section
+  id="trattamenti-home"
+  class="home-treatments"
+  aria-labelledby="home-treatments-title"
+  data-home-treatments
+  data-desktop-visible-count={featuredTreatmentHrefs.length}
+  data-mobile-visible-count="3"
+>
   <div class="home-treatments-wrap">
     <header class="home-treatments-head">
       <p class="home-treatments-kicker"><span>Odontoiatria a 360°</span></p>
@@ -60,8 +81,11 @@ const orderedServices = [...featuredServices, ...remainingServices];
         <a
           class="home-treatment-card"
           href={service.href}
+          style={`--treatment-desktop-order: ${index}; --treatment-mobile-order: ${mobileOrderByHref.get(service.href) ?? index};`}
           hidden={index >= featuredTreatmentHrefs.length}
-          data-treatment-extra={index >= featuredTreatmentHrefs.length ? '' : undefined}
+          data-treatment-card
+          data-treatment-desktop-index={index}
+          data-treatment-mobile-index={mobileOrderByHref.get(service.href) ?? index}
         >
           <span class="home-treatment-icon">
             <TreatmentIcon icon={iconByHref[service.href] || 'hygiene'} />
@@ -92,21 +116,37 @@ const orderedServices = [...featuredServices, ...remainingServices];
     section.dataset.homeTreatmentsReady = 'true';
 
     const button = section.querySelector('[data-treatments-toggle]');
-    const extraCards = Array.from(section.querySelectorAll('[data-treatment-extra]'));
+    const cards = Array.from(section.querySelectorAll('[data-treatment-card]'));
 
-    if (!(button instanceof HTMLButtonElement) || extraCards.length === 0) return;
+    if (!(button instanceof HTMLButtonElement) || cards.length === 0) return;
+
+    const mobileQuery = window.matchMedia('(max-width: 680px)');
+
+    const syncCards = () => {
+      const mobile = mobileQuery.matches;
+      const visibleCount = Number(
+        mobile ? section.dataset.mobileVisibleCount : section.dataset.desktopVisibleCount,
+      );
+      const expanded = button.getAttribute('aria-expanded') === 'true';
+
+      cards.forEach((card) => {
+        if (!(card instanceof HTMLElement)) return;
+        const cardIndex = Number(mobile ? card.dataset.treatmentMobileIndex : card.dataset.treatmentDesktopIndex);
+        card.hidden = !expanded && cardIndex >= visibleCount;
+      });
+    };
 
     button.addEventListener('click', () => {
       const expanded = button.getAttribute('aria-expanded') === 'true';
       const nextExpanded = !expanded;
 
-      extraCards.forEach((card) => {
-        if (card instanceof HTMLElement) card.hidden = !nextExpanded;
-      });
-
       button.setAttribute('aria-expanded', String(nextExpanded));
       button.textContent = nextExpanded ? 'Mostra meno' : 'Guarda tutti i trattamenti';
+      syncCards();
     });
+
+    mobileQuery.addEventListener('change', syncCards);
+    syncCards();
   });
 </script>
 
@@ -178,6 +218,7 @@ const orderedServices = [...featuredServices, ...remainingServices];
   }
 
   .home-treatment-card {
+    order: var(--treatment-desktop-order, 0);
     min-height: 318px;
     display: flex;
     flex-direction: column;
@@ -330,6 +371,7 @@ const orderedServices = [...featuredServices, ...remainingServices];
       font-size: clamp(2.4rem, 12vw, 3.7rem);
       letter-spacing: -0.025em;
       line-height: 1;
+      text-align: center;
     }
 
     .home-treatments-grid {
@@ -338,6 +380,7 @@ const orderedServices = [...featuredServices, ...remainingServices];
     }
 
     .home-treatment-card {
+      order: var(--treatment-mobile-order, 0);
       min-height: 0;
       border-radius: 24px;
       padding: 26px;
