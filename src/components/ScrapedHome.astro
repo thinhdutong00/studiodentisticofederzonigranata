@@ -309,8 +309,12 @@ const locationOffices = site.offices.map((office) => {
   <section class="locations-section" aria-labelledby="locations-title" data-locations-map-section>
     <div class="locations-layout">
       <div class="locations-copy">
-        <p class="locations-eyebrow">Sedi e accessibilità</p>
-        <h2 id="locations-title">Dove trovarci</h2>
+        <p class="locations-eyebrow">
+          <span class="locations-eyebrow-desktop">Sedi e accessibilità</span>
+          <span class="locations-eyebrow-mobile">Vicinanza e accessibilità</span>
+        </p>
+        <h2 id="locations-title">Dove <span>trovarci</span></h2>
+        <p class="locations-mobile-description">Scegli la sede più vicina a te e visualizza il percorso interattivo.</p>
 
         <div class="location-list">
           {locationOffices.map((office, index) => (
@@ -328,9 +332,16 @@ const locationOffices = site.offices.map((office) => {
                 type="button"
                 aria-expanded={index === 0 ? 'true' : 'false'}
                 aria-controls={`sede-${office.slug}-panel`}>
+                <span class="location-card-pin" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path>
+                    <circle cx="12" cy="10" r="2.5"></circle>
+                  </svg>
+                </span>
                 <span class="location-card-title">
-                  <small>Studio dentistico di</small>
+                  <small class="location-card-kicker">Studio dentistico di</small>
                   <strong>{office.city}</strong>
+                  <span class="location-card-address-mobile">{office.address}</span>
                 </span>
                 <i aria-hidden="true"></i>
               </button>
@@ -369,6 +380,29 @@ const locationOffices = site.offices.map((office) => {
             </article>
           ))}
         </div>
+
+        {locationOffices[0] && (
+          <details class="locations-mobile-hours">
+            <summary>
+              <span class="locations-mobile-hours-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="8.5"></circle>
+                  <path d="M12 7v5l3.5 2"></path>
+                </svg>
+              </span>
+              <strong>Orari di apertura</strong>
+              <i aria-hidden="true"></i>
+            </summary>
+            <div class="locations-mobile-hours-panel">
+              {locationOffices[0].hoursRows.map((row) => (
+                <div>
+                  <span>{row.label}</span>
+                  <strong>{row.value}</strong>
+                </div>
+              ))}
+            </div>
+          </details>
+        )}
       </div>
 
       <div class="locations-map-stack" aria-label="Mappa dello studio selezionato">
@@ -383,7 +417,11 @@ const locationOffices = site.offices.map((office) => {
             <div class="location-map-caption">
               <strong data-location-map-city>{locationOffices[0].city}</strong>
               <span data-location-map-address>{locationOffices[0].address}</span>
-              <a href={locationOffices[0].mapHref} target="_blank" rel="noreferrer" data-location-map-link>Apri su Google Maps <span aria-hidden="true">↗</span></a>
+              <a href={locationOffices[0].mapHref} target="_blank" rel="noreferrer" data-location-map-link>
+                <span class="location-map-link-desktop">Apri su Google Maps</span>
+                <span class="location-map-link-mobile">Apri in Maps</span>
+                <span aria-hidden="true">↗</span>
+              </a>
             </div>
           </article>
         )}
@@ -1824,6 +1862,15 @@ const locationOffices = site.offices.map((office) => {
     text-transform: uppercase;
   }
 
+  .locations-eyebrow-mobile,
+  .locations-mobile-description,
+  .location-card-pin,
+  .location-card-address-mobile,
+  .locations-mobile-hours,
+  .location-map-link-mobile {
+    display: none;
+  }
+
   .locations-copy h2 {
     max-width: 12ch;
     margin: 0;
@@ -1833,6 +1880,10 @@ const locationOffices = site.offices.map((office) => {
     font-weight: 500;
     letter-spacing: -0.2px;
     line-height: 1.05;
+  }
+
+  .locations-copy h2 span {
+    color: inherit;
   }
 
   .location-list {
@@ -2506,40 +2557,269 @@ const locationOffices = site.offices.map((office) => {
       margin-top: 28px;
     }
 
+    .locations-section {
+      background: var(--surface-white);
+    }
+
     .locations-copy {
-      padding: 58px 24px;
+      padding: 64px 20px 38px;
+      background: var(--surface-white);
+    }
+
+    .locations-eyebrow {
+      margin-bottom: 18px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+    }
+
+    .locations-eyebrow-desktop {
+      display: none;
+    }
+
+    .locations-eyebrow-mobile {
+      display: inline;
     }
 
     .locations-copy h2 {
-      font-size: clamp(2.8rem, 13vw, 4.4rem);
+      max-width: none;
+      font-size: clamp(3rem, 13vw, 3.55rem);
+      line-height: 1;
+    }
+
+    .locations-copy h2 span {
+      color: var(--brand-blue);
+    }
+
+    .locations-mobile-description {
+      max-width: 31ch;
+      display: block;
+      margin: 26px 0 0;
+      color: var(--muted-text);
+      font-size: 1.08rem;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    .location-list {
+      gap: 16px;
+      margin-top: 42px;
+    }
+
+    .location-card,
+    .location-card-open {
+      border: 1px solid rgba(var(--brand-primary-dark-rgb), 0.1);
+      border-radius: 32px;
+      background: var(--surface-white);
+      box-shadow: 0 12px 30px rgba(var(--brand-primary-dark-rgb), 0.07);
     }
 
     .location-card-trigger {
-      grid-template-columns: minmax(0, 1fr) 34px;
-      gap: 14px;
-      padding: 22px 20px 22px 26px;
+      min-height: 108px;
+      grid-template-columns: 62px minmax(0, 1fr);
+      gap: 18px;
+      border-bottom: 0;
+      padding: 18px 20px;
+      color: var(--brand-primary-dark);
     }
 
-    .location-card-trigger i {
-      width: 34px;
-      height: 34px;
+    .location-card-pin {
+      width: 62px;
+      height: 62px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: var(--soft-blue-bg);
+      color: var(--brand-primary-dark);
+    }
+
+    .location-card-pin svg {
+      width: 29px;
+      height: 29px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .location-card-trigger .location-card-kicker,
+    .location-card-trigger > i {
+      display: none;
+    }
+
+    .location-card-trigger strong {
+      margin-top: 0;
+      color: inherit;
+      font-size: 1.18rem;
+      font-weight: 600;
+      line-height: 1.15;
+    }
+
+    .location-card-address-mobile {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted-text);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.13em;
+      line-height: 1.35;
+      text-transform: uppercase;
+    }
+
+    .location-card-open {
+      border-color: var(--brand-primary-dark);
+      background: var(--brand-primary-dark);
+      box-shadow: 0 18px 38px rgba(var(--brand-primary-dark-rgb), 0.2);
+    }
+
+    .location-card-open .location-card-trigger {
+      border-bottom: 0;
+      background: transparent;
+      color: var(--surface-white);
+    }
+
+    .location-card-open .location-card-pin {
+      background: var(--brand-blue);
+      color: var(--brand-primary-dark);
+    }
+
+    .location-card-open .location-card-pin svg {
+      stroke: var(--brand-primary-dark);
+    }
+
+    .location-card-open .location-card-address-mobile {
+      color: rgba(255, 255, 255, 0.7);
     }
 
     .location-card-panel {
-      padding: 18px 20px 22px 26px;
+      display: none !important;
     }
 
-    .location-hours-row {
+    .locations-mobile-hours {
+      display: block;
+      margin-top: 32px;
+      overflow: hidden;
+      border: 1px solid rgba(var(--brand-primary-dark-rgb), 0.1);
+      border-radius: 32px;
+      background: var(--surface-white);
+      box-shadow: 0 12px 30px rgba(var(--brand-primary-dark-rgb), 0.09);
+    }
+
+    .locations-mobile-hours summary {
+      min-height: 104px;
       display: grid;
-      gap: 4px;
+      grid-template-columns: 58px minmax(0, 1fr) 20px;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      color: var(--brand-primary-dark);
+      cursor: pointer;
+      list-style: none;
     }
 
-    .location-hours-row strong {
-      text-align: left;
+    .locations-mobile-hours summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .locations-mobile-hours-icon {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: var(--soft-blue-bg);
+      color: var(--brand-cta);
+    }
+
+    .locations-mobile-hours-icon svg {
+      width: 28px;
+      height: 28px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .locations-mobile-hours summary strong {
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      line-height: 1.3;
+      text-transform: uppercase;
+    }
+
+    .locations-mobile-hours summary > i {
+      width: 11px;
+      height: 11px;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform: translateY(-3px) rotate(45deg);
+      transition: transform 180ms ease;
+    }
+
+    .locations-mobile-hours[open] summary > i {
+      transform: translateY(3px) rotate(225deg);
+    }
+
+    .locations-mobile-hours-panel {
+      display: grid;
+      gap: 12px;
+      border-top: 1px solid var(--border);
+      padding: 20px 22px 24px;
+    }
+
+    .locations-mobile-hours-panel > div {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: baseline;
+      color: var(--muted-text);
+      font-size: 0.92rem;
+      line-height: 1.4;
+    }
+
+    .locations-mobile-hours-panel strong {
+      color: var(--brand-primary-dark);
+      font-weight: 500;
+      text-align: right;
     }
 
     .location-map-card {
-      min-height: 360px;
+      min-height: 380px;
+    }
+
+    .location-map-card iframe {
+      top: 0;
+      height: 100%;
+    }
+
+    .location-map-caption {
+      top: 18px;
+      right: auto;
+      left: 18px;
+      gap: 0;
+      border-radius: 6px;
+      padding: 12px 14px;
+    }
+
+    .location-map-caption > strong,
+    .location-map-caption > span,
+    .location-map-link-desktop {
+      display: none;
+    }
+
+    .location-map-caption a {
+      margin-top: 0;
+      color: var(--brand-cta);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .location-map-link-mobile {
+      display: inline;
+      color: inherit;
     }
   }
 

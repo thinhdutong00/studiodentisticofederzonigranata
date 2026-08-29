@@ -178,9 +178,13 @@ const footerEmail = site.offices[0];
 
   <div class="footer-bottom">
     <div class="container footer-bottom-inner">
-      <span class="footer-copyright">© {new Date().getFullYear()} {site.name}</span>
+      <span class="footer-copyright">
+        <span class="footer-copyright-desktop">© {new Date().getFullYear()} {site.name}</span>
+        <span class="footer-copyright-mobile">© {new Date().getFullYear()} Studio Odontoiatri Ass.ti Federzoni Granata | P. IVA 02082850369</span>
+      </span>
       <span class="footer-note">{site.footerNote}</span>
       <span class="footer-legal"><a href="/privacy-policy/">Privacy Policy</a><span class="footer-policy-separator" aria-hidden="true"></span><a href="/cookie-privacy/">Cookie Policy</a></span>
+      <span class="footer-powered"><strong>Powered by Mago System <sup>TM</sup></strong></span>
     </div>
   </div>
 </footer>

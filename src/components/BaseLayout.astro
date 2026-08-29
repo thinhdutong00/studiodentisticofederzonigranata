@@ -2559,6 +2559,11 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     content: "·";
   }
 
+  .footer-copyright-mobile,
+  .footer-powered {
+    display: none;
+  }
+
   @media (max-width: 1160px) {
     .footer-shell,
     .footer-bottom-inner {
@@ -2780,12 +2785,37 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
       order: 1;
     }
 
-    .footer-legal {
+    .footer-copyright {
       order: 2;
     }
 
-    .footer-copyright {
+    .footer-legal {
       order: 3;
+    }
+
+    .footer-copyright-desktop {
+      display: none;
+    }
+
+    .footer-copyright-mobile,
+    .footer-powered {
+      display: block;
+    }
+
+    .footer-powered {
+      order: 4;
+      color: var(--surface-white);
+    }
+
+    .footer-powered strong {
+      font-weight: 700;
+    }
+
+    .footer-powered sup {
+      margin-left: 0.12em;
+      font-size: 0.62em;
+      line-height: 0;
+      text-transform: uppercase;
     }
 
     .footer-policy-separator::before {
