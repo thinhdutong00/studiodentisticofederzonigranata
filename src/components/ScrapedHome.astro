@@ -2443,6 +2443,13 @@ const locationOffices = site.offices.map((office) => {
       min-height: 360px;
     }
 
+    .video-carousel-play,
+    .video-carousel-card:hover .video-carousel-play,
+    .video-carousel-card:focus-visible .video-carousel-play {
+      background: transparent;
+      text-shadow: 0 2px 10px rgba(var(--brand-primary-dark-rgb), 0.55);
+    }
+
     .clinical-carousel-card-copy {
       padding: 24px;
     }
