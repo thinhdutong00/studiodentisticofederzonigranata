@@ -2168,7 +2168,7 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .scraped-hero {
-      align-items: center;
+      align-items: end;
       justify-items: center;
       background-position: 74% center;
     }
@@ -2183,8 +2183,12 @@ const locationOffices = site.offices.map((office) => {
     .scraped-hero-copy {
       width: min(100% - 28px, 1320px);
       margin: 0 auto;
-      padding: 120px 0 72px;
+      padding: 120px 0 32px;
       text-align: center;
+    }
+
+    .scraped-scroll {
+      display: none;
     }
 
     .scraped-hero-shade {
@@ -2203,7 +2207,7 @@ const locationOffices = site.offices.map((office) => {
       padding: 8px 12px;
       border: 1px solid rgba(255, 255, 255, 0.42);
       border-radius: 10px;
-      background: rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.08);
       font-size: 0.95rem;
       text-align: center;
       backdrop-filter: blur(8px);

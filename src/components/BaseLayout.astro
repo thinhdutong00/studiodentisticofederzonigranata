@@ -5292,6 +5292,10 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   }
 
   @media (max-width: 620px) {
+    :root {
+      --nav-height: 80px;
+    }
+
     .site-header {
       --header-experience-height: 30px;
     }
@@ -5615,23 +5619,23 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     }
 
     .site-header .brand img {
-      width: 190px;
-      max-width: 52vw;
+      width: 204px;
+      max-width: 56vw;
     }
 
     .site-menu-trigger {
-      min-height: 48px;
+      min-height: 52px;
       gap: 10px;
       font-size: 1rem;
     }
 
     .site-menu-icon {
-      width: 26px;
+      width: 28px;
       gap: 5px;
     }
 
     .site-menu-icon span {
-      width: 26px;
+      width: 28px;
       height: 2.5px;
     }
   }
@@ -5666,8 +5670,8 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     }
 
     .site-header .brand img {
-      width: 180px;
-      max-width: 50vw;
+      width: 198px;
+      max-width: 54vw;
     }
 
     .site-header .header-cta {
@@ -5677,14 +5681,15 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     }
 
     .site-menu-trigger {
-      gap: 9px;
+      min-height: 52px;
+      gap: 10px;
       padding-left: 4px;
-      font-size: 0.95rem;
+      font-size: 1rem;
     }
 
     .site-menu-icon,
     .site-menu-icon span {
-      width: 24px;
+      width: 27px;
     }
   }
 
