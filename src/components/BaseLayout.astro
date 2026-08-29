@@ -2409,6 +2409,10 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     padding: 0;
   }
 
+  .footer-mobile {
+    display: none;
+  }
+
   .site-footer h2,
   .site-footer h3 {
     color: var(--aqua);
@@ -2583,6 +2587,144 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     .footer-shell,
     .footer-bottom-inner {
       width: min(100% - 32px, 1828px);
+    }
+
+    .footer-desktop {
+      display: none;
+    }
+
+    .footer-mobile {
+      display: block;
+      padding-top: 42px;
+    }
+
+    .footer-mobile-brand {
+      padding-bottom: 34px;
+      border-bottom: 1px solid var(--footer-line);
+    }
+
+    .footer-mobile-logo {
+      width: min(100%, 310px);
+      display: block;
+    }
+
+    .footer-mobile-logo img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: brightness(0) invert(1);
+    }
+
+    .footer-mobile-brand p {
+      max-width: 34ch;
+      margin: 22px 0 0;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    .footer-mobile-section {
+      padding: 30px 0;
+      border-bottom: 1px solid var(--footer-line);
+    }
+
+    .footer-mobile-section h2 {
+      margin: 0 0 22px;
+      font-size: 1.18rem;
+      font-weight: 500;
+      line-height: 1.25;
+    }
+
+    .footer-mobile-navigation {
+      display: grid;
+      gap: 15px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .footer-mobile-navigation a,
+    .footer-mobile-content > a {
+      font-size: 1rem;
+      line-height: 1.45;
+    }
+
+    .footer-mobile-contact-list {
+      display: grid;
+      gap: 28px;
+    }
+
+    .footer-mobile-contact-item {
+      display: grid;
+      grid-template-columns: 28px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .footer-mobile-contact-icon {
+      width: 24px;
+      height: 24px;
+      margin-top: 2px;
+      fill: none;
+      stroke: var(--brand-blue);
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .footer-mobile-contact-values {
+      min-width: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .footer-mobile-contact-values > span {
+      color: var(--brand-blue);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: normal;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    .footer-mobile-contact-values a {
+      display: grid;
+      gap: 3px;
+      overflow-wrap: anywhere;
+      font-size: 0.98rem;
+      line-height: 1.45;
+    }
+
+    .footer-mobile-contact-values a strong {
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+
+    .footer-mobile-hours {
+      display: grid;
+      gap: 16px;
+    }
+
+    .footer-mobile-hours > div {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: baseline;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 0.98rem;
+      line-height: 1.4;
+    }
+
+    .footer-mobile-hours strong {
+      color: var(--soft-blue-bg);
+      font-weight: 500;
+      text-align: right;
+    }
+
+    .footer-mobile-content {
+      border-bottom: 0;
     }
 
     .footer-menu-grid {

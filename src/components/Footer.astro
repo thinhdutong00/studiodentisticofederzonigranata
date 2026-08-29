@@ -38,30 +38,138 @@ const footerColumns = [
     ],
   },
 ];
+
+const mobileNavigation = [
+  { label: 'Informazioni', href: '/chi-siamo/' },
+  { label: 'Trattamenti', href: '/trattamenti/' },
+  { label: 'Modalità della visita', href: '/prima-visita/' },
+  { label: 'Prenota ora', href: '/richiesta/' },
+];
+
+const footerOffices = site.offices.map((office) => ({
+  ...office,
+  mapHref: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(office.address)}`,
+}));
+
+const footerHours = site.offices[0]?.hours.split(';').map((row) => {
+  const [label, ...value] = row.split(':');
+
+  return {
+    label: label.trim(),
+    value: value.join(':').trim(),
+  };
+}) || [];
+
+const footerEmail = site.offices[0];
 ---
 
-<footer class="site-footer">
+<footer id="footer" class="site-footer">
   <div class="container footer-shell">
-    <nav class="footer-menu-grid" aria-label="Navigazione footer">
-      {footerColumns.map((column) => (
-        <section class="footer-links" aria-labelledby={`footer-${column.title.toLowerCase().replaceAll(' ', '-')}`}>
-          <h2 id={`footer-${column.title.toLowerCase().replaceAll(' ', '-')}`}>{column.title}</h2>
-          <ul>
-            {column.links.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
-          </ul>
-        </section>
-      ))}
-    </nav>
+    <div class="footer-desktop">
+      <nav class="footer-menu-grid" aria-label="Navigazione footer">
+        {footerColumns.map((column) => (
+          <section class="footer-links" aria-labelledby={`footer-${column.title.toLowerCase().replaceAll(' ', '-')}`}>
+            <h2 id={`footer-${column.title.toLowerCase().replaceAll(' ', '-')}`}>{column.title}</h2>
+            <ul>
+              {column.links.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+            </ul>
+          </section>
+        ))}
+      </nav>
 
-    <div class="footer-social-row">
-      <section class="footer-social-block" aria-labelledby="footer-social-title">
-        <h2 id="footer-social-title">Seguici sui nostri social:</h2>
+      <div class="footer-social-row">
+        <section class="footer-social-block" aria-labelledby="footer-social-title">
+          <h2 id="footer-social-title">Seguici sui nostri social:</h2>
+          <div class="footer-social" aria-label="Canali social">
+            {site.social.map((item) => <a href={item.url} target="_blank" rel="noopener noreferrer">{item.label}</a>)}
+          </div>
+        </section>
+        <section class="footer-social-block footer-article-block" aria-labelledby="footer-articles-title">
+          <h2 id="footer-articles-title">Scopri i nostri contenuti:</h2>
+          <a href="/video/">Video dello studio</a>
+        </section>
+      </div>
+    </div>
+
+    <div class="footer-mobile">
+      <div class="footer-mobile-brand">
+        <a class="footer-mobile-logo" href="/" aria-label={`${site.name} — Home`}>
+          <img src={site.logo} alt={site.name} width="400" height="52" />
+        </a>
+        <p>Professionisti con oltre 35 anni di esperienza e riconoscimenti dalle più prestigiose società scientifiche nazionali e internazionali.</p>
+      </div>
+
+      <nav class="footer-mobile-section" aria-labelledby="footer-mobile-navigation-title">
+        <h2 id="footer-mobile-navigation-title">Navigazione</h2>
+        <ul class="footer-mobile-navigation">
+          {mobileNavigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+        </ul>
+      </nav>
+
+      <section class="footer-mobile-section" aria-labelledby="footer-mobile-contacts-title">
+        <h2 id="footer-mobile-contacts-title">Contatti</h2>
+        <div class="footer-mobile-contact-list">
+          <div class="footer-mobile-contact-item">
+            <svg class="footer-mobile-contact-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7.2 3.5 9.6 8l-2 1.8a15 15 0 0 0 6.6 6.6l1.8-2 4.5 2.4-.8 3.2a2 2 0 0 1-2 1.5C9.3 20.7 3.3 14.7 2.5 6.3a2 2 0 0 1 1.5-2l3.2-.8Z"></path>
+            </svg>
+            <div class="footer-mobile-contact-values">
+              <span>Telefono</span>
+              {footerOffices.map((office) => (
+                <a href={office.phoneHref}><strong>{office.city}</strong>{office.phone}</a>
+              ))}
+            </div>
+          </div>
+
+          {footerEmail && (
+            <div class="footer-mobile-contact-item">
+              <svg class="footer-mobile-contact-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 5.5h18v13H3z"></path>
+                <path d="m4 7 8 6 8-6"></path>
+              </svg>
+              <div class="footer-mobile-contact-values">
+                <span>Email</span>
+                <a href={footerEmail.emailHref}>{footerEmail.email}</a>
+              </div>
+            </div>
+          )}
+
+          <div class="footer-mobile-contact-item">
+            <svg class="footer-mobile-contact-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path>
+              <circle cx="12" cy="10" r="2.5"></circle>
+            </svg>
+            <div class="footer-mobile-contact-values">
+              <span>Google Maps</span>
+              {footerOffices.map((office) => (
+                <a href={office.mapHref} target="_blank" rel="noopener noreferrer"><strong>{office.city}</strong>{office.address}</a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="footer-mobile-section" aria-labelledby="footer-mobile-hours-title">
+        <h2 id="footer-mobile-hours-title">Orari</h2>
+        <div class="footer-mobile-hours">
+          {footerHours.map((row) => (
+            <div>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="footer-mobile-section" aria-labelledby="footer-mobile-social-title">
+        <h2 id="footer-mobile-social-title">Seguici sui nostri social:</h2>
         <div class="footer-social" aria-label="Canali social">
           {site.social.map((item) => <a href={item.url} target="_blank" rel="noopener noreferrer">{item.label}</a>)}
         </div>
       </section>
-      <section class="footer-social-block footer-article-block" aria-labelledby="footer-articles-title">
-        <h2 id="footer-articles-title">Scopri i nostri contenuti:</h2>
+
+      <section class="footer-mobile-section footer-mobile-content" aria-labelledby="footer-mobile-content-title">
+        <h2 id="footer-mobile-content-title">Scopri i nostri contenuti:</h2>
         <a href="/video/">Video dello studio</a>
       </section>
     </div>

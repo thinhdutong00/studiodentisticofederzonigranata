@@ -2372,31 +2372,34 @@ const locationOffices = site.offices.map((office) => {
     .prefooter-cta {
       box-sizing: border-box;
       padding: 32px 24px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      border: 1px solid var(--border);
       border-radius: 20px;
-      background: var(--brand-primary-dark);
-      color: var(--surface-white);
-      box-shadow: 0 22px 54px rgba(var(--brand-primary-dark-rgb), 0.18);
+      background: var(--surface-white);
+      color: var(--brand-primary-dark);
+      box-shadow: 0 22px 54px rgba(var(--brand-primary-dark-rgb), 0.1);
     }
 
-    .prefooter-eyebrow,
+    .prefooter-eyebrow {
+      color: var(--brand-blue);
+    }
+
     .prefooter-copy p,
     .prefooter-action > span {
-      color: rgba(255, 255, 255, 0.72);
+      color: var(--muted-text);
     }
 
     .prefooter-section .prefooter-button {
-      border-color: var(--surface-white);
-      background: var(--surface-white);
-      color: var(--brand-primary-dark);
+      border-color: var(--brand-cta);
+      background: var(--brand-cta);
+      color: var(--surface-white);
       box-shadow: none;
     }
 
     .prefooter-section .prefooter-button:hover,
     .prefooter-section .prefooter-button:focus-visible {
-      border-color: var(--soft-blue-bg);
-      background: var(--soft-blue-bg);
-      color: var(--brand-primary-dark);
+      border-color: var(--brand-cta-hover);
+      background: var(--brand-cta-hover);
+      color: var(--surface-white);
     }
 
     .prefooter-section .prefooter-button span {
