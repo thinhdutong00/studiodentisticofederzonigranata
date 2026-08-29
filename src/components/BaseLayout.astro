@@ -5273,13 +5273,13 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     }
 
     .site-menu-panel {
-      top: calc(var(--nav-height) + var(--header-experience-height) + 8px);
-      right: 8px;
-      bottom: 8px;
-      left: 8px;
-      width: auto;
-      height: calc(100dvh - var(--nav-height) - var(--header-experience-height) - 16px);
-      border-radius: 8px;
+      top: var(--header-experience-height);
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: calc(100dvh - var(--header-experience-height));
+      border-radius: 0;
       padding: 22px 24px 28px;
     }
 
