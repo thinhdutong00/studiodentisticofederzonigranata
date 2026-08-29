@@ -14,7 +14,9 @@
   const banner = document.querySelector('[data-cookie-banner]');
   const storageKey = 'fg-cookie-preference';
   if (banner && !localStorage.getItem(storageKey)) {
-    banner.classList.add('is-visible');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => banner.classList.add('is-visible'));
+    });
   }
   document.querySelectorAll('[data-cookie-choice]').forEach((button) => {
     button.addEventListener('click', () => {

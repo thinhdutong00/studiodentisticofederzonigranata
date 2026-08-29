@@ -50,7 +50,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={new URL(ogImage, canonical).toString()} />
   </head>
-  <body>
+  <body class:list={[canonicalPath === '/' && 'is-home-page']}>
     <div class="site-preloader" data-site-preloader aria-hidden="true">
       <img src="/assets/original/2020/10/cropped-favicon-180x180.png" alt="" width="72" height="72" decoding="async" />
     </div>
@@ -5690,6 +5690,64 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     .site-menu-icon,
     .site-menu-icon span {
       width: 27px;
+    }
+  }
+
+  @media (max-width: 620px) {
+    body.is-home-page .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) {
+      border-bottom-color: rgba(var(--brand-primary-dark-rgb), 0.12);
+      background: var(--surface-white);
+      box-shadow: 0 10px 32px rgba(var(--brand-primary-dark-rgb), 0.08);
+      backdrop-filter: blur(16px);
+    }
+
+    body.is-home-page .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .brand img {
+      filter: none;
+    }
+
+    body.is-home-page .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .site-menu-trigger {
+      color: var(--brand-primary-dark);
+    }
+
+    body.is-home-page .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .site-menu-trigger:hover,
+    body.is-home-page .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .site-menu-trigger:focus-visible {
+      color: var(--brand-blue);
+    }
+
+    .cookie-banner {
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      max-width: none;
+      display: block;
+      margin: 0;
+      padding: 18px 16px calc(18px + env(safe-area-inset-bottom));
+      border-width: 1px 0 0;
+      border-radius: 16px 16px 0 0;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(100%);
+      transition:
+        opacity 240ms ease,
+        transform 360ms cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 0s linear 360ms;
+    }
+
+    .cookie-banner.is-visible {
+      display: block;
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0);
+      transition-delay: 0s;
+    }
+  }
+
+  @media (max-width: 620px) and (prefers-reduced-motion: reduce) {
+    .cookie-banner {
+      transition: none;
     }
   }
 
