@@ -795,7 +795,14 @@ const siteMenuContacts = [
       accordion.addEventListener('toggle', () => {
         if (!mobileMenuQuery.matches) {
           if (!accordion.open) accordion.open = true;
+          return;
         }
+
+        if (!accordion.open) return;
+
+        accordions.forEach((otherAccordion) => {
+          if (otherAccordion !== accordion) otherAccordion.open = false;
+        });
       });
     });
 

@@ -5281,12 +5281,12 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   @keyframes site-menu-item-enter {
     from {
       opacity: 0;
-      transform: translateX(-18px);
+      clip-path: inset(0 100% 0 0);
     }
 
     to {
       opacity: 1;
-      transform: translateX(0);
+      clip-path: inset(0 0 0 0);
     }
   }
 
@@ -5328,6 +5328,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
       height: calc(100dvh - var(--header-experience-height));
       grid-template-rows: auto minmax(0, 1fr) auto auto;
       gap: 8px;
+      overflow: hidden;
       border-radius: 0;
       padding: 20px 22px 14px;
     }
@@ -5353,12 +5354,25 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     .site-menu-scroll {
       display: grid;
       align-content: start;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior-x: none;
       padding: 36px 2px 8px 0;
+      touch-action: pan-y;
+    }
+
+    .site-menu-scroll > * {
+      min-width: 0;
+      border-bottom: 0.5px solid rgba(var(--surface-white-rgb), 0.22);
+    }
+
+    .site-menu-scroll > .site-menu-contact {
+      border-bottom: 0;
     }
 
     .site-menu-primary-link {
       display: block;
-      padding-bottom: 18px;
+      padding-bottom: 28px;
       color: var(--surface-white);
       font-size: clamp(1.75rem, 7.4vw, 2rem);
       font-weight: 500;
@@ -5400,7 +5414,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
     .site-menu-section {
       gap: 0;
-      padding-bottom: 18px;
+      padding-bottom: 28px;
     }
 
     .site-menu-section[open] {
@@ -5480,9 +5494,11 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
     .site-menu-links a,
     .site-menu-all-link {
+      max-width: 100%;
       font-size: 1.125rem;
       line-height: 1.3;
       letter-spacing: -0.16px;
+      overflow-wrap: anywhere;
     }
 
     .site-menu-accordion[open] .site-menu-links a,
