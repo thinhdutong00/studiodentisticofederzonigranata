@@ -2171,10 +2171,7 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .prefooter-section::after {
-      top: auto;
-      width: 100%;
-      height: 52%;
-      opacity: 0.18;
+      display: none;
     }
 
     .scraped-hero-copy {
@@ -2304,6 +2301,60 @@ const locationOffices = site.offices.map((office) => {
       gap: 52px;
     }
 
+    .feature-specialists {
+      gap: 0;
+    }
+
+    .feature-specialists .feature-copy {
+      display: contents;
+    }
+
+    .feature-specialists .feature-copy h2 {
+      order: 1;
+    }
+
+    .feature-specialists .feature-image {
+      order: 2;
+      width: 100%;
+      margin-top: 24px;
+    }
+
+    .feature-specialists .feature-copy > p {
+      order: 3;
+      margin-top: 24px;
+    }
+
+    .feature-specialists .feature-button-list {
+      order: 4;
+    }
+
+    .feature-workplace {
+      gap: 0;
+    }
+
+    .feature-workplace .feature-copy {
+      display: contents;
+    }
+
+    .feature-workplace .feature-copy h2 {
+      order: 1;
+    }
+
+    .feature-workplace .feature-image {
+      order: 2;
+      width: 100%;
+      margin-top: 24px;
+    }
+
+    .feature-workplace .feature-copy > p {
+      order: 3;
+      margin-top: 24px;
+    }
+
+    .feature-workplace .feature-copy > .feature-button {
+      order: 4;
+    }
+
     .feature-copy h2 {
       font-size: clamp(2.3rem, 12vw, 3.65rem);
     }
@@ -2316,6 +2367,40 @@ const locationOffices = site.offices.map((office) => {
     .prefooter-action,
     .prefooter-button {
       width: 100%;
+    }
+
+    .prefooter-cta {
+      box-sizing: border-box;
+      padding: 32px 24px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      background: var(--brand-primary-dark);
+      color: var(--surface-white);
+      box-shadow: 0 22px 54px rgba(var(--brand-primary-dark-rgb), 0.18);
+    }
+
+    .prefooter-eyebrow,
+    .prefooter-copy p,
+    .prefooter-action > span {
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    .prefooter-section .prefooter-button {
+      border-color: var(--surface-white);
+      background: var(--surface-white);
+      color: var(--brand-primary-dark);
+      box-shadow: none;
+    }
+
+    .prefooter-section .prefooter-button:hover,
+    .prefooter-section .prefooter-button:focus-visible {
+      border-color: var(--soft-blue-bg);
+      background: var(--soft-blue-bg);
+      color: var(--brand-primary-dark);
+    }
+
+    .prefooter-section .prefooter-button span {
+      color: inherit;
     }
 
     .feature-hero {
@@ -2354,8 +2439,8 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .clinical-carousel-card {
-      flex-basis: min(82vw, 360px);
-      min-height: 430px;
+      flex-basis: min(74vw, 310px);
+      min-height: 360px;
     }
 
     .clinical-carousel-card-copy {
@@ -2382,12 +2467,27 @@ const locationOffices = site.offices.map((office) => {
       right: 18px;
     }
 
+    .insights-section .scraped-wrap {
+      display: grid;
+    }
+
     .insights-head {
-      display: block;
+      display: contents;
+    }
+
+    .insights-head h2 {
+      order: 1;
+      margin-bottom: 34px;
+    }
+
+    .insights-grid {
+      order: 2;
     }
 
     .insights-head a {
-      margin-top: 22px;
+      order: 3;
+      justify-self: center;
+      margin-top: 28px;
     }
 
     .locations-copy {
