@@ -353,6 +353,26 @@ const siteMenuInformation = [
         </div>
       </section>
     </div>
+    <div class="site-menu-actions" aria-label="Azioni rapide">
+      <a class="site-menu-action site-menu-action-primary" href={ctaHref}>
+        Prenota visita
+        <span aria-hidden="true">↗</span>
+      </a>
+      <details class="site-menu-call-dropdown" data-call-dropdown>
+        <summary class="site-menu-action site-menu-action-secondary">
+          Chiama lo studio
+          <span aria-hidden="true">⌃</span>
+        </summary>
+        <div class="call-dropdown-menu site-menu-call-options" role="list">
+          {callOptions.map((office) => (
+            <a class="call-dropdown-link" href={office.phoneHref}>
+              <span>Studio {office.city}</span>
+              <strong>{office.phone}</strong>
+            </a>
+          ))}
+        </div>
+      </details>
+    </div>
     <nav class="site-menu-social" aria-label="Seguici sui social">
       <span class="site-menu-social-label">Scopri i nostri contenuti:</span>
       <span class="site-menu-social-icons">
@@ -690,6 +710,9 @@ const siteMenuInformation = [
       trigger.setAttribute('aria-label', isOpen ? 'Chiudi menu' : 'Apri menu');
       panel.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
       if (isOpen) header.classList.remove('is-hidden');
+      if (!isOpen) {
+        panel.querySelectorAll('details[open]').forEach((dropdown) => dropdown.removeAttribute('open'));
+      }
     };
 
     trigger.addEventListener('click', () => {
@@ -713,6 +736,7 @@ const siteMenuInformation = [
   const setupCallDropdowns = () => {
     const dropdowns = Array.from(document.querySelectorAll('[data-call-dropdown]'));
     const hoverQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const mobileDropdownQuery = window.matchMedia('(max-width: 620px)');
 
     dropdowns.forEach((dropdown) => {
       if (!(dropdown instanceof HTMLDetailsElement) || dropdown.dataset.ready === 'true') return;
@@ -726,13 +750,13 @@ const siteMenuInformation = [
       };
 
       const openOnHover = () => {
-        if (!hoverQuery.matches) return;
+        if (!hoverQuery.matches || mobileDropdownQuery.matches) return;
         clearCloseDelay();
         dropdown.open = true;
       };
 
       const closeAfterHover = () => {
-        if (!hoverQuery.matches) return;
+        if (!hoverQuery.matches || mobileDropdownQuery.matches) return;
         clearCloseDelay();
         closeTimeout = window.setTimeout(() => {
           dropdown.open = false;
