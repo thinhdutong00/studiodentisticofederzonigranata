@@ -118,7 +118,8 @@ const locationOffices = site.offices.map((office) => {
     <div class="scraped-hero-shade" aria-hidden="true"></div>
     <div class="scraped-hero-copy">
       <p class="scraped-pretitle">
-        Studio dentistico a Modena e Reggio Emilia <span class="scraped-pretitle-separator">·</span><br class="scraped-pretitle-mobile-break" /> Oltre 35 anni di esperienza
+        Studio dentistico a Modena e Reggio Emilia <span class="scraped-pretitle-separator">·</span>
+        <span class="scraped-pretitle-experience">Oltre 35 anni di esperienza</span>
       </p>
       <h1>
         <span class="scraped-hero-title-line">il tuo benessere</span>
@@ -130,7 +131,7 @@ const locationOffices = site.offices.map((office) => {
           spiegazioni semplici e risultati naturali pensati sul tuo viso.
         </span>
         <span class="scraped-hero-description-mobile">
-          Curiamo salute, funzione ed estetica della bocca per adulti e bambini.
+          Da oltre 35 anni curiamo salute, funzione ed estetica della bocca per adulti e bambini.
         </span>
       </p>
       <div class="scraped-hero-actions" aria-label="Azioni principali">
@@ -783,10 +784,6 @@ const locationOffices = site.offices.map((office) => {
     line-height: 1.25;
     letter-spacing: -0.2px;
     text-shadow: 0 1px 10px rgba(var(--brand-primary-dark-rgb), 0.5);
-  }
-
-  .scraped-pretitle-mobile-break {
-    display: none;
   }
 
   .scraped-hero h1 {
@@ -2185,6 +2182,7 @@ const locationOffices = site.offices.map((office) => {
       margin: 0 auto;
       padding: 112px 0 28px;
       text-align: center;
+      transform: translateY(clamp(68px, 9svh, 96px));
     }
 
     .scraped-scroll {
@@ -2214,11 +2212,8 @@ const locationOffices = site.offices.map((office) => {
       -webkit-backdrop-filter: blur(8px);
     }
 
-    .scraped-pretitle-mobile-break {
-      display: block;
-    }
-
-    .scraped-pretitle-separator {
+    .scraped-pretitle-separator,
+    .scraped-pretitle-experience {
       display: none;
     }
 
