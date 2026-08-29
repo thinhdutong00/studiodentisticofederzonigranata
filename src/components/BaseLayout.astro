@@ -4977,6 +4977,16 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     cursor: pointer;
   }
 
+  .site-menu-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .site-menu-panel-logo {
+    display: none;
+  }
+
   .site-menu-close span {
     font-size: 2rem;
     font-weight: 300;
@@ -5007,8 +5017,24 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     padding-top: 4px;
   }
 
-  .site-menu-section h2 {
-    margin: 0;
+  .site-menu-primary-link,
+  .site-menu-contact {
+    display: none;
+  }
+
+  .site-menu-section-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    list-style: none;
+  }
+
+  .site-menu-section-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .site-menu-section-title {
     color: var(--surface-white);
     font-size: clamp(1.35rem, 2vw, 1.85rem);
     font-weight: 500;
@@ -5016,7 +5042,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     letter-spacing: -0.01em;
   }
 
-  .site-menu-section h2::after {
+  .site-menu-section-title::after {
     content: "";
     width: clamp(48px, 5vw, 86px);
     height: 3px;
@@ -5024,6 +5050,15 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     margin-top: 10px;
     border-radius: 999px;
     background: rgba(var(--brand-blue-rgb), 0.9);
+  }
+
+  .site-menu-section-panel {
+    display: grid;
+    gap: 18px;
+  }
+
+  .site-menu-section-toggle {
+    display: none;
   }
 
   .site-menu-links {
@@ -5243,6 +5278,18 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     }
   }
 
+  @keyframes site-menu-item-enter {
+    from {
+      opacity: 0;
+      transform: translateX(-18px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
   @media (max-width: 620px) {
     .site-header {
       --header-experience-height: 30px;
@@ -5280,17 +5327,169 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
       width: 100%;
       height: calc(100dvh - var(--header-experience-height));
       grid-template-rows: auto minmax(0, 1fr) auto auto;
+      gap: 8px;
       border-radius: 0;
-      padding: 22px 24px 28px;
+      padding: 20px 22px 14px;
+    }
+
+    .site-menu-panel-header {
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .site-menu-panel-logo {
+      width: min(168px, 46vw);
+      display: block;
+      flex: 0 1 auto;
+    }
+
+    .site-menu-panel-logo img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: brightness(0) invert(1);
+    }
+
+    .site-menu-scroll {
+      display: grid;
+      align-content: start;
+      padding: 36px 2px 8px 0;
+    }
+
+    .site-menu-primary-link {
+      display: block;
+      padding-bottom: 18px;
+      color: var(--surface-white);
+      font-size: clamp(1.75rem, 7.4vw, 2rem);
+      font-weight: 500;
+      line-height: 1.08;
+      letter-spacing: -0.16px;
+      text-decoration: none;
+    }
+
+    .site-menu-primary-link:hover,
+    .site-menu-primary-link:focus-visible {
+      color: var(--soft-blue-bg);
+      outline: 0;
+    }
+
+    .site-menu-home-link {
+      order: 1;
+    }
+
+    .site-menu-section-information {
+      order: 2;
+    }
+
+    .site-menu-section-treatments {
+      order: 3;
+    }
+
+    .site-menu-visit-link {
+      order: 4;
+    }
+
+    .site-menu-contact {
+      order: 5;
+      display: grid;
+    }
+
+    .site-menu-links a.site-menu-mobile-moved {
+      display: none;
+    }
+
+    .site-menu-section {
+      gap: 14px;
+      padding-bottom: 18px;
+    }
+
+    .site-menu-section + .site-menu-section {
+      padding-top: 0;
+    }
+
+    .site-menu-section-summary {
+      cursor: pointer;
+    }
+
+    .site-menu-section-summary:focus-visible {
+      outline: 2px solid rgba(var(--surface-white-rgb), 0.76);
+      outline-offset: 6px;
+    }
+
+    .site-menu-section-toggle {
+      width: 28px;
+      height: 28px;
+      flex: 0 0 28px;
+      display: grid;
+      place-items: center;
+      color: var(--surface-white);
+      transition: transform 180ms ease;
+    }
+
+    .site-menu-section-toggle svg {
+      width: 24px;
+      height: 24px;
+      display: block;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .site-menu-accordion[open] .site-menu-section-toggle {
+      transform: rotate(180deg);
+    }
+
+    .site-menu-section-title {
+      font-size: clamp(1.75rem, 7.4vw, 2rem);
+      line-height: 1.08;
+      letter-spacing: -0.16px;
+    }
+
+    .site-menu-section-title::after {
+      margin-top: 8px;
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition:
+        opacity 80ms linear,
+        transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .site-menu-accordion[open] .site-menu-section-title::after {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+
+    .site-menu-section-panel {
+      gap: 12px;
+    }
+
+    .site-menu-links {
+      gap: 10px;
+    }
+
+    .site-menu-links a,
+    .site-menu-all-link {
+      font-size: 1.125rem;
+      line-height: 1.3;
+      letter-spacing: -0.16px;
+    }
+
+    .site-menu-accordion[open] .site-menu-links a,
+    .site-menu-accordion[open] .site-menu-all-link {
+      animation: site-menu-item-enter 340ms cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation-delay: calc(var(--site-menu-item-order, 0) * 55ms);
     }
 
     .site-menu-actions {
       position: relative;
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
+      gap: 8px;
       border-top: 1px solid rgba(var(--surface-white-rgb), 0.24);
-      padding-top: 14px;
+      padding-top: 12px;
     }
 
     .site-menu-actions > * {
@@ -5322,6 +5521,17 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
     .site-menu-action::-webkit-details-marker {
       display: none;
+    }
+
+    .site-menu-action-icon {
+      width: 20px;
+      height: 20px;
+      flex: 0 0 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .site-menu-action-primary {
@@ -5362,7 +5572,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
     .site-menu-social {
       border-top: 1px solid rgba(var(--surface-white-rgb), 0.24);
-      padding-top: 14px;
+      padding-top: 12px;
     }
 
     .site-header .brand img {
@@ -5387,6 +5597,11 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
     .header-experience-message + .header-experience-message {
       display: none;
+    }
+
+    .site-menu-accordion[open] .site-menu-links a,
+    .site-menu-accordion[open] .site-menu-all-link {
+      animation: none;
     }
   }
 

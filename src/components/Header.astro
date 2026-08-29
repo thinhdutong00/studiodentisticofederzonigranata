@@ -235,6 +235,19 @@ const siteMenuInformation = [
   { label: 'Video', href: '/video/' },
   { label: 'FAQ', href: '/faq/' },
 ];
+
+const mobileMovedInformationLabels = new Set(['Prima visita', 'Orari e sedi', 'Urgenze']);
+const mobileInformationOrder = new Map(
+  siteMenuInformation
+    .filter((item) => !mobileMovedInformationLabels.has(item.label))
+    .map((item, index) => [item.label, index]),
+);
+
+const siteMenuContacts = [
+  { label: 'Orari e sedi', href: '/orari-e-sedi/' },
+  { label: 'Prenota una visita', href: ctaHref },
+  { label: 'Urgenze', href: '/urgenze/' },
+];
 ---
 
 <header class:list={['site-header', transparent && 'site-header-overlay', transparent && 'is-over-hero']} data-overlay-header={transparent ? 'true' : undefined} data-site-menu-root>
@@ -330,38 +343,97 @@ const siteMenuInformation = [
   </div>
   <div class="site-menu-backdrop" data-site-menu-close></div>
   <aside id="site-menu-panel" class="site-menu-panel" aria-label="Menu principale" aria-hidden="true" data-site-menu-panel>
-    <button class="site-menu-close" type="button" data-site-menu-close>
-      <span aria-hidden="true">×</span>
-      Chiudi
-    </button>
+    <div class="site-menu-panel-header">
+      <a class="site-menu-panel-logo" href="/" aria-label={`${site.name} — Home`}>
+        <img src={site.logo} alt="" width="400" height="52" />
+      </a>
+      <button class="site-menu-close" type="button" data-site-menu-close>
+        <span aria-hidden="true">×</span>
+        Chiudi
+      </button>
+    </div>
     <div class="site-menu-scroll">
-      <section class="site-menu-section" aria-labelledby="site-menu-treatments">
-        <h2 id="site-menu-treatments">Trattamenti</h2>
-        <div class="site-menu-links">
-          {siteMenuTreatments.map((item) => (
-            <a href={item.href}>{item.label}</a>
-          ))}
+      <a class="site-menu-primary-link site-menu-home-link" href="/">Home</a>
+      <details class="site-menu-section site-menu-accordion site-menu-section-treatments" data-site-menu-accordion>
+        <summary class="site-menu-section-summary">
+          <span id="site-menu-treatments" class="site-menu-section-title" role="heading" aria-level="2">Trattamenti</span>
+          <span class="site-menu-section-toggle" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="m6.5 9.25 5.5 5.5 5.5-5.5"></path>
+            </svg>
+          </span>
+        </summary>
+        <div class="site-menu-section-panel" aria-labelledby="site-menu-treatments">
+          <div class="site-menu-links">
+            {siteMenuTreatments.map((item, index) => (
+              <a href={item.href} style={`--site-menu-item-order: ${index};`}>{item.label}</a>
+            ))}
+          </div>
+          <a
+            class="site-menu-all-link"
+            href="/trattamenti/"
+            style={`--site-menu-item-order: ${siteMenuTreatments.length};`}
+          >
+            Tutti i trattamenti <span aria-hidden="true">↗</span>
+          </a>
         </div>
-        <a class="site-menu-all-link" href="/trattamenti/">Tutti i trattamenti <span aria-hidden="true">↗</span></a>
-      </section>
-      <section class="site-menu-section" aria-labelledby="site-menu-information">
-        <h2 id="site-menu-information">Informazioni</h2>
-        <div class="site-menu-links">
-          {siteMenuInformation.map((item) => (
-            <a href={item.href}>{item.label}</a>
-          ))}
+      </details>
+      <details class="site-menu-section site-menu-accordion site-menu-section-information" data-site-menu-accordion>
+        <summary class="site-menu-section-summary">
+          <span id="site-menu-information" class="site-menu-section-title" role="heading" aria-level="2">Informazioni</span>
+          <span class="site-menu-section-toggle" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="m6.5 9.25 5.5 5.5 5.5-5.5"></path>
+            </svg>
+          </span>
+        </summary>
+        <div class="site-menu-section-panel" aria-labelledby="site-menu-information">
+          <div class="site-menu-links">
+            {siteMenuInformation.map((item, index) => (
+              <a
+                class={mobileMovedInformationLabels.has(item.label) ? 'site-menu-mobile-moved' : undefined}
+                href={item.href}
+                style={`--site-menu-item-order: ${mobileInformationOrder.get(item.label) ?? index};`}
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
         </div>
-      </section>
+      </details>
+      <a class="site-menu-primary-link site-menu-visit-link" href="/prima-visita/">Modalità della visita</a>
+      <details class="site-menu-section site-menu-accordion site-menu-contact" data-site-menu-accordion>
+        <summary class="site-menu-section-summary">
+          <span id="site-menu-contacts" class="site-menu-section-title" role="heading" aria-level="2">Contatti</span>
+          <span class="site-menu-section-toggle" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="m6.5 9.25 5.5 5.5 5.5-5.5"></path>
+            </svg>
+          </span>
+        </summary>
+        <div class="site-menu-section-panel" aria-labelledby="site-menu-contacts">
+          <div class="site-menu-links">
+            {siteMenuContacts.map((item, index) => (
+              <a href={item.href} style={`--site-menu-item-order: ${index};`}>{item.label}</a>
+            ))}
+          </div>
+        </div>
+      </details>
     </div>
     <div class="site-menu-actions" aria-label="Azioni rapide">
       <a class="site-menu-action site-menu-action-primary" href={ctaHref}>
         Prenota visita
-        <span aria-hidden="true">↗</span>
+        <svg class="site-menu-action-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 2.75h8.5L19 7.25v14H6z"></path>
+          <path d="M14.5 2.75v4.5H19M9 12h7M9 16h7"></path>
+        </svg>
       </a>
       <details class="site-menu-call-dropdown" data-call-dropdown>
         <summary class="site-menu-action site-menu-action-secondary">
-          Chiama lo studio
-          <span aria-hidden="true">⌃</span>
+          Chiama ora
+          <svg class="site-menu-action-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.35 1.91.66 2.82a2 2 0 0 1-.45 2.11L8.05 9.92a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.31 1.86.53 2.82.66A2 2 0 0 1 22 16.92Z"></path>
+          </svg>
         </summary>
         <div class="call-dropdown-menu site-menu-call-options" role="list">
           {callOptions.map((office) => (
@@ -702,6 +774,34 @@ const siteMenuInformation = [
       return;
     }
 
+    const mobileMenuQuery = window.matchMedia('(max-width: 620px)');
+    const accordions = Array.from(panel.querySelectorAll('[data-site-menu-accordion]')).filter(
+      (item) => item instanceof HTMLDetailsElement,
+    );
+
+    const syncAccordions = () => {
+      accordions.forEach((accordion) => {
+        accordion.open = !mobileMenuQuery.matches;
+      });
+    };
+
+    accordions.forEach((accordion) => {
+      const summary = accordion.querySelector('.site-menu-section-summary');
+
+      summary?.addEventListener('click', (event) => {
+        if (!mobileMenuQuery.matches) event.preventDefault();
+      });
+
+      accordion.addEventListener('toggle', () => {
+        if (!mobileMenuQuery.matches) {
+          if (!accordion.open) accordion.open = true;
+        }
+      });
+    });
+
+    syncAccordions();
+    mobileMenuQuery.addEventListener('change', syncAccordions);
+
     const setOpen = (isOpen) => {
       header.classList.toggle('site-menu-open', isOpen);
       document.documentElement.classList.toggle('site-menu-lock', isOpen);
@@ -711,7 +811,12 @@ const siteMenuInformation = [
       panel.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
       if (isOpen) header.classList.remove('is-hidden');
       if (!isOpen) {
-        panel.querySelectorAll('details[open]').forEach((dropdown) => dropdown.removeAttribute('open'));
+        panel.querySelectorAll('.site-menu-call-dropdown[open]').forEach((dropdown) => dropdown.removeAttribute('open'));
+        if (mobileMenuQuery.matches) {
+          accordions.forEach((accordion) => {
+            accordion.open = false;
+          });
+        }
       }
     };
 
