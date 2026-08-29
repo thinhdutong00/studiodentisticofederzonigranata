@@ -42,6 +42,7 @@ const footerColumns = [
 const mobileNavigation = [
   { label: 'Informazioni', href: '/chi-siamo/' },
   { label: 'Trattamenti', href: '/trattamenti/' },
+  { label: 'Casi clinici', href: '/casi-clinici/' },
   { label: 'Modalità della visita', href: '/prima-visita/' },
   { label: 'Prenota ora', href: '/richiesta/' },
 ];
@@ -177,9 +178,9 @@ const footerEmail = site.offices[0];
 
   <div class="footer-bottom">
     <div class="container footer-bottom-inner">
-      <span>© {new Date().getFullYear()} {site.name}</span>
-      <span>{site.footerNote}</span>
-      <span><a href="/privacy-policy/">Privacy Policy</a> · <a href="/cookie-privacy/">Cookie Policy</a></span>
+      <span class="footer-copyright">© {new Date().getFullYear()} {site.name}</span>
+      <span class="footer-note">{site.footerNote}</span>
+      <span class="footer-legal"><a href="/privacy-policy/">Privacy Policy</a><span class="footer-policy-separator" aria-hidden="true"></span><a href="/cookie-privacy/">Cookie Policy</a></span>
     </div>
   </div>
 </footer>

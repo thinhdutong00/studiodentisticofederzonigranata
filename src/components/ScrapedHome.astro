@@ -2286,6 +2286,10 @@ const locationOffices = site.offices.map((office) => {
       padding: 58px 0;
     }
 
+    .prefooter-section {
+      background: var(--surface-white);
+    }
+
     .services-rail,
     .insights-grid {
       grid-template-columns: 1fr;
@@ -2359,6 +2363,11 @@ const locationOffices = site.offices.map((office) => {
       font-size: clamp(2.3rem, 12vw, 3.65rem);
     }
 
+    .feature-workplace .feature-copy h2,
+    .feature-specialists .feature-copy h2 {
+      font-size: clamp(2rem, 9.5vw, 3rem);
+    }
+
     .feature-button {
       width: 100%;
       min-width: 0;
@@ -2372,34 +2381,31 @@ const locationOffices = site.offices.map((office) => {
     .prefooter-cta {
       box-sizing: border-box;
       padding: 32px 24px;
-      border: 1px solid var(--border);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 20px;
-      background: var(--surface-white);
-      color: var(--brand-primary-dark);
-      box-shadow: 0 22px 54px rgba(var(--brand-primary-dark-rgb), 0.1);
+      background: var(--brand-primary-dark);
+      color: var(--surface-white);
+      box-shadow: 0 22px 54px rgba(var(--brand-primary-dark-rgb), 0.18);
     }
 
-    .prefooter-eyebrow {
-      color: var(--brand-blue);
-    }
-
+    .prefooter-eyebrow,
     .prefooter-copy p,
     .prefooter-action > span {
-      color: var(--muted-text);
+      color: rgba(255, 255, 255, 0.72);
     }
 
     .prefooter-section .prefooter-button {
-      border-color: var(--brand-cta);
-      background: var(--brand-cta);
-      color: var(--surface-white);
+      border-color: var(--surface-white);
+      background: var(--surface-white);
+      color: var(--brand-primary-dark);
       box-shadow: none;
     }
 
     .prefooter-section .prefooter-button:hover,
     .prefooter-section .prefooter-button:focus-visible {
-      border-color: var(--brand-cta-hover);
-      background: var(--brand-cta-hover);
-      color: var(--surface-white);
+      border-color: var(--soft-blue-bg);
+      background: var(--soft-blue-bg);
+      color: var(--brand-primary-dark);
     }
 
     .prefooter-section .prefooter-button span {
@@ -2427,7 +2433,7 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .clinical-carousel-head h2 {
-      font-size: clamp(3rem, 16vw, 4.8rem);
+      font-size: clamp(2.5rem, 12vw, 3.7rem);
     }
 
     .video-carousel-section .clinical-carousel-head,
