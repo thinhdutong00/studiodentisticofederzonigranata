@@ -248,6 +248,11 @@ const siteMenuContacts = [
   { label: 'Prenota una visita', href: ctaHref },
   { label: 'Urgenze', href: '/urgenze/' },
 ];
+
+const siteMenuClinical = site.clinicalLinks.map((item) => ({
+  label: item.label,
+  href: item.href,
+}));
 ---
 
 <header class:list={['site-header', transparent && 'site-header-overlay', transparent && 'is-over-hero']} data-overlay-header={transparent ? 'true' : undefined} data-site-menu-root>
@@ -375,6 +380,30 @@ const siteMenuContacts = [
             style={`--site-menu-item-order: ${siteMenuTreatments.length};`}
           >
             Tutti i trattamenti <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </details>
+      <details class="site-menu-section site-menu-accordion site-menu-clinical" data-site-menu-accordion>
+        <summary class="site-menu-section-summary">
+          <span id="site-menu-clinical" class="site-menu-section-title" role="heading" aria-level="2">Casi clinici</span>
+          <span class="site-menu-section-toggle" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="m6.5 9.25 5.5 5.5 5.5-5.5"></path>
+            </svg>
+          </span>
+        </summary>
+        <div class="site-menu-section-panel" aria-labelledby="site-menu-clinical">
+          <div class="site-menu-links">
+            {siteMenuClinical.map((item, index) => (
+              <a href={item.href} style={`--site-menu-item-order: ${index};`}>{item.label}</a>
+            ))}
+          </div>
+          <a
+            class="site-menu-all-link"
+            href="/casi-clinici/"
+            style={`--site-menu-item-order: ${siteMenuClinical.length};`}
+          >
+            Tutti i casi clinici <span aria-hidden="true">↗</span>
           </a>
         </div>
       </details>

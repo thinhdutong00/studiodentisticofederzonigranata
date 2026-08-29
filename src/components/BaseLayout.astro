@@ -5018,6 +5018,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   }
 
   .site-menu-primary-link,
+  .site-menu-clinical,
   .site-menu-contact {
     display: none;
   }
@@ -5399,12 +5400,17 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
       order: 3;
     }
 
-    .site-menu-visit-link {
+    .site-menu-clinical {
       order: 4;
+      display: grid;
+    }
+
+    .site-menu-visit-link {
+      order: 5;
     }
 
     .site-menu-contact {
-      order: 5;
+      order: 6;
       display: grid;
     }
 
