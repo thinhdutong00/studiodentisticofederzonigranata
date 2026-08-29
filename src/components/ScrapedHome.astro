@@ -72,7 +72,8 @@ const technologyFeature = {
   text: 'Scopri di più',
   href: '/strumentazioni-attrezzature-tecniche/',
   image: '/assets/feature-stack/paziente-scanner-digitale.jpg',
-  alt: 'Paziente durante una scansione digitale del sorriso',
+  mobileImage: '/assets/feature-stack/tecnologia-radiografia-mobile.jpg',
+  alt: 'Paziente durante un esame diagnostico digitale nello studio dentistico',
 };
 
 const workplaceFeature = {
@@ -165,7 +166,10 @@ const locationOffices = site.offices.map((office) => {
       </section>
 
       <a class="feature-hero" href={technologyFeature.href} aria-label={technologyFeature.text}>
-        <img src={technologyFeature.image} alt={technologyFeature.alt} loading="eager" />
+        <picture>
+          <source media="(max-width: 720px)" srcset={technologyFeature.mobileImage} />
+          <img src={technologyFeature.image} alt={technologyFeature.alt} loading="eager" />
+        </picture>
         <span class="feature-hero-shade" aria-hidden="true"></span>
         <div class="feature-hero-copy">
           <h2>
@@ -457,6 +461,41 @@ const locationOffices = site.offices.map((office) => {
       };
 
       const scrollLoop = (direction) => {
+        if (mobileCarousel.matches) {
+          stopAutoplay();
+          window.clearTimeout(mobileNavigationResumeTimer);
+          navigationAutoplayPaused = true;
+          normalizeLoopPosition();
+
+          const cards = Array.from(track.querySelectorAll('.clinical-carousel-card')).filter(
+            (card) => card instanceof HTMLElement,
+          );
+          const viewportCenter = track.scrollLeft + track.clientWidth / 2;
+          const centeredCardIndex = cards.reduce((closestIndex, card, index) => {
+            const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+            const closestCard = cards[closestIndex];
+            const closestCenter = closestCard.offsetLeft + closestCard.offsetWidth / 2;
+
+            return Math.abs(cardCenter - viewportCenter) < Math.abs(closestCenter - viewportCenter)
+              ? index
+              : closestIndex;
+          }, 0);
+          const targetIndex = Math.max(0, Math.min(cards.length - 1, centeredCardIndex + direction));
+          const targetCard = cards[targetIndex];
+          const targetScrollLeft = targetCard.offsetLeft - (track.clientWidth - targetCard.offsetWidth) / 2;
+
+          track.scrollTo({ left: targetScrollLeft, behavior: 'smooth' });
+          mobileNavigationResumeTimer = window.setTimeout(() => {
+            normalizeLoopPosition();
+            mobileNavigationResumeTimer = window.setTimeout(() => {
+              navigationAutoplayPaused = false;
+              scheduleAutoplay();
+            }, 3000);
+          }, 420);
+
+          return;
+        }
+
         normalizeLoopPosition();
         track.scrollBy({ left: direction * getScrollAmount(), behavior: 'smooth' });
         window.setTimeout(normalizeLoopPosition, 420);
@@ -464,9 +503,12 @@ const locationOffices = site.offices.map((office) => {
 
       const autoplaySpeed = Number.parseFloat(carousel.getAttribute('data-carousel-continuous-speed') || '');
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const mobileCarousel = window.matchMedia('(max-width: 720px)');
       let autoplayFrame = 0;
       let previousAutoplayTime = 0;
       let autoplaySuspended = false;
+      let navigationAutoplayPaused = false;
+      let mobileNavigationResumeTimer = 0;
 
       const stopAutoplay = () => {
         window.cancelAnimationFrame(autoplayFrame);
@@ -480,7 +522,8 @@ const locationOffices = site.offices.map((office) => {
         reducedMotion.matches ||
         document.hidden ||
         autoplaySuspended ||
-        carousel.contains(document.activeElement);
+        navigationAutoplayPaused ||
+        (!mobileCarousel.matches && carousel.contains(document.activeElement));
 
       const runAutoplay = (timestamp) => {
         if (isAutoplayBlocked()) {
@@ -528,15 +571,25 @@ const locationOffices = site.offices.map((office) => {
 
       prev?.addEventListener('click', () => {
         scrollLoop(-1);
-        scheduleAutoplay();
+
+        if (!mobileCarousel.matches) {
+          scheduleAutoplay();
+        }
       });
 
       next?.addEventListener('click', () => {
         scrollLoop(1);
-        scheduleAutoplay();
+
+        if (!mobileCarousel.matches) {
+          scheduleAutoplay();
+        }
       });
 
-      carousel.addEventListener('focusin', stopAutoplay);
+      carousel.addEventListener('focusin', () => {
+        if (!mobileCarousel.matches) {
+          stopAutoplay();
+        }
+      });
       carousel.addEventListener('focusout', () => requestAnimationFrame(scheduleAutoplay));
       carousel.addEventListener('carousel-autoplay-pause', () => {
         autoplaySuspended = true;
@@ -548,6 +601,7 @@ const locationOffices = site.offices.map((office) => {
       });
       document.addEventListener('visibilitychange', scheduleAutoplay);
       reducedMotion.addEventListener('change', scheduleAutoplay);
+      mobileCarousel.addEventListener('change', scheduleAutoplay);
     });
 
     const videoDialog = document.querySelector('[data-video-dialog]');
@@ -2141,6 +2195,24 @@ const locationOffices = site.offices.map((office) => {
       justify-content: space-between;
     }
 
+    .scraped-hero-button-primary,
+    .scraped-hero-button-primary:hover,
+    .scraped-hero-button-primary:focus-visible {
+      border-color: var(--brand-blue);
+      background: var(--brand-blue);
+    }
+
+    .scraped-hero-button-secondary {
+      border-color: rgba(255, 255, 255, 0.82);
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .scraped-hero-button-secondary:hover,
+    .scraped-hero-button-secondary:focus-visible {
+      border-color: var(--surface-white);
+      background: rgba(255, 255, 255, 0.24);
+    }
+
     .services-section,
     .feature-stack,
     .clinical-carousel-section,
@@ -2179,7 +2251,10 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .feature-hero {
-      min-height: 360px;
+      width: 100%;
+      min-width: 0;
+      min-height: 0;
+      aspect-ratio: 4 / 5;
     }
 
     .feature-hero-copy {
@@ -2197,6 +2272,11 @@ const locationOffices = site.offices.map((office) => {
 
     .clinical-carousel-head h2 {
       font-size: clamp(3rem, 16vw, 4.8rem);
+    }
+
+    .video-carousel-section .clinical-carousel-head,
+    .video-carousel-section .clinical-carousel-head h2 {
+      text-align: center;
     }
 
     .clinical-carousel-track {
