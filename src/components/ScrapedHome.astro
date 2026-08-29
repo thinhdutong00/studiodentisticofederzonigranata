@@ -71,8 +71,7 @@ const technologyFeature = {
   titleAccent: 'cura dentale di precisione.',
   text: 'Scopri di più',
   href: '/strumentazioni-attrezzature-tecniche/',
-  image: '/assets/feature-stack/paziente-scanner-digitale.jpg',
-  mobileImage: '/assets/feature-stack/tecnologia-radiografia-mobile.jpg',
+  image: '/assets/feature-stack/tecnologia-radiografia-mobile.jpg',
   alt: 'Paziente durante un esame diagnostico digitale nello studio dentistico',
 };
 
@@ -166,10 +165,7 @@ const locationOffices = site.offices.map((office) => {
       </section>
 
       <a class="feature-hero" href={technologyFeature.href} aria-label={technologyFeature.text}>
-        <picture>
-          <source media="(max-width: 720px)" srcset={technologyFeature.mobileImage} />
-          <img src={technologyFeature.image} alt={technologyFeature.alt} loading="eager" />
-        </picture>
+        <img src={technologyFeature.image} alt={technologyFeature.alt} loading="eager" />
         <span class="feature-hero-shade" aria-hidden="true"></span>
         <div class="feature-hero-copy">
           <h2>
