@@ -117,18 +117,26 @@ const locationOffices = site.offices.map((office) => {
   <section class="scraped-hero" aria-label="Studio dentistico Federzoni Granata" style={`--hero-image: url('${heroImage}')`} data-transparent-header-region>
     <div class="scraped-hero-shade" aria-hidden="true"></div>
     <div class="scraped-hero-copy">
-      <p class="scraped-pretitle">Studio dentistico a Modena e Reggio Emilia · Oltre 35 anni di esperienza</p>
+      <p class="scraped-pretitle">
+        Studio dentistico a Modena e Reggio Emilia <span class="scraped-pretitle-separator">·</span><br class="scraped-pretitle-mobile-break" /> Oltre 35 anni di esperienza
+      </p>
       <h1>
         <span class="scraped-hero-title-line">il tuo benessere</span>
         <span class="scraped-hero-title-line">inizia da un sorriso</span>
       </h1>
       <p class="scraped-hero-description">
-        Curiamo salute, funzione ed estetica della bocca per adulti e bambini con un piano chiaro prima di iniziare,
-        spiegazioni semplici e risultati naturali pensati sul tuo viso.
+        <span class="scraped-hero-description-desktop">
+          Curiamo salute, funzione ed estetica della bocca per adulti e bambini con un piano chiaro prima di iniziare,
+          spiegazioni semplici e risultati naturali pensati sul tuo viso.
+        </span>
+        <span class="scraped-hero-description-mobile">
+          Curiamo salute, funzione ed estetica della bocca per adulti e bambini.
+        </span>
       </p>
       <div class="scraped-hero-actions" aria-label="Azioni principali">
         <a class="scraped-hero-button scraped-hero-button-primary" href="/prenota-prima-visita/">
-          <span>Prenota una valutazione</span>
+          <span class="scraped-hero-cta-desktop">Prenota una valutazione</span>
+          <span class="scraped-hero-cta-mobile">Inizia il percorso</span>
           <span aria-hidden="true">↗</span>
         </a>
         <a class="scraped-hero-button scraped-hero-button-secondary" href="/trattamenti/">
@@ -777,6 +785,10 @@ const locationOffices = site.offices.map((office) => {
     text-shadow: 0 1px 10px rgba(var(--brand-primary-dark-rgb), 0.5);
   }
 
+  .scraped-pretitle-mobile-break {
+    display: none;
+  }
+
   .scraped-hero h1 {
     max-width: 1320px;
     margin: 0;
@@ -805,6 +817,10 @@ const locationOffices = site.offices.map((office) => {
     line-height: 1.4;
     letter-spacing: -0.2px;
     text-shadow: 0 1px 12px rgba(var(--brand-primary-dark-rgb), 0.54);
+  }
+
+  .scraped-hero-description-mobile {
+    display: none;
   }
 
   .scraped-hero-actions {
@@ -844,6 +860,10 @@ const locationOffices = site.offices.map((office) => {
     border-color: var(--brand-cta);
     background: var(--brand-cta);
     color: var(--surface-white);
+  }
+
+  .scraped-hero-cta-mobile {
+    display: none;
   }
 
   .scraped-hero-button-secondary {
@@ -2147,6 +2167,11 @@ const locationOffices = site.offices.map((office) => {
       width: min(100% - 30px, 1510px);
     }
 
+    .scraped-hero {
+      align-items: center;
+      justify-items: center;
+    }
+
     .prefooter-section::after {
       top: auto;
       width: 100%;
@@ -2156,8 +2181,9 @@ const locationOffices = site.offices.map((office) => {
 
     .scraped-hero-copy {
       width: min(100% - 28px, 1320px);
-      margin-left: 14px;
-      padding: 120px 0 64px;
+      margin: 0 auto;
+      padding: 120px 0 72px;
+      text-align: center;
     }
 
     .scraped-hero-shade {
@@ -2167,28 +2193,73 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .scraped-pretitle {
+      width: fit-content;
+      max-width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+      padding: 8px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.16);
       font-size: 0.95rem;
+      text-align: center;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .scraped-pretitle-mobile-break {
+      display: block;
+    }
+
+    .scraped-pretitle-separator {
+      display: none;
     }
 
     .scraped-hero h1 {
       font-size: clamp(1.9rem, 9.2vw, 4.25rem);
+      font-weight: 500;
       line-height: 0.98;
     }
 
     .scraped-hero-description {
-      margin-top: 22px;
+      margin: 22px auto 0;
       font-size: 1rem;
       line-height: 1.4;
     }
 
+    .scraped-hero-description-desktop {
+      display: none;
+    }
+
+    .scraped-hero-description-mobile {
+      display: inline;
+    }
+
     .scraped-hero-actions {
       align-items: stretch;
+      justify-content: center;
       margin-top: 28px;
     }
 
     .scraped-hero-button {
+      position: relative;
       width: 100%;
-      justify-content: space-between;
+      justify-content: center;
+    }
+
+    .scraped-hero-button > span:last-child {
+      position: absolute;
+      right: 20px;
+    }
+
+    .scraped-hero-cta-desktop {
+      display: none;
+    }
+
+    .scraped-hero-cta-mobile {
+      display: inline;
     }
 
     .scraped-hero-button-primary,
