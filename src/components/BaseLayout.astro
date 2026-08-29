@@ -5399,8 +5399,12 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     }
 
     .site-menu-section {
-      gap: 14px;
+      gap: 0;
       padding-bottom: 18px;
+    }
+
+    .site-menu-section[open] {
+      gap: 14px;
     }
 
     .site-menu-section + .site-menu-section {
@@ -5442,13 +5446,17 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     }
 
     .site-menu-section-title {
+      position: relative;
       font-size: clamp(1.75rem, 7.4vw, 2rem);
       line-height: 1.08;
       letter-spacing: -0.16px;
     }
 
     .site-menu-section-title::after {
-      margin-top: 8px;
+      position: absolute;
+      bottom: -9px;
+      left: 0;
+      margin-top: 0;
       opacity: 0;
       transform: scaleX(0);
       transform-origin: left center;
