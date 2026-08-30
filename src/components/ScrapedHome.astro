@@ -2326,8 +2326,8 @@ const locationOffices = site.offices.map((office) => {
     .mobile-digital-intro {
       display: block;
       padding: 58px 0;
-      background: var(--surface-white);
-      color: var(--brand-primary-dark);
+      background: var(--brand-primary-dark);
+      color: var(--surface-white);
     }
 
     .mobile-digital-intro-inner {
@@ -2337,7 +2337,7 @@ const locationOffices = site.offices.map((office) => {
 
     .mobile-digital-intro h2 {
       margin: 0;
-      color: var(--brand-primary-dark);
+      color: var(--surface-white);
       font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
       font-size: clamp(2rem, 9.5vw, 3rem);
       font-weight: 600;
@@ -2349,8 +2349,10 @@ const locationOffices = site.offices.map((office) => {
       margin: 28px 0 0;
       aspect-ratio: 4 / 3;
       overflow: hidden;
+      border: 1px solid rgba(var(--surface-white-rgb), 0.14);
       border-radius: 8px;
-      background: var(--soft-blue-bg);
+      background: rgba(var(--surface-white-rgb), 0.08);
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.16);
     }
 
     .mobile-digital-intro img {
@@ -2362,7 +2364,7 @@ const locationOffices = site.offices.map((office) => {
 
     .mobile-digital-intro p {
       margin: 26px 0 0;
-      color: var(--text-dark);
+      color: rgba(var(--surface-white-rgb), 0.82);
       font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
       font-size: 16px;
       font-weight: 400;
