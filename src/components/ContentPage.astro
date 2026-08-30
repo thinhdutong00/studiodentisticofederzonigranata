@@ -78,7 +78,7 @@ const emergencyCopyBlocks = [
     support: 'Nelle urgenze dentali lo Studio Dentistico Federzoni Granata ti aiuta a capire rapidamente la priorita del problema e il percorso piu adatto per intervenire.',
   },
   {
-    lead: 'Puoi inviare una richiesta dedicata indicando sintomi, intensita del dolore, sede preferita e disponibilita.',
+    lead: 'Puoi inviare una richiesta dedicata indicando sintomi, intensita del dolore, sede preferita e disponibilità.',
     support: 'La segreteria raccogliera le informazioni essenziali e ti ricontattera per organizzare la visita urgente nel modo piu rapido possibile.',
   },
 ];
@@ -2763,16 +2763,29 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
     }
 
     .emergency-hero {
-      min-height: auto;
-      padding: 86px 0 78px;
+      min-height: 260px;
+      place-items: stretch;
+      padding: 0;
+    }
+
+    .emergency-hero-inner {
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-sizing: border-box;
+      padding: 104px 0 8px;
     }
 
     .emergency-hero h1 {
-      font-size: clamp(4rem, 18vw, 6.4rem);
+      font-size: 40px;
+      font-weight: 600;
+      letter-spacing: -0.16px;
+      line-height: 44px;
     }
 
     .emergency-hero p {
-      font-size: clamp(1.15rem, 5vw, 1.55rem);
+      display: none;
     }
 
     .emergency-copy-wrap {
@@ -2784,15 +2797,40 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
     }
 
     .emergency-copy-lead {
-      font-size: 2.22rem;
+      color: var(--brand-blue);
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: -0.16px;
+      line-height: 30px;
     }
 
     .emergency-copy-support {
-      font-size: 1.05rem;
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: -0.16px;
+      line-height: 25px;
     }
 
     .emergency-cta a {
       width: 100%;
+      border-color: var(--brand-cta);
+      background: var(--brand-cta);
+      color: var(--surface-white);
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: -0.16px;
+      line-height: 16px;
+      text-transform: uppercase;
+    }
+
+    .emergency-cta a:hover {
+      border-color: var(--brand-cta-hover);
+      background: var(--brand-cta-hover);
+      color: var(--surface-white);
+    }
+
+    .emergency-cta a span {
+      color: inherit;
     }
 
     .faq-accordion-wrap {
