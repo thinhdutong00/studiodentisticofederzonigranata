@@ -92,10 +92,37 @@ const evaluationAreas = [
 ];
 
 const preparationItems = [
-  'Radiografie, TAC, referti o preventivi già ricevuti.',
-  'Farmaci assunti e allergie note.',
-  'Bite, apparecchi, mascherine o protesi.',
-  'Domande, dubbi, paure o obiettivi estetici.',
+  {
+    text: 'Radiografie, TAC, referti o preventivi già ricevuti.',
+    icon: `
+      <path d="M14 7h14l7 7v27H14V7Z" />
+      <path d="M28 7v8h7" />
+      <path d="M19 23h11M19 29h11M19 35h7" />
+    `,
+  },
+  {
+    text: 'Farmaci assunti e allergie note.',
+    icon: `
+      <path d="M13.4 34.6a7.8 7.8 0 0 1 0-11l10.2-10.2a7.8 7.8 0 0 1 11 11L24.4 34.6a7.8 7.8 0 0 1-11 0Z" />
+      <path d="m18.5 18.5 11 11" />
+    `,
+  },
+  {
+    text: 'Bite, apparecchi, mascherine o protesi.',
+    icon: `
+      <path d="M11 27.5C12.8 16.8 17.1 11 24 11s11.2 5.8 13 16.5" />
+      <path d="M12.5 29c3.4 5.3 7.2 8 11.5 8s8.1-2.7 11.5-8" />
+      <path d="M16 26h16M18 22v8M24 21v10M30 22v8" />
+    `,
+  },
+  {
+    text: 'Domande, dubbi, paure o obiettivi estetici.',
+    icon: `
+      <path d="M10 10h28v22H24l-8 7v-7h-6V10Z" />
+      <path d="M20.5 19a3.7 3.7 0 1 1 5.2 3.4c-1.4.7-1.7 1.5-1.7 3" />
+      <circle cx="24" cy="29.5" r="1" fill="currentColor" stroke="none" />
+    `,
+  },
 ];
 
 const reasonIcons = {
@@ -354,7 +381,14 @@ const offices = site.offices.map((office) => ({
             Se hai documenti recenti, portali. Se non hai nulla, va bene: partiamo dalla visita.
           </p>
           <ul class="fv-prep-list">
-            {preparationItems.map((item) => <li>{item}</li>)}
+            {preparationItems.map((item) => (
+              <li>
+                <span class="fv-prep-icon" aria-hidden="true">
+                  <svg viewBox="0 0 48 48" aria-hidden="true" role="presentation" focusable="false" set:html={item.icon} />
+                </span>
+                <span>{item.text}</span>
+              </li>
+            ))}
           </ul>
         </div>
         <figure class="fv-split-image">
@@ -994,6 +1028,10 @@ const offices = site.offices.map((office) => ({
     background: var(--fv-blue-bright);
   }
 
+  .fv-prep-icon {
+    display: none;
+  }
+
   .fv-final {
     padding: 86px 0;
     background: var(--blue-dark);
@@ -1161,7 +1199,7 @@ const offices = site.offices.map((office) => ({
     }
 
     .fv-hero-inner {
-      padding: 92px 0 20px;
+      padding: 104px 0 8px;
     }
 
     .fv-hero-copy {
@@ -1244,7 +1282,7 @@ const offices = site.offices.map((office) => ({
     }
 
     .fv-split-grid-reverse .fv-split-image {
-      order: -1;
+      display: none;
     }
 
     .fv-actions,
@@ -1375,6 +1413,39 @@ const offices = site.offices.map((office) => ({
       margin-top: 20px;
     }
 
+    .fv-prep-list li {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: 13px;
+      align-items: center;
+      padding-left: 0;
+    }
+
+    .fv-prep-list li::before {
+      display: none;
+    }
+
+    .fv-prep-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: rgba(var(--brand-blue-rgb), 0.12);
+      box-shadow: inset 0 0 0 1px rgba(var(--brand-blue-rgb), 0.22);
+      color: var(--brand-blue);
+    }
+
+    .fv-prep-icon svg {
+      width: 25px;
+      height: 25px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
     .fv-step-cta {
       margin-top: 34px;
     }
@@ -1392,6 +1463,10 @@ const offices = site.offices.map((office) => ({
       width: 100%;
       min-height: 58px;
       margin-top: 24px;
+    }
+
+    .first-visit-page .fv-inline-link {
+      color: var(--brand-blue);
     }
 
     .fv-button > span[aria-hidden="true"],
