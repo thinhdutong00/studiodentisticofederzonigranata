@@ -137,7 +137,7 @@ const locationOffices = site.offices.map((office) => {
       <div class="scraped-hero-actions" aria-label="Azioni principali">
         <a class="scraped-hero-button scraped-hero-button-primary" href="/prenota-prima-visita/">
           <span class="scraped-hero-cta-desktop">Prenota una valutazione</span>
-          <span class="scraped-hero-cta-mobile">Inizia il percorso</span>
+          <span class="scraped-hero-cta-mobile">Prenota una visita</span>
           <span aria-hidden="true">↗</span>
         </a>
         <a class="scraped-hero-button scraped-hero-button-secondary" href="/trattamenti/">
@@ -2241,8 +2241,8 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .scraped-hero {
-      align-items: center;
-      justify-items: center;
+      align-items: end;
+      justify-items: start;
       background-position: 74% center;
     }
 
@@ -2251,11 +2251,11 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .scraped-hero-copy {
-      width: min(100% - 28px, 1320px);
+      width: min(100% - 40px, 1320px);
       margin: 0 auto;
-      padding: 112px 0 28px;
-      text-align: center;
-      transform: translateY(clamp(120px, 15svh, 156px));
+      padding: 0 0 calc(34px + env(safe-area-inset-bottom));
+      text-align: left;
+      transform: none;
     }
 
     .scraped-scroll {
@@ -2263,26 +2263,18 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .scraped-hero-shade {
-      background:
-        linear-gradient(180deg, rgba(var(--brand-primary-dark-rgb), 0.46) 0%, rgba(var(--brand-primary-dark-rgb), 0.1) 27%, rgba(var(--brand-primary-dark-rgb), 0.18) 43%, rgba(var(--brand-primary-dark-rgb), 0.7) 100%),
-        linear-gradient(90deg, rgba(var(--brand-primary-dark-rgb), 0.24) 0%, transparent 82%);
+      background: linear-gradient(
+        0deg,
+        rgba(var(--brand-primary-dark-rgb), 0.94) 0%,
+        rgba(var(--brand-primary-dark-rgb), 0.82) 18%,
+        rgba(var(--brand-primary-dark-rgb), 0.54) 34%,
+        rgba(var(--brand-primary-dark-rgb), 0.18) 48%,
+        rgba(var(--brand-primary-dark-rgb), 0) 58%
+      );
     }
 
     .scraped-pretitle {
-      width: fit-content;
-      max-width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 14px;
-      padding: 8px 12px;
-      border: 1px solid rgba(255, 255, 255, 0.42);
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.04);
-      font-size: 0.85rem;
-      text-align: center;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      display: none;
     }
 
     .scraped-pretitle-separator,
@@ -2297,9 +2289,7 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .scraped-hero-description {
-      margin: 18px auto 0;
-      font-size: 1rem;
-      line-height: 1.4;
+      display: none;
     }
 
     .scraped-hero-description-desktop {
@@ -2311,16 +2301,17 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .scraped-hero-actions {
-      align-items: stretch;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 22px;
+      width: 100%;
+      align-items: flex-start;
+      justify-content: flex-start;
+      margin-top: 24px;
     }
 
     .scraped-hero-button {
       position: relative;
-      width: 100%;
-      justify-content: center;
+      width: min(100%, 252px);
+      justify-content: flex-start;
+      padding: 0 54px 0 22px;
     }
 
     .scraped-hero-button > span:last-child {
@@ -2344,6 +2335,7 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .scraped-hero-button-secondary {
+      display: none;
       border-color: rgba(255, 255, 255, 0.82);
       background: rgba(255, 255, 255, 0.16);
     }
