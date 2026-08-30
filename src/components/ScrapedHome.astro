@@ -144,11 +144,11 @@ const locationOffices = site.offices.map((office) => {
         <a class="scraped-hero-button scraped-hero-button-primary" href="/prenota-prima-visita/">
           <span class="scraped-hero-cta-desktop">Prenota una valutazione</span>
           <span class="scraped-hero-cta-mobile">Prenota una visita</span>
-          <span aria-hidden="true">↗</span>
+          <span class="ui-glyph" aria-hidden="true">↗</span>
         </a>
         <a class="scraped-hero-button scraped-hero-button-secondary" href="/trattamenti/">
           <span>I nostri trattamenti</span>
-          <span aria-hidden="true">↗</span>
+          <span class="ui-glyph" aria-hidden="true">↗</span>
         </a>
       </div>
     </div>
@@ -169,7 +169,7 @@ const locationOffices = site.offices.map((office) => {
             {workplaceFeature.links.map((link) => (
               <a class="feature-button" href={link.href}>
                 {link.label}
-                <span aria-hidden="true">↗</span>
+                <span class="ui-glyph" aria-hidden="true">↗</span>
               </a>
             ))}
           </div>
@@ -200,7 +200,7 @@ const locationOffices = site.offices.map((office) => {
           <p>{specialistFeature.text}</p>
           <a class="feature-button" href={specialistFeature.href}>
             {specialistFeature.cta}
-            <span aria-hidden="true">↗</span>
+            <span class="ui-glyph" aria-hidden="true">↗</span>
           </a>
         </div>
       </section>
@@ -277,7 +277,7 @@ const locationOffices = site.offices.map((office) => {
             data-video-title={video.title}>
             <img src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`} alt="" loading="lazy" />
             <span class="clinical-carousel-shade" aria-hidden="true"></span>
-            <span class="video-carousel-play" aria-hidden="true">▶</span>
+            <span class="video-carousel-play ui-glyph" aria-hidden="true">▶</span>
             <span class="clinical-carousel-card-copy">
               <strong>{video.title}</strong>
               <small>{video.description}</small>
@@ -288,11 +288,11 @@ const locationOffices = site.offices.map((office) => {
 
       <div class="video-carousel-controls" aria-label="Controlli del carosello video">
         <button class="clinical-carousel-arrow clinical-carousel-arrow-prev" type="button" aria-label="Scorri i video precedenti" data-clinical-carousel-prev>
-          <span aria-hidden="true">‹</span>
+          <span class="ui-glyph" aria-hidden="true">‹</span>
         </button>
 
         <button class="clinical-carousel-arrow clinical-carousel-arrow-next" type="button" aria-label="Scorri i video successivi" data-clinical-carousel-next>
-          <span aria-hidden="true">›</span>
+          <span class="ui-glyph" aria-hidden="true">›</span>
         </button>
       </div>
     </div>
@@ -302,7 +302,7 @@ const locationOffices = site.offices.map((office) => {
     <div class="video-dialog-panel">
       <div class="video-dialog-toolbar">
         <h2 id="video-dialog-title" data-video-dialog-title>Video</h2>
-        <button type="button" aria-label="Chiudi il video" data-video-dialog-close>×</button>
+        <button class="ui-glyph" type="button" aria-label="Chiudi il video" data-video-dialog-close>×</button>
       </div>
       <div class="video-dialog-frame">
         <iframe
@@ -325,7 +325,7 @@ const locationOffices = site.offices.map((office) => {
         </p>
       </div>
       <div class="prefooter-action">
-        <a class="prefooter-button" href="/richiesta/">Raccontaci la tua esigenza <span aria-hidden="true">↗</span></a>
+        <a class="prefooter-button" href="/richiesta/">Raccontaci la tua esigenza <span class="ui-glyph" aria-hidden="true">↗</span></a>
         <span>Studi a Modena e Reggio Emilia</span>
       </div>
     </div>
@@ -399,7 +399,7 @@ const locationOffices = site.offices.map((office) => {
 
                 <a class="location-route" href={office.mapHref} target="_blank" rel="noreferrer">
                   Apri percorso
-                  <span aria-hidden="true">↗</span>
+                  <span class="ui-glyph" aria-hidden="true">↗</span>
                 </a>
               </div>
             </article>
@@ -445,7 +445,7 @@ const locationOffices = site.offices.map((office) => {
               <a href={locationOffices[0].mapHref} target="_blank" rel="noreferrer" data-location-map-link>
                 <span class="location-map-link-desktop">Apri su Google Maps</span>
                 <span class="location-map-link-mobile">Apri in Maps</span>
-                <span aria-hidden="true">↗</span>
+                <span class="ui-glyph" aria-hidden="true">↗</span>
               </a>
             </div>
           </article>
@@ -2985,6 +2985,10 @@ const locationOffices = site.offices.map((office) => {
       font-family: var(--home-apple-font-text) !important;
     }
 
+    .scraped-home .ui-glyph {
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif !important;
+    }
+
     .scraped-home :global(h1),
     .scraped-home :global(h2),
     .scraped-home :global(h3),
@@ -2995,6 +2999,14 @@ const locationOffices = site.offices.map((office) => {
       font-weight: inherit !important;
       letter-spacing: inherit !important;
       line-height: inherit !important;
+      text-transform: none !important;
+    }
+
+    .scraped-home :global(h1),
+    .scraped-home :global(h2),
+    .scraped-home :global(h3),
+    .scraped-home :global(.clinical-cases-label) {
+      text-transform: none !important;
     }
 
     .scraped-home :global(h1),
