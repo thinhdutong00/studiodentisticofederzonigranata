@@ -155,6 +155,27 @@ const locationOffices = site.offices.map((office) => {
     <a class="scraped-scroll" href="#trattamenti-home">Scorri</a>
   </section>
 
+  <section class="mobile-digital-intro" aria-labelledby="mobile-digital-intro-title">
+    <div class="mobile-digital-intro-inner">
+      <h2 id="mobile-digital-intro-title">Odontoiatria digitale per adulti e bambini</h2>
+      <p>
+        Lavoriamo insieme da più di 35 anni con competenze specialistiche diverse che ci consentono un approccio
+        completo e multidisciplinare ai vostri sorrisi, di cui ci prendiamo cura fin dalla prima infanzia.
+      </p>
+      <figure>
+        <img
+          src="/assets/feature-stack/odontoiatria-digitale-adulti-bambini.png"
+          alt="Giovane paziente durante una visita odontoiatrica"
+          loading="eager"
+        />
+      </figure>
+      <p>
+        Vi invitiamo a scoprire chi siamo, le nostre nuovissime tecnologie digitali e soprattutto, oltre le parole, i
+        nostri casi clinici.
+      </p>
+    </div>
+  </section>
+
   <HomeTreatments services={services} />
 
   <section class="feature-stack" id="metodo-studio" aria-label="Servizi e valore dello studio">
@@ -187,13 +208,27 @@ const locationOffices = site.offices.map((office) => {
             {technologyFeature.titleLead}
             <strong>{technologyFeature.titleAccent}</strong>
           </h2>
-          <p>{technologyFeature.text}</p>
+          <p>
+            {technologyFeature.text}
+            <span class="feature-hero-cta-arrow" aria-hidden="true">→</span>
+          </p>
         </div>
       </a>
 
       <section class="feature-split feature-workplace">
         <figure class="feature-image">
-          <img src={specialistFeature.image} alt={specialistFeature.alt} loading="eager" />
+          <img
+            class="feature-workplace-image-desktop"
+            src={specialistFeature.image}
+            alt={specialistFeature.alt}
+            loading="eager"
+          />
+          <img
+            class="feature-workplace-image-mobile"
+            src="/assets/feature-stack/specialisti-clinica-mobile.jpg"
+            alt="Specialisti dello studio durante una procedura odontoiatrica"
+            loading="eager"
+          />
         </figure>
         <div class="feature-copy">
           <h2>{specialistFeature.title}</h2>
@@ -959,6 +994,10 @@ const locationOffices = site.offices.map((office) => {
     text-transform: uppercase;
   }
 
+  .mobile-digital-intro {
+    display: none;
+  }
+
   .scraped-eyebrow {
     margin: 0;
     font-size: clamp(1rem, 1.1vw, 1.125rem);
@@ -1161,6 +1200,10 @@ const locationOffices = site.offices.map((office) => {
     object-position: center center;
   }
 
+  .feature-workplace-image-mobile {
+    display: none;
+  }
+
   .feature-copy p {
     max-width: 520px;
     margin: 18px 0 0;
@@ -1303,6 +1346,10 @@ const locationOffices = site.offices.map((office) => {
     margin: 18px 0 0;
     color: var(--surface-white);
     font-size: clamp(1rem, 1.3vw, 1.2rem);
+  }
+
+  .feature-hero-cta-arrow {
+    display: none;
   }
 
   .clinical-carousel-section {
@@ -2247,6 +2294,8 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .scraped-hero {
+      height: 100svh;
+      min-height: 100svh;
       align-items: end;
       justify-items: start;
       background-image: var(--hero-image-mobile);
@@ -2258,6 +2307,11 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .scraped-hero-copy {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 2;
       width: min(100% - 40px, 1320px);
       margin: 0 auto;
       padding: 0 0 calc(34px + env(safe-area-inset-bottom));
@@ -2267,6 +2321,53 @@ const locationOffices = site.offices.map((office) => {
 
     .scraped-scroll {
       display: none;
+    }
+
+    .mobile-digital-intro {
+      display: block;
+      padding: 58px 0;
+      background: var(--surface-white);
+      color: var(--brand-primary-dark);
+    }
+
+    .mobile-digital-intro-inner {
+      width: min(100% - 40px, 540px);
+      margin: 0 auto;
+    }
+
+    .mobile-digital-intro h2 {
+      margin: 0;
+      color: var(--brand-primary-dark);
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+      font-size: clamp(2rem, 9.5vw, 3rem);
+      font-weight: 600;
+      letter-spacing: -0.16px;
+      line-height: 1.05;
+    }
+
+    .mobile-digital-intro figure {
+      margin: 28px 0 0;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      border-radius: 8px;
+      background: var(--soft-blue-bg);
+    }
+
+    .mobile-digital-intro img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .mobile-digital-intro p {
+      margin: 26px 0 0;
+      color: var(--text-dark);
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: -0.16px;
+      line-height: 1.5;
     }
 
     .scraped-hero-shade {
@@ -2344,6 +2445,7 @@ const locationOffices = site.offices.map((office) => {
     .scraped-hero-button-primary:focus-visible {
       border-color: var(--brand-blue);
       background: var(--brand-blue);
+      transform: none;
     }
 
     .scraped-hero-button-secondary {
@@ -2385,8 +2487,16 @@ const locationOffices = site.offices.map((office) => {
       gap: 52px;
     }
 
+    .feature-workplace {
+      order: 1;
+    }
+
+    .feature-hero {
+      order: 2;
+    }
+
     .feature-specialists {
-      gap: 0;
+      display: none;
     }
 
     .feature-specialists .feature-copy {
@@ -2430,6 +2540,14 @@ const locationOffices = site.offices.map((office) => {
       margin-top: 24px;
     }
 
+    .feature-workplace-image-desktop {
+      display: none;
+    }
+
+    .feature-workplace-image-mobile {
+      display: block;
+    }
+
     .feature-workplace .feature-copy > p {
       order: 3;
       margin-top: 24px;
@@ -2456,6 +2574,10 @@ const locationOffices = site.offices.map((office) => {
     .prefooter-action,
     .prefooter-button {
       width: 100%;
+    }
+
+    .prefooter-action > span {
+      display: none;
     }
 
     .prefooter-cta {
@@ -2506,6 +2628,20 @@ const locationOffices = site.offices.map((office) => {
 
     .feature-hero-copy h2 {
       font-size: clamp(1.9rem, 9vw, 3rem);
+    }
+
+    .feature-hero-copy p {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+      text-align: left;
+    }
+
+    .feature-hero-cta-arrow {
+      display: inline-block;
+      font-size: 1.15em;
+      line-height: 1;
     }
 
     .clinical-carousel-head {
@@ -3128,6 +3264,22 @@ const locationOffices = site.offices.map((office) => {
       font-weight: 600 !important;
       letter-spacing: 0.228px !important;
       line-height: var(--home-apple-card-title-line) !important;
+    }
+
+    .mobile-digital-intro h2 {
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif !important;
+      font-size: clamp(2rem, 9vw, 2.75rem) !important;
+      font-weight: 600 !important;
+      letter-spacing: -0.16px !important;
+      line-height: 1.08 !important;
+    }
+
+    .mobile-digital-intro p {
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif !important;
+      font-size: 16px !important;
+      font-weight: 400 !important;
+      letter-spacing: -0.16px !important;
+      line-height: 1.5 !important;
     }
   }
 </style>

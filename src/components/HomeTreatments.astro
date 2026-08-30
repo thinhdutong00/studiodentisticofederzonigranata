@@ -72,7 +72,10 @@ const mobileOrderByHref = new Map(mobileOrderedServices.map((service, index) => 
 >
   <div class="home-treatments-wrap">
     <header class="home-treatments-head">
-      <p class="home-treatments-kicker"><span>Odontoiatria a 360°</span></p>
+      <p class="home-treatments-kicker">
+        <span class="home-treatments-kicker-desktop">Odontoiatria a 360°</span>
+        <span class="home-treatments-kicker-mobile">Specializzazioni</span>
+      </p>
       <h2 id="home-treatments-title">Soluzioni per la tua <span>salute orale.</span></h2>
     </header>
 
@@ -193,6 +196,10 @@ const mobileOrderByHref = new Map(mobileOrderedServices.map((service, index) => 
     width: 38px;
     height: 1px;
     background: currentColor;
+  }
+
+  .home-treatments-kicker-mobile {
+    display: none;
   }
 
   .home-treatments-head h2 {
@@ -365,6 +372,14 @@ const mobileOrderByHref = new Map(mobileOrderedServices.map((service, index) => 
     .home-treatments-kicker::before,
     .home-treatments-kicker::after {
       width: 24px;
+    }
+
+    .home-treatments-kicker-desktop {
+      display: none;
+    }
+
+    .home-treatments-kicker-mobile {
+      display: inline;
     }
 
     .home-treatments-head h2 {
