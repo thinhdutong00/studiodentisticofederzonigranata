@@ -6,6 +6,7 @@ interface Props {
   lead?: string;
   ctaLabel?: string;
   note?: string;
+  arrow?: string;
 }
 
 const {
@@ -15,6 +16,7 @@ const {
   lead = 'Raccontaci la tua esigenza. Ti ricontatteremo per indicarti il percorso più adatto e organizzare la tua visita.',
   ctaLabel = 'Raccontaci la tua esigenza',
   note = 'Studi a Modena e Reggio Emilia',
+  arrow = '↗',
 } = Astro.props;
 ---
 
@@ -27,7 +29,7 @@ const {
     </div>
 
     <div class="treatment-prefooter-action">
-      <a href={href}>{ctaLabel} <span aria-hidden="true">↗</span></a>
+      <a href={href}>{ctaLabel} <span aria-hidden="true">{arrow}</span></a>
       <span>{note}</span>
     </div>
   </div>
