@@ -818,11 +818,17 @@ const siteMenuClinical = site.clinicalLinks.map((item) => ({
     const accordions = Array.from(panel.querySelectorAll('[data-site-menu-accordion]')).filter(
       (item) => item instanceof HTMLDetailsElement,
     );
+    const desktopMenuQuery = window.matchMedia('(min-width: 621px)');
+    const treatmentsAccordion = panel.querySelector('.site-menu-section-treatments');
 
-    const closeAccordions = () => {
+    const resetAccordions = () => {
       accordions.forEach((accordion) => {
         accordion.open = false;
       });
+
+      if (desktopMenuQuery.matches && treatmentsAccordion instanceof HTMLDetailsElement) {
+        treatmentsAccordion.open = true;
+      }
     };
 
     accordions.forEach((accordion) => {
@@ -835,7 +841,8 @@ const siteMenuClinical = site.clinicalLinks.map((item) => ({
       });
     });
 
-    closeAccordions();
+    resetAccordions();
+    desktopMenuQuery.addEventListener('change', resetAccordions);
 
     const setOpen = (isOpen) => {
       header.classList.toggle('site-menu-open', isOpen);
@@ -847,7 +854,7 @@ const siteMenuClinical = site.clinicalLinks.map((item) => ({
       if (isOpen) header.classList.remove('is-hidden');
       if (!isOpen) {
         panel.querySelectorAll('.site-menu-call-dropdown[open]').forEach((dropdown) => dropdown.removeAttribute('open'));
-        closeAccordions();
+        resetAccordions();
       }
     };
 

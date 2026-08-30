@@ -3,25 +3,114 @@
 
 <aside class="cookie-banner" data-cookie-banner role="note" aria-label="GDPR Cookie Banner">
   <p>Usiamo i cookie per migliorare esperienza d'uso e navigazione. Trovi più informazioni nella <a href="/cookie-privacy/">Cookie Policy</a>.</p>
-  <div class="cookie-actions">
+  <div class="cookie-actions cookie-primary-actions">
     <button type="button" data-cookie-choice="accept">Accetta</button>
-    <button type="button" class="secondary" data-cookie-choice="reject">Rifiuta</button>
-    <button type="button" class="secondary" data-cookie-choice="settings">Impostazioni</button>
+    <button
+      type="button"
+      class="secondary"
+      aria-expanded="false"
+      aria-controls="cookie-settings-panel"
+      data-cookie-settings-toggle
+    >
+      Impostazioni
+    </button>
+  </div>
+  <div
+    id="cookie-settings-panel"
+    class="cookie-settings-panel"
+    role="region"
+    aria-label="Impostazioni dei cookie"
+    data-cookie-settings-panel
+    hidden
+  >
+    <p class="cookie-settings-title">Preferenze cookie</p>
+    <div class="cookie-settings-row">
+      <span>
+        <strong>Cookie necessari</strong>
+        <small>Essenziali per il corretto funzionamento del sito.</small>
+      </span>
+      <span class="cookie-settings-status">Sempre attivi</span>
+    </div>
+    <div class="cookie-actions cookie-settings-actions">
+      <button type="button" class="secondary" data-cookie-choice="reject">Rifiuta</button>
+    </div>
   </div>
 </aside>
 
 <script>
   const banner = document.querySelector('[data-cookie-banner]');
+  const settingsToggle = banner?.querySelector('[data-cookie-settings-toggle]');
+  const settingsPanel = banner?.querySelector('[data-cookie-settings-panel]');
   const storageKey = 'fg-cookie-preference';
-  if (banner && !localStorage.getItem(storageKey)) {
+
+  const readPreference = () => {
+    try {
+      return localStorage.getItem(storageKey);
+    } catch {
+      return null;
+    }
+  };
+
+  const applyPreference = (preference) => {
+    if (!preference) return;
+    document.documentElement.dataset.cookiePreference = preference;
+    document.dispatchEvent(new CustomEvent('fg-cookie-preference', { detail: { preference } }));
+  };
+
+  const setSettingsOpen = (isOpen) => {
+    if (!(settingsToggle instanceof HTMLButtonElement) || !(settingsPanel instanceof HTMLElement)) return;
+    settingsToggle.setAttribute('aria-expanded', String(isOpen));
+    settingsPanel.hidden = !isOpen;
+    banner?.classList.toggle('settings-open', isOpen);
+  };
+
+  const savePreference = (preference) => {
+    try {
+      localStorage.setItem(storageKey, preference);
+    } catch {
+      // Il consenso resta valido per la sessione anche se lo storage non è disponibile.
+    }
+
+    applyPreference(preference);
+    setSettingsOpen(false);
+    banner?.classList.remove('is-visible');
+  };
+
+  const storedPreference = readPreference();
+  const savedPreference = storedPreference === 'accept' || storedPreference === 'reject' ? storedPreference : null;
+  applyPreference(savedPreference);
+
+  if (banner && !savedPreference) {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => banner.classList.add('is-visible'));
     });
   }
-  document.querySelectorAll('[data-cookie-choice]').forEach((button) => {
+
+  settingsToggle?.addEventListener('click', () => {
+    const isOpen = settingsToggle.getAttribute('aria-expanded') === 'true';
+    setSettingsOpen(!isOpen);
+  });
+
+  document.addEventListener('fg-cookie-settings-open', () => {
+    banner?.classList.add('is-visible');
+    setSettingsOpen(true);
+  });
+
+  document.querySelectorAll('[data-cookie-settings-open]').forEach((button) => {
     button.addEventListener('click', () => {
-      localStorage.setItem(storageKey, button.getAttribute('data-cookie-choice') || 'set');
-      banner?.classList.remove('is-visible');
+      banner?.classList.add('is-visible');
+      setSettingsOpen(true);
     });
+  });
+
+  banner?.querySelectorAll('[data-cookie-choice]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const preference = button.getAttribute('data-cookie-choice');
+      if (preference === 'accept' || preference === 'reject') savePreference(preference);
+    });
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') setSettingsOpen(false);
   });
 </script>

@@ -1254,6 +1254,66 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     background: transparent;
   }
 
+  .cookie-settings-panel {
+    display: grid;
+    gap: 12px;
+    margin-top: 14px;
+    border-top: 1px solid rgba(var(--surface-white-rgb), 0.24);
+    padding-top: 14px;
+  }
+
+  .cookie-settings-panel[hidden] {
+    display: none;
+  }
+
+  .cookie-banner .cookie-settings-title {
+    margin: 0;
+    color: var(--surface-white);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .cookie-settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    border: 1px solid rgba(var(--surface-white-rgb), 0.2);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+
+  .cookie-settings-row > span:first-child {
+    min-width: 0;
+    display: grid;
+    gap: 3px;
+  }
+
+  .cookie-settings-row strong,
+  .cookie-settings-row small {
+    display: block;
+  }
+
+  .cookie-settings-row small {
+    color: rgba(var(--surface-white-rgb), 0.72);
+    font-size: 0.82rem;
+    line-height: 1.35;
+  }
+
+  .cookie-settings-status {
+    flex: 0 0 auto;
+    color: var(--soft-blue-bg);
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .cookie-settings-actions {
+    justify-content: flex-end;
+  }
+
   @media (max-width: 1120px) {
     .header-inner {
       grid-template-columns: auto 1fr;
@@ -2560,6 +2620,22 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
   .footer-policy-separator::before {
     content: "·";
+  }
+
+  .footer-cookie-settings {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-weight: 400;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .footer-cookie-settings:hover,
+  .footer-cookie-settings:focus-visible {
+    color: var(--surface-white);
   }
 
   .footer-copyright-mobile,

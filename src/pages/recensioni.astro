@@ -235,4 +235,106 @@ const starsFor = (rating: number) => `${'★'.repeat(rating)}${'☆'.repeat(5 - 
       padding: 24px;
     }
   }
+
+  @media (max-width: 720px) {
+    .reviews-page,
+    .reviews-page *,
+    .reviews-page *::before,
+    .reviews-page *::after {
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif !important;
+    }
+
+    .reviews-page {
+      padding: 58px 0 68px;
+      letter-spacing: -0.16px;
+      word-spacing: 0;
+    }
+
+    .reviews-wrap {
+      width: min(100% - 30px, 1510px);
+    }
+
+    .reviews-eyebrow {
+      margin: 0 0 20px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: normal;
+      line-height: 18px;
+    }
+
+    .reviews-head {
+      margin-bottom: 40px;
+    }
+
+    .reviews-head h1 {
+      max-width: none;
+      margin-bottom: 28px;
+      font-size: 40px;
+      font-weight: 600;
+      letter-spacing: -0.16px;
+      line-height: 41px;
+    }
+
+    .reviews-head a {
+      width: 100%;
+      min-height: 56px;
+      box-sizing: border-box;
+      padding: 0 24px;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: -0.16px;
+      line-height: 16px;
+      text-transform: uppercase;
+    }
+
+    .reviews-head a span {
+      width: 24px;
+      height: 24px;
+      display: inline-grid;
+      flex: 0 0 24px;
+      place-items: center;
+      font-size: 0;
+      line-height: 1;
+    }
+
+    .reviews-head a span::before {
+      content: "→";
+      font-size: 23.2px;
+      font-weight: 400;
+      letter-spacing: normal;
+      line-height: 23.2px;
+    }
+
+    .review-card {
+      gap: 18px;
+    }
+
+    .review-person h2 {
+      font-size: 19px;
+      font-weight: 600;
+      letter-spacing: -0.16px;
+      line-height: 23px;
+    }
+
+    .review-person p {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: normal;
+      line-height: 18px;
+    }
+
+    .review-stars,
+    .review-card:hover .review-stars {
+      color: #fabc05;
+      font-size: 18px;
+      line-height: 18px;
+    }
+
+    .review-text {
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: -0.16px;
+      line-height: 25px;
+    }
+  }
 </style>

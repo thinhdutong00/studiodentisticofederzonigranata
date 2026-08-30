@@ -128,7 +128,7 @@ const treatments = site.treatmentMenu
         </div>
 
         <div class="directory-foot">
-          <a href="/">← Torna alla Home</a>
+          <a href="/"><span aria-hidden="true">←</span> Torna alla Home</a>
           <span>{site.name}</span>
         </div>
       </div>
@@ -445,8 +445,17 @@ const treatments = site.treatmentMenu
   }
 
   @media (max-width: 760px) {
+    .treatments-page,
+    .treatments-page *,
+    .treatments-page *::before,
+    .treatments-page *::after {
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif !important;
+    }
+
     .treatments-page {
       --treatments-letter-spacing: -0.16px;
+      letter-spacing: var(--treatments-letter-spacing);
+      word-spacing: 0;
     }
 
     .treatments-wrap {
@@ -455,6 +464,20 @@ const treatments = site.treatmentMenu
 
     .treatments-hero {
       background: var(--surface-white);
+    }
+
+    .treatments-hero-panel {
+      min-height: 260px;
+      align-items: stretch;
+    }
+
+    .treatments-hero-copy {
+      min-height: 260px;
+      display: flex;
+      box-sizing: border-box;
+      align-items: center;
+      justify-content: center;
+      padding: 104px 0 8px;
     }
 
     .treatments-kicker {
@@ -468,8 +491,10 @@ const treatments = site.treatmentMenu
     }
 
     .treatments-hero h1 {
-      font-size: clamp(35.1px, 11vw, 50px);
-      line-height: 1;
+      font-size: 35.1px;
+      font-weight: 400;
+      letter-spacing: var(--treatments-letter-spacing);
+      line-height: 35.1px;
     }
 
     .treatments-directory {
@@ -483,8 +508,10 @@ const treatments = site.treatmentMenu
     .directory-head .treatments-kicker {
       gap: 12px;
       margin-bottom: 20px;
-      font-size: 11px;
-      letter-spacing: 0.16em;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: normal;
+      line-height: 18px;
     }
 
     .directory-head .treatments-kicker::before,
@@ -493,13 +520,16 @@ const treatments = site.treatmentMenu
     }
 
     .directory-head h2 {
-      font-size: clamp(2.4rem, 12vw, 3.7rem);
-      letter-spacing: -0.025em;
-      line-height: 1;
+      font-size: 40px;
+      font-weight: 500;
+      letter-spacing: var(--treatments-letter-spacing);
+      line-height: 41px;
+      text-align: center;
     }
 
     .treatment-grid {
       grid-template-columns: 1fr;
+      gap: 16px;
     }
 
     .treatment-card,
@@ -518,25 +548,85 @@ const treatments = site.treatmentMenu
     .treatment-card h3 {
       margin-top: 28px;
       font-size: 20px;
-      line-height: 1.25;
+      font-weight: 500;
+      letter-spacing: var(--treatments-letter-spacing);
+      line-height: 25px;
     }
 
     .treatment-card p {
       margin-top: 14px;
       font-size: 14px;
-      line-height: 1.45;
+      letter-spacing: var(--treatments-letter-spacing);
+      line-height: 20px;
     }
 
     .consult-card h3 {
       max-width: none;
       font-size: 20px;
-      line-height: 1.25;
+      font-weight: 500;
+      letter-spacing: var(--treatments-letter-spacing);
+      line-height: 25px;
+    }
+
+    .consult-card p:not(.consult-label) {
+      font-size: 14px;
+      letter-spacing: var(--treatments-letter-spacing);
+      line-height: 20px;
+    }
+
+    .consult-card a {
+      min-height: 56px;
+      padding: 0 24px;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: var(--treatments-letter-spacing);
+      line-height: 16px;
+    }
+
+    .consult-card a span {
+      width: 24px;
+      height: 24px;
+      display: inline-grid;
+      flex: 0 0 24px;
+      place-items: center;
+      font-size: 0;
+      line-height: 1;
+    }
+
+    .consult-card a span::before {
+      content: "→";
+      font-size: 23.2px;
+      font-weight: 400;
+      letter-spacing: normal;
+      line-height: 23.2px;
     }
 
     .directory-foot {
       display: grid;
       margin-top: 48px;
-      font-size: 0.78rem;
+      padding-top: 24px;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: var(--treatments-letter-spacing);
+      line-height: 18px;
+    }
+
+    .directory-foot a {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .directory-foot a > span {
+      width: 24px;
+      height: 24px;
+      display: inline-grid;
+      flex: 0 0 24px;
+      place-items: center;
+      font-size: 23.2px;
+      font-weight: 400;
+      letter-spacing: normal;
+      line-height: 23.2px;
     }
   }
 </style>

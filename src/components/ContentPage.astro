@@ -1292,6 +1292,13 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
     margin-top: 0;
   }
 
+  @media (min-width: 721px) {
+    .video-page-hero {
+      min-height: clamp(480px, 58vh, 660px);
+      padding: clamp(80px, 7vw, 118px) 0 clamp(44px, 4vw, 68px);
+    }
+  }
+
   @media (max-width: 720px) {
     .video-hero {
       min-height: 590px;
