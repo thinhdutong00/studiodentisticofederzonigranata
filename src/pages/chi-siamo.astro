@@ -164,13 +164,19 @@ const officeDetails: Record<string, { label: string; title: string; description:
             </div>
           </div>
           <figure class="doctor-profile-image">
-            <img src="/assets/original/2020/10/Livello-12.jpg" alt="Dottoressa Chiara Federzoni" loading="eager" />
+            <picture>
+              <source media="(min-width: 721px)" srcset="/assets/chi-siamo/chiara-federzoni-portrait-hd.jpg" />
+              <img src="/assets/original/2020/10/Livello-12.jpg" alt="Dottoressa Chiara Federzoni" loading="eager" />
+            </picture>
           </figure>
         </article>
 
         <article class="doctor-profile doctor-profile-stefano">
           <figure class="doctor-profile-image">
-            <img src="/assets/original/2020/10/Livello-13.jpg" alt="Dottor Stefano Granata" loading="eager" />
+            <picture>
+              <source media="(min-width: 721px)" srcset="/assets/chi-siamo/stefano-granata-portrait-hd.jpg" />
+              <img src="/assets/original/2020/10/Livello-13.jpg" alt="Dottor Stefano Granata" loading="eager" />
+            </picture>
           </figure>
           <div class="doctor-profile-copy">
             <p class="doctor-profile-heading">
@@ -595,11 +601,25 @@ const officeDetails: Record<string, { label: string; title: string; description:
   }
 
   .doctor-profile-image {
-    width: 100%;
+    width: min(100%, 560px);
     aspect-ratio: 4 / 5;
     overflow: hidden;
     margin: 0;
     background: var(--about-green-dark);
+  }
+
+  .doctor-profile-chiara .doctor-profile-image {
+    justify-self: end;
+  }
+
+  .doctor-profile-stefano .doctor-profile-image {
+    justify-self: start;
+  }
+
+  .doctor-profile-image picture {
+    width: 100%;
+    height: 100%;
+    display: block;
   }
 
   .doctor-profile-image img {
