@@ -1,8 +1,10 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
+import TreatmentMarketingPage from '../components/TreatmentMarketingPage.astro';
 import TreatmentPrefooterCta from '../components/TreatmentPrefooterCta.astro';
 import TreatmentStickyCta from '../components/TreatmentStickyCta.astro';
 import { site } from '../data/site';
+import type { TreatmentMarketingConfig } from '../data/treatmentMarketing';
 
 const title = `Igiene orale e prevenzione | ${site.name}`;
 const description =
@@ -101,6 +103,65 @@ const relatedCards = [
     href: '/parodontologia-cure-gengivali/',
   },
 ];
+
+const mobileFunnelConfig = {
+  seoTitle: 'Igiene orale e prevenzione',
+  description,
+  requestLabel: 'Igiene orale e prevenzione',
+  heroTitle: 'Igiene orale e prevenzione',
+  kicker: 'Prevenzione odontoiatrica',
+  lead:
+    'Controlli periodici e sedute professionali personalizzate per mantenere denti e gengive in salute e riconoscere precocemente eventuali problemi.',
+  trustItems: [
+    'Valutazione iniziale di denti e gengive',
+    'Seduta calibrata su sensibilità ed esigenze',
+    'Indicazioni e richiami personalizzati',
+  ],
+  formOptions: [
+    'Igiene orale professionale',
+    'Controllo di denti e gengive',
+    'Prevenzione per bambini',
+    'Richiamo periodico',
+  ],
+  sections: [
+    {
+      title: 'A cosa serve',
+      paragraphs: [
+        'L’igiene orale professionale rimuove placca, tartaro e pigmentazioni che non sempre possono essere eliminati con la sola igiene quotidiana. Aiuta a ridurre l’infiammazione gengivale e a mantenere più facilmente pulite le superfici dentali.',
+        'La seduta è anche un momento di prevenzione: permette di controllare denti, gengive e restauri e di riconoscere segnali che meritano un approfondimento prima che diventino sintomatici.',
+      ],
+    },
+    {
+      title: 'Per chi è indicato',
+      paragraphs: [
+        'Il percorso è indicato ad adulti e bambini e viene adattato alla salute orale, alla presenza di tartaro o pigmentazioni, alla sensibilità e alla capacità di mantenere una corretta igiene domiciliare.',
+        'Sanguinamento, alito persistente, sensibilità o accumuli visibili meritano una valutazione, ma l’assenza di dolore non esclude la necessità di controlli preventivi.',
+      ],
+    },
+    {
+      title: 'Come si svolge e come prepararsi',
+      paragraphs: [
+        'La seduta inizia con la valutazione di denti e gengive. Placca e tartaro vengono rimossi con strumenti scelti in base al caso; quando indicato, si completa il trattamento con lucidatura e rimozione delle pigmentazioni superficiali.',
+        'Non è richiesta una preparazione particolare. È utile segnalare sensibilità, condizioni di salute e farmaci assunti, senza modificare terapie prescritte di propria iniziativa.',
+      ],
+    },
+    {
+      title: 'Dopo la seduta',
+      paragraphs: [
+        'Una lieve sensibilità o un piccolo sanguinamento possono comparire soprattutto quando le gengive sono infiammate. Le indicazioni successive vengono personalizzate in base alla situazione rilevata durante la seduta.',
+        'Spazzolino, filo o scovolini e richiami programmati aiutano a mantenere il risultato. La frequenza non è uguale per tutti: viene definita considerando rischio individuale, salute gengivale e qualità dell’igiene quotidiana.',
+      ],
+    },
+  ],
+  faqs: faqRows.map((row) => ({ question: row.title, answer: row.text })),
+  pathwayTitle: 'Prevenzione costruita su misura',
+  pathwayLead:
+    'Dalla valutazione iniziale ai richiami, ogni fase viene adattata alle condizioni della bocca e alle abitudini quotidiane.',
+  pathwayCards: processCards.map((card) => ({ title: card.title, text: card.text })),
+  finalKicker: 'Inizia dalla prevenzione',
+  finalTitle: 'Costruiamo il tuo percorso di igiene e prevenzione.',
+  ogImage: '/assets/original/2022/03/dentista-modena-reggio-emilia.jpg',
+} satisfies TreatmentMarketingConfig;
 ---
 
 <BaseLayout title={title} description={description} ogImage="/assets/original/2022/03/dentista-modena-reggio-emilia.jpg" canonicalPath="/igiene-orale-prevenzione/" transparentHeader>
@@ -245,14 +306,24 @@ const relatedCards = [
     </section>
 
     <TreatmentPrefooterCta
+      headingId="service-prefooter-title"
       title="Costruiamo il tuo percorso di igiene e prevenzione."
       href="/richiesta/?trattamento=Igiene%20orale%20e%20Prevenzione"
     />
   </article>
-  <TreatmentStickyCta treatment="Igiene orale e prevenzione" />
+  <div class="service-mobile-funnel">
+    <TreatmentMarketingPage config={mobileFunnelConfig} />
+  </div>
+  <div class="service-desktop-sticky">
+    <TreatmentStickyCta treatment="Igiene orale e prevenzione" />
+  </div>
 </BaseLayout>
 
 <style>
+  .service-mobile-funnel {
+    display: none;
+  }
+
   .service-template {
     --service-blue: var(--blue-dark);
     --service-accent: var(--brand-blue);
@@ -723,6 +794,15 @@ const relatedCards = [
   }
 
   @media (max-width: 720px) {
+    .service-template,
+    .service-desktop-sticky {
+      display: none;
+    }
+
+    .service-mobile-funnel {
+      display: block;
+    }
+
     .service-template {
       --service-letter-spacing: -0.16px;
     }

@@ -105,6 +105,10 @@ const heroTitleClass = config.heroTitle.length > 35 ? 'is-extra-long' : config.h
           </article>
         ))}
       </div>
+
+      <div class="treatment-pathway-action">
+        <a href={requestHref}>Prenota visita <span aria-hidden="true">→</span></a>
+      </div>
     </div>
   </section>
 
@@ -515,6 +519,10 @@ const heroTitleClass = config.heroTitle.length > 35 ? 'is-extra-long' : config.h
     line-height: 1.45;
   }
 
+  .treatment-pathway-action {
+    display: none;
+  }
+
   @media (max-width: 980px) {
     .treatment-hero-grid {
       grid-template-columns: 1fr;
@@ -535,8 +543,15 @@ const heroTitleClass = config.heroTitle.length > 35 ? 'is-extra-long' : config.h
   }
 
   @media (max-width: 720px) {
+    .treatment-marketing,
+    .treatment-marketing * {
+      font-family: Inter, sans-serif !important;
+    }
+
     .treatment-marketing {
       --tm-letter-spacing: -0.16px;
+      letter-spacing: var(--tm-letter-spacing);
+      word-spacing: 0;
     }
 
     .treatment-wrap {
@@ -548,23 +563,34 @@ const heroTitleClass = config.heroTitle.length > 35 ? 'is-extra-long' : config.h
     }
 
     .treatment-hero-grid {
-      gap: 38px;
-      padding: 158px 0 56px;
+      gap: 40px;
+      padding: 158px 0 58px;
     }
 
     .treatment-kicker,
     .treatment-form-eyebrow {
-      margin-bottom: 14px;
       font-size: 14px;
+      font-weight: 500;
+      letter-spacing: var(--tm-letter-spacing);
       line-height: 14px;
+    }
+
+    .treatment-kicker {
+      margin-bottom: 14px;
+    }
+
+    .treatment-form-eyebrow {
+      margin-bottom: 10px;
     }
 
     .treatment-hero h1,
     .treatment-hero h1.is-long,
     .treatment-hero h1.is-extra-long {
       max-width: none;
-      font-size: clamp(34px, 10.7vw, 46px);
-      line-height: 0.98;
+      font-size: 35.1px;
+      font-weight: 400;
+      letter-spacing: var(--tm-letter-spacing);
+      line-height: 35.1px;
       overflow-wrap: anywhere;
     }
 
@@ -588,6 +614,7 @@ const heroTitleClass = config.heroTitle.length > 35 ? 'is-extra-long' : config.h
     .treatment-form h2 {
       margin-bottom: 24px;
       font-size: 28px;
+      line-height: 32px;
     }
 
     .treatment-form select,
@@ -596,14 +623,15 @@ const heroTitleClass = config.heroTitle.length > 35 ? 'is-extra-long' : config.h
     }
 
     .treatment-information {
-      padding: 56px 0;
+      padding: 58px 0;
     }
 
     .treatment-detail summary {
       grid-template-columns: minmax(0, 1fr) 32px;
       gap: 16px;
       padding: 24px 0;
-      font-size: clamp(28px, 8vw, 38px);
+      font-size: 28px;
+      line-height: 30px;
     }
 
     .treatment-detail i {
@@ -617,7 +645,7 @@ const heroTitleClass = config.heroTitle.length > 35 ? 'is-extra-long' : config.h
 
     .treatment-detail-content > p {
       font-size: 17px;
-      line-height: 1.5;
+      line-height: 25px;
     }
 
     .treatment-faq-grid {
@@ -628,12 +656,105 @@ const heroTitleClass = config.heroTitle.length > 35 ? 'is-extra-long' : config.h
       padding: 22px 20px;
     }
 
+    .treatment-faq-grid h3 {
+      font-size: 20px;
+      line-height: 25px;
+    }
+
+    .treatment-faq-grid p {
+      font-size: 16px;
+      line-height: 24px;
+    }
+
+    .treatment-pathway {
+      padding: 58px 0;
+    }
+
     .treatment-section-heading h2 {
-      font-size: 40px;
+      font-size: 30px;
+      line-height: 30px;
+    }
+
+    .treatment-section-heading > p:last-child {
+      margin-top: 20px;
+      font-size: 17px;
+      line-height: 25px;
+    }
+
+    .treatment-pathway-grid {
+      gap: 12px;
+      margin-top: 36px;
     }
 
     .treatment-pathway-grid article {
-      min-height: 230px;
+      min-height: 250px;
+      padding: 24px;
+    }
+
+    .treatment-pathway-grid article > span {
+      font-size: 18px;
+      line-height: 18px;
+    }
+
+    .treatment-pathway-grid h3 {
+      margin-bottom: 12px;
+      font-size: 28px;
+      line-height: 28px;
+    }
+
+    .treatment-pathway-grid p {
+      font-size: 14px;
+      line-height: 18px;
+    }
+
+    .treatment-pathway-action {
+      display: block;
+      margin-top: 32px;
+    }
+
+    .treatment-pathway-action a {
+      width: 100%;
+      min-height: 56px;
+      display: inline-flex;
+      box-sizing: border-box;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      border: 1px solid var(--tm-cta);
+      border-radius: 12px;
+      padding: 0 24px;
+      background: var(--tm-cta);
+      color: var(--surface-white);
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: var(--tm-letter-spacing);
+      line-height: 16px;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .treatment-pathway-action a:hover,
+    .treatment-pathway-action a:focus-visible {
+      border-color: var(--tm-cta-hover);
+      background: var(--tm-cta-hover);
+      color: var(--surface-white);
+    }
+
+    .treatment-pathway-action a:focus-visible {
+      outline: 3px solid rgba(var(--brand-cta-rgb), 0.24);
+      outline-offset: 4px;
+    }
+
+    .treatment-pathway-action a span {
+      width: 24px;
+      height: 24px;
+      display: inline-grid;
+      flex: 0 0 24px;
+      place-items: center;
+      font-size: 23.2px;
+      font-weight: 400;
+      letter-spacing: normal;
+      line-height: 23.2px;
     }
 
   }

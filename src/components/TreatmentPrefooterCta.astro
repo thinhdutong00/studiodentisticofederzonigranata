@@ -1,6 +1,7 @@
 ---
 interface Props {
   title: string;
+  headingId?: string;
   href?: string;
   eyebrow?: string;
   lead?: string;
@@ -11,6 +12,7 @@ interface Props {
 
 const {
   title,
+  headingId = 'treatment-prefooter-title',
   href = '/richiesta/',
   eyebrow = 'Inizia da qui',
   lead = 'Raccontaci la tua esigenza. Ti ricontatteremo per indicarti il percorso più adatto e organizzare la tua visita.',
@@ -20,11 +22,11 @@ const {
 } = Astro.props;
 ---
 
-<section class="treatment-prefooter" aria-labelledby="treatment-prefooter-title">
+<section class="treatment-prefooter" aria-labelledby={headingId}>
   <div class="treatment-prefooter-wrap treatment-prefooter-inner">
     <div class="treatment-prefooter-copy">
       <p class="treatment-prefooter-eyebrow">{eyebrow}</p>
-      <h2 id="treatment-prefooter-title">{title}</h2>
+      <h2 id={headingId}>{title}</h2>
       <p class="treatment-prefooter-lead">{lead}</p>
     </div>
 
@@ -162,16 +164,35 @@ const {
   }
 
   @media (max-width: 720px) {
+    .treatment-prefooter,
+    .treatment-prefooter * {
+      font-family: Inter, sans-serif !important;
+    }
+
     .treatment-prefooter {
       padding: 58px 0;
+      background: var(--surface-white);
       letter-spacing: -0.16px;
+      word-spacing: 0;
     }
 
     .treatment-prefooter::after {
-      top: auto;
-      width: 100%;
-      height: 52%;
-      opacity: 0.18;
+      display: none;
+    }
+
+    .treatment-prefooter-inner {
+      box-sizing: border-box;
+      gap: 0;
+      padding: 32px 24px;
+      border: 1px solid rgba(var(--surface-white-rgb), 0.12);
+      border-radius: 20px;
+      background: var(--brand-primary-dark);
+      box-shadow: 0 22px 54px rgba(var(--brand-primary-dark-rgb), 0.18);
+      color: var(--surface-white);
+    }
+
+    .treatment-prefooter-copy {
+      max-width: none;
     }
 
     .treatment-prefooter-action,
@@ -179,8 +200,74 @@ const {
       width: 100%;
     }
 
+    .treatment-prefooter-eyebrow {
+      margin: 0 0 20px;
+      color: rgba(var(--surface-white-rgb), 0.72);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: normal;
+      line-height: 18px;
+    }
+
     .treatment-prefooter h2 {
+      max-width: none;
+      margin: 0;
+      color: var(--surface-white);
+      font-size: 40px;
+      font-weight: 600;
+      letter-spacing: -0.16px;
+      line-height: 41px;
       overflow-wrap: anywhere;
+    }
+
+    .treatment-prefooter-lead {
+      margin-top: 20px;
+      color: rgba(var(--surface-white-rgb), 0.72);
+      font-size: 17px;
+      line-height: 25px;
+    }
+
+    .treatment-prefooter-action {
+      gap: 0;
+      margin-top: 32px;
+    }
+
+    .treatment-prefooter-action a {
+      min-height: 56px;
+      border-color: var(--surface-white);
+      border-radius: 12px;
+      background: var(--surface-white);
+      box-shadow: none;
+      color: var(--brand-primary-dark);
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: -0.16px;
+      line-height: 16px;
+      text-transform: none;
+    }
+
+    .treatment-prefooter-action a:hover,
+    .treatment-prefooter-action a:focus-visible {
+      border-color: var(--soft-blue-bg);
+      background: var(--soft-blue-bg);
+      color: var(--brand-primary-dark);
+    }
+
+    .treatment-prefooter-action a span {
+      width: 24px;
+      height: 24px;
+      display: inline-grid;
+      flex: 0 0 24px;
+      place-items: center;
+      color: inherit;
+      font-size: 23.2px;
+      font-weight: 400;
+      letter-spacing: normal;
+      line-height: 23.2px;
+    }
+
+    .treatment-prefooter-action > span {
+      display: none;
     }
   }
 

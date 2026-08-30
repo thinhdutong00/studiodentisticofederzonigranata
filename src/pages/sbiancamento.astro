@@ -182,6 +182,10 @@ const pathwayCards = [
             </article>
           ))}
         </div>
+
+        <div class="whitening-pathway-action">
+          <a href="/richiesta/?trattamento=Sbiancamento">Prenota visita <span aria-hidden="true">→</span></a>
+        </div>
       </div>
     </section>
 
@@ -582,6 +586,10 @@ const pathwayCards = [
     line-height: 1.45;
   }
 
+  .whitening-pathway-action {
+    display: none;
+  }
+
   @media (max-width: 980px) {
     .whitening-hero-grid {
       grid-template-columns: 1fr;
@@ -606,8 +614,15 @@ const pathwayCards = [
   }
 
   @media (max-width: 720px) {
+    .whitening-page,
+    .whitening-page * {
+      font-family: Inter, sans-serif !important;
+    }
+
     .whitening-page {
       --whitening-letter-spacing: -0.16px;
+      letter-spacing: var(--whitening-letter-spacing);
+      word-spacing: 0;
     }
 
     .whitening-wrap {
@@ -619,20 +634,33 @@ const pathwayCards = [
     }
 
     .whitening-hero-grid {
-      gap: 38px;
-      padding: 158px 0 56px;
+      gap: 40px;
+      padding: 158px 0 58px;
     }
 
     .whitening-kicker,
     .whitening-form-eyebrow {
-      margin-bottom: 14px;
       font-size: 14px;
+      font-weight: 500;
+      letter-spacing: var(--whitening-letter-spacing);
       line-height: 14px;
     }
 
+    .whitening-kicker {
+      margin-bottom: 14px;
+    }
+
+    .whitening-form-eyebrow {
+      margin-bottom: 10px;
+    }
+
     .whitening-hero h1 {
-      font-size: clamp(35.1px, 11.4vw, 48px);
-      line-height: 0.96;
+      max-width: none;
+      font-size: 35.1px;
+      font-weight: 400;
+      letter-spacing: var(--whitening-letter-spacing);
+      line-height: 35.1px;
+      overflow-wrap: anywhere;
     }
 
     .whitening-lead {
@@ -655,6 +683,7 @@ const pathwayCards = [
     .whitening-form h2 {
       margin-bottom: 24px;
       font-size: 28px;
+      line-height: 32px;
     }
 
     .whitening-form select,
@@ -663,15 +692,15 @@ const pathwayCards = [
     }
 
     .whitening-information {
-      padding: 56px 0;
+      padding: 58px 0;
     }
 
     .whitening-detail summary {
       grid-template-columns: minmax(0, 1fr) 32px;
       gap: 16px;
       padding: 24px 0;
-      font-size: clamp(28px, 8vw, 38px);
-      line-height: 1.08;
+      font-size: 28px;
+      line-height: 30px;
     }
 
     .whitening-detail i {
@@ -685,7 +714,7 @@ const pathwayCards = [
 
     .whitening-detail-content > p {
       font-size: 17px;
-      line-height: 1.5;
+      line-height: 25px;
     }
 
     .whitening-faq-grid {
@@ -696,13 +725,105 @@ const pathwayCards = [
       padding: 22px 20px;
     }
 
+    .whitening-faq-grid h3 {
+      font-size: 20px;
+      line-height: 25px;
+    }
+
+    .whitening-faq-grid p {
+      font-size: 16px;
+      line-height: 24px;
+    }
+
+    .whitening-pathway {
+      padding: 58px 0;
+    }
+
     .whitening-section-heading h2 {
-      font-size: 40px;
-      line-height: 1;
+      font-size: 30px;
+      line-height: 30px;
+    }
+
+    .whitening-section-heading > p:last-child {
+      margin-top: 20px;
+      font-size: 17px;
+      line-height: 25px;
+    }
+
+    .whitening-pathway-grid {
+      gap: 12px;
+      margin-top: 36px;
     }
 
     .whitening-pathway-grid article {
-      min-height: 230px;
+      min-height: 250px;
+      padding: 24px;
+    }
+
+    .whitening-pathway-grid article > span {
+      font-size: 18px;
+      line-height: 18px;
+    }
+
+    .whitening-pathway-grid h3 {
+      margin-bottom: 12px;
+      font-size: 28px;
+      line-height: 28px;
+    }
+
+    .whitening-pathway-grid p {
+      font-size: 14px;
+      line-height: 18px;
+    }
+
+    .whitening-pathway-action {
+      display: block;
+      margin-top: 32px;
+    }
+
+    .whitening-pathway-action a {
+      width: 100%;
+      min-height: 56px;
+      display: inline-flex;
+      box-sizing: border-box;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      border: 1px solid var(--whitening-cta);
+      border-radius: 12px;
+      padding: 0 24px;
+      background: var(--whitening-cta);
+      color: var(--surface-white);
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: var(--whitening-letter-spacing);
+      line-height: 16px;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .whitening-pathway-action a:hover,
+    .whitening-pathway-action a:focus-visible {
+      border-color: var(--whitening-cta-hover);
+      background: var(--whitening-cta-hover);
+      color: var(--surface-white);
+    }
+
+    .whitening-pathway-action a:focus-visible {
+      outline: 3px solid rgba(var(--brand-cta-rgb), 0.24);
+      outline-offset: 4px;
+    }
+
+    .whitening-pathway-action a span {
+      width: 24px;
+      height: 24px;
+      display: inline-grid;
+      flex: 0 0 24px;
+      place-items: center;
+      font-size: 23.2px;
+      font-weight: 400;
+      letter-spacing: normal;
+      line-height: 23.2px;
     }
 
   }

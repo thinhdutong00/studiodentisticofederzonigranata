@@ -371,23 +371,57 @@ const cases = caseOrder.flatMap((label) => {
   }
 
   @media (max-width: 720px) {
+    .clinical-carousel-section,
+    .clinical-carousel-section * {
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif !important;
+    }
+
     .clinical-carousel-section {
       padding: 58px 0;
       letter-spacing: -0.16px;
+      word-spacing: 0;
     }
 
     .clinical-carousel-head { margin-bottom: 34px; }
-    .clinical-carousel-head h2 { font-size: clamp(3rem, 16vw, 4.8rem); }
+    .clinical-carousel-head p {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: -0.16px;
+      line-height: 14px;
+    }
+    .clinical-carousel-head h2 {
+      margin-top: 14px;
+      font-size: 30px;
+      font-weight: 400;
+      letter-spacing: -0.16px;
+      line-height: 30px;
+      text-align: center;
+    }
     .clinical-carousel-track { gap: 16px; }
 
     .clinical-carousel-card {
-      flex-basis: min(82vw, 360px);
-      min-height: 430px;
+      flex-basis: min(74vw, 310px);
+      min-height: 360px;
+    }
+
+    .clinical-carousel-section:not(.video-page-clinical-carousel) .clinical-carousel-card {
+      flex-basis: min(68vw, 280px);
+      min-height: 320px;
     }
 
     .clinical-carousel-card-copy { padding: 24px; }
-    .clinical-carousel-card-copy strong { font-size: clamp(1.9rem, 9vw, 2.7rem); }
-    .clinical-carousel-card-copy small { font-size: 0.98rem; }
+    .clinical-carousel-card-copy strong {
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: -0.16px;
+      line-height: 25px;
+    }
+    .clinical-carousel-card-copy small {
+      margin-top: 12px;
+      font-size: 14px;
+      letter-spacing: -0.16px;
+      line-height: 16.8px;
+    }
     .clinical-carousel-arrow { width: 50px; }
     .clinical-carousel-arrow-prev { left: 18px; }
     .clinical-carousel-arrow-next { right: 18px; }
@@ -448,7 +482,7 @@ const cases = caseOrder.flatMap((label) => {
       line-height: 20px;
     }
 
-    .video-page-clinical-carousel .clinical-carousel-arrow span {
+    .clinical-carousel-arrow span {
       width: 24px;
       height: 24px;
       display: inline-grid;
@@ -458,18 +492,18 @@ const cases = caseOrder.flatMap((label) => {
       line-height: 1;
     }
 
-    .video-page-clinical-carousel .clinical-carousel-arrow span::before {
+    .clinical-carousel-arrow span::before {
       font-family: "Inter", ui-sans-serif, system-ui, sans-serif !important;
       font-size: 23.2px;
       font-weight: 400;
       line-height: 23.2px;
     }
 
-    .video-page-clinical-carousel .clinical-carousel-arrow-prev span::before {
+    .clinical-carousel-arrow-prev span::before {
       content: "←";
     }
 
-    .video-page-clinical-carousel .clinical-carousel-arrow-next span::before {
+    .clinical-carousel-arrow-next span::before {
       content: "→";
     }
   }
