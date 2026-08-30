@@ -7,6 +7,7 @@ import ClinicalCasesOriginalGrid from './ClinicalCasesOriginalGrid.astro';
 import HomeTreatments from './HomeTreatments.astro';
 
 const heroImage = '/assets/original/2021/02/HOME.jpg';
+const heroMobileImage = '/assets/original/2021/02/HOME-mobile-hd.jpg';
 const starsFor = (rating: number) => `${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}`;
 
 const treatmentOrder = [
@@ -114,7 +115,11 @@ const locationOffices = site.offices.map((office) => {
 ---
 
 <div class="scraped-home">
-  <section class="scraped-hero" aria-label="Studio dentistico Federzoni Granata" style={`--hero-image: url('${heroImage}')`} data-transparent-header-region>
+  <section
+    class="scraped-hero"
+    aria-label="Studio dentistico Federzoni Granata"
+    style={`--hero-image: url('${heroImage}'); --hero-image-mobile: url('${heroMobileImage}')`}
+    data-transparent-header-region>
     <div class="scraped-hero-shade" aria-hidden="true"></div>
     <div class="scraped-hero-copy">
       <p class="scraped-pretitle">
@@ -2243,6 +2248,7 @@ const locationOffices = site.offices.map((office) => {
     .scraped-hero {
       align-items: end;
       justify-items: start;
+      background-image: var(--hero-image-mobile);
       background-position: 74% center;
     }
 
@@ -2274,7 +2280,10 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .scraped-pretitle {
-      display: none;
+      display: block;
+      margin: 0 0 14px;
+      color: var(--surface-white);
+      text-align: left;
     }
 
     .scraped-pretitle-separator,
@@ -2970,10 +2979,14 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .scraped-hero h1 {
-      font-size: clamp(2.25rem, 10vw, 2.625rem);
-      font-weight: 400;
+      font-size: clamp(2.375rem, 10.5vw, 2.75rem);
+      font-weight: 600;
       letter-spacing: -0.16px;
       line-height: 0.98;
+    }
+
+    .scraped-hero-title-line:first-child::first-letter {
+      text-transform: uppercase;
     }
 
     .scraped-hero-description {
