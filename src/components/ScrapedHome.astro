@@ -127,7 +127,7 @@ const locationOffices = site.offices.map((office) => {
         <span class="scraped-pretitle-experience">Oltre 35 anni di esperienza</span>
       </p>
       <h1>
-        <span class="scraped-hero-title-line">il tuo benessere</span>
+        <span class="scraped-hero-title-line">Il tuo benessere</span>
         <span class="scraped-hero-title-line">inizia da un sorriso</span>
       </h1>
       <p class="scraped-hero-description">
@@ -2979,19 +2979,16 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .scraped-hero h1 {
-      max-width: 17rem;
-      font-size: clamp(2.875rem, 12vw, 3.125rem);
+      max-width: 100%;
+      font-size: clamp(2.625rem, 11vw, 2.875rem);
       font-weight: 700;
       letter-spacing: -0.16px;
-      line-height: 0.98;
+      line-height: 1.07;
     }
 
     .scraped-hero-title-line {
+      display: inline;
       white-space: normal;
-    }
-
-    .scraped-hero-title-line:first-child::first-letter {
-      text-transform: uppercase;
     }
 
     .scraped-hero-description {
@@ -3043,8 +3040,9 @@ const locationOffices = site.offices.map((office) => {
   }
 
   @media (max-width: 340px) {
-    .scraped-hero-title-line {
-      white-space: normal;
+    .scraped-hero h1 {
+      font-size: 2.2rem;
+      line-height: 1.08;
     }
   }
 </style>
