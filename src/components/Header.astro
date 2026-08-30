@@ -815,30 +815,18 @@ const siteMenuClinical = site.clinicalLinks.map((item) => ({
       return;
     }
 
-    const mobileMenuQuery = window.matchMedia('(max-width: 620px)');
     const accordions = Array.from(panel.querySelectorAll('[data-site-menu-accordion]')).filter(
       (item) => item instanceof HTMLDetailsElement,
     );
 
-    const syncAccordions = () => {
+    const closeAccordions = () => {
       accordions.forEach((accordion) => {
-        accordion.open = !mobileMenuQuery.matches;
+        accordion.open = false;
       });
     };
 
     accordions.forEach((accordion) => {
-      const summary = accordion.querySelector('.site-menu-section-summary');
-
-      summary?.addEventListener('click', (event) => {
-        if (!mobileMenuQuery.matches) event.preventDefault();
-      });
-
       accordion.addEventListener('toggle', () => {
-        if (!mobileMenuQuery.matches) {
-          if (!accordion.open) accordion.open = true;
-          return;
-        }
-
         if (!accordion.open) return;
 
         accordions.forEach((otherAccordion) => {
@@ -847,8 +835,7 @@ const siteMenuClinical = site.clinicalLinks.map((item) => ({
       });
     });
 
-    syncAccordions();
-    mobileMenuQuery.addEventListener('change', syncAccordions);
+    closeAccordions();
 
     const setOpen = (isOpen) => {
       header.classList.toggle('site-menu-open', isOpen);
@@ -860,11 +847,7 @@ const siteMenuClinical = site.clinicalLinks.map((item) => ({
       if (isOpen) header.classList.remove('is-hidden');
       if (!isOpen) {
         panel.querySelectorAll('.site-menu-call-dropdown[open]').forEach((dropdown) => dropdown.removeAttribute('open'));
-        if (mobileMenuQuery.matches) {
-          accordions.forEach((accordion) => {
-            accordion.open = false;
-          });
-        }
+        closeAccordions();
       }
     };
 
@@ -894,6 +877,7 @@ const siteMenuClinical = site.clinicalLinks.map((item) => ({
     dropdowns.forEach((dropdown) => {
       if (!(dropdown instanceof HTMLDetailsElement) || dropdown.dataset.ready === 'true') return;
       dropdown.dataset.ready = 'true';
+      const isSiteMenuCallDropdown = dropdown.classList.contains('site-menu-call-dropdown');
       let closeTimeout;
 
       const clearCloseDelay = () => {
@@ -903,13 +887,13 @@ const siteMenuClinical = site.clinicalLinks.map((item) => ({
       };
 
       const openOnHover = () => {
-        if (!hoverQuery.matches || mobileDropdownQuery.matches) return;
+        if (isSiteMenuCallDropdown || !hoverQuery.matches || mobileDropdownQuery.matches) return;
         clearCloseDelay();
         dropdown.open = true;
       };
 
       const closeAfterHover = () => {
-        if (!hoverQuery.matches || mobileDropdownQuery.matches) return;
+        if (isSiteMenuCallDropdown || !hoverQuery.matches || mobileDropdownQuery.matches) return;
         clearCloseDelay();
         closeTimeout = window.setTimeout(() => {
           dropdown.open = false;

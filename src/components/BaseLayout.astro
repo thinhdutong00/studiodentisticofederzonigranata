@@ -5140,7 +5140,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     width: min(540px, calc(100vw - 32px));
     height: calc(100dvh - 32px);
     display: grid;
-    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-rows: auto minmax(0, 1fr) auto auto;
     gap: 10px;
     border-radius: 10px;
     padding: 28px 36px 34px;
@@ -5493,6 +5493,236 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     to {
       opacity: 1;
       clip-path: inset(0 0 0 0);
+    }
+  }
+
+  @media (min-width: 621px) {
+    .site-menu-scroll {
+      display: grid;
+      align-content: start;
+    }
+
+    .site-menu-scroll > * {
+      min-width: 0;
+      border-bottom: 1px solid rgba(var(--surface-white-rgb), 0.22);
+    }
+
+    .site-menu-scroll > .site-menu-contact {
+      border-bottom: 0;
+    }
+
+    .site-menu-primary-link {
+      display: block;
+      padding: 18px 0;
+      color: var(--surface-white);
+      font-size: clamp(1.35rem, 2vw, 1.85rem);
+      font-weight: 500;
+      line-height: 1.1;
+      letter-spacing: -0.2px;
+      text-decoration: none;
+    }
+
+    .site-menu-primary-link:hover,
+    .site-menu-primary-link:focus-visible {
+      color: var(--soft-blue-bg);
+      outline: 0;
+    }
+
+    .site-menu-home-link {
+      order: 1;
+    }
+
+    .site-menu-section-information {
+      order: 2;
+    }
+
+    .site-menu-section-treatments {
+      order: 3;
+    }
+
+    .site-menu-clinical {
+      order: 4;
+      display: grid;
+    }
+
+    .site-menu-visit-link {
+      order: 5;
+    }
+
+    .site-menu-contact {
+      order: 6;
+      display: grid;
+    }
+
+    .site-menu-links a.site-menu-mobile-moved {
+      display: none;
+    }
+
+    .site-menu-section {
+      gap: 0;
+      padding: 18px 0;
+    }
+
+    .site-menu-section + .site-menu-section {
+      padding-top: 18px;
+    }
+
+    .site-menu-section[open] {
+      gap: 16px;
+    }
+
+    .site-menu-section-summary {
+      cursor: pointer;
+    }
+
+    .site-menu-section-summary:focus-visible {
+      outline: 2px solid rgba(var(--surface-white-rgb), 0.76);
+      outline-offset: 6px;
+    }
+
+    .site-menu-section-title::after {
+      position: absolute;
+      bottom: -9px;
+      left: 0;
+      margin-top: 0;
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition:
+        opacity 80ms linear,
+        transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .site-menu-section-title {
+      position: relative;
+    }
+
+    .site-menu-accordion[open] .site-menu-section-title::after {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+
+    .site-menu-section-toggle {
+      width: 28px;
+      height: 28px;
+      flex: 0 0 28px;
+      display: grid;
+      place-items: center;
+      color: var(--surface-white);
+      transition: transform 180ms ease;
+    }
+
+    .site-menu-section-toggle svg {
+      width: 24px;
+      height: 24px;
+      display: block;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .site-menu-accordion[open] .site-menu-section-toggle {
+      transform: rotate(180deg);
+    }
+
+    .site-menu-accordion[open] .site-menu-links a,
+    .site-menu-accordion[open] .site-menu-all-link {
+      animation: site-menu-item-enter 340ms cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation-delay: calc(var(--site-menu-item-order, 0) * 55ms);
+    }
+
+    .site-menu-actions {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      border-top: 1px solid rgba(var(--surface-white-rgb), 0.24);
+      padding-top: 12px;
+    }
+
+    .site-menu-actions > * {
+      min-width: 0;
+    }
+
+    .site-menu-action {
+      width: 100%;
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border: 1px solid rgba(var(--surface-white-rgb), 0.72);
+      border-radius: 6px;
+      padding: 0 14px;
+      background: transparent;
+      color: var(--surface-white);
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 16px;
+      letter-spacing: -0.2px;
+      list-style: none;
+      text-decoration: none;
+      text-transform: none;
+      cursor: pointer;
+    }
+
+    .site-menu-action::-webkit-details-marker {
+      display: none;
+    }
+
+    .site-menu-action-icon {
+      width: 20px;
+      height: 20px;
+      flex: 0 0 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .site-menu-action-primary {
+      border-color: var(--surface-white);
+      background: var(--surface-white);
+      color: var(--brand-cta);
+    }
+
+    .site-menu-action-primary:hover,
+    .site-menu-action-primary:focus-visible {
+      border-color: var(--soft-blue-bg);
+      background: var(--soft-blue-bg);
+      color: var(--brand-cta-hover);
+      outline: 0;
+    }
+
+    .site-menu-action-secondary:hover,
+    .site-menu-action-secondary:focus-visible,
+    .site-menu-call-dropdown[open] .site-menu-action-secondary {
+      border-color: var(--surface-white);
+      background: rgba(var(--surface-white-rgb), 0.14);
+      color: var(--surface-white);
+      outline: 0;
+    }
+
+    .site-menu-call-dropdown {
+      position: relative;
+    }
+
+    .site-menu-call-options {
+      top: auto;
+      right: 0;
+      bottom: calc(100% + 10px);
+      left: auto;
+      width: min(300px, calc(100vw - 48px));
+      min-width: 0;
+    }
+
+    .site-menu-social {
+      border-top: 1px solid rgba(var(--surface-white-rgb), 0.24);
+      padding-top: 12px;
     }
   }
 
