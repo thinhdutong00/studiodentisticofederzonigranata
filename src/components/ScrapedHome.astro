@@ -508,17 +508,34 @@ const locationOffices = site.offices.map((office) => {
 
   <script>
     const mobileHero = document.querySelector('.scraped-hero');
+    const mobileHeroCopy = mobileHero?.querySelector('.scraped-hero-copy');
     const mobileHeroQuery = window.matchMedia('(max-width: 720px)');
+    const mobileHeroRootClass = 'mobile-home-hero-scroll-lock';
+    let mobileHeroLockFrame = 0;
 
     const lockMobileHeroHeight = () => {
-      if (!(mobileHero instanceof HTMLElement)) return;
+      if (!(mobileHero instanceof HTMLElement) || !(mobileHeroCopy instanceof HTMLElement)) return;
+
+      window.cancelAnimationFrame(mobileHeroLockFrame);
 
       if (mobileHeroQuery.matches) {
+        document.documentElement.classList.add(mobileHeroRootClass);
+        document.body.classList.add(mobileHeroRootClass);
+        mobileHero.removeAttribute('data-mobile-hero-position-locked');
+        mobileHero.style.removeProperty('--mobile-hero-copy-top');
         mobileHero.style.setProperty('--mobile-hero-stable-height', `${Math.round(window.innerHeight)}px`);
+        mobileHeroLockFrame = window.requestAnimationFrame(() => {
+          mobileHero.style.setProperty('--mobile-hero-copy-top', `${Math.round(mobileHeroCopy.offsetTop)}px`);
+          mobileHero.setAttribute('data-mobile-hero-position-locked', 'true');
+        });
         return;
       }
 
+      document.documentElement.classList.remove(mobileHeroRootClass);
+      document.body.classList.remove(mobileHeroRootClass);
+      mobileHero.removeAttribute('data-mobile-hero-position-locked');
       mobileHero.style.removeProperty('--mobile-hero-stable-height');
+      mobileHero.style.removeProperty('--mobile-hero-copy-top');
     };
 
     lockMobileHeroHeight();
@@ -2396,6 +2413,11 @@ const locationOffices = site.offices.map((office) => {
   }
 
   @media (max-width: 720px) {
+    :global(html.mobile-home-hero-scroll-lock),
+    :global(body.mobile-home-hero-scroll-lock) {
+      overscroll-behavior-y: none;
+    }
+
     .scraped-wrap {
       width: min(100% - 30px, 1510px);
     }
@@ -2407,6 +2429,11 @@ const locationOffices = site.offices.map((office) => {
       justify-items: start;
       background-image: var(--hero-image-mobile);
       background-position: 74% center;
+    }
+
+    .scraped-hero[data-mobile-hero-position-locked="true"] .scraped-hero-copy {
+      top: var(--mobile-hero-copy-top);
+      bottom: auto;
     }
 
     .prefooter-section::after {
