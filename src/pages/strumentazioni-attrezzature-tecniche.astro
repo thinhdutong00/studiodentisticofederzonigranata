@@ -723,6 +723,26 @@ const technologies = [
   }
 
   @media (max-width: 720px) {
+    :global(html body .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open)) {
+      border-bottom-color: rgba(var(--brand-primary-dark-rgb), 0.12);
+      background: var(--surface-white);
+      box-shadow: 0 10px 32px rgba(var(--brand-primary-dark-rgb), 0.08);
+      backdrop-filter: blur(16px);
+    }
+
+    :global(html body .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .brand img) {
+      filter: none;
+    }
+
+    :global(html body .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .site-menu-trigger) {
+      color: var(--brand-primary-dark);
+    }
+
+    :global(html body .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .site-menu-trigger:hover),
+    :global(html body .site-header.site-header-overlay.is-over-hero:not(.mobile-menu-open) .site-menu-trigger:focus-visible) {
+      color: var(--brand-blue);
+    }
+
     .technology-page {
       font-size: 17px;
       letter-spacing: -0.16px;
