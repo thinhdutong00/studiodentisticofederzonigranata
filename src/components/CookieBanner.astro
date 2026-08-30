@@ -2,37 +2,48 @@
 ---
 
 <aside class="cookie-banner" data-cookie-banner role="note" aria-label="GDPR Cookie Banner">
-  <p>Usiamo i cookie per migliorare esperienza d'uso e navigazione. Trovi più informazioni nella <a href="/cookie-privacy/">Cookie Policy</a>.</p>
-  <div class="cookie-actions cookie-primary-actions">
-    <button type="button" data-cookie-choice="accept">Accetta</button>
-    <button
-      type="button"
-      class="secondary"
-      aria-expanded="false"
-      aria-controls="cookie-settings-panel"
-      data-cookie-settings-toggle
-    >
-      Impostazioni
-    </button>
-  </div>
-  <div
-    id="cookie-settings-panel"
-    class="cookie-settings-panel"
-    role="region"
-    aria-label="Impostazioni dei cookie"
-    data-cookie-settings-panel
-    hidden
-  >
-    <p class="cookie-settings-title">Preferenze cookie</p>
-    <div class="cookie-settings-row">
-      <span>
-        <strong>Cookie necessari</strong>
-        <small>Essenziali per il corretto funzionamento del sito.</small>
-      </span>
-      <span class="cookie-settings-status">Sempre attivi</span>
+  <div class="cookie-banner-inner">
+    <div class="cookie-banner-intro">
+      <div class="cookie-banner-copy">
+        <p class="cookie-banner-title">La tua privacy è importante</p>
+        <p>
+          Usiamo i cookie per migliorare l’esperienza di navigazione. Puoi accettarli oppure
+          gestire le tue preferenze. Consulta la <a href="/cookie-privacy/">Cookie Policy</a>.
+        </p>
+      </div>
+      <div class="cookie-actions cookie-primary-actions">
+        <button type="button" data-cookie-choice="accept">Accetta</button>
+        <button
+          type="button"
+          class="secondary"
+          aria-expanded="false"
+          aria-controls="cookie-settings-panel"
+          data-cookie-settings-toggle
+        >
+          Gestisci le preferenze
+        </button>
+      </div>
     </div>
-    <div class="cookie-actions cookie-settings-actions">
-      <button type="button" class="secondary" data-cookie-choice="reject">Rifiuta</button>
+    <div
+      id="cookie-settings-panel"
+      class="cookie-settings-panel"
+      role="region"
+      aria-label="Impostazioni dei cookie"
+      data-cookie-settings-panel
+      hidden
+    >
+      <p class="cookie-settings-title">Gestisci le preferenze</p>
+      <div class="cookie-settings-row">
+        <span>
+          <strong>Cookie necessari</strong>
+          <small>Essenziali per il corretto funzionamento del sito.</small>
+        </span>
+        <span class="cookie-settings-status">Sempre attivi</span>
+      </div>
+      <div class="cookie-actions cookie-settings-actions">
+        <button type="button" class="cookie-settings-back secondary" data-cookie-settings-back>Indietro</button>
+        <button type="button" class="secondary" data-cookie-choice="reject">Rifiuta</button>
+      </div>
     </div>
   </div>
 </aside>
@@ -40,6 +51,7 @@
 <script>
   const banner = document.querySelector('[data-cookie-banner]');
   const settingsToggle = banner?.querySelector('[data-cookie-settings-toggle]');
+  const settingsBack = banner?.querySelector('[data-cookie-settings-back]');
   const settingsPanel = banner?.querySelector('[data-cookie-settings-panel]');
   const storageKey = 'fg-cookie-preference';
 
@@ -90,6 +102,8 @@
     const isOpen = settingsToggle.getAttribute('aria-expanded') === 'true';
     setSettingsOpen(!isOpen);
   });
+
+  settingsBack?.addEventListener('click', () => setSettingsOpen(false));
 
   document.addEventListener('fg-cookie-settings-open', () => {
     banner?.classList.add('is-visible');

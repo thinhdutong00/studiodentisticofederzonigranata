@@ -2,6 +2,7 @@
 import Header from './Header.astro';
 import Footer from './Footer.astro';
 import CookieBanner from './CookieBanner.astro';
+import WhatsAppFloatingButton from './WhatsAppFloatingButton.astro';
 import { site } from '../data/site';
 import '../styles/apple-mobile-fonts.css';
 
@@ -26,6 +27,14 @@ const {
 } = Astro.props;
 
 const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentisticofederzonigranata.vercel.app').toString();
+const whatsappExcludedPaths = new Set([
+  '/richiesta/',
+  '/prenota-prima-visita/',
+  '/prenota-urgenza/',
+  '/privacy-policy/',
+  '/cookie-privacy/',
+]);
+const showWhatsAppButton = !whatsappExcludedPaths.has(canonicalPath);
 ---
 
 <!doctype html>
@@ -63,6 +72,7 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
       <slot />
     </main>
     <Footer />
+    {showWhatsAppButton && <WhatsAppFloatingButton />}
     <CookieBanner />
     <script is:inline>
       (() => {
@@ -1210,56 +1220,135 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
   .cookie-banner {
     position: fixed;
-    left: 18px;
-    right: 18px;
-    bottom: 18px;
+    right: 0;
+    bottom: 0;
+    left: 0;
     z-index: 80;
-    display: none;
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 16px;
-    border-radius: 8px;
-    background: var(--brand-primary-dark);
-    color: var(--surface-white);
-    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
+    width: 100%;
+    display: block;
+    border: 0;
+    border-top: 1px solid var(--border);
+    border-radius: 0;
+    padding: 0;
+    background: var(--surface-white);
+    color: var(--brand-primary-dark);
+    box-shadow: 0 -16px 44px rgba(var(--brand-primary-dark-rgb), 0.16);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(calc(100% + 4px));
+    transition:
+      opacity 240ms ease,
+      transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s linear 420ms;
   }
 
   .cookie-banner.is-visible {
-    display: block;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+    transition-delay: 0s;
+  }
+
+  .cookie-banner-inner {
+    width: min(100% - 48px, 1280px);
+    margin: 0 auto;
+    padding: 24px 0 calc(24px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .cookie-banner-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .cookie-banner.settings-open .cookie-banner-intro {
+    display: none;
+  }
+
+  .cookie-banner-copy {
+    max-width: 720px;
+  }
+
+  .cookie-banner .cookie-banner-title {
+    margin: 0 0 6px;
+    color: var(--brand-primary-dark);
+    font-size: 1.18rem;
+    font-weight: 500;
+    letter-spacing: -0.2px;
+    line-height: 1.2;
   }
 
   .cookie-banner p {
-    margin: 0 0 10px;
+    margin: 0;
+    color: var(--brand-primary-dark);
+    font-size: 0.95rem;
+    font-weight: 400;
+    letter-spacing: -0.2px;
+    line-height: 1.5;
+  }
+
+  .cookie-banner a {
+    color: var(--brand-cta);
+    font-weight: 500;
+  }
+
+  .cookie-banner a:hover,
+  .cookie-banner a:focus-visible {
+    color: var(--brand-cta-hover);
   }
 
   .cookie-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 12px;
   }
 
   .cookie-actions button {
-    min-height: 40px;
-    border: 1px solid rgba(255, 255, 255, 0.24);
-    border-radius: 999px;
-    padding: 9px 14px;
-    background: var(--blue);
+    min-height: 48px;
+    border: 1px solid var(--brand-cta);
+    border-radius: 8px;
+    padding: 14px 22px;
+    background: var(--brand-cta);
     color: var(--surface-white);
     font: inherit;
-    font-weight: 900;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: normal;
+    line-height: 1;
+    text-transform: uppercase;
     cursor: pointer;
+    transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+  }
+
+  .cookie-actions button:hover,
+  .cookie-actions button:focus-visible {
+    border-color: var(--brand-cta-hover);
+    background: var(--brand-cta-hover);
+    color: var(--surface-white);
+    outline: 0;
   }
 
   .cookie-actions button.secondary {
-    background: transparent;
+    border-color: var(--border);
+    background: var(--surface-white);
+    color: var(--brand-primary-dark);
+  }
+
+  .cookie-actions button.secondary:hover,
+  .cookie-actions button.secondary:focus-visible {
+    border-color: var(--brand-blue);
+    background: var(--soft-blue-bg);
+    color: var(--brand-primary-dark);
   }
 
   .cookie-settings-panel {
     display: grid;
-    gap: 12px;
-    margin-top: 14px;
-    border-top: 1px solid rgba(var(--surface-white-rgb), 0.24);
-    padding-top: 14px;
+    grid-template-columns: auto minmax(300px, 1fr) auto;
+    align-items: center;
+    gap: 24px;
   }
 
   .cookie-settings-panel[hidden] {
@@ -1268,10 +1357,11 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
 
   .cookie-banner .cookie-settings-title {
     margin: 0;
-    color: var(--surface-white);
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 1.25;
+    color: var(--brand-primary-dark);
+    font-size: 1.18rem;
+    font-weight: 500;
+    letter-spacing: -0.2px;
+    line-height: 1.2;
   }
 
   .cookie-settings-row {
@@ -1279,9 +1369,10 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     align-items: center;
     justify-content: space-between;
     gap: 18px;
-    border: 1px solid rgba(var(--surface-white-rgb), 0.2);
+    border: 1px solid var(--border);
     border-radius: 8px;
     padding: 12px 14px;
+    background: var(--soft-blue-bg);
   }
 
   .cookie-settings-row > span:first-child {
@@ -1293,19 +1384,20 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
   .cookie-settings-row strong,
   .cookie-settings-row small {
     display: block;
+    color: var(--brand-primary-dark);
   }
 
   .cookie-settings-row small {
-    color: rgba(var(--surface-white-rgb), 0.72);
+    color: var(--muted-text);
     font-size: 0.82rem;
     line-height: 1.35;
   }
 
   .cookie-settings-status {
     flex: 0 0 auto;
-    color: var(--soft-blue-bg);
+    color: var(--brand-cta);
     font-size: 0.78rem;
-    font-weight: 700;
+    font-weight: 500;
     line-height: 1.2;
     white-space: nowrap;
   }
@@ -1551,22 +1643,6 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
       padding: 58px 0 42px;
     }
 
-    .cookie-banner {
-      left: 10px;
-      right: 10px;
-      bottom: 10px;
-      padding: 12px;
-      font-size: 0.86rem;
-    }
-
-    .cookie-actions {
-      gap: 8px;
-    }
-
-    .cookie-actions button {
-      min-height: 34px;
-      padding: 7px 11px;
-    }
   }
 
   /* Campaign-inspired redesign */
@@ -2900,17 +2976,6 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     .footer-policy-separator::before {
       content: "|";
     }
-  }
-
-  .cookie-banner {
-    border: 2px solid rgba(255, 255, 255, 0.14);
-    border-radius: var(--radius);
-    background: var(--blue-dark);
-  }
-
-  .cookie-actions button {
-    border-radius: var(--radius);
-    background: var(--signal);
   }
 
   @media (max-width: 1180px) {
@@ -6226,33 +6291,47 @@ const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentistico
     }
 
     .cookie-banner {
-      right: 0;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      max-width: none;
-      display: block;
-      margin: 0;
-      padding: 18px 16px calc(18px + env(safe-area-inset-bottom));
-      border-width: 1px 0 0;
-      border-radius: 16px 16px 0 0;
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transform: translateY(100%);
-      transition:
-        opacity 240ms ease,
-        transform 360ms cubic-bezier(0.22, 1, 0.36, 1),
-        visibility 0s linear 360ms;
+      font-size: 0.9rem;
     }
 
-    .cookie-banner.is-visible {
-      display: block;
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-      transform: translateY(0);
-      transition-delay: 0s;
+    .cookie-banner-inner {
+      width: calc(100% - 32px);
+      padding: 20px 0 calc(20px + env(safe-area-inset-bottom, 0px));
+    }
+
+    .cookie-banner-intro,
+    .cookie-settings-panel {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .cookie-banner .cookie-banner-title,
+    .cookie-banner .cookie-settings-title {
+      font-size: 1.08rem;
+      letter-spacing: -0.16px;
+    }
+
+    .cookie-banner p {
+      letter-spacing: -0.16px;
+    }
+
+    .cookie-primary-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    .cookie-actions button {
+      min-height: 48px;
+      padding: 14px 16px;
+    }
+
+    .cookie-settings-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .cookie-settings-actions button {
+      width: 100%;
     }
   }
 
