@@ -32,8 +32,8 @@ const networkImages = [
     alt: 'Radiografia dentale con impianto',
   },
   {
-    src: '/assets/original/2022/03/dentista-modena-reggio-emilia.jpg',
-    alt: 'Dottor Stefano Granata e Dottoressa Chiara Federzoni davanti al monitor',
+    src: '/assets/feature-stack/specialisti-clinica-mobile.jpg',
+    alt: 'Equipe odontoiatrica durante un intervento clinico',
   },
 ];
 
@@ -210,6 +210,9 @@ const officeDetails: Record<string, { label: string; title: string; description:
             implantologia, ortodonzia ed estetica dentale che ruotano attorno alla persona, le nostre sedi sono un
             punto di riferimento per la salute del sorriso.
           </p>
+          <figure class="network-gallery-mobile-lead">
+            <img src={networkImages[0].src} alt={networkImages[0].alt} loading="eager" />
+          </figure>
           <p>
             Punto di forza è la continuità nella presa in carico, grazie a una organizzazione condivisa, a
             professionisti coordinati e a strumenti digitali che rendono visite, controlli e trattamenti più chiari e
@@ -648,6 +651,10 @@ const officeDetails: Record<string, { label: string; title: string; description:
   .network-paragraphs p + p {
     max-width: 1310px;
     margin-top: 62px;
+  }
+
+  .network-gallery-mobile-lead {
+    display: none;
   }
 
   .network-gallery {
@@ -1159,7 +1166,7 @@ const officeDetails: Record<string, { label: string; title: string; description:
     }
 
     .about-lead {
-      margin-top: 24px;
+      margin-top: 20px;
       font-size: 17px;
       letter-spacing: -0.16px;
       line-height: 25px;
@@ -1193,17 +1200,17 @@ const officeDetails: Record<string, { label: string; title: string; description:
     .values-section,
     .network-section,
     .offices-section {
-      padding-top: 64px;
-      padding-bottom: 64px;
+      padding-top: 58px;
+      padding-bottom: 58px;
     }
 
     .text-stack {
       width: min(100% - 30px, 1120px);
-      gap: 48px;
+      gap: 40px;
     }
 
     .text-stack h2 {
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       font-size: 40px;
       font-weight: 600;
       letter-spacing: -0.16px;
@@ -1239,7 +1246,7 @@ const officeDetails: Record<string, { label: string; title: string; description:
     }
 
     .network-paragraphs {
-      margin-top: 24px;
+      margin-top: 20px;
     }
 
     .network-paragraphs p {
@@ -1249,6 +1256,27 @@ const officeDetails: Record<string, { label: string; title: string; description:
     }
 
     .network-paragraphs p + p {
+      margin-top: 20px;
+    }
+
+    .network-gallery-mobile-lead {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      display: block;
+      overflow: hidden;
+      margin: 24px 0 0;
+      background: var(--border);
+    }
+
+    .network-gallery-mobile-lead img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: 48% center;
+    }
+
+    .network-gallery-mobile-lead + p {
       margin-top: 20px;
     }
 
@@ -1325,9 +1353,17 @@ const officeDetails: Record<string, { label: string; title: string; description:
       aspect-ratio: 1.2;
     }
 
+    .network-gallery figure:first-child {
+      display: none;
+    }
+
+    .network-gallery figure:nth-child(3) {
+      order: -1;
+    }
+
     .network-foot {
       gap: 24px;
-      padding: 48px 0 0;
+      padding: 40px 0 0;
     }
 
     .network-foot h3 {
@@ -1377,12 +1413,37 @@ const officeDetails: Record<string, { label: string; title: string; description:
       margin-top: 40px;
     }
 
+    .offices-section {
+      background: var(--brand-primary-dark);
+      color: var(--surface-white);
+    }
+
+    .offices-head,
+    .offices-section h2,
+    .offices-head p {
+      text-align: center;
+    }
+
+    .offices-section h2,
+    .office-copy h3 {
+      color: var(--surface-white);
+    }
+
+    .offices-head p,
+    .office-copy p:not(.office-city) {
+      color: rgba(var(--surface-white-rgb), 0.86);
+    }
+
+    .office-city {
+      color: var(--brand-blue);
+    }
+
     .office-feature {
       gap: 24px;
     }
 
     .offices-head p {
-      margin-top: 24px;
+      margin-top: 20px;
       font-size: 17px;
       letter-spacing: -0.16px;
       line-height: 25px;
@@ -1425,6 +1486,19 @@ const officeDetails: Record<string, { label: string; title: string; description:
       letter-spacing: normal;
       line-height: 16px;
       text-transform: uppercase;
+    }
+
+    .office-actions a {
+      border-color: rgba(var(--surface-white-rgb), 0.7);
+      background: transparent;
+      color: var(--surface-white);
+    }
+
+    .office-actions a:hover,
+    .office-actions a:focus-visible {
+      border-color: var(--surface-white);
+      background: rgba(var(--surface-white-rgb), 0.1);
+      color: var(--surface-white);
     }
 
     .discover-card,
