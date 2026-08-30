@@ -2957,6 +2957,7 @@ const locationOffices = site.offices.map((office) => {
       eccezione della hero. Il desktop resta intenzionalmente invariato.
     */
     .scraped-home {
+      --home-mobile-font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "Helvetica Neue", sans-serif;
       --home-mobile-section-title-size: clamp(1.75rem, 8.2vw, 2rem);
       --home-mobile-section-title-line: 1.12;
       --home-mobile-card-title-size: 1.25rem;
@@ -2965,7 +2966,12 @@ const locationOffices = site.offices.map((office) => {
       --home-mobile-body-line: 1.5;
       --home-mobile-eyebrow-size: 0.75rem;
       --home-mobile-eyebrow-line: 1.25;
+      font-family: var(--home-mobile-font-family);
       letter-spacing: -0.16px;
+    }
+
+    .scraped-home :global(*) {
+      font-family: var(--home-mobile-font-family) !important;
     }
 
     .scraped-pretitle,
