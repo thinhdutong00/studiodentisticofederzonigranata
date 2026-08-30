@@ -507,6 +507,28 @@ const locationOffices = site.offices.map((office) => {
   </section>
 
   <script>
+    const mobileHero = document.querySelector('.scraped-hero');
+    const mobileHeroQuery = window.matchMedia('(max-width: 720px)');
+
+    const lockMobileHeroHeight = () => {
+      if (!(mobileHero instanceof HTMLElement)) return;
+
+      if (mobileHeroQuery.matches) {
+        mobileHero.style.setProperty('--mobile-hero-stable-height', `${Math.round(window.innerHeight)}px`);
+        return;
+      }
+
+      mobileHero.style.removeProperty('--mobile-hero-stable-height');
+    };
+
+    lockMobileHeroHeight();
+    mobileHeroQuery.addEventListener('change', lockMobileHeroHeight);
+    window.addEventListener(
+      'orientationchange',
+      () => window.setTimeout(lockMobileHeroHeight, 250),
+      { passive: true },
+    );
+
     const reviewsCarousel = document.querySelector('[data-reviews-carousel]');
 
     if (reviewsCarousel instanceof HTMLElement) {
@@ -2379,8 +2401,8 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .scraped-hero {
-      height: 100svh;
-      min-height: 100svh;
+      height: var(--mobile-hero-stable-height, 100svh);
+      min-height: var(--mobile-hero-stable-height, 100svh);
       align-items: end;
       justify-items: start;
       background-image: var(--hero-image-mobile);
