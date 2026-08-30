@@ -2703,6 +2703,11 @@ const locationOffices = site.offices.map((office) => {
       display: grid;
     }
 
+    .insights-section {
+      background: var(--brand-primary-dark);
+      color: var(--surface-white);
+    }
+
     .insights-head {
       display: contents;
     }
@@ -2710,6 +2715,7 @@ const locationOffices = site.offices.map((office) => {
     .insights-head h2 {
       order: 1;
       margin: 0;
+      color: var(--surface-white);
       text-align: center;
       text-wrap: balance;
     }
@@ -2733,7 +2739,7 @@ const locationOffices = site.offices.map((office) => {
       order: 2;
       justify-self: center;
       margin: 20px 0 0;
-      color: var(--muted-text);
+      color: rgba(var(--surface-white-rgb), 0.76);
       font-size: 1rem;
       font-weight: 400;
       line-height: 1.5;
@@ -2748,11 +2754,11 @@ const locationOffices = site.offices.map((office) => {
       gap: 16px;
       align-items: center;
       margin-top: 28px;
-      border: 1px solid var(--border);
+      border: 1px solid rgba(var(--surface-white-rgb), 0.16);
       border-radius: 22px;
       padding: 20px;
-      background: var(--soft-blue-bg);
-      box-shadow: 0 14px 34px rgba(var(--brand-primary-dark-rgb), 0.08);
+      background: rgba(var(--surface-white-rgb), 0.08);
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.16);
     }
 
     .google-business-brand {
@@ -2775,14 +2781,14 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .google-business-brand strong {
-      color: var(--brand-primary-dark);
+      color: var(--surface-white);
       font-size: 0.98rem;
       font-weight: 600;
       line-height: 1.1;
     }
 
     .google-business-brand small {
-      color: var(--muted-text);
+      color: rgba(var(--surface-white-rgb), 0.66);
       font-size: 0.67rem;
       font-weight: 500;
       line-height: 1.2;
@@ -2793,7 +2799,7 @@ const locationOffices = site.offices.map((office) => {
       display: grid;
       gap: 8px;
       justify-items: end;
-      border-left: 1px solid var(--border);
+      border-left: 1px solid rgba(var(--surface-white-rgb), 0.16);
       padding-left: 16px;
       text-align: right;
     }
@@ -2807,7 +2813,7 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .google-business-rating strong {
-      color: var(--brand-primary-dark);
+      color: rgba(var(--surface-white-rgb), 0.82);
       font-size: 0.72rem;
       font-weight: 600;
       line-height: 1.3;
@@ -2815,13 +2821,72 @@ const locationOffices = site.offices.map((office) => {
 
     .insights-grid {
       order: 4;
+      gap: 16px;
       margin-top: 28px;
+      background: transparent;
+    }
+
+    .insight-card {
+      border: 1px solid rgba(var(--surface-white-rgb), 0.14);
+      border-radius: 20px;
+      background: rgba(var(--surface-white-rgb), 0.08);
+      color: var(--surface-white);
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.14);
+    }
+
+    .insight-card:hover,
+    .insight-card:focus-visible {
+      background: rgba(var(--surface-white-rgb), 0.13);
+      color: var(--surface-white);
+    }
+
+    .review-avatar,
+    .insight-card:hover .review-avatar,
+    .insight-card:focus-visible .review-avatar {
+      background: rgba(var(--surface-white-rgb), 0.14);
+      color: var(--surface-white);
+    }
+
+    .review-card-person strong,
+    .insight-card:hover .review-card-person strong,
+    .insight-card:focus-visible .review-card-person strong {
+      color: var(--surface-white);
+    }
+
+    .review-card-person small,
+    .insight-card:hover .review-card-person small,
+    .insight-card:focus-visible .review-card-person small {
+      color: rgba(var(--surface-white-rgb), 0.66);
+    }
+
+    .review-stars,
+    .insight-card:hover .review-stars,
+    .insight-card:focus-visible .review-stars {
+      color: var(--brand-blue);
+    }
+
+    .review-card-copy,
+    .insight-card:hover .review-card-copy,
+    .insight-card:focus-visible .review-card-copy {
+      color: rgba(var(--surface-white-rgb), 0.88);
     }
 
     .insights-head a {
+      width: 100%;
+      min-height: 56px;
       order: 5;
+      justify-content: center;
       justify-self: center;
       margin-top: 28px;
+      border-radius: 8px;
+      background: var(--brand-cta);
+      color: var(--surface-white);
+    }
+
+    .insights-head a:hover,
+    .insights-head a:focus-visible {
+      background: var(--brand-cta-hover);
+      color: var(--surface-white);
     }
 
     .locations-section {

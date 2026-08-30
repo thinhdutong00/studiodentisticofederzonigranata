@@ -29,9 +29,9 @@ const iconByClinicalLabel: Record<string, string> = {
         Riteniamo che le foto siano molto più eloquenti delle parole, soprattutto per i non addetti ai lavori.
       </p>
       <p>
-        I casi esposti sono quelli di routine del nostro studio, un piccolo riassunto delle terapie più comuni. Si tratta
-        spesso di casi multidisciplinari, in cui i vari professionisti si sono intervallati in sinergia sul paziente,
-        ciascuno con la propria esperienza e conoscenza specialistica.
+        I casi esposti sono quelli di routine del nostro studio<span class="clinical-cases-desktop-copy">, un piccolo
+        riassunto delle terapie più comuni</span>. Si tratta spesso di casi multidisciplinari, in cui i vari professionisti
+        si sono intervallati in sinergia sul paziente, ciascuno con la propria esperienza e conoscenza specialistica.
       </p>
     </div>
 
@@ -238,6 +238,10 @@ const iconByClinicalLabel: Record<string, string> = {
 
     .clinical-cases-intro p + p {
       margin-top: 10px;
+    }
+
+    .clinical-cases-desktop-copy {
+      display: none;
     }
 
     .clinical-cases-navigation {
