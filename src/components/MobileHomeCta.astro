@@ -1,0 +1,138 @@
+---
+interface Props {
+  id?: string;
+  eyebrow?: string;
+  title?: string;
+  lead?: string;
+  ctaLabel?: string;
+  href?: string;
+}
+
+const {
+  id = 'mobile-home-cta-title',
+  eyebrow = 'Inizia da qui',
+  title = 'Cosa vorresti migliorare del tuo sorriso?',
+  lead = 'Raccontaci la tua esigenza. Ti ricontatteremo per indicarti il percorso più adatto e organizzare la tua visita.',
+  ctaLabel = 'Raccontaci la tua esigenza',
+  href = '/richiesta/',
+} = Astro.props;
+---
+
+<section class="mobile-home-cta" aria-labelledby={id}>
+  <div class="mobile-home-cta-card">
+    <p class="mobile-home-cta-eyebrow">{eyebrow}</p>
+    <h2 id={id}>{title}</h2>
+    <p class="mobile-home-cta-copy">{lead}</p>
+    <a class="mobile-home-cta-button" href={href}>
+      {ctaLabel} <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .mobile-home-cta {
+    display: none;
+  }
+
+  @media (max-width: 720px) {
+    .mobile-home-cta {
+      display: block;
+      padding: 58px 0;
+      background: var(--surface-white);
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+      letter-spacing: -0.16px;
+      word-spacing: 0;
+    }
+
+    .mobile-home-cta-card {
+      width: min(100% - 30px, 1320px);
+      margin: 0 auto;
+      box-sizing: border-box;
+      padding: 32px 24px;
+      border: 1px solid rgba(var(--surface-white-rgb), 0.12);
+      border-radius: 20px;
+      background: var(--brand-primary-dark);
+      box-shadow: 0 22px 54px rgba(var(--brand-primary-dark-rgb), 0.18);
+      color: var(--surface-white);
+    }
+
+    .mobile-home-cta-eyebrow {
+      margin: 0 0 20px;
+      color: rgba(var(--surface-white-rgb), 0.72);
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif !important;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: normal;
+      line-height: 18px;
+      text-transform: uppercase;
+    }
+
+    .mobile-home-cta h2 {
+      margin: 0;
+      color: var(--surface-white);
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif !important;
+      font-size: 40px;
+      font-weight: 600;
+      letter-spacing: -0.16px;
+      line-height: 41px;
+      text-transform: none !important;
+    }
+
+    .mobile-home-cta-copy {
+      margin: 20px 0 0;
+      color: rgba(var(--surface-white-rgb), 0.72);
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif !important;
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: -0.16px;
+      line-height: 25px;
+    }
+
+    .mobile-home-cta-button {
+      width: 100%;
+      min-height: 56px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      box-sizing: border-box;
+      margin-top: 32px;
+      border: 1px solid var(--surface-white);
+      border-radius: 12px;
+      padding: 0 24px;
+      background: var(--surface-white);
+      color: var(--brand-primary-dark);
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif !important;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: -0.16px;
+      line-height: 16px;
+      text-decoration: none;
+    }
+
+    .mobile-home-cta-button:hover,
+    .mobile-home-cta-button:focus-visible {
+      border-color: var(--soft-blue-bg);
+      background: var(--soft-blue-bg);
+      color: var(--brand-primary-dark);
+    }
+
+    .mobile-home-cta-button:focus-visible {
+      outline: 3px solid var(--brand-blue);
+      outline-offset: 4px;
+    }
+
+    .mobile-home-cta-button span {
+      width: 24px;
+      height: 24px;
+      display: inline-grid;
+      flex: 0 0 24px;
+      place-items: center;
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif !important;
+      font-size: 23.2px;
+      font-weight: 400;
+      letter-spacing: normal;
+      line-height: 23.2px;
+    }
+  }
+</style>

@@ -2,6 +2,7 @@
 import ContactForm from './ContactForm.astro';
 import ClinicalCasesCarousel from './ClinicalCasesCarousel.astro';
 import ClinicalCasesOriginalGrid from './ClinicalCasesOriginalGrid.astro';
+import MobileHomeCta from './MobileHomeCta.astro';
 import ScrapedHome from './ScrapedHome.astro';
 import SectionBand from './SectionBand.astro';
 import TreatmentPrefooterCta from './TreatmentPrefooterCta.astro';
@@ -703,9 +704,7 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
   <>
     <section class="video-hero video-page-hero" aria-labelledby="video-hero-title" data-transparent-header-region>
       <div class="video-hero-inner">
-        <p class="video-hero-kicker">Video</p>
-        <h1 id="video-hero-title">Scopri il nostro studio dentistico!</h1>
-        <p class="video-hero-lead">Guarda i contenuti video dello Studio Dentistico Federzoni Granata e approfondisci tecnologie, trattamenti e casi clinici.</p>
+        <h1 id="video-hero-title">Contenuti video</h1>
       </div>
     </section>
 
@@ -745,7 +744,7 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
       </div>
     </SectionBand>
 
-    <ClinicalCasesCarousel />
+    <ClinicalCasesCarousel className="video-page-clinical-carousel" />
   </>
 ) : page.path === '/faq/' ? (
   <>
@@ -771,6 +770,8 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
         </div>
       </div>
     </section>
+
+    <MobileHomeCta id="faq-mobile-cta-title" />
   </>
 ) : page.path === '/urgenze/' ? (
   <>
@@ -1409,6 +1410,24 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
       letter-spacing: normal;
       line-height: 16px;
       text-transform: uppercase;
+    }
+
+    .video-page-channel .button span {
+      width: 24px;
+      height: 24px;
+      display: inline-grid;
+      flex: 0 0 24px;
+      place-items: center;
+      font-size: 0 !important;
+      line-height: 1;
+    }
+
+    .video-page-channel .button span::before {
+      content: "→";
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif !important;
+      font-size: 23.2px;
+      font-weight: 400;
+      line-height: 23.2px;
     }
   }
 
@@ -3293,33 +3312,72 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
       line-height: 23.2px;
     }
 
+    .faq-accordion-section {
+      padding: 58px 0;
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    }
+
+    .faq-accordion-head .eyebrow,
+    .faq-accordion-head h2,
+    .faq-accordion-item summary span,
+    .faq-accordion-answer,
+    .faq-accordion-answer p {
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif !important;
+    }
+
     .faq-accordion-wrap {
       width: min(100% - 30px, 1500px);
     }
 
+    .faq-accordion-head {
+      max-width: none;
+      margin-bottom: 40px;
+    }
+
+    .faq-accordion-head .eyebrow {
+      margin: 0 0 20px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: normal;
+      line-height: 18px;
+    }
+
     .faq-accordion-head h2 {
-      font-size: clamp(2.25rem, 11vw, 3.35rem);
-      line-height: 1;
+      font-size: 40px;
+      font-weight: 600;
+      letter-spacing: -0.16px;
+      line-height: 41px;
     }
 
     .faq-accordion-item summary {
       min-height: 86px;
       grid-template-columns: minmax(0, 1fr) 36px;
       gap: 18px;
+      box-sizing: border-box;
+      padding: 16px 0;
     }
 
     .faq-accordion-item summary span {
-      font-size: clamp(1.25rem, 6vw, 1.65rem);
-      line-height: 1.2;
+      font-size: 19px;
+      font-weight: 600;
+      letter-spacing: -0.16px;
+      line-height: 23px;
     }
 
     .faq-accordion-item summary i {
       width: 34px;
     }
 
+    .faq-accordion-item[open] summary i {
+      transform: none;
+    }
+
     .faq-accordion-answer {
-      margin: -4px 0 30px;
-      font-size: 1rem;
+      margin: 0 52px 24px 0;
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: -0.16px;
+      line-height: 25px;
     }
   }
 </style>

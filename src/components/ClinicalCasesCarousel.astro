@@ -4,9 +4,10 @@ import type { TreatmentClinicalCase } from '../data/treatmentMarketing';
 
 interface Props {
   initialCase?: TreatmentClinicalCase;
+  className?: string;
 }
 
-const { initialCase } = Astro.props;
+const { initialCase, className } = Astro.props;
 
 const caseDetails: Record<string, { description: string; image: string; imageAlt: string; imagePosition: string }> = {
   Estetica: {
@@ -68,7 +69,7 @@ const cases = caseOrder.flatMap((label) => {
 ---
 
 <section
-  class="clinical-carousel-section"
+  class:list={['clinical-carousel-section', className]}
   aria-labelledby="clinical-carousel-title"
   data-cases-carousel
   data-initial-case={initialCase}
@@ -390,5 +391,86 @@ const cases = caseOrder.flatMap((label) => {
     .clinical-carousel-arrow { width: 50px; }
     .clinical-carousel-arrow-prev { left: 18px; }
     .clinical-carousel-arrow-next { right: 18px; }
+
+    .clinical-carousel-section.video-page-clinical-carousel {
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+      letter-spacing: -0.16px;
+      word-spacing: 0;
+    }
+
+    .video-page-clinical-carousel .clinical-carousel-head {
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .video-page-clinical-carousel .clinical-carousel-head p,
+    .video-page-clinical-carousel .clinical-carousel-head h2,
+    .video-page-clinical-carousel .clinical-carousel-card-copy strong,
+    .video-page-clinical-carousel .clinical-carousel-card-copy small,
+    .video-page-clinical-carousel .clinical-carousel-arrow span {
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif !important;
+    }
+
+    .video-page-clinical-carousel .clinical-carousel-head p {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: normal;
+      line-height: 18px;
+      text-align: center;
+    }
+
+    .video-page-clinical-carousel .clinical-carousel-head h2 {
+      margin-top: 20px;
+      font-size: 40px;
+      font-weight: 600;
+      letter-spacing: -0.16px;
+      line-height: 41px;
+      text-align: center;
+    }
+
+    .video-page-clinical-carousel .clinical-carousel-card {
+      flex-basis: min(74vw, 310px);
+      min-height: 360px;
+    }
+
+    .video-page-clinical-carousel .clinical-carousel-card-copy strong {
+      font-size: 32px;
+      font-weight: 500;
+      letter-spacing: -0.16px;
+      line-height: 35px;
+    }
+
+    .video-page-clinical-carousel .clinical-carousel-card-copy small {
+      margin-top: 12px;
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: -0.16px;
+      line-height: 20px;
+    }
+
+    .video-page-clinical-carousel .clinical-carousel-arrow span {
+      width: 24px;
+      height: 24px;
+      display: inline-grid;
+      place-items: center;
+      margin-top: 0;
+      font-size: 0 !important;
+      line-height: 1;
+    }
+
+    .video-page-clinical-carousel .clinical-carousel-arrow span::before {
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif !important;
+      font-size: 23.2px;
+      font-weight: 400;
+      line-height: 23.2px;
+    }
+
+    .video-page-clinical-carousel .clinical-carousel-arrow-prev span::before {
+      content: "←";
+    }
+
+    .video-page-clinical-carousel .clinical-carousel-arrow-next span::before {
+      content: "→";
+    }
   }
 </style>
