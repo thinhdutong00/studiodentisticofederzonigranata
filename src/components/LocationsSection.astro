@@ -592,6 +592,27 @@ const locationOffices = site.offices.map((office) => {
       text-transform: uppercase;
     }
 
+    .location-route > span[aria-hidden="true"],
+    .location-map-caption a > span[aria-hidden="true"] {
+      width: 24px;
+      height: 24px;
+      display: inline-grid;
+      flex: 0 0 24px;
+      place-items: center;
+      color: inherit;
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+      font-size: 0;
+      line-height: 1;
+    }
+
+    .location-route > span[aria-hidden="true"]::before,
+    .location-map-caption a > span[aria-hidden="true"]::before {
+      content: "→";
+      font-size: 23.2px;
+      font-weight: 400;
+      line-height: 23.2px;
+    }
+
     .location-map-card {
       min-height: 360px;
     }
