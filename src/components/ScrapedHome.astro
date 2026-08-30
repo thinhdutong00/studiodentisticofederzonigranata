@@ -116,6 +116,7 @@ const locationOffices = site.offices.map((office) => {
 ---
 
 <div class="scraped-home">
+  <div class="mobile-hero-transition">
   <section
     class="scraped-hero"
     aria-label="Studio dentistico Federzoni Granata"
@@ -175,6 +176,7 @@ const locationOffices = site.offices.map((office) => {
       </p>
     </div>
   </section>
+  </div>
 
   <HomeTreatments services={services} />
 
@@ -841,6 +843,10 @@ const locationOffices = site.offices.map((office) => {
   .scraped-wrap {
     width: min(1510px, calc(100% - 30px));
     margin: 0 auto;
+  }
+
+  .mobile-hero-transition {
+    display: contents;
   }
 
   .scraped-hero {
@@ -2293,7 +2299,15 @@ const locationOffices = site.offices.map((office) => {
       width: min(100% - 30px, 1510px);
     }
 
+    .mobile-hero-transition {
+      position: relative;
+      display: block;
+    }
+
     .scraped-hero {
+      position: sticky;
+      top: 0;
+      z-index: 0;
       height: 100svh;
       min-height: 100svh;
       align-items: end;
@@ -2324,8 +2338,10 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .mobile-digital-intro {
+      position: relative;
+      z-index: 1;
       display: block;
-      padding: 58px 0;
+      padding: 24px 0 58px;
       background: var(--brand-primary-dark);
       color: var(--surface-white);
     }
