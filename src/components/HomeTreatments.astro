@@ -4,6 +4,7 @@ import TreatmentIcon from './TreatmentIcon.astro';
 interface Service {
   title: string;
   description?: string;
+  mobileDescription?: string;
   href: string;
 }
 
@@ -94,7 +95,18 @@ const mobileOrderByHref = new Map(mobileOrderedServices.map((service, index) => 
             <TreatmentIcon icon={iconByHref[service.href] || 'hygiene'} />
           </span>
           <h3>{service.title}</h3>
-          {service.description && <p>{service.description}</p>}
+          {service.description && (
+            <p>
+              {service.mobileDescription ? (
+                <>
+                  <span class="home-treatment-description-desktop">{service.description}</span>
+                  <span class="home-treatment-description-mobile">{service.mobileDescription}</span>
+                </>
+              ) : (
+                service.description
+              )}
+            </p>
+          )}
         </a>
       ))}
     </div>
@@ -301,6 +313,10 @@ const mobileOrderByHref = new Map(mobileOrderedServices.map((service, index) => 
     line-height: 1.5;
   }
 
+  .home-treatment-description-mobile {
+    display: none;
+  }
+
   .home-treatments-action {
     display: flex;
     justify-content: center;
@@ -419,6 +435,14 @@ const mobileOrderByHref = new Map(mobileOrderedServices.map((service, index) => 
       font-size: 14px;
       letter-spacing: -0.16px;
       line-height: 1.45;
+    }
+
+    .home-treatment-description-desktop {
+      display: none;
+    }
+
+    .home-treatment-description-mobile {
+      display: inline;
     }
 
     .home-treatments-action {

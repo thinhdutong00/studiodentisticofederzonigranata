@@ -3,7 +3,6 @@ import { site } from '../data/site';
 import { videoItems } from '../data/videos';
 import { featuredPatientReviews } from '../data/reviews';
 import { formatParentheticalDetail } from '../utils/formatParentheticalDetail';
-import '../styles/apple-mobile-fonts.css';
 import ClinicalCasesOriginalGrid from './ClinicalCasesOriginalGrid.astro';
 import HomeTreatments from './HomeTreatments.astro';
 
@@ -56,6 +55,10 @@ const services = site.treatmentMenu
   .map((item) => ({
     title: treatmentMenuLabels[item.label] || formatParentheticalDetail(item.label),
     description: treatmentDescriptions[item.label],
+    mobileDescription:
+      item.label === 'Implantologia tradizionale e computer guidata'
+        ? 'Impianti dentali tradizionali o guidati digitalmente per sostituire denti mancanti.'
+        : undefined,
     href: item.href,
   }));
 
@@ -116,7 +119,6 @@ const locationOffices = site.offices.map((office) => {
 ---
 
 <div class="scraped-home">
-  <div class="mobile-hero-transition">
   <section
     class="scraped-hero"
     aria-label="Studio dentistico Federzoni Granata"
@@ -176,7 +178,6 @@ const locationOffices = site.offices.map((office) => {
       </p>
     </div>
   </section>
-  </div>
 
   <HomeTreatments services={services} />
 
@@ -246,7 +247,7 @@ const locationOffices = site.offices.map((office) => {
 
   <ClinicalCasesOriginalGrid />
 
-  <section class="insights-section" aria-labelledby="insights-title">
+  <section class="insights-section" aria-labelledby="insights-title" data-reviews-carousel>
     <div class="scraped-wrap">
       <div class="insights-head">
         <h2 id="insights-title">
@@ -271,7 +272,13 @@ const locationOffices = site.offices.map((office) => {
         </div>
         <a href="/recensioni/">Tutte le recensioni</a>
       </div>
-      <div class="insights-grid">
+      <div
+        class="insights-grid"
+        role="region"
+        aria-label="Recensioni in evidenza"
+        tabindex="0"
+        data-reviews-carousel-track
+      >
         {featuredPatientReviews.map((item) => (
           <a class="insight-card" href="/recensioni/">
             <div class="review-card-head">
@@ -289,6 +296,14 @@ const locationOffices = site.offices.map((office) => {
             <p class="review-card-copy">{item.text}</p>
           </a>
         ))}
+      </div>
+      <div class="reviews-carousel-controls" aria-label="Controlli carosello recensioni">
+        <button type="button" aria-label="Recensione precedente" data-reviews-carousel-prev>
+          <span aria-hidden="true">←</span>
+        </button>
+        <button type="button" aria-label="Recensione successiva" data-reviews-carousel-next>
+          <span aria-hidden="true">→</span>
+        </button>
       </div>
     </div>
   </section>
@@ -492,6 +507,70 @@ const locationOffices = site.offices.map((office) => {
   </section>
 
   <script>
+    const reviewsCarousel = document.querySelector('[data-reviews-carousel]');
+
+    if (reviewsCarousel instanceof HTMLElement) {
+      const reviewsTrack = reviewsCarousel.querySelector('[data-reviews-carousel-track]');
+      const reviewsPrev = reviewsCarousel.querySelector('[data-reviews-carousel-prev]');
+      const reviewsNext = reviewsCarousel.querySelector('[data-reviews-carousel-next]');
+      const reviewsMobile = window.matchMedia('(max-width: 720px)');
+
+      if (reviewsTrack instanceof HTMLElement) {
+        const reviewCards = Array.from(reviewsTrack.querySelectorAll('.insight-card')).filter(
+          (card) => card instanceof HTMLElement,
+        );
+        let reviewsScrollFrame = 0;
+
+        const getActiveReviewIndex = () => {
+          const viewportCenter = reviewsTrack.scrollLeft + reviewsTrack.clientWidth / 2;
+
+          return reviewCards.reduce((closestIndex, card, index) => {
+            const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+            const closestCard = reviewCards[closestIndex];
+            const closestCenter = closestCard.offsetLeft + closestCard.offsetWidth / 2;
+
+            return Math.abs(cardCenter - viewportCenter) < Math.abs(closestCenter - viewportCenter)
+              ? index
+              : closestIndex;
+          }, 0);
+        };
+
+        const updateReviewsCarousel = () => {
+          if (reviewCards.length === 0) return;
+
+          const activeIndex = getActiveReviewIndex();
+          if (reviewsPrev instanceof HTMLButtonElement) reviewsPrev.disabled = activeIndex === 0;
+          if (reviewsNext instanceof HTMLButtonElement) reviewsNext.disabled = activeIndex === reviewCards.length - 1;
+        };
+
+        const scrollToReview = (targetIndex) => {
+          const clampedIndex = Math.max(0, Math.min(reviewCards.length - 1, targetIndex));
+          const targetCard = reviewCards[clampedIndex];
+          if (!(targetCard instanceof HTMLElement)) return;
+
+          const targetLeft = targetCard.offsetLeft - (reviewsTrack.clientWidth - targetCard.offsetWidth) / 2;
+          reviewsTrack.scrollTo({ left: targetLeft, behavior: 'smooth' });
+        };
+
+        reviewsPrev?.addEventListener('click', () => scrollToReview(getActiveReviewIndex() - 1));
+        reviewsNext?.addEventListener('click', () => scrollToReview(getActiveReviewIndex() + 1));
+        reviewsTrack.addEventListener(
+          'scroll',
+          () => {
+            window.cancelAnimationFrame(reviewsScrollFrame);
+            reviewsScrollFrame = window.requestAnimationFrame(updateReviewsCarousel);
+          },
+          { passive: true },
+        );
+        reviewsMobile.addEventListener('change', () => {
+          reviewsTrack.scrollLeft = 0;
+          updateReviewsCarousel();
+        });
+        window.addEventListener('resize', updateReviewsCarousel);
+        updateReviewsCarousel();
+      }
+    }
+
     const clinicalCarousels = document.querySelectorAll('[data-clinical-carousel]');
 
     clinicalCarousels.forEach((carousel) => {
@@ -843,10 +922,6 @@ const locationOffices = site.offices.map((office) => {
   .scraped-wrap {
     width: min(1510px, calc(100% - 30px));
     margin: 0 auto;
-  }
-
-  .mobile-hero-transition {
-    display: contents;
   }
 
   .scraped-hero {
@@ -1721,6 +1796,10 @@ const locationOffices = site.offices.map((office) => {
     background: rgba(var(--brand-blue-rgb), 0.22);
   }
 
+  .reviews-carousel-controls {
+    display: none;
+  }
+
   .insight-card {
     min-height: 310px;
     display: flex;
@@ -2299,15 +2378,7 @@ const locationOffices = site.offices.map((office) => {
       width: min(100% - 30px, 1510px);
     }
 
-    .mobile-hero-transition {
-      position: relative;
-      display: block;
-    }
-
     .scraped-hero {
-      position: sticky;
-      top: 0;
-      z-index: 0;
       height: 100svh;
       min-height: 100svh;
       align-items: end;
@@ -2338,8 +2409,6 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .mobile-digital-intro {
-      position: relative;
-      z-index: 1;
       display: block;
       padding: 24px 0 58px;
       background: var(--brand-primary-dark);
@@ -2839,18 +2908,34 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .insights-grid {
+      width: 100%;
+      display: flex;
       order: 4;
       gap: 16px;
       margin-top: 28px;
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
       background: transparent;
+      scrollbar-width: none;
+      scroll-padding-inline: 0;
+      scroll-snap-type: inline mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .insights-grid::-webkit-scrollbar {
+      display: none;
     }
 
     .insight-card {
+      min-width: 0;
+      flex: 0 0 calc(100% - 24px);
       border: 1px solid rgba(var(--surface-white-rgb), 0.14);
       border-radius: 20px;
       background: rgba(var(--surface-white-rgb), 0.08);
       color: var(--surface-white);
       box-shadow: 0 16px 34px rgba(0, 0, 0, 0.14);
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
     }
 
     .insight-card:hover,
@@ -2890,10 +2975,58 @@ const locationOffices = site.offices.map((office) => {
       color: rgba(var(--surface-white-rgb), 0.88);
     }
 
+    .reviews-carousel-controls {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      order: 5;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .reviews-carousel-controls button {
+      width: 50px;
+      height: 50px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid rgba(var(--surface-white-rgb), 0.22);
+      border-radius: 999px;
+      padding: 0;
+      background: rgba(var(--surface-white-rgb), 0.08);
+      color: var(--surface-white);
+      cursor: pointer;
+      transition:
+        background-color 160ms ease,
+        border-color 160ms ease,
+        opacity 160ms ease;
+    }
+
+    .reviews-carousel-controls button span {
+      font-size: 1.35rem;
+      line-height: 1;
+    }
+
+    .reviews-carousel-controls button:hover,
+    .reviews-carousel-controls button:focus-visible {
+      border-color: rgba(var(--surface-white-rgb), 0.54);
+      background: rgba(var(--surface-white-rgb), 0.16);
+      outline: 0;
+    }
+
+    .reviews-carousel-controls button:focus-visible {
+      box-shadow: 0 0 0 3px rgba(var(--surface-white-rgb), 0.2);
+    }
+
+    .reviews-carousel-controls button:disabled {
+      opacity: 0.34;
+      cursor: default;
+    }
+
     .insights-head a {
       width: 100%;
       min-height: 56px;
-      order: 5;
+      order: 6;
       justify-content: center;
       justify-self: center;
       margin-top: 28px;
