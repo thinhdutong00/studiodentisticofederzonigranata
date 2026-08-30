@@ -5,10 +5,12 @@ import TreatmentIcon from './TreatmentIcon.astro';
 
 interface Props {
   transparent?: boolean;
+  mobileTransparent?: boolean;
   ctaHref?: string;
 }
 
-const { transparent = false, ctaHref = '/richiesta/' } = Astro.props;
+const { transparent = false, mobileTransparent = false, ctaHref = '/richiesta/' } = Astro.props;
+const usesMobileTransparentHeader = mobileTransparent && !transparent;
 
 const beforeClinical = [{ label: 'Informazioni', href: '/chi-siamo/' }];
 const afterClinical = [{ label: 'Trattamenti', href: '/trattamenti/' }];
@@ -255,7 +257,17 @@ const siteMenuClinical = site.clinicalLinks.map((item) => ({
 }));
 ---
 
-<header class:list={['site-header', transparent && 'site-header-overlay', transparent && 'is-over-hero']} data-overlay-header={transparent ? 'true' : undefined} data-site-menu-root>
+<header
+  class:list={[
+    'site-header',
+    transparent && 'site-header-overlay',
+    usesMobileTransparentHeader && 'site-header-overlay-mobile',
+    (transparent || usesMobileTransparentHeader) && 'is-over-hero',
+  ]}
+  data-overlay-header={transparent || usesMobileTransparentHeader ? 'true' : undefined}
+  data-mobile-overlay-header={usesMobileTransparentHeader ? 'true' : undefined}
+  data-site-menu-root
+>
   <div class="header-experience-bar" role="note">
     <span class="sr-only">{experienceMessage}</span>
     <div class="header-experience-track" aria-hidden="true">

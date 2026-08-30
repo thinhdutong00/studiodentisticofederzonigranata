@@ -31,6 +31,8 @@ const treatmentMarketing =
     ? treatmentMarketingPages[page.path as keyof typeof treatmentMarketingPages]
     : undefined;
 const transparentHeader = Boolean(treatmentMarketing) || transparentHeaderPaths.has(page.path);
+const mobileTransparentHeader =
+  !transparentHeader && site.clinicalLinks.some((item) => item.href === page.path);
 const layoutTitle = treatmentMarketing ? `${treatmentMarketing.seoTitle} | ${site.name}` : page.title;
 const layoutDescription = treatmentMarketing?.description || page.description;
 const layoutOgImage = treatmentMarketing?.ogImage || page.ogImage || site.heroImage;
@@ -45,6 +47,7 @@ const headerCtaHref = treatmentMarketing
   ogImage={layoutOgImage}
   canonicalPath={page.path}
   transparentHeader={transparentHeader}
+  mobileTransparentHeader={mobileTransparentHeader}
   headerCtaHref={headerCtaHref}
 >
   {treatmentMarketing ? <TreatmentMarketingPage config={treatmentMarketing} /> : <ContentPage page={page} />}
