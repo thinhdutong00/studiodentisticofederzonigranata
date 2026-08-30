@@ -2948,6 +2948,88 @@ const locationOffices = site.offices.map((office) => {
       display: inline;
       color: inherit;
     }
+
+    /*
+      Scala tipografica mobile della home.
+      Mantiene una gerarchia chiusa tra sezioni, card e testi, con la sola
+      eccezione della hero. Il desktop resta intenzionalmente invariato.
+    */
+    .scraped-home {
+      --home-mobile-section-title-size: clamp(1.75rem, 8.2vw, 2rem);
+      --home-mobile-section-title-line: 1.12;
+      --home-mobile-card-title-size: 1.25rem;
+      --home-mobile-card-title-line: 1.25;
+      --home-mobile-body-size: 1rem;
+      --home-mobile-body-line: 1.5;
+      --home-mobile-eyebrow-size: 0.75rem;
+      --home-mobile-eyebrow-line: 1.25;
+      letter-spacing: -0.16px;
+    }
+
+    .scraped-pretitle,
+    .scraped-eyebrow,
+    .prefooter-copy .prefooter-eyebrow,
+    .locations-eyebrow,
+    .scraped-home :global(.home-treatments-kicker) {
+      font-size: var(--home-mobile-eyebrow-size);
+      font-weight: 600;
+      letter-spacing: -0.16px;
+      line-height: var(--home-mobile-eyebrow-line);
+    }
+
+    .scraped-hero h1 {
+      font-size: clamp(2.25rem, 10vw, 2.625rem);
+      font-weight: 400;
+      letter-spacing: -0.16px;
+      line-height: 0.98;
+    }
+
+    .scraped-hero-description {
+      font-size: 1.125rem;
+      font-weight: 500;
+      letter-spacing: -0.16px;
+      line-height: 1.4;
+    }
+
+    .scraped-home :global(.home-treatments-head h2),
+    .feature-copy h2,
+    .feature-workplace .feature-copy h2,
+    .feature-specialists .feature-copy h2,
+    .feature-hero-copy h2,
+    .scraped-home :global(.clinical-cases-header h1),
+    .insights-head h2,
+    .clinical-carousel-head h2,
+    .prefooter-copy h2,
+    .locations-copy h2 {
+      font-size: var(--home-mobile-section-title-size);
+      font-weight: 500;
+      letter-spacing: -0.16px;
+      line-height: var(--home-mobile-section-title-line);
+    }
+
+    .scraped-home :global(.home-treatment-card h3),
+    .clinical-carousel-card-copy strong,
+    .location-card-trigger strong {
+      font-size: var(--home-mobile-card-title-size);
+      font-weight: 500;
+      letter-spacing: -0.16px;
+      line-height: var(--home-mobile-card-title-line);
+    }
+
+    .scraped-home :global(.home-treatment-card p),
+    .feature-copy p,
+    .scraped-home :global(.clinical-cases-header h2),
+    .scraped-home :global(.clinical-cases-intro),
+    .insights-mobile-description,
+    .review-card-copy,
+    .clinical-carousel-card-copy small,
+    .prefooter-copy p:not(.prefooter-eyebrow),
+    .locations-mobile-description {
+      font-size: var(--home-mobile-body-size);
+      font-weight: 400;
+      letter-spacing: -0.16px;
+      line-height: var(--home-mobile-body-line);
+    }
   }
 
   @media (max-width: 340px) {
