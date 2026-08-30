@@ -176,6 +176,9 @@ const locationOffices = site.offices.map((office) => {
         Vi invitiamo a scoprire chi siamo, le nostre nuovissime tecnologie digitali e soprattutto, oltre le parole, i
         nostri casi clinici.
       </p>
+      <a class="mobile-digital-intro-cta" href="#casi-clinici">
+        Guarda i nostri casi clinici <span class="ui-glyph" aria-hidden="true">→</span>
+      </a>
     </div>
   </section>
 
@@ -299,10 +302,10 @@ const locationOffices = site.offices.map((office) => {
       </div>
       <div class="reviews-carousel-controls" aria-label="Controlli carosello recensioni">
         <button type="button" aria-label="Recensione precedente" data-reviews-carousel-prev>
-          <span aria-hidden="true">←</span>
+          <span class="ui-glyph" aria-hidden="true">‹</span>
         </button>
         <button type="button" aria-label="Recensione successiva" data-reviews-carousel-next>
-          <span aria-hidden="true">→</span>
+          <span class="ui-glyph" aria-hidden="true">›</span>
         </button>
       </div>
     </div>
@@ -2506,6 +2509,54 @@ const locationOffices = site.offices.map((office) => {
       line-height: 1.5;
     }
 
+    .mobile-digital-intro-cta {
+      width: 100%;
+      min-height: 56px;
+      display: inline-flex;
+      box-sizing: border-box;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-top: 32px;
+      border: 1px solid var(--brand-blue);
+      border-radius: 12px;
+      padding: 0 24px;
+      background: var(--brand-blue);
+      color: var(--surface-white);
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif !important;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: -0.16px;
+      line-height: 16px;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .mobile-digital-intro-cta:hover,
+    .mobile-digital-intro-cta:focus-visible {
+      border-color: var(--brand-cta);
+      background: var(--brand-cta);
+      color: var(--surface-white);
+    }
+
+    .mobile-digital-intro-cta:focus-visible {
+      outline: 3px solid rgba(var(--surface-white-rgb), 0.48);
+      outline-offset: 4px;
+    }
+
+    .mobile-digital-intro-cta span {
+      width: 24px;
+      height: 24px;
+      display: inline-grid;
+      flex: 0 0 24px;
+      place-items: center;
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif !important;
+      font-size: 23.2px;
+      font-weight: 400;
+      letter-spacing: normal;
+      line-height: 23.2px;
+    }
+
     .scraped-hero-shade {
       background: linear-gradient(
         0deg,
@@ -3052,8 +3103,12 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .reviews-carousel-controls button span {
-      font-size: 1.35rem;
-      line-height: 1;
+      display: block;
+      margin-top: -2px;
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif !important;
+      font-size: 32px;
+      font-weight: 300;
+      line-height: 32px;
     }
 
     .reviews-carousel-controls button:hover,
@@ -3214,11 +3269,11 @@ const locationOffices = site.offices.map((office) => {
 
     .location-card-open .location-card-pin {
       background: var(--brand-blue);
-      color: var(--brand-primary-dark);
+      color: var(--surface-white);
     }
 
     .location-card-open .location-card-pin svg {
-      stroke: var(--brand-primary-dark);
+      stroke: var(--surface-white);
     }
 
     .location-card-open .location-card-address-mobile {

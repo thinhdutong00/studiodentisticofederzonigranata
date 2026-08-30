@@ -462,13 +462,6 @@ const siteMenuClinical = site.clinicalLinks.map((item) => ({
       </details>
     </div>
     <div class="site-menu-actions" aria-label="Azioni rapide">
-      <a class="site-menu-action site-menu-action-primary" href={ctaHref}>
-        Prenota visita
-        <svg class="site-menu-action-icon" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M6 2.75h8.5L19 7.25v14H6z"></path>
-          <path d="M14.5 2.75v4.5H19M9 12h7M9 16h7"></path>
-        </svg>
-      </a>
       <details class="site-menu-call-dropdown" data-call-dropdown>
         <summary class="site-menu-action site-menu-action-secondary">
           Chiama ora
@@ -485,6 +478,13 @@ const siteMenuClinical = site.clinicalLinks.map((item) => ({
           ))}
         </div>
       </details>
+      <a class="site-menu-action site-menu-action-primary" href={ctaHref}>
+        Prenota visita
+        <svg class="site-menu-action-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 2.75h8.5L19 7.25v14H6z"></path>
+          <path d="M14.5 2.75v4.5H19M9 12h7M9 16h7"></path>
+        </svg>
+      </a>
     </div>
     <nav class="site-menu-social" aria-label="Seguici sui social">
       <span class="site-menu-social-label">Scopri i nostri contenuti:</span>
