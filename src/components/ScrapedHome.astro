@@ -2979,10 +2979,15 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .scraped-hero h1 {
-      font-size: clamp(2.375rem, 10.5vw, 2.75rem);
-      font-weight: 600;
+      max-width: 17rem;
+      font-size: clamp(2.875rem, 12vw, 3.125rem);
+      font-weight: 700;
       letter-spacing: -0.16px;
       line-height: 0.98;
+    }
+
+    .scraped-hero-title-line {
+      white-space: normal;
     }
 
     .scraped-hero-title-line:first-child::first-letter {
