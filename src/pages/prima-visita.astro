@@ -227,7 +227,10 @@ const offices = site.offices.map((office) => ({
         </div>
       </div>
       <figure class="fv-hero-media">
-        <img src="/assets/original/2022/03/dentista-modena-reggio-emilia.jpg" alt="Visita nello Studio Dentistico Federzoni Granata" loading="eager" />
+        <picture>
+          <source media="(max-width: 720px)" srcset="/assets/original/2026/prima-visita-studio-mobile.png" />
+          <img src="/assets/original/2022/03/dentista-modena-reggio-emilia.jpg" alt="Sala operativa dello Studio Dentistico Federzoni Granata" loading="eager" />
+        </picture>
       </figure>
     </section>
 
@@ -507,6 +510,12 @@ const offices = site.offices.map((office) => ({
     margin: 0;
     overflow: hidden;
     background: var(--border);
+  }
+
+  .fv-hero-media picture {
+    width: 100%;
+    height: 100%;
+    display: block;
   }
 
   .fv-hero-media img {
@@ -1105,8 +1114,50 @@ const offices = site.offices.map((office) => ({
       width: min(100% - 22px, 1510px);
     }
 
+    .first-visit-page .fv-kicker {
+      color: var(--brand-blue);
+    }
+
+    .fv-steps-section .fv-kicker {
+      text-align: center;
+    }
+
+    .fv-steps-section .fv-section-head h2 {
+      justify-self: center;
+      text-align: center;
+    }
+
+    .fv-evaluation .fv-section-head,
+    .fv-evaluation .fv-section-head h2,
+    .fv-evaluation .fv-section-head > p,
+    .fv-evaluation .fv-evaluation-card,
+    .fv-evaluation .fv-evaluation-copy,
+    .fv-evaluation .fv-evaluation-copy strong,
+    .fv-evaluation .fv-evaluation-copy p {
+      text-align: center;
+    }
+
+    .fv-evaluation .fv-evaluation-icon {
+      justify-self: center;
+    }
+
+    .fv-reasons-section .fv-section-head,
+    .fv-reasons-section .fv-section-head h2,
+    .fv-reasons-section .fv-section-head > p,
+    .fv-reasons-section .fv-reason-card,
+    .fv-reasons-section .fv-reason-copy,
+    .fv-reasons-section .fv-reason-copy h3,
+    .fv-reasons-section .fv-reason-copy p {
+      text-align: center;
+    }
+
+    .fv-reasons-section .fv-section-head h2,
+    .fv-reasons-section .fv-reason-icon {
+      justify-self: center;
+    }
+
     .fv-hero-panel {
-      min-height: 460px;
+      min-height: 280px;
     }
 
     .fv-hero-inner {
@@ -1118,8 +1169,7 @@ const offices = site.offices.map((office) => ({
     }
 
     .fv-hero .fv-kicker {
-      margin-bottom: 20px;
-      font-size: 0.92rem;
+      display: none;
     }
 
     .fv-hero h1 {
@@ -1128,9 +1178,7 @@ const offices = site.offices.map((office) => ({
     }
 
     .fv-hero-copy > p:not(.fv-kicker) {
-      display: block;
-      font-size: 1.05rem;
-      line-height: 1.32;
+      display: none;
     }
 
     .fv-hero-media {
@@ -1152,6 +1200,10 @@ const offices = site.offices.map((office) => ({
     .fv-final h2 {
       font-size: 2.35rem;
       line-height: 1.04;
+    }
+
+    .fv-final h2 {
+      color: var(--surface-white);
     }
 
     .fv-section-head {
