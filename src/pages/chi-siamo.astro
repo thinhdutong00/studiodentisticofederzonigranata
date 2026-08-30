@@ -259,7 +259,7 @@ const officeDetails: Record<string, { label: string; title: string; description:
             <article class:list={['office-feature', index % 2 === 1 && 'office-feature-reverse']}>
               <div class="office-copy">
                 <p class="office-city">{detail.label}</p>
-                <h3>{detail.title}</h3>
+                <h3><span>Studio dentistico a</span>{' '}<span>{office.city}</span></h3>
                 <p>{detail.description}</p>
                 <p>{office.address}</p>
                 <div class="office-actions">
@@ -1458,12 +1458,17 @@ const officeDetails: Record<string, { label: string; title: string; description:
     }
 
     .office-copy h3 {
-      max-width: 12ch;
+      max-width: none;
       margin-bottom: 16px;
       font-size: 24px;
       font-weight: 600;
       letter-spacing: -0.16px;
       line-height: 30px;
+    }
+
+    .office-copy h3 span {
+      display: block;
+      white-space: nowrap;
     }
 
     .office-copy p:not(.office-city) {
