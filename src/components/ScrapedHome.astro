@@ -3,6 +3,7 @@ import { site } from '../data/site';
 import { videoItems } from '../data/videos';
 import { featuredPatientReviews } from '../data/reviews';
 import { formatParentheticalDetail } from '../utils/formatParentheticalDetail';
+import '../styles/apple-mobile-fonts.css';
 import ClinicalCasesOriginalGrid from './ClinicalCasesOriginalGrid.astro';
 import HomeTreatments from './HomeTreatments.astro';
 
@@ -2318,15 +2319,16 @@ const locationOffices = site.offices.map((office) => {
 
     .scraped-hero-button {
       position: relative;
-      width: min(100%, 238px);
+      width: min(100%, 244px);
       min-height: 50px;
       justify-content: flex-start;
-      padding: 0 48px 0 20px;
+      padding: 0 42px 0 18px;
+      white-space: nowrap;
     }
 
     .scraped-hero-button > span:last-child {
       position: absolute;
-      right: 18px;
+      right: 16px;
     }
 
     .scraped-hero-cta-desktop {
@@ -2952,26 +2954,66 @@ const locationOffices = site.offices.map((office) => {
     }
 
     /*
-      Scala tipografica mobile della home.
-      Mantiene una gerarchia chiusa tra sezioni, card e testi, con la sola
-      eccezione della hero. Il desktop resta intenzionalmente invariato.
+      Scala tipografica Apple rilevata su apple.com/it/apple-podcasts/
+      ai breakpoint mobili da 320px e 390px. Vale solo per la home mobile.
     */
     .scraped-home {
-      --home-mobile-font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "Helvetica Neue", sans-serif;
-      --home-mobile-section-title-size: clamp(1.75rem, 8.2vw, 2rem);
-      --home-mobile-section-title-line: 1.12;
-      --home-mobile-card-title-size: 1.25rem;
-      --home-mobile-card-title-line: 1.25;
-      --home-mobile-body-size: 1rem;
-      --home-mobile-body-line: 1.5;
-      --home-mobile-eyebrow-size: 0.75rem;
-      --home-mobile-eyebrow-line: 1.25;
-      font-family: var(--home-mobile-font-family);
-      letter-spacing: -0.16px;
+      --home-apple-font-display: "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --home-apple-font-text: "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --home-apple-title-size: 40px;
+      --home-apple-title-line: 41px;
+      --home-apple-hero-title-line: 44px;
+      --home-apple-card-title-size: 19px;
+      --home-apple-card-title-line: 23px;
+      --home-apple-body-size: 17px;
+      --home-apple-body-line: 21.0012px;
+      --home-apple-body-tracking: -0.0629px;
+      --home-apple-copy-line: 25px;
+      --home-apple-copy-tracking: -0.374px;
+      --home-apple-caption-size: 14px;
+      --home-apple-caption-line: 18.0008px;
+      --home-apple-caption-tracking: -0.224px;
+      font-family: var(--home-apple-font-text);
+      font-size: var(--home-apple-body-size);
+      font-weight: 400;
+      font-synthesis: none;
+      letter-spacing: var(--home-apple-body-tracking);
+      line-height: var(--home-apple-body-line);
     }
 
     .scraped-home :global(*) {
-      font-family: var(--home-mobile-font-family) !important;
+      font-family: var(--home-apple-font-text) !important;
+    }
+
+    .scraped-home :global(h1),
+    .scraped-home :global(h2),
+    .scraped-home :global(h3),
+    .scraped-home :global(h1 *),
+    .scraped-home :global(h2 *),
+    .scraped-home :global(h3 *) {
+      font-family: var(--home-apple-font-display) !important;
+      font-weight: inherit !important;
+      letter-spacing: inherit !important;
+      line-height: inherit !important;
+    }
+
+    .scraped-home :global(h1),
+    .scraped-home :global(h2) {
+      font-size: var(--home-apple-title-size) !important;
+      font-weight: 600 !important;
+      letter-spacing: normal !important;
+      line-height: var(--home-apple-title-line) !important;
+    }
+
+    .scraped-home :global(h3),
+    .scraped-home :global(.clinical-cases-label),
+    .clinical-carousel-card-copy strong,
+    .location-card-trigger strong {
+      font-family: var(--home-apple-font-display) !important;
+      font-size: var(--home-apple-card-title-size) !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.228px !important;
+      line-height: var(--home-apple-card-title-line) !important;
     }
 
     .scraped-pretitle,
@@ -2979,18 +3021,18 @@ const locationOffices = site.offices.map((office) => {
     .prefooter-copy .prefooter-eyebrow,
     .locations-eyebrow,
     .scraped-home :global(.home-treatments-kicker) {
-      font-size: var(--home-mobile-eyebrow-size);
-      font-weight: 600;
-      letter-spacing: -0.16px;
-      line-height: var(--home-mobile-eyebrow-line);
+      font-size: var(--home-apple-caption-size) !important;
+      font-weight: 600 !important;
+      letter-spacing: -0.00308px !important;
+      line-height: var(--home-apple-caption-line) !important;
     }
 
     .scraped-hero h1 {
       max-width: 100%;
-      font-size: clamp(2.75rem, 11.5vw, 3rem);
-      font-weight: 700;
-      letter-spacing: -0.16px;
-      line-height: 1.07;
+      font-size: var(--home-apple-title-size) !important;
+      font-weight: 600 !important;
+      letter-spacing: normal !important;
+      line-height: var(--home-apple-hero-title-line) !important;
     }
 
     .scraped-hero-title-line {
@@ -2998,63 +3040,82 @@ const locationOffices = site.offices.map((office) => {
       white-space: normal;
     }
 
-    .scraped-hero-description {
-      font-size: 1.125rem;
-      font-weight: 500;
-      letter-spacing: -0.16px;
-      line-height: 1.4;
-    }
-
-    .scraped-home :global(.home-treatments-head h2),
-    .feature-copy h2,
-    .feature-workplace .feature-copy h2,
-    .feature-specialists .feature-copy h2,
-    .feature-hero-copy h2,
-    .scraped-home :global(.clinical-cases-header h1),
-    .insights-head h2,
-    .clinical-carousel-head h2,
-    .prefooter-copy h2,
-    .locations-copy h2 {
-      font-size: var(--home-mobile-section-title-size);
-      font-weight: 500;
-      letter-spacing: -0.16px;
-      line-height: var(--home-mobile-section-title-line);
-    }
-
-    .scraped-home :global(.home-treatments-head h2) {
-      font-size: clamp(1.875rem, 8.7vw, 2.125rem);
-      font-weight: 800;
-    }
-
-    .scraped-home :global(.home-treatment-card h3),
-    .clinical-carousel-card-copy strong,
-    .location-card-trigger strong {
-      font-size: var(--home-mobile-card-title-size);
-      font-weight: 500;
-      letter-spacing: -0.16px;
-      line-height: var(--home-mobile-card-title-line);
-    }
-
-    .scraped-home :global(.home-treatment-card p),
+    .scraped-hero-description,
     .feature-copy p,
     .scraped-home :global(.clinical-cases-header h2),
     .scraped-home :global(.clinical-cases-intro),
     .insights-mobile-description,
-    .review-card-copy,
-    .clinical-carousel-card-copy small,
     .prefooter-copy p:not(.prefooter-eyebrow),
     .locations-mobile-description {
-      font-size: var(--home-mobile-body-size);
-      font-weight: 400;
-      letter-spacing: -0.16px;
-      line-height: var(--home-mobile-body-line);
+      font-size: var(--home-apple-body-size) !important;
+      font-weight: 400 !important;
+      letter-spacing: var(--home-apple-body-tracking) !important;
+      line-height: var(--home-apple-body-line) !important;
     }
-  }
 
-  @media (max-width: 340px) {
-    .scraped-hero h1 {
-      font-size: 2.2rem;
-      line-height: 1.08;
+    .scraped-home :global(.clinical-cases-header h2) {
+      font-family: var(--home-apple-font-text) !important;
+    }
+
+    .scraped-home :global(.home-treatment-card p),
+    .review-card-copy {
+      font-size: var(--home-apple-body-size) !important;
+      font-weight: 400 !important;
+      letter-spacing: var(--home-apple-copy-tracking) !important;
+      line-height: var(--home-apple-copy-line) !important;
+    }
+
+    .scraped-home :global(small),
+    .location-card-address-mobile,
+    .locations-mobile-hours-panel > div {
+      font-size: var(--home-apple-caption-size) !important;
+      font-weight: 400 !important;
+      letter-spacing: var(--home-apple-caption-tracking) !important;
+      line-height: var(--home-apple-caption-line) !important;
+    }
+
+    .review-card-person strong,
+    .google-business-brand strong,
+    .google-business-rating strong {
+      font-size: var(--home-apple-caption-size) !important;
+      font-weight: 600 !important;
+      letter-spacing: -0.00308px !important;
+      line-height: var(--home-apple-caption-line) !important;
+    }
+
+    .scraped-hero-button,
+    .scraped-home :global(.home-treatments-toggle),
+    .feature-button,
+    .feature-hero-copy p,
+    .insights-head > a,
+    .prefooter-button,
+    .location-route,
+    .location-map-caption a {
+      font-size: var(--home-apple-body-size) !important;
+      font-weight: 400 !important;
+      letter-spacing: var(--home-apple-copy-tracking) !important;
+      line-height: 20.0002px !important;
+    }
+
+    .location-detail,
+    .location-detail > *,
+    .location-hours,
+    .location-hours > p,
+    .location-hours-row,
+    .location-hours-row > *,
+    .locations-mobile-hours-panel strong {
+      font-size: var(--home-apple-caption-size) !important;
+      font-weight: 400 !important;
+      letter-spacing: var(--home-apple-caption-tracking) !important;
+      line-height: var(--home-apple-caption-line) !important;
+    }
+
+    .locations-mobile-hours summary strong {
+      font-family: var(--home-apple-font-display) !important;
+      font-size: var(--home-apple-card-title-size) !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.228px !important;
+      line-height: var(--home-apple-card-title-line) !important;
     }
   }
 </style>
