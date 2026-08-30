@@ -472,6 +472,8 @@ const usesRefinedMobileClinicalStyle = new Set([
   '/parodontologia/',
   '/implantologia/',
   '/ortodonzia/',
+  '/conservativa/',
+  '/endodonzia/',
 ]).has(page.path);
 const clinicalShowcaseKeepsParagraphs = new Set([
   '/protesi/',
@@ -699,7 +701,7 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
   <ClinicalCasesOriginalGrid />
 ) : page.path === '/video/' ? (
   <>
-    <section class="video-hero" aria-labelledby="video-hero-title" data-transparent-header-region>
+    <section class="video-hero video-page-hero" aria-labelledby="video-hero-title" data-transparent-header-region>
       <div class="video-hero-inner">
         <p class="video-hero-kicker">Video</p>
         <h1 id="video-hero-title">Scopri il nostro studio dentistico!</h1>
@@ -707,7 +709,7 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
       </div>
     </section>
 
-    <section class="video-channel-section" aria-labelledby="video-channel-title">
+    <section class="video-channel-section video-page-channel" aria-labelledby="video-channel-title">
       <div class="video-channel-inner">
       <div class="youtube-channel-card">
         <div>
@@ -720,7 +722,7 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
       </div>
     </section>
 
-    <SectionBand eyebrow="Canale YouTube" title="Video dello studio" tone="cream">
+    <SectionBand id="video-page-gallery" eyebrow="Canale YouTube" title="Video dello studio" tone="cream">
       <div class="video-grid">
         {videoItems.map((video) => (
           <article class="video-card">
@@ -929,7 +931,7 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
       </div>
     </section>
 
-    <figure class="aesthetic-hero-media">
+    <figure class:list={['aesthetic-hero-media', usesRefinedMobileClinicalStyle && 'aesthetic-mobile-refined']}>
       <img
         src={clinicalShowcase.heroImage}
         alt={clinicalShowcase.heroAlt}
@@ -1311,6 +1313,88 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
 
     .video-channel-section {
       padding: 52px 0 64px;
+    }
+
+    .video-page-hero,
+    .video-page-channel,
+    :global(#video-page-gallery) {
+      font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: -0.16px;
+      word-spacing: 0;
+    }
+
+    .video-page-hero {
+      min-height: 260px;
+      place-items: stretch;
+      padding: 0;
+    }
+
+    .video-page-hero .video-hero-inner {
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-sizing: border-box;
+      padding: 104px 0 8px;
+    }
+
+    .video-page-hero .video-hero-kicker {
+      margin-bottom: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: normal;
+      line-height: 18px;
+    }
+
+    .video-page-hero h1 {
+      font-size: 40px;
+      font-weight: 600;
+      letter-spacing: -0.16px;
+      line-height: 44px;
+    }
+
+    .video-page-hero .video-hero-lead {
+      display: none;
+    }
+
+    .video-page-channel .eyebrow,
+    :global(#video-page-gallery .section-heading .eyebrow) {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: normal;
+      line-height: 18px;
+    }
+
+    .video-page-channel .youtube-channel-card h2,
+    :global(#video-page-gallery .section-heading h2) {
+      font-size: 40px;
+      font-weight: 600;
+      letter-spacing: -0.16px;
+      line-height: 41px;
+    }
+
+    .video-page-channel .rich-text :global(p),
+    .video-grid .video-card-body p {
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: -0.16px;
+      line-height: 25px;
+    }
+
+    .video-grid .video-card-body h3 {
+      font-size: 19px;
+      font-weight: 600;
+      letter-spacing: -0.16px;
+      line-height: 23px;
+    }
+
+    .video-page-channel .button,
+    .video-grid .video-card-body a {
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: normal;
+      line-height: 16px;
+      text-transform: uppercase;
     }
   }
 
@@ -2580,6 +2664,10 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
 
     .aesthetic-hero-media {
       height: 430px;
+    }
+
+    .aesthetic-hero-media.aesthetic-mobile-refined {
+      height: 240px;
     }
 
     .aesthetic-hero-media img {
