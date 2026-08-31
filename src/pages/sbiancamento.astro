@@ -1,7 +1,9 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
+import TreatmentPathwayIcon from '../components/TreatmentPathwayIcon.astro';
 import TreatmentPrefooterCta from '../components/TreatmentPrefooterCta.astro';
 import { site } from '../data/site';
+import type { TreatmentPathwayIconName } from '../data/treatmentMarketing';
 
 const title = `Sbiancamento dentale | ${site.name}`;
 const description =
@@ -65,21 +67,21 @@ const informationSections = [
 
 const pathwayCards = [
   {
-    number: '01',
+    icon: 'assessment',
     title: 'Valutiamo il sorriso',
     text: 'Colore di partenza, salute orale, restauri presenti, sensibilità e obiettivi personali.',
   },
   {
-    number: '02',
+    icon: 'whitening',
     title: 'Scegliamo il percorso',
     text: 'Tempi e modalità vengono definiti in base alle caratteristiche della bocca e alla vita quotidiana.',
   },
   {
-    number: '03',
+    icon: 'monitoring',
     title: 'Controlliamo il risultato',
     text: 'Indicazioni post-trattamento e controlli aiutano a proteggere comfort, naturalezza e durata.',
   },
-];
+] satisfies Array<{ icon: TreatmentPathwayIconName; title: string; text: string }>;
 ---
 
 <BaseLayout
@@ -176,7 +178,7 @@ const pathwayCards = [
         <div class="whitening-pathway-grid">
           {pathwayCards.map((card) => (
             <article>
-              <span>{card.number}</span>
+              <TreatmentPathwayIcon name={card.icon} />
               <h3>{card.title}</h3>
               <p>{card.text}</p>
             </article>
@@ -277,7 +279,7 @@ const pathwayCards = [
     gap: 12px 28px;
     margin: 34px 0 0;
     padding: 0;
-    color: rgba(var(--surface-white-rgb), 0.78);
+    color: var(--surface-white);
     font-size: 14px;
     font-weight: 400;
     line-height: 1.4;
@@ -560,13 +562,6 @@ const pathwayCards = [
     background: var(--surface-white);
   }
 
-  .whitening-pathway-grid article > span {
-    color: var(--whitening-accent);
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 1;
-  }
-
   .whitening-pathway-grid h3 {
     max-width: 11ch;
     margin: auto 0 14px;
@@ -758,11 +753,6 @@ const pathwayCards = [
     .whitening-pathway-grid article {
       min-height: 250px;
       padding: 24px;
-    }
-
-    .whitening-pathway-grid article > span {
-      font-size: 18px;
-      line-height: 18px;
     }
 
     .whitening-pathway-grid h3 {

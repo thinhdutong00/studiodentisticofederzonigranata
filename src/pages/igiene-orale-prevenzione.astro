@@ -1,10 +1,11 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
 import TreatmentMarketingPage from '../components/TreatmentMarketingPage.astro';
+import TreatmentPathwayIcon from '../components/TreatmentPathwayIcon.astro';
 import TreatmentPrefooterCta from '../components/TreatmentPrefooterCta.astro';
 import TreatmentStickyCta from '../components/TreatmentStickyCta.astro';
 import { site } from '../data/site';
-import type { TreatmentMarketingConfig } from '../data/treatmentMarketing';
+import type { TreatmentMarketingConfig, TreatmentPathwayIconName } from '../data/treatmentMarketing';
 
 const title = `Igiene orale e prevenzione | ${site.name}`;
 const description =
@@ -12,21 +13,21 @@ const description =
 
 const processCards = [
   {
-    number: '1.',
+    icon: 'assessment',
     title: 'Valutazione iniziale',
     text: 'Controllo di denti, gengive e abitudini quotidiane per personalizzare la seduta.',
   },
   {
-    number: '2.',
+    icon: 'restoration',
     title: 'Igiene professionale',
     text: 'Rimozione di placca, tartaro e pigmentazioni con strumenti scelti in base al caso.',
   },
   {
-    number: '3.',
+    icon: 'prevention',
     title: 'Prevenzione su misura',
     text: 'Indicazioni pratiche per mantenere il risultato e programmare i controlli periodici.',
   },
-];
+] satisfies Array<{ icon: TreatmentPathwayIconName; title: string; text: string }>;
 
 const serviceCards = [
   {
@@ -157,7 +158,7 @@ const mobileFunnelConfig = {
   pathwayTitle: 'Prevenzione costruita su misura',
   pathwayLead:
     'Dalla valutazione iniziale ai richiami, ogni fase viene adattata alle condizioni della bocca e alle abitudini quotidiane.',
-  pathwayCards: processCards.map((card) => ({ title: card.title, text: card.text })),
+  pathwayCards: processCards.map((card) => ({ icon: card.icon, title: card.title, text: card.text })),
   finalKicker: 'Inizia dalla prevenzione',
   finalTitle: 'Costruiamo il tuo percorso di igiene e prevenzione.',
   ogImage: '/assets/original/2022/03/dentista-modena-reggio-emilia.jpg',
@@ -204,7 +205,7 @@ const mobileFunnelConfig = {
         <div class="process-grid" id="process-title">
           {processCards.map((card) => (
             <article class="process-card">
-              <span>{card.number}</span>
+              <div class="process-card-icon"><TreatmentPathwayIcon name={card.icon} /></div>
               <h2>{card.title}</h2>
               <p>{card.text}</p>
             </article>
@@ -509,13 +510,9 @@ const mobileFunnelConfig = {
     color: var(--service-blue);
   }
 
-  .process-card span {
-    display: block;
-    margin-bottom: 20px;
-    color: var(--service-accent);
-    font-size: clamp(84px, 6.6vw, 128px);
-    font-weight: 400;
-    line-height: 1;
+  .process-card-icon {
+    margin-bottom: auto;
+    padding-bottom: 24px;
   }
 
   .process-card h2,

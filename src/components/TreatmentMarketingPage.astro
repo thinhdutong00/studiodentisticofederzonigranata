@@ -1,5 +1,6 @@
 ---
 import ClinicalCasesCarousel from './ClinicalCasesCarousel.astro';
+import TreatmentPathwayIcon from './TreatmentPathwayIcon.astro';
 import TreatmentPrefooterCta from './TreatmentPrefooterCta.astro';
 import { site } from '../data/site';
 import type { TreatmentMarketingConfig } from '../data/treatmentMarketing';
@@ -97,9 +98,9 @@ const heroTitleClass = config.heroTitle.length > 35 ? 'is-extra-long' : config.h
       </div>
 
       <div class="treatment-pathway-grid">
-        {config.pathwayCards.map((card, index) => (
+        {config.pathwayCards.map((card) => (
           <article>
-            <span>{String(index + 1).padStart(2, '0')}</span>
+            <TreatmentPathwayIcon name={card.icon} />
             <h3>{card.title}</h3>
             <p>{card.text}</p>
           </article>
@@ -210,7 +211,7 @@ const heroTitleClass = config.heroTitle.length > 35 ? 'is-extra-long' : config.h
     gap: 12px 28px;
     margin: 32px 0 0;
     padding: 0;
-    color: rgba(var(--surface-white-rgb), 0.78);
+    color: var(--surface-white);
     font-size: 14px;
     font-weight: 400;
     line-height: 1.4;
@@ -493,13 +494,6 @@ const heroTitleClass = config.heroTitle.length > 35 ? 'is-extra-long' : config.h
     background: var(--surface-white);
   }
 
-  .treatment-pathway-grid article > span {
-    color: var(--tm-accent);
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 1;
-  }
-
   .treatment-pathway-grid h3 {
     max-width: 12ch;
     margin: auto 0 14px;
@@ -689,11 +683,6 @@ const heroTitleClass = config.heroTitle.length > 35 ? 'is-extra-long' : config.h
     .treatment-pathway-grid article {
       min-height: 250px;
       padding: 24px;
-    }
-
-    .treatment-pathway-grid article > span {
-      font-size: 18px;
-      line-height: 18px;
     }
 
     .treatment-pathway-grid h3 {

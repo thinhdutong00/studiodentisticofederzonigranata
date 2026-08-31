@@ -17,6 +17,28 @@ export type TreatmentClinicalCase =
   | 'Conservativa'
   | 'Endodonzia';
 
+export type TreatmentPathwayIconName =
+  | 'assessment'
+  | 'restoration'
+  | 'monitoring'
+  | 'child'
+  | 'prevention'
+  | 'growth'
+  | 'alignment'
+  | 'design'
+  | 'precision'
+  | 'inflammation'
+  | 'surgery'
+  | 'healing'
+  | 'implant'
+  | 'function'
+  | 'sleep'
+  | 'device'
+  | 'whitening'
+  | 'goal'
+  | 'history'
+  | 'progress';
+
 export type TreatmentMarketingConfig = {
   seoTitle: string;
   description: string;
@@ -31,7 +53,7 @@ export type TreatmentMarketingConfig = {
   faqs: TreatmentMarketingFaq[];
   pathwayTitle: string;
   pathwayLead: string;
-  pathwayCards: Array<{ title: string; text: string }>;
+  pathwayCards: Array<{ icon: TreatmentPathwayIconName; title: string; text: string }>;
   finalKicker: string;
   finalTitle: string;
   ogImage: string;
@@ -128,14 +150,17 @@ export const treatmentMarketingPages = {
       'La scelta del restauro nasce dalla quantità di dente sano, dalla profondità del danno e dai carichi della masticazione.',
     pathwayCards: [
       {
+        icon: 'assessment',
         title: 'Comprendiamo il problema',
         text: 'Visita, test clinici e immagini quando indicate aiutano a definire posizione, profondità e causa del danno.',
       },
       {
+        icon: 'restoration',
         title: 'Ricostruiamo con precisione',
         text: 'Materiali, forma e tecnica vengono scelti per il singolo dente e per il suo ruolo nella masticazione.',
       },
       {
+        icon: 'monitoring',
         title: 'Controlliamo nel tempo',
         text: 'Igiene e richiami periodici aiutano a monitorare il restauro e il tessuto dentale residuo.',
       },
@@ -217,14 +242,17 @@ export const treatmentMarketingPages = {
       'Il trattamento dei canali è solo una parte del percorso: diagnosi e ricostruzione finale contribuiscono alla possibilità di mantenere il dente.',
     pathwayCards: [
       {
+        icon: 'assessment',
         title: 'Formuliamo la diagnosi',
         text: 'Sintomi, test clinici e radiografie quando necessarie aiutano a comprendere lo stato della polpa e dei tessuti intorno alla radice.',
       },
       {
+        icon: 'restoration',
         title: 'Trattiamo i canali',
         text: 'Detersione, disinfezione e sigillatura vengono adattate all’anatomia e alle condizioni del dente.',
       },
       {
+        icon: 'monitoring',
         title: 'Ricostruiamo e monitoriamo',
         text: 'La protezione della corona e i controlli completano il percorso e permettono di seguirne l’evoluzione.',
       },
@@ -305,14 +333,17 @@ export const treatmentMarketingPages = {
       'Un percorso sereno nasce da incontri adatti all’età e da indicazioni concrete che coinvolgono bambino e famiglia.',
     pathwayCards: [
       {
+        icon: 'child',
         title: 'Ci conosciamo',
         text: 'Un primo incontro sereno permette di ascoltare la famiglia e far prendere confidenza al bambino con persone e ambiente.',
       },
       {
+        icon: 'prevention',
         title: 'Preveniamo e curiamo',
         text: 'Indicazioni e trattamenti vengono scelti in base a età, rischio individuale e necessità cliniche.',
       },
       {
+        icon: 'growth',
         title: 'Accompagniamo la crescita',
         text: 'Controlli personalizzati aiutano a seguire igiene, permuta dei denti e sviluppo del sorriso.',
       },
@@ -394,14 +425,17 @@ export const treatmentMarketingPages = {
       'Allineamento, funzione e mantenimento vengono considerati insieme, scegliendo strumenti e tempi sul singolo caso.',
     pathwayCards: [
       {
+        icon: 'assessment',
         title: 'Studiamo il sorriso',
         text: 'Denti, morso, tessuti e obiettivi vengono analizzati insieme con la documentazione necessaria.',
       },
       {
+        icon: 'alignment',
         title: 'Guidiamo i movimenti',
         text: 'Tecnica, controlli e dispositivi vengono calibrati sul piano e sulla risposta individuale.',
       },
       {
+        icon: 'prevention',
         title: 'Proteggiamo la stabilità',
         text: 'La contenzione e i richiami aiutano a conservare il risultato e intercettare eventuali cambiamenti.',
       },
@@ -483,14 +517,17 @@ export const treatmentMarketingPages = {
       'Forma, colore, tessuti e morso vengono letti insieme per capire se il composito è la soluzione più adatta e sostenibile.',
     pathwayCards: [
       {
+        icon: 'design',
         title: 'Progettiamo insieme',
         text: 'Ascoltiamo l’obiettivo e analizziamo proporzioni, colore, gengive e morso per definire ciò che è realistico.',
       },
       {
+        icon: 'precision',
         title: 'Modelliamo il dettaglio',
         text: 'Il composito viene stratificato direttamente e rifinito per integrarsi con forma e luce del sorriso.',
       },
       {
+        icon: 'monitoring',
         title: 'Manteniamo il risultato',
         text: 'Controlli, lucidature e possibili riparazioni accompagnano il restauro nel tempo.',
       },
@@ -572,14 +609,17 @@ export const treatmentMarketingPages = {
       'La stabilità delle gengive dipende dal trattamento professionale e dalla continuità del controllo quotidiano e periodico.',
     pathwayCards: [
       {
+        icon: 'assessment',
         title: 'Misuriamo il quadro',
         text: 'Anamnesi, sondaggio e immagini quando indicate definiscono estensione, gravità e fattori di rischio.',
       },
       {
+        icon: 'inflammation',
         title: 'Controlliamo l’infiammazione',
         text: 'Igiene guidata e terapia professionale mirano a ridurre biofilm e infiammazione nei siti interessati.',
       },
       {
+        icon: 'monitoring',
         title: 'Manteniamo la stabilità',
         text: 'Rivalutazioni e richiami personalizzati aiutano a intercettare precocemente eventuali riattivazioni.',
       },
@@ -661,14 +701,17 @@ export const treatmentMarketingPages = {
       'La soluzione nasce dall’equilibrio tra ciò che può sostenerla, la funzione richiesta e la possibilità di mantenerla pulita nel tempo.',
     pathwayCards: [
       {
+        icon: 'assessment',
         title: 'Valutiamo i supporti',
         text: 'Denti, gengive, osso, occlusione e vecchie riabilitazioni vengono esaminati prima di scegliere la soluzione.',
       },
       {
+        icon: 'design',
         title: 'Progettiamo forma e funzione',
         text: 'Impronte o scansioni, prove e provvisori aiutano a verificare estetica, masticazione e facilità di pulizia.',
       },
       {
+        icon: 'monitoring',
         title: 'Manteniamo il risultato',
         text: 'Consegna, istruzioni personalizzate e controlli periodici accompagnano la protesi nel tempo.',
       },
@@ -750,14 +793,17 @@ export const treatmentMarketingPages = {
       'L’estetica viene costruita su salute orale, funzione e caratteristiche del volto, confrontando anche le alternative più conservative.',
     pathwayCards: [
       {
+        icon: 'goal',
         title: 'Ascoltiamo l’obiettivo',
         text: 'Valutiamo ciò che desideri cambiare insieme a salute orale, funzione e caratteristiche del sorriso.',
       },
       {
+        icon: 'design',
         title: 'Condividiamo il progetto',
         text: 'Fotografie, scansioni e simulazioni aiutano a definire forma, proporzioni e alternativa più appropriata.',
       },
       {
+        icon: 'prevention',
         title: 'Proteggiamo il lavoro',
         text: 'Dopo l’applicazione controlliamo occlusione, igiene e condizioni dei tessuti con richiami personalizzati.',
       },
@@ -838,14 +884,17 @@ export const treatmentMarketingPages = {
       'Una procedura chirurgica ben pianificata parte dall’indicazione corretta, prosegue con scelte condivise e comprende il controllo della guarigione.',
     pathwayCards: [
       {
+        icon: 'assessment',
         title: 'Definiamo l’indicazione',
         text: 'Visita, anamnesi e immagini aiutano a chiarire necessità, alternative e priorità dell’intervento.',
       },
       {
+        icon: 'surgery',
         title: 'Pianifichiamo la procedura',
         text: 'Tecnica, anestesia, farmaci e indicazioni vengono adattati alla situazione clinica e generale.',
       },
       {
+        icon: 'healing',
         title: 'Seguiamo la guarigione',
         text: 'Istruzioni chiare e controllo post-operatorio permettono di osservare il decorso e intervenire se necessario.',
       },
@@ -927,14 +976,17 @@ export const treatmentMarketingPages = {
       'L’impianto è un supporto: il progetto parte dal dente o dalla riabilitazione che dovrà sostenere e dalle condizioni biologiche disponibili.',
     pathwayCards: [
       {
+        icon: 'implant',
         title: 'Partiamo dalla protesi',
         text: 'Definiamo quale dente o riabilitazione deve essere sostenuta e quali condizioni devono essere rispettate.',
       },
       {
+        icon: 'surgery',
         title: 'Pianifichiamo la chirurgia',
         text: 'Dati clinici e immagini orientano numero, posizione degli impianti e scelta tra tecnica tradizionale e guidata.',
       },
       {
+        icon: 'monitoring',
         title: 'Completiamo e manteniamo',
         text: 'Guarigione, protesi definitiva e richiami periodici fanno parte di un unico percorso.',
       },
@@ -1015,14 +1067,17 @@ export const treatmentMarketingPages = {
       'Storia dei sintomi, funzione e risposta nel tempo guidano un percorso inizialmente conservativo e adattabile.',
     pathwayCards: [
       {
+        icon: 'history',
         title: 'Ricostruiamo la storia',
         text: 'Sintomi, abitudini, sonno e attività che aggravano il disturbo aiutano a definire il quadro.',
       },
       {
+        icon: 'function',
         title: 'Valutiamo la funzione',
         text: 'Osserviamo movimenti, muscoli, articolazioni, denti e occlusione, richiedendo esami solo se utili.',
       },
       {
+        icon: 'progress',
         title: 'Procediamo per gradi',
         text: 'Strategie conservative, eventuale dispositivo e controlli vengono adattati alla risposta individuale.',
       },
@@ -1103,14 +1158,17 @@ export const treatmentMarketingPages = {
       'Diagnosi medica, valutazione odontoiatrica e verifica dell’efficacia hanno ruoli distinti e complementari.',
     pathwayCards: [
       {
+        icon: 'sleep',
         title: 'Partiamo dalla diagnosi',
         text: 'Il referto del sonno chiarisce natura del problema e ruolo possibile del dispositivo intraorale.',
       },
       {
+        icon: 'device',
         title: 'Personalizziamo il dispositivo',
         text: 'Valutazione odontoiatrica, scansioni e regolazione progressiva adattano il trattamento alla bocca.',
       },
       {
+        icon: 'monitoring',
         title: 'Verifichiamo la risposta',
         text: 'Controlli dentali e rivalutazione specialistica verificano tollerabilità, effetti ed efficacia respiratoria.',
       },
