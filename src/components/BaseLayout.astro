@@ -20,7 +20,6 @@ interface Props {
 const {
   title,
   description = site.description,
-  ogImage = site.heroImage,
   canonicalPath = '/',
   transparentHeader = false,
   mobileTransparentHeader = false,
@@ -28,6 +27,8 @@ const {
 } = Astro.props;
 
 const canonical = new URL(canonicalPath, Astro.site || 'https://studiodentisticofederzonigranata.vercel.app').toString();
+const socialPreviewImage = '/assets/social/studio-dentistico-federzoni-granata-og.png';
+const socialPreviewImageUrl = new URL(socialPreviewImage, canonical).toString();
 const whatsappExcludedPaths = new Set([
   '/richiesta/',
   '/prenota-prima-visita/',
@@ -63,11 +64,16 @@ const showSectionReveal = !sectionRevealExcludedPaths.has(canonicalPath);
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content={site.name} />
-    <meta property="og:image" content={new URL(ogImage, canonical).toString()} />
+    <meta property="og:image" content={socialPreviewImageUrl} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`Logo ${site.name} su sfondo bianco`} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={new URL(ogImage, canonical).toString()} />
+    <meta name="twitter:image" content={socialPreviewImageUrl} />
+    <meta name="twitter:image:alt" content={`Logo ${site.name} su sfondo bianco`} />
   </head>
   <body class:list={[canonicalPath === '/' && 'is-home-page']}>
     <div class="site-preloader" data-site-preloader aria-hidden="true">
