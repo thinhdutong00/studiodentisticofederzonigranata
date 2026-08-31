@@ -3,6 +3,7 @@ import Header from './Header.astro';
 import Footer from './Footer.astro';
 import CookieBanner from './CookieBanner.astro';
 import WhatsAppFloatingButton from './WhatsAppFloatingButton.astro';
+import SectionReveal from './SectionReveal.astro';
 import { site } from '../data/site';
 import '../styles/apple-mobile-fonts.css';
 
@@ -35,6 +36,12 @@ const whatsappExcludedPaths = new Set([
   '/cookie-privacy/',
 ]);
 const showWhatsAppButton = !whatsappExcludedPaths.has(canonicalPath);
+const sectionRevealExcludedPaths = new Set([
+  '/richiesta/',
+  '/prenota-prima-visita/',
+  '/prenota-urgenza/',
+]);
+const showSectionReveal = !sectionRevealExcludedPaths.has(canonicalPath);
 ---
 
 <!doctype html>
@@ -68,9 +75,10 @@ const showWhatsAppButton = !whatsappExcludedPaths.has(canonicalPath);
     </div>
     <noscript><style>.site-preloader { display: none !important; }</style></noscript>
     <Header transparent={transparentHeader} mobileTransparent={mobileTransparentHeader} ctaHref={headerCtaHref} />
-    <main>
+    <main data-section-reveal-root={showSectionReveal ? '' : undefined}>
       <slot />
     </main>
+    {showSectionReveal && <SectionReveal />}
     <Footer />
     {showWhatsAppButton && <WhatsAppFloatingButton />}
     <CookieBanner />

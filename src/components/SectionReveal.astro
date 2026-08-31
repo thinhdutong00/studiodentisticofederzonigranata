@@ -1,0 +1,150 @@
+<script is:inline>
+  (() => {
+    const root = document.querySelector('[data-section-reveal-root]');
+    if (!(root instanceof HTMLElement) || root.dataset.sectionRevealReady === 'true') return;
+
+    root.dataset.sectionRevealReady = 'true';
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const maxTargetHeight = Math.max(window.innerHeight * 1.35, 900);
+    const targets = new Set();
+
+    const ignoredSelector = [
+      'script',
+      'style',
+      'template',
+      'noscript',
+      'form',
+      'fieldset',
+      '[hidden]',
+      '[aria-hidden="true"]',
+      '[aria-modal="true"]',
+      '[role="dialog"]',
+      '[data-no-section-reveal]',
+      '[data-treatment-sticky-cta]',
+      '[data-clinical-carousel-slide]',
+    ].join(',');
+
+    const eligibleChildren = (element) =>
+      Array.from(element.children).filter(
+        (child) => child instanceof HTMLElement && !child.matches(ignoredSelector),
+      );
+
+    const canAnimate = (element) => {
+      if (!(element instanceof HTMLElement) || element.matches(ignoredSelector)) return false;
+      if (element.closest('form, [data-no-section-reveal]')) return false;
+
+      const style = window.getComputedStyle(element);
+      if (style.display === 'none' || style.visibility === 'hidden') return false;
+      if (style.position === 'fixed' || style.position === 'sticky') return false;
+      if (Number.parseFloat(style.opacity) < 0.99) return false;
+      if (style.animationName !== 'none') return false;
+
+      return true;
+    };
+
+    const addTarget = (element, order) => {
+      if (!canAnimate(element) || targets.has(element)) return;
+
+      element.dataset.sectionReveal = '';
+      element.style.setProperty('--section-reveal-delay', `${Math.min(order * 0.06, 0.18)}s`);
+      targets.add(element);
+    };
+
+    const collectTargets = (element, depth, orderState) => {
+      if (!(element instanceof HTMLElement) || element.matches(ignoredSelector)) return;
+      if (element.matches('section')) return;
+
+      const children = eligibleChildren(element);
+      const containsSection = Boolean(element.querySelector('section'));
+      const containsForm = Boolean(element.querySelector('form'));
+      const isOversized = element.getBoundingClientRect().height > maxTargetHeight;
+      const shouldSplit = depth < 4 && children.length > 0 && (containsSection || containsForm || isOversized);
+
+      if (shouldSplit) {
+        children.forEach((child) => collectTargets(child, depth + 1, orderState));
+        return;
+      }
+
+      addTarget(element, orderState.value);
+      orderState.value += 1;
+    };
+
+    root.querySelectorAll('section').forEach((section) => {
+      if (!(section instanceof HTMLElement) || section.closest('[data-no-section-reveal]')) return;
+
+      const orderState = { value: 0 };
+      const children = eligibleChildren(section);
+
+      if (children.length === 0 && !section.querySelector('form')) {
+        addTarget(section, 0);
+        return;
+      }
+
+      children.forEach((child) => collectTargets(child, 0, orderState));
+    });
+
+    root.querySelectorAll('figure').forEach((figure) => {
+      if (!(figure instanceof HTMLElement) || figure.closest('section')) return;
+      addTarget(figure, 0);
+    });
+
+    if (targets.size === 0) return;
+
+    root.classList.add('section-reveal-active');
+
+    const showTarget = (target) => target.classList.add('is-section-reveal-visible');
+
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      targets.forEach(showTarget);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          showTarget(entry.target);
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -60px' },
+    );
+
+    window.requestAnimationFrame(() => targets.forEach((target) => observer.observe(target)));
+  })();
+</script>
+
+<style is:global>
+  [data-section-reveal-root].section-reveal-active [data-section-reveal] {
+    opacity: 0;
+    translate: 0 -36px;
+    will-change: opacity, translate;
+  }
+
+  [data-section-reveal-root].section-reveal-active [data-section-reveal].is-section-reveal-visible {
+    animation: sectionRevealIn 0.6s ease var(--section-reveal-delay, 0s) both;
+  }
+
+  @keyframes sectionRevealIn {
+    from {
+      opacity: 0;
+      translate: 0 -36px;
+    }
+
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-section-reveal-root].section-reveal-active [data-section-reveal],
+    [data-section-reveal-root].section-reveal-active [data-section-reveal].is-section-reveal-visible {
+      opacity: 1;
+      translate: 0 0;
+      animation: none;
+      will-change: auto;
+    }
+  }
+</style>

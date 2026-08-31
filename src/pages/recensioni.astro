@@ -184,7 +184,7 @@ const starsFor = (rating: number) => `${'★'.repeat(rating)}${'☆'.repeat(5 - 
   }
 
   .review-stars {
-    color: var(--brand-blue);
+    color: #fabc05;
     font-size: 1.15rem;
     letter-spacing: 0.08em;
     line-height: 1;
@@ -211,9 +211,12 @@ const starsFor = (rating: number) => `${'★'.repeat(rating)}${'☆'.repeat(5 - 
 
   .review-card:hover .review-person h2,
   .review-card:hover .review-person p,
-  .review-card:hover .review-stars,
   .review-card:hover .review-text {
     color: var(--surface-white);
+  }
+
+  .review-card:hover .review-stars {
+    color: #fabc05;
   }
 
   @media (max-width: 980px) {
