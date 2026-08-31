@@ -5,6 +5,7 @@ import CookieBanner from './CookieBanner.astro';
 import WhatsAppFloatingButton from './WhatsAppFloatingButton.astro';
 import SectionReveal from './SectionReveal.astro';
 import { site } from '../data/site';
+import '../styles/inter-font.css';
 import '../styles/apple-mobile-fonts.css';
 
 interface Props {
@@ -38,6 +39,7 @@ const whatsappExcludedPaths = new Set([
 ]);
 const showWhatsAppButton = !whatsappExcludedPaths.has(canonicalPath);
 const sectionRevealExcludedPaths = new Set([
+  '/',
   '/richiesta/',
   '/prenota-prima-visita/',
   '/prenota-urgenza/',
@@ -51,12 +53,12 @@ const showSectionReveal = !sectionRevealExcludedPaths.has(canonicalPath);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="preload" as="font" href="/fonts/inter/inter-latin.woff2" type="font/woff2" crossorigin />
+    {canonicalPath === '/' && <link rel="preload" as="image" href="/assets/optimized/home-hero-mobile.avif" type="image/avif" media="(max-width: 720px)" fetchpriority="high" />}
+    {canonicalPath === '/' && <link rel="preload" as="image" href="/assets/optimized/home-hero-desktop.avif" type="image/avif" media="(min-width: 721px)" fetchpriority="high" />}
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/png" href="/assets/original/2020/10/cropped-favicon-32x32.png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/assets/original/2020/10/cropped-favicon-180x180.png" />
     <meta property="og:type" content="website" />
@@ -76,63 +78,6 @@ const showSectionReveal = !sectionRevealExcludedPaths.has(canonicalPath);
     <meta name="twitter:image:alt" content={`Logo ${site.name} su sfondo bianco`} />
   </head>
   <body class:list={[canonicalPath === '/' && 'is-home-page']}>
-    <div class="site-preloader" data-site-preloader aria-hidden="true">
-      <div class="site-preloader-logo">
-        <img class="site-preloader-logo-base" src={site.logo} alt="" width="400" height="52" decoding="sync" />
-        <span class="site-preloader-logo-fill">
-          <img src={site.logo} alt="" width="400" height="52" decoding="sync" />
-        </span>
-      </div>
-    </div>
-    <noscript><style>.site-preloader { display: none !important; }</style></noscript>
-    <script is:inline>
-      (() => {
-        const preloader = document.querySelector('[data-site-preloader]');
-        if (!preloader) return;
-
-        const storageKey = 'federzoni-site-preloader-seen-v1';
-        let hasSeenPreloader = false;
-
-        try {
-          hasSeenPreloader = window.sessionStorage.getItem(storageKey) === 'true';
-          if (!hasSeenPreloader) window.sessionStorage.setItem(storageKey, 'true');
-        } catch {
-          hasSeenPreloader = false;
-        }
-
-        if (hasSeenPreloader) {
-          preloader.remove();
-          return;
-        }
-
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const minVisibleMs = reduceMotion ? 180 : 1120;
-        const maxVisibleMs = reduceMotion ? 450 : 1800;
-        const fadeMs = reduceMotion ? 0 : 220;
-        const startedAt = performance.now();
-
-        const removePreloader = () => {
-          if (preloader.dataset.done === 'true') return;
-          preloader.dataset.done = 'true';
-          preloader.classList.add('is-hiding');
-          window.setTimeout(() => preloader.remove(), fadeMs);
-        };
-
-        const hidePreloader = () => {
-          const wait = Math.max(0, minVisibleMs - (performance.now() - startedAt));
-          window.setTimeout(removePreloader, wait);
-        };
-
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', hidePreloader, { once: true });
-        } else {
-          hidePreloader();
-        }
-
-        window.addEventListener('load', hidePreloader, { once: true });
-        window.setTimeout(removePreloader, maxVisibleMs);
-      })();
-    </script>
     <Header transparent={transparentHeader} mobileTransparent={mobileTransparentHeader} ctaHref={headerCtaHref} />
     <main data-section-reveal-root={showSectionReveal ? '' : undefined}>
       <slot />
@@ -197,92 +142,6 @@ const showSectionReveal = !sectionRevealExcludedPaths.has(canonicalPath);
 
   * {
     box-sizing: border-box;
-  }
-
-  .site-preloader {
-    position: fixed;
-    inset: 0;
-    z-index: 10000;
-    display: grid;
-    place-items: center;
-    background: var(--surface-white, #fff);
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transition: opacity 220ms ease, visibility 220ms ease;
-  }
-
-  .site-preloader-logo {
-    --site-preloader-logo-width: clamp(250px, 31vw, 400px);
-    position: relative;
-    width: var(--site-preloader-logo-width);
-    aspect-ratio: 400 / 52;
-  }
-
-  .site-preloader-logo-base,
-  .site-preloader-logo-fill img {
-    width: var(--site-preloader-logo-width);
-    max-width: none;
-    height: auto;
-    display: block;
-  }
-
-  .site-preloader-logo-base {
-    opacity: 0.15;
-    filter: grayscale(1);
-  }
-
-  .site-preloader-logo-fill {
-    position: absolute;
-    inset: 0 auto 0 0;
-    width: 0;
-    overflow: hidden;
-    animation: sitePreloaderFill 1050ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
-  }
-
-  .site-preloader-logo-fill::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 22px;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(var(--surface-white-rgb), 0.72));
-    transform: translateX(35%);
-  }
-
-  .site-preloader-logo-fill img {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-
-  .site-preloader.is-hiding {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  @keyframes sitePreloaderFill {
-    0%,
-    8% {
-      width: 0;
-    }
-
-    100% {
-      width: 100%;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .site-preloader {
-      transition: none;
-    }
-
-    .site-preloader-logo-fill {
-      animation: none;
-      width: 100%;
-    }
   }
 
   html {
@@ -5366,6 +5225,7 @@ const showSectionReveal = !sectionRevealExcludedPaths.has(canonicalPath);
     background: var(--brand-cta);
     color: var(--surface-white);
     box-shadow: 0 28px 70px rgba(var(--brand-primary-dark-rgb), 0.34);
+    content-visibility: hidden;
     opacity: 0;
     pointer-events: none;
     transform: translateX(18px);
@@ -5382,6 +5242,10 @@ const showSectionReveal = !sectionRevealExcludedPaths.has(canonicalPath);
     pointer-events: auto;
     transform: translateX(0);
     visibility: visible;
+  }
+
+  .site-header.site-menu-open .site-menu-panel {
+    content-visibility: visible;
   }
 
   .site-menu-close {

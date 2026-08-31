@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
-import ContentPage from '../components/ContentPage.astro';
+import ScrapedHome from '../components/ScrapedHome.astro';
 import { site } from '../data/site';
 
 const page = site.pages.find((item) => item.path === '/');
@@ -8,5 +8,5 @@ if (!page) throw new Error('Homepage data not found');
 ---
 
 <BaseLayout title={page.title} description={page.description} ogImage={page.ogImage || site.heroImage} canonicalPath="/" transparentHeader>
-  <ContentPage page={page} />
+  <ScrapedHome />
 </BaseLayout>

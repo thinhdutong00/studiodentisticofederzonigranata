@@ -4,7 +4,7 @@ export const site = {
   "name": "Studio Dentistico Federzoni Granata",
   "description": "Odontoiatria digitale per adulti e bambini a Modena e Reggio Emilia.",
   "source": "https://studiodentisticofederzonigranata.it",
-  "logo": "/assets/original/2022/04/studio-dentistico-federzoni-granata.png",
+  "logo": "/assets/optimized/studio-dentistico-federzoni-granata.webp",
   "heroImage": "/assets/original/2022/03/dentista-modena-reggio-emilia.jpg",
   "social": [
     {

@@ -277,7 +277,14 @@ const siteMenuClinical = site.clinicalLinks.map((item) => ({
   </div>
   <div class="container header-inner">
     <a class="brand" href="/" aria-label={site.name}>
-      <img src={site.logo} alt="Studio dentistico Federzoni Granata" width="400" height="52" />
+      <img
+        src={site.logo}
+        srcset="/assets/optimized/studio-dentistico-federzoni-granata-300.webp 300w, /assets/optimized/studio-dentistico-federzoni-granata.webp 400w"
+        sizes="(max-width: 720px) 200px, 400px"
+        alt="Studio dentistico Federzoni Granata"
+        width="400"
+        height="52"
+      />
     </a>
     <nav id="primary-navigation" class="primary-nav" aria-label="Navigazione principale">
       {beforeClinical.map((item) => <a class="primary-nav-link" href={item.href}>{item.label}</a>)}
@@ -362,7 +369,7 @@ const siteMenuClinical = site.clinicalLinks.map((item) => ({
   <aside id="site-menu-panel" class="site-menu-panel" aria-label="Menu principale" aria-hidden="true" data-site-menu-panel>
     <div class="site-menu-panel-header">
       <a class="site-menu-panel-logo" href="/" aria-label={`${site.name} — Home`}>
-        <img src={site.logo} alt="" width="400" height="52" />
+        <img src="/assets/optimized/studio-dentistico-federzoni-granata-300.webp" alt="" width="300" height="39" />
       </a>
       <button class="site-menu-close" type="button" data-site-menu-close>
         <span aria-hidden="true">×</span>
