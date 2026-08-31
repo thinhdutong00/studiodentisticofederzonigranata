@@ -137,20 +137,17 @@ body .booking-questionnaire [data-step-key="treatment"] .quiz-options {
 
 @media (min-width: 721px) {
   body .booking-questionnaire [data-step-key="treatment"] .quiz-options {
-    width: min(1280px, calc(100vw - 64px));
     max-height: none;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px !important;
-    margin-inline: 50%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px !important;
     overflow: visible;
     padding: 0;
     scrollbar-gutter: auto;
-    transform: translateX(-50%);
   }
 
   body .booking-questionnaire [data-step-key="treatment"] .choice-btn {
-    min-height: 70px !important;
-    padding: 14px 64px 14px 20px !important;
+    min-height: 58px !important;
+    padding: 10px 60px 10px 20px !important;
   }
 }
 

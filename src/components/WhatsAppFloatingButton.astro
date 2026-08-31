@@ -38,9 +38,11 @@ const whatsappHref = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
       const message = widget.querySelector('[data-whatsapp-message]');
       const badge = widget.querySelector('[data-whatsapp-badge]');
       const firstMessage = 'Ciao, come possiamo aiutarti?';
-      const secondMessage = 'Hai un dubbio e non vuoi attendere? Contattarci su whatsapp!';
-      const messageDuration = 10000;
-      const messageTransitionDuration = 450;
+      const secondMessage = "Hai un dubbio o un'urgenza? Scrivicelo su whatsapp!";
+      const widgetDelay = 5000;
+      const firstMessageDelay = 8000;
+      const secondMessageDelay = 18000;
+      const finalMessageCloseDelay = 28000;
 
       const showMessage = (text, notificationCount) => {
         if (message) {
@@ -64,23 +66,19 @@ const whatsappHref = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
       window.setTimeout(() => {
         widget.classList.add('is-visible');
         widget.removeAttribute('aria-hidden');
+      }, widgetDelay);
 
-        window.setTimeout(() => {
-          showMessage(firstMessage, 1);
+      window.setTimeout(() => {
+        showMessage(firstMessage, 1);
+      }, firstMessageDelay);
 
-          window.setTimeout(() => {
-            hideMessage({ hideNotification: true });
+      window.setTimeout(() => {
+        showMessage(secondMessage, 2);
+      }, secondMessageDelay);
 
-            window.setTimeout(() => {
-              showMessage(secondMessage, 2);
-
-              window.setTimeout(() => {
-                hideMessage();
-              }, messageDuration);
-            }, messageTransitionDuration);
-          }, messageDuration);
-        }, 3000);
-      }, 5000);
+      window.setTimeout(() => {
+        hideMessage();
+      }, finalMessageCloseDelay);
 
       const cookieBanner = document.querySelector('[data-cookie-banner]');
       if (!(cookieBanner instanceof HTMLElement)) return;
