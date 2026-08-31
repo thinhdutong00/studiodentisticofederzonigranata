@@ -213,6 +213,24 @@ body .booking-questionnaire :is(.urgent-split, .date-time-grid, .first-visit-spl
   gap: 18px !important;
 }
 
+body .booking-questionnaire .request-office-choice {
+  margin: 0 0 24px;
+}
+
+body .booking-questionnaire .request-office-choice h2 {
+  margin: 0 0 14px;
+  color: var(--surface-white) !important;
+  font-family: Inter, sans-serif !important;
+  font-size: 17px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.2px !important;
+  line-height: 1.25 !important;
+}
+
+body .booking-questionnaire .request-office-options {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 body .booking-questionnaire :is(.urgent-split > div, .calendar-card, .slot-card) {
   border: 1px solid rgba(var(--surface-white-rgb), 0.3) !important;
   border-radius: 16px !important;
@@ -390,14 +408,12 @@ body .booking-questionnaire :is(.request-btn, .urgent-btn, .first-visit-btn) .mo
 }
 
 body:has(.booking-questionnaire) .multistep-backbar {
-  position: fixed !important;
-  left: 22px;
-  bottom: 22px;
-  z-index: 75;
+  position: static !important;
   width: auto;
   min-height: 50px !important;
   display: inline-flex !important;
   gap: 8px !important;
+  margin: 0 0 28px;
   border: 1px solid rgba(var(--surface-white-rgb), 0.7);
   border-radius: 999px;
   padding: 0 18px !important;
@@ -475,6 +491,13 @@ body:has(.booking-questionnaire) .multistep-backbar .module-back-glyph {
     grid-template-columns: 1fr !important;
   }
 
+  body .booking-questionnaire .request-office-choice h2 {
+    font-family: "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-size: 17px !important;
+    letter-spacing: -0.374px !important;
+    line-height: 21px !important;
+  }
+
   body .booking-questionnaire [data-step-key="treatment"] .quiz-options {
     max-height: none;
     padding-right: 2px;
@@ -528,8 +551,7 @@ body:has(.booking-questionnaire) .multistep-backbar .module-back-glyph {
   }
 
   body:has(.booking-questionnaire) .multistep-backbar {
-    left: 16px;
-    bottom: 16px;
+    margin-bottom: 22px;
   }
 }
 

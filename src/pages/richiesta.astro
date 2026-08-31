@@ -189,24 +189,26 @@ const requestConfig = {
   detailOptionsByTreatment,
   timeSlots: ['09:00', '10:00', '11:00', '14:30', '15:30', '16:30', '17:30'],
 };
+const offices = site.offices.map((office) => office.city);
 
 const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c');
 ---
 
 <BaseLayout title={title} description={description} ogImage={site.heroImage} canonicalPath="/richiesta/">
-  <a class="multistep-backbar" href="/" data-request-back hidden>
-    <span class="ui-glyph module-back-glyph" aria-hidden="true">‹</span>
-    <strong>Indietro</strong>
-  </a>
-
   <section class="request-page booking-questionnaire" aria-labelledby="request-questionnaire-title">
     <div class="request-shell">
+      <a class="multistep-backbar" href="/" data-request-back hidden>
+        <span class="ui-glyph module-back-glyph" aria-hidden="true">‹</span>
+        <strong>Indietro</strong>
+      </a>
+
       <form class="request-form" data-request-form novalidate>
         <script id="request-config" type="application/json" set:html={requestConfigJson}></script>
         <input type="hidden" name="treatment" data-field="treatment" />
         <input type="hidden" name="treatmentCategory" data-field="treatmentCategory" />
         <input type="hidden" name="problem" data-field="problem" />
         <input type="hidden" name="ageRange" data-field="ageRange" />
+        <input type="hidden" name="office" data-field="office" />
         <input type="hidden" name="preferredDate" data-field="preferredDate" />
         <input type="hidden" name="preferredTime" data-field="preferredTime" />
 
@@ -296,9 +298,20 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 
         <fieldset class="request-step" data-step="4" data-step-key="schedule" data-step-label="Preferenze per la visita" hidden>
           <legend>
-            <span class="quiz-kicker">Data e orario</span>
-            <strong>Quando preferiresti venire in studio?</strong>
+            <span class="quiz-kicker">Sede, data e orario</span>
+            <strong>Dove e quando preferiresti venire in studio?</strong>
           </legend>
+
+          <div class="request-office-choice">
+            <h2>Sede preferita</h2>
+            <div class="quiz-options request-office-options">
+              {offices.map((office) => (
+                <button class="choice-btn" type="button" data-choice="office" data-value={office}>
+                  {office}
+                </button>
+              ))}
+            </div>
+          </div>
 
           <div class="date-time-grid">
             <div class="calendar-card">
@@ -1321,6 +1334,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
       treatmentCategory: form.querySelector('[data-field="treatmentCategory"]'),
       problem: form.querySelector('[data-field="problem"]'),
       ageRange: form.querySelector('[data-field="ageRange"]'),
+      office: form.querySelector('[data-field="office"]'),
       preferredDate: form.querySelector('[data-field="preferredDate"]'),
       preferredTime: form.querySelector('[data-field="preferredTime"]'),
     };
@@ -1332,6 +1346,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
       categoryLabel: '',
       problem: '',
       ageRange: '',
+      office: '',
       preferredDate: '',
       preferredTime: '',
     };
@@ -1390,6 +1405,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
       if (fields.treatmentCategory) fields.treatmentCategory.value = state.categoryLabel;
       if (fields.problem) fields.problem.value = state.problem;
       if (fields.ageRange) fields.ageRange.value = state.ageRange;
+      if (fields.office) fields.office.value = state.office;
       if (fields.preferredDate) fields.preferredDate.value = state.preferredDate;
       if (fields.preferredTime) fields.preferredTime.value = state.preferredTime;
     };
@@ -1491,7 +1507,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
         return otherRequest instanceof HTMLTextAreaElement && otherRequest.value.trim().length >= 10;
       }
       if (stepKey === 'ageRange') return Boolean(state.ageRange);
-      if (stepKey === 'schedule') return Boolean(state.preferredDate && state.preferredTime);
+      if (stepKey === 'schedule') return Boolean(state.office && state.preferredDate && state.preferredTime);
       return true;
     };
 
@@ -1610,6 +1626,15 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
         });
       }
 
+      if (choiceType === 'office') {
+        state.office = button.dataset.value || button.textContent?.trim() || '';
+        form.querySelectorAll('[data-choice="office"]').forEach((option) => {
+          const isSelected = option === button;
+          option.classList.toggle('is-selected', isSelected);
+          option.setAttribute('aria-pressed', String(isSelected));
+        });
+      }
+
       syncHiddenFields();
       setError();
       syncNextButton();
@@ -1714,8 +1739,8 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
         setError('Seleziona una fascia d’età per continuare.');
         return false;
       }
-      if (stepKey === 'schedule' && (!state.preferredDate || !state.preferredTime)) {
-        setError('Scegli una data e una fascia oraria preferita.');
+      if (stepKey === 'schedule' && (!state.office || !state.preferredDate || !state.preferredTime)) {
+        setError('Scegli una sede, una data e una fascia oraria preferita.');
         return false;
       }
       if (stepKey === 'contact') {
@@ -1736,7 +1761,12 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
         const choiceType = choiceButton.getAttribute('data-choice');
         if (
           usesMobilePillFlow() &&
-          (choiceType === 'treatment' || choiceType === 'problem' || choiceType === 'ageRange')
+          (
+            choiceType === 'treatment' ||
+            choiceType === 'problem' ||
+            choiceType === 'ageRange' ||
+            (choiceType === 'office' && state.preferredDate && state.preferredTime)
+          )
         ) {
           autoAdvance();
         }
@@ -1769,7 +1799,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
         renderSlots();
         setError();
         syncNextButton();
-        if (usesMobilePillFlow() && state.preferredDate && state.preferredTime) {
+        if (usesMobilePillFlow() && state.office && state.preferredDate && state.preferredTime) {
           autoAdvance();
         }
       }

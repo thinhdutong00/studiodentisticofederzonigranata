@@ -52,13 +52,13 @@ const firstVisitConfigJson = JSON.stringify({
   canonicalPath="/prenota-prima-visita/"
   headerCtaHref="/richiesta/"
 >
-  <a class="multistep-backbar" href="/" data-first-visit-back hidden>
-    <span class="ui-glyph module-back-glyph" aria-hidden="true">‹</span>
-    <strong>Indietro</strong>
-  </a>
-
   <section class="first-visit-request-page booking-questionnaire" aria-labelledby="first-visit-request-title">
     <div class="first-visit-request-shell">
+      <a class="multistep-backbar" href="/" data-first-visit-back hidden>
+        <span class="ui-glyph module-back-glyph" aria-hidden="true">‹</span>
+        <strong>Indietro</strong>
+      </a>
+
       <form class="first-visit-request-form" data-first-visit-form novalidate>
         <script id="first-visit-config" type="application/json" set:html={firstVisitConfigJson}></script>
         <input type="hidden" name="visitReason" data-field="visitReason" />
