@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
+import CtaArrowIcon from '../components/CtaArrowIcon.astro';
 import TreatmentIcon from '../components/TreatmentIcon.astro';
 import { site } from '../data/site';
 import { formatParentheticalDetail } from '../utils/formatParentheticalDetail';
@@ -123,7 +124,7 @@ const treatments = site.treatmentMenu
               Raccontaci cosa ti serve: il team ti aiuta a individuare il percorso più adatto tra prevenzione,
               estetica, ortodonzia, chirurgia o riabilitazione.
             </p>
-            <a href="/richiesta/">Richiedi una visita <span class="ui-glyph" aria-hidden="true">↗</span></a>
+            <a href="/richiesta/">Richiedi una visita <CtaArrowIcon className="ui-glyph" /></a>
           </aside>
         </div>
 

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
+import CtaArrowIcon from '../components/CtaArrowIcon.astro';
 import TreatmentMarketingPage from '../components/TreatmentMarketingPage.astro';
 import TreatmentPathwayIcon from '../components/TreatmentPathwayIcon.astro';
 import TreatmentPrefooterCta from '../components/TreatmentPrefooterCta.astro';
@@ -200,7 +201,7 @@ const mobileFunnelConfig = {
       <div class="service-wrap">
         <div class="service-section-head">
           <p>Igiene orale e prevenzione</p>
-          <a href="/richiesta/">Prenota una visita <span aria-hidden="true">↗</span></a>
+          <a href="/richiesta/">Prenota una visita <CtaArrowIcon /></a>
         </div>
         <div class="process-grid" id="process-title">
           {processCards.map((card) => (
@@ -218,7 +219,7 @@ const mobileFunnelConfig = {
       <div class="service-wrap">
         <div class="service-section-head">
           <p>Prestazioni</p>
-          <a href="/trattamenti/">Tutti i trattamenti <span aria-hidden="true">↗</span></a>
+          <a href="/trattamenti/">Tutti i trattamenti <CtaArrowIcon /></a>
         </div>
         <h2 class="service-band-title" id="services-title">Cosa comprende il percorso</h2>
         <div class="image-card-rail">
@@ -238,7 +239,7 @@ const mobileFunnelConfig = {
       <div class="service-wrap">
         <div class="service-section-head">
           <p>Dettagli del trattamento</p>
-          <a href="/richiesta/">Richiedi informazioni <span aria-hidden="true">↗</span></a>
+          <a href="/richiesta/">Richiedi informazioni <CtaArrowIcon /></a>
         </div>
         <div class="detail-list" id="details-title">
           {preventionRows.map((row) => (
@@ -247,7 +248,7 @@ const mobileFunnelConfig = {
                 <h2>{row.title}</h2>
                 <p>{row.text}</p>
               </div>
-              <a href="/richiesta/">Prenota una visita <span aria-hidden="true">↗</span></a>
+              <a href="/richiesta/">Prenota una visita <CtaArrowIcon /></a>
             </article>
           ))}
         </div>
@@ -258,7 +259,7 @@ const mobileFunnelConfig = {
       <div class="service-wrap">
         <div class="service-section-head">
           <p>Domande frequenti</p>
-          <a href="/faq/">Vai alle FAQ <span aria-hidden="true">↗</span></a>
+          <a href="/faq/">Vai alle FAQ <CtaArrowIcon /></a>
         </div>
         <h2 class="service-band-title" id="faq-title">Informazioni utili</h2>
         <div class="accordion-list">

@@ -47,11 +47,6 @@ const emergencyConfigJson = JSON.stringify({
 <BaseLayout title={title} description={description} ogImage={site.heroImage} canonicalPath="/prenota-urgenza/">
   <section class="urgent-request-page booking-questionnaire" aria-labelledby="urgent-questionnaire-title">
     <div class="urgent-request-shell">
-      <a class="multistep-backbar" href="/" data-urgent-back hidden>
-        <span class="ui-glyph module-back-glyph" aria-hidden="true">‹</span>
-        <strong>Indietro</strong>
-      </a>
-
       <form class="urgent-request-form" data-urgent-form novalidate>
         <script id="urgent-config" type="application/json" set:html={emergencyConfigJson}></script>
         <input type="hidden" name="emergencyType" data-field="emergencyType" />
@@ -217,6 +212,10 @@ const emergencyConfigJson = JSON.stringify({
         <p class="urgent-error" data-urgent-error role="alert" aria-live="polite"></p>
 
         <div class="urgent-actions">
+          <a class="multistep-backbar" href="/" data-urgent-back hidden>
+            <span class="ui-glyph module-back-glyph" aria-hidden="true">‹</span>
+            <strong>Indietro</strong>
+          </a>
           <button class="urgent-btn urgent-btn-primary booking-desktop-next" type="button" data-urgent-next>
             Continua <span class="ui-glyph module-cta-glyph" aria-hidden="true">↗</span>
           </button>

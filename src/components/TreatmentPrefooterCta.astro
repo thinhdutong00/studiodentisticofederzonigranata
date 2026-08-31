@@ -1,4 +1,6 @@
 ---
+import CtaArrowIcon from './CtaArrowIcon.astro';
+
 interface Props {
   title: string;
   headingId?: string;
@@ -31,7 +33,13 @@ const {
     </div>
 
     <div class="treatment-prefooter-action">
-      <a href={href}>{ctaLabel} <span class="ui-glyph treatment-prefooter-arrow" aria-hidden="true">{arrow}</span></a>
+      <a href={href}>
+        {ctaLabel}
+        <CtaArrowIcon
+          className="ui-glyph treatment-prefooter-arrow"
+          direction={arrow === '→' ? 'right' : 'up-right'}
+        />
+      </a>
       <span>{note}</span>
     </div>
   </div>

@@ -54,11 +54,6 @@ const firstVisitConfigJson = JSON.stringify({
 >
   <section class="first-visit-request-page booking-questionnaire" aria-labelledby="first-visit-request-title">
     <div class="first-visit-request-shell">
-      <a class="multistep-backbar" href="/" data-first-visit-back hidden>
-        <span class="ui-glyph module-back-glyph" aria-hidden="true">‹</span>
-        <strong>Indietro</strong>
-      </a>
-
       <form class="first-visit-request-form" data-first-visit-form novalidate>
         <script id="first-visit-config" type="application/json" set:html={firstVisitConfigJson}></script>
         <input type="hidden" name="visitReason" data-field="visitReason" />
@@ -196,6 +191,10 @@ const firstVisitConfigJson = JSON.stringify({
         <p class="first-visit-error" data-first-visit-error role="alert" aria-live="polite"></p>
 
         <div class="first-visit-actions">
+          <a class="multistep-backbar" href="/" data-first-visit-back hidden>
+            <span class="ui-glyph module-back-glyph" aria-hidden="true">‹</span>
+            <strong>Indietro</strong>
+          </a>
           <button class="first-visit-btn first-visit-btn-primary booking-desktop-next" type="button" data-first-visit-next>
             Continua <span class="ui-glyph module-cta-glyph" aria-hidden="true">↗</span>
           </button>

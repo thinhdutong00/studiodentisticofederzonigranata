@@ -197,11 +197,6 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 <BaseLayout title={title} description={description} ogImage={site.heroImage} canonicalPath="/richiesta/">
   <section class="request-page booking-questionnaire" aria-labelledby="request-questionnaire-title">
     <div class="request-shell">
-      <a class="multistep-backbar" href="/" data-request-back hidden>
-        <span class="ui-glyph module-back-glyph" aria-hidden="true">‹</span>
-        <strong>Indietro</strong>
-      </a>
-
       <form class="request-form" data-request-form novalidate>
         <script id="request-config" type="application/json" set:html={requestConfigJson}></script>
         <input type="hidden" name="treatment" data-field="treatment" />
@@ -377,6 +372,10 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
         <p class="request-error" data-request-error role="alert" aria-live="polite"></p>
 
         <div class="request-actions">
+          <a class="multistep-backbar" href="/" data-request-back hidden>
+            <span class="ui-glyph module-back-glyph" aria-hidden="true">‹</span>
+            <strong>Indietro</strong>
+          </a>
           <button class="request-btn request-btn-primary booking-desktop-next" type="button" data-request-next>
             Continua <span class="ui-glyph module-cta-glyph" aria-hidden="true">↗</span>
           </button>

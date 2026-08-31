@@ -1,0 +1,35 @@
+---
+interface Props {
+  direction?: 'right' | 'up-right';
+  className?: string;
+}
+
+const { direction = 'up-right', className = '' } = Astro.props;
+const path = direction === 'right'
+  ? 'M4 10h12m-4-4 4 4-4 4'
+  : 'M6 14 14 6M8 6h6v6';
+---
+
+<svg
+  class:list={['cta-arrow-icon', className]}
+  viewBox="0 0 20 20"
+  fill="none"
+  aria-hidden="true"
+  focusable="false"
+>
+  <path d={path}></path>
+</svg>
+
+<style>
+  .cta-arrow-icon {
+    width: 1.35em;
+    height: 1.35em;
+    display: block;
+    flex: 0 0 auto;
+    overflow: visible;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+</style>

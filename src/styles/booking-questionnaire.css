@@ -356,6 +356,17 @@ body .booking-questionnaire :is(.request-actions, .urgent-actions, .first-visit-
 
 body .booking-questionnaire :is(.request-actions, .urgent-actions, .first-visit-actions) {
   width: 100%;
+  display: flex !important;
+  align-items: stretch;
+  gap: 14px !important;
+}
+
+body .booking-questionnaire :is(.request-actions, .urgent-actions, .first-visit-actions) > :is(button, .multistep-backbar) {
+  min-width: 0;
+}
+
+body .booking-questionnaire :is(.request-actions, .urgent-actions, .first-visit-actions) > button {
+  flex: 1 1 0;
 }
 
 body .booking-questionnaire :is(.request-other-actions, .urgent-other-actions) {
@@ -410,10 +421,12 @@ body .booking-questionnaire :is(.request-btn, .urgent-btn, .first-visit-btn) .mo
 body:has(.booking-questionnaire) .multistep-backbar {
   position: static !important;
   width: auto;
-  min-height: 50px !important;
+  min-height: 64px !important;
   display: inline-flex !important;
+  flex: 0 0 auto;
+  align-items: center;
   gap: 8px !important;
-  margin: 0 0 28px;
+  margin: 0;
   border: 1px solid rgba(var(--surface-white-rgb), 0.7);
   border-radius: 999px;
   padding: 0 18px !important;
@@ -535,9 +548,11 @@ body:has(.booking-questionnaire) .multistep-backbar .module-back-glyph {
   }
 
   body .booking-questionnaire :is(.request-actions, .urgent-actions, .first-visit-actions) {
+    flex-direction: column;
     margin-top: 0 !important;
   }
 
+  body .booking-questionnaire :is(.request-actions, .urgent-actions, .first-visit-actions):has(.multistep-backbar:not([hidden])),
   body .booking-questionnaire :is(.request-actions, .urgent-actions, .first-visit-actions):has(button[type="submit"]:not([hidden])) {
     margin-top: 38px !important;
   }
@@ -551,7 +566,9 @@ body:has(.booking-questionnaire) .multistep-backbar .module-back-glyph {
   }
 
   body:has(.booking-questionnaire) .multistep-backbar {
-    margin-bottom: 22px;
+    width: 100%;
+    min-height: 56px !important;
+    justify-content: flex-start;
   }
 }
 

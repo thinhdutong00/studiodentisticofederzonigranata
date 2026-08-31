@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
+import CtaArrowIcon from '../components/CtaArrowIcon.astro';
 import TreatmentPathwayIcon from '../components/TreatmentPathwayIcon.astro';
 import TreatmentPrefooterCta from '../components/TreatmentPrefooterCta.astro';
 import { site } from '../data/site';
@@ -130,7 +131,7 @@ const pathwayCards = [
             </select>
           </div>
 
-          <button type="button" aria-disabled="true">Richiedi informazioni <span class="ui-glyph" aria-hidden="true">↗</span></button>
+          <button type="button" aria-disabled="true">Richiedi informazioni <CtaArrowIcon className="ui-glyph" /></button>
           <p class="whitening-form-note" id="whitening-form-note">
             Modulo dimostrativo: l’invio non è ancora attivo.
           </p>
@@ -186,7 +187,7 @@ const pathwayCards = [
         </div>
 
         <div class="whitening-pathway-action">
-          <a href="/richiesta/?trattamento=Sbiancamento">Prenota visita <span class="ui-glyph" aria-hidden="true">↗</span></a>
+          <a href="/richiesta/?trattamento=Sbiancamento">Prenota visita <CtaArrowIcon className="ui-glyph" /></a>
         </div>
       </div>
     </section>
