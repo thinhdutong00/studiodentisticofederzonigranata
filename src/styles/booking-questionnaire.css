@@ -557,6 +557,10 @@ body:has(.booking-questionnaire) .multistep-backbar .module-back-glyph {
     margin-top: 38px !important;
   }
 
+  body .booking-questionnaire :is(.request-actions, .urgent-actions, .first-visit-actions):has(.multistep-backbar:not([hidden])):not(:has(button[type="submit"]:not([hidden]))) {
+    margin-top: 20px !important;
+  }
+
   body .booking-questionnaire :is(.request-other-actions, .urgent-other-actions) {
     display: flex !important;
   }
