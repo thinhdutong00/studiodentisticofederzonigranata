@@ -205,9 +205,13 @@ const emergencyConfigJson = JSON.stringify({
             </label>
           </div>
 
-          <p class="urgent-privacy">
-            Inviando il modulo autorizzi lo studio a ricontattarti per gestire la richiesta di urgenza.
-          </p>
+          <label class="booking-privacy-consent">
+            <input type="checkbox" name="privacyConsent" required data-privacy-consent />
+            <span>
+              Ho letto l’<a href="/privacy-policy/" target="_blank" rel="noopener noreferrer">informativa privacy</a>
+              e acconsento al trattamento dei dati per essere ricontattato in merito alla richiesta di urgenza.
+            </span>
+          </label>
         </fieldset>
 
         <p class="urgent-error" data-urgent-error role="alert" aria-live="polite"></p>
@@ -907,6 +911,7 @@ const emergencyConfigJson = JSON.stringify({
     const otherDetails = urgentForm.querySelector('[data-other-details]');
     const painRange = urgentForm.querySelector('[data-pain-range]');
     const painLabel = urgentForm.querySelector('[data-pain-label]');
+    const privacyConsent = urgentForm.querySelector('[data-privacy-consent]');
     const fields = {
       emergencyType: urgentForm.querySelector('[data-field="emergencyType"]'),
       symptom: urgentForm.querySelector('[data-field="symptom"]'),
@@ -1077,12 +1082,24 @@ const emergencyConfigJson = JSON.stringify({
       const missingName = !(fullName instanceof HTMLInputElement) || fullName.value.trim().length < 2;
       const missingPhone = !(phone instanceof HTMLInputElement) || phone.value.trim().length < 6;
       const missingEmail = !isEmailValid;
+      const missingPrivacy = !(privacyConsent instanceof HTMLInputElement) || !privacyConsent.checked;
 
       markInvalid(fullName, missingName);
       markInvalid(phone, missingPhone);
       markInvalid(email, missingEmail);
+      if (privacyConsent instanceof HTMLInputElement) {
+        if (missingPrivacy) {
+          privacyConsent.setAttribute('aria-invalid', 'true');
+        } else {
+          privacyConsent.removeAttribute('aria-invalid');
+        }
+      }
 
-      if (missingName || missingPhone || missingEmail) {
+      if (missingName || missingPhone || missingEmail || missingPrivacy) {
+        if (!missingName && !missingPhone && !missingEmail && missingPrivacy) {
+          setError('Accetta l’informativa privacy per inviare la richiesta di urgenza.');
+          return false;
+        }
         setError('Compila nome, telefono ed email per inviare la richiesta di urgenza.');
         return false;
       }
@@ -1179,6 +1196,9 @@ const emergencyConfigJson = JSON.stringify({
 
     urgentForm.addEventListener('input', (event) => {
       markInvalid(event.target, false);
+      if (event.target === privacyConsent && privacyConsent instanceof HTMLInputElement) {
+        privacyConsent.removeAttribute('aria-invalid');
+      }
       setError();
       syncNextButton();
     });

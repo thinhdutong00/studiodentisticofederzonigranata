@@ -352,9 +352,13 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
             </label>
           </div>
 
-          <p class="privacy-copy">
-            Inviando la richiesta autorizzi lo studio a ricontattarti per gestire la preferenza di appuntamento indicata.
-          </p>
+          <label class="booking-privacy-consent">
+            <input type="checkbox" name="privacyConsent" required data-privacy-consent />
+            <span>
+              Ho letto l’<a href="/privacy-policy/" target="_blank" rel="noopener noreferrer">informativa privacy</a>
+              e acconsento al trattamento dei dati per essere ricontattato in merito alla richiesta.
+            </span>
+          </label>
         </fieldset>
 
         <p class="request-error" data-request-error role="alert" aria-live="polite"></p>
@@ -1311,6 +1315,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
     const calendarNext = form.querySelector('[data-calendar-next]');
     const selectedDateLabel = form.querySelector('[data-selected-date]');
     const slotGrid = form.querySelector('[data-slot-grid]');
+    const privacyConsent = form.querySelector('[data-privacy-consent]');
     const fields = {
       treatment: form.querySelector('[data-field="treatment"]'),
       treatmentCategory: form.querySelector('[data-field="treatmentCategory"]'),
@@ -1658,12 +1663,24 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
       const missingName = !(fullName instanceof HTMLInputElement) || fullName.value.trim().length < 2;
       const missingPhone = !(phone instanceof HTMLInputElement) || phone.value.trim().length < 6;
       const missingEmail = !isEmailValid;
+      const missingPrivacy = !(privacyConsent instanceof HTMLInputElement) || !privacyConsent.checked;
 
       markInvalid(fullName, missingName);
       markInvalid(phone, missingPhone);
       markInvalid(email, missingEmail);
+      if (privacyConsent instanceof HTMLInputElement) {
+        if (missingPrivacy) {
+          privacyConsent.setAttribute('aria-invalid', 'true');
+        } else {
+          privacyConsent.removeAttribute('aria-invalid');
+        }
+      }
 
-      if (missingName || missingPhone || missingEmail) {
+      if (missingName || missingPhone || missingEmail || missingPrivacy) {
+        if (!missingName && !missingPhone && !missingEmail && missingPrivacy) {
+          setError('Accetta l’informativa privacy per inviare la richiesta.');
+          return false;
+        }
         setError('Compila nome, telefono ed email per inviare la richiesta.');
         return false;
       }
@@ -1786,6 +1803,9 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 
     form.addEventListener('input', (event) => {
       markInvalid(event.target, false);
+      if (event.target === privacyConsent && privacyConsent instanceof HTMLInputElement) {
+        privacyConsent.removeAttribute('aria-invalid');
+      }
       setError();
       syncNextButton();
     });

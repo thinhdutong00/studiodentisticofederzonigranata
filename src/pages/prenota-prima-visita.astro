@@ -184,9 +184,13 @@ const firstVisitConfigJson = JSON.stringify({
             </label>
           </div>
 
-          <p class="first-visit-privacy">
-            Inviando il modulo autorizzi lo studio a ricontattarti per organizzare la prima visita.
-          </p>
+          <label class="booking-privacy-consent">
+            <input type="checkbox" name="privacyConsent" required data-privacy-consent />
+            <span>
+              Ho letto l’<a href="/privacy-policy/" target="_blank" rel="noopener noreferrer">informativa privacy</a>
+              e acconsento al trattamento dei dati per essere ricontattato e organizzare la prima visita.
+            </span>
+          </label>
         </fieldset>
 
         <p class="first-visit-error" data-first-visit-error role="alert" aria-live="polite"></p>
@@ -790,6 +794,7 @@ const firstVisitConfigJson = JSON.stringify({
     const submitButton = firstVisitForm.querySelector('[data-submit-first-visit]');
     const nextButton = firstVisitForm.querySelector('[data-first-visit-next]');
     const errorBox = firstVisitForm.querySelector('[data-first-visit-error]');
+    const privacyConsent = firstVisitForm.querySelector('[data-privacy-consent]');
     const hiddenFields = Array.from(firstVisitForm.querySelectorAll('[data-field]'));
     const state = {
       visitReason: '',
@@ -975,13 +980,26 @@ const firstVisitConfigJson = JSON.stringify({
 
     firstVisitForm.addEventListener('submit', (event) => {
       event.preventDefault();
-      const requiredFields = Array.from(firstVisitForm.querySelectorAll('input[required]'));
+      const requiredFields = Array.from(firstVisitForm.querySelectorAll('input[required]:not([type="checkbox"])'));
       const missingRequired = requiredFields.some(
         (field) => field instanceof HTMLInputElement && !field.value.trim(),
       );
       const emailField = firstVisitForm.elements.namedItem('email');
+      const missingPrivacy = !(privacyConsent instanceof HTMLInputElement) || !privacyConsent.checked;
 
-      if (missingRequired || (emailField instanceof HTMLInputElement && !emailField.checkValidity())) {
+      if (privacyConsent instanceof HTMLInputElement) {
+        if (missingPrivacy) {
+          privacyConsent.setAttribute('aria-invalid', 'true');
+        } else {
+          privacyConsent.removeAttribute('aria-invalid');
+        }
+      }
+
+      if (missingRequired || (emailField instanceof HTMLInputElement && !emailField.checkValidity()) || missingPrivacy) {
+        if (!missingRequired && emailField instanceof HTMLInputElement && emailField.checkValidity() && missingPrivacy) {
+          setError('Accetta l’informativa privacy per inviare la richiesta.');
+          return;
+        }
         setError('Compila nome, telefono ed email per inviare la richiesta.');
         return;
       }
@@ -995,6 +1013,13 @@ const firstVisitConfigJson = JSON.stringify({
       window.setTimeout(() => {
         window.location.href = '/thank-you-page/';
       }, 450);
+    });
+
+    privacyConsent?.addEventListener('change', () => {
+      if (privacyConsent instanceof HTMLInputElement) {
+        privacyConsent.removeAttribute('aria-invalid');
+      }
+      setError('');
     });
 
     syncHiddenFields();

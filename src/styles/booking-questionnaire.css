@@ -3,7 +3,7 @@ body:has(.booking-questionnaire) {
 }
 
 body:has(.booking-questionnaire) .site-header {
-  display: block !important;
+  display: none !important;
 }
 
 body .booking-questionnaire:is(.request-page, .urgent-request-page, .first-visit-request-page) {
@@ -281,6 +281,51 @@ body .booking-questionnaire :is(input, textarea):focus {
 
 body .booking-questionnaire :is(.privacy-copy, .urgent-privacy, .first-visit-privacy) {
   color: rgba(var(--surface-white-rgb), 0.76) !important;
+}
+
+body .booking-questionnaire .booking-privacy-consent {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 12px !important;
+  margin: 26px 0 0;
+  color: rgba(var(--surface-white-rgb), 0.82) !important;
+  cursor: pointer;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.16px !important;
+  line-height: 1.45 !important;
+  text-transform: none !important;
+}
+
+body .booking-questionnaire .booking-privacy-consent input {
+  width: 20px !important;
+  min-width: 20px;
+  height: 20px !important;
+  min-height: 20px !important;
+  flex: 0 0 20px;
+  margin: 1px 0 0;
+  padding: 0 !important;
+  border: 1px solid rgba(var(--surface-white-rgb), 0.76) !important;
+  border-radius: 4px;
+  background: transparent !important;
+  box-shadow: none !important;
+  accent-color: var(--surface-white);
+}
+
+body .booking-questionnaire .booking-privacy-consent input[aria-invalid="true"] {
+  outline: 3px solid rgba(var(--surface-white-rgb), 0.56) !important;
+  outline-offset: 3px;
+}
+
+body .booking-questionnaire .booking-privacy-consent span {
+  color: inherit !important;
+}
+
+body .booking-questionnaire .booking-privacy-consent a {
+  color: var(--surface-white) !important;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
 }
 
 body .booking-questionnaire :is(.request-error, .urgent-error, .first-visit-error) {
