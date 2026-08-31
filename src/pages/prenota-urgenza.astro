@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
+import { bookingAgeRangeOptions } from '../data/bookingForms';
 import { site } from '../data/site';
+import '../styles/booking-questionnaire.css';
 
 const title = `Prenota urgenza - ${site.name}`;
 const description =
@@ -43,22 +45,19 @@ const emergencyConfigJson = JSON.stringify({
 ---
 
 <BaseLayout title={title} description={description} ogImage={site.heroImage} canonicalPath="/prenota-urgenza/">
-  <a class="multistep-backbar" href="/" data-urgent-back>
-    <span aria-hidden="true">‹</span>
+  <a class="multistep-backbar" href="/" data-urgent-back hidden>
+    <span class="ui-glyph module-back-glyph" aria-hidden="true">‹</span>
     <strong>Indietro</strong>
   </a>
 
-  <section class="urgent-request-page" aria-labelledby="urgent-step-title">
+  <section class="urgent-request-page booking-questionnaire" aria-labelledby="urgent-questionnaire-title">
     <div class="urgent-request-shell">
-      <header class="urgent-request-head">
-        <h1>Prenota urgenza</h1>
-      </header>
-
       <form class="urgent-request-form" data-urgent-form novalidate>
         <script id="urgent-config" type="application/json" set:html={emergencyConfigJson}></script>
         <input type="hidden" name="emergencyType" data-field="emergencyType" />
         <input type="hidden" name="symptom" data-field="symptom" />
         <input type="hidden" name="painLevel" data-field="painLevel" />
+        <input type="hidden" name="ageRange" data-field="ageRange" />
         <input type="hidden" name="office" data-field="office" />
         <input type="hidden" name="availability" data-field="availability" />
 
@@ -66,9 +65,14 @@ const emergencyConfigJson = JSON.stringify({
           <span data-progress-bar></span>
         </div>
 
-        <p class="urgent-step-count" data-step-count>Step 1 di 4</p>
+        <header class="urgent-request-head booking-questionnaire-heading">
+          <p class="booking-questionnaire-eyebrow" data-booking-eyebrow>Scegli il tipo di urgenza</p>
+          <h1 id="urgent-questionnaire-title">Anamnesi</h1>
+        </header>
 
-        <fieldset class="urgent-step is-active" data-step="0" data-step-key="emergencyType">
+        <p class="urgent-step-count" data-step-count>Step 1 di 5</p>
+
+        <fieldset class="urgent-step is-active" data-step="0" data-step-key="emergencyType" data-step-label="Scegli il tipo di urgenza">
           <legend>
             <span class="urgent-kicker">Tipo di urgenza</span>
             <strong id="urgent-step-title">Che cosa sta succedendo?</strong>
@@ -83,7 +87,7 @@ const emergencyConfigJson = JSON.stringify({
           </div>
         </fieldset>
 
-        <fieldset class="urgent-step" data-step="1" data-step-key="symptom" hidden>
+        <fieldset class="urgent-step" data-step="1" data-step-key="symptom" data-step-label="Descrivi i sintomi" hidden>
           <legend>
             <span class="urgent-kicker">Sintomi</span>
             <strong>Quanto e urgente il problema?</strong>
@@ -104,7 +108,7 @@ const emergencyConfigJson = JSON.stringify({
           </label>
         </fieldset>
 
-        <fieldset class="urgent-step" data-step="2" data-step-key="otherDetails" data-conditional-other hidden>
+        <fieldset class="urgent-step" data-step="2" data-step-key="otherDetails" data-step-label="Raccontaci che cosa è successo" data-conditional-other hidden>
           <legend>
             <span class="urgent-kicker">Raccontaci di più</span>
             <strong>Descrivi brevemente che cosa hai</strong>
@@ -124,13 +128,28 @@ const emergencyConfigJson = JSON.stringify({
           </div>
 
           <div class="urgent-other-actions">
-            <button class="urgent-btn urgent-btn-primary" type="button" data-urgent-other-next>
-              Continua <span aria-hidden="true">↗</span>
+            <button class="urgent-btn urgent-btn-primary booking-conditional-next" type="button" data-urgent-other-next>
+              Conferma dettagli <span class="ui-glyph module-cta-glyph" aria-hidden="true">↗</span>
             </button>
           </div>
         </fieldset>
 
-        <fieldset class="urgent-step" data-step="3" data-step-key="logistics" hidden>
+        <fieldset class="urgent-step" data-step="3" data-step-key="ageRange" data-step-label="Fascia d’età" hidden>
+          <legend>
+            <span class="urgent-kicker">Fascia d’età</span>
+            <strong>Qual è la fascia d’età della persona da visitare?</strong>
+          </legend>
+
+          <div class="urgent-options">
+            {bookingAgeRangeOptions.map((option) => (
+              <button class="urgent-choice" type="button" data-choice="ageRange" data-value={option}>
+                {option}
+              </button>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset class="urgent-step" data-step="4" data-step-key="logistics" data-step-label="Sede e disponibilità" hidden>
           <legend>
             <span class="urgent-kicker">Sede e disponibilita</span>
             <strong>Dove e quando puoi venire?</strong>
@@ -161,7 +180,7 @@ const emergencyConfigJson = JSON.stringify({
           </div>
         </fieldset>
 
-        <fieldset class="urgent-step" data-step="4" data-step-key="contact" hidden>
+        <fieldset class="urgent-step" data-step="5" data-step-key="contact" data-step-label="I tuoi dati" hidden>
           <legend>
             <span class="urgent-kicker">Contatti</span>
             <strong>Lasciaci i dati per ricontattarti</strong>
@@ -194,7 +213,10 @@ const emergencyConfigJson = JSON.stringify({
         <p class="urgent-error" data-urgent-error role="alert" aria-live="polite"></p>
 
         <div class="urgent-actions">
-          <button class="urgent-btn urgent-btn-primary" type="submit" data-submit-urgent hidden>Invia urgenza <span aria-hidden="true">↗</span></button>
+          <button class="urgent-btn urgent-btn-primary booking-desktop-next" type="button" data-urgent-next>
+            Continua <span class="ui-glyph module-cta-glyph" aria-hidden="true">↗</span>
+          </button>
+          <button class="urgent-btn urgent-btn-primary" type="submit" data-submit-urgent hidden>Invia urgenza <span class="ui-glyph module-cta-glyph" aria-hidden="true">↗</span></button>
         </div>
       </form>
     </div>
@@ -227,12 +249,15 @@ const emergencyConfigJson = JSON.stringify({
     word-spacing: 0;
   }
 
-  .multistep-backbar span {
-    display: inline-flex;
-    align-items: center;
+  .multistep-backbar .module-back-glyph {
+    width: 1em;
+    height: 1em;
+    display: inline-grid;
+    flex: 0 0 1em;
+    place-items: center;
     font-size: 1.45em;
-    font-weight: 500;
-    line-height: 0.75;
+    font-weight: 400;
+    line-height: 1;
   }
 
   .multistep-backbar strong {
@@ -510,9 +535,15 @@ const emergencyConfigJson = JSON.stringify({
     transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
   }
 
-  .urgent-btn span {
-    font-size: 1.1em;
-    line-height: 1;
+  .urgent-btn .module-cta-glyph {
+    width: 24px;
+    height: 24px;
+    display: inline-grid;
+    flex: 0 0 24px;
+    place-items: center;
+    font-size: 23.2px;
+    font-weight: 400;
+    line-height: 23.2px;
   }
 
   .urgent-btn:hover {
@@ -561,6 +592,11 @@ const emergencyConfigJson = JSON.stringify({
     .urgent-btn-primary {
       width: 100%;
       margin-left: 0;
+    }
+
+    .urgent-btn {
+      justify-content: space-between;
+      text-align: left;
     }
   }
 
@@ -864,7 +900,9 @@ const emergencyConfigJson = JSON.stringify({
     const stepCount = urgentForm.querySelector('[data-step-count]');
     const errorBox = urgentForm.querySelector('[data-urgent-error]');
     const topBackButton = document.querySelector('[data-urgent-back]');
+    const bookingEyebrow = document.querySelector('[data-booking-eyebrow]');
     const submitButton = urgentForm.querySelector('[data-submit-urgent]');
+    const nextButton = urgentForm.querySelector('[data-urgent-next]');
     const conditionalOtherStep = urgentForm.querySelector('[data-conditional-other]');
     const otherDetails = urgentForm.querySelector('[data-other-details]');
     const painRange = urgentForm.querySelector('[data-pain-range]');
@@ -873,6 +911,7 @@ const emergencyConfigJson = JSON.stringify({
       emergencyType: urgentForm.querySelector('[data-field="emergencyType"]'),
       symptom: urgentForm.querySelector('[data-field="symptom"]'),
       painLevel: urgentForm.querySelector('[data-field="painLevel"]'),
+      ageRange: urgentForm.querySelector('[data-field="ageRange"]'),
       office: urgentForm.querySelector('[data-field="office"]'),
       availability: urgentForm.querySelector('[data-field="availability"]'),
     };
@@ -882,11 +921,13 @@ const emergencyConfigJson = JSON.stringify({
       emergencyType: '',
       symptom: '',
       painLevel: '5',
+      ageRange: '',
       office: '',
       availability: '',
     };
     const otherChoiceValue = 'Altro';
     let autoAdvanceTimer = 0;
+    const usesMobilePillFlow = () => window.matchMedia('(max-width: 720px)').matches;
 
     const needsOtherDetails = () =>
       state.emergencyType === otherChoiceValue || state.symptom === otherChoiceValue;
@@ -904,6 +945,7 @@ const emergencyConfigJson = JSON.stringify({
       if (fields.emergencyType) fields.emergencyType.value = state.emergencyType;
       if (fields.symptom) fields.symptom.value = state.symptom;
       if (fields.painLevel) fields.painLevel.value = state.painLevel;
+      if (fields.ageRange) fields.ageRange.value = state.ageRange;
       if (fields.office) fields.office.value = state.office;
       if (fields.availability) fields.availability.value = state.availability;
     };
@@ -911,6 +953,26 @@ const emergencyConfigJson = JSON.stringify({
     const renderPain = () => {
       if (painLabel) {
         painLabel.textContent = `${state.painLevel} / 10`;
+      }
+    };
+
+    const isCurrentStepComplete = () => {
+      const currentStep = getActiveSteps()[state.step];
+      const stepKey = currentStep?.dataset.stepKey;
+
+      if (stepKey === 'emergencyType') return Boolean(state.emergencyType);
+      if (stepKey === 'symptom') return Boolean(state.symptom);
+      if (stepKey === 'otherDetails') {
+        return otherDetails instanceof HTMLTextAreaElement && otherDetails.value.trim().length >= 10;
+      }
+      if (stepKey === 'ageRange') return Boolean(state.ageRange);
+      if (stepKey === 'logistics') return Boolean(state.office && state.availability);
+      return true;
+    };
+
+    const syncNextButton = () => {
+      if (nextButton instanceof HTMLButtonElement) {
+        nextButton.disabled = !isCurrentStepComplete();
       }
     };
 
@@ -934,8 +996,18 @@ const emergencyConfigJson = JSON.stringify({
       if (submitButton instanceof HTMLButtonElement) {
         submitButton.hidden = state.step !== activeSteps.length - 1;
       }
+      if (nextButton instanceof HTMLButtonElement) {
+        nextButton.hidden = state.step === activeSteps.length - 1;
+      }
+      if (topBackButton instanceof HTMLElement) {
+        topBackButton.hidden = state.step === 0;
+      }
+      if (bookingEyebrow) {
+        bookingEyebrow.textContent = currentStep?.dataset.stepLabel || '';
+      }
 
       setError();
+      syncNextButton();
     };
 
     const goToStep = (stepIndex) => {
@@ -986,6 +1058,7 @@ const emergencyConfigJson = JSON.stringify({
 
       syncHiddenFields();
       setError();
+      syncNextButton();
     };
 
     const markInvalid = (input, invalid) => {
@@ -1039,6 +1112,10 @@ const emergencyConfigJson = JSON.stringify({
           return false;
         }
       }
+      if (stepKey === 'ageRange' && !state.ageRange) {
+        setError('Seleziona una fascia d’età per continuare.');
+        return false;
+      }
       if (stepKey === 'logistics' && (!state.office || !state.availability)) {
         setError('Scegli una sede e una disponibilita.');
         return false;
@@ -1059,11 +1136,12 @@ const emergencyConfigJson = JSON.stringify({
       if (choiceButton) {
         selectChoice(choiceButton);
         const choiceType = choiceButton.getAttribute('data-choice');
-        if (
+        const shouldAutoAdvance =
           choiceType === 'emergencyType' ||
           choiceType === 'symptom' ||
-          ((choiceType === 'office' || choiceType === 'availability') && state.office && state.availability)
-        ) {
+          choiceType === 'ageRange' ||
+          ((choiceType === 'office' || choiceType === 'availability') && state.office && state.availability);
+        if (usesMobilePillFlow() && shouldAutoAdvance) {
           autoAdvance();
         }
         return;
@@ -1083,6 +1161,12 @@ const emergencyConfigJson = JSON.stringify({
       }
     });
 
+    nextButton?.addEventListener('click', () => {
+      if (validateCurrentStep()) {
+        goToStep(state.step + 1);
+      }
+    });
+
     topBackButton?.addEventListener('click', (event) => {
       event.preventDefault();
       if (state.step === 0) {
@@ -1096,6 +1180,7 @@ const emergencyConfigJson = JSON.stringify({
     urgentForm.addEventListener('input', (event) => {
       markInvalid(event.target, false);
       setError();
+      syncNextButton();
     });
 
     urgentForm.addEventListener('submit', (event) => {

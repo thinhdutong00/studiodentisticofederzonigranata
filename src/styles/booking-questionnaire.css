@@ -1,0 +1,495 @@
+body:has(.booking-questionnaire) {
+  background: var(--brand-blue);
+}
+
+body:has(.booking-questionnaire) .site-header {
+  display: block !important;
+}
+
+body .booking-questionnaire:is(.request-page, .urgent-request-page, .first-visit-request-page) {
+  min-height: calc(100svh - var(--nav-height));
+  padding: clamp(46px, 5vw, 74px) 24px clamp(92px, 9vw, 136px) !important;
+  background: var(--brand-blue) !important;
+  color: var(--surface-white) !important;
+}
+
+body .booking-questionnaire :is(.request-shell, .urgent-request-shell, .first-visit-request-shell) {
+  width: min(1020px, 100%) !important;
+  margin: 0 auto;
+}
+
+body .booking-questionnaire :is(.request-form, .urgent-request-form, .first-visit-request-form) {
+  min-height: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--surface-white) !important;
+}
+
+body .booking-questionnaire :is(.request-progress, .urgent-progress, .first-visit-progress) {
+  height: 4px !important;
+  margin: 0 0 clamp(46px, 4vw, 60px) !important;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(var(--surface-white-rgb), 0.22) !important;
+}
+
+body .booking-questionnaire :is(.request-progress, .urgent-progress, .first-visit-progress) > span {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--surface-white) !important;
+  transition: width 240ms ease;
+}
+
+body .booking-questionnaire .booking-questionnaire-heading {
+  display: grid !important;
+  max-width: none !important;
+  margin: 0 0 clamp(62px, 8vw, 94px) !important;
+  gap: 18px !important;
+}
+
+body .booking-questionnaire .booking-questionnaire-eyebrow {
+  display: block !important;
+  margin: 0 !important;
+  color: rgba(var(--surface-white-rgb), 0.74) !important;
+  font-family: Inter, sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.12em !important;
+  line-height: 1.2 !important;
+  text-transform: uppercase !important;
+}
+
+body .booking-questionnaire .booking-questionnaire-heading h1 {
+  width: fit-content;
+  max-width: 9ch !important;
+  margin: 0 !important;
+  color: var(--surface-white) !important;
+  font-family: Inter, sans-serif !important;
+  font-size: clamp(70px, 9vw, 122px) !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.04em !important;
+  line-height: 0.88 !important;
+  text-transform: none !important;
+}
+
+body .booking-questionnaire .booking-questionnaire-heading > span {
+  display: none !important;
+}
+
+body .booking-questionnaire :is(.request-step-count, .urgent-step-count, .first-visit-step-count) {
+  display: none !important;
+}
+
+body .booking-questionnaire :is(.request-step, .urgent-step, .first-visit-step).is-active {
+  animation: booking-questionnaire-step-enter 220ms ease both;
+}
+
+body .booking-questionnaire :is(.request-step, .urgent-step, .first-visit-step) legend {
+  width: 100%;
+  max-width: none !important;
+  margin: 0 0 28px !important;
+  padding: 0;
+}
+
+body .booking-questionnaire :is(.quiz-kicker, .urgent-kicker, .first-visit-kicker) {
+  display: none !important;
+}
+
+body .booking-questionnaire :is(.request-step, .urgent-step, .first-visit-step) legend strong {
+  display: block;
+  max-width: 30ch !important;
+  color: var(--surface-white) !important;
+  font-family: Inter, sans-serif !important;
+  font-size: clamp(28px, 3.2vw, 38px) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.025em !important;
+  line-height: 1.08 !important;
+  text-transform: none !important;
+}
+
+body .booking-questionnaire .selected-summary {
+  display: none !important;
+}
+
+body .booking-questionnaire :is(.quiz-options, .urgent-options, .first-visit-options) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px !important;
+}
+
+body .booking-questionnaire :is(.urgent-options-compact, .first-visit-options-compact) {
+  grid-template-columns: 1fr;
+}
+
+body .booking-questionnaire [data-step-key="treatment"] .quiz-options {
+  max-height: min(62svh, 640px);
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  padding: 2px 10px 2px 2px;
+  scrollbar-color: rgba(var(--surface-white-rgb), 0.52) transparent;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+}
+
+body .booking-questionnaire :is(.choice-btn, .urgent-choice, .first-visit-choice) {
+  position: relative;
+  width: 100%;
+  min-height: 82px !important;
+  display: grid;
+  align-items: center;
+  margin: 0;
+  border: 1px solid rgba(var(--surface-white-rgb), 0.34) !important;
+  border-radius: 16px !important;
+  padding: 16px 72px 16px 24px !important;
+  background: rgba(var(--surface-white-rgb), 0.055) !important;
+  box-shadow: none !important;
+  color: var(--surface-white) !important;
+  font: inherit !important;
+  font-size: 17px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.2px !important;
+  line-height: 1.25 !important;
+  text-align: left;
+  transform: none !important;
+  cursor: pointer;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+
+body .booking-questionnaire :is(.choice-btn, .urgent-choice, .first-visit-choice)::before,
+body .booking-questionnaire :is(.choice-btn, .urgent-choice, .first-visit-choice)::after {
+  position: absolute !important;
+  top: 50% !important;
+  border-radius: 999px !important;
+  content: "" !important;
+  transform: translateY(-50%) !important;
+  transition: border-color 160ms ease, background-color 160ms ease, opacity 160ms ease, transform 160ms ease;
+}
+
+body .booking-questionnaire :is(.choice-btn, .urgent-choice, .first-visit-choice)::before {
+  right: 22px !important;
+  width: 26px !important;
+  height: 26px !important;
+  border: 2px solid rgba(var(--surface-white-rgb), 0.5) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body .booking-questionnaire :is(.choice-btn, .urgent-choice, .first-visit-choice)::after {
+  right: 30px !important;
+  width: 10px !important;
+  height: 10px !important;
+  border: 0 !important;
+  background: var(--brand-blue) !important;
+  box-shadow: none !important;
+  opacity: 0 !important;
+  transform: translateY(-50%) scale(0.55) !important;
+}
+
+body .booking-questionnaire :is(.choice-btn, .urgent-choice, .first-visit-choice):is(:hover, :focus-visible) {
+  border-color: rgba(var(--surface-white-rgb), 0.82) !important;
+  background: rgba(var(--surface-white-rgb), 0.1) !important;
+}
+
+body .booking-questionnaire :is(.choice-btn, .urgent-choice, .first-visit-choice):is(.is-selected, [aria-pressed="true"]) {
+  border-color: var(--surface-white) !important;
+  background: rgba(var(--surface-white-rgb), 0.15) !important;
+}
+
+body .booking-questionnaire :is(.choice-btn, .urgent-choice, .first-visit-choice):is(.is-selected, [aria-pressed="true"])::before {
+  border-color: var(--surface-white) !important;
+  background: var(--surface-white) !important;
+}
+
+body .booking-questionnaire :is(.choice-btn, .urgent-choice, .first-visit-choice):is(.is-selected, [aria-pressed="true"])::after {
+  opacity: 1 !important;
+  transform: translateY(-50%) scale(1) !important;
+}
+
+body .booking-questionnaire :is(.urgent-split, .date-time-grid, .first-visit-split) {
+  gap: 18px !important;
+}
+
+body .booking-questionnaire :is(.urgent-split > div, .calendar-card, .slot-card) {
+  border: 1px solid rgba(var(--surface-white-rgb), 0.3) !important;
+  border-radius: 16px !important;
+  background: rgba(var(--surface-white-rgb), 0.06) !important;
+  box-shadow: none !important;
+}
+
+body .booking-questionnaire :is(.urgent-split h2, .calendar-title, .slot-title) {
+  color: var(--surface-white) !important;
+}
+
+body .booking-questionnaire :is(.slot-date, .calendar-weekdays) {
+  color: rgba(var(--surface-white-rgb), 0.72) !important;
+}
+
+body .booking-questionnaire :is(.calendar-nav, .date-btn, .slot-btn) {
+  border-color: rgba(var(--surface-white-rgb), 0.34) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--surface-white) !important;
+}
+
+body .booking-questionnaire :is(.date-btn, .slot-btn).is-selected {
+  border-color: var(--surface-white) !important;
+  background: var(--surface-white) !important;
+  color: var(--brand-blue) !important;
+}
+
+body .booking-questionnaire .date-btn:disabled {
+  border-color: transparent !important;
+  color: rgba(var(--surface-white-rgb), 0.3) !important;
+}
+
+body .booking-questionnaire .pain-scale {
+  border-color: rgba(var(--surface-white-rgb), 0.34) !important;
+  background: rgba(var(--surface-white-rgb), 0.06) !important;
+  color: var(--surface-white) !important;
+}
+
+body .booking-questionnaire .pain-scale input {
+  accent-color: var(--surface-white) !important;
+}
+
+body .booking-questionnaire :is(.field-grid, .urgent-field-grid, .first-visit-field-grid, .first-visit-notes) label,
+body .booking-questionnaire :is(.first-visit-notes, .first-visit-field-grid label) {
+  color: var(--surface-white) !important;
+}
+
+body .booking-questionnaire :is(.field-grid, .urgent-field-grid, .first-visit-field-grid, .first-visit-notes) :is(input, textarea),
+body .booking-questionnaire :is(.first-visit-notes, .first-visit-field-grid) :is(input, textarea) {
+  border: 1px solid rgba(var(--surface-white-rgb), 0.38) !important;
+  background: rgba(var(--surface-white-rgb), 0.08) !important;
+  box-shadow: none !important;
+  color: var(--surface-white) !important;
+}
+
+body .booking-questionnaire :is(input, textarea)::placeholder {
+  color: rgba(var(--surface-white-rgb), 0.64) !important;
+}
+
+body .booking-questionnaire :is(input, textarea):focus {
+  border-color: var(--surface-white) !important;
+  outline: 3px solid rgba(var(--surface-white-rgb), 0.32) !important;
+  outline-offset: 2px;
+}
+
+body .booking-questionnaire :is(.privacy-copy, .urgent-privacy, .first-visit-privacy) {
+  color: rgba(var(--surface-white-rgb), 0.76) !important;
+}
+
+body .booking-questionnaire :is(.request-error, .urgent-error, .first-visit-error) {
+  color: var(--surface-white) !important;
+}
+
+body .booking-questionnaire :is(.request-actions, .urgent-actions, .first-visit-actions, .request-other-actions, .urgent-other-actions) {
+  margin-top: 38px !important;
+}
+
+body .booking-questionnaire :is(.request-actions, .urgent-actions, .first-visit-actions) {
+  width: 100%;
+}
+
+body .booking-questionnaire :is(.request-other-actions, .urgent-other-actions) {
+  display: none !important;
+}
+
+body .booking-questionnaire :is(.request-btn, .urgent-btn, .first-visit-btn) {
+  width: 100%;
+  min-height: 64px !important;
+  justify-content: space-between;
+  gap: 18px;
+  border: 1px solid var(--surface-white) !important;
+  border-radius: 999px !important;
+  padding: 0 24px !important;
+  background: var(--surface-white) !important;
+  box-shadow: none !important;
+  color: var(--brand-blue) !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.2px !important;
+  line-height: 16px !important;
+  text-align: left;
+  transform: none !important;
+}
+
+body .booking-questionnaire .booking-desktop-next {
+  display: inline-flex !important;
+}
+
+body .booking-questionnaire .booking-desktop-next[hidden],
+body .booking-questionnaire :is(.request-btn, .urgent-btn, .first-visit-btn)[hidden] {
+  display: none !important;
+}
+
+body .booking-questionnaire :is(.request-btn, .urgent-btn, .first-visit-btn):disabled {
+  border-color: transparent !important;
+  background: rgba(var(--surface-white-rgb), 0.36) !important;
+  color: rgba(var(--brand-primary-dark-rgb), 0.54) !important;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+body .booking-questionnaire :is(.request-btn, .urgent-btn, .first-visit-btn):is(:hover, :focus-visible) {
+  background: transparent !important;
+  color: var(--surface-white) !important;
+}
+
+body .booking-questionnaire :is(.request-btn, .urgent-btn, .first-visit-btn) .module-cta-glyph {
+  color: inherit;
+}
+
+body:has(.booking-questionnaire) .multistep-backbar {
+  position: fixed !important;
+  left: 22px;
+  bottom: 22px;
+  z-index: 75;
+  width: auto;
+  min-height: 50px !important;
+  display: inline-flex !important;
+  gap: 8px !important;
+  border: 1px solid rgba(var(--surface-white-rgb), 0.7);
+  border-radius: 999px;
+  padding: 0 18px !important;
+  background: rgba(var(--brand-primary-dark-rgb), 0.32) !important;
+  box-shadow: 0 12px 30px rgba(var(--brand-primary-dark-rgb), 0.18);
+  color: var(--surface-white) !important;
+  backdrop-filter: blur(10px);
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  letter-spacing: normal !important;
+  line-height: 1 !important;
+}
+
+body:has(.booking-questionnaire) .multistep-backbar[hidden] {
+  display: none !important;
+}
+
+body:has(.booking-questionnaire) .multistep-backbar .module-back-glyph {
+  width: 20px !important;
+  height: 20px !important;
+  flex-basis: 20px !important;
+  font-size: 24px !important;
+  line-height: 20px !important;
+}
+
+@keyframes booking-questionnaire-step-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 720px) {
+  body .booking-questionnaire:is(.request-page, .urgent-request-page, .first-visit-request-page) {
+    min-height: calc(100svh - var(--nav-height));
+    padding: 32px 18px 84px !important;
+  }
+
+  body .booking-questionnaire :is(.request-progress, .urgent-progress, .first-visit-progress) {
+    margin-bottom: 44px !important;
+  }
+
+  body .booking-questionnaire .booking-questionnaire-heading {
+    margin-bottom: 54px !important;
+    gap: 16px !important;
+  }
+
+  body .booking-questionnaire .booking-questionnaire-heading h1 {
+    font-family: "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-size: clamp(58px, 19vw, 82px) !important;
+    font-weight: 500 !important;
+    letter-spacing: -0.04em !important;
+  }
+
+  body .booking-questionnaire .booking-questionnaire-eyebrow {
+    font-family: "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  }
+
+  body .booking-questionnaire :is(.request-step, .urgent-step, .first-visit-step) legend strong {
+    font-family: "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-size: 28px !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.4px !important;
+    line-height: 1.08 !important;
+  }
+
+  body .booking-questionnaire :is(.quiz-options, .urgent-options, .first-visit-options),
+  body .booking-questionnaire :is(.urgent-split, .date-time-grid, .first-visit-split),
+  body .booking-questionnaire :is(.field-grid, .urgent-field-grid, .first-visit-field-grid) {
+    grid-template-columns: 1fr !important;
+  }
+
+  body .booking-questionnaire [data-step-key="treatment"] .quiz-options {
+    max-height: none;
+    padding-right: 2px;
+  }
+
+  body .booking-questionnaire :is(.choice-btn, .urgent-choice, .first-visit-choice) {
+    min-height: 72px !important;
+    padding: 14px 60px 14px 18px !important;
+    border-radius: 14px !important;
+    font-family: "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.374px !important;
+    line-height: 21px !important;
+  }
+
+  body .booking-questionnaire :is(.choice-btn, .urgent-choice, .first-visit-choice)::before {
+    right: 18px !important;
+    width: 26px !important;
+    height: 26px !important;
+  }
+
+  body .booking-questionnaire :is(.choice-btn, .urgent-choice, .first-visit-choice)::after {
+    right: 26px !important;
+  }
+
+  body .booking-questionnaire :is(.request-btn, .urgent-btn, .first-visit-btn) {
+    width: 100%;
+    font-family: "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-size: 17px !important;
+  }
+
+  body .booking-questionnaire .booking-desktop-next {
+    display: none !important;
+  }
+
+  body .booking-questionnaire :is(.request-actions, .urgent-actions, .first-visit-actions) {
+    margin-top: 0 !important;
+  }
+
+  body .booking-questionnaire :is(.request-actions, .urgent-actions, .first-visit-actions):has(button[type="submit"]:not([hidden])) {
+    margin-top: 38px !important;
+  }
+
+  body .booking-questionnaire :is(.request-other-actions, .urgent-other-actions) {
+    display: flex !important;
+  }
+
+  body .booking-questionnaire .booking-conditional-next {
+    display: inline-flex !important;
+  }
+
+  body:has(.booking-questionnaire) .multistep-backbar {
+    left: 16px;
+    bottom: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body .booking-questionnaire :is(.request-step, .urgent-step, .first-visit-step).is-active {
+    animation: none;
+  }
+}

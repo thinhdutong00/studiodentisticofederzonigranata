@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
+import { bookingAgeRangeOptions } from '../data/bookingForms';
 import { site } from '../data/site';
+import '../styles/booking-questionnaire.css';
 
 const title = `Prenota prima visita - ${site.name}`;
 const description =
@@ -48,28 +50,20 @@ const firstVisitConfigJson = JSON.stringify({
   description={description}
   ogImage={site.heroImage}
   canonicalPath="/prenota-prima-visita/"
-  headerCtaHref="/prenota-prima-visita/"
+  headerCtaHref="/richiesta/"
 >
-  <a class="multistep-backbar" href="/" data-first-visit-back>
-    <span aria-hidden="true">‹</span>
+  <a class="multistep-backbar" href="/" data-first-visit-back hidden>
+    <span class="ui-glyph module-back-glyph" aria-hidden="true">‹</span>
     <strong>Indietro</strong>
   </a>
 
-  <section class="first-visit-request-page" aria-labelledby="first-visit-request-title">
+  <section class="first-visit-request-page booking-questionnaire" aria-labelledby="first-visit-request-title">
     <div class="first-visit-request-shell">
-      <header class="first-visit-request-head">
-        <p>Prima visita</p>
-        <h1 id="first-visit-request-title">Raccontaci da dove vuoi iniziare</h1>
-        <span>
-          Il modulo raccoglie le informazioni essenziali prima del contatto dello studio:
-          motivo, obiettivo, sede preferita e disponibilità.
-        </span>
-      </header>
-
       <form class="first-visit-request-form" data-first-visit-form novalidate>
         <script id="first-visit-config" type="application/json" set:html={firstVisitConfigJson}></script>
         <input type="hidden" name="visitReason" data-field="visitReason" />
         <input type="hidden" name="visitGoal" data-field="visitGoal" />
+        <input type="hidden" name="ageRange" data-field="ageRange" />
         <input type="hidden" name="office" data-field="office" />
         <input type="hidden" name="availability" data-field="availability" />
 
@@ -77,9 +71,14 @@ const firstVisitConfigJson = JSON.stringify({
           <span data-progress-bar></span>
         </div>
 
-        <p class="first-visit-step-count" data-step-count>Step 1 di 4</p>
+        <header class="first-visit-request-head booking-questionnaire-heading">
+          <p class="booking-questionnaire-eyebrow" data-booking-eyebrow>Motivo della visita</p>
+          <h1 id="first-visit-request-title">Anamnesi</h1>
+        </header>
 
-        <fieldset class="first-visit-step is-active" data-step="0">
+        <p class="first-visit-step-count" data-step-count>Step 1 di 5</p>
+
+        <fieldset class="first-visit-step is-active" data-step="0" data-step-key="visitReason" data-step-label="Motivo della visita">
           <legend>
             <span class="first-visit-kicker">Motivo della visita</span>
             <strong>Per cosa vuoi prenotare?</strong>
@@ -94,7 +93,7 @@ const firstVisitConfigJson = JSON.stringify({
           </div>
         </fieldset>
 
-        <fieldset class="first-visit-step" data-step="1" hidden>
+        <fieldset class="first-visit-step" data-step="1" data-step-key="visitGoal" data-step-label="Obiettivo della visita" hidden>
           <legend>
             <span class="first-visit-kicker">Obiettivo</span>
             <strong>Che cosa ti aspetti dal primo incontro?</strong>
@@ -114,7 +113,22 @@ const firstVisitConfigJson = JSON.stringify({
           </label>
         </fieldset>
 
-        <fieldset class="first-visit-step" data-step="2" hidden>
+        <fieldset class="first-visit-step" data-step="2" data-step-key="ageRange" data-step-label="Fascia d’età" hidden>
+          <legend>
+            <span class="first-visit-kicker">Fascia d’età</span>
+            <strong>Qual è la fascia d’età della persona da visitare?</strong>
+          </legend>
+
+          <div class="first-visit-options">
+            {bookingAgeRangeOptions.map((option) => (
+              <button class="first-visit-choice" type="button" data-choice="ageRange" data-value={option}>
+                {option}
+              </button>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset class="first-visit-step" data-step="3" data-step-key="logistics" data-step-label="Sede e disponibilità" hidden>
           <legend>
             <span class="first-visit-kicker">Sede e disponibilità</span>
             <strong>Dove e quando preferisci venire?</strong>
@@ -145,7 +159,7 @@ const firstVisitConfigJson = JSON.stringify({
           </div>
         </fieldset>
 
-        <fieldset class="first-visit-step" data-step="3" hidden>
+        <fieldset class="first-visit-step" data-step="4" data-step-key="contact" data-step-label="I tuoi dati" hidden>
           <legend>
             <span class="first-visit-kicker">Contatti</span>
             <strong>Lasciaci i dati per ricontattarti</strong>
@@ -178,7 +192,10 @@ const firstVisitConfigJson = JSON.stringify({
         <p class="first-visit-error" data-first-visit-error role="alert" aria-live="polite"></p>
 
         <div class="first-visit-actions">
-          <button class="first-visit-btn first-visit-btn-primary" type="submit" data-submit-first-visit hidden>Invia richiesta <span aria-hidden="true">↗</span></button>
+          <button class="first-visit-btn first-visit-btn-primary booking-desktop-next" type="button" data-first-visit-next>
+            Continua <span class="ui-glyph module-cta-glyph" aria-hidden="true">↗</span>
+          </button>
+          <button class="first-visit-btn first-visit-btn-primary" type="submit" data-submit-first-visit hidden>Invia richiesta <span class="ui-glyph module-cta-glyph" aria-hidden="true">↗</span></button>
         </div>
       </form>
     </div>
@@ -209,12 +226,15 @@ const firstVisitConfigJson = JSON.stringify({
     text-decoration: none;
   }
 
-  .multistep-backbar span {
-    display: inline-flex;
-    align-items: center;
+  .multistep-backbar .module-back-glyph {
+    width: 1em;
+    height: 1em;
+    display: inline-grid;
+    flex: 0 0 1em;
+    place-items: center;
     font-size: 1.45em;
-    font-weight: 500;
-    line-height: 0.75;
+    font-weight: 400;
+    line-height: 1;
   }
 
   .multistep-backbar strong {
@@ -483,6 +503,7 @@ const firstVisitConfigJson = JSON.stringify({
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 18px;
     min-height: 54px;
     padding: 0 24px;
     border-radius: 999px;
@@ -496,6 +517,17 @@ const firstVisitConfigJson = JSON.stringify({
       border-color 180ms ease,
       color 180ms ease,
       transform 180ms ease;
+  }
+
+  .first-visit-btn .module-cta-glyph {
+    width: 24px;
+    height: 24px;
+    display: inline-grid;
+    flex: 0 0 24px;
+    place-items: center;
+    font-size: 23.2px;
+    font-weight: 400;
+    line-height: 23.2px;
   }
 
   .first-visit-btn:hover {
@@ -559,6 +591,8 @@ const firstVisitConfigJson = JSON.stringify({
 
     .first-visit-btn {
       flex: 1 1 100%;
+      justify-content: space-between;
+      text-align: left;
     }
   }
 
@@ -752,16 +786,20 @@ const firstVisitConfigJson = JSON.stringify({
     const progressBar = firstVisitForm.querySelector('[data-progress-bar]');
     const stepCount = firstVisitForm.querySelector('[data-step-count]');
     const topBackButton = document.querySelector('[data-first-visit-back]');
+    const bookingEyebrow = document.querySelector('[data-booking-eyebrow]');
     const submitButton = firstVisitForm.querySelector('[data-submit-first-visit]');
+    const nextButton = firstVisitForm.querySelector('[data-first-visit-next]');
     const errorBox = firstVisitForm.querySelector('[data-first-visit-error]');
     const hiddenFields = Array.from(firstVisitForm.querySelectorAll('[data-field]'));
     const state = {
       visitReason: '',
       visitGoal: '',
+      ageRange: '',
       office: '',
       availability: '',
     };
     let autoAdvanceTimer = 0;
+    const usesMobilePillFlow = () => window.matchMedia('(max-width: 720px)').matches;
 
     const normalizeValue = (value) =>
       String(value || '')
@@ -809,6 +847,16 @@ const firstVisitConfigJson = JSON.stringify({
       if (submitButton instanceof HTMLButtonElement) {
         submitButton.hidden = nextIndex !== steps.length - 1;
       }
+      if (nextButton instanceof HTMLButtonElement) {
+        nextButton.hidden = nextIndex === steps.length - 1;
+        nextButton.disabled = !canContinue();
+      }
+      if (topBackButton instanceof HTMLElement) {
+        topBackButton.hidden = nextIndex === 0;
+      }
+      if (bookingEyebrow) {
+        bookingEyebrow.textContent = steps[nextIndex]?.dataset.stepLabel || '';
+      }
 
       setError('');
     };
@@ -829,6 +877,9 @@ const firstVisitConfigJson = JSON.stringify({
 
       syncHiddenFields();
       setError('');
+      if (nextButton instanceof HTMLButtonElement) {
+        nextButton.disabled = !canContinue();
+      }
     };
 
     const autoAdvance = () => {
@@ -854,6 +905,8 @@ const firstVisitConfigJson = JSON.stringify({
         case 1:
           return Boolean(state.visitGoal);
         case 2:
+          return Boolean(state.ageRange);
+        case 3:
           return Boolean(state.office && state.availability);
         default:
           return true;
@@ -867,6 +920,8 @@ const firstVisitConfigJson = JSON.stringify({
         case 1:
           return 'Scegli che cosa ti aspetti dal primo incontro.';
         case 2:
+          return 'Seleziona una fascia d’età.';
+        case 3:
           return 'Seleziona una sede e una disponibilità indicativa.';
         default:
           return 'Completa i campi richiesti.';
@@ -877,10 +932,22 @@ const firstVisitConfigJson = JSON.stringify({
       const target = event.target instanceof Element ? event.target.closest('[data-choice]') : null;
       if (target instanceof HTMLButtonElement) {
         selectChoice(target);
-        if (currentStep() < 2 || (currentStep() === 2 && state.office && state.availability)) {
+        if (
+          usesMobilePillFlow() &&
+          (currentStep() < 3 || (currentStep() === 3 && state.office && state.availability))
+        ) {
           autoAdvance();
         }
       }
+    });
+
+    nextButton?.addEventListener('click', () => {
+      if (!canContinue()) {
+        setError(validationMessage());
+        return;
+      }
+
+      setCurrentStep(currentStep() + 1);
     });
 
     topBackButton?.addEventListener('click', (event) => {

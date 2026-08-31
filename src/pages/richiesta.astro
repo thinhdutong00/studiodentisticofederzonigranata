@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
+import { bookingAgeRangeOptions } from '../data/bookingForms';
 import { site } from '../data/site';
+import '../styles/booking-questionnaire.css';
 
 const title = `Richiedi una valutazione - ${site.name}`;
 const description =
@@ -192,22 +194,19 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 ---
 
 <BaseLayout title={title} description={description} ogImage={site.heroImage} canonicalPath="/richiesta/">
-  <a class="multistep-backbar" href="/" data-request-back>
-    <span aria-hidden="true">‹</span>
+  <a class="multistep-backbar" href="/" data-request-back hidden>
+    <span class="ui-glyph module-back-glyph" aria-hidden="true">‹</span>
     <strong>Indietro</strong>
   </a>
 
-  <section class="request-page" aria-labelledby="request-step-title">
+  <section class="request-page booking-questionnaire" aria-labelledby="request-questionnaire-title">
     <div class="request-shell">
-      <header class="request-head">
-        <h1>Richiedi una valutazione</h1>
-      </header>
-
       <form class="request-form" data-request-form novalidate>
         <script id="request-config" type="application/json" set:html={requestConfigJson}></script>
         <input type="hidden" name="treatment" data-field="treatment" />
         <input type="hidden" name="treatmentCategory" data-field="treatmentCategory" />
         <input type="hidden" name="problem" data-field="problem" />
+        <input type="hidden" name="ageRange" data-field="ageRange" />
         <input type="hidden" name="preferredDate" data-field="preferredDate" />
         <input type="hidden" name="preferredTime" data-field="preferredTime" />
 
@@ -215,9 +214,14 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
           <span data-progress-bar></span>
         </div>
 
-        <p class="request-step-count" data-step-count>Step 1 di 4</p>
+        <header class="request-head booking-questionnaire-heading">
+          <p class="booking-questionnaire-eyebrow" data-booking-eyebrow>Scegli il trattamento</p>
+          <h1 id="request-questionnaire-title">Anamnesi</h1>
+        </header>
 
-        <fieldset class="request-step is-active" data-step="0" data-step-key="treatment">
+        <p class="request-step-count" data-step-count>Step 1 di 5</p>
+
+        <fieldset class="request-step is-active" data-step="0" data-step-key="treatment" data-step-label="Scegli il trattamento">
           <legend>
             <span class="quiz-kicker">Trattamento</span>
             <strong id="request-step-title">Quale trattamento vuoi richiedere?</strong>
@@ -239,7 +243,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
           </div>
         </fieldset>
 
-        <fieldset class="request-step" data-step="1" data-step-key="treatmentDetail" hidden>
+        <fieldset class="request-step" data-step="1" data-step-key="treatmentDetail" data-step-label="Approfondisci la richiesta" hidden>
           <legend>
             <span class="quiz-kicker">Approfondimento</span>
             <strong data-detail-step-title>Raccontaci meglio il trattamento che cerchi</strong>
@@ -249,7 +253,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
           <div class="quiz-options quiz-options-large" data-problem-options></div>
         </fieldset>
 
-        <fieldset class="request-step" data-step="2" data-step-key="otherDetails" data-conditional-other hidden>
+        <fieldset class="request-step" data-step="2" data-step-key="otherDetails" data-step-label="Raccontaci la tua esigenza" data-conditional-other hidden>
           <legend>
             <span class="quiz-kicker">Raccontaci di più</span>
             <strong>Di che cosa hai bisogno?</strong>
@@ -269,13 +273,28 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
           </div>
 
           <div class="request-other-actions">
-            <button class="request-btn request-btn-primary" type="button" data-request-other-next>
-              Continua <span aria-hidden="true">↗</span>
+            <button class="request-btn request-btn-primary booking-conditional-next" type="button" data-request-other-next>
+              Conferma dettagli <span class="ui-glyph module-cta-glyph" aria-hidden="true">↗</span>
             </button>
           </div>
         </fieldset>
 
-        <fieldset class="request-step" data-step="3" data-step-key="schedule" hidden>
+        <fieldset class="request-step" data-step="3" data-step-key="ageRange" data-step-label="Fascia d’età" hidden>
+          <legend>
+            <span class="quiz-kicker">Fascia d’età</span>
+            <strong>Qual è la fascia d’età della persona da visitare?</strong>
+          </legend>
+
+          <div class="quiz-options">
+            {bookingAgeRangeOptions.map((option) => (
+              <button class="choice-btn" type="button" data-choice="ageRange" data-value={option}>
+                {option}
+              </button>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset class="request-step" data-step="4" data-step-key="schedule" data-step-label="Preferenze per la visita" hidden>
           <legend>
             <span class="quiz-kicker">Data e orario</span>
             <strong>Quando preferiresti venire in studio?</strong>
@@ -284,9 +303,9 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
           <div class="date-time-grid">
             <div class="calendar-card">
               <div class="calendar-head">
-                <button class="calendar-nav" type="button" data-calendar-prev aria-label="Mese precedente">‹</button>
+                <button class="calendar-nav" type="button" data-calendar-prev aria-label="Mese precedente"><span class="ui-glyph module-calendar-glyph" aria-hidden="true">‹</span></button>
                 <p class="calendar-title" data-calendar-title></p>
-                <button class="calendar-nav" type="button" data-calendar-next aria-label="Mese successivo">›</button>
+                <button class="calendar-nav" type="button" data-calendar-next aria-label="Mese successivo"><span class="ui-glyph module-calendar-glyph" aria-hidden="true">›</span></button>
               </div>
               <div class="calendar-weekdays" aria-hidden="true">
                 <span>Lun</span>
@@ -308,7 +327,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
           </div>
         </fieldset>
 
-        <fieldset class="request-step" data-step="4" data-step-key="contact" hidden>
+        <fieldset class="request-step" data-step="5" data-step-key="contact" data-step-label="I tuoi dati" hidden>
           <legend>
             <span class="quiz-kicker">Contatti</span>
             <strong>Lasciaci i tuoi dati</strong>
@@ -341,7 +360,10 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
         <p class="request-error" data-request-error role="alert" aria-live="polite"></p>
 
         <div class="request-actions">
-          <button class="request-btn request-btn-primary" type="submit" data-submit-request hidden>Invia la richiesta <span aria-hidden="true">↗</span></button>
+          <button class="request-btn request-btn-primary booking-desktop-next" type="button" data-request-next>
+            Continua <span class="ui-glyph module-cta-glyph" aria-hidden="true">↗</span>
+          </button>
+          <button class="request-btn request-btn-primary" type="submit" data-submit-request hidden>Invia la richiesta <span class="ui-glyph module-cta-glyph" aria-hidden="true">↗</span></button>
         </div>
       </form>
     </div>
@@ -372,12 +394,15 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
     text-decoration: none;
   }
 
-  .multistep-backbar span {
-    display: inline-flex;
-    align-items: center;
+  .multistep-backbar .module-back-glyph {
+    width: 1em;
+    height: 1em;
+    display: inline-grid;
+    flex: 0 0 1em;
+    place-items: center;
     font-size: 1.45em;
-    font-weight: 500;
-    line-height: 0.75;
+    font-weight: 400;
+    line-height: 1;
   }
 
   .multistep-backbar strong {
@@ -582,14 +607,24 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
   .calendar-nav {
     width: 42px;
     height: 42px;
+    display: grid;
+    place-items: center;
     border: 1px solid var(--border);
     border-radius: 50%;
+    padding: 0;
     background: var(--surface-white);
     color: var(--brand-cta);
-    font-size: 1.6rem;
-    font-weight: 900;
-    line-height: 1;
     cursor: pointer;
+  }
+
+  .calendar-nav .module-calendar-glyph {
+    width: 24px;
+    height: 24px;
+    display: inline-grid;
+    place-items: center;
+    font-size: 25.6px;
+    font-weight: 400;
+    line-height: 24px;
   }
 
   .calendar-nav:disabled {
@@ -760,9 +795,15 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
     transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
   }
 
-  .request-btn span {
-    font-size: 1.1em;
-    line-height: 1;
+  .request-btn .module-cta-glyph {
+    width: 24px;
+    height: 24px;
+    display: inline-grid;
+    flex: 0 0 24px;
+    place-items: center;
+    font-size: 23.2px;
+    font-weight: 400;
+    line-height: 23.2px;
   }
 
   .request-btn:hover {
@@ -820,6 +861,11 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
     .request-btn-primary {
       width: 100%;
       margin-left: 0;
+    }
+
+    .request-btn {
+      justify-content: space-between;
+      text-align: left;
     }
   }
 
@@ -1250,7 +1296,9 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
     const stepCount = form.querySelector('[data-step-count]');
     const errorBox = form.querySelector('[data-request-error]');
     const topBackButton = document.querySelector('[data-request-back]');
+    const bookingEyebrow = document.querySelector('[data-booking-eyebrow]');
     const submitButton = form.querySelector('[data-submit-request]');
+    const nextButton = form.querySelector('[data-request-next]');
     const selectedTreatment = form.querySelector('[data-selected-treatment]');
     const detailStepTitle = form.querySelector('[data-detail-step-title]');
     const problemOptions = form.querySelector('[data-problem-options]');
@@ -1267,6 +1315,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
       treatment: form.querySelector('[data-field="treatment"]'),
       treatmentCategory: form.querySelector('[data-field="treatmentCategory"]'),
       problem: form.querySelector('[data-field="problem"]'),
+      ageRange: form.querySelector('[data-field="ageRange"]'),
       preferredDate: form.querySelector('[data-field="preferredDate"]'),
       preferredTime: form.querySelector('[data-field="preferredTime"]'),
     };
@@ -1277,10 +1326,12 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
       treatment: '',
       categoryLabel: '',
       problem: '',
+      ageRange: '',
       preferredDate: '',
       preferredTime: '',
     };
     let autoAdvanceTimer = 0;
+    const usesMobilePillFlow = () => window.matchMedia('(max-width: 720px)').matches;
 
     const otherTreatmentId = 'altro';
     const needsOtherDetails = () => state.treatmentId === otherTreatmentId;
@@ -1333,6 +1384,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
       if (fields.treatment) fields.treatment.value = state.treatment;
       if (fields.treatmentCategory) fields.treatmentCategory.value = state.categoryLabel;
       if (fields.problem) fields.problem.value = state.problem;
+      if (fields.ageRange) fields.ageRange.value = state.ageRange;
       if (fields.preferredDate) fields.preferredDate.value = state.preferredDate;
       if (fields.preferredTime) fields.preferredTime.value = state.preferredTime;
     };
@@ -1424,6 +1476,26 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
         : 'Nessuna data selezionata';
     };
 
+    const isCurrentStepComplete = () => {
+      const currentStep = getActiveSteps()[state.step];
+      const stepKey = currentStep?.dataset.stepKey;
+
+      if (stepKey === 'treatment') return Boolean(state.treatment);
+      if (stepKey === 'treatmentDetail') return Boolean(state.problem);
+      if (stepKey === 'otherDetails') {
+        return otherRequest instanceof HTMLTextAreaElement && otherRequest.value.trim().length >= 10;
+      }
+      if (stepKey === 'ageRange') return Boolean(state.ageRange);
+      if (stepKey === 'schedule') return Boolean(state.preferredDate && state.preferredTime);
+      return true;
+    };
+
+    const syncNextButton = () => {
+      if (nextButton instanceof HTMLButtonElement) {
+        nextButton.disabled = !isCurrentStepComplete();
+      }
+    };
+
     const renderStep = () => {
       const activeSteps = getActiveSteps();
       state.step = Math.max(0, Math.min(state.step, activeSteps.length - 1));
@@ -1444,8 +1516,18 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
       if (submitButton instanceof HTMLButtonElement) {
         submitButton.hidden = state.step !== activeSteps.length - 1;
       }
+      if (nextButton instanceof HTMLButtonElement) {
+        nextButton.hidden = state.step === activeSteps.length - 1;
+      }
+      if (topBackButton instanceof HTMLElement) {
+        topBackButton.hidden = state.step === 0;
+      }
+      if (bookingEyebrow) {
+        bookingEyebrow.textContent = currentStep?.dataset.stepLabel || '';
+      }
 
       setError();
+      syncNextButton();
     };
 
     const goToStep = (stepIndex) => {
@@ -1514,8 +1596,18 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
         });
       }
 
+      if (choiceType === 'ageRange') {
+        state.ageRange = button.dataset.value || button.textContent?.trim() || '';
+        form.querySelectorAll('[data-choice="ageRange"]').forEach((option) => {
+          const isSelected = option === button;
+          option.classList.toggle('is-selected', isSelected);
+          option.setAttribute('aria-pressed', String(isSelected));
+        });
+      }
+
       syncHiddenFields();
       setError();
+      syncNextButton();
     };
 
     const normalizeLabel = (value = '') =>
@@ -1601,6 +1693,10 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
           return false;
         }
       }
+      if (stepKey === 'ageRange' && !state.ageRange) {
+        setError('Seleziona una fascia d’età per continuare.');
+        return false;
+      }
       if (stepKey === 'schedule' && (!state.preferredDate || !state.preferredTime)) {
         setError('Scegli una data e una fascia oraria preferita.');
         return false;
@@ -1621,7 +1717,10 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
       if (choiceButton) {
         selectChoice(choiceButton);
         const choiceType = choiceButton.getAttribute('data-choice');
-        if (choiceType === 'treatment' || choiceType === 'problem') {
+        if (
+          usesMobilePillFlow() &&
+          (choiceType === 'treatment' || choiceType === 'problem' || choiceType === 'ageRange')
+        ) {
           autoAdvance();
         }
         return;
@@ -1642,6 +1741,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
         renderSlots();
         updateSelectedDateLabel();
         setError();
+        syncNextButton();
         return;
       }
 
@@ -1651,9 +1751,16 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
         syncHiddenFields();
         renderSlots();
         setError();
-        if (state.preferredDate && state.preferredTime) {
+        syncNextButton();
+        if (usesMobilePillFlow() && state.preferredDate && state.preferredTime) {
           autoAdvance();
         }
+      }
+    });
+
+    nextButton?.addEventListener('click', () => {
+      if (validateCurrentStep()) {
+        goToStep(state.step + 1);
       }
     });
 
@@ -1680,6 +1787,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
     form.addEventListener('input', (event) => {
       markInvalid(event.target, false);
       setError();
+      syncNextButton();
     });
 
     form.addEventListener('submit', (event) => {
