@@ -71,25 +71,38 @@ const showSectionReveal = !sectionRevealExcludedPaths.has(canonicalPath);
   </head>
   <body class:list={[canonicalPath === '/' && 'is-home-page']}>
     <div class="site-preloader" data-site-preloader aria-hidden="true">
-      <img src="/assets/original/2020/10/cropped-favicon-180x180.png" alt="" width="72" height="72" decoding="async" />
+      <div class="site-preloader-logo">
+        <img class="site-preloader-logo-base" src={site.logo} alt="" width="400" height="52" decoding="sync" />
+        <span class="site-preloader-logo-fill">
+          <img src={site.logo} alt="" width="400" height="52" decoding="sync" />
+        </span>
+      </div>
     </div>
     <noscript><style>.site-preloader { display: none !important; }</style></noscript>
-    <Header transparent={transparentHeader} mobileTransparent={mobileTransparentHeader} ctaHref={headerCtaHref} />
-    <main data-section-reveal-root={showSectionReveal ? '' : undefined}>
-      <slot />
-    </main>
-    {showSectionReveal && <SectionReveal />}
-    <Footer />
-    {showWhatsAppButton && <WhatsAppFloatingButton />}
-    <CookieBanner />
     <script is:inline>
       (() => {
         const preloader = document.querySelector('[data-site-preloader]');
         if (!preloader) return;
 
-        const minVisibleMs = 280;
-        const maxVisibleMs = 850;
-        const fadeMs = 180;
+        const storageKey = 'federzoni-site-preloader-seen-v1';
+        let hasSeenPreloader = false;
+
+        try {
+          hasSeenPreloader = window.sessionStorage.getItem(storageKey) === 'true';
+          if (!hasSeenPreloader) window.sessionStorage.setItem(storageKey, 'true');
+        } catch {
+          hasSeenPreloader = false;
+        }
+
+        if (hasSeenPreloader) {
+          preloader.remove();
+          return;
+        }
+
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const minVisibleMs = reduceMotion ? 180 : 1120;
+        const maxVisibleMs = reduceMotion ? 450 : 1800;
+        const fadeMs = reduceMotion ? 0 : 220;
         const startedAt = performance.now();
 
         const removePreloader = () => {
@@ -114,6 +127,14 @@ const showSectionReveal = !sectionRevealExcludedPaths.has(canonicalPath);
         window.setTimeout(removePreloader, maxVisibleMs);
       })();
     </script>
+    <Header transparent={transparentHeader} mobileTransparent={mobileTransparentHeader} ctaHref={headerCtaHref} />
+    <main data-section-reveal-root={showSectionReveal ? '' : undefined}>
+      <slot />
+    </main>
+    {showSectionReveal && <SectionReveal />}
+    <Footer />
+    {showWhatsAppButton && <WhatsAppFloatingButton />}
+    <CookieBanner />
   </body>
 </html>
 
@@ -182,14 +203,52 @@ const showSectionReveal = !sectionRevealExcludedPaths.has(canonicalPath);
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-    transition: opacity 180ms ease, visibility 180ms ease;
+    transition: opacity 220ms ease, visibility 220ms ease;
   }
 
-  .site-preloader img {
-    width: clamp(58px, 5vw, 82px);
+  .site-preloader-logo {
+    --site-preloader-logo-width: clamp(250px, 31vw, 400px);
+    position: relative;
+    width: var(--site-preloader-logo-width);
+    aspect-ratio: 400 / 52;
+  }
+
+  .site-preloader-logo-base,
+  .site-preloader-logo-fill img {
+    width: var(--site-preloader-logo-width);
+    max-width: none;
     height: auto;
     display: block;
-    animation: sitePreloaderPulse 760ms ease-in-out infinite;
+  }
+
+  .site-preloader-logo-base {
+    opacity: 0.15;
+    filter: grayscale(1);
+  }
+
+  .site-preloader-logo-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0;
+    overflow: hidden;
+    animation: sitePreloaderFill 1050ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  }
+
+  .site-preloader-logo-fill::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 22px;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(var(--surface-white-rgb), 0.72));
+    transform: translateX(35%);
+  }
+
+  .site-preloader-logo-fill img {
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 
   .site-preloader.is-hiding {
@@ -198,16 +257,14 @@ const showSectionReveal = !sectionRevealExcludedPaths.has(canonicalPath);
     pointer-events: none;
   }
 
-  @keyframes sitePreloaderPulse {
+  @keyframes sitePreloaderFill {
     0%,
-    100% {
-      transform: scale(0.96);
-      opacity: 0.82;
+    8% {
+      width: 0;
     }
 
-    50% {
-      transform: scale(1);
-      opacity: 1;
+    100% {
+      width: 100%;
     }
   }
 
@@ -216,8 +273,9 @@ const showSectionReveal = !sectionRevealExcludedPaths.has(canonicalPath);
       transition: none;
     }
 
-    .site-preloader img {
+    .site-preloader-logo-fill {
       animation: none;
+      width: 100%;
     }
   }
 
