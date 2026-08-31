@@ -6,45 +6,185 @@ const title = `Richiedi una valutazione - ${site.name}`;
 const description =
   'Scegli il trattamento, indica il problema e invia una richiesta di appuntamento allo Studio Dentistico Federzoni Granata.';
 
-const treatmentOptions = site.treatmentMenu.flatMap((category) =>
-  category.items.map((item) => ({
-    categoryId: category.id,
-    categoryLabel: category.label,
-    label: item.label,
-    href: item.href,
-  }))
-);
+const treatmentOptions = [
+  {
+    id: 'igiene',
+    label: 'Igiene orale e prevenzione',
+    categoryLabel: 'Prevenzione',
+    aliases: ['Igiene orale e Prevenzione', 'Igiene orale e prevenzione'],
+  },
+  {
+    id: 'sbiancamento',
+    label: 'Sbiancamento dentale',
+    categoryLabel: 'Estetica',
+    aliases: ['Sbiancamento', 'Sbiancamento dentale'],
+  },
+  {
+    id: 'faccette',
+    label: 'Faccette dentali',
+    categoryLabel: 'Estetica',
+    aliases: [
+      'Faccette dentali',
+      'Estetica diretta (faccette in composito)',
+      'Estetica Indiretta (faccette in porcellana)',
+    ],
+  },
+  {
+    id: 'otturazioni',
+    label: 'Carie e otturazioni',
+    categoryLabel: 'Conservativa',
+    aliases: ['Conservativa', 'Conservativa (otturazioni)', 'Carie e otturazioni'],
+  },
+  {
+    id: 'devitalizzazione',
+    label: 'Devitalizzazione',
+    categoryLabel: 'Endodonzia',
+    aliases: ['Endodonzia', 'Endodonzia (devitalizzazioni)', 'Devitalizzazione'],
+  },
+  {
+    id: 'pedodonzia',
+    label: 'Odontoiatria infantile',
+    categoryLabel: 'Pedodonzia',
+    aliases: ['Pedodonzia', 'Pedodonzia (odontoiatria infantile)', 'Odontoiatria infantile'],
+  },
+  {
+    id: 'ortodonzia',
+    label: 'Ortodonzia e allineatori',
+    categoryLabel: 'Ortodonzia',
+    aliases: [
+      'Ortodonzia',
+      'Ortodonzia e allineatori',
+      'Ortodonzia e Allineatori invisibili (adulti e bimbi)',
+    ],
+  },
+  {
+    id: 'gnatologia',
+    label: 'Disturbi della mandibola e ATM',
+    categoryLabel: 'Gnatologia',
+    aliases: ['Gnatologia', 'Gnatologia (disturbi articolazione temporo-mandibolare)'],
+  },
+  {
+    id: 'russamento-apnee',
+    label: 'Russamento e apnee notturne',
+    categoryLabel: 'Disturbi del sonno',
+    aliases: ['Russamento e apnee notturne', 'Dispositivi contro il russamento e le apnee notturne'],
+  },
+  {
+    id: 'gengive',
+    label: 'Cura delle gengive',
+    categoryLabel: 'Parodontologia',
+    aliases: ['Parodontologia', 'Parodontologia (cure gengivali)', 'Cura delle gengive'],
+  },
+  {
+    id: 'protesi',
+    label: 'Protesi dentali',
+    categoryLabel: 'Protesi',
+    aliases: ['Protesi', 'Protesi fissa e mobile', 'Protesi dentali'],
+  },
+  {
+    id: 'chirurgia',
+    label: 'Chirurgia orale',
+    categoryLabel: 'Chirurgia',
+    aliases: ['Chirurgia Stomatologica', 'Chirurgia orale'],
+  },
+  {
+    id: 'implantologia',
+    label: 'Implantologia',
+    categoryLabel: 'Implantologia',
+    aliases: ['Implantologia', 'Implantologia tradizionale e computer guidata'],
+  },
+  {
+    id: 'altro',
+    label: 'Altro',
+    categoryLabel: 'Altra esigenza',
+    aliases: ['Altro'],
+  },
+];
 
-const problemOptionsByCategory = {
-  'prevenzione-estetica': [
-    'Vorrei fare un controllo o una seduta di igiene',
-    'Ho macchie o discromie sui denti',
-    'Vorrei migliorare il sorriso',
-    'Cerco una valutazione estetica completa',
+const specialistOption = 'Voglio prima confrontarmi con un vostro specialista';
+const detailOptionsByTreatment = {
+  igiene: [
+    'Seduta di igiene orale professionale',
+    'Controllo preventivo di denti e gengive',
+    'Prevenzione e igiene per un bambino',
+    specialistOption,
   ],
-  'cure-bambini': [
-    'Ho dolore o fastidio a un dente',
-    'Sento sensibilita al caldo o al freddo',
-    'Penso di avere una carie o una vecchia otturazione da controllare',
-    'Vorrei prenotare una visita per un bambino',
+  sbiancamento: [
+    'Sbiancamento professionale in studio',
+    'Sbiancamento domiciliare controllato',
+    'Vorrei capire quale soluzione è più adatta a me',
+    specialistOption,
   ],
-  'ortodonzia-funzione': [
-    'Vorrei allineare i denti',
-    'Ho fastidi alla mandibola o all articolazione',
-    'Vorrei valutare allineatori trasparenti',
-    'Ho bisogno di informazioni su russamento o apnee notturne',
+  faccette: [
+    'Faccette in composito',
+    'Faccette in ceramica',
+    specialistOption,
   ],
-  'chirurgia-gengive-protesi': [
-    'Mi manca uno o piu denti',
-    'Ho gengive che sanguinano o si ritirano',
-    'Devo valutare un estrazione o un intervento',
-    'Vorrei informazioni su impianti o protesi',
+  otturazioni: [
+    'Sospetta carie o sensibilità da controllare',
+    'Vecchia otturazione da controllare o sostituire',
+    'Dente scheggiato o usurato da ricostruire',
+    specialistOption,
+  ],
+  devitalizzazione: [
+    'Dolore o sensibilità persistente',
+    'Devitalizzazione già consigliata',
+    'Controllo di un dente già devitalizzato',
+    specialistOption,
+  ],
+  pedodonzia: [
+    'Prima visita del bambino',
+    'Controllo, igiene o prevenzione',
+    'Dolore, carie o trauma dentale',
+    specialistOption,
+  ],
+  ortodonzia: [
+    'Allineatori trasparenti',
+    'Apparecchio ortodontico tradizionale',
+    'Valutazione ortodontica per un bambino o ragazzo',
+    specialistOption,
+  ],
+  gnatologia: [
+    'Dolore, rumori o blocchi della mandibola',
+    'Bruxismo, serramento o usura dei denti',
+    'Valutazione del morso e della funzione',
+    specialistOption,
+  ],
+  'russamento-apnee': [
+    'Russamento abituale da valutare',
+    'Apnea notturna già diagnosticata',
+    'Valutazione per un dispositivo intraorale',
+    specialistOption,
+  ],
+  gengive: [
+    'Gengive che sanguinano o sono infiammate',
+    'Recessione gengivale o denti che si muovono',
+    'Mantenimento dopo una terapia parodontale',
+    specialistOption,
+  ],
+  protesi: [
+    'Protesi fissa: corona o ponte',
+    'Protesi mobile',
+    'Controllo o riparazione di una protesi esistente',
+    specialistOption,
+  ],
+  chirurgia: [
+    'Dente del giudizio',
+    'Estrazione o residuo radicolare',
+    'Valutazione di una lesione o procedura orale',
+    specialistOption,
+  ],
+  implantologia: [
+    'Sostituire un singolo dente',
+    'Sostituire più denti o un’intera arcata',
+    'Valutare implantologia computer guidata',
+    specialistOption,
   ],
 };
 
 const requestConfig = {
   treatments: treatmentOptions,
-  problemOptionsByCategory,
+  detailOptionsByTreatment,
   timeSlots: ['09:00', '10:00', '11:00', '14:30', '15:30', '16:30', '17:30'],
 };
 
@@ -77,46 +217,65 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 
         <p class="request-step-count" data-step-count>Step 1 di 4</p>
 
-        <fieldset class="request-step is-active" data-step="0">
+        <fieldset class="request-step is-active" data-step="0" data-step-key="treatment">
           <legend>
             <span class="quiz-kicker">Trattamento</span>
-            <strong id="request-step-title">Per quale trattamento vuoi prenotare?</strong>
+            <strong id="request-step-title">Quale trattamento vuoi richiedere?</strong>
           </legend>
 
-          <div class="treatment-groups">
-            {site.treatmentMenu.map((category) => (
-              <article class="treatment-group">
-                <h2>{category.label}</h2>
-                <div class="quiz-options">
-                  {category.items.map((item) => (
-                    <button
-                      class="choice-btn"
-                      type="button"
-                      data-choice="treatment"
-                      data-category-id={category.id}
-                      data-category-label={category.label}
-                      data-treatment-label={item.label}
-                    >
-                      {item.label}
-                    </button>
-                  ))}
-                </div>
-              </article>
+          <div class="quiz-options quiz-options-treatments">
+            {treatmentOptions.map((item) => (
+              <button
+                class="choice-btn"
+                type="button"
+                data-choice="treatment"
+                data-treatment-id={item.id}
+                data-category-label={item.categoryLabel}
+                data-treatment-label={item.label}
+              >
+                {item.label}
+              </button>
             ))}
           </div>
         </fieldset>
 
-        <fieldset class="request-step" data-step="1" hidden>
+        <fieldset class="request-step" data-step="1" data-step-key="treatmentDetail" hidden>
           <legend>
-            <span class="quiz-kicker">Esigenza</span>
-            <strong>Quale situazione descrive meglio il tuo problema?</strong>
+            <span class="quiz-kicker">Approfondimento</span>
+            <strong data-detail-step-title>Raccontaci meglio il trattamento che cerchi</strong>
           </legend>
 
-          <p class="selected-summary" data-selected-treatment>Seleziona prima un trattamento.</p>
+          <p class="selected-summary" data-selected-treatment>Trattamento non ancora selezionato.</p>
           <div class="quiz-options quiz-options-large" data-problem-options></div>
         </fieldset>
 
-        <fieldset class="request-step" data-step="2" hidden>
+        <fieldset class="request-step" data-step="2" data-step-key="otherDetails" data-conditional-other hidden>
+          <legend>
+            <span class="quiz-kicker">Raccontaci di più</span>
+            <strong>Di che cosa hai bisogno?</strong>
+          </legend>
+
+          <div class="field-grid request-other-field-grid">
+            <label class="field-wide">
+              <span>Descrivi brevemente la tua richiesta</span>
+              <textarea
+                name="otherRequest"
+                rows="6"
+                minlength="10"
+                placeholder="Raccontaci che cosa ti serve o quale problema vorresti risolvere"
+                data-other-request
+              ></textarea>
+            </label>
+          </div>
+
+          <div class="request-other-actions">
+            <button class="request-btn request-btn-primary" type="button" data-request-other-next>
+              Continua <span aria-hidden="true">↗</span>
+            </button>
+          </div>
+        </fieldset>
+
+        <fieldset class="request-step" data-step="3" data-step-key="schedule" hidden>
           <legend>
             <span class="quiz-kicker">Data e orario</span>
             <strong>Quando preferiresti venire in studio?</strong>
@@ -149,7 +308,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
           </div>
         </fieldset>
 
-        <fieldset class="request-step" data-step="3" hidden>
+        <fieldset class="request-step" data-step="4" data-step-key="contact" hidden>
           <legend>
             <span class="quiz-kicker">Contatti</span>
             <strong>Lasciaci i tuoi dati</strong>
@@ -901,6 +1060,183 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
       height: 34px;
     }
   }
+
+  .multistep-backbar,
+  .request-page {
+    font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    letter-spacing: -0.2px;
+    word-spacing: 0;
+  }
+
+  .multistep-backbar {
+    font-weight: 500;
+  }
+
+  .request-head h1 {
+    font-weight: 400;
+    letter-spacing: -0.2px;
+  }
+
+  .quiz-kicker {
+    font-weight: 500;
+    letter-spacing: normal;
+  }
+
+  .request-step legend strong,
+  .treatment-group h2 {
+    font-weight: 500;
+    letter-spacing: -0.2px;
+  }
+
+  .quiz-options-treatments {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .choice-btn,
+  .date-btn,
+  .slot-btn,
+  .selected-summary,
+  .calendar-title,
+  .slot-title,
+  .slot-date,
+  .calendar-nav,
+  .calendar-weekdays {
+    font-weight: 500;
+    letter-spacing: -0.2px;
+  }
+
+  .field-grid label {
+    font-weight: 500;
+  }
+
+  .field-grid em,
+  .field-grid input,
+  .field-grid textarea,
+  .privacy-copy {
+    font-weight: 400;
+  }
+
+  .field-grid input,
+  .field-grid textarea {
+    letter-spacing: -0.2px;
+  }
+
+  .request-error {
+    font-weight: 500;
+  }
+
+  .request-btn {
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.2px;
+    line-height: 16px;
+  }
+
+  .request-other-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 22px;
+  }
+
+  @media (max-width: 860px) {
+    .quiz-options-treatments {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .multistep-backbar,
+    .request-page {
+      --request-mobile-font-display: "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --request-mobile-font-text: "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-family: var(--request-mobile-font-text) !important;
+      font-synthesis: none;
+      letter-spacing: -0.0629px;
+      word-spacing: 0;
+    }
+
+    .multistep-backbar {
+      min-height: 86px;
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.374px;
+      line-height: 21px;
+    }
+
+    .request-page {
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 21.0012px;
+    }
+
+    .request-head h1,
+    .request-step legend strong,
+    .treatment-group h2 {
+      font-family: var(--request-mobile-font-display) !important;
+      font-weight: 600;
+      letter-spacing: normal;
+    }
+
+    .request-head h1 {
+      font-size: 40px;
+      line-height: 41px;
+    }
+
+    .request-step legend strong {
+      font-size: 20px;
+      line-height: 25px;
+    }
+
+    .quiz-kicker {
+      font-family: var(--request-mobile-font-text) !important;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.00308px;
+      line-height: 18.0008px;
+    }
+
+    .choice-btn {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.374px;
+      line-height: 21px;
+    }
+
+    .date-btn,
+    .slot-btn,
+    .selected-summary,
+    .calendar-title,
+    .slot-title,
+    .slot-date,
+    .calendar-nav,
+    .calendar-weekdays,
+    .field-grid label,
+    .request-error {
+      font-weight: 600;
+    }
+
+    .field-grid input,
+    .field-grid textarea {
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: -0.0629px;
+      line-height: 21.0012px;
+    }
+
+    .privacy-copy {
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: -0.224px;
+      line-height: 18.0008px;
+    }
+
+    .request-btn {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.374px;
+      line-height: 17px;
+    }
+  }
 </style>
 
 <script>
@@ -916,7 +1252,11 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
     const topBackButton = document.querySelector('[data-request-back]');
     const submitButton = form.querySelector('[data-submit-request]');
     const selectedTreatment = form.querySelector('[data-selected-treatment]');
+    const detailStepTitle = form.querySelector('[data-detail-step-title]');
     const problemOptions = form.querySelector('[data-problem-options]');
+    const detailStep = form.querySelector('[data-step-key="treatmentDetail"]');
+    const conditionalOtherStep = form.querySelector('[data-conditional-other]');
+    const otherRequest = form.querySelector('[data-other-request]');
     const calendarGrid = form.querySelector('[data-calendar-grid]');
     const calendarTitle = form.querySelector('[data-calendar-title]');
     const calendarPrev = form.querySelector('[data-calendar-prev]');
@@ -933,14 +1273,23 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 
     const state = {
       step: 0,
+      treatmentId: '',
       treatment: '',
-      categoryId: '',
       categoryLabel: '',
       problem: '',
       preferredDate: '',
       preferredTime: '',
     };
     let autoAdvanceTimer = 0;
+
+    const otherTreatmentId = 'altro';
+    const needsOtherDetails = () => state.treatmentId === otherTreatmentId;
+    const getActiveSteps = () =>
+      steps.filter((step) => {
+        if (step === detailStep) return !needsOtherDetails();
+        if (step === conditionalOtherStep) return needsOtherDetails();
+        return true;
+      });
 
     const formatMonth = new Intl.DateTimeFormat('it-IT', { month: 'long', year: 'numeric' });
     const formatDay = new Intl.DateTimeFormat('it-IT', { weekday: 'long', day: 'numeric', month: 'long' });
@@ -990,12 +1339,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 
     const renderProblemOptions = () => {
       if (!problemOptions) return;
-      const options = config.problemOptionsByCategory[state.categoryId] || [
-        'Vorrei una prima valutazione',
-        'Ho dolore o fastidio',
-        'Vorrei migliorare estetica o funzione',
-        'Ho bisogno di capire il percorso piu adatto',
-      ];
+      const options = config.detailOptionsByTreatment[state.treatmentId] || [];
 
       problemOptions.innerHTML = '';
       options.forEach((option) => {
@@ -1081,20 +1425,24 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
     };
 
     const renderStep = () => {
-      steps.forEach((step, index) => {
-        const isActive = index === state.step;
+      const activeSteps = getActiveSteps();
+      state.step = Math.max(0, Math.min(state.step, activeSteps.length - 1));
+      const currentStep = activeSteps[state.step];
+
+      steps.forEach((step) => {
+        const isActive = step === currentStep;
         step.toggleAttribute('hidden', !isActive);
         step.classList.toggle('is-active', isActive);
       });
 
       if (progressBar instanceof HTMLElement) {
-        progressBar.style.width = `${((state.step + 1) / steps.length) * 100}%`;
+        progressBar.style.width = `${((state.step + 1) / activeSteps.length) * 100}%`;
       }
       if (stepCount) {
-        stepCount.textContent = `Step ${state.step + 1} di ${steps.length}`;
+        stepCount.textContent = `Step ${state.step + 1} di ${activeSteps.length}`;
       }
       if (submitButton instanceof HTMLButtonElement) {
-        submitButton.hidden = state.step !== steps.length - 1;
+        submitButton.hidden = state.step !== activeSteps.length - 1;
       }
 
       setError();
@@ -1102,7 +1450,8 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 
     const goToStep = (stepIndex) => {
       window.clearTimeout(autoAdvanceTimer);
-      state.step = Math.max(0, Math.min(stepIndex, steps.length - 1));
+      const activeSteps = getActiveSteps();
+      state.step = Math.max(0, Math.min(stepIndex, activeSteps.length - 1));
       renderStep();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
@@ -1128,10 +1477,18 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
       const choiceType = button.dataset.choice;
 
       if (choiceType === 'treatment') {
+        state.treatmentId = button.dataset.treatmentId || '';
         state.treatment = button.dataset.treatmentLabel || '';
-        state.categoryId = button.dataset.categoryId || '';
         state.categoryLabel = button.dataset.categoryLabel || '';
         state.problem = '';
+
+        if (otherRequest instanceof HTMLTextAreaElement) {
+          otherRequest.required = needsOtherDetails();
+          if (!needsOtherDetails()) {
+            otherRequest.value = '';
+            otherRequest.classList.remove('is-invalid');
+          }
+        }
 
         form.querySelectorAll('[data-choice="treatment"]').forEach((option) => {
           const isSelected = option === button;
@@ -1140,7 +1497,10 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
         });
 
         if (selectedTreatment) {
-          selectedTreatment.textContent = `${state.categoryLabel}: ${state.treatment}`;
+          selectedTreatment.textContent = `Trattamento scelto: ${state.treatment}`;
+        }
+        if (detailStepTitle) {
+          detailStepTitle.textContent = `Che cosa desideri approfondire per ${state.treatment.toLowerCase()}?`;
         }
         renderProblemOptions();
       }
@@ -1172,14 +1532,21 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
       if (!requestedTreatment) return;
 
       const normalizedRequest = normalizeLabel(requestedTreatment);
+      const matchingTreatment = config.treatments.find((treatment) =>
+        [treatment.label, ...(treatment.aliases || [])].some(
+          (alias) => normalizeLabel(alias) === normalizedRequest
+        )
+      );
+      if (!matchingTreatment) return;
+
       const matchingButton = Array.from(form.querySelectorAll('[data-choice="treatment"]')).find((button) => {
         if (!(button instanceof HTMLButtonElement)) return false;
-        return normalizeLabel(button.dataset.treatmentLabel) === normalizedRequest;
+        return button.dataset.treatmentId === matchingTreatment.id;
       });
 
       if (matchingButton instanceof HTMLButtonElement) {
         selectChoice(matchingButton);
-        state.step = Math.min(1, steps.length - 1);
+        state.step = Math.min(1, getActiveSteps().length - 1);
       }
     };
 
@@ -1213,19 +1580,32 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
     };
 
     const validateCurrentStep = () => {
-      if (state.step === 0 && !state.treatment) {
+      const currentStep = getActiveSteps()[state.step];
+      const stepKey = currentStep?.dataset.stepKey;
+
+      if (stepKey === 'treatment' && !state.treatment) {
         setError('Seleziona un trattamento per continuare.');
         return false;
       }
-      if (state.step === 1 && !state.problem) {
-        setError('Seleziona la situazione piu vicina al tuo problema.');
+      if (stepKey === 'treatmentDetail' && !state.problem) {
+        setError('Seleziona l’opzione più vicina alla tua richiesta.');
         return false;
       }
-      if (state.step === 2 && (!state.preferredDate || !state.preferredTime)) {
+      if (stepKey === 'otherDetails') {
+        const otherRequestValue = otherRequest instanceof HTMLTextAreaElement ? otherRequest.value.trim() : '';
+        const missingOtherRequest = otherRequestValue.length < 10;
+        markInvalid(otherRequest, missingOtherRequest);
+
+        if (missingOtherRequest) {
+          setError('Raccontaci brevemente di che cosa hai bisogno.');
+          return false;
+        }
+      }
+      if (stepKey === 'schedule' && (!state.preferredDate || !state.preferredTime)) {
         setError('Scegli una data e una fascia oraria preferita.');
         return false;
       }
-      if (state.step === 3) {
+      if (stepKey === 'contact') {
         return validateContactStep();
       }
 
@@ -1240,9 +1620,16 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
       const choiceButton = target.closest('[data-choice]');
       if (choiceButton) {
         selectChoice(choiceButton);
-        if (state.step < 2) {
+        const choiceType = choiceButton.getAttribute('data-choice');
+        if (choiceType === 'treatment' || choiceType === 'problem') {
           autoAdvance();
         }
+        return;
+      }
+
+      const otherNextButton = target.closest('[data-request-other-next]');
+      if (otherNextButton && validateCurrentStep()) {
+        goToStep(state.step + 1);
         return;
       }
 
