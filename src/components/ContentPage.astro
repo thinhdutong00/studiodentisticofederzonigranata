@@ -512,6 +512,21 @@ type ClinicalRenderItem =
   | { type: 'block'; block: SiteBlock }
   | { type: 'mediaGrid'; groups: ClinicalMediaGroup[] };
 
+// Reviewed full-smile photographs, paired within the same case and treatment phase.
+const clinicalOverviewImages = new Set([
+  '/assets/original/2021/03/282.jpg',
+  '/assets/original/2021/03/283.jpg',
+  '/assets/original/2021/03/287.jpg',
+  '/assets/original/2021/03/288.jpg',
+  '/assets/original/2021/03/300.jpg',
+  '/assets/original/2021/03/301.jpg',
+  '/assets/original/2020/11/521.jpg',
+  '/assets/original/2020/11/522.jpg',
+]);
+
+const clinicalImagePriority = (image: ClinicalMediaGroup['images'][number]) =>
+  clinicalOverviewImages.has(image.src) ? 0 : 1;
+
 const buildClinicalRenderItems = (blocks: SiteBlock[]): ClinicalRenderItem[] => {
   const items: ClinicalRenderItem[] = [];
   let index = 0;
@@ -524,7 +539,17 @@ const buildClinicalRenderItems = (blocks: SiteBlock[]): ClinicalRenderItem[] => 
 
       const flushGroups = () => {
         if (groups.length === 0) return;
-        items.push({ type: 'mediaGrid', groups: [...groups] });
+        // Stable ordering keeps Prima/Dopo paired and retains every detail image.
+        const overviewFirstGroups = groups
+          .map((group) => ({
+            ...group,
+            images: [...group.images].sort((a, b) => clinicalImagePriority(a) - clinicalImagePriority(b)),
+          }))
+          .sort((a, b) =>
+            Number(b.images.some((image) => clinicalOverviewImages.has(image.src))) -
+            Number(a.images.some((image) => clinicalOverviewImages.has(image.src)))
+          );
+        items.push({ type: 'mediaGrid', groups: overviewFirstGroups });
         groups.length = 0;
       };
 
@@ -1635,8 +1660,10 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
 
   .aesthetic-case-figure img {
     width: 100%;
+    height: auto;
     max-height: 780px;
-    object-fit: cover;
+    display: block;
+    object-fit: contain;
   }
 
   .aesthetic-case-figure figcaption {
@@ -1698,7 +1725,7 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
   }
 
   .clinical-media-column-images {
-    --clinical-media-frame-height: clamp(320px, 26vw, 420px);
+    --clinical-media-frame-ratio: 3 / 2;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
     gap: clamp(16px, 1.6vw, 24px);
@@ -1714,11 +1741,13 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
   }
 
   .clinical-media-grid .aesthetic-case-figure img {
-    height: var(--clinical-media-frame-height);
+    height: auto;
+    aspect-ratio: var(--clinical-media-frame-ratio);
     max-height: none;
     display: block;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
+    background: var(--background);
   }
 
   .clinical-image-carousel {
@@ -1744,10 +1773,11 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
 
   .clinical-carousel-slide img {
     width: 100%;
-    height: var(--clinical-media-frame-height);
+    height: auto;
+    aspect-ratio: var(--clinical-media-frame-ratio);
     max-height: none;
     display: block;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
     background: var(--background);
   }
