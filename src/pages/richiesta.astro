@@ -1649,7 +1649,8 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
         .toLowerCase();
 
     const preselectTreatmentFromUrl = () => {
-      const requestedTreatment = new URLSearchParams(window.location.search).get('trattamento');
+      const params = new URLSearchParams(window.location.search);
+      const requestedTreatment = params.get('trattamento');
       if (!requestedTreatment) return;
 
       const normalizedRequest = normalizeLabel(requestedTreatment);
@@ -1667,6 +1668,20 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 
       if (matchingButton instanceof HTMLButtonElement) {
         selectChoice(matchingButton);
+
+        // Carry over only choices available in the questionnaire.
+        const requestedProblem = params.get('motivo');
+        const matchingProblem = Array.from(form.querySelectorAll('[data-choice="problem"]')).find(
+          (button) => button.textContent?.trim() === requestedProblem
+        );
+        if (matchingProblem instanceof HTMLButtonElement) selectChoice(matchingProblem);
+
+        const requestedOffice = params.get('sede');
+        const matchingOffice = Array.from(form.querySelectorAll('[data-choice="office"]')).find(
+          (button) => button instanceof HTMLButtonElement && button.dataset.value === requestedOffice
+        );
+        if (matchingOffice instanceof HTMLButtonElement) selectChoice(matchingOffice);
+
         state.step = Math.min(1, getActiveSteps().length - 1);
       }
     };
