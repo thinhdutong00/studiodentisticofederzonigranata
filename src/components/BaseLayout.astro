@@ -3,6 +3,7 @@ import Header from './Header.astro';
 import Footer from './Footer.astro';
 import CookieBanner from './CookieBanner.astro';
 import WhatsAppFloatingButton from './WhatsAppFloatingButton.astro';
+import TreatmentStickyCta from './TreatmentStickyCta.astro';
 import SectionReveal from './SectionReveal.astro';
 import { site } from '../data/site';
 import '../styles/inter-font.css';
@@ -37,7 +38,8 @@ const whatsappExcludedPaths = new Set([
   '/privacy-policy/',
   '/cookie-privacy/',
 ]);
-const showWhatsAppButton = !whatsappExcludedPaths.has(canonicalPath);
+const treatmentPage = site.treatmentPages.find((page) => page.path === canonicalPath);
+const showWhatsAppButton = !treatmentPage && !whatsappExcludedPaths.has(canonicalPath);
 const sectionRevealExcludedPaths = new Set([
   '/',
   '/richiesta/',
@@ -84,6 +86,7 @@ const showSectionReveal = !sectionRevealExcludedPaths.has(canonicalPath);
     </main>
     {showSectionReveal && <SectionReveal />}
     <Footer />
+    {treatmentPage && <TreatmentStickyCta treatment={treatmentPage.navTitle} href={headerCtaHref !== '/richiesta/' ? headerCtaHref : undefined} />}
     {showWhatsAppButton && <WhatsAppFloatingButton />}
     <CookieBanner />
   </body>

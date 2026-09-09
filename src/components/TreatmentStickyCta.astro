@@ -108,6 +108,7 @@ const requestHref = href || `/richiesta/?trattamento=${encodeURIComponent(treatm
     gap: 24px;
     align-items: center;
     margin: 0 auto;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 
   .treatment-sticky-cta p {
@@ -159,7 +160,7 @@ const requestHref = href || `/richiesta/?trattamento=${encodeURIComponent(treatm
       min-height: 112px;
       grid-template-columns: 1fr;
       gap: 10px;
-      padding: 12px 0;
+      padding: 12px 0 calc(12px + env(safe-area-inset-bottom, 0px));
     }
 
     .treatment-sticky-cta p {

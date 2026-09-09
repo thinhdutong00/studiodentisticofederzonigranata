@@ -6,7 +6,6 @@ import MobileHomeCta from './MobileHomeCta.astro';
 import ScrapedHome from './ScrapedHome.astro';
 import SectionBand from './SectionBand.astro';
 import TreatmentPrefooterCta from './TreatmentPrefooterCta.astro';
-import TreatmentStickyCta from './TreatmentStickyCta.astro';
 import { site, type SitePage } from '../data/site';
 import { videoItems } from '../data/videos';
 
@@ -18,7 +17,6 @@ const { page } = Astro.props;
 const titleBlock = page.blocks.find((block) => block.type === 'heading');
 const pageTitle = titleBlock?.text || page.navTitle;
 const bodyBlocks = page.path === '/' ? page.blocks : page.blocks.filter((block) => block !== titleBlock);
-const hasStickyCta = page.kind === 'treatment' || page.kind === 'clinical';
 
 const cleanHeading = (text = '') =>
   text
@@ -26,8 +24,6 @@ const cleanHeading = (text = '') =>
     .replace(/Dottor(?=[A-ZÀ-Ý])/g, 'Dottor ')
     .replace('Casi CliniciEsempi di lavori eseguiti dallo studio odontoiatrico', 'Casi Clinici')
     .trim();
-
-const stickyCtaTitle = page.path === '/estetica/' ? 'Estetica dentale' : cleanHeading(pageTitle);
 
 const videoBlocks = page.path === '/video/' ? page.blocks : [];
 const videoLeadHtml = videoBlocks[3] && 'html' in videoBlocks[3] ? videoBlocks[3].html : '';
@@ -937,7 +933,7 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
   </>
 ) : clinicalShowcase ? (
   <>
-    <section class:list={['aesthetic-hero', usesRefinedMobileClinicalStyle && 'aesthetic-mobile-refined']} aria-labelledby="aesthetic-title" data-clinical-page={page.path} data-transparent-header-region data-treatment-sticky-hero>
+    <section class:list={['aesthetic-hero', usesRefinedMobileClinicalStyle && 'aesthetic-mobile-refined']} aria-labelledby="aesthetic-title" data-clinical-page={page.path} data-transparent-header-region>
       <div class="aesthetic-hero-inner">
         <h1 id="aesthetic-title">{clinicalShowcaseTitle}</h1>
         <p class="aesthetic-hero-description">
@@ -1073,7 +1069,6 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
       </div>
     </section>
 
-    <TreatmentStickyCta treatment={stickyCtaTitle} />
   </>
 ) : (
   <>
@@ -1086,7 +1081,7 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
         </div>
       </section>
     ) : (
-      <section class="page-hero" data-treatment-sticky-hero={hasStickyCta ? '' : undefined}>
+      <section class="page-hero" data-treatment-sticky-hero={page.kind === 'treatment' ? '' : undefined}>
         <div class="container">
           <p class="eyebrow">{page.kind === 'article' ? 'Approfondimenti' : site.name}</p>
           <h1>{cleanHeading(pageTitle)}</h1>
@@ -1135,7 +1130,6 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
       </div>
     </section>
 
-    {hasStickyCta && <TreatmentStickyCta treatment={stickyCtaTitle} />}
   </>
 )}
 
