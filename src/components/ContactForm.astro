@@ -1,39 +1,37 @@
 ---
+import BookingFields from './BookingFields.astro';
+import BookingPrivacy from './BookingPrivacy.astro';
+import BookingFeedback from './BookingFeedback.astro';
 ---
 
 <section class="contact-form" aria-labelledby="contact-form-title">
   <h2 id="contact-form-title">Compila il modulo contatti per ulteriori informazioni!</h2>
-  <form data-static-form>
+  <form data-contact-form data-booking-kind="contact" action="/api/booking" method="post">
+    <BookingFields />
     <div class="form-grid">
       <label>Nome
-        <input type="text" name="your-name" placeholder="Nome" autocomplete="given-name" />
+        <input type="text" name="fullName" placeholder="Nome" autocomplete="given-name" maxlength="60" required />
       </label>
       <label>Cognome
-        <input type="text" name="your-lastname" placeholder="Cognome" autocomplete="family-name" />
+        <input type="text" name="lastName" placeholder="Cognome" autocomplete="family-name" maxlength="59" required />
       </label>
       <label>Telefono
-        <input type="tel" name="your-phone" placeholder="Telefono" autocomplete="tel" />
+        <input type="tel" name="phone" placeholder="Telefono" autocomplete="tel" minlength="6" maxlength="30" required />
       </label>
       <label>Email
-        <input type="email" name="your-email" placeholder="Email" autocomplete="email" />
+        <input type="email" name="email" placeholder="Email" autocomplete="email" maxlength="254" required />
       </label>
       <label class="full-span">Messaggio
-        <textarea name="your-message" placeholder="Messaggio"></textarea>
+        <textarea name="message" placeholder="Messaggio" maxlength="3000"></textarea>
       </label>
     </div>
-    <label class="checkbox-row">
-      <input type="checkbox" name="acceptance-459" value="1" />
-      <span>Accetto l’informativa sulla privacy policy</span>
-    </label>
+    <BookingPrivacy />
     <button class="button" type="submit">Richiedi Info <span aria-hidden="true">↗</span></button>
-    <p class="form-note">Modulo statico: l’invio email verrà collegato successivamente con Resend.</p>
+    <BookingFeedback />
   </form>
 </section>
 
 <script>
-  document.querySelectorAll('[data-static-form]').forEach((form) => {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-    });
-  });
+  import { bindContactForms } from '../utils/submitBooking';
+  bindContactForms();
 </script>

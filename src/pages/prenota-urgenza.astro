@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
+import BookingFields from '../components/BookingFields.astro';
 import { bookingAgeRangeOptions } from '../data/bookingForms';
 import { site } from '../data/site';
 import '../styles/booking-questionnaire.css';
@@ -47,7 +48,8 @@ const emergencyConfigJson = JSON.stringify({
 <BaseLayout title={title} description={description} ogImage={site.heroImage} canonicalPath="/prenota-urgenza/">
   <section class="urgent-request-page booking-questionnaire" aria-labelledby="urgent-questionnaire-title">
     <div class="urgent-request-shell">
-      <form class="urgent-request-form" data-urgent-form novalidate>
+      <form class="urgent-request-form" data-urgent-form data-booking-kind="urgent" action="/api/booking" method="post" novalidate>
+        <BookingFields />
         <script id="urgent-config" type="application/json" set:html={emergencyConfigJson}></script>
         <input type="hidden" name="emergencyType" data-field="emergencyType" />
         <input type="hidden" name="symptom" data-field="symptom" />
@@ -115,7 +117,7 @@ const emergencyConfigJson = JSON.stringify({
               <textarea
                 name="otherDetails"
                 rows="6"
-                minlength="10"
+                minlength="10" maxlength="3000"
                 placeholder="Raccontaci i sintomi o che cosa è successo"
                 data-other-details
               ></textarea>
@@ -184,19 +186,19 @@ const emergencyConfigJson = JSON.stringify({
           <div class="urgent-field-grid">
             <label>
               <span>Nome e cognome</span>
-              <input type="text" name="fullName" autocomplete="name" required />
+              <input type="text" name="fullName" autocomplete="name" minlength="2" maxlength="120" required />
             </label>
             <label>
               <span>Telefono</span>
-              <input type="tel" name="phone" autocomplete="tel" required />
+              <input type="tel" name="phone" autocomplete="tel" minlength="6" maxlength="30" required />
             </label>
             <label class="urgent-field-wide">
               <span>Email</span>
-              <input type="email" name="email" autocomplete="email" required />
+              <input type="email" name="email" autocomplete="email" maxlength="254" required />
             </label>
             <label class="urgent-field-wide">
               <span>Descrivi brevemente cosa e successo <em>facoltativo</em></span>
-              <textarea name="details" rows="4"></textarea>
+              <textarea name="details" rows="4" maxlength="3000"></textarea>
             </label>
           </div>
 
@@ -895,6 +897,7 @@ const emergencyConfigJson = JSON.stringify({
 </style>
 
 <script>
+  import { submitBooking } from '../utils/submitBooking';
   const urgentForm = document.querySelector('[data-urgent-form]');
 
   if (urgentForm instanceof HTMLFormElement) {
@@ -1204,14 +1207,9 @@ const emergencyConfigJson = JSON.stringify({
 
     urgentForm.addEventListener('submit', (event) => {
       event.preventDefault();
-      if (!validateCurrentStep()) return;
-
-      if (submitButton instanceof HTMLButtonElement) {
-        submitButton.disabled = true;
-        submitButton.textContent = 'Invio in corso';
-      }
-
-      window.location.href = '/thank-you-page/';
+      if (getActiveSteps()[state.step]?.dataset.stepKey !== 'contact' || !validateCurrentStep()) return;
+      syncHiddenFields();
+      void submitBooking(urgentForm, setError);
     });
 
     syncHiddenFields();

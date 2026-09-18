@@ -932,10 +932,16 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
         </div>
         <div class="office-detail-grid">
           {officePage.details.map((detail, index) => (
-            <article class="office-detail-card">
+            <article class:list={['office-detail-card', { 'office-detail-card-email': detail.href?.startsWith('mailto:') }]}>
               <span>{String(index + 1).padStart(2, '0')}</span>
               <p>{detail.label}</p>
-              <h3>{detail.href ? <a href={detail.href} target={detail.href.startsWith('http') ? '_blank' : undefined} rel={detail.href.startsWith('http') ? 'noreferrer' : undefined}>{detail.title}</a> : detail.title}</h3>
+              <h3>
+                {detail.href ? (
+                  <a href={detail.href} target={detail.href.startsWith('http') ? '_blank' : undefined} rel={detail.href.startsWith('http') ? 'noreferrer' : undefined}>
+                    {detail.href.startsWith('mailto:') ? <>{detail.title.split('@')[0]}@<wbr />{detail.title.split('@')[1]}</> : detail.title}
+                  </a>
+                ) : detail.title}
+              </h3>
               <small>{detail.text}</small>
             </article>
           ))}
@@ -2271,12 +2277,15 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
   }
 
   .office-detail-card {
+    min-width: 0;
     min-height: 300px;
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     align-content: start;
     gap: 16px;
     padding: clamp(24px, 2.8vw, 42px);
     border-right: 1px solid rgba(21, 90, 148, 0.2);
+    overflow-wrap: anywhere;
   }
 
   .office-detail-card:last-child {
@@ -2308,6 +2317,11 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
   .office-detail-card a {
     color: inherit;
     text-decoration: none;
+  }
+
+  .office-detail-card-email h3 {
+    font-size: clamp(1rem, 1.3vw, 1.25rem);
+    line-height: 1.4;
   }
 
   .office-detail-card a:hover {

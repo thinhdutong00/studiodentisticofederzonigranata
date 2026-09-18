@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
+import BookingFields from '../components/BookingFields.astro';
 import { bookingAgeRangeOptions } from '../data/bookingForms';
 import { site } from '../data/site';
 import '../styles/booking-questionnaire.css';
@@ -54,7 +55,8 @@ const firstVisitConfigJson = JSON.stringify({
 >
   <section class="first-visit-request-page booking-questionnaire" aria-labelledby="first-visit-request-title">
     <div class="first-visit-request-shell">
-      <form class="first-visit-request-form" data-first-visit-form novalidate>
+      <form class="first-visit-request-form" data-first-visit-form data-booking-kind="first-visit" action="/api/booking" method="post" novalidate>
+        <BookingFields />
         <script id="first-visit-config" type="application/json" set:html={firstVisitConfigJson}></script>
         <input type="hidden" name="visitReason" data-field="visitReason" />
         <input type="hidden" name="visitGoal" data-field="visitGoal" />
@@ -104,7 +106,7 @@ const firstVisitConfigJson = JSON.stringify({
 
           <label class="first-visit-notes">
             <span>Vuoi aggiungere qualcosa? <em>facoltativo</em></span>
-            <textarea name="notes" rows="4" placeholder="Sintomi, dubbi, esami già fatti o preferenze particolari"></textarea>
+            <textarea name="notes" rows="4" maxlength="3000" placeholder="Sintomi, dubbi, esami già fatti o preferenze particolari"></textarea>
           </label>
         </fieldset>
 
@@ -163,19 +165,19 @@ const firstVisitConfigJson = JSON.stringify({
           <div class="first-visit-field-grid">
             <label>
               <span>Nome e cognome</span>
-              <input type="text" name="fullName" autocomplete="name" required />
+              <input type="text" name="fullName" autocomplete="name" minlength="2" maxlength="120" required />
             </label>
             <label>
               <span>Telefono</span>
-              <input type="tel" name="phone" autocomplete="tel" required />
+              <input type="tel" name="phone" autocomplete="tel" minlength="6" maxlength="30" required />
             </label>
             <label class="first-visit-field-wide">
               <span>Email</span>
-              <input type="email" name="email" autocomplete="email" required />
+              <input type="email" name="email" autocomplete="email" maxlength="254" required />
             </label>
             <label class="first-visit-field-wide">
               <span>Messaggio <em>facoltativo</em></span>
-              <textarea name="message" rows="4"></textarea>
+              <textarea name="message" rows="4" maxlength="3000"></textarea>
             </label>
           </div>
 
@@ -782,6 +784,7 @@ const firstVisitConfigJson = JSON.stringify({
 </style>
 
 <script>
+  import { submitBooking } from '../utils/submitBooking';
   const firstVisitForm = document.querySelector('[data-first-visit-form]');
 
   if (firstVisitForm instanceof HTMLFormElement) {
@@ -979,6 +982,7 @@ const firstVisitConfigJson = JSON.stringify({
 
     firstVisitForm.addEventListener('submit', (event) => {
       event.preventDefault();
+      if (steps[currentStep()]?.getAttribute('data-step-key') !== 'contact') return;
       const requiredFields = Array.from(firstVisitForm.querySelectorAll('input[required]:not([type="checkbox"])'));
       const missingRequired = requiredFields.some(
         (field) => field instanceof HTMLInputElement && !field.value.trim(),
@@ -1004,14 +1008,7 @@ const firstVisitConfigJson = JSON.stringify({
       }
 
       syncHiddenFields();
-      if (submitButton instanceof HTMLButtonElement) {
-        submitButton.disabled = true;
-        submitButton.textContent = 'Richiesta inviata';
-      }
-
-      window.setTimeout(() => {
-        window.location.href = '/thank-you-page/';
-      }, 450);
+      void submitBooking(firstVisitForm, setError);
     });
 
     privacyConsent?.addEventListener('change', () => {

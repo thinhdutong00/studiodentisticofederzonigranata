@@ -8,10 +8,9 @@ import type { TreatmentMarketingConfig } from '../data/treatmentMarketing';
 
 interface Props {
   config: TreatmentMarketingConfig;
-  requestFormEnabled?: boolean;
 }
 
-const { config, requestFormEnabled = false } = Astro.props;
+const { config } = Astro.props;
 const requestHref = `/richiesta/?trattamento=${encodeURIComponent(config.requestLabel)}`;
 const informationSections = [
   ...config.sections,
@@ -37,18 +36,18 @@ const heroTitleClass = config.heroTitle.length > 35 ? 'is-extra-long' : config.h
 
       <form
         class="treatment-form"
-        action={requestFormEnabled ? '/richiesta/' : undefined}
-        method={requestFormEnabled ? 'get' : undefined}
+        action="/richiesta/"
+        method="get"
         aria-labelledby="treatment-form-title"
         aria-describedby="treatment-form-note"
       >
-        {requestFormEnabled && <input type="hidden" name="trattamento" value={config.requestLabel} />}
+        <input type="hidden" name="trattamento" value={config.requestLabel} />
         <p class="treatment-form-eyebrow">Richiedi una valutazione</p>
         <h2 id="treatment-form-title">Parliamo delle tue esigenze</h2>
 
         <label for="treatment-office">Sede preferita</label>
         <div class="treatment-select-wrap">
-          <select id="treatment-office" name={requestFormEnabled ? 'sede' : 'office'}>
+          <select id="treatment-office" name="sede">
             <option value="">Scegli una sede</option>
             {site.offices.map((office) => <option value={office.city}>{office.city}</option>)}
           </select>
@@ -56,19 +55,17 @@ const heroTitleClass = config.heroTitle.length > 35 ? 'is-extra-long' : config.h
 
         <label for="treatment-reason">Motivo della richiesta</label>
         <div class="treatment-select-wrap">
-          <select id="treatment-reason" name={requestFormEnabled ? 'motivo' : 'reason'}>
+          <select id="treatment-reason" name="motivo">
             <option value="">Da valutare insieme</option>
             {config.formOptions.map((option) => <option value={option}>{option}</option>)}
           </select>
         </div>
 
-        <button type={requestFormEnabled ? 'submit' : 'button'} aria-disabled={requestFormEnabled ? undefined : 'true'}>
+        <button type="submit">
           Richiedi informazioni <CtaArrowIcon className="ui-glyph" />
         </button>
         <p class="treatment-form-note" id="treatment-form-note">
-          {requestFormEnabled
-            ? 'Prosegui per indicarci le tue preferenze e i tuoi recapiti.'
-            : 'Modulo dimostrativo: l’invio non è ancora attivo.'}
+          Prosegui per indicarci le tue preferenze e i tuoi recapiti.
         </p>
       </form>
     </div>

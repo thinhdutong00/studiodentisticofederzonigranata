@@ -1,4 +1,7 @@
 ---
+import BookingFields from './BookingFields.astro';
+import BookingPrivacy from './BookingPrivacy.astro';
+import BookingFeedback from './BookingFeedback.astro';
 interface Props {
   variant?: 'compact' | 'full';
   title?: string;
@@ -8,22 +11,23 @@ interface Props {
 const {
   variant = 'compact',
   title = variant === 'compact' ? undefined : 'Compila il modulo contatti per ulteriori informazioni!',
-  note = variant === 'compact' ? '' : 'Modulo statico: l’invio email verrà collegato successivamente con Resend.',
+  note = '',
 } = Astro.props;
 ---
 
-<form class:list={['pill-form', `pill-form-${variant}`]} data-static-form>
+<form class:list={['pill-form', `pill-form-${variant}`]} data-contact-form data-booking-kind={variant === 'compact' ? 'callback' : 'contact'} action="/api/booking" method="post">
+  <BookingFields />
   {title && <h2>{title}</h2>}
 
   {variant === 'compact' ? (
     <div class="pill-form-row">
       <label>
         <span>Nome e cognome</span>
-        <input type="text" name="your-name" placeholder="Nome e cognome" autocomplete="name" />
+        <input type="text" name="fullName" placeholder="Nome e cognome" autocomplete="name" minlength="2" maxlength="120" required />
       </label>
       <label>
         <span>Telefono</span>
-        <input type="tel" name="your-phone" placeholder="Telefono" autocomplete="tel" />
+        <input type="tel" name="phone" placeholder="Telefono" autocomplete="tel" minlength="6" maxlength="30" required />
       </label>
       <button class="button button-primary" type="submit">Richiedi Info <span aria-hidden="true">↗</span></button>
     </div>
@@ -31,35 +35,31 @@ const {
     <>
       <div class="form-grid">
         <label>Nome
-          <input type="text" name="your-name" placeholder="Nome" autocomplete="given-name" />
+          <input type="text" name="fullName" placeholder="Nome" autocomplete="given-name" maxlength="60" required />
         </label>
         <label>Cognome
-          <input type="text" name="your-lastname" placeholder="Cognome" autocomplete="family-name" />
+          <input type="text" name="lastName" placeholder="Cognome" autocomplete="family-name" maxlength="59" required />
         </label>
         <label>Telefono
-          <input type="tel" name="your-phone" placeholder="Telefono" autocomplete="tel" />
+          <input type="tel" name="phone" placeholder="Telefono" autocomplete="tel" minlength="6" maxlength="30" required />
         </label>
         <label>Email
-          <input type="email" name="your-email" placeholder="Email" autocomplete="email" />
+          <input type="email" name="email" placeholder="Email" autocomplete="email" maxlength="254" required />
         </label>
         <label class="full-span">Messaggio
-          <textarea name="your-message" placeholder="Messaggio"></textarea>
+          <textarea name="message" placeholder="Messaggio" maxlength="3000"></textarea>
         </label>
       </div>
-      <label class="checkbox-row">
-        <input type="checkbox" name="acceptance-459" value="1" />
-        <span>Accetto l’informativa sulla privacy policy</span>
-      </label>
+      <BookingPrivacy />
       <button class="button button-primary" type="submit">Richiedi Info <span aria-hidden="true">↗</span></button>
     </>
   )}
+  {variant === 'compact' && <BookingPrivacy />}
+  <BookingFeedback />
   {note && <p class="form-note">{note}</p>}
 </form>
 
 <script>
-  document.querySelectorAll('[data-static-form]').forEach((form) => {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-    });
-  });
+  import { bindContactForms } from '../utils/submitBooking';
+  bindContactForms();
 </script>

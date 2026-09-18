@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../components/BaseLayout.astro';
+import BookingFields from '../components/BookingFields.astro';
 import { bookingAgeRangeOptions } from '../data/bookingForms';
 import { site } from '../data/site';
 import '../styles/booking-questionnaire.css';
@@ -197,11 +198,13 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 <BaseLayout title={title} description={description} ogImage={site.heroImage} canonicalPath="/richiesta/">
   <section class="request-page booking-questionnaire" aria-labelledby="request-questionnaire-title">
     <div class="request-shell">
-      <form class="request-form" data-request-form novalidate>
+      <form class="request-form" data-request-form data-booking-kind="treatment" action="/api/booking" method="post" novalidate>
+        <BookingFields />
         <script id="request-config" type="application/json" set:html={requestConfigJson}></script>
         <input type="hidden" name="treatment" data-field="treatment" />
         <input type="hidden" name="treatmentCategory" data-field="treatmentCategory" />
         <input type="hidden" name="problem" data-field="problem" />
+        <input type="hidden" name="initialReason" data-initial-reason />
         <input type="hidden" name="ageRange" data-field="ageRange" />
         <input type="hidden" name="office" data-field="office" />
         <input type="hidden" name="preferredDate" data-field="preferredDate" />
@@ -262,7 +265,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
               <textarea
                 name="otherRequest"
                 rows="6"
-                minlength="10"
+                minlength="10" maxlength="3000"
                 placeholder="Raccontaci che cosa ti serve o quale problema vorresti risolvere"
                 data-other-request
               ></textarea>
@@ -343,20 +346,20 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 
           <div class="field-grid">
             <label>
-              <span>Nome intero</span>
-              <input type="text" name="fullName" autocomplete="name" required />
+              <span>Nome e cognome</span>
+              <input type="text" name="fullName" autocomplete="name" minlength="2" maxlength="120" required />
             </label>
             <label>
               <span>Numero di telefono</span>
-              <input type="tel" name="phone" autocomplete="tel" required />
+              <input type="tel" name="phone" autocomplete="tel" minlength="6" maxlength="30" required />
             </label>
             <label class="field-wide">
               <span>Email</span>
-              <input type="email" name="email" autocomplete="email" required />
+              <input type="email" name="email" autocomplete="email" maxlength="254" required />
             </label>
             <label class="field-wide">
               <span>Dettagli prima della visita <em>(facoltativo)</em></span>
-              <textarea name="details" rows="4"></textarea>
+              <textarea name="details" rows="4" maxlength="3000"></textarea>
             </label>
           </div>
 
@@ -1302,6 +1305,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 </style>
 
 <script>
+  import { submitBooking } from '../utils/submitBooking';
   const form = document.querySelector('[data-request-form]');
   const configEl = document.getElementById('request-config');
 
@@ -1671,6 +1675,8 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 
         // Carry over only choices available in the questionnaire.
         const requestedProblem = params.get('motivo');
+        const initialReason = form.querySelector('[data-initial-reason]');
+        if (initialReason instanceof HTMLInputElement) initialReason.value = requestedProblem || '';
         const matchingProblem = Array.from(form.querySelectorAll('[data-choice="problem"]')).find(
           (button) => button.textContent?.trim() === requestedProblem
         );
@@ -1856,14 +1862,9 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 
     form.addEventListener('submit', (event) => {
       event.preventDefault();
-      if (!validateCurrentStep()) return;
-
-      if (submitButton instanceof HTMLButtonElement) {
-        submitButton.disabled = true;
-        submitButton.textContent = 'Invio in corso';
-      }
-
-      window.location.href = '/thank-you-page/';
+      if (getActiveSteps()[state.step]?.dataset.stepKey !== 'contact' || !validateCurrentStep()) return;
+      syncHiddenFields();
+      void submitBooking(form, setError);
     });
 
     preselectTreatmentFromUrl();
