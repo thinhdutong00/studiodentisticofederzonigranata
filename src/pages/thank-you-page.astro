@@ -4,146 +4,219 @@ import { site } from '../data/site';
 
 const title = `Richiesta ricevuta - ${site.name}`;
 const description =
-  'La tua richiesta e stata ricevuta dallo Studio Dentistico Federzoni Granata. La segreteria ti ricontattera per confermare la disponibilita.';
+  'La tua richiesta è stata ricevuta dallo Studio Dentistico Federzoni Granata. La segreteria ti ricontatterà per confermare la disponibilità.';
 ---
 
 <BaseLayout title={title} description={description} ogImage={site.heroImage} canonicalPath="/thank-you-page/">
   <section class="thank-you-page" aria-labelledby="thank-you-title">
-    <div class="thank-you-shell">
-      <p class="thank-you-kicker">Richiesta inviata</p>
-      <h1 id="thank-you-title">Grazie, abbiamo ricevuto la tua richiesta.</h1>
-      <p>
-        La segreteria dello Studio Dentistico Federzoni Granata ti ricontattera per verificare i dettagli e confermare data e orario della visita.
-      </p>
+    <div class="thank-you-content">
+      <div class="thank-you-progress" aria-hidden="true"><span></span></div>
 
-      <div class="thank-you-actions">
+      <header class="thank-you-heading">
+        <p class="thank-you-kicker">Richiesta inviata</p>
+        <h1 id="thank-you-title">Grazie.</h1>
+      </header>
+
+      <div class="thank-you-message">
+        <h2>Abbiamo ricevuto la tua richiesta.</h2>
+        <p>
+          La segreteria dello Studio Dentistico Federzoni Granata ti ricontatterà per verificare i dettagli e confermare data e orario della visita.
+        </p>
+      </div>
+
+      <nav class="thank-you-actions" aria-label="Prossime azioni">
         <a class="thank-you-btn thank-you-btn-primary" href="/">Torna alla home <span aria-hidden="true">↗</span></a>
         <a class="thank-you-btn thank-you-btn-outline" href="/#trattamenti">I nostri trattamenti <span aria-hidden="true">↗</span></a>
-      </div>
+      </nav>
     </div>
   </section>
 </BaseLayout>
 
 <style>
   :global(body) {
-    background: var(--background);
+    background: var(--surface-white);
+  }
+
+  :global(body:has(.thank-you-page) .site-header),
+  :global(body:has(.thank-you-page) .whatsapp-floating-widget) {
+    display: none !important;
   }
 
   .thank-you-page {
-    display: grid;
-    min-height: calc(100vh - var(--nav-height));
-    place-items: center;
-    padding: 80px 0;
-    background: var(--background);
+    min-height: 100svh;
+    padding: clamp(46px, 5vw, 74px) 24px clamp(92px, 9vw, 136px);
+    background: var(--surface-white);
+    color: var(--text-dark);
   }
 
-  .thank-you-shell {
-    width: min(900px, calc(100% - 32px));
-    border: 1px solid rgba(var(--brand-cta-rgb), 0.1);
-    border-radius: 22px;
-    padding: clamp(28px, 6vw, 64px);
-    background: var(--surface-white);
-    box-shadow: 0 26px 70px rgba(15, 31, 99, 0.12);
-    text-align: center;
+  .thank-you-content {
+    width: min(1020px, 100%);
+    margin: 0 auto;
+  }
+
+  .thank-you-progress {
+    height: 4px;
+    margin: 0 0 clamp(46px, 4vw, 60px);
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--soft-blue-bg);
+  }
+
+  .thank-you-progress span {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: inherit;
+    background: var(--brand-blue);
+  }
+
+  .thank-you-heading {
+    display: grid;
+    margin: 0 0 clamp(62px, 8vw, 94px);
+    gap: 18px;
   }
 
   .thank-you-kicker {
-    margin: 0 0 12px;
+    margin: 0;
     color: var(--brand-cta);
-    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
-    font-size: 0.78rem;
-    font-weight: 900;
-    letter-spacing: 0.1em;
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    line-height: 1.2;
     text-transform: uppercase;
   }
 
-  .thank-you-shell h1 {
-    max-width: 760px;
-    margin: 0 auto 18px;
+  .thank-you-heading h1 {
+    width: fit-content;
+    max-width: 9ch;
+    margin: 0;
     color: var(--brand-primary-dark);
-    font-size: clamp(2.35rem, 6vw, 4.5rem);
+    font-family: Inter, sans-serif;
+    font-size: clamp(70px, 9vw, 122px);
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 0.88;
   }
 
-  .thank-you-shell p {
-    max-width: 650px;
-    margin: 0 auto;
+  .thank-you-message h2 {
+    max-width: 30ch;
+    margin: 0 0 18px;
+    color: var(--brand-primary-dark);
+    font-family: Inter, sans-serif;
+    font-size: clamp(28px, 3.2vw, 38px);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+  }
+
+  .thank-you-message p {
+    max-width: 65ch;
+    margin: 0;
     color: var(--muted-text);
-    font-size: 1.12rem;
-    font-weight: 700;
-    line-height: 1.6;
+    font-family: Inter, sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.2px;
+    line-height: 1.5;
   }
 
   .thank-you-actions {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 34px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 38px;
   }
 
   .thank-you-btn {
     display: inline-flex;
-    width: min(100%, 304px);
-    min-height: 68px;
+    width: 100%;
+    min-height: 64px;
     align-items: center;
     justify-content: space-between;
     gap: 18px;
-    border: 1px solid rgba(var(--brand-primary-dark-rgb), 0.52);
-    border-radius: 12px;
+    border: 1px solid var(--brand-cta);
+    border-radius: 999px;
     padding: 0 24px;
-    color: var(--brand-primary-dark);
-    font-size: 1.03rem;
-    font-weight: 700;
-    line-height: 1.2;
-    text-align: center;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    line-height: 16px;
+    text-align: left;
     text-decoration: none;
     transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
   }
 
-  .thank-you-btn:hover {
+  .thank-you-btn:is(:hover, :focus-visible) {
     transform: translateY(-1px);
   }
 
   .thank-you-btn-primary {
-    background: transparent;
-    color: var(--brand-primary-dark);
-    box-shadow: none;
+    background: var(--brand-cta);
+    color: var(--surface-white);
   }
 
-  .thank-you-btn-primary:hover {
-    background: rgba(var(--brand-primary-dark-rgb), 0.06);
-    color: var(--brand-primary-dark);
+  .thank-you-btn-primary:is(:hover, :focus-visible) {
+    border-color: var(--brand-cta-hover);
+    background: var(--brand-cta-hover);
+    color: var(--surface-white);
   }
 
   .thank-you-btn-outline {
-    border-color: rgba(var(--brand-primary-dark-rgb), 0.52);
+    border-color: rgba(var(--brand-cta-rgb), 0.52);
     background: transparent;
-    color: var(--brand-primary-dark);
+    color: var(--brand-cta);
   }
 
-  .thank-you-btn-outline:hover {
-    border-color: var(--brand-primary-dark);
-    background: rgba(var(--brand-primary-dark-rgb), 0.06);
-    color: var(--brand-primary-dark);
+  .thank-you-btn-outline:is(:hover, :focus-visible) {
+    border-color: var(--brand-cta);
+    background: var(--soft-blue-bg);
+    color: var(--brand-cta-hover);
+  }
+
+  .thank-you-btn:focus-visible {
+    outline: 3px solid rgba(var(--brand-cta-rgb), 0.22);
+    outline-offset: 3px;
   }
 
   .thank-you-btn span {
-    font-size: 1.45rem;
+    font-size: 23px;
+    font-weight: 400;
     line-height: 1;
   }
 
-  @media (max-width: 560px) {
+  @media (max-width: 720px) {
     .thank-you-page {
-      padding: 48px 0;
+      padding: 32px 18px 84px;
+    }
+
+    .thank-you-progress {
+      margin-bottom: 44px;
+    }
+
+    .thank-you-heading {
+      margin-bottom: 54px;
+      gap: 16px;
+    }
+
+    .thank-you-heading h1 {
+      font-size: clamp(58px, 19vw, 82px);
+    }
+
+    .thank-you-message h2 {
+      font-size: 28px;
+      letter-spacing: -0.4px;
     }
 
     .thank-you-actions {
-      display: grid;
       grid-template-columns: 1fr;
     }
+  }
 
+  @media (prefers-reduced-motion: reduce) {
     .thank-you-btn {
-      width: 100%;
+      transition: none;
     }
   }
 </style>

@@ -18,6 +18,7 @@ export async function submitBooking(form: HTMLFormElement, setError: (message: s
       kind: form.dataset.bookingKind,
       source: window.location.pathname,
       privacyConsent: fields.privacyConsent === 'on' || fields.privacyConsent === '1',
+      scheduleAcknowledged: fields.scheduleAcknowledged === 'on' || fields.scheduleAcknowledged === '1',
     };
     const fingerprint = JSON.stringify(payload);
     let attempt = attempts.get(form);

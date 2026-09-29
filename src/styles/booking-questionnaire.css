@@ -254,11 +254,11 @@ body .booking-questionnaire :is(.urgent-split > div, .calendar-card, .slot-card)
   box-shadow: none !important;
 }
 
-body .booking-questionnaire :is(.urgent-split h2, .calendar-title, .slot-title) {
+body .booking-questionnaire :is(.urgent-split h2, .calendar-title, .slot-title, .schedule-section-title) {
   color: var(--surface-white) !important;
 }
 
-body .booking-questionnaire :is(.slot-date, .calendar-weekdays) {
+body .booking-questionnaire :is(.slot-date, .calendar-weekdays, .schedule-section-help) {
   color: rgba(var(--surface-white-rgb), 0.72) !important;
 }
 
@@ -278,6 +278,15 @@ body .booking-questionnaire :is(.date-btn, .slot-btn).is-selected {
 body .booking-questionnaire .date-btn:disabled {
   border-color: transparent !important;
   color: rgba(var(--surface-white-rgb), 0.3) !important;
+}
+
+body .booking-questionnaire :is(.date-btn, .slot-btn).is-limit-disabled:disabled {
+  border-color: rgba(var(--surface-white-rgb), 0.18) !important;
+  background: rgba(var(--surface-white-rgb), 0.025) !important;
+  color: rgba(var(--surface-white-rgb), 0.42) !important;
+  cursor: not-allowed;
+  opacity: 1;
+  transform: none !important;
 }
 
 body .booking-questionnaire .pain-scale {
@@ -360,6 +369,43 @@ body .booking-questionnaire .booking-privacy-consent a {
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 0.16em;
+}
+
+body .booking-questionnaire .schedule-confirmation {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 22px 0 0;
+  border: 1px solid rgba(var(--surface-white-rgb), 0.3) !important;
+  border-radius: 16px;
+  padding: 16px;
+  background: rgba(var(--surface-white-rgb), 0.06) !important;
+  color: rgba(var(--surface-white-rgb), 0.86) !important;
+  cursor: pointer;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.16px !important;
+  line-height: 1.45 !important;
+}
+
+body .booking-questionnaire .schedule-confirmation input {
+  width: 20px !important;
+  min-width: 20px;
+  height: 20px !important;
+  min-height: 20px !important;
+  flex: 0 0 20px;
+  margin: 1px 0 0;
+  padding: 0 !important;
+  border: 1px solid rgba(var(--surface-white-rgb), 0.76) !important;
+  border-radius: 4px;
+  background: transparent !important;
+  box-shadow: none !important;
+  accent-color: var(--surface-white);
+}
+
+body .booking-questionnaire .schedule-confirmation input[aria-invalid="true"] {
+  outline: 3px solid rgba(var(--surface-white-rgb), 0.56) !important;
+  outline-offset: 3px;
 }
 
 body .booking-questionnaire :is(.request-error, .urgent-error, .first-visit-error) {
@@ -561,6 +607,10 @@ body:has(.booking-questionnaire) .multistep-backbar .module-back-glyph {
 
   body .booking-questionnaire .booking-desktop-next {
     display: none !important;
+  }
+
+  body .booking-questionnaire [data-request-form]:has([data-step-key="schedule"].is-active) .booking-desktop-next {
+    display: inline-flex !important;
   }
 
   body .booking-questionnaire :is(.request-actions, .urgent-actions, .first-visit-actions) {

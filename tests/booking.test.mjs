@@ -15,7 +15,7 @@ const cases = {
   contact: {}, callback: { email: '' },
   'first-visit': { ...common, visitReason: 'Controllo generale', visitGoal: 'Ricevere una diagnosi completa', availability: 'Mattina', notes: 'Nota di prova', message: 'Messaggio finale' },
   urgent: { ...common, emergencyType: 'Altro', symptom: 'Altro', painLevel: '8', availability: 'Entro 24 ore', otherDetails: 'Descrizione tecnica di prova', details: 'Dettagli di prova' },
-  treatment: { ...common, treatment: 'Sbiancamento dentale', treatmentCategory: 'Estetica', problem: 'Sbiancamento domiciliare controllato', preferredDate: '2026-10-20', preferredTime: '15:30', details: 'Dettagli della visita', initialReason: 'Preferenza iniziale' },
+  treatment: { ...common, treatment: 'Sbiancamento dentale', treatmentCategory: 'Estetica', problem: 'Sbiancamento domiciliare controllato', preferredDates: '2026-10-20, 2026-10-22', preferredTimes: '10:00, 15:30', scheduleAcknowledged: true, details: 'Dettagli della visita', initialReason: 'Preferenza iniziale' },
 };
 
 async function invoke(handler, body = base, options = {}) {
@@ -54,9 +54,10 @@ for (const [kind, fields] of Object.entries(cases)) {
     assert.equal(calls[0].email.from, env.RESEND_FROM_EMAIL);
     assert.equal(calls[0].email.reply_to, data.email || undefined);
     for (const [key, value] of Object.entries({ ...fields, fullName: base.fullName, phone: base.phone })) {
-      if (value) assert.ok(calls[0].email.text.includes(value), `Missing ${key}`);
+      if (typeof value === 'string' && value) assert.ok(calls[0].email.text.includes(value), `Missing ${key}`);
     }
     assert.match(calls[0].email.text, /Consenso.*espresso/);
+    if (kind === 'treatment') assert.match(calls[0].email.text, /carattere indicativo.*confermata/);
     assert.equal(calls[0].email.html, undefined);
     assert.equal(res.headers['Cache-Control'], 'no-store');
   });
@@ -79,8 +80,11 @@ for (const [label, changes] of [
   ['non-string form', { kind: ['contact'] }], ['non-string request ID', { requestId: [base.requestId] }],
   ['incomplete questionnaire', { kind: 'first-visit' }], ['invalid office', { office: 'Bologna' }],
   ['private data in source query', { source: '/contatti/?email=test@example.com' }],
-  ['impossible date', { ...cases.treatment, kind: 'treatment', preferredDate: '2026-02-31' }],
-  ['invalid time', { ...cases.treatment, kind: 'treatment', preferredTime: '99:99' }],
+  ['impossible date', { ...cases.treatment, kind: 'treatment', preferredDates: '2026-02-31' }],
+  ['invalid time', { ...cases.treatment, kind: 'treatment', preferredTimes: '99:99' }],
+  ['too many dates', { ...cases.treatment, kind: 'treatment', preferredDates: '2026-10-20, 2026-10-21, 2026-10-22' }],
+  ['too many times', { ...cases.treatment, kind: 'treatment', preferredTimes: '09:00, 10:00, 11:00' }],
+  ['missing schedule acknowledgement', { ...cases.treatment, kind: 'treatment', scheduleAcknowledged: false }],
   ['invalid pain level', { ...cases.urgent, kind: 'urgent', painLevel: '99' }],
   ['missing other symptoms', { ...cases.urgent, kind: 'urgent', otherDetails: '' }],
 ]) {

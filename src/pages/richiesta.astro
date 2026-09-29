@@ -189,6 +189,8 @@ const requestConfig = {
   treatments: treatmentOptions,
   detailOptionsByTreatment,
   timeSlots: ['09:00', '10:00', '11:00', '14:30', '15:30', '16:30', '17:30'],
+  maxPreferredDates: 2,
+  maxPreferredTimes: 2,
 };
 const offices = site.offices.map((office) => office.city);
 
@@ -207,8 +209,8 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
         <input type="hidden" name="initialReason" data-initial-reason />
         <input type="hidden" name="ageRange" data-field="ageRange" />
         <input type="hidden" name="office" data-field="office" />
-        <input type="hidden" name="preferredDate" data-field="preferredDate" />
-        <input type="hidden" name="preferredTime" data-field="preferredTime" />
+        <input type="hidden" name="preferredDates" data-field="preferredDates" />
+        <input type="hidden" name="preferredTimes" data-field="preferredTimes" />
 
         <div class="request-progress" aria-hidden="true">
           <span data-progress-bar></span>
@@ -313,6 +315,10 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 
           <div class="date-time-grid">
             <div class="calendar-card">
+              <p class="schedule-section-title">Date preferite</p>
+              <p class="schedule-section-help" data-date-selection-help aria-live="polite" aria-atomic="true">
+                Puoi selezionare fino a due date.
+              </p>
               <div class="calendar-head">
                 <button class="calendar-nav" type="button" data-calendar-prev aria-label="Mese precedente"><span class="ui-glyph module-calendar-glyph" aria-hidden="true">‹</span></button>
                 <p class="calendar-title" data-calendar-title></p>
@@ -331,11 +337,22 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
             </div>
 
             <div class="slot-card">
-              <p class="slot-title">Orario preferito</p>
-              <p class="slot-date" data-selected-date>Nessuna data selezionata</p>
+              <p class="slot-title">Orari preferiti</p>
+              <p class="schedule-section-help" data-time-selection-help aria-live="polite" aria-atomic="true">
+                Puoi selezionare fino a due orari.
+              </p>
+              <p class="slot-date" data-selected-date>Seleziona almeno una data nel calendario.</p>
               <div class="slot-grid" data-slot-grid></div>
             </div>
           </div>
+
+          <label class="schedule-confirmation">
+            <input type="checkbox" name="scheduleAcknowledged" required data-schedule-acknowledgement />
+            <span>
+              Ho compreso che i giorni e gli orari indicati rappresentano preferenze di disponibilità e che
+              l’appuntamento sarà confermato esclusivamente dalla segreteria dello Studio.
+            </span>
+          </label>
         </fieldset>
 
         <fieldset class="request-step" data-step="5" data-step-key="contact" data-step-label="I tuoi dati" hidden>
@@ -609,9 +626,11 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
     grid-template-columns: 42px 1fr 42px;
     align-items: center;
     gap: 12px;
+    margin-top: 18px;
     margin-bottom: 18px;
   }
 
+  .schedule-section-title,
   .calendar-title,
   .slot-title,
   .slot-date {
@@ -621,6 +640,18 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
     font-weight: 900;
     line-height: 1.25;
     text-align: center;
+  }
+
+  .schedule-section-title,
+  .slot-title {
+    text-align: left;
+  }
+
+  .schedule-section-help {
+    margin: 6px 0 0;
+    color: var(--muted-text);
+    font-size: 0.92rem;
+    line-height: 1.4;
   }
 
   .calendar-nav {
@@ -682,6 +713,17 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
     box-shadow: none;
   }
 
+  .date-btn.is-limit-disabled:disabled,
+  .slot-btn.is-limit-disabled:disabled {
+    border-color: var(--border);
+    background: var(--background);
+    color: var(--muted-text);
+    cursor: not-allowed;
+    opacity: 0.55;
+    transform: none;
+    box-shadow: none;
+  }
+
   .calendar-empty {
     min-height: 52px;
   }
@@ -714,6 +756,35 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
     min-height: 48px;
     padding: 10px;
     text-align: center;
+  }
+
+  .schedule-confirmation {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 20px 0 0;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    background: var(--soft-blue-bg);
+    color: var(--text-dark);
+    cursor: pointer;
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+
+  .schedule-confirmation input {
+    width: 20px;
+    min-width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+    margin: 1px 0 0;
+    accent-color: var(--brand-cta);
+  }
+
+  .schedule-confirmation input[aria-invalid="true"] {
+    outline: 3px solid rgba(var(--error-rgb), 0.18);
+    outline-offset: 3px;
   }
 
   .field-grid {
@@ -1161,6 +1232,9 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
   .date-btn,
   .slot-btn,
   .selected-summary,
+  .schedule-section-title,
+  .schedule-section-help,
+  .schedule-confirmation,
   .calendar-title,
   .slot-title,
   .slot-date,
@@ -1270,6 +1344,9 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
     .date-btn,
     .slot-btn,
     .selected-summary,
+    .schedule-section-title,
+    .schedule-section-help,
+    .schedule-confirmation,
     .calendar-title,
     .slot-title,
     .slot-date,
@@ -1329,8 +1406,11 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
     const calendarTitle = form.querySelector('[data-calendar-title]');
     const calendarPrev = form.querySelector('[data-calendar-prev]');
     const calendarNext = form.querySelector('[data-calendar-next]');
+    const dateSelectionHelp = form.querySelector('[data-date-selection-help]');
+    const timeSelectionHelp = form.querySelector('[data-time-selection-help]');
     const selectedDateLabel = form.querySelector('[data-selected-date]');
     const slotGrid = form.querySelector('[data-slot-grid]');
+    const scheduleAcknowledgement = form.querySelector('[data-schedule-acknowledgement]');
     const privacyConsent = form.querySelector('[data-privacy-consent]');
     const fields = {
       treatment: form.querySelector('[data-field="treatment"]'),
@@ -1338,8 +1418,8 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
       problem: form.querySelector('[data-field="problem"]'),
       ageRange: form.querySelector('[data-field="ageRange"]'),
       office: form.querySelector('[data-field="office"]'),
-      preferredDate: form.querySelector('[data-field="preferredDate"]'),
-      preferredTime: form.querySelector('[data-field="preferredTime"]'),
+      preferredDates: form.querySelector('[data-field="preferredDates"]'),
+      preferredTimes: form.querySelector('[data-field="preferredTimes"]'),
     };
 
     const state = {
@@ -1350,11 +1430,13 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
       problem: '',
       ageRange: '',
       office: '',
-      preferredDate: '',
-      preferredTime: '',
+      preferredDates: [],
+      preferredTimes: [],
     };
     let autoAdvanceTimer = 0;
     const usesMobilePillFlow = () => window.matchMedia('(max-width: 720px)').matches;
+    const maxPreferredDates = Number(config.maxPreferredDates) || 2;
+    const maxPreferredTimes = Number(config.maxPreferredTimes) || 2;
 
     const otherTreatmentId = 'altro';
     const needsOtherDetails = () => state.treatmentId === otherTreatmentId;
@@ -1367,6 +1449,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 
     const formatMonth = new Intl.DateTimeFormat('it-IT', { month: 'long', year: 'numeric' });
     const formatDay = new Intl.DateTimeFormat('it-IT', { weekday: 'long', day: 'numeric', month: 'long' });
+    const formatDateList = new Intl.ListFormat('it-IT', { style: 'long', type: 'conjunction' });
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -1409,8 +1492,8 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
       if (fields.problem) fields.problem.value = state.problem;
       if (fields.ageRange) fields.ageRange.value = state.ageRange;
       if (fields.office) fields.office.value = state.office;
-      if (fields.preferredDate) fields.preferredDate.value = state.preferredDate;
-      if (fields.preferredTime) fields.preferredTime.value = state.preferredTime;
+      if (fields.preferredDates) fields.preferredDates.value = state.preferredDates.join(', ');
+      if (fields.preferredTimes) fields.preferredTimes.value = state.preferredTimes.join(', ');
     };
 
     const renderProblemOptions = () => {
@@ -1441,8 +1524,12 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
         button.className = 'slot-btn';
         button.dataset.timeSlot = slot;
         button.textContent = slot;
-        button.setAttribute('aria-pressed', String(state.preferredTime === slot));
-        if (state.preferredTime === slot) {
+        const isSelected = state.preferredTimes.includes(slot);
+        const isLimitDisabled = state.preferredTimes.length >= maxPreferredTimes && !isSelected;
+        button.disabled = isLimitDisabled;
+        button.classList.toggle('is-limit-disabled', isLimitDisabled);
+        button.setAttribute('aria-pressed', String(isSelected));
+        if (isSelected) {
           button.classList.add('is-selected');
         }
         slotGrid.append(button);
@@ -1474,10 +1561,14 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
         button.className = 'date-btn';
         button.dataset.date = key;
         button.textContent = String(day);
-        button.disabled = !availableDateSet.has(key);
+        const isSelected = state.preferredDates.includes(key);
+        const isAvailable = availableDateSet.has(key);
+        const isLimitDisabled = isAvailable && state.preferredDates.length >= maxPreferredDates && !isSelected;
+        button.disabled = !isAvailable || isLimitDisabled;
+        button.classList.toggle('is-limit-disabled', isLimitDisabled);
         button.setAttribute('aria-label', formatDay.format(date));
-        button.setAttribute('aria-pressed', String(state.preferredDate === key));
-        if (state.preferredDate === key) {
+        button.setAttribute('aria-pressed', String(isSelected));
+        if (isSelected) {
           button.classList.add('is-selected');
         }
         calendarGrid.append(button);
@@ -1495,9 +1586,31 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 
     const updateSelectedDateLabel = () => {
       if (!selectedDateLabel) return;
-      selectedDateLabel.textContent = state.preferredDate
-        ? formatDay.format(dateFromKey(state.preferredDate))
-        : 'Nessuna data selezionata';
+      const formattedDates = state.preferredDates.map((date) => formatDay.format(dateFromKey(date)));
+      if (formattedDates.length === 0) {
+        selectedDateLabel.textContent = 'Seleziona almeno una data nel calendario.';
+        return;
+      }
+      selectedDateLabel.textContent = `${formattedDates.length === 1 ? '1 data selezionata' : `${formattedDates.length} date selezionate`}: ${formatDateList.format(formattedDates)}`;
+    };
+
+    const updateSelectionHelp = () => {
+      if (dateSelectionHelp) {
+        dateSelectionHelp.textContent =
+          state.preferredDates.length === 0
+            ? 'Puoi selezionare fino a due date.'
+            : state.preferredDates.length === 1
+              ? 'Puoi selezionare ancora un’altra data.'
+              : 'Hai selezionato il numero massimo di date.';
+      }
+      if (timeSelectionHelp) {
+        timeSelectionHelp.textContent =
+          state.preferredTimes.length === 0
+            ? 'Puoi selezionare fino a due orari.'
+            : state.preferredTimes.length === 1
+              ? 'Puoi selezionare ancora un altro orario.'
+              : 'Hai selezionato il numero massimo di orari.';
+      }
     };
 
     const isCurrentStepComplete = () => {
@@ -1510,7 +1623,15 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
         return otherRequest instanceof HTMLTextAreaElement && otherRequest.value.trim().length >= 10;
       }
       if (stepKey === 'ageRange') return Boolean(state.ageRange);
-      if (stepKey === 'schedule') return Boolean(state.office && state.preferredDate && state.preferredTime);
+      if (stepKey === 'schedule') {
+        return Boolean(
+          state.office &&
+          state.preferredDates.length > 0 &&
+          state.preferredTimes.length > 0 &&
+          scheduleAcknowledgement instanceof HTMLInputElement &&
+          scheduleAcknowledgement.checked
+        );
+      }
       return true;
     };
 
@@ -1759,9 +1880,27 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
         setError('Seleziona una fascia d’età per continuare.');
         return false;
       }
-      if (stepKey === 'schedule' && (!state.office || !state.preferredDate || !state.preferredTime)) {
-        setError('Scegli una sede, una data e una fascia oraria preferita.');
-        return false;
+      if (stepKey === 'schedule') {
+        const missingPreferences = !state.office || state.preferredDates.length === 0 || state.preferredTimes.length === 0;
+        const missingAcknowledgement =
+          !(scheduleAcknowledgement instanceof HTMLInputElement) || !scheduleAcknowledgement.checked;
+
+        if (scheduleAcknowledgement instanceof HTMLInputElement) {
+          if (missingAcknowledgement) {
+            scheduleAcknowledgement.setAttribute('aria-invalid', 'true');
+          } else {
+            scheduleAcknowledgement.removeAttribute('aria-invalid');
+          }
+        }
+
+        if (missingPreferences) {
+          setError('Scegli una sede e almeno un giorno e un orario preferiti.');
+          return false;
+        }
+        if (missingAcknowledgement) {
+          setError('Conferma di aver compreso che l’appuntamento sarà definito dalla segreteria.');
+          return false;
+        }
       }
       if (stepKey === 'contact') {
         return validateContactStep();
@@ -1784,8 +1923,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
           (
             choiceType === 'treatment' ||
             choiceType === 'problem' ||
-            choiceType === 'ageRange' ||
-            (choiceType === 'office' && state.preferredDate && state.preferredTime)
+            choiceType === 'ageRange'
           )
         ) {
           autoAdvance();
@@ -1801,27 +1939,32 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 
       const dateButton = target.closest('[data-date]');
       if (dateButton instanceof HTMLButtonElement && !dateButton.disabled) {
-        state.preferredDate = dateButton.dataset.date || '';
-        state.preferredTime = '';
+        const selectedDate = dateButton.dataset.date || '';
+        state.preferredDates = state.preferredDates.includes(selectedDate)
+          ? state.preferredDates.filter((date) => date !== selectedDate)
+          : [...state.preferredDates, selectedDate].sort();
         syncHiddenFields();
         renderCalendar();
-        renderSlots();
         updateSelectedDateLabel();
+        updateSelectionHelp();
         setError();
         syncNextButton();
         return;
       }
 
       const slotButton = target.closest('[data-time-slot]');
-      if (slotButton instanceof HTMLButtonElement) {
-        state.preferredTime = slotButton.dataset.timeSlot || '';
+      if (slotButton instanceof HTMLButtonElement && !slotButton.disabled) {
+        const selectedTime = slotButton.dataset.timeSlot || '';
+        state.preferredTimes = state.preferredTimes.includes(selectedTime)
+          ? state.preferredTimes.filter((time) => time !== selectedTime)
+          : [...state.preferredTimes, selectedTime].sort(
+              (first, second) => config.timeSlots.indexOf(first) - config.timeSlots.indexOf(second)
+            );
         syncHiddenFields();
         renderSlots();
+        updateSelectionHelp();
         setError();
         syncNextButton();
-        if (usesMobilePillFlow() && state.office && state.preferredDate && state.preferredTime) {
-          autoAdvance();
-        }
       }
     });
 
@@ -1853,6 +1996,9 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 
     form.addEventListener('input', (event) => {
       markInvalid(event.target, false);
+      if (event.target === scheduleAcknowledgement && scheduleAcknowledgement instanceof HTMLInputElement) {
+        scheduleAcknowledgement.removeAttribute('aria-invalid');
+      }
       if (event.target === privacyConsent && privacyConsent instanceof HTMLInputElement) {
         privacyConsent.removeAttribute('aria-invalid');
       }
@@ -1872,6 +2018,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
     renderCalendar();
     renderSlots();
     updateSelectedDateLabel();
+    updateSelectionHelp();
     syncHiddenFields();
     renderStep();
   }

@@ -4,6 +4,9 @@ export const RECIPIENT = 'info.federzonigranata@gmail.com';
 const MAX_BYTES = 24_000;
 const EMAIL = /^[^\s<>@]+@[^\s<>@]+\.[^\s<>@]+$/;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const TIME_SLOTS = ['09:00', '10:00', '11:00', '14:30', '15:30', '16:30', '17:30'];
+const MAX_PREFERRED_DATES = 2;
+const MAX_PREFERRED_TIMES = 2;
 const KINDS = {
   'first-visit': 'Prima visita',
   urgent: 'Urgenza',
@@ -18,7 +21,7 @@ const LABELS = {
   emergencyType: 'Tipo di urgenza', symptom: 'Sintomi', painLevel: 'Dolore (0–10)',
   treatment: 'Trattamento', treatmentCategory: 'Categoria', problem: 'Motivo della richiesta',
   initialReason: 'Preferenza indicata nella pagina del trattamento',
-  availability: 'Disponibilità', preferredDate: 'Data preferita', preferredTime: 'Orario preferito',
+  availability: 'Disponibilità', preferredDates: 'Giorni preferiti', preferredTimes: 'Orari preferiti',
   notes: 'Note', message: 'Messaggio', details: 'Dettagli',
   otherDetails: 'Altri sintomi o informazioni', otherRequest: 'Altra esigenza',
   source: 'Pagina di provenienza',
@@ -27,7 +30,7 @@ const LONG_FIELDS = new Set(['notes', 'message', 'details', 'otherDetails', 'oth
 const REQUIRED = {
   'first-visit': ['visitReason', 'visitGoal', 'ageRange', 'office', 'availability'],
   urgent: ['emergencyType', 'symptom', 'painLevel', 'ageRange', 'office', 'availability'],
-  treatment: ['treatment', 'ageRange', 'office', 'preferredDate', 'preferredTime'],
+  treatment: ['treatment', 'ageRange', 'office', 'preferredDates', 'preferredTimes'],
   contact: [], callback: [],
 };
 
@@ -44,7 +47,8 @@ export function validateBooking(input) {
   const data = { kind: input.kind, requestId: input.requestId };
   for (const key of Object.keys(LABELS)) {
     const value = input[key] ?? '';
-    if (typeof value !== 'string' || value.length > (LONG_FIELDS.has(key) ? 3000 : key === 'source' ? 500 : 254) || /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(value)) {
+    const maxLength = LONG_FIELDS.has(key) ? 3000 : key === 'preferredDates' ? 1024 : key === 'source' ? 500 : 254;
+    if (typeof value !== 'string' || value.length > maxLength || /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(value)) {
       throw new RequestError(400, 'Uno dei campi contiene un valore non valido o troppo lungo.');
     }
     data[key] = value.trim();
@@ -66,10 +70,32 @@ export function validateBooking(input) {
   }
   if (data.kind === 'treatment') {
     if (data.treatment === 'Altro' ? data.otherRequest.length < 10 : !data.problem) throw new RequestError(400, 'Completa il motivo della richiesta.');
-    const date = new Date(`${data.preferredDate}T12:00:00Z`);
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(data.preferredDate) || !Number.isFinite(date.getTime()) || date.toISOString().slice(0, 10) !== data.preferredDate || !['09:00', '10:00', '11:00', '14:30', '15:30', '16:30', '17:30'].includes(data.preferredTime)) {
-      throw new RequestError(400, 'Seleziona una data e un orario validi.');
+    const preferredDates = data.preferredDates.split(',').map((value) => value.trim()).filter(Boolean);
+    const preferredTimes = data.preferredTimes.split(',').map((value) => value.trim()).filter(Boolean);
+    const datesAreValid = preferredDates.every((value) => {
+      const date = new Date(`${value}T12:00:00Z`);
+      return /^\d{4}-\d{2}-\d{2}$/.test(value) && Number.isFinite(date.getTime()) && date.toISOString().slice(0, 10) === value;
+    });
+    const selectionsAreUnique =
+      new Set(preferredDates).size === preferredDates.length && new Set(preferredTimes).size === preferredTimes.length;
+
+    if (
+      preferredDates.length === 0 ||
+      preferredDates.length > MAX_PREFERRED_DATES ||
+      preferredTimes.length === 0 ||
+      preferredTimes.length > MAX_PREFERRED_TIMES ||
+      !datesAreValid ||
+      !preferredTimes.every((value) => TIME_SLOTS.includes(value)) ||
+      !selectionsAreUnique
+    ) {
+      throw new RequestError(400, 'Puoi selezionare al massimo due date e due orari validi.');
     }
+    if (input.scheduleAcknowledged !== true) {
+      throw new RequestError(400, 'Conferma di aver compreso che l’appuntamento sarà definito dalla segreteria.');
+    }
+    data.preferredDates = preferredDates.join(', ');
+    data.preferredTimes = preferredTimes.join(', ');
+    data.scheduleAcknowledged = true;
   }
   return data;
 }
@@ -84,6 +110,9 @@ export function buildEmail(data, from) {
     text: [
       `Nuova richiesta dal sito: ${KINDS[data.kind]}`, '', ...lines, '',
       'Consenso al trattamento dei dati per gestire la richiesta: espresso nel modulo.',
+      ...(data.kind === 'treatment'
+        ? ['Presa visione del carattere indicativo delle preferenze di appuntamento: confermata nel modulo.']
+        : []),
       `Riferimento richiesta: ${data.requestId}`,
       'Le preferenze di appuntamento devono essere confermate dalla segreteria.',
     ].join('\n'),
