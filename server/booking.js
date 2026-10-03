@@ -33,6 +33,16 @@ const REQUIRED = {
   treatment: ['treatment', 'ageRange', 'office', 'preferredDates', 'preferredTimes'],
   contact: [], callback: [],
 };
+const ATTRIBUTION_FIELDS = {
+  attributionSource: 300,
+  attributionMedium: 300,
+  attributionCampaign: 300,
+  attributionReferrer: 500,
+  attributionLandingPage: 500,
+  clickIdType: 10,
+};
+const CLICK_ID_TYPES = ['', 'gclid', 'gbraid', 'wbraid'];
+const SITE_HOSTS = new Set(['studiodentisticofederzonigranata.it', 'www.studiodentisticofederzonigranata.it']);
 
 class RequestError extends Error {
   constructor(status, message) { super(message); this.status = status; }
@@ -54,6 +64,13 @@ export function validateBooking(input) {
     data[key] = value.trim();
     if (!LONG_FIELDS.has(key) && /[\r\n]/.test(value)) throw new RequestError(400, 'Uno dei campi contiene un valore non valido.');
   }
+  for (const [key, maxLength] of Object.entries(ATTRIBUTION_FIELDS)) {
+    const value = input[key] ?? '';
+    if (typeof value !== 'string' || value.length > maxLength || /[\u0000-\u001f\u007f\r\n]/.test(value)) {
+      throw new RequestError(400, 'I dati di provenienza non sono validi.');
+    }
+    data[key] = value.trim();
+  }
   if (data.fullName.length < 2 || data.fullName.length > 120 || !/^[+\d\s()./-]{6,30}$/.test(data.phone) || data.phone.replace(/\D/g, '').length < 6) {
     throw new RequestError(400, 'Controlla nome e numero di telefono.');
   }
@@ -64,6 +81,18 @@ export function validateBooking(input) {
   if (REQUIRED[data.kind].some((key) => !data[key])) throw new RequestError(400, 'Completa tutti i passaggi del modulo prima di inviare.');
   if (data.office && !['Modena', 'Reggio Emilia'].includes(data.office)) throw new RequestError(400, 'Seleziona una sede valida.');
   if (data.source && (!data.source.startsWith('/') || data.source.startsWith('//') || /[?#]/.test(data.source))) throw new RequestError(400, 'Pagina di provenienza non valida.');
+  if (data.attributionLandingPage && (!data.attributionLandingPage.startsWith('/') || data.attributionLandingPage.startsWith('//') || /[?#]/.test(data.attributionLandingPage))) {
+    throw new RequestError(400, 'Pagina di ingresso non valida.');
+  }
+  if (!CLICK_ID_TYPES.includes(data.clickIdType)) throw new RequestError(400, 'Identificativo pubblicitario non valido.');
+  if (data.attributionReferrer) {
+    try {
+      const referrer = new URL(data.attributionReferrer);
+      if (!['http:', 'https:'].includes(referrer.protocol) || referrer.search || referrer.hash) throw new Error('invalid');
+    } catch {
+      throw new RequestError(400, 'Provenienza esterna non valida.');
+    }
+  }
   if (data.kind === 'urgent') {
     if (!/^(?:[0-9]|10)$/.test(data.painLevel)) throw new RequestError(400, 'Seleziona un livello di dolore valido.');
     if ((data.emergencyType === 'Altro' || data.symptom === 'Altro') && data.otherDetails.length < 10) throw new RequestError(400, 'Descrivi brevemente i sintomi.');
@@ -119,6 +148,100 @@ export function buildEmail(data, from) {
   };
 }
 
+function normalizedSignal(value) {
+  return String(value || '').trim().toLowerCase().replace(/[\s-]+/g, '_');
+}
+
+function parsedReferrer(value) {
+  try { return value ? new URL(value) : null; }
+  catch { return null; }
+}
+
+export function classifyAttribution(data) {
+  const source = normalizedSignal(data.attributionSource);
+  const medium = normalizedSignal(data.attributionMedium);
+  const campaign = normalizedSignal(data.attributionCampaign);
+  const referrer = parsedReferrer(data.attributionReferrer);
+  const host = referrer?.hostname.toLowerCase() || '';
+  const path = referrer?.pathname.toLowerCase() || '';
+  const googleReferrer = /(^|\.)google\.[a-z.]+$/.test(host);
+  const mapsToken = new Set(['google_maps', 'google_business_profile', 'gbp', 'maps']);
+  const paidMedium = new Set(['cpc', 'ppc', 'paid', 'paid_search', 'paidsearch', 'display']);
+  const organicMedium = new Set(['organic', 'seo', 'search']);
+
+  if (data.clickIdType || (source === 'google' && paidMedium.has(medium))) return 'Google Ads';
+  if (mapsToken.has(source) || mapsToken.has(medium) || (googleReferrer && /^\/maps(?:\/|$)/.test(path))) return 'Google Maps';
+  if ((source === 'google' && organicMedium.has(medium)) || googleReferrer) return 'Google organico';
+
+  if (source) return source === 'google' ? 'Non rilevata' : 'Altro';
+  if (referrer && !SITE_HOSTS.has(host)) return 'Altro';
+  if (medium || campaign) return 'Non rilevata';
+  if (!referrer) return 'Diretto';
+  return 'Non rilevata';
+}
+
+function buildSheetMessage(data) {
+  const keys = [
+    'visitReason', 'visitGoal', 'emergencyType', 'symptom', 'painLevel', 'problem',
+    'initialReason', 'notes', 'message', 'details', 'otherDetails', 'otherRequest', 'ageRange',
+  ];
+  return keys
+    .filter((key) => data[key])
+    .map((key) => `${LABELS[key]}: ${data[key]}`)
+    .join('\n')
+    .slice(0, 3000);
+}
+
+export function buildSheetPayload(data, env) {
+  return {
+    secret: env.GOOGLE_SHEETS_WEBHOOK_SECRET,
+    requestId: data.requestId,
+    nomeCognome: data.fullName,
+    telefono: data.phone,
+    email: data.email,
+    sede: data.office,
+    servizio: data.treatment || KINDS[data.kind],
+    giorniPreferiti: data.preferredDates || data.availability || '',
+    orariPreferiti: data.preferredTimes || '',
+    messaggio: buildSheetMessage(data),
+    provenienza: classifyAttribution(data),
+    pagina: data.source,
+    campagna: data.attributionCampaign || '',
+    recordType: env.GOOGLE_SHEETS_RECORD_TYPE === 'TEST' ? 'TEST' : 'REALE',
+  };
+}
+
+export async function storeBookingInSheet(data, { env = process.env, send = fetch } = {}) {
+  const endpoint = env.GOOGLE_SHEETS_WEBHOOK_URL?.trim();
+  const secret = env.GOOGLE_SHEETS_WEBHOOK_SECRET?.trim();
+  if (!endpoint || !secret) return { configured: false, stored: false };
+
+  let endpointUrl;
+  try { endpointUrl = new URL(endpoint); }
+  catch { throw new Error('Configurazione webhook foglio non valida.'); }
+  if (endpointUrl.protocol !== 'https:' || endpointUrl.hostname !== 'script.google.com') {
+    throw new Error('Configurazione webhook foglio non valida.');
+  }
+
+  let response;
+  let result;
+  try {
+    response = await send(endpointUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(buildSheetPayload(data, { ...env, GOOGLE_SHEETS_WEBHOOK_SECRET: secret })),
+      signal: AbortSignal.timeout(6_000),
+    });
+    result = await response.json();
+  } catch {
+    throw new Error('Webhook foglio non raggiungibile.');
+  }
+  if (!response.ok || result?.ok !== true || result.requestId !== data.requestId) {
+    throw new Error('Webhook foglio ha rifiutato la richiesta.');
+  }
+  return { configured: true, stored: true, duplicate: result.duplicate === true };
+}
+
 async function readBody(req) {
   if (Number(req.headers['content-length']) > MAX_BYTES) throw new RequestError(413, 'La richiesta è troppo lunga. Riduci il testo e riprova.');
   if (req.body !== undefined) {
@@ -146,7 +269,7 @@ function json(res, status, body) {
 
 // A small per-instance guard supplements the honeypot and same-origin checks.
 // For distributed rate limiting use the hosting firewall (see deployment notes).
-export function createBookingHandler({ env = process.env, send = fetch, now = Date.now } = {}) {
+export function createBookingHandler({ env = process.env, send = fetch, now = Date.now, logger = console } = {}) {
   const attempts = new Map();
   return async function bookingHandler(req, res) {
     try {
@@ -188,8 +311,16 @@ export function createBookingHandler({ env = process.env, send = fetch, now = Da
       }
       if (!response.ok || typeof result?.id !== 'string' || !result.id) {
         // Never log patient data, keys or the provider response body.
-        console.error('Booking email provider rejected request', response.status);
+        logger.error('Booking email provider rejected request', response.status);
         throw new RequestError(502, 'Non siamo riusciti a confermare l’invio. Riprova tra poco oppure contatta lo studio.');
+      }
+      try {
+        const sheetResult = await storeBookingInSheet(data, { env, send });
+        if (!sheetResult.configured) logger.error('Booking sheet integration is not configured', data.requestId);
+      } catch {
+        // L'email resta la fonte primaria: un errore del foglio non trasforma
+        // una richiesta già accettata da Resend in un falso fallimento utente.
+        logger.error('Booking sheet write failed', data.requestId);
       }
       return json(res, 200, { ok: true, requestId: data.requestId });
     } catch (error) {

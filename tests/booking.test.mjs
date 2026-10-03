@@ -1,7 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Readable } from 'node:stream';
-import { createBookingHandler, RECIPIENT } from '../server/booking.js';
+import {
+  buildSheetPayload,
+  classifyAttribution,
+  createBookingHandler,
+  RECIPIENT,
+  validateBooking,
+} from '../server/booking.js';
+import { deriveAttribution } from '../src/utils/attribution.js';
 
 const origin = 'https://studiodentisticofederzonigranata.vercel.app';
 const env = { RESEND_API_KEY: 'test-key', RESEND_FROM_EMAIL: 'Studio <moduli@example.com>', VERCEL: '1' };
@@ -33,11 +40,12 @@ async function invoke(handler, body = base, options = {}) {
 
 function fixture(overrides = {}) {
   const calls = [];
+  const logs = [];
   const handler = createBookingHandler({ env, send: async (url, options) => {
     calls.push({ url, ...options, email: JSON.parse(options.body) });
     return Response.json({ id: 'provider-message-id' });
-  }, ...overrides });
-  return { calls, handler };
+  }, logger: { error(...args) { logs.push(args); } }, ...overrides });
+  return { calls, handler, logs };
 }
 
 for (const [kind, fields] of Object.entries(cases)) {
@@ -87,6 +95,10 @@ for (const [label, changes] of [
   ['missing schedule acknowledgement', { ...cases.treatment, kind: 'treatment', scheduleAcknowledged: false }],
   ['invalid pain level', { ...cases.urgent, kind: 'urgent', painLevel: '99' }],
   ['missing other symptoms', { ...cases.urgent, kind: 'urgent', otherDetails: '' }],
+  ['non-string attribution', { attributionSource: ['google'] }],
+  ['private data in attribution referrer query', { attributionReferrer: 'https://www.google.com/search?q=nome' }],
+  ['invalid click ID type', { clickIdType: 'msclkid' }],
+  ['private data in attribution landing page', { attributionLandingPage: '/?email=test@example.com' }],
 ]) {
   test(`rejects ${label} without sending email`, async () => {
     const { handler, calls } = fixture();
@@ -155,4 +167,142 @@ test('limits rapid repeated attempts and allows requests after the window expire
   assert.equal(calls.length, 10);
   time = 600_001;
   assert.equal((await invoke(handler)).statusCode, 200);
+});
+
+test('classifies attribution conservatively without inventing organic or campaign data', () => {
+  assert.equal(classifyAttribution({ clickIdType: 'gclid' }), 'Google Ads');
+  assert.equal(classifyAttribution({ attributionSource: 'google', attributionMedium: 'cpc' }), 'Google Ads');
+  assert.equal(classifyAttribution({ attributionSource: 'google_maps' }), 'Google Maps');
+  assert.equal(classifyAttribution({ attributionReferrer: 'https://www.google.com/maps/place/Modena' }), 'Google Maps');
+  assert.equal(classifyAttribution({ attributionReferrer: 'https://www.google.it/search' }), 'Google organico');
+  assert.equal(classifyAttribution({ attributionSource: 'google' }), 'Non rilevata');
+  assert.equal(classifyAttribution({ attributionCampaign: 'solo-campagna' }), 'Non rilevata');
+  assert.equal(classifyAttribution({ attributionReferrer: 'https://example.com/article' }), 'Altro');
+  assert.equal(classifyAttribution({}), 'Diretto');
+});
+
+test('captures only bounded non-contact attribution data from the browser URL', () => {
+  const attribution = deriveAttribution({
+    href: 'https://studiodentisticofederzonigranata.it/sbiancamento/?utm_source=google&utm_medium=cpc&utm_campaign=TEST-CAMPAGNA&gclid=TEST-NON-REALE',
+    origin: 'https://studiodentisticofederzonigranata.it',
+    search: '?utm_source=google&utm_medium=cpc&utm_campaign=TEST-CAMPAGNA&gclid=TEST-NON-REALE',
+    referrer: 'https://www.google.it/search?q=dentista+modena&email=privato@example.com',
+  });
+  assert.deepEqual(attribution, {
+    attributionSource: 'google',
+    attributionMedium: 'cpc',
+    attributionCampaign: 'TEST-CAMPAGNA',
+    attributionReferrer: 'https://www.google.it/search',
+    attributionLandingPage: '/sbiancamento/',
+    clickIdType: 'gclid',
+  });
+  assert.ok(!JSON.stringify(attribution).includes('TEST-NON-REALE'));
+  assert.ok(!JSON.stringify(attribution).includes('privato@example.com'));
+});
+
+test('builds the operational sheet payload and keeps campaign names source-backed', () => {
+  const data = validateBooking({
+    ...base,
+    ...cases.treatment,
+    kind: 'treatment',
+    attributionSource: 'google',
+    attributionMedium: 'cpc',
+    attributionCampaign: 'TEST-CAMPAGNA-ESATTA',
+    attributionLandingPage: '/sbiancamento/',
+    attributionReferrer: 'https://www.google.it/search',
+    clickIdType: 'gclid',
+  });
+  const payload = buildSheetPayload(data, { GOOGLE_SHEETS_WEBHOOK_SECRET: 'server-secret', GOOGLE_SHEETS_RECORD_TYPE: 'TEST' });
+  assert.equal(payload.secret, 'server-secret');
+  assert.equal(payload.requestId, base.requestId);
+  assert.equal(payload.servizio, cases.treatment.treatment);
+  assert.equal(payload.giorniPreferiti, cases.treatment.preferredDates);
+  assert.equal(payload.orariPreferiti, cases.treatment.preferredTimes);
+  assert.equal(payload.provenienza, 'Google Ads');
+  assert.equal(payload.pagina, base.source);
+  assert.equal(payload.campagna, 'TEST-CAMPAGNA-ESATTA');
+  assert.equal(payload.recordType, 'TEST');
+  assert.match(payload.messaggio, /Sbiancamento domiciliare controllato/);
+
+  const withoutCampaign = buildSheetPayload({ ...data, attributionCampaign: '' }, { GOOGLE_SHEETS_WEBHOOK_SECRET: 'server-secret' });
+  assert.equal(withoutCampaign.campagna, '');
+  assert.equal(withoutCampaign.recordType, 'REALE');
+});
+
+test('writes to the sheet only after email acceptance', async () => {
+  const sheetEnv = {
+    ...env,
+    GOOGLE_SHEETS_WEBHOOK_URL: 'https://script.google.com/macros/s/test-deployment/exec',
+    GOOGLE_SHEETS_WEBHOOK_SECRET: 'server-secret',
+    GOOGLE_SHEETS_RECORD_TYPE: 'TEST',
+  };
+  const calls = [];
+  const { handler, logs } = fixture({
+    env: sheetEnv,
+    send: async (url, options) => {
+      const href = String(url);
+      const body = JSON.parse(options.body);
+      calls.push({ href, body, options });
+      if (href === 'https://api.resend.com/emails') return Response.json({ id: 'provider-message-id' });
+      return Response.json({ ok: true, duplicate: false, requestId: body.requestId });
+    },
+  });
+  const res = await invoke(handler, {
+    ...base,
+    attributionSource: 'google',
+    attributionMedium: 'cpc',
+    attributionCampaign: 'TEST-WEBHOOK',
+    clickIdType: 'gclid',
+  });
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.body.ok, true);
+  assert.equal(calls.length, 2);
+  assert.equal(calls[0].href, 'https://api.resend.com/emails');
+  assert.equal(calls[1].href, sheetEnv.GOOGLE_SHEETS_WEBHOOK_URL);
+  assert.equal(calls[1].body.provenienza, 'Google Ads');
+  assert.equal(calls[1].body.campagna, 'TEST-WEBHOOK');
+  assert.equal(calls[1].body.recordType, 'TEST');
+  assert.equal(logs.length, 0);
+});
+
+test('sheet failure is detectable but never blocks an accepted email', async () => {
+  const sheetEnv = {
+    ...env,
+    GOOGLE_SHEETS_WEBHOOK_URL: 'https://script.google.com/macros/s/test-deployment/exec',
+    GOOGLE_SHEETS_WEBHOOK_SECRET: 'server-secret',
+  };
+  const calls = [];
+  const { handler, logs } = fixture({
+    env: sheetEnv,
+    send: async (url, options) => {
+      const href = String(url);
+      calls.push(href);
+      if (href === 'https://api.resend.com/emails') return Response.json({ id: 'provider-message-id' });
+      return Response.json({ ok: false, error: 'TEST' }, { status: 503 });
+    },
+  });
+  const res = await invoke(handler);
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.body.ok, true);
+  assert.deepEqual(calls, ['https://api.resend.com/emails', sheetEnv.GOOGLE_SHEETS_WEBHOOK_URL]);
+  assert.deepEqual(logs, [['Booking sheet write failed', base.requestId]]);
+});
+
+test('email rejection never creates a sheet row', async () => {
+  const sheetEnv = {
+    ...env,
+    GOOGLE_SHEETS_WEBHOOK_URL: 'https://script.google.com/macros/s/test-deployment/exec',
+    GOOGLE_SHEETS_WEBHOOK_SECRET: 'server-secret',
+  };
+  const calls = [];
+  const { handler } = fixture({
+    env: sheetEnv,
+    send: async (url) => {
+      calls.push(String(url));
+      return Response.json({ error: 'provider failure' }, { status: 500 });
+    },
+  });
+  const res = await invoke(handler);
+  assert.equal(res.statusCode, 502);
+  assert.deepEqual(calls, ['https://api.resend.com/emails']);
 });
