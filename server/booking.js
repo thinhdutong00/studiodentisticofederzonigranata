@@ -1,6 +1,8 @@
 import { createHash } from 'node:crypto';
 
 export const RECIPIENT = 'info.federzonigranata@gmail.com';
+export const CRM_SCHEMA_VERSION = 1;
+export const CRM_DEFAULT_STATUS = 'Nuovo';
 const MAX_BYTES = 24_000;
 const EMAIL = /^[^\s<>@]+@[^\s<>@]+\.[^\s<>@]+$/;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -33,6 +35,7 @@ const REQUIRED = {
   treatment: ['treatment', 'ageRange', 'office', 'preferredDates', 'preferredTimes'],
   contact: [], callback: [],
 };
+const BOOKING_ERROR = 'Non siamo riusciti a confermare l’invio. Riprova tra poco oppure contatta lo studio.';
 
 class RequestError extends Error {
   constructor(status, message) { super(message); this.status = status; }
@@ -119,6 +122,82 @@ export function buildEmail(data, from) {
   };
 }
 
+export function buildCrmPayload(data, receivedAt) {
+  const timestamp = new Date(receivedAt);
+  if (!Number.isFinite(timestamp.getTime())) throw new RequestError(500, BOOKING_ERROR);
+  return {
+    schemaVersion: CRM_SCHEMA_VERSION,
+    requestId: data.requestId,
+    receivedAt: timestamp.toISOString(),
+    kind: data.kind,
+    fields: {
+      ...Object.fromEntries(Object.keys(LABELS).map((key) => [key, data[key] || ''])),
+      privacyConsent: true,
+      scheduleAcknowledged: data.kind === 'treatment' && data.scheduleAcknowledged === true,
+    },
+  };
+}
+
+function validWebhookUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' && url.hostname === 'script.google.com' && /^\/macros\/s\/[^/]+\/exec$/.test(url.pathname);
+  } catch {
+    return false;
+  }
+}
+
+async function parseJsonResponse(response) {
+  try { return await response.json(); } catch { return null; }
+}
+
+async function deliverEmail(send, env, email) {
+  let response;
+  try {
+    const key = createHash('sha256').update(JSON.stringify(email)).digest('hex');
+    response = await send('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json', 'Idempotency-Key': `booking-${key}` },
+      body: JSON.stringify(email),
+      signal: AbortSignal.timeout(12_000),
+    });
+  } catch {
+    console.error('Booking email provider request failed');
+    throw new RequestError(502, BOOKING_ERROR);
+  }
+  const result = await parseJsonResponse(response);
+  if (!response.ok || typeof result?.id !== 'string' || !result.id) {
+    console.error('Booking email provider rejected request', response.status);
+    throw new RequestError(502, BOOKING_ERROR);
+  }
+}
+
+async function deliverCrm(send, env, payload) {
+  let response;
+  try {
+    response = await send(env.GOOGLE_SHEETS_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ secret: env.GOOGLE_SHEETS_WEBHOOK_SECRET, ...payload }),
+      redirect: 'follow',
+      signal: AbortSignal.timeout(8_000),
+    });
+  } catch {
+    console.error('Booking CRM provider request failed');
+    throw new RequestError(502, BOOKING_ERROR);
+  }
+  const result = await parseJsonResponse(response);
+  if (
+    !response.ok ||
+    result?.ok !== true ||
+    result.requestId !== payload.requestId ||
+    typeof result.duplicate !== 'boolean'
+  ) {
+    console.error('Booking CRM provider rejected request', response.status);
+    throw new RequestError(502, BOOKING_ERROR);
+  }
+}
+
 async function readBody(req) {
   if (Number(req.headers['content-length']) > MAX_BYTES) throw new RequestError(413, 'La richiesta è troppo lunga. Riduci il testo e riprova.');
   if (req.body !== undefined) {
@@ -160,7 +239,18 @@ export function createBookingHandler({ env = process.env, send = fetch, now = Da
       if (!/^application\/json(?:;|$)/i.test(req.headers['content-type'] || '')) throw new RequestError(415, 'Formato della richiesta non valido.');
       const data = validateBooking(await readBody(req));
       const from = env.RESEND_FROM_EMAIL?.trim();
-      if (!env.RESEND_API_KEY || !from || /[\r\n]/.test(from)) {
+      const webhookUrl = env.GOOGLE_SHEETS_WEBHOOK_URL?.trim();
+      const webhookSecret = env.GOOGLE_SHEETS_WEBHOOK_SECRET?.trim();
+      if (
+        !env.RESEND_API_KEY ||
+        !from ||
+        /[\r\n]/.test(from) ||
+        !webhookUrl ||
+        !validWebhookUrl(webhookUrl) ||
+        !webhookSecret ||
+        webhookSecret.length < 32 ||
+        /[\r\n]/.test(webhookSecret)
+      ) {
         throw new RequestError(503, 'Invio temporaneamente non disponibile. Contatta lo studio via telefono o email.');
       }
       const timestamp = now();
@@ -173,24 +263,12 @@ export function createBookingHandler({ env = process.env, send = fetch, now = Da
       bucket.count += 1;
       attempts.set(fingerprint, bucket);
       const email = buildEmail(data, from);
-      const key = createHash('sha256').update(JSON.stringify(email)).digest('hex');
-      let response;
-      let result;
-      try {
-        response = await send('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json', 'Idempotency-Key': `booking-${key}` },
-          body: JSON.stringify(email), signal: AbortSignal.timeout(12_000),
-        });
-        result = await response.json();
-      } catch {
-        throw new RequestError(502, 'Non siamo riusciti a confermare l’invio. Riprova tra poco oppure contatta lo studio.');
-      }
-      if (!response.ok || typeof result?.id !== 'string' || !result.id) {
-        // Never log patient data, keys or the provider response body.
-        console.error('Booking email provider rejected request', response.status);
-        throw new RequestError(502, 'Non siamo riusciti a confermare l’invio. Riprova tra poco oppure contatta lo studio.');
-      }
+      const crmPayload = buildCrmPayload(data, timestamp);
+      const outcomes = await Promise.allSettled([
+        deliverEmail(send, env, email),
+        deliverCrm(send, { ...env, GOOGLE_SHEETS_WEBHOOK_URL: webhookUrl, GOOGLE_SHEETS_WEBHOOK_SECRET: webhookSecret }, crmPayload),
+      ]);
+      if (outcomes.some((outcome) => outcome.status === 'rejected')) throw new RequestError(502, BOOKING_ERROR);
       return json(res, 200, { ok: true, requestId: data.requestId });
     } catch (error) {
       const status = error instanceof RequestError ? error.status : 400;

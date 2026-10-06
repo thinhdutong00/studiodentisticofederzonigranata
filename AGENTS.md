@@ -1,5 +1,9 @@
 # Project Memory
 
+## Backup del sito originale
+
+L'utente ha richiesto di conservare testi, immagini e una copia di emergenza del sito WordPress originale. Il riferimento dell'acquisizione del 15 settembre 2026 è `docs/backup-sito-originale-2026-09-15.md`: contiene i percorsi dello ZIP, dell'inventario, dei testi e dei file multimediali salvati in `output/`. Consultarlo quando servono materiali del sito originale. La copia statica non comprende il database e il backend WordPress.
+
 ## Nostro font
 
 Quando l'utente dice "nostro font", "il nostro font" o chiede di usare la tipografia appresa, significa usare il riferimento tipografico rilevato dal sito Centro di medicina.

@@ -1,10 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Readable } from 'node:stream';
-import { createBookingHandler, RECIPIENT } from '../server/booking.js';
+import { CRM_SCHEMA_VERSION, createBookingHandler, RECIPIENT } from '../server/booking.js';
 
 const origin = 'https://studiodentisticofederzonigranata.vercel.app';
-const env = { RESEND_API_KEY: 'test-key', RESEND_FROM_EMAIL: 'Studio <moduli@example.com>', VERCEL: '1' };
+const crmUrl = 'https://script.google.com/macros/s/test-deployment/exec';
+const env = {
+  RESEND_API_KEY: 'test-key',
+  RESEND_FROM_EMAIL: 'Studio <moduli@example.com>',
+  GOOGLE_SHEETS_WEBHOOK_URL: crmUrl,
+  GOOGLE_SHEETS_WEBHOOK_SECRET: 'test-secret-with-at-least-thirty-two-characters',
+  VERCEL: '1',
+};
 const base = {
   kind: 'contact', requestId: 'a3fb3f9c-714c-4d7c-af09-51fe594f6251',
   fullName: 'Test tecnico', phone: '+39 333 000 0000', email: 'test@example.com',
@@ -31,34 +38,56 @@ async function invoke(handler, body = base, options = {}) {
   return res;
 }
 
-function fixture(overrides = {}) {
+function fixture({ emailResponse, crmResponse, ...overrides } = {}) {
   const calls = [];
   const handler = createBookingHandler({ env, send: async (url, options) => {
-    calls.push({ url, ...options, email: JSON.parse(options.body) });
-    return Response.json({ id: 'provider-message-id' });
+    const body = JSON.parse(options.body);
+    calls.push({ url, ...options, body });
+    if (url === 'https://api.resend.com/emails') {
+      return emailResponse ? emailResponse(body, options) : Response.json({ id: 'provider-message-id' });
+    }
+    if (url === crmUrl) {
+      return crmResponse ? crmResponse(body, options) : Response.json({ ok: true, requestId: body.requestId, duplicate: false });
+    }
+    throw new Error('Unexpected provider URL');
   }, ...overrides });
   return { calls, handler };
 }
 
+const findEmailCall = (calls) => calls.find((call) => call.url === 'https://api.resend.com/emails');
+const findCrmCall = (calls) => calls.find((call) => call.url === crmUrl);
+
 for (const [kind, fields] of Object.entries(cases)) {
-  test(`${kind}: sends all answers to the fixed recipient and acknowledges only provider acceptance`, async () => {
+  test(`${kind}: sends all answers to email and CRM and acknowledges both providers`, async () => {
     const { calls, handler } = fixture();
-    const data = { ...base, ...fields, kind, to: 'attacker@example.com', from: 'spoof@example.com' };
+    const data = { ...base, ...fields, kind, to: 'attacker@example.com', from: 'spoof@example.com', status: 'Chiuso' };
     const res = await invoke(handler, data);
     assert.equal(res.statusCode, 200);
     assert.equal(res.body.ok, true);
     assert.equal(res.body.requestId, base.requestId);
-    assert.equal(calls.length, 1);
-    assert.equal(calls[0].url, 'https://api.resend.com/emails');
-    assert.deepEqual(calls[0].email.to, [RECIPIENT]);
-    assert.equal(calls[0].email.from, env.RESEND_FROM_EMAIL);
-    assert.equal(calls[0].email.reply_to, data.email || undefined);
+    assert.equal(calls.length, 2);
+    const emailCall = findEmailCall(calls);
+    const crmCall = findCrmCall(calls);
+    assert.deepEqual(emailCall.body.to, [RECIPIENT]);
+    assert.equal(emailCall.body.from, env.RESEND_FROM_EMAIL);
+    assert.equal(emailCall.body.reply_to, data.email || undefined);
     for (const [key, value] of Object.entries({ ...fields, fullName: base.fullName, phone: base.phone })) {
-      if (typeof value === 'string' && value) assert.ok(calls[0].email.text.includes(value), `Missing ${key}`);
+      if (typeof value === 'string' && value) assert.ok(emailCall.body.text.includes(value), `Missing ${key}`);
     }
-    assert.match(calls[0].email.text, /Consenso.*espresso/);
-    if (kind === 'treatment') assert.match(calls[0].email.text, /carattere indicativo.*confermata/);
-    assert.equal(calls[0].email.html, undefined);
+    assert.match(emailCall.body.text, /Consenso.*espresso/);
+    if (kind === 'treatment') assert.match(emailCall.body.text, /carattere indicativo.*confermata/);
+    assert.equal(emailCall.body.html, undefined);
+    assert.equal(crmCall.body.secret, env.GOOGLE_SHEETS_WEBHOOK_SECRET);
+    assert.equal(crmCall.body.schemaVersion, CRM_SCHEMA_VERSION);
+    assert.equal(crmCall.body.requestId, base.requestId);
+    assert.equal(crmCall.body.kind, kind);
+    assert.equal(crmCall.body.fields.fullName, base.fullName);
+    assert.equal(crmCall.body.fields.phone, base.phone);
+    assert.equal(crmCall.body.fields.privacyConsent, true);
+    assert.equal(crmCall.body.fields.scheduleAcknowledged, kind === 'treatment');
+    assert.equal(crmCall.body.status, undefined);
+    assert.match(crmCall.body.receivedAt, /^\d{4}-\d{2}-\d{2}T/);
+    assert.equal(crmCall.redirect, 'follow');
     assert.equal(res.headers['Cache-Control'], 'no-store');
   });
 }
@@ -67,7 +96,8 @@ test('alternative treatment preserves the free-text request', async () => {
   const { handler, calls } = fixture();
   const res = await invoke(handler, { ...base, ...cases.treatment, treatment: 'Altro', problem: '', otherRequest: 'Vorrei una valutazione personalizzata.' });
   assert.equal(res.statusCode, 200);
-  assert.match(calls[0].email.text, /Vorrei una valutazione personalizzata/);
+  assert.match(findEmailCall(calls).body.text, /Vorrei una valutazione personalizzata/);
+  assert.equal(findCrmCall(calls).body.fields.otherRequest, 'Vorrei una valutazione personalizzata.');
 });
 
 for (const [label, changes] of [
@@ -113,38 +143,78 @@ test('rejects cross-origin, non-JSON and non-POST requests', async () => {
 test('reads JSON from a native Node request as well as Vercel parsed bodies', async () => {
   const { handler, calls } = fixture();
   assert.equal((await invoke(handler, null, { raw: JSON.stringify(base) })).statusCode, 200);
-  assert.equal(calls.length, 1);
+  assert.equal(calls.length, 2);
 });
 
-test('missing credentials never produces a success response', async () => {
-  const { handler, calls } = fixture({ env: {} });
-  assert.equal((await invoke(handler)).statusCode, 503);
-  assert.equal(calls.length, 0);
+test('missing or invalid provider configuration never calls either provider', async () => {
+  for (const invalidEnv of [
+    {},
+    { ...env, GOOGLE_SHEETS_WEBHOOK_URL: '' },
+    { ...env, GOOGLE_SHEETS_WEBHOOK_URL: 'https://example.com/webhook' },
+    { ...env, GOOGLE_SHEETS_WEBHOOK_SECRET: 'too-short' },
+    { ...env, RESEND_API_KEY: '' },
+  ]) {
+    const { handler, calls } = fixture({ env: invalidEnv });
+    assert.equal((await invoke(handler)).statusCode, 503);
+    assert.equal(calls.length, 0);
+  }
 });
 
-test('provider rejection, malformed response and network failure never acknowledge delivery', async () => {
-  for (const send of [
+test('email failures never acknowledge delivery even when CRM accepts the row', async () => {
+  for (const emailResponse of [
     async () => Response.json({ message: 'SECRET provider error' }, { status: 403 }),
     async () => Response.json({}),
     async () => new Response('not json'),
     async () => { throw new Error('SECRET connection error'); },
   ]) {
-    const { handler } = fixture({ send });
+    const { handler, calls } = fixture({ emailResponse });
     const res = await invoke(handler);
     assert.equal(res.statusCode, 502);
     assert.equal(res.body.ok, false);
     assert.ok(!res.body.error.includes('SECRET'));
+    assert.ok(findCrmCall(calls));
   }
 });
 
-test('retries retain the same provider idempotency key and email body', async () => {
-  const { handler, calls } = fixture();
+test('CRM failures never acknowledge delivery even when email is accepted', async () => {
+  for (const crmResponse of [
+    async () => Response.json({ ok: false, error: 'SECRET CRM error' }),
+    async () => Response.json({ ok: true, requestId: 'f2ca977f-168d-4115-8f18-91370c1ef746', duplicate: false }),
+    async () => Response.json({ ok: true, requestId: base.requestId }),
+    async () => new Response('not json'),
+    async () => { throw new Error('SECRET connection error'); },
+  ]) {
+    const { handler, calls } = fixture({ crmResponse });
+    const res = await invoke(handler);
+    assert.equal(res.statusCode, 502);
+    assert.equal(res.body.ok, false);
+    assert.ok(!res.body.error.includes('SECRET'));
+    assert.ok(findEmailCall(calls));
+  }
+});
+
+test('a duplicate CRM acknowledgement is a successful idempotent retry', async () => {
+  const { handler } = fixture({
+    crmResponse: async (body) => Response.json({ ok: true, requestId: body.requestId, duplicate: true }),
+  });
+  const res = await invoke(handler);
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.body.ok, true);
+});
+
+test('retries retain the same email idempotency key and CRM request ID', async () => {
+  const { handler, calls } = fixture({ now: () => Date.UTC(2026, 8, 29, 14, 0, 0) });
   await invoke(handler);
   await invoke(handler);
-  await invoke(handler, { ...base, message: 'A corrected message' });
-  assert.equal(calls[0].headers['Idempotency-Key'], calls[1].headers['Idempotency-Key']);
-  assert.equal(calls[0].body, calls[1].body);
-  assert.notEqual(calls[0].headers['Idempotency-Key'], calls[2].headers['Idempotency-Key']);
+  await invoke(handler, { ...base, requestId: 'f2ca977f-168d-4115-8f18-91370c1ef746', message: 'A corrected message' });
+  const emailCalls = calls.filter((call) => call.url === 'https://api.resend.com/emails');
+  const crmCalls = calls.filter((call) => call.url === crmUrl);
+  assert.equal(emailCalls[0].headers['Idempotency-Key'], emailCalls[1].headers['Idempotency-Key']);
+  assert.deepEqual(emailCalls[0].body, emailCalls[1].body);
+  assert.notEqual(emailCalls[0].headers['Idempotency-Key'], emailCalls[2].headers['Idempotency-Key']);
+  assert.equal(crmCalls[0].body.requestId, crmCalls[1].body.requestId);
+  assert.deepEqual(crmCalls[0].body, crmCalls[1].body);
+  assert.notEqual(crmCalls[0].body.requestId, crmCalls[2].body.requestId);
 });
 
 test('limits rapid repeated attempts and allows requests after the window expires', async () => {
@@ -152,7 +222,8 @@ test('limits rapid repeated attempts and allows requests after the window expire
   const { handler, calls } = fixture({ now: () => time });
   for (let i = 0; i < 10; i++) assert.equal((await invoke(handler)).statusCode, 200);
   assert.equal((await invoke(handler)).statusCode, 429);
-  assert.equal(calls.length, 10);
+  assert.equal(calls.length, 20);
   time = 600_001;
   assert.equal((await invoke(handler)).statusCode, 200);
+  assert.equal(calls.length, 22);
 });

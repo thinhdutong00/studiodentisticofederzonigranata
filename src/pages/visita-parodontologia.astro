@@ -1,0 +1,2929 @@
+---
+import BookingFeedback from '../components/BookingFeedback.astro';
+import BookingFields from '../components/BookingFields.astro';
+import BookingPrivacy from '../components/BookingPrivacy.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+import Footer from '../components/Footer.astro';
+import { featuredPatientReviews } from '../data/reviews';
+import { site } from '../data/site';
+import '../styles/inter-font.css';
+
+const canonicalPath = '/visita-parodontologia/';
+const canonical = new URL(canonicalPath, site.source).toString();
+const title = 'Parodontologia Modena e Reggio Emilia | Federzoni Granata';
+const description =
+  'Valutazione parodontale per gengive che sanguinano, recessioni e parodontite a Modena e Reggio Emilia. Richiedi un ricontatto allo Studio Federzoni Granata.';
+const heroImagePath = '/assets/optimized/parodontologia-equipe-clinica.webp';
+const socialPreviewImage = new URL('/assets/menu/casi-clinici-parodontologia.png', canonical).toString();
+
+const reviewAuthors = new Set(['Francesca Tassinari', 'Rosa Castelluccio', 'Umberto Salatino']);
+const reviews = featuredPatientReviews.filter((review) => reviewAuthors.has(review.author));
+
+const offices = site.offices;
+
+const valuePoints = [
+  {
+    number: '01',
+    title: 'Sanguinamento e gonfiore',
+    text: 'Gengive che sanguinano durante lo spazzolamento o appaiono gonfie indicano un’infiammazione da valutare, anche in assenza di dolore.',
+  },
+  {
+    number: '02',
+    title: 'Gengive ritirate',
+    text: 'Una radice più esposta può causare sensibilità e far apparire il dente più lungo. La causa e il tipo di recessione guidano le possibili soluzioni.',
+  },
+  {
+    number: '03',
+    title: 'Denti mobili o spostati',
+    text: 'La mobilità o il cambiamento di posizione di un dente possono segnalare una perdita di supporto e richiedono un inquadramento parodontale.',
+  },
+  {
+    number: '04',
+    title: 'Alito persistente e familiarità',
+    text: 'Alitosi che non si risolve, precedenti problemi gengivali o casi di parodontite in famiglia sono informazioni utili durante la valutazione.',
+  },
+];
+
+const processSteps = [
+  {
+    title: 'Controllo dell’infiammazione',
+    text: 'Indicazioni di igiene personalizzate e gestione dei fattori di rischio aiutano a ridurre placca e infiammazione.',
+  },
+  {
+    title: 'Terapia non chirurgica',
+    text: 'Quando indicato, placca e tartaro vengono rimossi professionalmente anche sotto gengiva, nelle aree interessate.',
+  },
+  {
+    title: 'Rivalutazione e mantenimento',
+    text: 'La risposta viene misurata prima di decidere eventuali ulteriori terapie e la frequenza dei richiami nel tempo.',
+  },
+];
+
+const faqs = [
+  {
+    question: 'Le gengive che sanguinano indicano sempre parodontite?',
+    answer:
+      'Non necessariamente. Il sanguinamento può essere associato a una gengivite superficiale, ma può comparire anche nella parodontite. Esame clinico, sondaggio parodontale e, quando indicate, radiografie permettono di distinguere le condizioni.',
+  },
+  {
+    question: 'Qual è la differenza tra gengivite, parodontite e “piorrea”?',
+    answer:
+      'La gengivite interessa i tessuti gengivali superficiali e può regredire quando l’infiammazione viene controllata. La parodontite comporta invece una perdita del supporto che mantiene i denti stabili. “Piorrea” è un termine tradizionale, oggi sostituito da diagnosi parodontali più precise.',
+  },
+  {
+    question: 'La parodontite può essere curata?',
+    answer:
+      'Può essere trattata e, in molti casi, stabilizzata. Il supporto già perso non torna automaticamente alla situazione iniziale e la malattia può riattivarsi: per questo igiene quotidiana, rivalutazioni e richiami personalizzati restano essenziali.',
+  },
+  {
+    question: 'Un dente mobile deve sempre essere estratto?',
+    answer:
+      'No. La decisione dipende dal supporto residuo, dal controllo dell’infiammazione, dalla funzione e dalla risposta alla terapia. La valutazione serve anche a capire quali denti possono essere mantenuti in modo ragionevole.',
+  },
+  {
+    question: 'Ogni quanto servono i controlli parodontali?',
+    answer:
+      'Non esiste una frequenza uguale per tutti. Dopo la terapia viene definito un programma di mantenimento considerando diagnosi, rischio individuale, igiene, fumo, condizioni generali e stabilità raggiunta.',
+  },
+];
+
+const officeSeoDetails = {
+  Modena: {
+    streetAddress: 'Via Giovanni Segantini, 25',
+    postalCode: '41124',
+    addressLocality: 'Modena',
+    addressRegion: 'MO',
+  },
+  'Reggio Emilia': {
+    streetAddress: 'Via Guido da Castello 8',
+    postalCode: '42121',
+    addressLocality: 'Reggio nell’Emilia',
+    addressRegion: 'RE',
+  },
+} as const;
+
+const organizationId = new URL('/#organization', canonical).toString();
+const serviceId = `${canonical}#service`;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'MedicalWebPage',
+      '@id': `${canonical}#webpage`,
+      url: canonical,
+      name: title,
+      description,
+      inLanguage: 'it-IT',
+      dateModified: '2026-10-06',
+      primaryImageOfPage: socialPreviewImage,
+      about: [
+        { '@type': 'MedicalCondition', name: 'Parodontite' },
+        { '@type': 'MedicalCondition', name: 'Gengivite' },
+      ],
+      mainEntity: { '@id': serviceId },
+    },
+    {
+      '@type': 'Service',
+      '@id': serviceId,
+      name: 'Parodontologia e cure gengivali',
+      serviceType: 'Valutazione e terapia parodontale',
+      description,
+      url: canonical,
+      areaServed: ['Modena', 'Reggio Emilia'],
+      provider: { '@id': organizationId },
+    },
+    {
+      '@type': 'Organization',
+      '@id': organizationId,
+      name: site.name,
+      url: site.source,
+      logo: new URL(site.logo, site.source).toString(),
+      email: site.offices[0]?.email,
+      department: offices.map((office) => ({ '@id': `${canonical}#studio-${office.city.toLowerCase().replaceAll(' ', '-')}` })),
+    },
+    ...offices.map((office) => ({
+      '@type': 'Dentist',
+      '@id': `${canonical}#studio-${office.city.toLowerCase().replaceAll(' ', '-')}`,
+      name: `${site.name} – ${office.city}`,
+      url: new URL(office.href, site.source).toString(),
+      image: socialPreviewImage,
+      telephone: office.phone,
+      email: office.email,
+      parentOrganization: { '@id': organizationId },
+      medicalSpecialty: 'https://schema.org/Dentistry',
+      address: {
+        '@type': 'PostalAddress',
+        ...officeSeoDetails[office.city as keyof typeof officeSeoDetails],
+        addressCountry: 'IT',
+      },
+    })),
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${canonical}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: site.source },
+        { '@type': 'ListItem', position: 2, name: 'Parodontologia e cure gengivali', item: canonical },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${canonical}#faq`,
+      mainEntity: faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+      })),
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="preload" as="font" href="/fonts/inter/inter-latin.woff2" type="font/woff2" crossorigin />
+    <link
+      rel="preload"
+      as="image"
+      href={heroImagePath}
+      type="image/webp"
+      fetchpriority="high"
+    />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+    <meta name="theme-color" content="#10283D" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="it-IT" href={canonical} />
+    <link rel="icon" type="image/png" href="/assets/original/2020/10/cropped-favicon-32x32.png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/assets/original/2020/10/cropped-favicon-180x180.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:image" content={socialPreviewImage} />
+    <meta property="og:image:width" content="1448" />
+    <meta property="og:image:height" content="1086" />
+    <meta property="og:image:alt" content="Valutazione parodontale delle gengive" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialPreviewImage} />
+    <meta name="twitter:image:alt" content="Valutazione parodontale delle gengive" />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g, '\\u003c')}></script>
+  </head>
+
+  <body>
+    <header class="landing-header">
+      <div class="landing-shell landing-header-inner">
+        <a class="landing-logo" href="/" aria-label={`${site.name} — Home`}>
+          <img
+            src={site.logo}
+            srcset="/assets/optimized/studio-dentistico-federzoni-granata-300.webp 300w, /assets/optimized/studio-dentistico-federzoni-granata.webp 400w"
+            sizes="(max-width: 720px) 204px, 286px"
+            alt={site.name}
+            width="400"
+            height="52"
+          />
+        </a>
+
+        <div class="landing-header-actions">
+          <span class="landing-header-locations">Modena · Reggio Emilia</span>
+          <a class="landing-header-cta" href="#richiedi">Richiedi una valutazione</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="landing-hero" aria-labelledby="landing-title">
+        <div class="landing-shell landing-hero-shell">
+          <div class="landing-hero-stage">
+            <img
+              class="landing-hero-photo"
+              src={heroImagePath}
+              alt="Equipe odontoiatrica dello Studio Federzoni Granata durante un trattamento"
+              width="1080"
+              height="1350"
+              loading="eager"
+              decoding="async"
+              fetchpriority="high"
+            />
+
+            <div class="landing-hero-panel">
+              <p class="landing-hero-eyebrow">Parodontologia · Modena e Reggio Emilia</p>
+              <h1 id="landing-title">
+                Soffri di “piorrea” o hai gengive che sanguinano?
+              </h1>
+              <p class="landing-hero-lead">
+                Una valutazione parodontale aiuta a diagnosticare e trattare la parodontite, con l’obiettivo di
+                proteggere i denti naturali.
+              </p>
+              <a class="landing-hero-link" href="#richiedi">
+                <span>Richiedi una valutazione</span>
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="M5 5h10v10M15 5 5 15"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="landing-overview" aria-labelledby="landing-overview-title">
+        <div class="landing-shell landing-overview-shell">
+          <div class="landing-overview-aside">
+            <p class="landing-overview-label">Parodontologia</p>
+
+            <aside class="landing-form-card landing-overview-form" id="richiedi" aria-labelledby="landing-form-title">
+              <p class="landing-form-kicker">Parla con la segreteria</p>
+              <h2 id="landing-form-title">Richiedi una valutazione parodontale</h2>
+              <p class="landing-form-intro">
+                Lascia i tuoi recapiti e la sede preferita. Ti ricontatteremo per comprendere l’esigenza e concordare
+                l’appuntamento.
+              </p>
+
+              <form data-contact-form data-booking-kind="callback" action="/api/booking" method="post">
+                <BookingFields />
+                <input type="hidden" name="message" value="Richiesta di valutazione parodontale dalla landing Google Ads" />
+
+                <div class="landing-form-fields">
+                  <label for="landing-full-name">
+                    Nome e cognome
+                    <input
+                      id="landing-full-name"
+                      type="text"
+                      name="fullName"
+                      autocomplete="name"
+                      maxlength="120"
+                      placeholder="Come possiamo chiamarti?"
+                      required
+                    />
+                  </label>
+
+                  <label for="landing-phone">
+                    Telefono
+                    <input
+                      id="landing-phone"
+                      type="tel"
+                      name="phone"
+                      autocomplete="tel"
+                      minlength="6"
+                      maxlength="30"
+                      placeholder="Il numero su cui ricontattarti"
+                      required
+                    />
+                  </label>
+
+                  <label for="landing-office">
+                    Sede preferita
+                    <select id="landing-office" name="office" required>
+                      <option value="">Scegli la sede</option>
+                      {offices.map((office) => <option value={office.city}>{office.city}</option>)}
+                    </select>
+                  </label>
+                </div>
+
+                <BookingPrivacy />
+                <button class="landing-form-submit" type="submit">
+                  Richiedi la valutazione
+                  <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M4 10h11M11 6l4 4-4 4"></path>
+                  </svg>
+                </button>
+                <p class="landing-form-note">
+                  L’invio non conferma automaticamente l’appuntamento. Giorno e orario saranno concordati con la
+                  segreteria.
+                </p>
+                <BookingFeedback />
+              </form>
+            </aside>
+          </div>
+
+          <div class="landing-overview-content">
+            <h2 id="landing-overview-title">
+              Un percorso parodontale costruito su diagnosi, terapia per fasi e mantenimento nel tempo.
+            </h2>
+            <a class="landing-button landing-overview-cta" href="#richiedi">Richiedi una valutazione</a>
+
+            <div class="landing-overview-features" aria-label="Elementi del percorso parodontale">
+              <article class="landing-overview-feature">
+                <svg class="landing-overview-icon" viewBox="0 0 64 64" aria-hidden="true">
+                  <path d="M20 12h24a4 4 0 0 1 4 4v36H16V16a4 4 0 0 1 4-4Z"></path>
+                  <path d="M25 12V8h14v4M23 25h18M23 33h18M23 41h10"></path>
+                  <path class="landing-overview-icon-accent" d="m25 24 3 3 6-7"></path>
+                </svg>
+                <div>
+                  <h3>Valutazione parodontale</h3>
+                  <p>Anamnesi, sondaggio e radiografie quando indicate.</p>
+                </div>
+              </article>
+
+              <article class="landing-overview-feature">
+                <svg class="landing-overview-icon" viewBox="0 0 64 64" aria-hidden="true">
+                  <path d="M15 49h34M20 43V30M29 43V22M38 43V15M47 43V26"></path>
+                  <path class="landing-overview-icon-accent" d="m17 23 10-8 9 5 12-10"></path>
+                  <path d="m43 10h5v5"></path>
+                </svg>
+                <div>
+                  <h3>Diagnosi misurabile</h3>
+                  <p>Tasche, sanguinamento, recessioni e mobilità.</p>
+                </div>
+              </article>
+
+              <article class="landing-overview-feature">
+                <svg class="landing-overview-icon" viewBox="0 0 64 64" aria-hidden="true">
+                  <path d="M22 11c-7 0-12 5-12 13 0 7 4 11 6 17 2 6 1 13 6 13 4 0 4-11 10-11s6 11 10 11c5 0 4-7 6-13 2-6 6-10 6-17 0-8-5-13-12-13-5 0-7 3-10 3s-5-3-10-3Z"></path>
+                  <path class="landing-overview-icon-accent" d="M18 31c4 2 8 3 14 3s10-1 14-3"></path>
+                  <path d="M25 19c2 1 4 2 7 2"></path>
+                </svg>
+                <div>
+                  <h3>Terapia non chirurgica</h3>
+                  <p>Rimozione professionale di placca e tartaro sottogengivale.</p>
+                </div>
+              </article>
+
+              <article class="landing-overview-feature">
+                <svg class="landing-overview-icon" viewBox="0 0 64 64" aria-hidden="true">
+                  <path d="M32 54a22 22 0 1 0-22-22"></path>
+                  <path d="M10 19v13h13"></path>
+                  <path class="landing-overview-icon-accent" d="m22 33 7 7 14-16"></path>
+                </svg>
+                <div>
+                  <h3>Rivalutazione clinica</h3>
+                  <p>Per misurare la risposta e definire i passi successivi.</p>
+                </div>
+              </article>
+
+              <article class="landing-overview-feature">
+                <svg class="landing-overview-icon" viewBox="0 0 64 64" aria-hidden="true">
+                  <path d="M32 54c11-7 19-17 19-29a10 10 0 0 0-19-5 10 10 0 0 0-19 5c0 12 8 22 19 29Z"></path>
+                  <path class="landing-overview-icon-accent" d="M22 32h6l3-7 5 15 3-8h5"></path>
+                </svg>
+                <div>
+                  <h3>Mantenimento personalizzato</h3>
+                  <p>Richiami definiti in base al rischio individuale.</p>
+                </div>
+              </article>
+
+              <article class="landing-overview-feature">
+                <svg class="landing-overview-icon" viewBox="0 0 64 64" aria-hidden="true">
+                  <path d="M32 55s17-14 17-29a17 17 0 1 0-34 0c0 15 17 29 17 29Z"></path>
+                  <circle class="landing-overview-icon-accent" cx="32" cy="26" r="6"></circle>
+                  <path d="M24 47h16"></path>
+                </svg>
+                <div>
+                  <h3>Due sedi</h3>
+                  <p>Modena e Reggio Emilia.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="landing-depth" aria-labelledby="landing-depth-title">
+        <div class="landing-depth-shell">
+          <article class="landing-depth-copy">
+            <h2 id="landing-depth-title">
+              Quando l’infiammazione scende sotto gengiva, una semplice pulizia può non bastare.
+            </h2>
+
+            <div class="landing-depth-text">
+              <p>
+                La parodontite interessa i tessuti profondi che sostengono il dente. Per questo l’igiene professionale
+                di routine non sostituisce una diagnosi parodontale né, quando indicata, la terapia sottogengivale.
+              </p>
+              <p>
+                Il trattamento in studio è solo una parte del percorso. Anche l’igiene quotidiana a casa, eseguita con
+                strumenti e tecniche adatti, contribuisce a controllare la placca e a mantenere nel tempo i risultati
+                raggiunti.
+              </p>
+              <p>
+                Sondaggio, sanguinamento, recessioni e mobilità aiutano a capire dove è presente l’infiammazione e a
+                definire controlli e richiami in base al rischio individuale.
+              </p>
+              <p class="landing-depth-emphasis">
+                Non è una questione di colpa: la parodontite è una malattia complessa e può evolvere anche senza dolore.
+              </p>
+              <p>
+                Un percorso costruito su misurazioni cliniche, terapia per fasi e mantenimento aiuta a intervenire dove
+                serve e a proteggere i denti naturali.
+              </p>
+            </div>
+          </article>
+
+          <figure class="landing-depth-media">
+            <img
+              src="/assets/original/2022/03/dentista-modena-reggio-emilia.jpg"
+              alt="Professionisti dello Studio Dentistico Federzoni Granata durante la valutazione di immagini cliniche"
+              width="1200"
+              height="652"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        </div>
+      </section>
+
+      <section class="landing-section landing-value" aria-labelledby="landing-value-title">
+        <div class="landing-shell">
+          <div class="landing-section-heading">
+            <p class="landing-kicker landing-kicker-dark">Quando richiedere un controllo parodontale</p>
+            <h2 id="landing-value-title">Segnali delle gengive<br />che è utile non ignorare.</h2>
+            <p>
+              Sanguinamento, recessioni o mobilità non permettono da soli di formulare una diagnosi. Servono misurazioni
+              cliniche per capire se si tratta di gengivite, parodontite o di un’altra condizione.
+            </p>
+          </div>
+
+          <div class="landing-value-grid">
+            {valuePoints.map((point) => (
+              <article class="landing-value-card">
+                <span>{point.number}</span>
+                <h3>{point.title}</h3>
+                <p>{point.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="landing-section landing-method" aria-labelledby="landing-method-title">
+        <div class="landing-shell landing-method-grid">
+          <div class="landing-method-image">
+            <img
+              src="/assets/original/2026/04/BEA08719-3-scaled.jpg"
+              alt="Esame radiografico digitale nello Studio Dentistico Federzoni Granata"
+              width="1600"
+              height="1615"
+              loading="lazy"
+              decoding="async"
+            />
+            <span>Diagnosi basata su misurazioni cliniche</span>
+          </div>
+
+          <div class="landing-method-copy">
+            <p class="landing-kicker landing-kicker-dark">La diagnosi parodontale</p>
+            <h2 id="landing-method-title">Non basta guardare le gengive.</h2>
+            <p class="landing-method-lead">
+              Per definire presenza, estensione e gravità della malattia si integrano anamnesi, sondaggio, mobilità,
+              sanguinamento e immagini radiografiche quando necessarie.
+            </p>
+
+            <div class="landing-method-list">
+              <article>
+                <span aria-hidden="true">01</span>
+                <div>
+                  <h3>Anamnesi e fattori di rischio</h3>
+                  <p>Consideriamo sintomi, familiarità, fumo, diabete, farmaci, terapie precedenti e qualità dell’igiene.</p>
+                </div>
+              </article>
+              <article>
+                <span aria-hidden="true">02</span>
+                <div>
+                  <h3>Sondaggio parodontale</h3>
+                  <p>Una sonda millimetrata misura tasche, recessioni e sanguinamento attorno ai denti in modo sistematico.</p>
+                </div>
+              </article>
+              <article>
+                <span aria-hidden="true">03</span>
+                <div>
+                  <h3>Radiografie quando indicate</h3>
+                  <p>Le immagini aiutano a valutare il supporto osseo e completano i dati clinici, senza sostituirli.</p>
+                </div>
+              </article>
+            </div>
+
+            <a class="landing-text-link" href="#richiedi">
+              Richiedi una valutazione parodontale
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="landing-section landing-process" aria-labelledby="landing-process-title">
+        <div class="landing-shell">
+          <div class="landing-section-heading landing-section-heading-centered">
+            <p class="landing-kicker landing-kicker-dark">Come si tratta la parodontite</p>
+            <h2 id="landing-process-title">Un percorso per fasi, con rivalutazioni.</h2>
+          </div>
+
+          <ol class="landing-process-grid">
+            {processSteps.map((step, index) => (
+              <li>
+                <span class="landing-process-number">{String(index + 1).padStart(2, '0')}</span>
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
+              </li>
+            ))}
+          </ol>
+
+          <div class="landing-process-cta">
+            <a class="landing-button" href="#richiedi">Richiedi una valutazione</a>
+            <p>Il piano dipende da diagnosi, estensione della malattia e risposta ai primi interventi.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="landing-section landing-reviews" aria-labelledby="landing-reviews-title">
+        <div class="landing-shell">
+          <div class="landing-reviews-heading">
+            <div>
+              <p class="landing-kicker">Esperienze dei pazienti</p>
+              <h2 id="landing-reviews-title">La fiducia si costruisce nel tempo.</h2>
+            </div>
+            <p>Testimonianze pubblicate sul profilo Google dello studio.</p>
+          </div>
+
+          <div class="landing-review-grid">
+            {reviews.map((review) => (
+              <article class="landing-review-card">
+                <div class="landing-review-stars" aria-label={`${review.rating} stelle su 5`}>
+                  {'★'.repeat(review.rating)}
+                </div>
+                <blockquote>“{review.text}”</blockquote>
+                <footer>
+                  <span>{review.initials}</span>
+                  <p><strong>{review.author}</strong><small>Recensione Google · {review.relativeTime}</small></p>
+                </footer>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="landing-section landing-faq" aria-labelledby="landing-faq-title">
+        <div class="landing-shell landing-faq-grid">
+          <div class="landing-faq-heading">
+            <p class="landing-kicker landing-kicker-dark">Capire la parodontite</p>
+            <h2 id="landing-faq-title">Domande frequenti su gengive e parodontite.</h2>
+            <p class="landing-faq-intro">Risposte sintetiche ai dubbi più comuni, senza sostituire una diagnosi individuale.</p>
+            <p class="landing-faq-source">
+              Approfondimento clinico:
+              <a
+                href="https://www.sidp.it/media-download/ta2e331.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+              >linee guida SIdP sul trattamento della parodontite</a>.
+            </p>
+          </div>
+
+          <div class="landing-faq-list">
+            {faqs.map((faq, index) => (
+              <details open={index === 0}>
+                <summary>{faq.question}</summary>
+                <p>{faq.answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="landing-final-cta" aria-labelledby="landing-final-title">
+        <div class="landing-shell">
+          <div class="landing-final-panel">
+            <div class="landing-final-copy">
+              <p class="landing-kicker">Gengive che chiedono attenzione?</p>
+              <h2 id="landing-final-title">Il primo passo è una diagnosi parodontale.</h2>
+            </div>
+            <div class="landing-final-action">
+              <p>
+                Descrivi brevemente l’esigenza e scegli la sede. La segreteria ti ricontatterà per concordare la
+                valutazione.
+              </p>
+              <a class="landing-final-button" href="#richiedi">
+                <span>Richiedi una valutazione</span>
+                <span class="landing-final-button-icon" aria-hidden="true">
+                  <svg viewBox="0 0 20 20">
+                    <path d="M4 10h11M11 6l4 4-4 4"></path>
+                  </svg>
+                </span>
+              </a>
+              <div class="landing-final-reassurance" aria-label="Informazioni sulla richiesta">
+                <span>Modena e Reggio Emilia</span>
+                <span>Appuntamento concordato con la segreteria</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+
+    <a class="landing-mobile-cta" href="#richiedi">Richiedi una valutazione</a>
+    <CookieBanner />
+
+    <script>
+      import { bindContactForms } from '../utils/submitBooking';
+      bindContactForms();
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --brand-primary-dark: #10283d;
+    --brand-blue: #5e9acc;
+    --brand-cta: #256d95;
+    --brand-cta-hover: #1e5a7c;
+    --text-dark: #1d1d1d;
+    --muted-text: #5f6f7c;
+    --background: #f7fafc;
+    --soft-blue-bg: #eef6fb;
+    --surface-white: #ffffff;
+    --border: #d9e7f2;
+    --success: #2e7d5b;
+    --error: #c94a4a;
+    --brand-primary-dark-rgb: 16, 40, 61;
+    --brand-blue-rgb: 94, 154, 204;
+    --blue-dark: var(--brand-primary-dark);
+    --aqua: var(--brand-blue);
+    color-scheme: light;
+    font-family: Inter, sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px;
+  }
+
+  body {
+    margin: 0;
+    color: var(--text-dark);
+    background: var(--background);
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    letter-spacing: -0.2px;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+  }
+
+  body,
+  button,
+  input,
+  select {
+    font-family: Inter, sans-serif;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .landing-shell {
+    width: min(1180px, calc(100% - 48px));
+    margin: 0 auto;
+  }
+
+  .landing-header {
+    position: sticky;
+    z-index: 50;
+    top: 0;
+    border-bottom: 1px solid rgba(217, 231, 242, 0.88);
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(16px);
+  }
+
+  .landing-header-inner {
+    display: flex;
+    min-height: 80px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+  }
+
+  @media (min-width: 1121px) {
+    .landing-header-inner {
+      width: 100%;
+      max-width: none;
+      padding-inline: clamp(28px, 3vw, 56px);
+    }
+  }
+
+  .landing-logo {
+    flex: 0 1 286px;
+  }
+
+  .landing-logo img {
+    width: min(286px, 100%);
+    height: auto;
+  }
+
+  .landing-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .landing-header-locations {
+    color: var(--muted-text);
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .landing-header-cta,
+  .landing-button,
+  .landing-form-submit {
+    display: inline-flex;
+    min-height: 52px;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 4px;
+    background: var(--brand-cta);
+    color: var(--surface-white);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.2px;
+    line-height: 16px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+      background 180ms ease,
+      transform 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .landing-header-cta {
+    min-height: 46px;
+    padding: 0 22px;
+    font-size: 13px;
+  }
+
+  .landing-header-cta:hover,
+  .landing-button:hover,
+  .landing-form-submit:hover {
+    background: var(--brand-cta-hover);
+    box-shadow: 0 12px 28px rgba(16, 40, 61, 0.16);
+    transform: translateY(-1px);
+  }
+
+  .landing-header-cta:focus-visible,
+  .landing-button:focus-visible,
+  .landing-form-submit:focus-visible,
+  .landing-text-link:focus-visible,
+  .landing-mobile-cta:focus-visible {
+    outline: 3px solid rgba(94, 154, 204, 0.45);
+    outline-offset: 3px;
+  }
+
+  .landing-hero {
+    overflow: hidden;
+    padding: 10px 0 clamp(48px, 4vw, 68px);
+    background: var(--surface-white);
+    color: var(--text-dark);
+  }
+
+  .landing-hero-shell {
+    width: min(1648px, calc(100% - 48px));
+  }
+
+  .landing-kicker,
+  .landing-form-kicker {
+    margin: 0 0 18px;
+    color: var(--brand-blue);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.2px;
+    line-height: 16px;
+    text-transform: uppercase;
+  }
+
+  .landing-kicker-dark {
+    color: var(--brand-cta);
+  }
+
+  .landing-hero-stage {
+    --hero-panel-corner: clamp(32px, 3.25vw, 50px);
+    --hero-shell-gutter: max(24px, calc((100vw - 1648px) / 2));
+    position: relative;
+    min-height: 0;
+    aspect-ratio: 16 / 9;
+    overflow: visible;
+    border-radius: clamp(20px, 2vw, 32px);
+    background: var(--surface-white);
+    box-shadow: none;
+    isolation: isolate;
+  }
+
+  .landing-hero-stage::after {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    background: linear-gradient(180deg, transparent 62%, rgba(16, 40, 61, 0.08));
+    content: '';
+    pointer-events: none;
+  }
+
+  .landing-hero-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    object-fit: cover;
+    object-position: 50% 52%;
+  }
+
+  .landing-hero-panel {
+    position: absolute;
+    z-index: 2;
+    bottom: 0;
+    left: calc((100vw - 100%) / -2);
+    width: min(45%, 720px);
+    padding: clamp(38px, 4.4vw, 56px) clamp(34px, 4.6vw, 58px) clamp(42px, 5vw, 62px);
+    border-radius: 0 var(--hero-panel-corner) 0 0;
+    background: var(--surface-white);
+    color: var(--text-dark);
+  }
+
+  .landing-hero-panel::before,
+  .landing-hero-panel::after {
+    position: absolute;
+    width: var(--hero-panel-corner);
+    height: var(--hero-panel-corner);
+    background: radial-gradient(
+      circle at 100% 0,
+      transparent calc(var(--hero-panel-corner) - 1px),
+      var(--surface-white) var(--hero-panel-corner)
+    );
+    content: '';
+    pointer-events: none;
+  }
+
+  .landing-hero-panel::before {
+    top: 0;
+    left: var(--hero-shell-gutter);
+    transform: translateY(-100%);
+  }
+
+  .landing-hero-panel::after {
+    bottom: 0;
+    left: 100%;
+  }
+
+  .landing-hero-eyebrow {
+    margin: 0 0 18px;
+    color: var(--brand-cta);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: normal;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .landing-hero h1 {
+    max-width: 18ch;
+    margin: 0;
+    color: var(--text-dark);
+    font-size: clamp(42px, 4.1vw, 56px);
+    font-weight: 400;
+    letter-spacing: -0.2px;
+    line-height: 1.02;
+  }
+
+  .landing-hero-lead {
+    max-width: 540px;
+    margin: 22px 0 0;
+    color: var(--muted-text);
+    font-size: clamp(16px, 1.45vw, 18px);
+    font-weight: 400;
+    line-height: 1.45;
+  }
+
+  .landing-hero-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 28px;
+    color: var(--brand-primary-dark);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+  }
+
+  .landing-hero-link svg {
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.7;
+    transition: transform 180ms ease;
+  }
+
+  .landing-hero-link:hover svg,
+  .landing-hero-link:focus-visible svg {
+    transform: translate(3px, 3px);
+  }
+
+  .landing-hero-link:focus-visible {
+    border-radius: 2px;
+    outline: 3px solid rgba(94, 154, 204, 0.42);
+    outline-offset: 5px;
+  }
+
+  .landing-overview {
+    padding: clamp(56px, 5vw, 80px) 0 clamp(80px, 7vw, 108px);
+    background: var(--surface-white);
+    color: var(--text-dark);
+  }
+
+  .landing-overview-shell {
+    width: min(1600px, calc(100% - 80px));
+    display: grid;
+    grid-template-columns: minmax(390px, 0.65fr) minmax(0, 1.35fr);
+    align-items: start;
+    gap: clamp(48px, 6vw, 96px);
+  }
+
+  .landing-overview-aside {
+    min-width: 0;
+  }
+
+  .landing-overview-label {
+    margin: 4px 0 0;
+    color: var(--text-dark);
+    font-size: clamp(18px, 1.25vw, 21px);
+    font-weight: 500;
+    letter-spacing: -0.2px;
+    line-height: 1.2;
+  }
+
+  .landing-overview-content h2 {
+    max-width: 24ch;
+    margin: 0;
+    color: var(--text-dark);
+    font-size: clamp(40px, 3.5vw, 58px);
+    font-weight: 400;
+    letter-spacing: -0.2px;
+    line-height: 1.06;
+  }
+
+  .landing-overview-cta {
+    min-height: 56px;
+    margin-top: 36px;
+    padding: 0 26px;
+    border-radius: 8px;
+  }
+
+  .landing-overview-features {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(40px, 3vw, 52px) clamp(52px, 5vw, 80px);
+    margin-top: clamp(60px, 5vw, 76px);
+  }
+
+  .landing-overview-feature {
+    display: grid;
+    grid-template-columns: 58px minmax(0, 1fr);
+    align-items: start;
+    gap: 20px;
+  }
+
+  .landing-overview-icon {
+    width: 52px;
+    height: 52px;
+    overflow: visible;
+    fill: none;
+    color: var(--brand-blue);
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2.4;
+  }
+
+  .landing-overview-icon-accent {
+    color: var(--brand-primary-dark);
+    stroke: currentColor;
+  }
+
+  .landing-overview-feature:nth-child(2) .landing-overview-icon,
+  .landing-overview-feature:nth-child(5) .landing-overview-icon {
+    color: #7897d4;
+  }
+
+  .landing-overview-feature:nth-child(3) .landing-overview-icon {
+    color: #db7777;
+  }
+
+  .landing-overview-feature:nth-child(4) .landing-overview-icon,
+  .landing-overview-feature:nth-child(6) .landing-overview-icon {
+    color: var(--brand-cta);
+  }
+
+  .landing-overview-feature h3 {
+    margin: 0;
+    color: var(--text-dark);
+    font-size: clamp(22px, 1.6vw, 27px);
+    font-weight: 400;
+    letter-spacing: -0.2px;
+    line-height: 1.18;
+  }
+
+  .landing-overview-feature p {
+    max-width: 36ch;
+    margin: 8px 0 0;
+    color: var(--muted-text);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .landing-form-card {
+    position: static;
+    padding: clamp(30px, 3vw, 42px);
+    border: 1px solid rgba(217, 231, 242, 0.7);
+    border-radius: 20px;
+    background: var(--surface-white);
+    box-shadow: 0 28px 76px rgba(16, 40, 61, 0.14);
+    color: var(--text-dark);
+  }
+
+  .landing-form-kicker {
+    margin-bottom: 10px;
+    color: var(--brand-cta);
+  }
+
+  .landing-form-card h2 {
+    margin: 0;
+    color: var(--brand-primary-dark);
+    font-size: clamp(28px, 2.3vw, 36px);
+    font-weight: 500;
+    line-height: 1.08;
+  }
+
+  .landing-form-intro {
+    margin: 16px 0 26px;
+    color: var(--muted-text);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .landing-form-fields {
+    display: grid;
+    gap: 17px;
+  }
+
+  .landing-form-fields label {
+    display: grid;
+    gap: 7px;
+    color: var(--brand-primary-dark);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .landing-form-fields input,
+  .landing-form-fields select {
+    width: 100%;
+    min-height: 52px;
+    padding: 0 15px;
+    border: 1px solid #c8dbe8;
+    border-radius: 4px;
+    outline: none;
+    background: var(--surface-white);
+    color: var(--text-dark);
+    font-size: 16px;
+    letter-spacing: -0.2px;
+    transition:
+      border-color 160ms ease,
+      box-shadow 160ms ease;
+  }
+
+  .landing-form-fields select {
+    appearance: none;
+    background-image:
+      linear-gradient(45deg, transparent 50%, var(--brand-primary-dark) 50%),
+      linear-gradient(135deg, var(--brand-primary-dark) 50%, transparent 50%);
+    background-position:
+      calc(100% - 18px) 23px,
+      calc(100% - 13px) 23px;
+    background-repeat: no-repeat;
+    background-size: 5px 5px, 5px 5px;
+  }
+
+  .landing-form-fields input::placeholder {
+    color: #8293a0;
+  }
+
+  .landing-form-fields input:focus,
+  .landing-form-fields select:focus {
+    border-color: var(--brand-cta);
+    box-shadow: 0 0 0 3px rgba(37, 109, 149, 0.12);
+  }
+
+  .landing-form-card .booking-contact-privacy {
+    color: var(--muted-text);
+    font-size: 12px;
+  }
+
+  .landing-form-submit {
+    width: 100%;
+    min-height: 58px;
+    gap: 14px;
+    margin-top: 20px;
+  }
+
+  .landing-form-submit svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.7;
+  }
+
+  .landing-form-note {
+    margin: 13px 0 0;
+    color: var(--muted-text);
+    font-size: 11px;
+    line-height: 1.45;
+    text-align: center;
+  }
+
+  .landing-form-card .booking-contact-error {
+    margin: 14px 0 0;
+    font-size: 13px;
+  }
+
+  .landing-form-card.landing-overview-form {
+    scroll-margin-top: 100px;
+    margin-top: clamp(30px, 2.2vw, 38px);
+    padding: clamp(28px, 2vw, 32px);
+    border-color: var(--border);
+    border-radius: 16px;
+    background: var(--background);
+    box-shadow: 0 18px 44px rgba(16, 40, 61, 0.08);
+  }
+
+  .landing-overview-form h2 {
+    font-size: clamp(24px, 1.75vw, 29px);
+    line-height: 1.1;
+  }
+
+  .landing-overview-form .landing-form-intro {
+    margin: 12px 0 20px;
+    font-size: 14px;
+  }
+
+  .landing-overview-form .landing-form-fields {
+    gap: 13px;
+  }
+
+  .landing-overview-form .landing-form-fields input,
+  .landing-overview-form .landing-form-fields select {
+    min-height: 50px;
+  }
+
+  .landing-overview-form .landing-form-submit {
+    min-height: 54px;
+    margin-top: 18px;
+  }
+
+  .landing-section {
+    padding: clamp(82px, 9vw, 128px) 0;
+  }
+
+  .landing-section-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.55fr);
+    column-gap: 80px;
+    align-items: end;
+  }
+
+  .landing-section-heading .landing-kicker {
+    grid-column: 1 / -1;
+  }
+
+  .landing-section-heading h2,
+  .landing-method-copy h2,
+  .landing-reviews-heading h2,
+  .landing-faq-heading h2,
+  .landing-final-cta h2 {
+    margin: 0;
+    color: var(--brand-primary-dark);
+    font-size: clamp(38px, 4vw, 60px);
+    font-weight: 400;
+    letter-spacing: -0.2px;
+    line-height: 1.04;
+  }
+
+  .landing-section-heading > p:last-child,
+  .landing-faq-intro {
+    margin: 0 0 4px;
+    color: var(--muted-text);
+    line-height: 1.55;
+  }
+
+  .landing-depth {
+    padding: 0 0 clamp(88px, 7vw, 120px);
+    background: var(--surface-white);
+  }
+
+  .landing-depth-shell {
+    width: min(1648px, calc(100% - 48px));
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .landing-depth-copy,
+  .landing-depth-media {
+    min-height: clamp(620px, 44vw, 740px);
+    border-radius: 40px;
+  }
+
+  .landing-depth-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(46px, 4vw, 68px);
+    background: var(--brand-primary-dark);
+    color: var(--surface-white);
+  }
+
+  .landing-depth-copy h2 {
+    max-width: 18ch;
+    margin: 0;
+    color: var(--surface-white);
+    font-size: clamp(38px, 3vw, 52px);
+    font-weight: 400;
+    letter-spacing: -0.2px;
+    line-height: 1.08;
+  }
+
+  .landing-depth-text {
+    display: grid;
+    max-width: 61ch;
+    gap: 17px;
+    margin-top: clamp(30px, 2.8vw, 44px);
+    color: rgba(255, 255, 255, 0.78);
+    font-size: clamp(15px, 1.05vw, 18px);
+    line-height: 1.55;
+  }
+
+  .landing-depth-text p {
+    margin: 0;
+  }
+
+  .landing-depth-text .landing-depth-emphasis {
+    margin-top: 2px;
+    color: var(--surface-white);
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .landing-depth-media {
+    margin: 0;
+    overflow: hidden;
+    background: var(--soft-blue-bg);
+  }
+
+  .landing-depth-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+  }
+
+  .landing-value {
+    background: var(--background);
+  }
+
+  .landing-value-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 58px;
+  }
+
+  .landing-value-card {
+    min-height: 310px;
+    padding: 30px 26px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface-white);
+    box-shadow: 0 14px 36px rgba(16, 40, 61, 0.05);
+  }
+
+  .landing-value-card > span {
+    display: inline-flex;
+    width: 42px;
+    height: 42px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--soft-blue-bg);
+    color: var(--brand-cta);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .landing-value-card h3 {
+    margin: 68px 0 12px;
+    color: var(--brand-primary-dark);
+    font-size: 23px;
+    font-weight: 500;
+    line-height: 1.15;
+  }
+
+  .landing-value-card p {
+    margin: 0;
+    color: var(--muted-text);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .landing-method {
+    background: var(--surface-white);
+  }
+
+  .landing-method-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+    gap: clamp(54px, 8vw, 108px);
+    align-items: center;
+  }
+
+  .landing-method-image {
+    position: relative;
+  }
+
+  .landing-method-image::before {
+    position: absolute;
+    z-index: 0;
+    top: -24px;
+    right: -24px;
+    width: 72%;
+    height: 72%;
+    border-radius: 5px;
+    background: var(--soft-blue-bg);
+    content: '';
+  }
+
+  .landing-method-image img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    aspect-ratio: 0.88;
+    border-radius: 6px;
+    object-fit: cover;
+    object-position: 52% 50%;
+  }
+
+  .landing-method-image span {
+    position: absolute;
+    z-index: 2;
+    right: -32px;
+    bottom: 26px;
+    width: min(260px, 72%);
+    padding: 18px 20px;
+    border-radius: 4px;
+    background: var(--brand-primary-dark);
+    color: var(--surface-white);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.35;
+  }
+
+  .landing-method-copy h2 {
+    max-width: 11ch;
+  }
+
+  .landing-method-lead {
+    max-width: 650px;
+    margin: 24px 0 0;
+    color: var(--muted-text);
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .landing-method-list {
+    display: grid;
+    gap: 0;
+    margin-top: 34px;
+    border-top: 1px solid var(--border);
+  }
+
+  .landing-method-list article {
+    display: grid;
+    grid-template-columns: 42px 1fr;
+    gap: 18px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .landing-method-list article > span {
+    color: var(--brand-blue);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .landing-method-list h3 {
+    margin: 0 0 5px;
+    color: var(--brand-primary-dark);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .landing-method-list p {
+    margin: 0;
+    color: var(--muted-text);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .landing-text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 18px;
+    margin-top: 30px;
+    color: var(--brand-cta);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .landing-text-link span {
+    font-size: 22px;
+    font-weight: 400;
+    transition: transform 160ms ease;
+  }
+
+  .landing-text-link:hover span {
+    transform: translateX(4px);
+  }
+
+  .landing-process {
+    background: var(--soft-blue-bg);
+  }
+
+  .landing-section-heading-centered {
+    display: block;
+    max-width: 780px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .landing-process-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin: 66px 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: process;
+  }
+
+  .landing-process-grid li {
+    position: relative;
+    min-height: 240px;
+    padding: 0 44px;
+    border-right: 1px solid #cadfea;
+  }
+
+  .landing-process-grid li:first-child {
+    padding-left: 0;
+  }
+
+  .landing-process-grid li:last-child {
+    padding-right: 0;
+    border-right: 0;
+  }
+
+  .landing-process-number {
+    color: var(--brand-blue);
+    font-size: 62px;
+    font-weight: 300;
+    line-height: 1;
+  }
+
+  .landing-process-grid h3 {
+    margin: 28px 0 10px;
+    color: var(--brand-primary-dark);
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .landing-process-grid p {
+    margin: 0;
+    color: var(--muted-text);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .landing-process-cta {
+    display: grid;
+    justify-items: center;
+    margin-top: 42px;
+    text-align: center;
+  }
+
+  .landing-button {
+    min-width: 280px;
+    padding: 0 28px;
+  }
+
+  .landing-process-cta p {
+    margin: 13px 0 0;
+    color: var(--muted-text);
+    font-size: 12px;
+  }
+
+  .landing-reviews {
+    background: var(--brand-primary-dark);
+    color: var(--surface-white);
+  }
+
+  .landing-reviews-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 48px;
+  }
+
+  .landing-reviews-heading h2 {
+    max-width: 13ch;
+    color: var(--surface-white);
+  }
+
+  .landing-reviews-heading > p {
+    max-width: 310px;
+    margin: 0 0 6px;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 14px;
+  }
+
+  .landing-review-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 52px;
+  }
+
+  .landing-review-card {
+    display: flex;
+    min-height: 330px;
+    flex-direction: column;
+    padding: 30px;
+    border: 1px solid rgba(217, 231, 242, 0.18);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.055);
+  }
+
+  .landing-review-stars {
+    color: #f5c768;
+    font-size: 15px;
+    letter-spacing: 3px;
+  }
+
+  .landing-review-card blockquote {
+    flex: 1;
+    margin: 24px 0 30px;
+    color: var(--surface-white);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .landing-review-card footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .landing-review-card footer > span {
+    display: inline-flex;
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--brand-blue);
+    color: var(--brand-primary-dark);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .landing-review-card footer p {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+  }
+
+  .landing-review-card footer strong {
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .landing-review-card footer small {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 11px;
+  }
+
+  .landing-faq {
+    background: var(--surface-white);
+  }
+
+  .landing-faq-grid {
+    display: grid;
+    grid-template-columns: minmax(260px, 0.65fr) minmax(0, 1.35fr);
+    gap: clamp(60px, 9vw, 120px);
+    align-items: start;
+  }
+
+  .landing-faq-heading {
+    position: sticky;
+    top: 120px;
+  }
+
+  .landing-faq-intro {
+    max-width: 360px;
+    margin-top: 22px;
+  }
+
+  .landing-faq-source {
+    max-width: 360px;
+    margin: 18px 0 0;
+    color: var(--muted-text);
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .landing-faq-source a {
+    color: var(--brand-cta);
+    font-weight: 500;
+    text-underline-offset: 3px;
+  }
+
+  .landing-faq-list {
+    border-top: 1px solid var(--border);
+  }
+
+  .landing-faq-list details {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .landing-faq-list summary {
+    position: relative;
+    padding: 25px 52px 25px 0;
+    color: var(--brand-primary-dark);
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.35;
+    list-style: none;
+  }
+
+  .landing-faq-list summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .landing-faq-list summary::before,
+  .landing-faq-list summary::after {
+    position: absolute;
+    top: 50%;
+    right: 4px;
+    width: 16px;
+    height: 1px;
+    background: var(--brand-cta);
+    content: '';
+    transition: transform 160ms ease;
+  }
+
+  .landing-faq-list summary::after {
+    transform: rotate(90deg);
+  }
+
+  .landing-faq-list details[open] summary::after {
+    transform: rotate(0deg);
+  }
+
+  .landing-faq-list details p {
+    max-width: 720px;
+    margin: -6px 0 25px;
+    padding-right: 42px;
+    color: var(--muted-text);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .landing-final-cta {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(72px, 8vw, 116px) 0;
+    background: var(--surface-white);
+  }
+
+  .landing-final-panel {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.72fr);
+    gap: clamp(56px, 7vw, 112px);
+    align-items: end;
+    padding: clamp(54px, 6.5vw, 88px);
+    border: 1px solid rgba(94, 154, 204, 0.24);
+    background:
+      radial-gradient(circle at 100% 0%, rgba(94, 154, 204, 0.24), transparent 42%),
+      linear-gradient(135deg, #10283d 0%, #10283d 68%, #0b2133 100%);
+    box-shadow: 0 28px 70px rgba(16, 40, 61, 0.18);
+  }
+
+  .landing-final-panel::before {
+    position: absolute;
+    z-index: -1;
+    top: -230px;
+    right: -160px;
+    width: 460px;
+    height: 460px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 64px rgba(94, 154, 204, 0.055),
+      0 0 0 128px rgba(94, 154, 204, 0.035);
+    content: '';
+    pointer-events: none;
+  }
+
+  .landing-final-copy::before {
+    display: block;
+    width: 58px;
+    height: 2px;
+    margin-bottom: 28px;
+    background: var(--brand-blue);
+    content: '';
+  }
+
+  .landing-final-cta .landing-kicker {
+    color: var(--brand-blue);
+  }
+
+  .landing-final-cta h2 {
+    max-width: 10.5ch;
+    color: var(--surface-white);
+  }
+
+  .landing-final-action {
+    position: relative;
+    z-index: 1;
+  }
+
+  .landing-final-action > p {
+    margin: 0 0 30px;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.55;
+  }
+
+  .landing-final-button {
+    display: inline-flex;
+    min-height: 60px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 8px 8px 8px 24px;
+    background: var(--surface-white);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.16);
+    color: var(--brand-primary-dark);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: normal;
+    line-height: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+      background 180ms ease,
+      transform 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .landing-final-button:hover {
+    background: var(--soft-blue-bg);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .landing-final-button:focus-visible {
+    outline: 3px solid rgba(94, 154, 204, 0.55);
+    outline-offset: 4px;
+  }
+
+  .landing-final-button-icon {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 auto;
+    place-items: center;
+    background: var(--brand-cta);
+    color: var(--surface-white);
+    transition: background 180ms ease;
+  }
+
+  .landing-final-button:hover .landing-final-button-icon {
+    background: var(--brand-cta-hover);
+  }
+
+  .landing-final-button-icon svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+  }
+
+  .landing-final-reassurance {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    margin-top: 22px;
+    color: rgba(255, 255, 255, 0.58);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: normal;
+    line-height: 1.4;
+  }
+
+  .landing-final-reassurance span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .landing-final-reassurance span::before {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--brand-blue);
+    content: '';
+  }
+
+  .container {
+    width: min(1280px, calc(100% - 48px));
+    margin: 0 auto;
+  }
+
+  .site-footer {
+    position: relative;
+    --footer-line: rgba(var(--brand-blue-rgb), 0.28);
+    --footer-letter-spacing: -0.2px;
+    background: var(--blue-dark);
+    color: var(--soft-blue-bg);
+    font-family: "Inter", sans-serif;
+    letter-spacing: var(--footer-letter-spacing);
+    word-spacing: 0;
+  }
+
+  .footer-shell {
+    width: min(100% - 124px, 1828px);
+    padding: 0;
+  }
+
+  .footer-mobile {
+    display: none;
+  }
+
+  .site-footer h2,
+  .site-footer h3 {
+    color: var(--aqua);
+  }
+
+  .site-footer h2 {
+    margin: 0 0 36px;
+    font-family: "Inter", sans-serif;
+    font-size: clamp(1.25rem, 1.35vw, 1.5rem);
+    font-weight: 500;
+    letter-spacing: var(--footer-letter-spacing);
+    line-height: 1.25;
+  }
+
+  .site-footer p {
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .site-footer a {
+    color: var(--soft-blue-bg);
+    font-weight: 400;
+    text-decoration: none;
+  }
+
+  .site-footer a:hover {
+    color: var(--aqua);
+  }
+
+  .footer-menu-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-bottom: 1px solid var(--footer-line);
+  }
+
+  .footer-links {
+    min-height: 492px;
+    padding: clamp(58px, 4.8vw, 88px) clamp(36px, 3.2vw, 58px);
+    border-right: 1px solid var(--footer-line);
+  }
+
+  .footer-links:last-child {
+    border-right: 0;
+  }
+
+  .footer-links ul {
+    display: grid;
+    gap: 17px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: var(--footer-letter-spacing);
+    line-height: 1.5;
+  }
+
+  .footer-social-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    border-bottom: 1px solid var(--footer-line);
+  }
+
+  .footer-social-block {
+    min-height: 152px;
+    display: grid;
+    grid-template-columns: minmax(300px, 0.82fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(22px, 2.4vw, 42px);
+    padding: 36px clamp(36px, 3.2vw, 58px);
+  }
+
+  .footer-social-block + .footer-social-block {
+    border-left: 1px solid var(--footer-line);
+  }
+
+  .footer-social-block h2 {
+    margin: 0;
+  }
+
+  .footer-social {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .footer-social a {
+    min-width: 42px;
+    min-height: 42px;
+    display: inline-grid;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: var(--footer-letter-spacing);
+    line-height: 1;
+  }
+
+  .footer-social a:hover {
+    border-color: var(--aqua);
+  }
+
+  .footer-article-block > a {
+    justify-self: end;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: var(--footer-letter-spacing);
+    line-height: 1.5;
+  }
+
+  .footer-bottom {
+    padding: 34px 0 40px;
+    border-top: 0;
+  }
+
+  .footer-bottom-inner {
+    width: min(100% - 124px, 1828px);
+    display: grid;
+    grid-template-columns: minmax(240px, 1fr) minmax(0, 1.2fr) auto;
+    gap: 18px 28px;
+    align-items: start;
+    color: rgba(255, 255, 255, 0.76);
+    font-size: 0.875rem;
+    font-weight: 400;
+    letter-spacing: var(--footer-letter-spacing);
+    line-height: 1.5;
+  }
+
+  .footer-bottom-inner a {
+    font-weight: 400;
+  }
+
+  .footer-policy-separator {
+    display: inline-block;
+    margin: 0 0.42em;
+  }
+
+  .footer-policy-separator::before {
+    content: "·";
+  }
+
+  .footer-cookie-settings {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-weight: 400;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .footer-cookie-settings:hover,
+  .footer-cookie-settings:focus-visible {
+    color: var(--surface-white);
+  }
+
+  .footer-copyright-mobile,
+  .footer-powered {
+    display: none;
+  }
+
+  @media (max-width: 1160px) {
+    .footer-shell,
+    .footer-bottom-inner {
+      width: min(100% - 48px, 1828px);
+    }
+
+    .footer-menu-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .footer-links:nth-child(2n) {
+      border-right: 0;
+    }
+
+    .footer-social-row,
+    .footer-bottom-inner {
+      grid-template-columns: 1fr;
+    }
+
+    .footer-social-block + .footer-social-block {
+      border-left: 0;
+      border-top: 1px solid var(--footer-line);
+    }
+
+    .footer-article-block > a {
+      justify-self: start;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .site-footer {
+      --footer-letter-spacing: -0.16px;
+    }
+
+    .footer-shell,
+    .footer-bottom-inner {
+      width: min(100% - 32px, 1828px);
+    }
+
+    .footer-desktop {
+      display: none;
+    }
+
+    .footer-mobile {
+      display: block;
+      padding-top: 42px;
+    }
+
+    .footer-mobile-brand {
+      padding-bottom: 34px;
+      border-bottom: 1px solid var(--footer-line);
+    }
+
+    .footer-mobile-logo {
+      width: min(100%, 310px);
+      display: block;
+    }
+
+    .footer-mobile-logo img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: brightness(0) invert(1);
+    }
+
+    .footer-mobile-brand p {
+      max-width: 34ch;
+      margin: 22px 0 0;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    .footer-mobile-section {
+      padding: 30px 0;
+      border-bottom: 1px solid var(--footer-line);
+    }
+
+    .footer-mobile-section h2 {
+      margin: 0 0 22px;
+      font-size: 1.18rem;
+      font-weight: 500;
+      line-height: 1.25;
+    }
+
+    .footer-mobile-navigation {
+      display: grid;
+      gap: 15px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .footer-mobile-navigation a,
+    .footer-mobile-content > a {
+      font-size: 1rem;
+      line-height: 1.45;
+    }
+
+    .footer-mobile-contact-list {
+      display: grid;
+      gap: 28px;
+    }
+
+    .footer-mobile-contact-item {
+      display: grid;
+      grid-template-columns: 28px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .footer-mobile-contact-icon {
+      width: 24px;
+      height: 24px;
+      margin-top: 2px;
+      fill: none;
+      stroke: var(--brand-blue);
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .footer-mobile-contact-values {
+      min-width: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .footer-mobile-contact-values > span {
+      color: var(--brand-blue);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: normal;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    .footer-mobile-contact-values a {
+      display: grid;
+      gap: 3px;
+      overflow-wrap: anywhere;
+      font-size: 0.98rem;
+      line-height: 1.45;
+    }
+
+    .footer-mobile-contact-values a strong {
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+
+    .footer-mobile-hours {
+      display: grid;
+      gap: 16px;
+    }
+
+    .footer-mobile-hours > div {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: baseline;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 0.98rem;
+      line-height: 1.4;
+    }
+
+    .footer-mobile-hours strong {
+      color: var(--soft-blue-bg);
+      font-weight: 500;
+      text-align: right;
+    }
+
+    .footer-mobile-content {
+      border-bottom: 0;
+    }
+
+    .footer-menu-grid {
+      grid-template-columns: 1fr;
+      border-left: 0;
+      border-bottom: 1px solid var(--footer-line);
+    }
+
+    .footer-links {
+      min-height: auto;
+      border-right: 0;
+      border-top: 1px solid var(--footer-line);
+      padding: 34px 0;
+    }
+
+    .footer-links:first-child {
+      border-top: 0;
+    }
+
+    .footer-social-block {
+      grid-template-columns: 1fr;
+      padding: 30px 0;
+    }
+
+    .footer-social-row {
+      border-left: 0;
+      border-right: 0;
+    }
+
+    .footer-social {
+      flex-wrap: wrap;
+    }
+
+    .footer-bottom {
+      padding: 30px 0;
+    }
+
+    .footer-bottom-inner {
+      justify-items: center;
+      text-align: center;
+    }
+
+    .footer-note {
+      order: 1;
+    }
+
+    .footer-copyright {
+      order: 2;
+    }
+
+    .footer-legal {
+      order: 3;
+    }
+
+    .footer-copyright-desktop {
+      display: none;
+    }
+
+    .footer-copyright-mobile,
+    .footer-powered {
+      display: block;
+    }
+
+    .footer-powered {
+      order: 4;
+      color: var(--surface-white);
+    }
+
+    .footer-powered strong {
+      font-weight: 700;
+    }
+
+    .footer-powered sup {
+      margin-left: 0.12em;
+      font-size: 0.62em;
+      line-height: 0;
+      text-transform: uppercase;
+    }
+
+    .footer-policy-separator::before {
+      content: "|";
+    }
+  }
+
+  .landing-mobile-cta {
+    display: none;
+  }
+
+  @media (max-width: 1000px) {
+    .landing-hero-stage {
+      min-height: 620px;
+    }
+
+    .landing-hero-panel {
+      width: min(62%, 590px);
+    }
+
+    .landing-hero h1 {
+      font-size: clamp(40px, 5.3vw, 52px);
+    }
+
+    .landing-overview-shell {
+      width: min(100% - 48px, 900px);
+      grid-template-columns: 1fr;
+      gap: 52px;
+    }
+
+    .landing-overview-form {
+      max-width: 560px;
+    }
+
+    .landing-overview-content h2 {
+      max-width: 22ch;
+      font-size: clamp(38px, 4.8vw, 48px);
+    }
+
+    .landing-overview-features {
+      column-gap: 44px;
+    }
+
+    .landing-depth {
+      padding-bottom: 96px;
+    }
+
+    .landing-depth-shell {
+      width: min(100% - 48px, 900px);
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .landing-depth-copy,
+    .landing-depth-media {
+      min-height: 0;
+    }
+
+    .landing-depth-copy {
+      padding: 54px;
+    }
+
+    .landing-depth-copy h2 {
+      max-width: 20ch;
+      font-size: clamp(40px, 5vw, 48px);
+    }
+
+    .landing-depth-media {
+      aspect-ratio: 16 / 10;
+    }
+
+    .landing-value-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .landing-value-card {
+      min-height: 280px;
+    }
+
+    .landing-review-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .landing-review-card {
+      min-height: 0;
+    }
+
+  }
+
+  @media (max-width: 760px) {
+    html {
+      scroll-padding-top: 74px;
+    }
+
+    body {
+      padding-bottom: 68px;
+      letter-spacing: -0.16px;
+    }
+
+    .landing-shell {
+      width: min(100% - 32px, 1180px);
+    }
+
+    .landing-header-inner {
+      min-height: 68px;
+    }
+
+    .landing-logo {
+      flex-basis: 204px;
+      max-width: 56vw;
+    }
+
+    .landing-logo img {
+      width: min(204px, 100%);
+    }
+
+    .landing-header-locations,
+    .landing-header-cta {
+      display: none;
+    }
+
+    .landing-hero {
+      padding: 8px 0 42px;
+    }
+
+    .landing-hero-shell {
+      width: min(100% - 24px, 1180px);
+    }
+
+    .landing-hero-stage {
+      display: flex;
+      min-height: 0;
+      aspect-ratio: auto;
+      flex-direction: column;
+      overflow: hidden;
+      border-radius: 18px;
+      box-shadow: none;
+    }
+
+    .landing-hero-stage::after {
+      display: none;
+    }
+
+    .landing-hero-photo {
+      position: relative;
+      inset: auto;
+      aspect-ratio: 4 / 4.25;
+      height: auto;
+      border-radius: 18px 18px 0 0;
+      object-position: 50% 34%;
+    }
+
+    .landing-hero-panel {
+      position: relative;
+      bottom: auto;
+      left: auto;
+      width: 100%;
+      padding: 30px 22px 34px;
+      border-radius: 0;
+    }
+
+    .landing-hero-panel::before,
+    .landing-hero-panel::after {
+      display: none;
+    }
+
+    .landing-hero-eyebrow {
+      margin-bottom: 14px;
+      font-size: 11px;
+    }
+
+    .landing-hero h1 {
+      max-width: 100%;
+      font-size: clamp(34px, 9.5vw, 42px);
+      letter-spacing: -0.16px;
+      line-height: 1.02;
+    }
+
+    .landing-hero-lead {
+      margin-top: 18px;
+      font-size: 16px;
+      letter-spacing: -0.16px;
+      line-height: 1.5;
+    }
+
+    .landing-hero-link {
+      margin-top: 24px;
+    }
+
+    .landing-overview {
+      padding: 48px 0 68px;
+    }
+
+    .landing-overview-shell {
+      width: min(100% - 32px, 1180px);
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+
+    .landing-overview-label {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .landing-form-card.landing-overview-form {
+      max-width: none;
+      margin-top: 24px;
+      padding: 26px 22px;
+    }
+
+    .landing-form-card.landing-overview-form h2 {
+      font-size: 28px;
+    }
+
+    .landing-overview-content h2 {
+      max-width: 100%;
+      font-size: clamp(32px, 8.8vw, 38px);
+      letter-spacing: -0.16px;
+      line-height: 1.06;
+    }
+
+    .landing-overview-cta {
+      width: 100%;
+      min-height: 54px;
+      margin-top: 28px;
+    }
+
+    .landing-overview-features {
+      grid-template-columns: 1fr;
+      gap: 30px;
+      margin-top: 48px;
+    }
+
+    .landing-overview-feature {
+      grid-template-columns: 48px minmax(0, 1fr);
+      gap: 16px;
+    }
+
+    .landing-overview-icon {
+      width: 44px;
+      height: 44px;
+    }
+
+    .landing-overview-feature h3 {
+      font-size: 22px;
+      letter-spacing: -0.16px;
+    }
+
+    .landing-overview-feature p {
+      margin-top: 7px;
+      font-size: 15px;
+    }
+
+    .landing-depth {
+      padding-bottom: 76px;
+    }
+
+    .landing-depth-shell {
+      width: min(100% - 24px, 1180px);
+      gap: 12px;
+    }
+
+    .landing-depth-copy,
+    .landing-depth-media {
+      border-radius: 26px;
+    }
+
+    .landing-depth-copy {
+      padding: 36px 24px 40px;
+    }
+
+    .landing-depth-copy h2 {
+      max-width: 100%;
+      font-size: clamp(31px, 8.5vw, 36px);
+      letter-spacing: -0.16px;
+      line-height: 1.08;
+    }
+
+    .landing-depth-text {
+      gap: 15px;
+      margin-top: 28px;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .landing-depth-media {
+      aspect-ratio: 4 / 3;
+    }
+
+    .landing-form-card {
+      position: static;
+      width: 100%;
+      padding: 28px 22px;
+    }
+
+    .landing-form-card h2 {
+      font-size: 30px;
+    }
+
+    .landing-section {
+      padding: 76px 0;
+    }
+
+    .landing-section-heading {
+      display: block;
+    }
+
+    .landing-section-heading h2,
+    .landing-method-copy h2,
+    .landing-reviews-heading h2,
+    .landing-faq-heading h2,
+    .landing-final-cta h2 {
+      font-size: 38px;
+      letter-spacing: -0.16px;
+      line-height: 1.06;
+    }
+
+    .landing-section-heading > p:last-child {
+      margin-top: 20px;
+    }
+
+    .landing-value-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 38px;
+    }
+
+    .landing-value-card {
+      display: grid;
+      min-height: 0;
+      grid-template-columns: 44px 1fr;
+      column-gap: 16px;
+      padding: 24px 20px;
+    }
+
+    .landing-value-card > span {
+      grid-row: 1 / 3;
+    }
+
+    .landing-value-card h3 {
+      margin: 1px 0 8px;
+      font-size: 21px;
+    }
+
+    .landing-value-card p {
+      grid-column: 2;
+    }
+
+    .landing-method-grid {
+      grid-template-columns: 1fr;
+      gap: 56px;
+    }
+
+    .landing-method-image {
+      width: calc(100% - 18px);
+    }
+
+    .landing-method-image::before {
+      top: -14px;
+      right: -18px;
+    }
+
+    .landing-method-image img {
+      aspect-ratio: 1 / 1.05;
+    }
+
+    .landing-method-image span {
+      right: -18px;
+      bottom: 18px;
+    }
+
+    .landing-method-lead {
+      font-size: 17px;
+    }
+
+    .landing-process-grid {
+      grid-template-columns: 1fr;
+      margin-top: 46px;
+    }
+
+    .landing-process-grid li,
+    .landing-process-grid li:first-child,
+    .landing-process-grid li:last-child {
+      display: grid;
+      min-height: 0;
+      grid-template-columns: 66px 1fr;
+      column-gap: 18px;
+      padding: 24px 0;
+      border-right: 0;
+      border-bottom: 1px solid #cadfea;
+    }
+
+    .landing-process-grid li:last-child {
+      border-bottom: 0;
+    }
+
+    .landing-process-number {
+      grid-row: 1 / 3;
+      font-size: 48px;
+    }
+
+    .landing-process-grid h3 {
+      margin: 2px 0 8px;
+    }
+
+    .landing-process-grid p {
+      grid-column: 2;
+    }
+
+    .landing-process-cta {
+      margin-top: 30px;
+    }
+
+    .landing-button {
+      width: 100%;
+      min-width: 0;
+    }
+
+    .landing-reviews-heading {
+      display: block;
+    }
+
+    .landing-reviews-heading > p {
+      margin-top: 20px;
+    }
+
+    .landing-review-grid {
+      margin-top: 36px;
+    }
+
+    .landing-review-card {
+      padding: 24px 22px;
+    }
+
+    .landing-review-card blockquote {
+      font-size: 16px;
+    }
+
+    .landing-faq-grid {
+      grid-template-columns: 1fr;
+      gap: 42px;
+    }
+
+    .landing-faq-heading {
+      position: static;
+    }
+
+    .landing-faq-list summary {
+      padding-top: 22px;
+      padding-bottom: 22px;
+      font-size: 16px;
+    }
+
+    .landing-faq-list details p {
+      padding-right: 12px;
+      font-size: 14px;
+    }
+
+    .landing-final-cta {
+      padding: 64px 0;
+    }
+
+    .landing-final-panel {
+      grid-template-columns: 1fr;
+      gap: 36px;
+      padding: 44px 24px 34px;
+    }
+
+    .landing-final-panel::before {
+      top: -165px;
+      right: -190px;
+      width: 360px;
+      height: 360px;
+      box-shadow:
+        0 0 0 48px rgba(94, 154, 204, 0.05),
+        0 0 0 96px rgba(94, 154, 204, 0.03);
+    }
+
+    .landing-final-copy::before {
+      width: 46px;
+      margin-bottom: 22px;
+    }
+
+    .landing-final-action > p {
+      margin-bottom: 24px;
+      font-size: 16px;
+    }
+
+    .landing-final-button {
+      width: 100%;
+      gap: 16px;
+      padding-left: 18px;
+      font-size: 13px;
+    }
+
+    .landing-final-reassurance {
+      display: grid;
+      gap: 8px;
+    }
+
+    .landing-mobile-cta {
+      position: fixed;
+      z-index: 45;
+      right: 12px;
+      bottom: 10px;
+      left: 12px;
+      display: flex;
+      min-height: 50px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      background: var(--brand-cta);
+      box-shadow: 0 12px 36px rgba(16, 40, 61, 0.28);
+      color: var(--surface-white);
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+  }
+
+  @media (max-width: 420px) {
+    .landing-logo {
+      flex-basis: 198px;
+      max-width: 54vw;
+    }
+
+    .landing-logo img {
+      width: min(198px, 100%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>

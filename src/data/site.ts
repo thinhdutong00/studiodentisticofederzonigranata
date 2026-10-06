@@ -149,7 +149,7 @@ export const site = {
         {
           "type": "list",
           "ordered": false,
-          "html": "<ul><li><a href=\"/igiene-orale-prevenzione/\">Igiene orale e Prevenzione</a></li><li><a href=\"/sbiancamento/\">Sbiancamento</a></li><li><a href=\"/conservativa-otturazioni/\">Conservativa (otturazioni)</a></li><li><a href=\"/endodonzia-devitalizzazioni/\">Endodonzia (devitalizzazioni)</a></li><li><a href=\"/pedodonzia-odontoiatria-infantile/\">Pedodonzia (odontoiatria infantile)</a></li><li><a href=\"/ortodonzia-allineatori-invisibili/\">Ortodonzia e Allineatori invisibili (adulti e bimbi)</a></li><li><a href=\"/estetica-diretta-faccette-composito/\">Estetica diretta (faccette in composito)</a></li><li><a href=\"/parodontologia-cure-gengivali/\">Parodontologia (cure gengivali)</a></li><li><a href=\"/protesi-fissa-mobile/\">Protesi fissa e mobile</a></li><li><a href=\"/estetica-indiretta-faccette-porcellana/\">Estetica Indiretta (faccette in porcellana)</a></li><li><a href=\"/chirurgia-stomatologica/\">Chirurgia Stomatologica</a></li><li><a href=\"/implantologia-tradizionale-computer-guidata/\">Implantologia tradizionale e computer guidata</a></li><li><a href=\"/gnatologia-articolazione-temporo-mandibolare/\">Gnatologia (disturbi articolazione temporo-mandibolare)</a></li><li><a href=\"/dispositivi-russamento-apnee-notturne/\">Dispositivi contro il russamento e le apnee notturne</a></li></ul>"
+          "html": "<ul><li><a href=\"/igiene-orale-prevenzione/\">Igiene orale e Prevenzione</a></li><li><a href=\"/sbiancamento/\">Sbiancamento</a></li><li><a href=\"/conservativa-otturazioni/\">Conservativa (otturazioni)</a></li><li><a href=\"/endodonzia-devitalizzazioni/\">Endodonzia (devitalizzazioni)</a></li><li><a href=\"/pedodonzia-odontoiatria-infantile/\">Pedodonzia (odontoiatria infantile)</a></li><li><a href=\"/ortodonzia-allineatori-invisibili/\">Ortodonzia e Allineatori invisibili (adulti e bimbi)</a></li><li><a href=\"/estetica-diretta-faccette-composito/\">Estetica diretta (faccette in composito)</a></li><li><a href=\"/visita-parodontologia/\">Parodontologia (cure gengivali)</a></li><li><a href=\"/protesi-fissa-mobile/\">Protesi fissa e mobile</a></li><li><a href=\"/estetica-indiretta-faccette-porcellana/\">Estetica Indiretta (faccette in porcellana)</a></li><li><a href=\"/chirurgia-stomatologica/\">Chirurgia Stomatologica</a></li><li><a href=\"/implantologia-tradizionale-computer-guidata/\">Implantologia tradizionale e computer guidata</a></li><li><a href=\"/gnatologia-articolazione-temporo-mandibolare/\">Gnatologia (disturbi articolazione temporo-mandibolare)</a></li><li><a href=\"/dispositivi-russamento-apnee-notturne/\">Dispositivi contro il russamento e le apnee notturne</a></li></ul>"
         }
       ]
     },
@@ -405,7 +405,7 @@ export const site = {
       "items": [
         {
           "label": "Parodontologia (cure gengivali)",
-          "href": "/parodontologia-cure-gengivali/"
+          "href": "/visita-parodontologia/"
         },
         {
           "label": "Protesi fissa e mobile",
@@ -564,8 +564,8 @@ export const site = {
       ]
     },
     {
-      "path": "/parodontologia-cure-gengivali/",
-      "slug": "parodontologia-cure-gengivali",
+      "path": "/visita-parodontologia/",
+      "slug": "visita-parodontologia",
       "kind": "treatment",
       "title": "Parodontologia (cure gengivali) - Studio dentistico Federzoni Granata",
       "navTitle": "Parodontologia (cure gengivali)",
@@ -2730,7 +2730,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<p><strong>Trasferimento dei dati all’estero</strong><br>\nI dati personali sono conservati su server e supporti ubicati all’interno dell’Unione Europea.</p>"
+          "html": "<p><strong>Fornitori tecnologici e trasferimento dei dati</strong><br>\nPer gestire le richieste inviate dal sito vengono utilizzati servizi di posta elettronica, invio email e archiviazione cloud. In particolare, le informazioni inserite nei moduli, comprese eventuali informazioni sanitarie comunicate volontariamente, sono registrate anche in un foglio Google Drive ad accesso riservato, utilizzato esclusivamente dal personale autorizzato dello Studio per organizzare i ricontatti e gli appuntamenti. I fornitori tecnologici possono trattare i dati in Paesi diversi da quello dell’interessato; il Titolare applica, ove necessario, le garanzie previste dalla normativa vigente. Per informazioni aggiornate sui fornitori e sulle garanzie applicabili è possibile contattare il Titolare ai recapiti indicati nella presente informativa.</p>"
         },
         {
           "type": "paragraph",

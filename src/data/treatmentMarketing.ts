@@ -65,7 +65,7 @@ export const treatmentMarketingPaths = [
   '/pedodonzia-odontoiatria-infantile/',
   '/ortodonzia-allineatori-invisibili/',
   '/estetica-diretta-faccette-composito/',
-  '/parodontologia-cure-gengivali/',
+  '/visita-parodontologia/',
   '/protesi-fissa-mobile/',
   '/estetica-indiretta-faccette-porcellana/',
   '/chirurgia-stomatologica/',
@@ -536,7 +536,7 @@ export const treatmentMarketingPages = {
     finalTitle: 'Valutiamo le faccette in composito per il tuo sorriso.',
     ogImage: '/assets/menu/casi-clinici-estetica.jpg',
   },
-  '/parodontologia-cure-gengivali/': {
+  '/visita-parodontologia/': {
     seoTitle: 'Parodontologia e cure gengivali',
     description:
       'Diagnosi e trattamenti parodontali a Modena e Reggio Emilia per controllare l’infiammazione e proteggere gengive e sostegno dei denti.',
