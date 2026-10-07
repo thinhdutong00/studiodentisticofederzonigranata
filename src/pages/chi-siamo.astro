@@ -114,7 +114,7 @@ const officeDetails: Record<string, { label: string; title: string; description:
           controlslist="nodownload nofullscreen noplaybackrate"
           aria-label="Presentazione dello Studio Dentistico Federzoni Granata"
         >
-          <source src="/assets/chi-siamo/chi-siamo-hero-mobile.m4v" type="video/mp4" />
+          <source src="/assets/chi-siamo/chi-siamo-hero-mobile.mp4" type="video/mp4" />
         </video>
       </div>
     </section>
@@ -292,13 +292,18 @@ const officeDetails: Record<string, { label: string; title: string; description:
   const aboutHeroVideo = document.querySelector('.hero-video-frame video');
 
   if (aboutHeroVideo instanceof HTMLVideoElement) {
+    let isAboutHeroVideoVisible = !('IntersectionObserver' in window);
+
     const playAboutHeroVideo = () => {
-      if (document.hidden) return;
+      if (document.hidden || !isAboutHeroVideoVisible) return;
 
       aboutHeroVideo.muted = true;
       aboutHeroVideo.defaultMuted = true;
       aboutHeroVideo.loop = true;
       aboutHeroVideo.controls = false;
+      aboutHeroVideo.setAttribute('muted', '');
+      aboutHeroVideo.setAttribute('playsinline', '');
+      aboutHeroVideo.removeAttribute('controls');
       aboutHeroVideo.play().catch(() => {});
     };
 
@@ -309,6 +314,18 @@ const officeDetails: Record<string, { label: string; title: string; description:
     }
 
     aboutHeroVideo.addEventListener('pause', playAboutHeroVideo);
+
+    if ('IntersectionObserver' in window) {
+      const aboutHeroVideoObserver = new IntersectionObserver(
+        ([entry]) => {
+          isAboutHeroVideoVisible = Boolean(entry?.isIntersecting);
+          if (isAboutHeroVideoVisible) playAboutHeroVideo();
+        },
+        { threshold: 0.01 }
+      );
+
+      aboutHeroVideoObserver.observe(aboutHeroVideo);
+    }
 
     document.addEventListener('visibilitychange', () => {
       if (!document.hidden) playAboutHeroVideo();
