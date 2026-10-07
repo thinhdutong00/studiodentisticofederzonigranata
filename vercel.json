@@ -3,18 +3,6 @@
   "functions": {
     "api/booking.js": { "maxDuration": 20 }
   },
-  "redirects": [
-    {
-      "source": "/prima-visita-odontoiatrica/",
-      "destination": "/visita-parodontologia/",
-      "permanent": true
-    },
-    {
-      "source": "/parodontologia-cure-gengivali/",
-      "destination": "/visita-parodontologia/",
-      "permanent": true
-    }
-  ],
   "headers": [
     {
       "source": "/assets/optimized/(.*)",
