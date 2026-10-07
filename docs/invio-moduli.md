@@ -11,8 +11,8 @@ Archivio operativo: foglio privato **Federzoni Granata Thin leads**, scheda `Ric
 - I moduli introduttivi dei trattamenti (incluso sbiancamento) aprono `/richiesta/` con trattamento, sede e motivo preselezionati; l’invio avviene dopo aver raccolto i recapiti. Anche un motivo iniziale che non coincide con le opzioni del questionario viene conservato nell’email.
 - Il server controlla i dati e chiama in parallelo Resend e la web app Google Apps Script del CRM. La conferma appare solo se Resend restituisce un identificativo email e il CRM conferma la registrazione della stessa richiesta.
 - In caso di errore o timeout il modulo conserva i valori e permette di riprovare. Lo stesso tentativo mantiene lo stesso `requestId`: Resend riutilizza la chiave di idempotenza e Apps Script non inserisce una seconda riga con lo stesso ID.
-- Il foglio riceve solo dati già validati dal server. Le nuove richieste reali entrano con `Chiamato = No`, `Esito del contatto = Da chiamare` e `Tipo record = REALE`; questi valori non possono essere impostati dal browser.
-- Provenienza, pagina di ingresso e campagna vengono conservate in campi separati, senza salvare il valore dei click ID pubblicitari.
+- Il foglio riceve solo dati già validati dal server. Le nuove richieste reali entrano con `Contattato = No`, `Esito = Da chiamare` e `Tipo record = REALE`; questi valori non possono essere impostati dal browser.
+- Provenienza, campagna, gruppo annunci, annuncio, parola chiave e pagine di ingresso/invio vengono conservati in campi separati, senza salvare il valore dei click ID pubblicitari.
 
 ## Configurazione necessaria su Vercel
 
@@ -45,6 +45,25 @@ Le funzioni Vercel in `api/` sono distribuite insieme al sito Astro statico; il 
 
 La scheda operativa deve chiamarsi `Richieste dal sito`; il log tecnico deve chiamarsi `_Log integrazione`. Entrambe devono mantenere le intestazioni nell’ordine previsto dallo script. Apps Script rifiuta lo schema se un’intestazione viene rinominata o spostata. La ricerca dell’`ID richiesta` avviene sotto lock per impedire duplicati concorrenti. Formati e convalide operative vengono copiati sulle nuove righe e i valori che iniziano come formule vengono salvati come testo.
 
+La scheda operativa usa 29 colonne, raggruppate così:
+
+- anagrafica e richiesta: data, nome e cognome, telefono, email, città/sede e servizio;
+- attribuzione: provenienza lead, campagna, gruppo annunci, annuncio, parola chiave, pagina di ingresso e pagina di invio;
+- gestione: preferenze, messaggio, esito, contattato, tentativi, data ultimo contatto, comunicazioni, richiamo, appuntamento, preventivo e trattamento;
+- colonne tecniche: note, tipo record e ID richiesta.
+
+## Collegamento con Google Ads e SEO
+
+Il sito riconosce automaticamente un clic Google Ads dalla presenza di `gclid`, `gbraid` o `wbraid`. Per compilare anche campagna, gruppo annunci, annuncio e parola chiave, configurare nell'account Google Ads dello Studio il seguente suffisso URL finale:
+
+```text
+utm_source=google&utm_medium=cpc&campaignid={campaignid}&adgroupid={adgroupid}&creative={creative}&keyword={keyword}
+```
+
+I parametri ValueTrack vengono risolti da Google al momento del clic. Il foglio registra gli ID forniti da Google Ads e non il valore del click ID. Se una campagna usa già `utm_campaign`, quel valore viene mostrato insieme all'ID campagna quando sono diversi.
+
+Per la SEO non serve modificare gli URL: un accesso proveniente da un risultato Google viene classificato `Google organico` tramite il referrer del browser. Quando il browser non comunica il referrer, il sistema usa `Non rilevata` invece di inventare l'origine.
+
 ## Verifica
 
 1. `npm test` verifica destinazione, risposte dei cinque tipi di modulo, consenso, mapping CRM, schema Apps Script, errori parziali, deduplicazione, neutralizzazione delle formule, chiavi di idempotenza e limite ai tentativi. I provider sono simulati: questi test non inviano email reali e non scrivono nel foglio.
@@ -58,7 +77,7 @@ Il destinatario è definito solo sul server: il browser non può cambiarlo. Il s
 
 Nessun dato dei moduli viene salvato in localStorage o nei log del server. Le query URL dei moduli introduttivi contengono solo le opzioni selezionate di trattamento, motivo e sede, mai recapiti o testo libero. Email e CRM contengono i dati forniti, inclusi gli eventuali dettagli sanitari. Il foglio deve restare privato e accessibile solo al personale autorizzato. Non è prevista una cancellazione automatica: tempi di conservazione e revisione periodica restano sotto la responsabilità dello Studio. Le date restano preferenze da confermare con la segreteria.
 
-La provenienza marketing viene conservata soltanto per la sessione in `sessionStorage`, senza recapiti o risposte del modulo. Sono memorizzati esclusivamente UTM, tipo di click ID (non il valore), pagina di ingresso e referrer senza query string. La classificazione avviene sul server con regole conservative:
+La provenienza marketing viene conservata soltanto per la sessione in `sessionStorage`, senza recapiti o risposte del modulo. Sono memorizzati esclusivamente UTM, identificativi ValueTrack di campagna/gruppo/annuncio, parola chiave, tipo di click ID (non il valore), pagina di ingresso e referrer senza query string. La classificazione avviene sul server con regole conservative:
 
 - `Google Ads` solo con `gclid`/`gbraid`/`wbraid` oppure Google con mezzo esplicitamente a pagamento;
 - `Google Maps` solo con UTM Maps/Google Business Profile o referrer Maps identificabile;
@@ -67,7 +86,7 @@ La provenienza marketing viene conservata soltanto per la sessione in `sessionSt
 - `Altro` per sorgenti esterne identificabili;
 - `Non rilevata` quando i segnali sono mancanti o ambigui.
 
-Il nome campagna viene riportato soltanto da `utm_campaign`; non viene ricostruito né inventato dal click ID.
+Il nome campagna viene riportato soltanto da `utm_campaign`; l'ID campagna viene riportato da `campaignid`, `gad_campaignid` o `utm_id`. Nessun dato viene ricostruito o inventato dal click ID.
 
 La formulazione dell’informativa privacy relativa ai fornitori tecnologici, ai dati sanitari e ai trasferimenti deve essere verificata dallo Studio prima della messa in produzione.
 

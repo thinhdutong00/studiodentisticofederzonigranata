@@ -1,3 +1,4 @@
+/** @OnlyCurrentDoc */
 const BOOKING_SHEET_NAME_ = 'Richieste dal sito';
 const BOOKING_LOG_SHEET_NAME_ = '_Log integrazione';
 const BOOKING_RECORD_TYPES_ = Object.freeze(['REALE', 'TEST']);
@@ -11,6 +12,40 @@ const BOOKING_PROVENANCE_ = Object.freeze([
 ]);
 
 const BOOKING_HEADERS_ = Object.freeze([
+  'Data e ora richiesta',
+  'Nome e cognome',
+  'Telefono',
+  'Email',
+  'Città / sede',
+  'Servizio richiesto',
+  'Provenienza lead',
+  'Campagna Google Ads (nome/ID)',
+  'Gruppo annunci Google Ads (ID)',
+  'Annuncio Google Ads (ID)',
+  'Parola chiave',
+  'Pagina di ingresso',
+  'Pagina di invio',
+  'Giorni e orari preferiti',
+  'Messaggio',
+  'Esito',
+  'Contattato',
+  'Tentativi di contatto',
+  'Data e ora ultimo contatto',
+  'Comunicazioni',
+  'Prossimo richiamo',
+  'Appuntamento confermato',
+  'Esito appuntamento',
+  'Preventivo presentato',
+  'Preventivo accettato',
+  'Trattamento iniziato',
+  'Note segreteria',
+  'Tipo record',
+  'ID richiesta',
+]);
+
+// Consente di distribuire il webhook prima della riorganizzazione del foglio
+// senza interrompere la ricezione delle richieste durante il passaggio.
+const BOOKING_LEGACY_HEADERS_ = Object.freeze([
   'Data e ora richiesta',
   'Nome e cognome',
   'Telefono',
@@ -67,12 +102,12 @@ function doPost(event) {
 
     const sheet = spreadsheet.getSheetByName(BOOKING_SHEET_NAME_);
     if (!sheet) throw new Error('Scheda richieste non trovata.');
-    verifyHeaders_(sheet, BOOKING_HEADERS_);
+    const schema = detectSchema_(sheet);
 
     const lastRow = sheet.getLastRow();
     if (lastRow > 1) {
       const existing = sheet
-        .getRange(2, BOOKING_HEADERS_.length, lastRow - 1, 1)
+        .getRange(2, schema.idColumn, lastRow - 1, 1)
         .createTextFinder(payload.requestId)
         .matchCase(true)
         .matchEntireCell(true)
@@ -83,13 +118,13 @@ function doPost(event) {
       }
     }
 
-    sheet.appendRow(mapPayloadToRow_(payload, new Date()));
+    const row = schema.version === 'current'
+      ? mapPayloadToRow_(payload, new Date())
+      : mapPayloadToLegacyRow_(payload, new Date());
+    sheet.appendRow(row);
     const insertedRow = sheet.getLastRow();
-    copyRowRules_(sheet, insertedRow);
-    sheet.getRange(insertedRow, 1).setNumberFormat('dd/mm/yyyy hh:mm');
-    sheet.getRange(insertedRow, 14).setNumberFormat('dd/mm/yyyy hh:mm');
-    sheet.getRange(insertedRow, 16).setNumberFormat('dd/mm/yyyy hh:mm');
-    sheet.getRange(insertedRow, 17).setNumberFormat('dd/mm/yyyy hh:mm');
+    copyRowRules_(sheet, insertedRow, schema.width);
+    formatInsertedRow_(sheet, insertedRow, schema.version);
     SpreadsheetApp.flush();
     appendIntegrationLog_(spreadsheet, 'OK', payload.requestId, `Riga ${insertedRow} creata come ${payload.recordType}.`);
     return jsonResponse_({ ok: true, requestId: payload.requestId, duplicate: false });
@@ -103,6 +138,26 @@ function doPost(event) {
   } finally {
     if (lock && lock.hasLock()) lock.releaseLock();
   }
+}
+
+function doGet() {
+  const properties = PropertiesService.getScriptProperties();
+  let sheetReady = false;
+  try {
+    const spreadsheet = openSpreadsheet_(properties);
+    sheetReady = !!spreadsheet.getSheetByName(BOOKING_SHEET_NAME_);
+  } catch (_error) {
+    sheetReady = false;
+  }
+  return jsonResponse_({
+    ok: true,
+    service: 'federzoni-granata-leads',
+    sheetReady,
+    secretConfigured: !!(
+      properties.getProperty('WEBHOOK_SECRET') ||
+      properties.getProperty('BOOKING_WEBHOOK_SECRET')
+    ),
+  });
 }
 
 function openSpreadsheet_(properties) {
@@ -135,24 +190,45 @@ function validatePayload_(payload) {
     orariPreferiti: 254,
     messaggio: 3000,
     pagina: 500,
+    paginaIngresso: 500,
     campagna: 300,
+    idCampagna: 64,
+    idGruppoAnnunci: 64,
+    idAnnuncio: 64,
+    parolaChiave: 300,
   };
   Object.keys(fields).forEach((key) => {
-    const value = payload[key];
+    const value = payload[key] == null ? '' : payload[key];
     if (typeof value !== 'string' || value.length > fields[key] || /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(value)) {
       throw new Error('Campo non valido.');
     }
+    payload[key] = value;
   });
   if (payload.nomeCognome.length < 2 || payload.telefono.replace(/\D/g, '').length < 6) throw new Error('Recapiti non validi.');
-  if (payload.pagina && (!payload.pagina.startsWith('/') || payload.pagina.startsWith('//') || /[?#]/.test(payload.pagina))) {
-    throw new Error('Pagina non valida.');
+  [payload.pagina, payload.paginaIngresso].forEach((page) => {
+    if (page && (!page.startsWith('/') || page.startsWith('//') || /[?#]/.test(page))) throw new Error('Pagina non valida.');
+  });
+}
+
+function detectSchema_(sheet) {
+  if (sheet.getLastColumn() >= BOOKING_HEADERS_.length && headersMatch_(sheet, BOOKING_HEADERS_)) {
+    return { version: 'current', width: BOOKING_HEADERS_.length, idColumn: BOOKING_HEADERS_.length };
   }
+  if (sheet.getLastColumn() >= BOOKING_LEGACY_HEADERS_.length && headersMatch_(sheet, BOOKING_LEGACY_HEADERS_)) {
+    return { version: 'legacy', width: BOOKING_LEGACY_HEADERS_.length, idColumn: BOOKING_LEGACY_HEADERS_.length };
+  }
+  throw new Error('Intestazioni foglio non valide.');
+}
+
+function headersMatch_(sheet, expected) {
+  const actual = sheet.getRange(1, 1, 1, expected.length).getDisplayValues()[0];
+  return !actual.some((value, index) => value !== expected[index]);
 }
 
 function verifyHeaders_(sheet, expected) {
-  if (sheet.getLastColumn() < expected.length) throw new Error('Schema foglio non valido.');
-  const actual = sheet.getRange(1, 1, 1, expected.length).getDisplayValues()[0];
-  if (actual.some((value, index) => value !== expected[index])) throw new Error('Intestazioni foglio non valide.');
+  if (sheet.getLastColumn() < expected.length || !headersMatch_(sheet, expected)) {
+    throw new Error('Intestazioni foglio non valide.');
+  }
 }
 
 function formatPreferences_(payload) {
@@ -162,7 +238,49 @@ function formatPreferences_(payload) {
   ].filter(Boolean).join('\n');
 }
 
+function campaignLabel_(payload) {
+  const campaign = payload.campagna.trim();
+  const campaignId = payload.idCampagna.trim();
+  if (campaign && campaignId && campaign !== campaignId) return `${campaign} (${campaignId})`;
+  return campaign || campaignId;
+}
+
 function mapPayloadToRow_(payload, receivedAt) {
+  const isTest = payload.recordType === 'TEST';
+  return [
+    receivedAt,
+    payload.nomeCognome,
+    payload.telefono,
+    payload.email,
+    payload.sede,
+    payload.servizio,
+    payload.provenienza,
+    campaignLabel_(payload),
+    payload.idGruppoAnnunci,
+    payload.idAnnuncio,
+    payload.parolaChiave,
+    payload.paginaIngresso,
+    payload.pagina,
+    formatPreferences_(payload),
+    payload.messaggio,
+    'Da chiamare',
+    isTest ? 'Sì' : 'No',
+    0,
+    '',
+    '',
+    '',
+    '',
+    'In attesa',
+    'Da verificare',
+    'In attesa',
+    'Da verificare',
+    isTest ? 'TEST – non contattare' : '',
+    payload.recordType,
+    payload.requestId,
+  ].map(sanitizeCell_);
+}
+
+function mapPayloadToLegacyRow_(payload, receivedAt) {
   const isTest = payload.recordType === 'TEST';
   return [
     receivedAt,
@@ -175,7 +293,7 @@ function mapPayloadToRow_(payload, receivedAt) {
     payload.messaggio,
     payload.provenienza,
     payload.pagina,
-    payload.campagna,
+    campaignLabel_(payload),
     isTest ? 'Sì' : 'No',
     0,
     '',
@@ -192,10 +310,10 @@ function mapPayloadToRow_(payload, receivedAt) {
   ].map(sanitizeCell_);
 }
 
-function copyRowRules_(sheet, insertedRow) {
+function copyRowRules_(sheet, insertedRow, width) {
   if (insertedRow <= 2) return;
-  const template = sheet.getRange(2, 1, 1, BOOKING_HEADERS_.length);
-  const target = sheet.getRange(insertedRow, 1, 1, BOOKING_HEADERS_.length);
+  const template = sheet.getRange(2, 1, 1, width);
+  const target = sheet.getRange(insertedRow, 1, 1, width);
   if (typeof template.copyTo === 'function' && SpreadsheetApp.CopyPasteType) {
     template.copyTo(target, SpreadsheetApp.CopyPasteType.PASTE_FORMAT, false);
   }
@@ -204,9 +322,21 @@ function copyRowRules_(sheet, insertedRow) {
   }
 }
 
+function formatInsertedRow_(sheet, insertedRow, version) {
+  sheet.getRange(insertedRow, 1).setNumberFormat('dd/mm/yyyy hh:mm');
+  sheet.getRange(insertedRow, 3).setNumberFormat('@');
+  const dateColumns = version === 'current' ? [19, 21, 22] : [14, 16, 17];
+  dateColumns.forEach((column) => sheet.getRange(insertedRow, column).setNumberFormat('dd/mm/yyyy hh:mm'));
+}
+
 function appendIntegrationLog_(spreadsheet, status, requestId, detail) {
-  const logSheet = spreadsheet.getSheetByName(BOOKING_LOG_SHEET_NAME_);
-  if (!logSheet) return;
+  let logSheet = spreadsheet.getSheetByName(BOOKING_LOG_SHEET_NAME_);
+  if (!logSheet) {
+    logSheet = spreadsheet.insertSheet(BOOKING_LOG_SHEET_NAME_);
+    logSheet.getRange(1, 1, 1, BOOKING_LOG_HEADERS_.length).setValues([BOOKING_LOG_HEADERS_]);
+    logSheet.setFrozenRows(1);
+    logSheet.hideSheet();
+  }
   verifyHeaders_(logSheet, BOOKING_LOG_HEADERS_);
   logSheet.appendRow([new Date(), status, requestId || '', detail]);
   const row = logSheet.getLastRow();
@@ -242,7 +372,6 @@ function safeErrorMessage_(error) {
     'Foglio non configurato.',
     'Integrazione temporaneamente occupata.',
     'Scheda richieste non trovata.',
-    'Schema foglio non valido.',
     'Intestazioni foglio non valide.',
   ]);
   return error && allowed.has(error.message) ? error.message : 'Errore interno del webhook.';

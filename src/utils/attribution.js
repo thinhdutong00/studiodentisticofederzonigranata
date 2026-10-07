@@ -1,9 +1,13 @@
-const STORAGE_KEY = 'fg-booking-attribution-v1';
+const STORAGE_KEY = 'fg-booking-attribution-v2';
 const MAX_VALUE_LENGTH = 300;
 const ATTRIBUTION_KEYS = [
   'attributionSource',
   'attributionMedium',
   'attributionCampaign',
+  'attributionCampaignId',
+  'attributionAdGroupId',
+  'attributionAdId',
+  'attributionKeyword',
   'attributionReferrer',
   'attributionLandingPage',
   'clickIdType',
@@ -38,6 +42,10 @@ export function deriveAttribution({ href, origin, search, referrer }) {
     attributionSource: clean(params.get('utm_source')),
     attributionMedium: clean(params.get('utm_medium')),
     attributionCampaign: clean(params.get('utm_campaign')),
+    attributionCampaignId: clean(params.get('campaignid') || params.get('gad_campaignid') || params.get('utm_id'), 64),
+    attributionAdGroupId: clean(params.get('adgroupid'), 64),
+    attributionAdId: clean(params.get('creative') || params.get('adid') || params.get('utm_content'), 64),
+    attributionKeyword: clean(params.get('keyword') || params.get('utm_term')),
     attributionReferrer: safeReferrer(referrer),
     attributionLandingPage: safePagePath(href, origin) || '/',
     clickIdType,
@@ -70,7 +78,16 @@ function readStoredAttribution() {
 }
 
 function hasExplicitCampaignSignal(value) {
-  return Boolean(value.clickIdType || value.attributionSource || value.attributionMedium || value.attributionCampaign);
+  return Boolean(
+    value.clickIdType ||
+    value.attributionSource ||
+    value.attributionMedium ||
+    value.attributionCampaign ||
+    value.attributionCampaignId ||
+    value.attributionAdGroupId ||
+    value.attributionAdId ||
+    value.attributionKeyword
+  );
 }
 
 function writeStoredAttribution(value) {

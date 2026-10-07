@@ -260,15 +260,19 @@ test('classifies attribution conservatively without inventing organic or campaig
 
 test('captures only bounded non-contact attribution data from the browser URL', () => {
   const attribution = deriveAttribution({
-    href: 'https://studiodentisticofederzonigranata.it/sbiancamento/?utm_source=google&utm_medium=cpc&utm_campaign=TEST-CAMPAGNA&gclid=TEST-NON-REALE',
+    href: 'https://studiodentisticofederzonigranata.it/sbiancamento/?utm_source=google&utm_medium=cpc&utm_campaign=TEST-CAMPAGNA&campaignid=123&adgroupid=456&creative=789&keyword=dentista%20modena&gclid=TEST-NON-REALE',
     origin: 'https://studiodentisticofederzonigranata.it',
-    search: '?utm_source=google&utm_medium=cpc&utm_campaign=TEST-CAMPAGNA&gclid=TEST-NON-REALE',
+    search: '?utm_source=google&utm_medium=cpc&utm_campaign=TEST-CAMPAGNA&campaignid=123&adgroupid=456&creative=789&keyword=dentista%20modena&gclid=TEST-NON-REALE',
     referrer: 'https://www.google.it/search?q=dentista+modena&email=privato@example.com',
   });
   assert.deepEqual(attribution, {
     attributionSource: 'google',
     attributionMedium: 'cpc',
     attributionCampaign: 'TEST-CAMPAGNA',
+    attributionCampaignId: '123',
+    attributionAdGroupId: '456',
+    attributionAdId: '789',
+    attributionKeyword: 'dentista modena',
     attributionReferrer: 'https://www.google.it/search',
     attributionLandingPage: '/sbiancamento/',
     clickIdType: 'gclid',
@@ -285,6 +289,10 @@ test('builds the payload expected by the operational sheet', () => {
     attributionSource: 'google',
     attributionMedium: 'cpc',
     attributionCampaign: 'TEST-CAMPAGNA-ESATTA',
+    attributionCampaignId: '123456789',
+    attributionAdGroupId: '987654321',
+    attributionAdId: '456789123',
+    attributionKeyword: 'dentista modena',
     attributionLandingPage: '/sbiancamento/',
     attributionReferrer: 'https://www.google.it/search',
     clickIdType: 'gclid',
@@ -302,6 +310,11 @@ test('builds the payload expected by the operational sheet', () => {
   assert.equal(payload.provenienza, 'Google Ads');
   assert.equal(payload.pagina, base.source);
   assert.equal(payload.campagna, 'TEST-CAMPAGNA-ESATTA');
+  assert.equal(payload.idCampagna, '123456789');
+  assert.equal(payload.idGruppoAnnunci, '987654321');
+  assert.equal(payload.idAnnuncio, '456789123');
+  assert.equal(payload.parolaChiave, 'dentista modena');
+  assert.equal(payload.paginaIngresso, '/sbiancamento/');
   assert.equal(payload.recordType, 'TEST');
   assert.match(payload.messaggio, /Sbiancamento domiciliare controllato/);
 

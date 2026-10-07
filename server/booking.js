@@ -37,6 +37,10 @@ const ATTRIBUTION_FIELDS = {
   attributionSource: 300,
   attributionMedium: 300,
   attributionCampaign: 300,
+  attributionCampaignId: 64,
+  attributionAdGroupId: 64,
+  attributionAdId: 64,
+  attributionKeyword: 300,
   attributionReferrer: 500,
   attributionLandingPage: 500,
   clickIdType: 10,
@@ -209,6 +213,11 @@ export function buildSheetPayload(data, env) {
     provenienza: classifyAttribution(data),
     pagina: data.source,
     campagna: data.attributionCampaign || '',
+    idCampagna: data.attributionCampaignId || '',
+    idGruppoAnnunci: data.attributionAdGroupId || '',
+    idAnnuncio: data.attributionAdId || '',
+    parolaChiave: data.attributionKeyword || '',
+    paginaIngresso: data.attributionLandingPage || '',
     recordType: env.GOOGLE_SHEETS_RECORD_TYPE === 'TEST' ? 'TEST' : 'REALE',
   };
 }
