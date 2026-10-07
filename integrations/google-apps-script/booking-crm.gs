@@ -12,6 +12,23 @@ const BOOKING_PROVENANCE_ = Object.freeze([
 ]);
 
 const BOOKING_HEADERS_ = Object.freeze([
+  'Data',
+  'Nome e cognome',
+  'Telefono',
+  'Email',
+  'Città',
+  'Provenienza',
+  'Annuncio',
+  'Contattato',
+  'Data e ora di contatto',
+  'Comunicazioni',
+  'Preventivo',
+  'Accettato',
+]);
+
+// Compatibilità con la versione estesa usata prima della semplificazione del
+// foglio. Può essere rimossa dopo che tutte le distribuzioni sono aggiornate.
+const BOOKING_EXTENDED_HEADERS_ = Object.freeze([
   'Data e ora richiesta',
   'Nome e cognome',
   'Telefono',
@@ -105,7 +122,7 @@ function doPost(event) {
     const schema = detectSchema_(sheet);
 
     const lastRow = sheet.getLastRow();
-    if (lastRow > 1) {
+    if (schema.idColumn && lastRow > 1) {
       const existing = sheet
         .getRange(2, schema.idColumn, lastRow - 1, 1)
         .createTextFinder(payload.requestId)
@@ -117,10 +134,16 @@ function doPost(event) {
         return jsonResponse_({ ok: true, requestId: payload.requestId, duplicate: true });
       }
     }
+    if (!schema.idColumn && hasSuccessfulLog_(spreadsheet, payload.requestId)) {
+      appendIntegrationLog_(spreadsheet, 'DUPLICATO', payload.requestId, 'Richiesta già presente; nessuna nuova riga creata.');
+      return jsonResponse_({ ok: true, requestId: payload.requestId, duplicate: true });
+    }
 
-    const row = schema.version === 'current'
+    const row = schema.version === 'compact'
       ? mapPayloadToRow_(payload, new Date())
-      : mapPayloadToLegacyRow_(payload, new Date());
+      : schema.version === 'extended'
+        ? mapPayloadToExtendedRow_(payload, new Date())
+        : mapPayloadToLegacyRow_(payload, new Date());
     sheet.appendRow(row);
     const insertedRow = sheet.getLastRow();
     copyRowRules_(sheet, insertedRow, schema.width);
@@ -212,7 +235,10 @@ function validatePayload_(payload) {
 
 function detectSchema_(sheet) {
   if (sheet.getLastColumn() >= BOOKING_HEADERS_.length && headersMatch_(sheet, BOOKING_HEADERS_)) {
-    return { version: 'current', width: BOOKING_HEADERS_.length, idColumn: BOOKING_HEADERS_.length };
+    return { version: 'compact', width: BOOKING_HEADERS_.length, idColumn: null };
+  }
+  if (sheet.getLastColumn() >= BOOKING_EXTENDED_HEADERS_.length && headersMatch_(sheet, BOOKING_EXTENDED_HEADERS_)) {
+    return { version: 'extended', width: BOOKING_EXTENDED_HEADERS_.length, idColumn: BOOKING_EXTENDED_HEADERS_.length };
   }
   if (sheet.getLastColumn() >= BOOKING_LEGACY_HEADERS_.length && headersMatch_(sheet, BOOKING_LEGACY_HEADERS_)) {
     return { version: 'legacy', width: BOOKING_LEGACY_HEADERS_.length, idColumn: BOOKING_LEGACY_HEADERS_.length };
@@ -245,7 +271,57 @@ function campaignLabel_(payload) {
   return campaign || campaignId;
 }
 
+function compactProvenance_(payload) {
+  if (payload.provenienza === 'Google Ads') return 'Google Ads';
+  if (payload.provenienza === 'Google organico' || payload.provenienza === 'Google Maps') return 'SEO';
+  return '';
+}
+
+function absoluteSiteUrl_(path) {
+  const value = String(path || '').trim();
+  if (!value) return '';
+  if (/^https:\/\//i.test(value)) return value;
+  return `https://studiodentisticofederzonigranata.it${value.startsWith('/') ? value : `/${value}`}`;
+}
+
+function adOrPageLabel_(payload) {
+  if (payload.provenienza === 'Google Ads') {
+    const ad = payload.idAnnuncio.trim();
+    if (ad) return /^\d+$/.test(ad) ? `Google Ads · ID ${ad}` : ad;
+    const campaign = campaignLabel_(payload);
+    return campaign ? `Campagna: ${campaign}` : 'Google Ads';
+  }
+  return absoluteSiteUrl_(payload.paginaIngresso || payload.pagina);
+}
+
+function compactCommunications_(payload) {
+  const lines = [
+    payload.recordType === 'TEST' ? 'TEST – non contattare' : '',
+    payload.servizio ? `Servizio richiesto: ${payload.servizio}` : '',
+    formatPreferences_(payload),
+    payload.messaggio,
+  ];
+  return lines.filter(Boolean).join('\n');
+}
+
 function mapPayloadToRow_(payload, receivedAt) {
+  return [
+    receivedAt,
+    payload.nomeCognome,
+    payload.telefono,
+    payload.email,
+    payload.sede,
+    compactProvenance_(payload),
+    adOrPageLabel_(payload),
+    'No',
+    '',
+    compactCommunications_(payload),
+    '',
+    'No',
+  ].map(sanitizeCell_);
+}
+
+function mapPayloadToExtendedRow_(payload, receivedAt) {
   const isTest = payload.recordType === 'TEST';
   return [
     receivedAt,
@@ -325,8 +401,23 @@ function copyRowRules_(sheet, insertedRow, width) {
 function formatInsertedRow_(sheet, insertedRow, version) {
   sheet.getRange(insertedRow, 1).setNumberFormat('dd/mm/yyyy hh:mm');
   sheet.getRange(insertedRow, 3).setNumberFormat('@');
-  const dateColumns = version === 'current' ? [19, 21, 22] : [14, 16, 17];
+  if (version === 'compact') {
+    sheet.getRange(insertedRow, 9).setNumberFormat('dd/mm/yyyy hh:mm');
+    sheet.getRange(insertedRow, 11).setNumberFormat('€ #,##0.00');
+    return;
+  }
+  const dateColumns = version === 'extended' ? [19, 21, 22] : [14, 16, 17];
   dateColumns.forEach((column) => sheet.getRange(insertedRow, column).setNumberFormat('dd/mm/yyyy hh:mm'));
+}
+
+function hasSuccessfulLog_(spreadsheet, requestId) {
+  const logSheet = spreadsheet.getSheetByName(BOOKING_LOG_SHEET_NAME_);
+  if (!logSheet || logSheet.getLastRow() <= 1) return false;
+  verifyHeaders_(logSheet, BOOKING_LOG_HEADERS_);
+  return logSheet
+    .getRange(2, 2, logSheet.getLastRow() - 1, 2)
+    .getDisplayValues()
+    .some((row) => (row[0] === 'OK' || row[0] === 'DUPLICATO') && row[1] === requestId);
 }
 
 function appendIntegrationLog_(spreadsheet, status, requestId, detail) {

@@ -11,8 +11,8 @@ Archivio operativo: foglio privato **Federzoni Granata Thin leads**, scheda `Ric
 - I moduli introduttivi dei trattamenti (incluso sbiancamento) aprono `/richiesta/` con trattamento, sede e motivo preselezionati; l’invio avviene dopo aver raccolto i recapiti. Anche un motivo iniziale che non coincide con le opzioni del questionario viene conservato nell’email.
 - Il server controlla i dati e chiama in parallelo Resend e la web app Google Apps Script del CRM. La conferma appare solo se Resend restituisce un identificativo email e il CRM conferma la registrazione della stessa richiesta.
 - In caso di errore o timeout il modulo conserva i valori e permette di riprovare. Lo stesso tentativo mantiene lo stesso `requestId`: Resend riutilizza la chiave di idempotenza e Apps Script non inserisce una seconda riga con lo stesso ID.
-- Il foglio riceve solo dati già validati dal server. Le nuove richieste reali entrano con `Contattato = No`, `Esito = Da chiamare` e `Tipo record = REALE`; questi valori non possono essere impostati dal browser.
-- Provenienza, campagna, gruppo annunci, annuncio, parola chiave e pagine di ingresso/invio vengono conservati in campi separati, senza salvare il valore dei click ID pubblicitari.
+- Il foglio riceve solo dati già validati dal server. Le nuove richieste entrano con `Contattato = No` e `Accettato = No`; questi valori non possono essere impostati dal browser.
+- La scheda visibile conserva soltanto i campi operativi richiesti. Il log tecnico nascosto conserva l’ID univoco usato per impedire duplicati, senza salvare il valore dei click ID pubblicitari.
 
 ## Configurazione necessaria su Vercel
 
@@ -43,14 +43,13 @@ Le funzioni Vercel in `api/` sono distribuite insieme al sito Astro statico; il 
 4. Distribuire lo script come applicazione web, eseguita come account dello studio. Il server deve poter chiamare l’URL `/exec`; l’endpoint è protetto dal segreto nel corpo HTTPS.
 5. Salvare l’URL della distribuzione in `GOOGLE_SHEETS_WEBHOOK_URL` e creare un nuovo deploy Vercel.
 
-La scheda operativa deve chiamarsi `Richieste dal sito`; il log tecnico deve chiamarsi `_Log integrazione`. Entrambe devono mantenere le intestazioni nell’ordine previsto dallo script. Apps Script rifiuta lo schema se un’intestazione viene rinominata o spostata. La ricerca dell’`ID richiesta` avviene sotto lock per impedire duplicati concorrenti. Formati e convalide operative vengono copiati sulle nuove righe e i valori che iniziano come formule vengono salvati come testo.
+La scheda operativa deve chiamarsi `Richieste dal sito`; il log tecnico nascosto deve chiamarsi `_Log integrazione`. Entrambe devono mantenere le intestazioni nell’ordine previsto dallo script. Apps Script rifiuta lo schema se un’intestazione viene rinominata o spostata. La ricerca dell’`ID richiesta` avviene nel log sotto lock per impedire duplicati concorrenti. Formati e convalide operative vengono copiati sulle nuove righe e i valori che iniziano come formule vengono salvati come testo.
 
-La scheda operativa usa 29 colonne, raggruppate così:
+La scheda operativa usa esattamente 12 colonne, nell’ordine:
 
-- anagrafica e richiesta: data, nome e cognome, telefono, email, città/sede e servizio;
-- attribuzione: provenienza lead, campagna, gruppo annunci, annuncio, parola chiave, pagina di ingresso e pagina di invio;
-- gestione: preferenze, messaggio, esito, contattato, tentativi, data ultimo contatto, comunicazioni, richiamo, appuntamento, preventivo e trattamento;
-- colonne tecniche: note, tipo record e ID richiesta.
+`Data`, `Nome e cognome`, `Telefono`, `Email`, `Città`, `Provenienza`, `Annuncio`, `Contattato`, `Data e ora di contatto`, `Comunicazioni`, `Preventivo`, `Accettato`.
+
+`Provenienza` mostra `Google Ads` per il traffico a pagamento e `SEO` per Google organico/Maps. Quando i segnali non bastano, resta vuota invece di attribuire un’origine inventata. `Annuncio` mostra il nome passato con un parametro dedicato oppure l’ID creativo Google Ads; per gli altri lead mostra il link completo della pagina di ingresso. Servizio, preferenze e messaggio del modulo confluiscono in `Comunicazioni`.
 
 ## Collegamento con Google Ads e SEO
 
@@ -60,16 +59,16 @@ Il sito riconosce automaticamente un clic Google Ads dalla presenza di `gclid`, 
 utm_source=google&utm_medium=cpc&campaignid={campaignid}&adgroupid={adgroupid}&creative={creative}&keyword={keyword}
 ```
 
-I parametri ValueTrack vengono risolti da Google al momento del clic. Il foglio registra gli ID forniti da Google Ads e non il valore del click ID. Se una campagna usa già `utm_campaign`, quel valore viene mostrato insieme all'ID campagna quando sono diversi.
+I parametri ValueTrack vengono risolti da Google al momento del clic. Google espone automaticamente l’ID del creativo, non il nome editoriale dell’annuncio: in assenza di un nome passato esplicitamente il foglio mostra `Google Ads · ID …`. Il valore del click ID non viene salvato.
 
-Per la SEO non serve modificare gli URL: un accesso proveniente da un risultato Google viene classificato `Google organico` tramite il referrer del browser. Quando il browser non comunica il referrer, il sistema usa `Non rilevata` invece di inventare l'origine.
+Per la SEO non serve modificare gli URL: un accesso proveniente da un risultato Google viene classificato `SEO` tramite il referrer del browser e il foglio riporta la pagina di ingresso. Quando il browser non comunica segnali sufficienti, la provenienza resta vuota invece di inventare l'origine.
 
 ## Verifica
 
 1. `npm test` verifica destinazione, risposte dei cinque tipi di modulo, consenso, mapping CRM, schema Apps Script, errori parziali, deduplicazione, neutralizzazione delle formule, chiavi di idempotenza e limite ai tentativi. I provider sono simulati: questi test non inviano email reali e non scrivono nel foglio.
 2. `npm run build` verifica la compilazione del sito.
 3. Per lo sviluppo, copiare `.env.example` in `.env` e configurare le variabili. `npm run dev` serve anche l’endpoint locale; con credenziali reali il modulo invia email reali allo stesso destinatario.
-4. Dopo il deploy configurato, inviare una richiesta chiaramente identificata come prova tecnica. Verificare l’evento `delivered` su Resend, la ricezione nella casella e una sola riga nel foglio. In Preview la riga deve avere `Tipo record = TEST`; in Production deve avere `Tipo record = REALE`. Ripetere lo stesso `requestId` e controllare che non venga creata una seconda riga.
+4. Dopo il deploy configurato, inviare una richiesta chiaramente identificata come prova tecnica. Verificare l’evento `delivered` su Resend, la ricezione nella casella e una sola riga nel foglio. In Preview `Comunicazioni` deve iniziare con `TEST – non contattare`; in Production questa dicitura non deve comparire. Ripetere lo stesso `requestId` e controllare nel log tecnico nascosto che non venga creata una seconda riga.
 
 ## Protezioni e limiti
 

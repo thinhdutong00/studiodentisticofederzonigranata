@@ -82,7 +82,7 @@ function loadScript(rows = [], logRows = []) {
     },
   };
   vm.createContext(context);
-  vm.runInContext(`${source}\nglobalThis.__sheetTest = { BOOKING_HEADERS_, BOOKING_LEGACY_HEADERS_, BOOKING_LOG_HEADERS_, sanitizeCell_, secureEquals_, mapPayloadToRow_, mapPayloadToLegacyRow_, validatePayload_, formatPreferences_, campaignLabel_ };`, context);
+  vm.runInContext(`${source}\nglobalThis.__sheetTest = { BOOKING_HEADERS_, BOOKING_EXTENDED_HEADERS_, BOOKING_LEGACY_HEADERS_, BOOKING_LOG_HEADERS_, sanitizeCell_, secureEquals_, mapPayloadToRow_, mapPayloadToExtendedRow_, mapPayloadToLegacyRow_, validatePayload_, formatPreferences_, campaignLabel_, compactProvenance_, adOrPageLabel_, compactCommunications_ };`, context);
   return context;
 }
 
@@ -111,49 +111,56 @@ function payload(overrides = {}) {
   };
 }
 
-test('Apps Script matches the 29-column lead and advertising sheet', () => {
+test('Apps Script matches the exact 12-column operational sheet', () => {
   const { BOOKING_HEADERS_, BOOKING_LOG_HEADERS_, mapPayloadToRow_ } = loadScript().__sheetTest;
-  assert.equal(BOOKING_HEADERS_.length, 29);
-  assert.deepEqual(Array.from(BOOKING_HEADERS_.slice(0, 6)), [
-    'Data e ora richiesta',
+  assert.deepEqual(Array.from(BOOKING_HEADERS_), [
+    'Data',
     'Nome e cognome',
     'Telefono',
     'Email',
-    'Città / sede',
-    'Servizio richiesto',
-  ]);
-  assert.deepEqual(Array.from(BOOKING_HEADERS_.slice(-3)), ['Note segreteria', 'Tipo record', 'ID richiesta']);
-  assert.deepEqual(Array.from(BOOKING_HEADERS_.slice(6, 11)), [
-    'Provenienza lead',
-    'Campagna Google Ads (nome/ID)',
-    'Gruppo annunci Google Ads (ID)',
-    'Annuncio Google Ads (ID)',
-    'Parola chiave',
+    'Città',
+    'Provenienza',
+    'Annuncio',
+    'Contattato',
+    'Data e ora di contatto',
+    'Comunicazioni',
+    'Preventivo',
+    'Accettato',
   ]);
   assert.deepEqual(Array.from(BOOKING_LOG_HEADERS_), ['Data e ora', 'Stato', 'ID richiesta', 'Dettaglio']);
 
   const row = Array.from(mapPayloadToRow_(payload(), new Date('2026-10-03T21:53:43.000Z')));
   assert.equal(row.length, BOOKING_HEADERS_.length);
   assert.equal(row[2], "'+39 333 000 0000");
-  assert.equal(row[6], 'Google Ads');
-  assert.equal(row[7], 'TEST-CAMPAGNA (123456789)');
-  assert.equal(row[8], '987654321');
-  assert.equal(row[9], '456789123');
-  assert.equal(row[10], 'dentista urgente modena');
-  assert.equal(row[11], '/urgenza-dentale/');
-  assert.equal(row[12], '/prenota-urgenza/');
-  assert.equal(row[14], "'=FORMULA()");
-  assert.equal(row[15], 'Da chiamare');
-  assert.equal(row[16], 'Sì');
-  assert.equal(row[17], 0);
-  assert.equal(row[22], 'In attesa');
-  assert.equal(row[26], 'TEST – non contattare');
-  assert.equal(row[27], 'TEST');
-  assert.equal(row[28], payload().requestId);
+  assert.equal(row[5], 'Google Ads');
+  assert.equal(row[6], 'Google Ads · ID 456789123');
+  assert.equal(row[7], 'No');
+  assert.equal(row[8], '');
+  assert.match(row[9], /^TEST – non contattare\nServizio richiesto: Urgenza/);
+  assert.match(row[9], /=FORMULA\(\)$/);
+  assert.equal(row[10], '');
+  assert.equal(row[11], 'No');
 
   const realRow = Array.from(mapPayloadToRow_(payload({ recordType: 'REALE' }), new Date()));
-  assert.equal(realRow[16], 'No');
-  assert.equal(realRow[26], '');
+  assert.equal(realRow[7], 'No');
+  assert.doesNotMatch(realRow[9], /TEST/);
+});
+
+test('Apps Script maps organic traffic to SEO and keeps the booking page link', () => {
+  const { mapPayloadToRow_ } = loadScript().__sheetTest;
+  const row = Array.from(mapPayloadToRow_(payload({
+    provenienza: 'Google organico',
+    paginaIngresso: '/implantologia/',
+    pagina: '/richiesta/',
+    idAnnuncio: '',
+    recordType: 'REALE',
+  }), new Date()));
+  assert.equal(row[5], 'SEO');
+  assert.equal(row[6], 'https://studiodentisticofederzonigranata.it/implantologia/');
+
+  const unknown = Array.from(mapPayloadToRow_(payload({ provenienza: 'Diretto', idAnnuncio: '' }), new Date()));
+  assert.equal(unknown[5], '');
+  assert.equal(unknown[6], 'https://studiodentisticofederzonigranata.it/urgenza-dentale/');
 });
 
 test('Apps Script neutralizes formulas and compares secrets exactly', () => {
@@ -185,11 +192,43 @@ test('Apps Script appends once, logs success and acknowledges duplicate request 
   assert.deepEqual(first, { ok: true, requestId: payload().requestId, duplicate: false });
   assert.deepEqual(second, { ok: true, requestId: payload().requestId, duplicate: true });
   assert.equal(rows.length, 2);
-  assert.equal(rows[1][27], 'TEST');
-  assert.equal(rows[1][28], payload().requestId);
+  assert.equal(rows[1].length, 12);
+  assert.equal(rows[1][7], 'No');
+  assert.equal(rows[1][11], 'No');
   assert.equal(logRows.length, 3);
   assert.equal(logRows[1][1], 'OK');
   assert.equal(logRows[2][1], 'DUPLICATO');
+});
+
+test('Apps Script ignores an old error log and retries the compact row', () => {
+  const bootstrap = loadScript();
+  const rows = [Array.from(bootstrap.__sheetTest.BOOKING_HEADERS_)];
+  const logRows = [
+    Array.from(bootstrap.__sheetTest.BOOKING_LOG_HEADERS_),
+    [new Date(), 'ERRORE', payload().requestId, 'Errore precedente'],
+  ];
+  const context = loadScript(rows, logRows);
+  const response = JSON.parse(context.doPost({ postData: { contents: JSON.stringify(payload()) } }).text);
+
+  assert.equal(response.ok, true);
+  assert.equal(response.duplicate, false);
+  assert.equal(rows.length, 2);
+  assert.equal(logRows.at(-1)[1], 'OK');
+});
+
+test('Apps Script remains compatible with the previous 29-column sheet during rollout', () => {
+  const bootstrap = loadScript();
+  const rows = [Array.from(bootstrap.__sheetTest.BOOKING_EXTENDED_HEADERS_)];
+  const logRows = [Array.from(bootstrap.__sheetTest.BOOKING_LOG_HEADERS_)];
+  const context = loadScript(rows, logRows);
+  const response = JSON.parse(context.doPost({ postData: { contents: JSON.stringify(payload()) } }).text);
+
+  assert.equal(response.ok, true);
+  assert.equal(rows.length, 2);
+  assert.equal(rows[1].length, 29);
+  assert.equal(rows[1][7], 'TEST-CAMPAGNA (123456789)');
+  assert.equal(rows[1][27], 'TEST');
+  assert.equal(rows[1][28], payload().requestId);
 });
 
 test('Apps Script remains compatible with the previous 24-column sheet during rollout', () => {
