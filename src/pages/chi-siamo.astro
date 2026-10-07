@@ -109,6 +109,9 @@ const officeDetails: Record<string, { label: string; title: string; description:
           loop
           playsinline
           preload="auto"
+          tabindex="-1"
+          disablepictureinpicture
+          controlslist="nodownload nofullscreen noplaybackrate"
           aria-label="Presentazione dello Studio Dentistico Federzoni Granata"
         >
           <source src="/assets/chi-siamo/chi-siamo-hero-mobile.m4v" type="video/mp4" />
@@ -290,19 +293,28 @@ const officeDetails: Record<string, { label: string; title: string; description:
 
   if (aboutHeroVideo instanceof HTMLVideoElement) {
     const playAboutHeroVideo = () => {
+      if (document.hidden) return;
+
       aboutHeroVideo.muted = true;
+      aboutHeroVideo.defaultMuted = true;
+      aboutHeroVideo.loop = true;
+      aboutHeroVideo.controls = false;
       aboutHeroVideo.play().catch(() => {});
     };
 
-    if (aboutHeroVideo.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+    if (aboutHeroVideo.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
       playAboutHeroVideo();
     } else {
       aboutHeroVideo.addEventListener('canplay', playAboutHeroVideo, { once: true });
     }
 
+    aboutHeroVideo.addEventListener('pause', playAboutHeroVideo);
+
     document.addEventListener('visibilitychange', () => {
       if (!document.hidden) playAboutHeroVideo();
     });
+
+    window.addEventListener('pageshow', playAboutHeroVideo);
   }
 
 </script>
@@ -1214,6 +1226,10 @@ const officeDetails: Record<string, { label: string; title: string; description:
       height: 100%;
       display: block;
       object-fit: cover;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
     }
 
     .vision-section,
