@@ -89,6 +89,10 @@ const showSectionReveal = !sectionRevealExcludedPaths.has(canonicalPath);
     {treatmentPage && <TreatmentStickyCta treatment={treatmentPage.navTitle} href={headerCtaHref !== '/richiesta/' ? headerCtaHref : undefined} />}
     {showWhatsAppButton && <WhatsAppFloatingButton />}
     <CookieBanner />
+    <script>
+      import { captureAttribution } from '../utils/attribution';
+      captureAttribution();
+    </script>
   </body>
 </html>
 

@@ -1,3 +1,5 @@
+import { getBookingAttribution } from './attribution';
+
 type Attempt = { fingerprint: string; requestId: string };
 const attempts = new WeakMap<HTMLFormElement, Attempt>();
 const pending = new WeakSet<HTMLFormElement>();
@@ -17,6 +19,7 @@ export async function submitBooking(form: HTMLFormElement, setError: (message: s
       fullName: [fields.fullName, fields.lastName].filter(Boolean).join(' '),
       kind: form.dataset.bookingKind,
       source: window.location.pathname,
+      ...getBookingAttribution(),
       privacyConsent: fields.privacyConsent === 'on' || fields.privacyConsent === '1',
       scheduleAcknowledged: fields.scheduleAcknowledged === 'on' || fields.scheduleAcknowledged === '1',
     };

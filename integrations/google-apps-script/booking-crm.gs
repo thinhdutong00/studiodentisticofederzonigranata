@@ -1,162 +1,216 @@
-const CRM_SCHEMA_VERSION_ = 1;
-const CRM_SHEET_NAME_ = 'CRM richieste';
-const CRM_DEFAULT_STATUS_ = 'Nuovo';
-const CRM_KIND_LABELS_ = Object.freeze({
-  'first-visit': 'Prima visita',
-  urgent: 'Urgenza',
-  treatment: 'Valutazione di un trattamento',
-  contact: 'Informazioni',
-  callback: 'Richiesta di richiamata',
-});
+const BOOKING_SHEET_NAME_ = 'Richieste dal sito';
+const BOOKING_LOG_SHEET_NAME_ = '_Log integrazione';
+const BOOKING_RECORD_TYPES_ = Object.freeze(['REALE', 'TEST']);
+const BOOKING_PROVENANCE_ = Object.freeze([
+  'Google organico',
+  'Google Ads',
+  'Google Maps',
+  'Diretto',
+  'Altro',
+  'Non rilevata',
+]);
 
-const CRM_HEADERS_ = Object.freeze([
-  'Ricevuta il',
-  'Stato',
+const BOOKING_HEADERS_ = Object.freeze([
+  'Data e ora richiesta',
   'Nome e cognome',
   'Telefono',
   'Email',
-  'Tipo richiesta',
-  'Sede',
-  'Operatore',
-  'Ultimo contatto',
-  'Prossimo ricontatto',
-  'Data appuntamento',
-  'Ora appuntamento',
-  'Note segreteria',
-  'Fascia di età',
-  'Giorni preferiti',
-  'Orari preferiti',
-  'Trattamento',
-  'Categoria',
-  'Motivo richiesta',
-  'Preferenza iniziale',
-  'Motivo prima visita',
-  'Obiettivo visita',
-  'Disponibilità',
-  'Tipo urgenza',
-  'Sintomi',
-  'Dolore 0–10',
-  'Altri sintomi/informazioni',
-  'Altra esigenza',
-  'Note dal paziente',
+  'Sede richiesta',
+  'Servizio richiesto',
+  'Giorni e orari preferiti',
   'Messaggio',
-  'Dettagli',
-  'Pagina di provenienza',
-  'Consenso privacy',
-  'Conferma preferenze',
+  'Provenienza',
+  'Pagina di invio',
+  'Campagna pubblicitaria',
+  'Chiamato',
+  'Tentativi di chiamata',
+  'Ultimo tentativo',
+  'Esito del contatto',
+  'Prossimo richiamo',
+  'Appuntamento confermato',
+  'Esito appuntamento',
+  'Preventivo presentato',
+  'Preventivo accettato',
+  'Trattamento iniziato',
+  'Note segreteria',
+  'Tipo record',
   'ID richiesta',
+]);
+
+const BOOKING_LOG_HEADERS_ = Object.freeze([
+  'Data e ora',
+  'Stato',
+  'ID richiesta',
+  'Dettaglio',
 ]);
 
 function doPost(event) {
   let requestId = '';
+  let spreadsheet = null;
   let lock;
   try {
-    const envelope = JSON.parse(event && event.postData && event.postData.contents || '');
-    requestId = typeof envelope.requestId === 'string' ? envelope.requestId : '';
-    validateEnvelope_(envelope);
+    const payload = JSON.parse(event && event.postData && event.postData.contents || '');
+    requestId = typeof payload.requestId === 'string' ? payload.requestId : '';
+    validatePayload_(payload);
 
     const properties = PropertiesService.getScriptProperties();
-    const expectedSecret = properties.getProperty('BOOKING_WEBHOOK_SECRET');
-    const spreadsheetId = properties.getProperty('BOOKING_SPREADSHEET_ID');
-    if (!expectedSecret || !spreadsheetId || !secureEquals_(envelope.secret, expectedSecret)) {
-      throw new Error('Configurazione o autorizzazione non valida.');
+    const expectedSecret =
+      properties.getProperty('WEBHOOK_SECRET') ||
+      properties.getProperty('BOOKING_WEBHOOK_SECRET');
+    if (!expectedSecret || !secureEquals_(payload.secret, expectedSecret)) {
+      throw new Error('Autorizzazione non valida.');
     }
 
+    spreadsheet = openSpreadsheet_(properties);
     lock = LockService.getScriptLock();
-    if (!lock.tryLock(10000)) throw new Error('CRM temporaneamente occupato.');
+    if (!lock.tryLock(10000)) throw new Error('Integrazione temporaneamente occupata.');
 
-    const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
-    const sheet = spreadsheet.getSheetByName(CRM_SHEET_NAME_);
-    if (!sheet) throw new Error('Scheda CRM non trovata.');
-    verifyHeaders_(sheet);
+    const sheet = spreadsheet.getSheetByName(BOOKING_SHEET_NAME_);
+    if (!sheet) throw new Error('Scheda richieste non trovata.');
+    verifyHeaders_(sheet, BOOKING_HEADERS_);
 
     const lastRow = sheet.getLastRow();
     if (lastRow > 1) {
       const existing = sheet
-        .getRange(2, CRM_HEADERS_.length, lastRow - 1, 1)
-        .createTextFinder(envelope.requestId)
+        .getRange(2, BOOKING_HEADERS_.length, lastRow - 1, 1)
+        .createTextFinder(payload.requestId)
         .matchCase(true)
         .matchEntireCell(true)
         .findNext();
-      if (existing) return jsonResponse_({ ok: true, requestId: envelope.requestId, duplicate: true });
+      if (existing) {
+        appendIntegrationLog_(spreadsheet, 'DUPLICATO', payload.requestId, 'Richiesta già presente; nessuna nuova riga creata.');
+        return jsonResponse_({ ok: true, requestId: payload.requestId, duplicate: true });
+      }
     }
 
-    sheet.appendRow(mapRequestToRow_(envelope));
+    sheet.appendRow(mapPayloadToRow_(payload, new Date()));
     const insertedRow = sheet.getLastRow();
+    copyRowRules_(sheet, insertedRow);
     sheet.getRange(insertedRow, 1).setNumberFormat('dd/mm/yyyy hh:mm');
-    sheet.getRange(insertedRow, 9, 1, 3).setNumberFormat('dd/mm/yyyy');
-    sheet.getRange(insertedRow, 12).setNumberFormat('hh:mm');
+    sheet.getRange(insertedRow, 14).setNumberFormat('dd/mm/yyyy hh:mm');
+    sheet.getRange(insertedRow, 16).setNumberFormat('dd/mm/yyyy hh:mm');
+    sheet.getRange(insertedRow, 17).setNumberFormat('dd/mm/yyyy hh:mm');
     SpreadsheetApp.flush();
-    return jsonResponse_({ ok: true, requestId: envelope.requestId, duplicate: false });
-  } catch (_error) {
+    appendIntegrationLog_(spreadsheet, 'OK', payload.requestId, `Riga ${insertedRow} creata come ${payload.recordType}.`);
+    return jsonResponse_({ ok: true, requestId: payload.requestId, duplicate: false });
+  } catch (error) {
+    try {
+      if (spreadsheet) appendIntegrationLog_(spreadsheet, 'ERRORE', requestId, safeErrorMessage_(error));
+    } catch (_logError) {
+      // Il log non deve mascherare la risposta del webhook.
+    }
     return jsonResponse_({ ok: false, requestId: requestId || null, duplicate: false });
   } finally {
     if (lock && lock.hasLock()) lock.releaseLock();
   }
 }
 
-function validateEnvelope_(envelope) {
-  if (!envelope || typeof envelope !== 'object' || Array.isArray(envelope)) throw new Error('Payload non valido.');
-  if (envelope.schemaVersion !== CRM_SCHEMA_VERSION_) throw new Error('Versione non valida.');
-  if (typeof envelope.secret !== 'string' || envelope.secret.length < 32) throw new Error('Segreto non valido.');
-  if (typeof envelope.requestId !== 'string' || !/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(envelope.requestId)) {
+function openSpreadsheet_(properties) {
+  const spreadsheetId =
+    properties.getProperty('SPREADSHEET_ID') ||
+    properties.getProperty('BOOKING_SPREADSHEET_ID');
+  const spreadsheet = spreadsheetId
+    ? SpreadsheetApp.openById(spreadsheetId)
+    : SpreadsheetApp.getActiveSpreadsheet();
+  if (!spreadsheet) throw new Error('Foglio non configurato.');
+  return spreadsheet;
+}
+
+function validatePayload_(payload) {
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) throw new Error('Payload non valido.');
+  if (typeof payload.secret !== 'string' || payload.secret.length < 32) throw new Error('Segreto non valido.');
+  if (typeof payload.requestId !== 'string' || !/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(payload.requestId)) {
     throw new Error('ID richiesta non valido.');
   }
-  if (!Object.prototype.hasOwnProperty.call(CRM_KIND_LABELS_, envelope.kind)) throw new Error('Tipo richiesta non valido.');
-  if (!envelope.fields || typeof envelope.fields !== 'object' || Array.isArray(envelope.fields)) throw new Error('Campi non validi.');
-  const receivedAt = new Date(envelope.receivedAt);
-  if (typeof envelope.receivedAt !== 'string' || !Number.isFinite(receivedAt.getTime()) || receivedAt.toISOString() !== envelope.receivedAt) {
-    throw new Error('Data ricezione non valida.');
+  if (BOOKING_RECORD_TYPES_.indexOf(payload.recordType) === -1) throw new Error('Tipo record non valido.');
+  if (BOOKING_PROVENANCE_.indexOf(payload.provenienza) === -1) throw new Error('Provenienza non valida.');
+
+  const fields = {
+    nomeCognome: 120,
+    telefono: 30,
+    email: 254,
+    sede: 254,
+    servizio: 254,
+    giorniPreferiti: 1024,
+    orariPreferiti: 254,
+    messaggio: 3000,
+    pagina: 500,
+    campagna: 300,
+  };
+  Object.keys(fields).forEach((key) => {
+    const value = payload[key];
+    if (typeof value !== 'string' || value.length > fields[key] || /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(value)) {
+      throw new Error('Campo non valido.');
+    }
+  });
+  if (payload.nomeCognome.length < 2 || payload.telefono.replace(/\D/g, '').length < 6) throw new Error('Recapiti non validi.');
+  if (payload.pagina && (!payload.pagina.startsWith('/') || payload.pagina.startsWith('//') || /[?#]/.test(payload.pagina))) {
+    throw new Error('Pagina non valida.');
   }
-  if (envelope.fields.privacyConsent !== true) throw new Error('Consenso non valido.');
-  if (envelope.kind === 'treatment' && envelope.fields.scheduleAcknowledged !== true) throw new Error('Conferma preferenze non valida.');
 }
 
-function verifyHeaders_(sheet) {
-  if (sheet.getLastColumn() !== CRM_HEADERS_.length) throw new Error('Schema CRM non valido.');
-  const actual = sheet.getRange(1, 1, 1, CRM_HEADERS_.length).getDisplayValues()[0];
-  if (actual.some((value, index) => value !== CRM_HEADERS_[index])) throw new Error('Intestazioni CRM non valide.');
+function verifyHeaders_(sheet, expected) {
+  if (sheet.getLastColumn() < expected.length) throw new Error('Schema foglio non valido.');
+  const actual = sheet.getRange(1, 1, 1, expected.length).getDisplayValues()[0];
+  if (actual.some((value, index) => value !== expected[index])) throw new Error('Intestazioni foglio non valide.');
 }
 
-function mapRequestToRow_(envelope) {
-  const fields = envelope.fields;
+function formatPreferences_(payload) {
   return [
-    new Date(envelope.receivedAt),
-    CRM_DEFAULT_STATUS_,
-    fields.fullName,
-    fields.phone,
-    fields.email,
-    CRM_KIND_LABELS_[envelope.kind],
-    fields.office,
+    payload.giorniPreferiti ? `Giorni/disponibilità: ${payload.giorniPreferiti}` : '',
+    payload.orariPreferiti ? `Orari: ${payload.orariPreferiti}` : '',
+  ].filter(Boolean).join('\n');
+}
+
+function mapPayloadToRow_(payload, receivedAt) {
+  const isTest = payload.recordType === 'TEST';
+  return [
+    receivedAt,
+    payload.nomeCognome,
+    payload.telefono,
+    payload.email,
+    payload.sede,
+    payload.servizio,
+    formatPreferences_(payload),
+    payload.messaggio,
+    payload.provenienza,
+    payload.pagina,
+    payload.campagna,
+    isTest ? 'Sì' : 'No',
+    0,
+    '',
+    'Da chiamare',
     '',
     '',
-    '',
-    '',
-    '',
-    '',
-    fields.ageRange,
-    fields.preferredDates,
-    fields.preferredTimes,
-    fields.treatment,
-    fields.treatmentCategory,
-    fields.problem,
-    fields.initialReason,
-    fields.visitReason,
-    fields.visitGoal,
-    fields.availability,
-    fields.emergencyType,
-    fields.symptom,
-    fields.painLevel,
-    fields.otherDetails,
-    fields.otherRequest,
-    fields.notes,
-    fields.message,
-    fields.details,
-    fields.source,
-    true,
-    envelope.kind === 'treatment' ? true : '',
-    envelope.requestId,
+    'In attesa',
+    'Da verificare',
+    'In attesa',
+    'Da verificare',
+    isTest ? 'TEST – non contattare' : '',
+    payload.recordType,
+    payload.requestId,
   ].map(sanitizeCell_);
+}
+
+function copyRowRules_(sheet, insertedRow) {
+  if (insertedRow <= 2) return;
+  const template = sheet.getRange(2, 1, 1, BOOKING_HEADERS_.length);
+  const target = sheet.getRange(insertedRow, 1, 1, BOOKING_HEADERS_.length);
+  if (typeof template.copyTo === 'function' && SpreadsheetApp.CopyPasteType) {
+    template.copyTo(target, SpreadsheetApp.CopyPasteType.PASTE_FORMAT, false);
+  }
+  if (typeof template.getDataValidations === 'function' && typeof target.setDataValidations === 'function') {
+    target.setDataValidations(template.getDataValidations());
+  }
+}
+
+function appendIntegrationLog_(spreadsheet, status, requestId, detail) {
+  const logSheet = spreadsheet.getSheetByName(BOOKING_LOG_SHEET_NAME_);
+  if (!logSheet) return;
+  verifyHeaders_(logSheet, BOOKING_LOG_HEADERS_);
+  logSheet.appendRow([new Date(), status, requestId || '', detail]);
+  const row = logSheet.getLastRow();
+  logSheet.getRange(row, 1).setNumberFormat('dd/mm/yyyy hh:mm:ss');
 }
 
 function sanitizeCell_(value) {
@@ -172,6 +226,26 @@ function secureEquals_(left, right) {
     difference |= (left.charCodeAt(index) || 0) ^ (right.charCodeAt(index) || 0);
   }
   return difference === 0;
+}
+
+function safeErrorMessage_(error) {
+  const allowed = new Set([
+    'Payload non valido.',
+    'Segreto non valido.',
+    'ID richiesta non valido.',
+    'Tipo record non valido.',
+    'Provenienza non valida.',
+    'Campo non valido.',
+    'Recapiti non validi.',
+    'Pagina non valida.',
+    'Autorizzazione non valida.',
+    'Foglio non configurato.',
+    'Integrazione temporaneamente occupata.',
+    'Scheda richieste non trovata.',
+    'Schema foglio non valido.',
+    'Intestazioni foglio non valide.',
+  ]);
+  return error && allowed.has(error.message) ? error.message : 'Errore interno del webhook.';
 }
 
 function jsonResponse_(body) {

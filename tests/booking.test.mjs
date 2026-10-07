@@ -1,7 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Readable } from 'node:stream';
-import { CRM_SCHEMA_VERSION, createBookingHandler, RECIPIENT } from '../server/booking.js';
+import {
+  buildSheetPayload,
+  classifyAttribution,
+  createBookingHandler,
+  RECIPIENT,
+  validateBooking,
+} from '../server/booking.js';
+import { deriveAttribution } from '../src/utils/attribution.js';
 
 const origin = 'https://studiodentisticofederzonigranata.vercel.app';
 const crmUrl = 'https://script.google.com/macros/s/test-deployment/exec';
@@ -10,6 +17,7 @@ const env = {
   RESEND_FROM_EMAIL: 'Studio <moduli@example.com>',
   GOOGLE_SHEETS_WEBHOOK_URL: crmUrl,
   GOOGLE_SHEETS_WEBHOOK_SECRET: 'test-secret-with-at-least-thirty-two-characters',
+  GOOGLE_SHEETS_RECORD_TYPE: 'TEST',
   VERCEL: '1',
 };
 const base = {
@@ -78,15 +86,20 @@ for (const [kind, fields] of Object.entries(cases)) {
     if (kind === 'treatment') assert.match(emailCall.body.text, /carattere indicativo.*confermata/);
     assert.equal(emailCall.body.html, undefined);
     assert.equal(crmCall.body.secret, env.GOOGLE_SHEETS_WEBHOOK_SECRET);
-    assert.equal(crmCall.body.schemaVersion, CRM_SCHEMA_VERSION);
     assert.equal(crmCall.body.requestId, base.requestId);
-    assert.equal(crmCall.body.kind, kind);
-    assert.equal(crmCall.body.fields.fullName, base.fullName);
-    assert.equal(crmCall.body.fields.phone, base.phone);
-    assert.equal(crmCall.body.fields.privacyConsent, true);
-    assert.equal(crmCall.body.fields.scheduleAcknowledged, kind === 'treatment');
-    assert.equal(crmCall.body.status, undefined);
-    assert.match(crmCall.body.receivedAt, /^\d{4}-\d{2}-\d{2}T/);
+    assert.equal(crmCall.body.nomeCognome, base.fullName);
+    assert.equal(crmCall.body.telefono, base.phone);
+    assert.equal(crmCall.body.email, data.email);
+    assert.equal(crmCall.body.sede, data.office || '');
+    assert.equal(crmCall.body.servizio, data.treatment || {
+      contact: 'Informazioni',
+      callback: 'Richiesta di richiamata',
+      'first-visit': 'Prima visita',
+      urgent: 'Urgenza',
+    }[kind]);
+    assert.equal(crmCall.body.recordType, 'TEST');
+    assert.equal(crmCall.body.provenienza, 'Diretto');
+    assert.equal(crmCall.body.pagina, base.source);
     assert.equal(crmCall.redirect, 'follow');
     assert.equal(res.headers['Cache-Control'], 'no-store');
   });
@@ -97,7 +110,7 @@ test('alternative treatment preserves the free-text request', async () => {
   const res = await invoke(handler, { ...base, ...cases.treatment, treatment: 'Altro', problem: '', otherRequest: 'Vorrei una valutazione personalizzata.' });
   assert.equal(res.statusCode, 200);
   assert.match(findEmailCall(calls).body.text, /Vorrei una valutazione personalizzata/);
-  assert.equal(findCrmCall(calls).body.fields.otherRequest, 'Vorrei una valutazione personalizzata.');
+  assert.match(findCrmCall(calls).body.messaggio, /Vorrei una valutazione personalizzata/);
 });
 
 for (const [label, changes] of [
@@ -117,6 +130,10 @@ for (const [label, changes] of [
   ['missing schedule acknowledgement', { ...cases.treatment, kind: 'treatment', scheduleAcknowledged: false }],
   ['invalid pain level', { ...cases.urgent, kind: 'urgent', painLevel: '99' }],
   ['missing other symptoms', { ...cases.urgent, kind: 'urgent', otherDetails: '' }],
+  ['non-string attribution', { attributionSource: ['google'] }],
+  ['private data in attribution referrer query', { attributionReferrer: 'https://www.google.com/search?q=nome' }],
+  ['invalid click ID type', { clickIdType: 'msclkid' }],
+  ['private data in attribution landing page', { attributionLandingPage: '/?email=test@example.com' }],
 ]) {
   test(`rejects ${label} without sending email`, async () => {
     const { handler, calls } = fixture();
@@ -152,6 +169,7 @@ test('missing or invalid provider configuration never calls either provider', as
     { ...env, GOOGLE_SHEETS_WEBHOOK_URL: '' },
     { ...env, GOOGLE_SHEETS_WEBHOOK_URL: 'https://example.com/webhook' },
     { ...env, GOOGLE_SHEETS_WEBHOOK_SECRET: 'too-short' },
+    { ...env, GOOGLE_SHEETS_RECORD_TYPE: 'INVALIDO' },
     { ...env, RESEND_API_KEY: '' },
   ]) {
     const { handler, calls } = fixture({ env: invalidEnv });
@@ -226,4 +244,71 @@ test('limits rapid repeated attempts and allows requests after the window expire
   time = 600_001;
   assert.equal((await invoke(handler)).statusCode, 200);
   assert.equal(calls.length, 22);
+});
+
+test('classifies attribution conservatively without inventing organic or campaign data', () => {
+  assert.equal(classifyAttribution({ clickIdType: 'gclid' }), 'Google Ads');
+  assert.equal(classifyAttribution({ attributionSource: 'google', attributionMedium: 'cpc' }), 'Google Ads');
+  assert.equal(classifyAttribution({ attributionSource: 'google_maps' }), 'Google Maps');
+  assert.equal(classifyAttribution({ attributionReferrer: 'https://www.google.com/maps/place/Modena' }), 'Google Maps');
+  assert.equal(classifyAttribution({ attributionReferrer: 'https://www.google.it/search' }), 'Google organico');
+  assert.equal(classifyAttribution({ attributionSource: 'google' }), 'Non rilevata');
+  assert.equal(classifyAttribution({ attributionCampaign: 'solo-campagna' }), 'Non rilevata');
+  assert.equal(classifyAttribution({ attributionReferrer: 'https://example.com/article' }), 'Altro');
+  assert.equal(classifyAttribution({}), 'Diretto');
+});
+
+test('captures only bounded non-contact attribution data from the browser URL', () => {
+  const attribution = deriveAttribution({
+    href: 'https://studiodentisticofederzonigranata.it/sbiancamento/?utm_source=google&utm_medium=cpc&utm_campaign=TEST-CAMPAGNA&gclid=TEST-NON-REALE',
+    origin: 'https://studiodentisticofederzonigranata.it',
+    search: '?utm_source=google&utm_medium=cpc&utm_campaign=TEST-CAMPAGNA&gclid=TEST-NON-REALE',
+    referrer: 'https://www.google.it/search?q=dentista+modena&email=privato@example.com',
+  });
+  assert.deepEqual(attribution, {
+    attributionSource: 'google',
+    attributionMedium: 'cpc',
+    attributionCampaign: 'TEST-CAMPAGNA',
+    attributionReferrer: 'https://www.google.it/search',
+    attributionLandingPage: '/sbiancamento/',
+    clickIdType: 'gclid',
+  });
+  assert.ok(!JSON.stringify(attribution).includes('TEST-NON-REALE'));
+  assert.ok(!JSON.stringify(attribution).includes('privato@example.com'));
+});
+
+test('builds the payload expected by the operational sheet', () => {
+  const data = validateBooking({
+    ...base,
+    ...cases.treatment,
+    kind: 'treatment',
+    attributionSource: 'google',
+    attributionMedium: 'cpc',
+    attributionCampaign: 'TEST-CAMPAGNA-ESATTA',
+    attributionLandingPage: '/sbiancamento/',
+    attributionReferrer: 'https://www.google.it/search',
+    clickIdType: 'gclid',
+  });
+  const payload = buildSheetPayload(data, {
+    GOOGLE_SHEETS_WEBHOOK_SECRET: 'server-secret',
+    GOOGLE_SHEETS_RECORD_TYPE: 'TEST',
+  });
+  assert.equal(payload.secret, 'server-secret');
+  assert.equal(payload.requestId, base.requestId);
+  assert.equal(payload.nomeCognome, base.fullName);
+  assert.equal(payload.servizio, cases.treatment.treatment);
+  assert.equal(payload.giorniPreferiti, cases.treatment.preferredDates);
+  assert.equal(payload.orariPreferiti, cases.treatment.preferredTimes);
+  assert.equal(payload.provenienza, 'Google Ads');
+  assert.equal(payload.pagina, base.source);
+  assert.equal(payload.campagna, 'TEST-CAMPAGNA-ESATTA');
+  assert.equal(payload.recordType, 'TEST');
+  assert.match(payload.messaggio, /Sbiancamento domiciliare controllato/);
+
+  const withoutCampaign = buildSheetPayload(
+    { ...data, attributionCampaign: '' },
+    { GOOGLE_SHEETS_WEBHOOK_SECRET: 'server-secret', GOOGLE_SHEETS_RECORD_TYPE: 'REALE' },
+  );
+  assert.equal(withoutCampaign.campagna, '');
+  assert.equal(withoutCampaign.recordType, 'REALE');
 });
