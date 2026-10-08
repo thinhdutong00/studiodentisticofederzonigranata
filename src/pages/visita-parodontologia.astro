@@ -470,25 +470,26 @@ const structuredData = {
         </div>
       </section>
 
-      <section class="landing-section landing-value" aria-labelledby="landing-value-title">
+      <section class="landing-section landing-process" aria-labelledby="landing-process-title">
         <div class="landing-shell">
-          <div class="landing-section-heading">
-            <p class="landing-kicker landing-kicker-dark">Quando richiedere un controllo parodontale</p>
-            <h2 id="landing-value-title">Segnali delle gengive<br />che è utile non ignorare.</h2>
-            <p>
-              Sanguinamento, recessioni o mobilità non permettono da soli di formulare una diagnosi. Servono misurazioni
-              cliniche per capire se si tratta di gengivite, parodontite o di un’altra condizione.
-            </p>
+          <div class="landing-section-heading landing-section-heading-centered">
+            <p class="landing-kicker landing-kicker-dark">Come si tratta la parodontite</p>
+            <h2 id="landing-process-title">Un percorso per fasi, con rivalutazioni.</h2>
           </div>
 
-          <div class="landing-value-grid">
-            {valuePoints.map((point) => (
-              <article class="landing-value-card">
-                <span>{point.number}</span>
-                <h3>{point.title}</h3>
-                <p>{point.text}</p>
-              </article>
+          <ol class="landing-process-grid">
+            {processSteps.map((step, index) => (
+              <li>
+                <span class="landing-process-number">{String(index + 1).padStart(2, '0')}</span>
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
+              </li>
             ))}
+          </ol>
+
+          <div class="landing-process-cta">
+            <a class="landing-button" href="#richiedi">Richiedi una valutazione</a>
+            <p>Il piano dipende da diagnosi, estensione della malattia e risposta ai primi interventi.</p>
           </div>
         </div>
       </section>
@@ -547,26 +548,25 @@ const structuredData = {
         </div>
       </section>
 
-      <section class="landing-section landing-process" aria-labelledby="landing-process-title">
+      <section class="landing-section landing-value" aria-labelledby="landing-value-title">
         <div class="landing-shell">
-          <div class="landing-section-heading landing-section-heading-centered">
-            <p class="landing-kicker landing-kicker-dark">Come si tratta la parodontite</p>
-            <h2 id="landing-process-title">Un percorso per fasi, con rivalutazioni.</h2>
+          <div class="landing-section-heading">
+            <p class="landing-kicker landing-kicker-dark">Quando richiedere un controllo parodontale</p>
+            <h2 id="landing-value-title">Segnali delle gengive<br />che è utile non ignorare.</h2>
+            <p>
+              Sanguinamento, recessioni o mobilità non permettono da soli di formulare una diagnosi. Servono misurazioni
+              cliniche per capire se si tratta di gengivite, parodontite o di un’altra condizione.
+            </p>
           </div>
 
-          <ol class="landing-process-grid">
-            {processSteps.map((step, index) => (
-              <li>
-                <span class="landing-process-number">{String(index + 1).padStart(2, '0')}</span>
-                <h3>{step.title}</h3>
-                <p>{step.text}</p>
-              </li>
+          <div class="landing-value-grid">
+            {valuePoints.map((point) => (
+              <article class="landing-value-card">
+                <span>{point.number}</span>
+                <h3>{point.title}</h3>
+                <p>{point.text}</p>
+              </article>
             ))}
-          </ol>
-
-          <div class="landing-process-cta">
-            <a class="landing-button" href="#richiedi">Richiedi una valutazione</a>
-            <p>Il piano dipende da diagnosi, estensione della malattia e risposta ai primi interventi.</p>
           </div>
         </div>
       </section>
