@@ -6,6 +6,7 @@ import LandingPatientReviews from '../components/LandingPatientReviews.astro';
 import OrthodonticQuiz from '../components/OrthodonticQuiz.astro';
 import OrthodonticIntroduction from '../components/OrthodonticIntroduction.astro';
 import OrthodonticSmileCarousel from '../components/OrthodonticSmileCarousel.astro';
+import OrthodonticConsultationForm from '../components/OrthodonticConsultationForm.astro';
 import OrthodonticPaths from '../components/OrthodonticPaths.astro';
 import OrthodonticLandingHeader from '../components/OrthodonticLandingHeader.astro';
 import TreatmentStickyCta from '../components/TreatmentStickyCta.astro';
@@ -282,6 +283,7 @@ const structuredData = {
           <p>Una visita ortodontica permette di valutare le caratteristiche del tuo sorriso e comprendere quali percorsi possono essere indicati.</p>
           <a class="ortho-cta" href="#il-tuo-obiettivo" data-quiz-cta>Richiedi una visita ortodontica <span aria-hidden="true">↗</span></a>
         </div>
+        <OrthodonticConsultationForm treatmentLabel={orthodonticTreatmentLabel} />
       </section>
       <HomeLocations />
     </main>
@@ -294,6 +296,7 @@ const structuredData = {
     <script>
       const quizSection = document.querySelector<HTMLElement>('.ortho-landing-main #il-tuo-obiettivo');
       const smileSection = document.querySelector<HTMLElement>('.ortho-landing-main #sorrisi-prima-dopo');
+      const finalSection = document.querySelector<HTMLElement>('.ortho-landing-main #ortho-final');
 
       if (quizSection && smileSection) {
         const desktopPosition = document.createComment('Original quiz position');
@@ -311,6 +314,7 @@ const structuredData = {
         const updateQuizPosition = () => {
           const anchor = mobileViewport.matches ? smileSection : desktopPosition;
           anchor.after(quizSection);
+          finalSection?.setAttribute('aria-labelledby', mobileViewport.matches ? 'ortho-consultation-title' : 'ortho-final-title');
 
           if (objectiveTitle && objectivesGrid && questionnaireBanner && desktopTitleParent && desktopGridParent) {
             if (mobileViewport.matches) {
@@ -341,6 +345,17 @@ const structuredData = {
   }
 
   @media (max-width: 720px) {
+    :global(.ortho-landing-main #ortho-final) {
+      padding: 48px 0 0;
+      background: var(--surface-white);
+      color: var(--text-dark);
+    }
+
+    :global(.ortho-landing-main #ortho-final::after),
+    :global(.ortho-landing-main #ortho-final > .ortho-final-copy) {
+      display: none;
+    }
+
     :global(.ortho-landing-main #sedi),
     :global(.ortho-landing-main #percorsi-ortodontici),
     :global(.ortho-landing-main .ortho-nav-list > li:has(> a[href="#sedi"])) {

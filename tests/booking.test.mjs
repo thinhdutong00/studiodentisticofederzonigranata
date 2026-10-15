@@ -106,6 +106,29 @@ for (const [kind, fields] of Object.entries(cases)) {
   });
 }
 
+test('simple orthodontic consultation keeps its treatment, office and landing in email and CRM', async () => {
+  const { handler, calls } = fixture();
+  const data = {
+    ...base, kind: 'contact', office: 'Reggio Emilia',
+    treatment: 'Ortodonzia e Allineatori invisibili (adulti e bimbi)',
+    treatmentCategory: 'Ortodonzia', source: '/visita-ortodonzia/',
+    message: 'Richiesta di visita di valutazione ortodontica dal modulo finale della landing ortodonzia.',
+  };
+  const res = await invoke(handler, data);
+  assert.equal(res.statusCode, 200);
+  assert.equal(calls.length, 2);
+  const crm = findCrmCall(calls).body;
+  assert.equal(crm.servizio, data.treatment);
+  assert.equal(crm.sede, data.office);
+  assert.equal(crm.pagina, data.source);
+  assert.equal(crm.telefono, data.phone);
+  assert.ok(crm.messaggio.includes(data.message));
+  const email = findEmailCall(calls).body;
+  for (const value of [data.treatment, data.office, data.source, data.phone, data.message]) {
+    assert.ok(email.text.includes(value));
+  }
+});
+
 test('alternative treatment preserves the free-text request', async () => {
   const { handler, calls } = fixture();
   const res = await invoke(handler, { ...base, ...cases.treatment, treatment: 'Altro', problem: '', otherRequest: 'Vorrei una valutazione personalizzata.' });

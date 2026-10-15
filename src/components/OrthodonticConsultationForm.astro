@@ -1,0 +1,254 @@
+---
+import BookingFields from './BookingFields.astro';
+import BookingPrivacy from './BookingPrivacy.astro';
+import BookingFeedback from './BookingFeedback.astro';
+import { site } from '../data/site';
+
+interface Props { treatmentLabel: string; }
+const { treatmentLabel } = Astro.props;
+const phoneCountries = [
+  { code: '+39', flag: '🇮🇹', country: 'Italia' },
+  { code: '+33', flag: '🇫🇷', country: 'Francia' },
+  { code: '+49', flag: '🇩🇪', country: 'Germania' },
+  { code: '+41', flag: '🇨🇭', country: 'Svizzera' },
+  { code: '+43', flag: '🇦🇹', country: 'Austria' },
+  { code: '+34', flag: '🇪🇸', country: 'Spagna' },
+  { code: '+44', flag: '🇬🇧', country: 'Regno Unito' },
+];
+---
+
+<div class="ortho-consultation-mobile">
+  <header class="ortho-consultation-heading">
+    <h2 id="ortho-consultation-title">Prenota la tua visita di valutazione ortodontica</h2>
+    <p>Fai il primo passo! Prenota la tua prima visita ortodontica per scoprire la diagnosi e il piano di trattamento più adatto a te.</p>
+  </header>
+
+  <div class="ortho-consultation-surface">
+    <form class="ortho-consultation-form" data-ortho-consultation-form data-contact-form data-booking-kind="contact" action="/api/booking" method="post" aria-labelledby="ortho-consultation-title">
+      <BookingFields />
+      <input type="hidden" name="treatment" value={treatmentLabel} />
+      <input type="hidden" name="treatmentCategory" value="Ortodonzia" />
+      <input type="hidden" name="message" value="Richiesta di visita di valutazione ortodontica dal modulo finale della landing ortodonzia." />
+
+      <div class="ortho-consultation-fields">
+        <label class="ortho-consultation-field" for="ortho-consultation-full-name">
+          <span class="landing-visually-hidden">Nome e cognome</span>
+          <input id="ortho-consultation-full-name" name="fullName" type="text" placeholder="Nome e cognome" autocomplete="name" minlength="2" maxlength="120" required />
+        </label>
+
+        <label class="ortho-consultation-field" for="ortho-consultation-email">
+          <span class="landing-visually-hidden">Email</span>
+          <input id="ortho-consultation-email" name="email" type="email" placeholder="E-Mail" autocomplete="email" maxlength="254" required />
+        </label>
+
+        <div class="ortho-consultation-phone">
+          <label class="ortho-consultation-country" for="ortho-consultation-country">
+            <span class="landing-visually-hidden">Prefisso internazionale</span>
+            <select id="ortho-consultation-country" name="phoneCountry" autocomplete="tel-country-code">
+              {phoneCountries.map(country => <option value={country.code} aria-label={`${country.country} ${country.code}`}>{country.flag} {country.code}</option>)}
+            </select>
+            <svg class="ortho-consultation-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 7 5 5 5-5" /></svg>
+          </label>
+          <label class="ortho-consultation-field" for="ortho-consultation-phone">
+            <span class="landing-visually-hidden">Numero di telefono</span>
+            <input id="ortho-consultation-phone" name="phone" type="tel" placeholder="Numero di telefono" autocomplete="tel-national" minlength="6" maxlength="30" required />
+          </label>
+        </div>
+
+        <label class="ortho-consultation-office" for="ortho-consultation-office">
+          <span class="landing-visually-hidden">Città dello studio</span>
+          <svg class="ortho-consultation-search" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" /></svg>
+          <select id="ortho-consultation-office" name="office" required>
+            <option value="" disabled selected>Città</option>
+            {site.offices.map(office => <option value={office.city}>{office.city}</option>)}
+          </select>
+          <svg class="ortho-consultation-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 7 5 5 5-5" /></svg>
+        </label>
+      </div>
+
+      <BookingPrivacy />
+      <button class="ortho-consultation-submit" type="submit">Continua</button>
+      <BookingFeedback />
+      <p class="ortho-consultation-note">La segreteria ti ricontatterà per concordare giorno e orario della visita.</p>
+    </form>
+  </div>
+</div>
+
+<script>
+  import { bindContactForms } from '../utils/submitBooking';
+
+  document.querySelectorAll<HTMLFormElement>('[data-ortho-consultation-form]').forEach(form => {
+    if (form.dataset.phonePrefixBound) return;
+    form.dataset.phonePrefixBound = 'true';
+    form.addEventListener('formdata', event => {
+      const phone = String(event.formData.get('phone') || '').trim();
+      const prefix = String(event.formData.get('phoneCountry') || '+39');
+      if (phone) {
+        event.formData.set('phone', phone.startsWith('+') ? phone : phone.startsWith('00') ? `+${phone.slice(2)}` : `${prefix} ${phone}`);
+      }
+      event.formData.delete('phoneCountry');
+    });
+  });
+  bindContactForms();
+</script>
+
+<style>
+  .ortho-consultation-mobile { display: none; }
+
+  @media (max-width: 720px) {
+    .ortho-consultation-mobile { display: block; }
+
+    .ortho-consultation-heading {
+      margin: 0 34px 32px;
+      text-align: center;
+    }
+
+    .ortho-consultation-mobile .ortho-consultation-heading h2 {
+      max-width: none;
+      margin: 0;
+      color: var(--brand-cta);
+      font-size: 34px;
+      font-weight: 500;
+      line-height: 1.12;
+      letter-spacing: -.16px;
+      text-wrap: balance;
+    }
+
+    .ortho-consultation-heading p {
+      margin: 20px 0 0;
+      color: var(--text-dark);
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 1.4;
+    }
+
+    .ortho-consultation-surface {
+      padding: 24px 12px 32px;
+      background: var(--background);
+    }
+
+    .ortho-consultation-form {
+      position: relative;
+      padding: 36px 20px 28px;
+      border-radius: 24px;
+      background: var(--surface-white);
+      color: var(--text-dark);
+    }
+
+    .ortho-consultation-fields {
+      display: grid;
+      gap: 20px;
+    }
+
+    .ortho-consultation-field { display: block; min-width: 0; }
+
+    .ortho-consultation-form input:not([type="checkbox"]):not([type="hidden"]),
+    .ortho-consultation-form select {
+      display: block;
+      width: 100%;
+      min-width: 0;
+      min-height: 54px;
+      margin: 0;
+      padding: 14px 0;
+      border: 0;
+      border-bottom: 1px solid var(--border);
+      border-radius: 0;
+      background: transparent;
+      color: var(--text-dark);
+      font: inherit;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.4;
+      letter-spacing: -.16px;
+      box-shadow: none;
+    }
+
+    .ortho-consultation-form input::placeholder { color: var(--muted-text); opacity: 1; }
+    .ortho-consultation-form select { appearance: none; cursor: pointer; }
+
+    .ortho-consultation-phone {
+      display: grid;
+      grid-template-columns: 96px minmax(0, 1fr);
+      gap: 12px;
+    }
+
+    .ortho-consultation-country,
+    .ortho-consultation-office { position: relative; display: block; min-width: 0; }
+    .ortho-consultation-country select { padding-right: 20px; }
+    .ortho-consultation-office select { padding-inline: 30px 24px; }
+
+    .ortho-consultation-chevron {
+      position: absolute;
+      top: 19px;
+      right: 0;
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      pointer-events: none;
+    }
+
+    .ortho-consultation-search {
+      position: absolute;
+      top: 16px;
+      left: 0;
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      pointer-events: none;
+    }
+
+    .ortho-consultation-form :global(.booking-contact-privacy) {
+      flex-direction: row-reverse;
+      justify-content: space-between;
+      gap: 14px;
+      margin-top: 24px;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .ortho-consultation-form :global(.booking-contact-privacy input) {
+      flex-basis: 20px;
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+    }
+
+    .ortho-consultation-submit {
+      display: block;
+      width: 100%;
+      min-height: 52px;
+      margin-top: 28px;
+      padding: 16px;
+      border: 0;
+      border-radius: 10px;
+      background: var(--brand-cta);
+      color: var(--surface-white);
+      font: inherit;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .ortho-consultation-submit:hover { background: var(--brand-cta-hover); }
+    .ortho-consultation-submit:disabled { opacity: .65; cursor: wait; }
+
+    .ortho-consultation-note {
+      margin: 18px 0 0;
+      color: var(--muted-text);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .ortho-consultation-form :is(input, select, button):focus-visible {
+      outline: 2px solid var(--brand-blue);
+      outline-offset: 4px;
+    }
+  }
+</style>
