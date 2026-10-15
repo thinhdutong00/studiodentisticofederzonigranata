@@ -1,0 +1,198 @@
+---
+const ageGroups = [
+  {
+    id: 'adulti',
+    label: 'Adulti',
+    title: 'Il tuo sorriso, il tuo momento.',
+    description: 'Dai spazio al sorriso che desideri, con un percorso pensato per te e per la tua quotidianità. Durante la visita valutiamo insieme le soluzioni più adatte alle tue esigenze.',
+  },
+  {
+    id: 'adolescenti',
+    label: 'Adolescenti',
+    title: 'Crescere con un sorriso più sicuro.',
+    description: 'Un sorriso in cui riconoscersi, anche negli anni del cambiamento. Accompagniamo tuo figlio con un percorso personalizzato, attento alla crescita e alle sue abitudini.',
+  },
+  {
+    id: 'bambini',
+    label: 'Bambini',
+    title: 'Un piccolo passo per il suo sorriso.',
+    description: 'Ogni sorriso cresce con i suoi tempi. Una prima visita ci permette di conoscere le esigenze del tuo bambino e accompagnarlo con un percorso attento e su misura.',
+  },
+];
+---
+
+<section class="ortho-age-section" id="ortodonzia-tutte-le-eta" aria-labelledby="ortho-age-title">
+  <h2 id="ortho-age-title">Ortodonzia per tutte le età</h2>
+  <ul class="ortho-age-list">
+    {ageGroups.map(group => <li>
+      <button type="button" data-ortho-age-open={group.id} aria-haspopup="dialog" aria-controls="ortho-age-sheet" aria-expanded="false">
+        <span>{group.label}</span>
+        <span class="ortho-age-open-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 12h12m-5-5 5 5-5 5" /></svg></span>
+      </button>
+    </li>)}
+  </ul>
+  <noscript><a class="ortho-cta" href="#ortho-final">Prenota una visita</a></noscript>
+</section>
+
+<dialog class="ortho-age-sheet" id="ortho-age-sheet" aria-labelledby="ortho-age-adulti-title" data-ortho-age-sheet>
+  <button class="ortho-age-close" type="button" aria-label="Chiudi la scheda" data-ortho-age-close>
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6" /></svg>
+  </button>
+  {ageGroups.map(group => <article class="ortho-age-content" data-ortho-age-content={group.id} hidden>
+    <div class="ortho-age-illustration" aria-hidden="true">
+      <svg viewBox="0 0 64 64" fill="none">
+        {group.id === 'adulti' && <>
+          <path d="M17 55v-4c0-8 6-13 15-13s15 5 15 13v4M25 39l7 8 7-8" />
+          <path d="M44 22c0 9-5 15-12 15s-12-6-12-15S25 8 32 8s12 5 12 14Z" />
+          <path d="M20 21c7 0 10-4 11-7 3 5 7 7 13 7M27 28c3 3 7 3 10 0M50 11v8m-4-4h8" />
+        </>}
+        {group.id === 'adolescenti' && <>
+          <path d="M16 55v-4c0-8 6-13 16-13s16 5 16 13v4M23 41l9 8 9-8" />
+          <path d="M20 23c0 8 5 14 12 14s12-6 12-14M20 23c-4-6 0-13 5-13 2-5 8-6 11-2 6-2 11 3 10 8 3 3 2 7-2 9M21 21c3 0 5-2 6-5 2 3 5 4 8 3 2 3 5 4 9 3M27 28c3 3 7 3 10 0M52 7v8m-4-4h8" />
+        </>}
+        {group.id === 'bambini' && <>
+          <path d="M17 55v-3c0-8 6-13 15-13s15 5 15 13v3M26 41l6 6 6-6" />
+          <path d="M44 25c0 8-5 13-12 13s-12-5-12-13 5-14 12-14 12 6 12 14ZM21 22c6 0 9-2 10-6 2 4 6 6 12 6M27 29c3 4 7 4 10 0M32 11c-3-5 0-8 4-8M12 11v8m-4-4h8M51 28v6m-3-3h6" />
+        </>}
+        <circle cx="27.5" cy="24" r="1" class="ortho-age-eye" />
+        <circle cx="36.5" cy="24" r="1" class="ortho-age-eye" />
+      </svg>
+    </div>
+    <p class="ortho-age-label">{group.label}</p>
+    <h2 id={`ortho-age-${group.id}-title`} tabindex="-1">{group.title}</h2>
+    <p class="ortho-age-description" id={`ortho-age-${group.id}-description`}>{group.description}</p>
+    <a class="ortho-age-visit" href="#ortho-final" data-ortho-age-visit>
+      Prenota una visita
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12" /></svg>
+    </a>
+  </article>)}
+</dialog>
+
+<script>
+  const ageSheet = document.querySelector<HTMLDialogElement>('[data-ortho-age-sheet]');
+  const ageTriggers = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-ortho-age-open]'));
+  const agePanels = Array.from(ageSheet?.querySelectorAll<HTMLElement>('[data-ortho-age-content]') || []);
+
+  if (ageSheet && ageTriggers.length) {
+    const mobileViewport = window.matchMedia('(max-width: 720px)');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let activeTrigger: HTMLButtonElement | null = null;
+    let previousOverflow = '';
+    let visitRequested = false;
+    let closeTimer: ReturnType<typeof setTimeout> | undefined;
+
+    const finishClose = () => {
+      clearTimeout(closeTimer);
+      ageSheet.classList.remove('is-closing');
+      ageSheet.close();
+    };
+
+    const closeSheet = (visit = false, immediate = false) => {
+      if (!ageSheet.open) return;
+      visitRequested = visit;
+      if (immediate || reducedMotion.matches) {
+        finishClose();
+      } else if (!ageSheet.classList.contains('is-closing')) {
+        ageSheet.classList.add('is-closing');
+        closeTimer = setTimeout(finishClose, 260);
+      }
+    };
+
+    ageTriggers.forEach(trigger => trigger.addEventListener('click', () => {
+      if (!mobileViewport.matches || ageSheet.open) return;
+      const selectedPanel = agePanels.find(panel => panel.dataset.orthoAgeContent === trigger.dataset.orthoAgeOpen);
+      const heading = selectedPanel?.querySelector<HTMLHeadingElement>('h2');
+      const description = selectedPanel?.querySelector<HTMLElement>('.ortho-age-description');
+      if (!selectedPanel || !heading || !description) return;
+      agePanels.forEach(panel => { panel.hidden = panel !== selectedPanel; });
+      ageSheet.setAttribute('aria-labelledby', heading.id);
+      ageSheet.setAttribute('aria-describedby', description.id);
+      activeTrigger = trigger;
+      activeTrigger.setAttribute('aria-expanded', 'true');
+      previousOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      visitRequested = false;
+      ageSheet.showModal();
+      ageSheet.scrollTop = 0;
+      heading.focus({ preventScroll: true });
+    }));
+
+    ageSheet.querySelector('[data-ortho-age-close]')?.addEventListener('click', () => closeSheet());
+    ageSheet.addEventListener('cancel', event => { event.preventDefault(); closeSheet(); });
+    ageSheet.addEventListener('click', event => {
+      const bounds = ageSheet.getBoundingClientRect();
+      if (event.target === ageSheet && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) closeSheet();
+    });
+    ageSheet.addEventListener('animationend', event => {
+      if (event.target === ageSheet && event.animationName === 'ortho-age-sheet-out') finishClose();
+    });
+    ageSheet.querySelectorAll<HTMLAnchorElement>('[data-ortho-age-visit]').forEach(link => link.addEventListener('click', event => {
+      event.preventDefault();
+      closeSheet(true);
+    }));
+    ageSheet.addEventListener('close', () => {
+      clearTimeout(closeTimer);
+      ageSheet.classList.remove('is-closing');
+      document.body.style.overflow = previousOverflow;
+      activeTrigger?.setAttribute('aria-expanded', 'false');
+      if (visitRequested) {
+        const destination = document.querySelector<HTMLElement>('#ortho-final');
+        destination?.setAttribute('tabindex', '-1');
+        destination?.focus({ preventScroll: true });
+        destination?.scrollIntoView({ behavior: reducedMotion.matches ? 'instant' : 'smooth', block: 'start' });
+      } else if (mobileViewport.matches) {
+        activeTrigger?.focus({ preventScroll: true });
+      }
+      visitRequested = false;
+    });
+    mobileViewport.addEventListener('change', () => { if (!mobileViewport.matches) closeSheet(false, true); });
+  }
+</script>
+
+<style>
+  .ortho-age-section { display: none; }
+  .ortho-age-sheet { position: fixed; inset: auto 0 0; width: 100%; max-width: 720px; max-height: 88svh; margin: 0 auto; padding: 0; overflow-y: auto; overscroll-behavior: contain; border: 0; border-radius: 28px 28px 0 0; background: var(--surface-white); color: var(--brand-primary-dark); font: inherit; }
+  .ortho-age-sheet::backdrop { background: rgba(16, 40, 61, .48); backdrop-filter: blur(3px); }
+  .ortho-age-sheet[open] { animation: ortho-age-sheet-in 360ms cubic-bezier(.22, 1, .36, 1) both; }
+  .ortho-age-sheet[open]::backdrop { animation: ortho-age-backdrop-in 220ms ease both; }
+  .ortho-age-sheet.is-closing { animation: ortho-age-sheet-out 220ms ease-in both; }
+  .ortho-age-sheet.is-closing::backdrop { animation: ortho-age-backdrop-out 220ms ease both; }
+  .ortho-age-sheet [hidden] { display: none !important; }
+  .ortho-age-close { position: absolute; top: 16px; right: 16px; display: grid; place-items: center; width: 44px; height: 44px; padding: 11px; border: 1px solid var(--border); border-radius: 50%; background: var(--surface-white); color: var(--muted-text); cursor: pointer; }
+  .ortho-age-close svg, .ortho-age-visit svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .ortho-age-content { padding: 52px 28px calc(32px + env(safe-area-inset-bottom, 0px)); text-align: center; }
+  .ortho-age-illustration { display: grid; place-items: center; width: 88px; height: 88px; margin: 0 auto 22px; border-radius: 28px; background: var(--soft-blue-bg); color: var(--brand-cta); }
+  .ortho-age-illustration svg { width: 64px; height: 64px; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .ortho-age-eye { fill: currentColor; stroke: none; }
+  .ortho-age-label { margin: 0 0 12px; color: var(--brand-cta); font-size: 13px; font-weight: 500; line-height: 1.3; letter-spacing: normal; text-transform: uppercase; }
+  .ortho-age-content h2 { margin: 0; color: var(--brand-primary-dark); font-size: 30px; font-weight: 500; line-height: 1.15; letter-spacing: -.16px; text-wrap: balance; }
+  .ortho-age-description { max-width: 38ch; margin: 20px auto 0; color: var(--muted-text); font-size: 17px; font-weight: 400; line-height: 1.5; letter-spacing: -.16px; }
+  .ortho-age-visit { display: flex; min-height: 54px; align-items: center; justify-content: center; gap: 14px; margin-top: 28px; padding: 17px 16px; border-radius: 10px; background: var(--brand-cta); color: var(--surface-white); font-size: 16px; font-weight: 500; line-height: 16px; letter-spacing: normal; text-decoration: none; text-transform: uppercase; }
+  .ortho-age-visit svg { flex: 0 0 22px; }
+  .ortho-age-visit:hover { background: var(--brand-cta-hover); }
+  .ortho-age-close:hover { background: var(--soft-blue-bg); }
+  .ortho-age-sheet :is(button, a):focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 4px; }
+  .ortho-age-content h2:focus { outline: none; }
+  :global(.ortho-landing-main:has(.ortho-age-sheet[open]) .treatment-sticky-cta) { visibility: hidden; pointer-events: none; }
+
+  @media (max-width: 720px) {
+    .ortho-age-section { display: block; padding: 48px 34px; background: var(--soft-blue-bg); }
+    .ortho-age-section h2 { max-width: 14ch; margin: 0; color: var(--brand-primary-dark); font-size: 34px; font-weight: 500; line-height: 1.15; letter-spacing: -.16px; text-wrap: balance; }
+    .ortho-age-list { margin: 28px 0 0; padding: 0; border-top: 1px solid var(--border); list-style: none; }
+    .ortho-age-list li { border-bottom: 1px solid var(--border); }
+    .ortho-age-list button { display: flex; width: 100%; min-height: 84px; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 0; border: 0; background: transparent; color: var(--brand-primary-dark); font: inherit; font-size: 24px; font-weight: 500; line-height: 1.2; letter-spacing: -.16px; text-align: left; cursor: pointer; }
+    .ortho-age-open-icon { display: grid; flex: 0 0 40px; place-items: center; width: 40px; height: 40px; border: 1px solid var(--brand-blue); border-radius: 50%; color: var(--brand-cta); transition: background 160ms ease, color 160ms ease; }
+    .ortho-age-open-icon svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .ortho-age-list button:hover .ortho-age-open-icon, .ortho-age-list button[aria-expanded="true"] .ortho-age-open-icon { background: var(--brand-cta); color: var(--surface-white); }
+    .ortho-age-list button:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 4px; border-radius: 4px; }
+  }
+
+  @keyframes ortho-age-sheet-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  @keyframes ortho-age-sheet-out { from { transform: translateY(0); } to { transform: translateY(100%); } }
+  @keyframes ortho-age-backdrop-in { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes ortho-age-backdrop-out { from { opacity: 1; } to { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .ortho-age-sheet[open], .ortho-age-sheet[open]::backdrop { animation: none; }
+    .ortho-age-open-icon { transition: none; }
+  }
+</style>

@@ -74,6 +74,7 @@ const steps = [
         </article>
       ))}
     </div>
+    <a class="ortho-cta ortho-benefits-cta" href="#ortho-final">Prenota una visita <span aria-hidden="true">↗</span></a>
   </div>
 </section>
 
@@ -109,6 +110,10 @@ const steps = [
   .ortho-functional-benefits {
     padding-block: clamp(48px, 4.5vw, 72px);
     background: var(--surface-white);
+  }
+
+  .ortho-benefits-cta {
+    display: none;
   }
 
   .ortho-personalized-path {
@@ -278,6 +283,19 @@ const steps = [
 
     .ortho-functional-copy {
       margin-top: 0;
+    }
+
+    .ortho-functional-benefits .ortho-benefits-cta {
+      display: flex;
+      width: 100%;
+      max-width: 360px;
+      min-height: 54px;
+      justify-content: center;
+      gap: 14px;
+      margin: 32px auto 0;
+      padding: 16px 20px;
+      border-radius: 10px;
+      line-height: 16px;
     }
 
     .ortho-functional-item h3,

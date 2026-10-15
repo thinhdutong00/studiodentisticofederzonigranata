@@ -6,6 +6,7 @@ import LandingPatientReviews from '../components/LandingPatientReviews.astro';
 import OrthodonticQuiz from '../components/OrthodonticQuiz.astro';
 import OrthodonticIntroduction from '../components/OrthodonticIntroduction.astro';
 import OrthodonticSmileCarousel from '../components/OrthodonticSmileCarousel.astro';
+import OrthodonticAgeSection from '../components/OrthodonticAgeSection.astro';
 import OrthodonticConsultationForm from '../components/OrthodonticConsultationForm.astro';
 import OrthodonticPaths from '../components/OrthodonticPaths.astro';
 import OrthodonticLandingHeader from '../components/OrthodonticLandingHeader.astro';
@@ -212,14 +213,18 @@ const structuredData = {
               <p class="landing-hero-eyebrow">Ortodonzia per adulti · Modena e Reggio Emilia</p>
               <h1 id="landing-title">Il sorriso che desideri, la naturalezza che cerchi.</h1>
               <p class="ortho-hero-lead">Sorridere nelle fotografie, ridere con gli amici e guardarti allo specchio sentendoti davvero a tuo agio. Con un percorso ortodontico personalizzato puoi prenderti cura dell'armonia del tuo sorriso e avvicinarti a quello che hai sempre desiderato.</p>
-              <a class="ortho-cta" href="#il-tuo-obiettivo" data-quiz-cta>Prenota una visita ortodontica <span aria-hidden="true">↗</span></a>
+              <a class="ortho-cta ortho-hero-quiz-link" href="#il-tuo-obiettivo" data-quiz-cta>Prenota una visita ortodontica <span aria-hidden="true">↗</span></a>
+              <OrthodonticConsultationForm treatmentLabel={orthodonticTreatmentLabel} variant="hero" />
             </div>
           </div>
         </div>
       </section>
 
       <OrthodonticIntroduction>
-        <OrthodonticSmileCarousel slot="after-benefits" />
+        <Fragment slot="after-benefits">
+          <OrthodonticSmileCarousel />
+          <OrthodonticAgeSection />
+        </Fragment>
       </OrthodonticIntroduction>
 
       <OrthodonticPaths />
@@ -248,20 +253,7 @@ const structuredData = {
       </section>
 
       <LandingPatientReviews reviews={reviews} />
-      <OrthodonticQuiz>
-        <img
-          slot="questionnaire-image"
-          class="ortho-questionnaire-image"
-          src={heroMobileImagePath}
-          srcset={heroMobileImageSet}
-          sizes="(max-width: 720px) calc(100vw - 24px), 0px"
-          alt=""
-          width="1440"
-          height="960"
-          loading="lazy"
-          decoding="async"
-        />
-      </OrthodonticQuiz>
+      <OrthodonticQuiz mobileObjectivesFirst />
 
       <section class="ortho-section ortho-faq" aria-labelledby="ortho-faq-title">
         <div class="ortho-shell ortho-split">
@@ -294,6 +286,9 @@ const structuredData = {
     <CookieBanner />
 
     <script>
+      import { bindOrthodonticMobileMotion } from '../utils/orthodonticMobileMotion';
+      bindOrthodonticMobileMotion();
+
       const quizSection = document.querySelector<HTMLElement>('.ortho-landing-main #il-tuo-obiettivo');
       const smileSection = document.querySelector<HTMLElement>('.ortho-landing-main #sorrisi-prima-dopo');
       const finalSection = document.querySelector<HTMLElement>('.ortho-landing-main #ortho-final');
@@ -302,33 +297,18 @@ const structuredData = {
         const desktopPosition = document.createComment('Original quiz position');
         quizSection.before(desktopPosition);
         const mobileViewport = window.matchMedia('(max-width: 720px)');
-        const objectiveTitle = quizSection.querySelector<HTMLElement>('.ortho-quiz-objective-title');
-        const objectivesGrid = quizSection.querySelector<HTMLElement>('.orthodontic-objectives-grid');
-        const questionnaireBanner = quizSection.querySelector<HTMLElement>('.orthodontic-questionnaire-banner');
-        const desktopTitleParent = objectiveTitle?.parentElement;
-        const desktopGridParent = objectivesGrid?.parentElement;
-        const mobileObjectives = document.createElement('div');
-        mobileObjectives.className = 'ortho-quiz-mobile-objectives';
-
         // Move the existing section so keyboard and reading order follow the layout.
         const updateQuizPosition = () => {
           const anchor = mobileViewport.matches ? smileSection : desktopPosition;
           anchor.after(quizSection);
           finalSection?.setAttribute('aria-labelledby', mobileViewport.matches ? 'ortho-consultation-title' : 'ortho-final-title');
 
-          if (objectiveTitle && objectivesGrid && questionnaireBanner && desktopTitleParent && desktopGridParent) {
-            if (mobileViewport.matches) {
-              mobileObjectives.append(objectiveTitle, objectivesGrid);
-              smileSection.append(mobileObjectives);
-              quizSection.removeAttribute('aria-labelledby');
-              quizSection.setAttribute('aria-label', 'Questionario ortodontico');
-            } else {
-              desktopTitleParent.append(objectiveTitle);
-              desktopGridParent.append(objectivesGrid);
-              mobileObjectives.remove();
-              quizSection.setAttribute('aria-labelledby', 'orthodontic-objectives-title');
-              quizSection.removeAttribute('aria-label');
-            }
+          if (mobileViewport.matches) {
+            quizSection.removeAttribute('aria-labelledby');
+            quizSection.setAttribute('aria-label', 'Questionario ortodontico');
+          } else {
+            quizSection.setAttribute('aria-labelledby', 'orthodontic-objectives-title');
+            quizSection.removeAttribute('aria-label');
           }
         };
 
@@ -340,11 +320,18 @@ const structuredData = {
 </html>
 
 <style>
-  .ortho-questionnaire-image {
-    display: none;
-  }
-
   @media (max-width: 720px) {
+    :global(.ortho-landing-main > .landing-header) {
+      transition: transform 260ms ease;
+    }
+
+    :global(.ortho-landing-main > .landing-header.is-scroll-hidden) {
+      transform: translateY(calc(-100% - 2px));
+      pointer-events: none;
+    }
+
+    .ortho-hero-quiz-link { display: none; }
+
     :global(.ortho-landing-main #ortho-final) {
       padding: 48px 0 0;
       background: var(--surface-white);
@@ -362,6 +349,10 @@ const structuredData = {
       display: none;
     }
 
+    :global(.ortho-landing-main #il-tuo-obiettivo) {
+      padding-top: 16px;
+    }
+
     :global(.ortho-landing-main #il-tuo-obiettivo .orthodontic-objectives-shell) {
       width: calc(100% - 24px);
       margin-inline: auto;
@@ -371,68 +362,15 @@ const structuredData = {
       display: none;
     }
 
-    .ortho-questionnaire-image {
-      display: block;
-      width: 100%;
-      height: auto;
-      margin-top: 0;
-      border-radius: 18px 18px 0 0;
-    }
-
-    .ortho-questionnaire-image + :global(.orthodontic-questionnaire-banner) {
+    :global(.ortho-landing-main #il-tuo-obiettivo .orthodontic-questionnaire-banner) {
       gap: 24px;
       margin-top: 0;
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
+      border-radius: 16px;
       background: var(--brand-primary-dark);
     }
 
     :global(.ortho-landing-main .orthodontic-questionnaire-banner > p) {
       text-align: center;
-    }
-
-    :global(.ortho-landing-main .ortho-quiz-mobile-objectives) {
-      display: grid;
-      gap: 24px;
-      margin: 24px 12px 0;
-      padding: 24px 20px;
-      background: var(--background);
-    }
-
-    :global(.ortho-landing-main .ortho-quiz-mobile-objectives .ortho-quiz-objective-title) {
-      margin: 0;
-      color: var(--brand-primary-dark);
-      font-size: 18px;
-      text-align: center;
-    }
-
-    :global(.ortho-landing-main .ortho-quiz-mobile-objectives .orthodontic-objectives-grid) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 24px 16px;
-    }
-
-    :global(.ortho-landing-main .ortho-quiz-mobile-objectives .orthodontic-objective) {
-      min-width: 0;
-      align-items: center;
-      gap: 12px;
-      color: var(--brand-primary-dark);
-      text-align: center;
-    }
-
-    :global(.ortho-landing-main .ortho-quiz-mobile-objectives .orthodontic-objective > svg) {
-      color: var(--brand-cta);
-    }
-
-    :global(.ortho-landing-main .ortho-quiz-mobile-objectives .orthodontic-objective > span) {
-      color: inherit;
-      font-size: 15px;
-      line-height: 1.3;
-      text-transform: none;
-    }
-
-    :global(.ortho-landing-main .ortho-quiz-mobile-objectives .orthodontic-objective:focus-visible) {
-      outline-color: var(--brand-cta);
-      outline-offset: 4px;
     }
 
     .ortho-hero-overlay .landing-hero-stage {
@@ -458,6 +396,24 @@ const structuredData = {
       inset: auto;
       width: 100%;
       box-shadow: none;
+    }
+  }
+
+  @media (max-width: 720px) and (prefers-reduced-motion: no-preference) {
+    .ortho-hero-overlay,
+    .ortho-hero-overlay .landing-hero-stage {
+      overflow: clip;
+    }
+
+    .ortho-hero-overlay .ortho-hero-photo-frame {
+      position: sticky;
+      top: 0;
+    }
+  }
+
+  @media (max-width: 720px) and (prefers-reduced-motion: reduce) {
+    :global(.ortho-landing-main > .landing-header) {
+      transition: none;
     }
   }
 </style>

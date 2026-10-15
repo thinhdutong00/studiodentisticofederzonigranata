@@ -12,8 +12,8 @@ import {
 } from '../data/orthodonticQuiz.js';
 import '../styles/orthodontic-quiz.css';
 
-interface Props { contextLabel?: string; }
-const { contextLabel } = Astro.props;
+interface Props { contextLabel?: string; mobileObjectivesFirst?: boolean; }
+const { contextLabel, mobileObjectivesFirst = false } = Astro.props;
 
 const questions = [
   { number: 1, title: 'Quanti anni ha il paziente?', name: 'patientAge', type: 'number', label: 'Età del paziente', placeholder: 'Scrivi l’età', required: true },
@@ -76,10 +76,11 @@ const questions = [
   </div>
 </section>
 
-<dialog id="orthodontic-quiz" class="orthodontic-quiz" aria-labelledby="orthodontic-quiz-welcome-title" data-quiz-dialog>
+<dialog id="orthodontic-quiz" class="orthodontic-quiz" aria-labelledby="orthodontic-quiz-welcome-title" data-quiz-dialog data-quiz-mobile-objectives-first={mobileObjectivesFirst || undefined}>
   <div class="orthodontic-quiz-header">
     <div class="orthodontic-quiz-progress" style={`--quiz-question-count: ${questions.length}`} role="progressbar" aria-label="Avanzamento del questionario" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-quiz-progress>
       {questions.map((_, index) => <span data-progress-segment={index}></span>)}
+      {mobileObjectivesFirst && <span data-progress-segment={questions.length} hidden></span>}
     </div>
     <img src={site.logo} width="400" height="52" alt={site.name} />
     <button type="button" class="orthodontic-quiz-close" data-quiz-close aria-label="Chiudi il questionario">
@@ -92,6 +93,14 @@ const questions = [
     <input type="hidden" name="initialReason" value="" />
     <input type="hidden" name="message" value={contextLabel ? `Richiesta dalla landing ortodonzia — ${contextLabel}` : 'Richiesta dalla landing ortodonzia — questionario del sorriso'} />
     {contextLabel && <input type="hidden" name="treatmentCategory" value={contextLabel} />}
+
+    {mobileObjectivesFirst && <section class="orthodontic-quiz-screen orthodontic-quiz-question orthodontic-quiz-objectives-step" hidden data-quiz-panel data-quiz-mobile-objectives-panel>
+      <div class="orthodontic-quiz-question-title">
+        <h2 id="orthodontic-quiz-objectives-step-title" tabindex="-1">Qual è il tuo obiettivo?</h2>
+      </div>
+      <div data-quiz-objectives-host role="group" aria-labelledby="orthodontic-quiz-objectives-step-title"></div>
+      <p class="orthodontic-quiz-error" data-quiz-error role="alert" aria-live="polite"></p>
+    </section>}
 
     <section class="orthodontic-quiz-screen orthodontic-quiz-welcome" data-quiz-panel data-question="0">
       <div class="orthodontic-quiz-welcome-copy">

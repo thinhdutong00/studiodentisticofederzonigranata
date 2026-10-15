@@ -4,8 +4,10 @@ import BookingPrivacy from './BookingPrivacy.astro';
 import BookingFeedback from './BookingFeedback.astro';
 import { site } from '../data/site';
 
-interface Props { treatmentLabel: string; }
-const { treatmentLabel } = Astro.props;
+interface Props { treatmentLabel: string; variant?: 'section' | 'hero'; }
+const { treatmentLabel, variant = 'section' } = Astro.props;
+const isHero = variant === 'hero';
+const idPrefix = isHero ? 'ortho-hero-consultation' : 'ortho-consultation';
 const phoneCountries = [
   { code: '+39', flag: '🇮🇹', country: 'Italia' },
   { code: '+33', flag: '🇫🇷', country: 'Francia' },
@@ -17,48 +19,48 @@ const phoneCountries = [
 ];
 ---
 
-<div class="ortho-consultation-mobile">
-  <header class="ortho-consultation-heading">
-    <h2 id="ortho-consultation-title">Prenota la tua visita di valutazione ortodontica</h2>
+<div class:list={['ortho-consultation-mobile', { 'ortho-consultation-hero': isHero }]}>
+  {!isHero && <header class="ortho-consultation-heading">
+    <h2 id={`${idPrefix}-title`}>Prenota la tua visita di valutazione ortodontica</h2>
     <p>Fai il primo passo! Prenota la tua prima visita ortodontica per scoprire la diagnosi e il piano di trattamento più adatto a te.</p>
-  </header>
+  </header>}
 
   <div class="ortho-consultation-surface">
-    <form class="ortho-consultation-form" data-ortho-consultation-form data-contact-form data-booking-kind="contact" action="/api/booking" method="post" aria-labelledby="ortho-consultation-title">
+    <form class="ortho-consultation-form" data-ortho-consultation-form data-contact-form data-booking-kind="contact" action="/api/booking" method="post" aria-labelledby={isHero ? undefined : `${idPrefix}-title`} aria-label={isHero ? 'Richiedi una visita ortodontica' : undefined}>
       <BookingFields />
       <input type="hidden" name="treatment" value={treatmentLabel} />
       <input type="hidden" name="treatmentCategory" value="Ortodonzia" />
-      <input type="hidden" name="message" value="Richiesta di visita di valutazione ortodontica dal modulo finale della landing ortodonzia." />
+      <input type="hidden" name="message" value={isHero ? 'Richiesta di visita di valutazione ortodontica dal modulo della hero della landing ortodonzia.' : 'Richiesta di visita di valutazione ortodontica dal modulo finale della landing ortodonzia.'} />
 
       <div class="ortho-consultation-fields">
-        <label class="ortho-consultation-field" for="ortho-consultation-full-name">
+        <label class="ortho-consultation-field" for={`${idPrefix}-full-name`}>
           <span class="landing-visually-hidden">Nome e cognome</span>
-          <input id="ortho-consultation-full-name" name="fullName" type="text" placeholder="Nome e cognome" autocomplete="name" minlength="2" maxlength="120" required />
+          <input id={`${idPrefix}-full-name`} name="fullName" type="text" placeholder="Nome e cognome" autocomplete="name" minlength="2" maxlength="120" required />
         </label>
 
-        <label class="ortho-consultation-field" for="ortho-consultation-email">
+        <label class="ortho-consultation-field" for={`${idPrefix}-email`}>
           <span class="landing-visually-hidden">Email</span>
-          <input id="ortho-consultation-email" name="email" type="email" placeholder="E-Mail" autocomplete="email" maxlength="254" required />
+          <input id={`${idPrefix}-email`} name="email" type="email" placeholder="E-Mail" autocomplete="email" maxlength="254" required />
         </label>
 
         <div class="ortho-consultation-phone">
-          <label class="ortho-consultation-country" for="ortho-consultation-country">
+          <label class="ortho-consultation-country" for={`${idPrefix}-country`}>
             <span class="landing-visually-hidden">Prefisso internazionale</span>
-            <select id="ortho-consultation-country" name="phoneCountry" autocomplete="tel-country-code">
+            <select id={`${idPrefix}-country`} name="phoneCountry" autocomplete="tel-country-code">
               {phoneCountries.map(country => <option value={country.code} aria-label={`${country.country} ${country.code}`}>{country.flag} {country.code}</option>)}
             </select>
             <svg class="ortho-consultation-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 7 5 5 5-5" /></svg>
           </label>
-          <label class="ortho-consultation-field" for="ortho-consultation-phone">
+          <label class="ortho-consultation-field" for={`${idPrefix}-phone`}>
             <span class="landing-visually-hidden">Numero di telefono</span>
-            <input id="ortho-consultation-phone" name="phone" type="tel" placeholder="Numero di telefono" autocomplete="tel-national" minlength="6" maxlength="30" required />
+            <input id={`${idPrefix}-phone`} name="phone" type="tel" placeholder="Numero di telefono" autocomplete="tel-national" minlength="6" maxlength="30" required />
           </label>
         </div>
 
-        <label class="ortho-consultation-office" for="ortho-consultation-office">
+        <label class="ortho-consultation-office" for={`${idPrefix}-office`}>
           <span class="landing-visually-hidden">Città dello studio</span>
           <svg class="ortho-consultation-search" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" /></svg>
-          <select id="ortho-consultation-office" name="office" required>
+          <select id={`${idPrefix}-office`} name="office" required>
             <option value="" disabled selected>Città</option>
             {site.offices.map(office => <option value={office.city}>{office.city}</option>)}
           </select>
@@ -69,7 +71,7 @@ const phoneCountries = [
       <BookingPrivacy />
       <button class="ortho-consultation-submit" type="submit">Continua</button>
       <BookingFeedback />
-      <p class="ortho-consultation-note">La segreteria ti ricontatterà per concordare giorno e orario della visita.</p>
+      {!isHero && <p class="ortho-consultation-note">La segreteria ti ricontatterà per concordare giorno e orario della visita.</p>}
     </form>
   </div>
 </div>
@@ -97,6 +99,19 @@ const phoneCountries = [
 
   @media (max-width: 720px) {
     .ortho-consultation-mobile { display: block; }
+
+    .ortho-consultation-hero { margin-top: 24px; }
+
+    .ortho-consultation-hero .ortho-consultation-surface {
+      padding: 0;
+      background: transparent;
+    }
+
+    .ortho-consultation-hero .ortho-consultation-form {
+      padding: 0;
+      border-radius: 0;
+      background: transparent;
+    }
 
     .ortho-consultation-heading {
       margin: 0 34px 32px;

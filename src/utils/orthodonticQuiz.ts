@@ -6,8 +6,14 @@ export function bindOrthodonticQuiz() {
   if (!dialog || !form || form.dataset.quizBound) return;
   form.dataset.quizBound = 'true';
 
-  const panels = Array.from(form.querySelectorAll<HTMLElement>('[data-quiz-panel]'));
-  const questionCount = panels.filter(panel => panel.classList.contains('orthodontic-quiz-question')).length;
+  const allPanels = Array.from(form.querySelectorAll<HTMLElement>('[data-quiz-panel]'));
+  const objectivesPanel = form.querySelector<HTMLElement>('[data-quiz-mobile-objectives-panel]');
+  const objectivesHost = objectivesPanel?.querySelector<HTMLElement>('[data-quiz-objectives-host]');
+  const objectivesGrid = objectivesPanel ? document.querySelector<HTMLElement>('[data-orthodontic-quiz] .orthodontic-objectives-grid') : null;
+  const objectivesDesktopParent = objectivesGrid?.parentElement;
+  const mobileViewport = window.matchMedia('(max-width: 720px)');
+  const initialReason = form.querySelector<HTMLInputElement>('[name="initialReason"]');
+  let panels = allPanels;
   const progress = dialog.querySelector<HTMLElement>('[data-quiz-progress]');
   const navigation = dialog.querySelector<HTMLElement>('[data-quiz-navigation]');
   const forward = dialog.querySelector<HTMLButtonElement>('[data-quiz-forward]');
@@ -28,15 +34,18 @@ export function bindOrthodonticQuiz() {
     if (output) output.textContent = message;
   };
 
-  const showPanel = (index: number) => {
+  const showPanel = (index: number, focus = true) => {
     clearAutoAdvance();
     current = Math.max(0, Math.min(index, panels.length - 1));
-    panels.forEach((panel, panelIndex) => { panel.hidden = panelIndex !== current; });
     const panel = panels[current];
+    allPanels.forEach(candidate => { candidate.hidden = candidate !== panel; });
+    const questionCount = panels.filter(candidate => candidate.classList.contains('orthodontic-quiz-question')).length;
     const completed = panels.slice(0, current).filter(previous => previous.classList.contains('orthodontic-quiz-question')).length;
+    progress?.style.setProperty('--quiz-question-count', String(questionCount));
     progress?.setAttribute('aria-valuenow', String(Math.round(completed / questionCount * 100)));
     progress?.setAttribute('aria-valuetext', `${completed} domande completate su ${questionCount}`);
     progress?.querySelectorAll<HTMLElement>('[data-progress-segment]').forEach((segment, i) => {
+      segment.hidden = i >= questionCount;
       segment.classList.toggle('is-complete', i < completed);
     });
     if (navigation) navigation.hidden = current === 0;
@@ -44,13 +53,19 @@ export function bindOrthodonticQuiz() {
 
     const heading = panel.querySelector<HTMLElement>('h2');
     if (heading) dialog.setAttribute('aria-labelledby', heading.id);
-    dialog.scrollTop = 0;
-    heading?.focus({ preventScroll: true });
-    panel.querySelector<HTMLInputElement | HTMLSelectElement>('input:not([type="radio"]):not([type="checkbox"]), select')?.focus({ preventScroll: true });
+    if (focus) {
+      dialog.scrollTop = 0;
+      heading?.focus({ preventScroll: true });
+      panel.querySelector<HTMLInputElement | HTMLSelectElement>('input:not([type="radio"]):not([type="checkbox"]), select')?.focus({ preventScroll: true });
+    }
   };
 
   const validatePanel = (panel: HTMLElement, report = true) => {
     setError(panel, '');
+    if (panel === objectivesPanel && !initialReason?.value) {
+      if (report) setError(panel, 'Seleziona il tuo obiettivo per continuare.');
+      return false;
+    }
     const controls = Array.from(panel.querySelectorAll<HTMLInputElement | HTMLSelectElement>('input, select'));
     for (const control of controls) {
       if (!control.validity.valid) {
@@ -86,8 +101,18 @@ export function bindOrthodonticQuiz() {
   document.querySelectorAll<HTMLButtonElement>('[data-quiz-open]').forEach(button => {
     button.setAttribute('aria-controls', dialog.id);
     button.addEventListener('click', () => {
-      const goal = form.querySelector<HTMLInputElement>('[name="initialReason"]');
-      if (goal && button.dataset.quizObjective) goal.value = button.dataset.quizObjective;
+      if (submitting) return;
+      if (initialReason && button.dataset.quizObjective) initialReason.value = button.dataset.quizObjective;
+      if (objectivesPanel?.contains(button)) {
+        if (!dialog.open || panels[current] !== objectivesPanel) return;
+        objectivesGrid?.querySelectorAll<HTMLButtonElement>('[data-quiz-objective]').forEach(choice => {
+          choice.setAttribute('aria-pressed', String(choice === button));
+        });
+        setError(objectivesPanel, '');
+        clearAutoAdvance();
+        autoAdvance = setTimeout(next, 220);
+        return;
+      }
       returnFocus = button;
       previousOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
@@ -95,6 +120,29 @@ export function bindOrthodonticQuiz() {
       showPanel(current);
     });
   });
+
+  if (objectivesPanel && objectivesHost && objectivesGrid && objectivesDesktopParent) {
+    const updateObjectivesStep = () => {
+      const previousPanel = panels[current];
+      const mobile = mobileViewport.matches;
+      (mobile ? objectivesHost : objectivesDesktopParent).append(objectivesGrid);
+      objectivesGrid.querySelectorAll<HTMLButtonElement>('[data-quiz-objective]').forEach(button => {
+        if (mobile) {
+          button.removeAttribute('aria-haspopup');
+          button.removeAttribute('aria-controls');
+          button.setAttribute('aria-pressed', String(button.dataset.quizObjective === initialReason?.value));
+        } else {
+          button.setAttribute('aria-haspopup', 'dialog');
+          button.setAttribute('aria-controls', dialog.id);
+          button.removeAttribute('aria-pressed');
+        }
+      });
+      panels = allPanels.filter(panel => mobile ? !panel.classList.contains('orthodontic-quiz-welcome') : panel !== objectivesPanel);
+      showPanel(Math.max(0, panels.indexOf(previousPanel)), dialog.open);
+    };
+    updateObjectivesStep();
+    mobileViewport.addEventListener('change', updateObjectivesStep);
+  }
 
   dialog.querySelectorAll<HTMLButtonElement>('[data-quiz-next]').forEach(button => button.addEventListener('click', next));
   dialog.querySelector<HTMLButtonElement>('[data-quiz-prev]')?.addEventListener('click', () => { if (!submitting) showPanel(current - 1); });
@@ -135,7 +183,7 @@ export function bindOrthodonticQuiz() {
     event.preventDefault();
     if (submitting) return;
     if (current !== panels.length - 1) { next(); return; }
-    for (let index = 1; index < panels.length; index += 1) {
+    for (let index = 0; index < panels.length; index += 1) {
       if (!validatePanel(panels[index], false)) {
         showPanel(index);
         validatePanel(panels[index]);
