@@ -278,3 +278,32 @@ const structuredData = {
 
   </body>
 </html>
+
+<style>
+  @media (max-width: 720px) {
+    .ortho-hero-overlay .landing-hero-stage {
+      display: block;
+      padding-top: 0;
+      border-radius: 18px 18px 0 0;
+    }
+
+    .ortho-hero-overlay .landing-hero-stage::after {
+      display: none;
+    }
+
+    .ortho-hero-overlay .ortho-hero-photo-frame {
+      position: relative;
+      inset: auto;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 3 / 2;
+      border-radius: 18px 18px 0 0;
+    }
+
+    .ortho-hero-overlay .landing-hero-panel {
+      inset: auto;
+      width: 100%;
+      box-shadow: none;
+    }
+  }
+</style>
