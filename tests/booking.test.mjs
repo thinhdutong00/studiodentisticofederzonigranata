@@ -31,6 +31,7 @@ const cases = {
   'first-visit': { ...common, visitReason: 'Controllo generale', visitGoal: 'Ricevere una diagnosi completa', availability: 'Mattina', notes: 'Nota di prova', message: 'Messaggio finale' },
   urgent: { ...common, emergencyType: 'Altro', symptom: 'Altro', painLevel: '8', availability: 'Entro 24 ore', otherDetails: 'Descrizione tecnica di prova', details: 'Dettagli di prova' },
   treatment: { ...common, treatment: 'Sbiancamento dentale', treatmentCategory: 'Estetica', problem: 'Sbiancamento domiciliare controllato', preferredDates: '2026-10-20, 2026-10-22', preferredTimes: '10:00, 15:30', scheduleAcknowledged: true, details: 'Dettagli della visita', initialReason: 'Preferenza iniziale' },
+  'orthodontic-quiz': { office: 'Modena', patientAge: '30', problem: 'Denti affollati', occlusion: 'Morso aperto', availability: 'Tra 1 e 3 mesi', visitGoal: 'Un piano di trattamento personalizzato', initialReason: 'Allineare i miei denti', treatment: 'Ortodonzia e allineatori' },
 };
 
 async function invoke(handler, body = base, options = {}) {
@@ -112,6 +113,41 @@ test('alternative treatment preserves the free-text request', async () => {
   assert.match(findEmailCall(calls).body.text, /Vorrei una valutazione personalizzata/);
   assert.match(findCrmCall(calls).body.messaggio, /Vorrei una valutazione personalizzata/);
 });
+
+test('orthodontic quiz stores every answer and its objective in CRM communications', async () => {
+  const { handler, calls } = fixture();
+  const answers = { ...cases['orthodontic-quiz'], kind: 'orthodontic-quiz', source: '/visita-ortodonzia/' };
+  const res = await invoke(handler, { ...base, ...answers });
+  assert.equal(res.statusCode, 200);
+  const crm = findCrmCall(calls).body;
+  assert.equal(crm.servizio, 'Ortodonzia e allineatori');
+  assert.equal(crm.pagina, '/visita-ortodonzia/');
+  assert.equal(crm.giorniPreferiti, answers.availability);
+  for (const key of ['patientAge', 'problem', 'occlusion', 'visitGoal', 'initialReason']) {
+    assert.ok(crm.messaggio.includes(answers[key]), `Missing quiz answer ${key}`);
+  }
+});
+
+test('orthodontic quiz permits skipping the optional visit goal and fixes its service', async () => {
+  const { handler, calls } = fixture();
+  const res = await invoke(handler, { ...base, ...cases['orthodontic-quiz'], kind: 'orthodontic-quiz', visitGoal: '', initialReason: '', treatment: 'Servizio manipolato' });
+  assert.equal(res.statusCode, 200);
+  assert.equal(findCrmCall(calls).body.servizio, 'Ortodonzia e allineatori');
+});
+
+for (const changes of [
+  { patientAge: '' }, { patientAge: '0' }, { patientAge: '101' }, { patientAge: '20.5' },
+  { problem: '' }, { problem: 'Risposta non prevista' }, { occlusion: '' }, { occlusion: 'Risposta non prevista' },
+  { availability: '' }, { availability: 'Risposta non prevista' }, { office: '' },
+  { visitGoal: 'Risposta non prevista' }, { initialReason: 'Risposta non prevista' }, { email: '' },
+]) {
+  test(`orthodontic quiz rejects incomplete or forged answer ${JSON.stringify(changes)} without provider calls`, async () => {
+    const { handler, calls } = fixture();
+    const res = await invoke(handler, { ...base, ...cases['orthodontic-quiz'], kind: 'orthodontic-quiz', ...changes });
+    assert.equal(res.statusCode, 400);
+    assert.equal(calls.length, 0);
+  });
+}
 
 for (const [label, changes] of [
   ['missing consent', { privacyConsent: false }], ['forged consent', { privacyConsent: 'true' }],

@@ -1,0 +1,48 @@
+---
+interface Props {
+  variant?: string;
+}
+const { variant = 'smile' } = Astro.props;
+const positions = variant === 'gapped'
+  ? [31, 56, 80, 103, 143, 166, 190, 215]
+  : [39, 62, 85, 109, 133, 157, 180, 203];
+const sideView = ['underbite', 'overbite'].includes(variant);
+const lowerOffset = variant === 'underbite' ? -22 : 15;
+const tooth = 'M-10-15Q-10-23 0-23Q10-23 10-15L9 12Q8 20 0 20Q-8 20-9 12Z';
+---
+
+<svg viewBox="0 0 250 154" fill="none" aria-hidden="true" class="orthodontic-diagram">
+  {variant === 'other' ? (
+    <g fill="currentColor" stroke="none">
+      <circle cx="98" cy="77" r="4" />
+      <circle cx="125" cy="77" r="4" />
+      <circle cx="152" cy="77" r="4" />
+    </g>
+  ) : sideView ? (
+    <g stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
+      <path d="M37 30c35-13 81-13 116 0l21 29" opacity=".35" />
+      <path d="M37 125c35 13 81 13 116 0l21-29" opacity=".35" transform={`translate(${lowerOffset} 0)`} />
+      {[55, 81, 107, 133, 159].map((x, i) => <path d={tooth} transform={`translate(${x} ${49 + i * 2}) rotate(${-i * 4})`} />)}
+      {[55, 81, 107, 133, 159].map((x, i) => <path d={tooth} transform={`translate(${x + lowerOffset} ${106 - i * 2}) rotate(${180 + i * 4})`} />)}
+      <path d={variant === 'underbite' ? 'M155 78h-30m6-5-6 5 6 5' : 'M180 72v21m-5-6 5 6 5-6'} stroke-width="2" />
+    </g>
+  ) : (
+    <g stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+      <path d="M17 28c-5 10-6 25-1 38M233 28c5 10 6 25 1 38M17 122c-5-10-6-25-1-38M233 122c5-10 6-25 1-38" opacity=".35" />
+      {positions.map((x, i) => {
+        const edge = Math.abs(3.5 - i);
+        const crowded = variant === 'crowded';
+        const upperX = x + (crowded ? [2, 3, 9, -8, 7, -7, -2, -2][i] : 0);
+        const rotation = crowded ? [-12, 8, -21, 17, -15, 21, -8, 12][i] : 0;
+        const upperY = 50 + edge * 2;
+        const lowerY = variant === 'openbite' && i > 1 && i < 6 ? 116 : 104 - edge * 2;
+        const scale = edge > 2 ? .8 : 1;
+        return <>
+          <path d={tooth} transform={`translate(${upperX} ${upperY}) rotate(${rotation}) scale(${scale} 1)`} />
+          <path d={tooth} transform={`translate(${x + (variant === 'crossbite' ? (i < 4 ? 9 : -9) : 0)} ${lowerY}) rotate(180) scale(${scale} .85)`} />
+        </>;
+      })}
+      {variant === 'crossbite' && <path d="M37 77h28m-6-5 6 5-6 5M213 77h-28m6-5-6 5 6 5" stroke-width="2" />}
+    </g>
+  )}
+</svg>

@@ -1,0 +1,57 @@
+---
+import { site } from '../data/site';
+import { orthodonticAgeMenu } from '../data/orthodonticPaths';
+import { orthodonticResultsPath } from '../data/orthodonticResults';
+---
+
+<header class="landing-header">
+      <div class="landing-shell landing-header-inner">
+        <a class="landing-logo" href="/visita-ortodonzia/" aria-label={`${site.name} — Landing ortodonzia`}>
+          <img
+            src={site.logo}
+            srcset="/assets/optimized/studio-dentistico-federzoni-granata-300.webp 300w, /assets/optimized/studio-dentistico-federzoni-granata.webp 400w"
+            sizes="(max-width: 720px) 204px, 286px"
+            alt={site.name}
+            width="400"
+            height="52"
+          />
+        </a>
+
+        <div class="landing-header-actions">
+          <nav class="ortho-header-nav" id="ortho-header-navigation" aria-label="Navigazione ortodonzia">
+            <ul class="ortho-nav-list">
+              <li>
+                <details class="ortho-treatment-menu">
+                  <summary>Trattamenti ortodontici <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg></summary>
+                  <ul class="ortho-treatment-submenu">
+                    {orthodonticAgeMenu.map(item => <li><a href={item.href}>{item.label}</a></li>)}
+                  </ul>
+                </details>
+              </li>
+              <li><a href="#sedi">Sedi</a></li>
+              <li><a href={orthodonticResultsPath} aria-current={Astro.url.pathname === orthodonticResultsPath ? 'page' : undefined}>Risultati</a></li>
+            </ul>
+          </nav>
+          <a class="landing-header-cta" href="#il-tuo-obiettivo" data-quiz-cta>Fai il test</a>
+          <button class="ortho-menu-toggle" type="button" aria-label="Apri menu di navigazione" aria-expanded="false" aria-controls="ortho-header-navigation">
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path class="ortho-menu-open-icon" d="M4 7h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /><path class="ortho-menu-close-icon" d="m6 6 12 12M6 18 18 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+    <noscript>
+      <style is:inline>
+        @media (max-width: 1024px) {
+          .ortho-landing .landing-header { position: relative; }
+          .ortho-landing .landing-header-inner, .ortho-landing .landing-header-actions { flex-wrap: wrap; }
+          .ortho-landing .landing-header-actions { flex: 1 0 100%; padding-bottom: 16px; }
+          .ortho-landing .ortho-header-nav { display: block; position: static; width: 100%; max-height: none; border: 0; padding: 0; }
+          .ortho-landing .ortho-menu-toggle { display: none; }
+        }
+      </style>
+    </noscript>
+
+<script>
+  import { bindOrthodonticLanding } from '../utils/orthodonticLanding';
+  bindOrthodonticLanding();
+</script>

@@ -1,0 +1,35 @@
+.ortho-pathways { background: var(--surface-white); }
+.ortho-pathways-heading > p:not(.ortho-eyebrow) { max-width: 70ch; }
+.ortho-pathways-group { margin-top: 36px; }
+.ortho-pathways-group + .ortho-pathways-group { margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--border); }
+.ortho-section .ortho-pathways-group > h3 { margin-bottom: 20px; color: var(--brand-primary-dark); font-size: 17px; line-height: 1.35; }
+.ortho-pathways-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.ortho-path-card { min-width: 0; }
+.ortho-path-card > a { display: block; height: 100%; border-radius: 10px; color: var(--text-dark); text-decoration: none; }
+.ortho-path-card > a:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 6px; }
+.ortho-path-card-image { overflow: hidden; aspect-ratio: 3 / 2; border: 1px solid var(--border); border-radius: 10px; background: var(--surface-white); }
+.ortho-path-card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 180ms ease; }
+.ortho-path-product-image img { object-fit: contain; }
+.ortho-path-card > a:hover .ortho-path-card-image img { transform: scale(1.025); }
+.ortho-path-card h4 { margin: 20px 0 6px; color: var(--brand-primary-dark); font-size: 22px; font-weight: 500; line-height: 1.25; letter-spacing: -.2px; }
+.ortho-path-card p { margin: 0; color: var(--muted-text); font-size: 16px; font-weight: 400; line-height: 1.45; }
+.ortho-path-card-link { display: inline-flex; min-height: 44px; align-items: center; gap: 10px; color: var(--brand-cta); font-size: 16px; font-weight: 500; line-height: 1.3; }
+.ortho-path-card > a:hover .ortho-path-card-link { color: var(--brand-cta-hover); text-decoration: underline; text-underline-offset: 4px; }
+.ortho-path-card-link svg { flex: 0 0 16px; width: 16px; height: 16px; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.ortho-pathway-back { margin-bottom: 24px; }
+.ortho-pathway-hero .ortho-hero-visual img { aspect-ratio: 3 / 2; }
+.ortho-pathway-hero .ortho-path-product-image { border-radius: 4px; }
+.ortho-pathway-hero .ortho-path-product-image img { object-fit: contain; }
+.ortho-pathway-method .ortho-method-steps { margin-top: 32px; }
+@media (max-width: 720px) {
+  .ortho-pathways-group { margin-top: 28px; }
+  .ortho-pathways-grid { grid-template-columns: 1fr; gap: 28px; }
+  .ortho-pathways-group + .ortho-pathways-group { margin-top: 28px; padding-top: 28px; }
+  .ortho-section .ortho-pathways-group > h3 { margin-bottom: 16px; font-size: 16px; }
+  .ortho-path-card h4 { margin-top: 16px; font-size: 21px; letter-spacing: -.16px; }
+  .ortho-pathway-back { margin-bottom: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ortho-path-card-image img { transition: none; }
+  .ortho-path-card > a:hover .ortho-path-card-image img { transform: none; }
+}

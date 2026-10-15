@@ -1,0 +1,34 @@
+---
+import { orthodonticPaths } from '../data/orthodonticPaths';
+import '../styles/orthodontic-pathways.css';
+
+const groups = [
+  { id: 'age', title: 'In base all’età' },
+  { id: 'solution', title: 'In base alla soluzione' },
+];
+---
+
+<section class="ortho-section ortho-pathways" id="percorsi-ortodontici" aria-labelledby="ortho-pathways-title">
+  <div class="ortho-shell">
+    <div class="ortho-section-heading ortho-pathways-heading">
+      <p class="ortho-eyebrow">Percorsi ortodontici</p>
+      <h2 id="ortho-pathways-title">Ogni sorriso ha esigenze diverse.</h2>
+      <p>Dall’infanzia all’età adulta, la valutazione ortodontica permette di individuare le possibilità di trattamento più appropriate.</p>
+    </div>
+    {groups.map(group => <div class="ortho-pathways-group" role="group" aria-labelledby={`ortho-pathways-${group.id}`}>
+      <h3 id={`ortho-pathways-${group.id}`}>{group.title}</h3>
+      <div class="ortho-pathways-grid">
+        {orthodonticPaths.filter(pathway => pathway.group === group.id).map(pathway => <article class="ortho-path-card">
+          <a href={pathway.href} aria-labelledby={`ortho-path-${pathway.slug}`}>
+            <div class:list={['ortho-path-card-image', pathway.productImage && 'ortho-path-product-image']}>
+              <img src={pathway.cardImage || pathway.image} srcset={pathway.cardImageSet || pathway.imageSet} sizes="(max-width: 720px) calc(100vw - 68px), (max-width: 760px) calc((92vw - 48px) / 2), (max-width: 1400px) calc((92vw - 24px) / 2), (max-width: 1760px) calc((100vw - 136px) / 2), 812px" alt={pathway.cardImageAlt || pathway.imageAlt} width="1200" height="800" loading="lazy" decoding="async" />
+            </div>
+            <h4 id={`ortho-path-${pathway.slug}`}>{pathway.name}</h4>
+            <p>{pathway.summary}</p>
+            <span class="ortho-path-card-link">{pathway.linkLabel}<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 15 15 5M5 5h10v10" /></svg></span>
+          </a>
+        </article>)}
+      </div>
+    </div>)}
+  </div>
+</section>

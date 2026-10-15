@@ -1,0 +1,6 @@
+---
+import OrthodonticPathLanding from '../../components/OrthodonticPathLanding.astro';
+import { orthodonticPaths } from '../../data/orthodonticPaths';
+const pathway = orthodonticPaths.find(item => item.slug === 'apparecchio-fisso')!;
+---
+<OrthodonticPathLanding pathway={pathway} />

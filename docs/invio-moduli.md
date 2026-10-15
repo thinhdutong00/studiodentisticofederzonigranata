@@ -8,11 +8,13 @@ Archivio operativo: foglio privato **Federzoni Granata Thin leads**, scheda `Ric
 - Prima visita, urgenza e richiesta trattamento inviano tutte le risposte a `POST /api/booking`.
 - I moduli contatti inviano nome, cognome, telefono, email e messaggio.
 - Il componente compatto di richiamata invia nome e telefono, con consenso privacy.
+- La landing `/visita-ortodonzia/` include un quiz con 9 domande e una schermata informativa. Nome e cognome vengono raccolti in un unico campo. Invia età, allineamento, morso, sede, tempi desiderati, aspettative e recapiti con il tipo `orthodontic-quiz`; l’obiettivo selezionato nella sezione introduttiva viene conservato. Il server valida le opzioni, identifica il servizio come `Ortodonzia e allineatori` e include tutte le risposte in `Comunicazioni` nel CRM esistente. I recapiti di un paziente minorenne sono quelli del genitore o del tutore. Il quiz è informativo e non determina l’idoneità clinica.
 - I moduli introduttivi dei trattamenti (incluso sbiancamento) aprono `/richiesta/` con trattamento, sede e motivo preselezionati; l’invio avviene dopo aver raccolto i recapiti. Anche un motivo iniziale che non coincide con le opzioni del questionario viene conservato nell’email.
+- Le landing `/visita-ortodonzia/ortodonzia-adulti/`, `/visita-ortodonzia/ortodonzia-bambini-adolescenti/`, `/visita-ortodonzia/allineatori-trasparenti/` e `/visita-ortodonzia/apparecchio-fisso/` riutilizzano lo stesso quiz ortodontico. La macro area viene inclusa nel messaggio, quindi compare sia nell’email sia in `Comunicazioni` nel CRM; la pagina del modulo resta nel campo `source`. La provenienza della sessione viene acquisita prima della navigazione tra le card e le landing dedicate.
 - Il server controlla i dati e chiama in parallelo Resend e la web app Google Apps Script del CRM. La conferma appare solo se Resend restituisce un identificativo email e il CRM conferma la registrazione della stessa richiesta.
 - In caso di errore o timeout il modulo conserva i valori e permette di riprovare. Lo stesso tentativo mantiene lo stesso `requestId`: Resend riutilizza la chiave di idempotenza e Apps Script non inserisce una seconda riga con lo stesso ID.
 - Il foglio riceve solo dati già validati dal server. Le nuove richieste entrano con `Contattato = No` e `Accettato = No`; questi valori non possono essere impostati dal browser.
-- La scheda visibile conserva soltanto i campi operativi richiesti. Il log tecnico nascosto conserva l’ID univoco usato per impedire duplicati, senza salvare il valore dei click ID pubblicitari.
+- La scheda visibile conserva soltanto i campi operativi richiesti. Una tredicesima colonna tecnica nascosta conserva l’ID univoco nella stessa scrittura del lead, così un errore del log non può creare duplicati. Il valore dei click ID pubblicitari non viene salvato.
 
 ## Configurazione necessaria su Vercel
 
@@ -30,7 +32,7 @@ Il Gmail destinatario non è il mittente autenticato. Non usare `mailto:` nelle 
 
 Verificare il dominio mittente in Resend tramite i record DNS indicati dal servizio. Dopo aver configurato le variabili, eseguire un nuovo deploy. Senza configurazione il server risponde `503` e non mostra una conferma falsa.
 
-Le funzioni Vercel in `api/` sono distribuite insieme al sito Astro statico; il runtime è Node 22. L’endpoint usa timeout separati di 12 secondi per Resend e 8 secondi per il CRM, eseguiti in parallelo entro il limite di 20 secondi della funzione.
+Le funzioni Vercel in `api/` sono distribuite insieme al sito Astro statico; il runtime è Node 22. L’endpoint usa timeout separati di 12 secondi per Resend e 45 secondi per il CRM, eseguiti in parallelo entro il limite di 60 secondi della funzione. Il browser attende fino a 65 secondi, così può ricevere anche l’esito di una funzione arrivata vicino al proprio limite. Il margine del CRM copre anche l’avvio a freddo e il redirect della web app Apps Script.
 
 ## Configurazione del CRM Google Sheets
 
@@ -43,13 +45,15 @@ Le funzioni Vercel in `api/` sono distribuite insieme al sito Astro statico; il 
 4. Distribuire lo script come applicazione web, eseguita come account dello studio. Il server deve poter chiamare l’URL `/exec`; l’endpoint è protetto dal segreto nel corpo HTTPS.
 5. Salvare l’URL della distribuzione in `GOOGLE_SHEETS_WEBHOOK_URL` e creare un nuovo deploy Vercel.
 
-La scheda operativa deve chiamarsi `Richieste dal sito`; il log tecnico nascosto deve chiamarsi `_Log integrazione`. Entrambe devono mantenere le intestazioni nell’ordine previsto dallo script. Apps Script rifiuta lo schema se un’intestazione viene rinominata o spostata. La ricerca dell’`ID richiesta` avviene nel log sotto lock per impedire duplicati concorrenti. Formati e convalide operative vengono copiati sulle nuove righe e i valori che iniziano come formule vengono salvati come testo.
+La scheda operativa deve chiamarsi `Richieste dal sito`; il log tecnico nascosto deve chiamarsi `_Log integrazione`. Entrambe devono mantenere le intestazioni nell’ordine previsto dallo script. Apps Script rifiuta lo schema se un’intestazione viene rinominata o spostata. La ricerca dell’`ID richiesta` avviene nella colonna tecnica nascosta della stessa riga, sotto lock, per impedire duplicati concorrenti anche quando il log non è scrivibile. Formati e convalide operative vengono copiati sulle nuove righe e i valori che iniziano come formule vengono salvati come testo.
 
-La scheda operativa usa esattamente 12 colonne, nell’ordine:
+La scheda operativa mostra esattamente 12 colonne, nell’ordine:
 
 `Data`, `Nome e cognome`, `Telefono`, `Email`, `Città`, `Provenienza`, `Annuncio`, `Contattato`, `Data e ora di contatto`, `Comunicazioni`, `Preventivo`, `Accettato`.
 
-`Provenienza` mostra `Google Ads` per il traffico a pagamento e `SEO` per Google organico/Maps. Quando i segnali non bastano, resta vuota invece di attribuire un’origine inventata. `Annuncio` mostra il nome passato con un parametro dedicato oppure l’ID creativo Google Ads; per gli altri lead mostra il link completo della pagina di ingresso. Servizio, preferenze e messaggio del modulo confluiscono in `Comunicazioni`.
+Lo script crea e mantiene nascosta la colonna tecnica M, `ID richiesta`. Non va rinominata, spostata o mostrata al personale: serve esclusivamente per l’idempotenza del webhook.
+
+`Provenienza` usa temporaneamente una classificazione binaria: mostra `Google Ads` quando è presente un segnale pubblicitario riconosciuto e `Risultato organico` in tutti gli altri casi. Di conseguenza, fino all'installazione del tracking Google Ads, `Risultato organico` comprende anche accessi diretti, referral e provenienze non rilevate. `Annuncio` mostra il nome passato con un parametro dedicato oppure l’ID creativo Google Ads; per gli altri lead mostra il link completo della pagina di ingresso. Servizio, preferenze e messaggio del modulo confluiscono in `Comunicazioni`.
 
 ## Collegamento con Google Ads e SEO
 
@@ -61,11 +65,11 @@ utm_source=google&utm_medium=cpc&campaignid={campaignid}&adgroupid={adgroupid}&c
 
 I parametri ValueTrack vengono risolti da Google al momento del clic. Google espone automaticamente l’ID del creativo, non il nome editoriale dell’annuncio: in assenza di un nome passato esplicitamente il foglio mostra `Google Ads · ID …`. Il valore del click ID non viene salvato.
 
-Per la SEO non serve modificare gli URL: un accesso proveniente da un risultato Google viene classificato `SEO` tramite il referrer del browser e il foglio riporta la pagina di ingresso. Quando il browser non comunica segnali sufficienti, la provenienza resta vuota invece di inventare l'origine.
+Per la SEO non serve modificare gli URL: un accesso proveniente da un risultato Google viene riconosciuto tramite il referrer del browser e il foglio riporta la pagina di ingresso. Per la classificazione binaria temporanea, anche le provenienze diverse da Google Ads vengono mostrate come `Risultato organico`.
 
 ## Verifica
 
-1. `npm test` verifica destinazione, risposte dei cinque tipi di modulo, consenso, mapping CRM, schema Apps Script, errori parziali, deduplicazione, neutralizzazione delle formule, chiavi di idempotenza e limite ai tentativi. I provider sono simulati: questi test non inviano email reali e non scrivono nel foglio.
+1. `npm test` verifica destinazione, risposte dei sei tipi di modulo, consenso, mapping CRM, schema Apps Script, errori parziali, deduplicazione, neutralizzazione delle formule, chiavi di idempotenza e limite ai tentativi. I provider sono simulati: questi test non inviano email reali e non scrivono nel foglio.
 2. `npm run build` verifica la compilazione del sito.
 3. Per lo sviluppo, copiare `.env.example` in `.env` e configurare le variabili. `npm run dev` serve anche l’endpoint locale; con credenziali reali il modulo invia email reali allo stesso destinatario.
 4. Dopo il deploy configurato, inviare una richiesta chiaramente identificata come prova tecnica. Verificare l’evento `delivered` su Resend, la ricezione nella casella e una sola riga nel foglio. In Preview `Comunicazioni` deve iniziare con `TEST – non contattare`; in Production questa dicitura non deve comparire. Ripetere lo stesso `requestId` e controllare nel log tecnico nascosto che non venga creata una seconda riga.
@@ -84,6 +88,8 @@ La provenienza marketing viene conservata soltanto per la sessione in `sessionSt
 - `Diretto` in assenza di parametri e referrer;
 - `Altro` per sorgenti esterne identificabili;
 - `Non rilevata` quando i segnali sono mancanti o ambigui.
+
+La scheda operativa comprime temporaneamente queste categorie in due valori: `Google Ads` resta invariato; ogni altra classificazione viene mostrata come `Risultato organico`.
 
 Il nome campagna viene riportato soltanto da `utm_campaign`; l'ID campagna viene riportato da `campaignid`, `gad_campaignid` o `utm_id`. Nessun dato viene ricostruito o inventato dal click ID.
 

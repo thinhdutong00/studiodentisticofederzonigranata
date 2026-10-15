@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { orthodonticBites, orthodonticConcerns, orthodonticObjectives, orthodonticTimings, orthodonticVisitGoals } from '../src/data/orthodonticQuiz.js';
 
 export const RECIPIENT = 'info.federzonigranata@gmail.com';
 const MAX_BYTES = 24_000;
@@ -13,6 +14,7 @@ const KINDS = {
   treatment: 'Valutazione di un trattamento',
   contact: 'Informazioni',
   callback: 'Richiesta di richiamata',
+  'orthodontic-quiz': 'Quiz ortodonzia',
 };
 const LABELS = {
   fullName: 'Nome e cognome', phone: 'Telefono', email: 'Email',
@@ -25,6 +27,7 @@ const LABELS = {
   notes: 'Note', message: 'Messaggio', details: 'Dettagli',
   otherDetails: 'Altri sintomi o informazioni', otherRequest: 'Altra esigenza',
   source: 'Pagina di provenienza',
+  patientAge: 'Età del paziente', occlusion: 'Morso indicato nel questionario',
 };
 const LONG_FIELDS = new Set(['notes', 'message', 'details', 'otherDetails', 'otherRequest']);
 const REQUIRED = {
@@ -32,6 +35,7 @@ const REQUIRED = {
   urgent: ['emergencyType', 'symptom', 'painLevel', 'ageRange', 'office', 'availability'],
   treatment: ['treatment', 'ageRange', 'office', 'preferredDates', 'preferredTimes'],
   contact: [], callback: [],
+  'orthodontic-quiz': ['patientAge', 'problem', 'occlusion', 'office', 'availability'],
 };
 const ATTRIBUTION_FIELDS = {
   attributionSource: 300,
@@ -102,6 +106,22 @@ export function validateBooking(input) {
   if (data.kind === 'urgent') {
     if (!/^(?:[0-9]|10)$/.test(data.painLevel)) throw new RequestError(400, 'Seleziona un livello di dolore valido.');
     if ((data.emergencyType === 'Altro' || data.symptom === 'Altro') && data.otherDetails.length < 10) throw new RequestError(400, 'Descrivi brevemente i sintomi.');
+  }
+  if (data.kind === 'orthodontic-quiz') {
+    if (!/^\d{1,3}$/.test(data.patientAge) || Number(data.patientAge) < 1 || Number(data.patientAge) > 100) {
+      throw new RequestError(400, 'Inserisci un’età valida tra 1 e 100 anni.');
+    }
+    const choices = [
+      [data.problem, orthodonticConcerns.map(option => option.value)],
+      [data.occlusion, orthodonticBites.map(option => option.value)],
+      [data.availability, orthodonticTimings],
+      [data.visitGoal, ['', ...orthodonticVisitGoals]],
+      [data.initialReason, ['', ...orthodonticObjectives.map(option => option.title)]],
+    ];
+    if (choices.some(([value, options]) => !options.includes(value))) {
+      throw new RequestError(400, 'Seleziona le risposte tra le opzioni del questionario.');
+    }
+    data.treatment = 'Ortodonzia e allineatori';
   }
   if (data.kind === 'treatment') {
     if (data.treatment === 'Altro' ? data.otherRequest.length < 10 : !data.problem) throw new RequestError(400, 'Completa il motivo della richiesta.');
@@ -189,7 +209,7 @@ export function classifyAttribution(data) {
 function buildSheetMessage(data) {
   const keys = [
     'visitReason', 'visitGoal', 'emergencyType', 'symptom', 'painLevel', 'problem',
-    'initialReason', 'notes', 'message', 'details', 'otherDetails', 'otherRequest', 'ageRange',
+    'initialReason', 'notes', 'message', 'details', 'otherDetails', 'otherRequest', 'ageRange', 'patientAge', 'occlusion',
   ];
   return keys
     .filter((key) => data[key])
@@ -265,10 +285,10 @@ async function deliverSheet(send, env, data) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
       redirect: 'follow',
-      signal: AbortSignal.timeout(8_000),
+      signal: AbortSignal.timeout(45_000),
     });
-  } catch {
-    console.error('Booking sheet provider request failed');
+  } catch (error) {
+    console.error('Booking sheet provider request failed', error instanceof Error ? error.name : 'UnknownError');
     throw new RequestError(502, BOOKING_ERROR);
   }
   const result = await parseJsonResponse(response);

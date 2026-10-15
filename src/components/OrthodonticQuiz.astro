@@ -1,0 +1,186 @@
+---
+import BookingFields from './BookingFields.astro';
+import BookingPrivacy from './BookingPrivacy.astro';
+import OrthodonticDiagram from './OrthodonticDiagram.astro';
+import { site } from '../data/site';
+import {
+  orthodonticBites,
+  orthodonticConcerns,
+  orthodonticObjectives,
+  orthodonticTimings,
+  orthodonticVisitGoals,
+} from '../data/orthodonticQuiz.js';
+import '../styles/orthodontic-quiz.css';
+
+interface Props { contextLabel?: string; }
+const { contextLabel } = Astro.props;
+
+const questions = [
+  { number: 1, title: 'Quanti anni ha il paziente?', name: 'patientAge', type: 'number', label: 'Età del paziente', placeholder: 'Scrivi l’età', required: true },
+  { number: 2, title: 'Quale immagine rappresenta meglio i tuoi denti?', name: 'problem', type: 'pictures', options: orthodonticConcerns, required: true },
+  { number: 3, title: 'Come si chiudono le tue arcate?', name: 'occlusion', type: 'pictures', options: orthodonticBites, required: true },
+  { number: 4, title: 'In quale sede vorresti venire?', name: 'office', type: 'select', required: true },
+  { number: 5, title: 'Quando vorresti iniziare il percorso?', name: 'availability', type: 'choices', options: orthodonticTimings.map(value => ({ value })), required: true },
+  { number: 6, title: 'Cosa ti interessa di più della prima valutazione?', name: 'visitGoal', type: 'choices', options: orthodonticVisitGoals.map(value => ({ value })), required: false },
+  { number: 7, title: 'Come ti chiami? (Nome e cognome)', name: 'fullName', type: 'text', label: 'Nome e cognome', placeholder: 'Il tuo nome e cognome', autocomplete: 'name', required: true },
+  { number: 8, title: 'A quale email possiamo scriverti?', name: 'email', type: 'email', label: 'Email', placeholder: 'nome@esempio.it', autocomplete: 'email', required: true },
+  { number: 9, title: 'Ultimo passo: a quale numero possiamo chiamarti?', name: 'phone', type: 'tel', label: 'Telefono', placeholder: '333 123 4567', autocomplete: 'tel-national', required: true },
+];
+---
+
+<section class="orthodontic-objectives" id="il-tuo-obiettivo" aria-labelledby="orthodontic-objectives-title" data-orthodontic-quiz>
+  <span id="richiedi" class="ortho-anchor" aria-hidden="true"></span>
+  <div class="landing-shell orthodontic-objectives-shell">
+    <div class="orthodontic-objectives-layout">
+      <div class="orthodontic-objectives-heading">
+        <p class="landing-kicker landing-kicker-dark">Richiesta di visita</p>
+        <h2 id="orthodontic-objectives-title">Richiedi la tua visita ortodontica.</h2>
+        <p>Compila il questionario e lascia i recapiti: la segreteria ti ricontatterà per concordare giorno e orario della visita.</p>
+        <button class="ortho-cta ortho-quiz-start" type="button" data-quiz-open aria-haspopup="dialog">Inizia il questionario <span aria-hidden="true">↗</span></button>
+        <h3 class="ortho-quiz-objective-title">Qual è il tuo obiettivo?</h3>
+      </div>
+      <div class="orthodontic-objectives-grid">
+        {orthodonticObjectives.map(objective => (
+          <button class="orthodontic-objective" type="button" data-quiz-open data-quiz-objective={objective.title} aria-haspopup="dialog">
+            <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+              {objective.icon === 'align' && <>
+                <path d="M15 27v-8a9 9 0 0 1 18 0v8a4 4 0 0 0 8 0V16a17 17 0 0 0-34 0v15a9 9 0 0 0 18 0V19a4 4 0 0 0-8 0v11" />
+              </>}
+              {objective.icon === 'spark' && <>
+                <path d="M24 4v40M4 24h40M10 10l28 28M10 38l28-28M16 5l16 38M5 16l38 16M5 32l38-16M16 43 32 5" />
+              </>}
+              {objective.icon === 'tooth' && <>
+                <path d="M25 9c-3 0-5 2-8 2S12 9 9 9C3 9 4 19 7 25c2 5 1 15 5 15s3-9 6-12" />
+                <path d="M24 12c2-2 4-3 7-3 5 0 7 4 7 8M22 20h19v12c0 7-9.5 11-9.5 11S22 39 22 32V20Z" />
+                <path d="M31.5 25v11M26 30.5h11" />
+              </>}
+              {objective.icon === 'smile' && <>
+                <path d="M5 16c10 4 28 4 38 0-2 12-9 20-19 20S7 28 5 16Z" />
+                <path d="M7 23c9 3 25 3 34 0" />
+              </>}
+            </svg>
+            <span>{objective.title}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+    <div class="orthodontic-questionnaire-banner">
+      <p>Compila questo questionario di 30 secondi e scopri se un trattamento di ortodonzia invisibile fa al caso tuo.</p>
+      <button type="button" data-quiz-open aria-haspopup="dialog">
+        <span>Compila il questionario</span>
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m8 5 5 5-5 5" /></svg>
+      </button>
+    </div>
+    <noscript><p>Per compilare il quiz abilita JavaScript oppure <a href="#contatti-studio">contatta la segreteria dello studio</a>.</p></noscript>
+  </div>
+</section>
+
+<dialog id="orthodontic-quiz" class="orthodontic-quiz" aria-labelledby="orthodontic-quiz-welcome-title" data-quiz-dialog>
+  <div class="orthodontic-quiz-header">
+    <div class="orthodontic-quiz-progress" style={`--quiz-question-count: ${questions.length}`} role="progressbar" aria-label="Avanzamento del questionario" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-quiz-progress>
+      {questions.map((_, index) => <span data-progress-segment={index}></span>)}
+    </div>
+    <img src={site.logo} width="400" height="52" alt={site.name} />
+    <button type="button" class="orthodontic-quiz-close" data-quiz-close aria-label="Chiudi il questionario">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6" /></svg>
+    </button>
+  </div>
+
+  <form action="/api/booking" method="post" novalidate data-booking-kind="orthodontic-quiz" data-orthodontic-quiz-form>
+    <BookingFields />
+    <input type="hidden" name="initialReason" value="" />
+    <input type="hidden" name="message" value={contextLabel ? `Richiesta dalla landing ortodonzia — ${contextLabel}` : 'Richiesta dalla landing ortodonzia — questionario del sorriso'} />
+    {contextLabel && <input type="hidden" name="treatmentCategory" value={contextLabel} />}
+
+    <section class="orthodontic-quiz-screen orthodontic-quiz-welcome" data-quiz-panel data-question="0">
+      <div class="orthodontic-quiz-welcome-copy">
+        <h2 id="orthodontic-quiz-welcome-title" tabindex="-1">Qual è il percorso per il tuo sorriso?</h2>
+        <p>Poche domande per conoscere le tue esigenze.</p>
+        <p class="orthodontic-quiz-caption">Il questionario è informativo. La scelta del trattamento richiede una visita.</p>
+        <button class="orthodontic-quiz-button" type="button" data-quiz-next>Iniziamo!</button>
+      </div>
+      <div class="orthodontic-quiz-welcome-visual"><OrthodonticDiagram variant="smile" /></div>
+    </section>
+
+    {questions.map(question => <>
+      <section class={`orthodontic-quiz-screen orthodontic-quiz-question orthodontic-quiz-question-${question.type}`} hidden data-quiz-panel data-question={question.number}>
+        <div class="orthodontic-quiz-question-title">
+          <span class="orthodontic-quiz-number" aria-hidden="true">{question.number}</span>
+          <h2 id={`orthodontic-question-${question.number}`} tabindex="-1">{question.title}{question.required && <span aria-label="Campo obbligatorio">*</span>}</h2>
+        </div>
+        {question.type === 'pictures' && <p class="orthodontic-quiz-description">Scegli l’immagine più vicina al tuo caso. Se hai dubbi, seleziona “Altro”.<br /><small>Illustrazioni indicative, senza valore diagnostico.</small></p>}
+        {question.type === 'select' && <p class="orthodontic-quiz-description">Scegli lo studio che ti è più comodo: Modena o Reggio Emilia.</p>}
+        {question.number === 6 && <p class="orthodontic-quiz-description">La segreteria ti ricontatterà per concordare la visita. Esami e approfondimenti vengono valutati in base al caso.</p>}
+        {question.type === 'email' && <p class="orthodontic-quiz-description">Useremo questo recapito per gestire la tua richiesta. <a href="/privacy-policy/" target="_blank" rel="noopener noreferrer">Informativa privacy</a>.</p>}
+        {question.type === 'tel' && <p class="orthodontic-quiz-description">La segreteria ti contatterà per comprendere l’esigenza e concordare l’appuntamento.<span data-quiz-guardian hidden>Per un paziente minorenne, inserisci i recapiti del genitore o del tutore.</span></p>}
+        {question.name === 'fullName' && <p class="orthodontic-quiz-description" data-quiz-guardian hidden>Il paziente è minorenne: inserisci nome e cognome del genitore o del tutore che possiamo contattare.</p>}
+
+        {['pictures', 'choices'].includes(question.type) ? (
+          <div class={question.type === 'pictures' ? 'orthodontic-quiz-pictures' : 'orthodontic-quiz-options'} role="radiogroup" aria-labelledby={`orthodontic-question-${question.number}`}>
+            {question.options?.map((option, index) => (
+              <label class="orthodontic-quiz-option">
+                <input type="radio" name={question.name} value={option.value} required={question.required} />
+                <span class="orthodontic-quiz-option-body">
+                  {question.type === 'pictures' && <span class="orthodontic-quiz-option-picture"><OrthodonticDiagram variant={'illustration' in option ? option.illustration : 'other'} /></span>}
+                  <span class="orthodontic-quiz-option-label">
+                    {question.type === 'choices' && <span class="orthodontic-quiz-letter" aria-hidden="true">{String.fromCharCode(65 + index)}</span>}
+                    <span>{option.value}</span>
+                    <svg class="orthodontic-quiz-check" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 10 4 4 8-8" /></svg>
+                  </span>
+                </span>
+              </label>
+            ))}
+          </div>
+        ) : question.type === 'select' ? (
+          <label class="orthodontic-quiz-input-label">
+            <span class="landing-visually-hidden">Sede preferita</span>
+            <select name="office" required aria-labelledby={`orthodontic-question-${question.number}`}>
+              <option value="">Seleziona una sede</option>
+              {site.offices.map(office => <option value={office.city}>{office.city}</option>)}
+            </select>
+          </label>
+        ) : (
+          <label class="orthodontic-quiz-input-label">
+            <span class="landing-visually-hidden">{question.label}</span>
+            <div class={question.type === 'tel' ? 'orthodontic-quiz-phone' : ''}>
+              {question.type === 'tel' && <span class="orthodontic-quiz-phone-prefix">IT +39</span>}
+              <input type={question.type} name={question.name} placeholder={question.placeholder} autocomplete={question.autocomplete} required min={question.type === 'number' ? 1 : undefined} max={question.type === 'number' ? 100 : undefined} step={question.type === 'number' ? 1 : undefined} maxlength={question.name === 'fullName' ? 120 : question.type === 'tel' ? 30 : question.type === 'email' ? 254 : undefined} minlength={question.name === 'fullName' ? 2 : question.type === 'tel' ? 6 : undefined} inputmode={question.type === 'number' ? 'numeric' : undefined} />
+            </div>
+          </label>
+        )}
+
+        {question.type === 'tel' && <div class="orthodontic-quiz-privacy"><BookingPrivacy /><p>L’invio è una richiesta di ricontatto. Giorno e orario della visita saranno concordati con la segreteria.</p></div>}
+        <p class="orthodontic-quiz-error" data-quiz-error role="alert" aria-live="polite"></p>
+        <div class="orthodontic-quiz-question-actions">
+          {question.type === 'tel' ? <button class="orthodontic-quiz-button" type="submit">Invia la richiesta <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 10 4 4 8-8" /></svg></button> : <button class="orthodontic-quiz-button" type="button" data-quiz-next>Ok <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 10 4 4 8-8" /></svg></button>}
+          {!question.required && <button class="orthodontic-quiz-skip" type="button" data-quiz-next>Salta questa domanda</button>}
+          <span class="orthodontic-quiz-enter">premi <strong>Invio ↵</strong></span>
+        </div>
+      </section>
+
+      {question.number === 3 && <section class="orthodontic-quiz-screen orthodontic-quiz-interlude" hidden data-quiz-panel data-question="3" data-quiz-information>
+        <div class="orthodontic-quiz-question-title">
+          <span class="orthodontic-quiz-quote" aria-hidden="true">“</span>
+          <h2 id="orthodontic-quiz-information-title" tabindex="-1">Ogni sorriso ha la sua storia.<br />Un percorso nasce dalla valutazione.</h2>
+        </div>
+        <p class="orthodontic-quiz-description">Un caso di ortodonzia documentato dallo Studio Federzoni Granata.</p>
+        <div class="orthodontic-quiz-clinical-case">
+          <figure><img src="/assets/original/2020/11/280.jpg" alt="Caso ortodontico dello studio: situazione prima del trattamento" width="600" height="300" loading="lazy" /><figcaption>Prima</figcaption></figure>
+          <figure><img src="/assets/original/2020/11/281.jpg" alt="Lo stesso caso ortodontico dello studio dopo il trattamento" width="600" height="300" loading="lazy" /><figcaption>Dopo</figcaption></figure>
+        </div>
+        <p class="orthodontic-quiz-caption">Il piano e i risultati dipendono dal singolo caso.</p>
+        <button class="orthodontic-quiz-button" type="button" data-quiz-next>Avanti</button>
+      </section>}
+    </>)}
+  </form>
+
+  <div class="orthodontic-quiz-navigation" data-quiz-navigation hidden>
+    <button type="button" data-quiz-prev aria-label="Passaggio precedente"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m6 12 4-4 4 4" /></svg></button>
+    <button type="button" data-quiz-next data-quiz-forward aria-label="Passaggio successivo"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m6 8 4 4 4-4" /></svg></button>
+  </div>
+</dialog>
+
+<script>
+  import { bindOrthodonticQuiz } from '../utils/orthodonticQuiz';
+  bindOrthodonticQuiz();
+</script>

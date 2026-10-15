@@ -1,4 +1,6 @@
 import { site } from '../data/site';
+import { orthodonticPaths } from '../data/orthodonticPaths';
+import { orthodonticResultsPath } from '../data/orthodonticResults';
 
 export async function GET({ site: astroSite }: { site: URL }) {
   const base = astroSite || new URL(site.source);
@@ -8,6 +10,9 @@ export async function GET({ site: astroSite }: { site: URL }) {
     '/richiesta/',
     '/prenota-prima-visita/',
     '/prenota-urgenza/',
+    '/visita-ortodonzia/',
+    orthodonticResultsPath,
+    ...orthodonticPaths.map(pathway => pathway.href),
     '/thank-you-page/',
   ]
     .map((path) => {

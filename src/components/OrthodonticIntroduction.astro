@@ -1,0 +1,270 @@
+---
+const benefits = [
+  {
+    icon: 'function',
+    title: 'Masticazione più equilibrata',
+    text: 'Una corretta occlusione favorisce il modo in cui i denti si incontrano, rendendo la masticazione più funzionale e confortevole.',
+  },
+  {
+    icon: 'hygiene',
+    title: 'Igiene orale più semplice',
+    text: 'Denti ben allineati sono generalmente più facili da pulire, favorendo una migliore igiene quotidiana e la salute delle gengive.',
+  },
+  {
+    icon: 'protection',
+    title: 'Minore usura dentale',
+    text: 'Correggere determinate malocclusioni può ridurre i contatti anomali tra i denti e limitare alcune forme di usura irregolare.',
+  },
+];
+
+const steps = [
+  {
+    title: 'Partiamo dal tuo sorriso',
+    text: 'Durante la visita ortodontica valutiamo la posizione dei denti, il modo in cui combaciano e ciò che desideri migliorare.',
+  },
+  {
+    title: 'Individuiamo il percorso più adatto',
+    text: 'Sulla base della valutazione clinica, definiamo le possibilità di trattamento e ti illustriamo le soluzioni indicate per le tue esigenze.',
+  },
+  {
+    title: 'Ti accompagniamo nel cambiamento',
+    text: "Attraverso controlli periodici seguiamo l'evoluzione del trattamento, con attenzione alla salute orale e agli obiettivi concordati.",
+  },
+];
+---
+
+<section class="ortho-section ortho-functional-benefits" id="benefici-ortodontici" aria-labelledby="ortho-functional-title">
+  <div class="ortho-shell">
+    <div class="ortho-section-heading ortho-intro-heading">
+      <div>
+        <p class="ortho-eyebrow">Salute e funzionalità</p>
+        <h2 id="ortho-functional-title">Un sorriso più armonioso, un equilibrio che va oltre l'estetica.</h2>
+      </div>
+      <p class="ortho-intro-lead">Un corretto allineamento dei denti può contribuire a migliorare la funzionalità della bocca e a favorire la salute orale nel tempo.</p>
+    </div>
+
+    <div class="ortho-functional-grid">
+      {benefits.map((benefit) => (
+        <article class="ortho-functional-item">
+          <svg class="ortho-benefit-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            {benefit.icon === 'function' && (
+              <>
+                <path d="M13 10.5c0 8.5 2.3 14.2 6.8 17.2 2.8 1.8 6.1 1.8 8.9.3 3.9-2.1 6.3-6.2 6.3-11.5" />
+                <path d="M16.5 17.5c4.8 1.7 9.8 1.7 15 0M18.5 22c3.7 1.3 7.3 1.3 11 0M28.7 28c1.8 2.3 2.3 5.3 1.3 9M19.8 27.7c-1.4 2.5-1.6 5.5-.3 9.1" />
+                <circle cx="36.5" cy="11.5" r="3.5" />
+              </>
+            )}
+            {benefit.icon === 'hygiene' && (
+              <>
+                <path d="M16.2 12.5c2.7 0 4.8 1.8 7.8 1.8s5.1-1.8 7.8-1.8c5 0 8.2 4.2 7.4 9.5-.8 5.7-3.2 14.3-7 14.3-3.1 0-3.4-6.4-8.2-6.4s-5.1 6.4-8.2 6.4c-3.8 0-6.2-8.6-7-14.3-.8-5.3 2.4-9.5 7.4-9.5Z" />
+                <path d="M24 6v4M22 8h4M36.5 7.5v5M34 10h5M8.5 30v4M6.5 32h4" />
+              </>
+            )}
+            {benefit.icon === 'protection' && (
+              <>
+                <path d="M24 6.4 38 12v10.4c0 8.6-5.6 15.4-14 19.2-8.4-3.8-14-10.6-14-19.2V12L24 6.4Z" />
+                <path d="m17.2 24.2 4.2 4.2 9.6-10" />
+              </>
+            )}
+          </svg>
+          <div class="ortho-functional-copy">
+            <h3>{benefit.title}</h3>
+            <p>{benefit.text}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="ortho-section ortho-personalized-path" id="percorso-ortodontico" aria-labelledby="ortho-personalized-title">
+  <div class="ortho-shell">
+    <div class="ortho-section-heading ortho-intro-heading">
+      <div>
+        <p class="ortho-eyebrow">Un percorso su misura</p>
+        <h2 id="ortho-personalized-title">Ogni sorriso è unico. Anche il percorso per valorizzarlo.</h2>
+      </div>
+      <p class="ortho-intro-lead">Non esiste un trattamento ortodontico uguale per tutti. Ogni percorso parte dall'ascolto delle tue esigenze e da un'attenta valutazione della salute e dell'allineamento dei denti, per individuare la soluzione più adatta al tuo sorriso.</p>
+    </div>
+
+    <ol class="ortho-personalized-steps" role="list">
+      {steps.map((step, index) => (
+        <li class="ortho-personalized-step">
+          <span class="ortho-personalized-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+          <div>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <a class="ortho-cta ortho-personalized-cta" href="#il-tuo-obiettivo" data-quiz-cta>Prenota una visita ortodontica <span aria-hidden="true">↗</span></a>
+  </div>
+</section>
+
+<style>
+  .ortho-functional-benefits {
+    padding-block: clamp(48px, 4.5vw, 72px);
+    background: var(--surface-white);
+  }
+
+  .ortho-personalized-path {
+    background: var(--soft-blue-bg);
+  }
+
+  .ortho-intro-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .ortho-intro-heading h2 {
+    max-width: 32ch;
+    text-wrap: balance;
+  }
+
+  .ortho-intro-heading > .ortho-intro-lead {
+    max-width: 72ch;
+    margin: 0;
+    color: var(--muted-text);
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .ortho-functional-grid,
+  .ortho-personalized-steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(28px, 3vw, 48px);
+    margin: 40px 0 0;
+    padding: 0;
+  }
+
+  .ortho-functional-item,
+  .ortho-personalized-step {
+    min-width: 0;
+  }
+
+  .ortho-benefit-icon {
+    display: block;
+    width: 44px;
+    height: 44px;
+    color: var(--brand-cta);
+  }
+
+  .ortho-functional-copy {
+    margin-top: 16px;
+  }
+
+  .ortho-functional-item h3,
+  .ortho-personalized-step h3 {
+    margin: 0;
+    color: var(--brand-primary-dark);
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -.2px;
+  }
+
+  .ortho-functional-item p,
+  .ortho-personalized-step p {
+    max-width: 44ch;
+    margin: 10px 0 0;
+    color: var(--muted-text);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .ortho-personalized-steps {
+    list-style: none;
+  }
+
+  .ortho-personalized-number {
+    display: block;
+    margin-bottom: 18px;
+    color: var(--brand-cta);
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -.2px;
+  }
+
+  .ortho-personalized-cta {
+    margin-top: 32px;
+    font-size: 16px;
+    line-height: 16px;
+  }
+
+  @media (max-width: 1000px) {
+    .ortho-intro-heading {
+      grid-template-columns: 1fr;
+      gap: 22px;
+    }
+
+    .ortho-intro-heading h2 {
+      max-width: 32ch;
+    }
+
+    .ortho-intro-heading > .ortho-intro-lead {
+      max-width: 64ch;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .ortho-intro-heading {
+      gap: 20px;
+    }
+
+    .ortho-intro-heading > .ortho-intro-lead {
+      font-size: 16px;
+    }
+
+    .ortho-functional-grid,
+    .ortho-personalized-steps {
+      grid-template-columns: 1fr;
+      gap: 28px;
+      margin-top: 28px;
+    }
+
+    .ortho-functional-item,
+    .ortho-personalized-step {
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr);
+      align-items: start;
+      gap: 16px;
+    }
+
+    .ortho-benefit-icon {
+      width: 36px;
+      height: 36px;
+    }
+
+    .ortho-functional-copy {
+      margin-top: 0;
+    }
+
+    .ortho-functional-item h3,
+    .ortho-personalized-step h3 {
+      letter-spacing: -.16px;
+    }
+
+    .ortho-personalized-number {
+      margin: 2px 0 0;
+      font-size: 24px;
+      line-height: 1.3;
+      letter-spacing: -.16px;
+    }
+
+    .ortho-personalized-cta {
+      width: 100%;
+      justify-content: space-between;
+      margin-top: 28px;
+      font-size: 16px;
+      line-height: 16px;
+    }
+  }
+</style>

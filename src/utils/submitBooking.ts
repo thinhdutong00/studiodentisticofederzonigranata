@@ -34,7 +34,7 @@ export async function submitBooking(form: HTMLFormElement, setError: (message: s
     const response = await fetch('/api/booking', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ...payload, requestId: attempt.requestId }),
-      signal: AbortSignal.timeout(20_000),
+      signal: AbortSignal.timeout(65_000),
     });
     const result = await response.json().catch(() => null);
     if (!response.ok || result?.ok !== true || result.requestId !== attempt.requestId) {

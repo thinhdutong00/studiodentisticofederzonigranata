@@ -18,6 +18,8 @@ const socialPreviewImage = new URL('/assets/menu/casi-clinici-parodontologia.png
 
 const reviewAuthors = new Set(['Francesca Tassinari', 'Rosa Castelluccio', 'Umberto Salatino']);
 const reviews = featuredPatientReviews.filter((review) => reviewAuthors.has(review.author));
+const experienceMessage =
+  'Studio dentistico a Modena e Reggio Emilia · Oltre 35 anni di esperienza e riconoscimenti dalle più prestigiose società scientifiche nazionali e internazionali.';
 
 const offices = site.offices;
 
@@ -220,6 +222,14 @@ const structuredData = {
 
   <body>
     <header class="landing-header">
+      <div class="header-experience-bar" role="note">
+        <span class="landing-visually-hidden">{experienceMessage}</span>
+        <div class="header-experience-track" aria-hidden="true">
+          <span class="header-experience-message">{experienceMessage}</span>
+          <span class="header-experience-message">{experienceMessage}</span>
+        </div>
+      </div>
+
       <div class="landing-shell landing-header-inner">
         <a class="landing-logo" href="/" aria-label={`${site.name} — Home`}>
           <img
@@ -459,10 +469,10 @@ const structuredData = {
 
           <figure class="landing-depth-media">
             <img
-              src="/assets/original/2022/03/dentista-modena-reggio-emilia.jpg"
-              alt="Professionisti dello Studio Dentistico Federzoni Granata durante la valutazione di immagini cliniche"
-              width="1200"
-              height="652"
+              src="/assets/optimized/parodontologia-localizzata.webp"
+              alt="Illustrazione di tre denti affiancati con un’area di parodontite localizzata, placca e tartaro sottogengivale sul dente centrale"
+              width="1254"
+              height="1254"
               loading="lazy"
               decoding="async"
             />
@@ -663,6 +673,15 @@ const structuredData = {
     <script>
       import { bindContactForms } from '../utils/submitBooking';
       bindContactForms();
+
+      const landingHeader = document.querySelector<HTMLElement>('.landing-header');
+      const updateHeaderBorder = () => {
+        landingHeader?.classList.toggle('is-scrolled', window.scrollY > 0);
+      };
+
+      updateHeaderBorder();
+      window.addEventListener('scroll', updateHeaderBorder, { passive: true });
+      window.addEventListener('pageshow', updateHeaderBorder);
     </script>
   </body>
 </html>
@@ -740,9 +759,64 @@ const structuredData = {
     position: sticky;
     z-index: 50;
     top: 0;
-    border-bottom: 1px solid rgba(217, 231, 242, 0.88);
+    border-bottom: 1px solid transparent;
     background: rgba(255, 255, 255, 0.96);
     backdrop-filter: blur(16px);
+  }
+
+  .landing-header.is-scrolled {
+    border-bottom-color: rgba(217, 231, 242, 0.88);
+  }
+
+  .landing-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .header-experience-bar {
+    position: relative;
+    height: 30px;
+    display: none;
+    align-items: center;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(16, 40, 61, 0.1);
+    background: var(--surface-white);
+    color: var(--brand-primary-dark);
+  }
+
+  .header-experience-track {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+  }
+
+  .header-experience-message {
+    flex: 0 0 auto;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+
+  .header-experience-message + .header-experience-message {
+    display: none;
+  }
+
+  @keyframes header-experience-marquee {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(calc(-50% - 22px));
+    }
   }
 
   .landing-header-inner {
@@ -999,12 +1073,20 @@ const structuredData = {
   .landing-overview-shell {
     width: min(1600px, calc(100% - 80px));
     display: grid;
-    grid-template-columns: minmax(390px, 0.65fr) minmax(0, 1.35fr);
-    align-items: start;
-    gap: clamp(48px, 6vw, 96px);
+    grid-template-columns: minmax(360px, 0.7fr) minmax(0, 1.3fr);
+    align-items: stretch;
+    gap: clamp(40px, 4.5vw, 80px);
   }
 
   .landing-overview-aside {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .landing-overview-content {
+    display: flex;
+    flex-direction: column;
     min-width: 0;
   }
 
@@ -1018,16 +1100,17 @@ const structuredData = {
   }
 
   .landing-overview-content h2 {
-    max-width: 24ch;
+    max-width: 100%;
     margin: 0;
     color: var(--text-dark);
-    font-size: clamp(40px, 3.5vw, 58px);
+    font-size: clamp(34px, 3vw, 48px);
     font-weight: 400;
     letter-spacing: -0.2px;
     line-height: 1.06;
   }
 
   .landing-overview-cta {
+    align-self: flex-start;
     min-height: 56px;
     margin-top: 36px;
     padding: 0 26px;
@@ -1036,9 +1119,11 @@ const structuredData = {
 
   .landing-overview-features {
     display: grid;
+    flex: 1;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-content: space-between;
     gap: clamp(40px, 3vw, 52px) clamp(52px, 5vw, 80px);
-    margin-top: clamp(60px, 5vw, 76px);
+    margin-top: clamp(48px, 4vw, 64px);
   }
 
   .landing-overview-feature {
@@ -1215,6 +1300,7 @@ const structuredData = {
   }
 
   .landing-form-card.landing-overview-form {
+    flex: 1;
     scroll-margin-top: 100px;
     margin-top: clamp(30px, 2.2vw, 38px);
     padding: clamp(28px, 2vw, 32px);
@@ -2407,7 +2493,16 @@ const structuredData = {
     .landing-overview-shell {
       width: min(100% - 48px, 900px);
       grid-template-columns: 1fr;
+      align-items: start;
       gap: 52px;
+    }
+
+    .landing-overview-content {
+      display: block;
+    }
+
+    .landing-overview-aside {
+      display: block;
     }
 
     .landing-overview-form {
@@ -2415,11 +2510,11 @@ const structuredData = {
     }
 
     .landing-overview-content h2 {
-      max-width: 22ch;
-      font-size: clamp(38px, 4.8vw, 48px);
+      font-size: clamp(32px, 4vw, 40px);
     }
 
     .landing-overview-features {
+      align-content: start;
       column-gap: 44px;
     }
 
@@ -2448,7 +2543,7 @@ const structuredData = {
     }
 
     .landing-depth-media {
-      aspect-ratio: 16 / 10;
+      aspect-ratio: 1;
     }
 
     .landing-value-grid {
@@ -2510,35 +2605,36 @@ const structuredData = {
     }
 
     .landing-hero-stage {
-      display: flex;
-      min-height: 0;
+      display: block;
+      min-height: clamp(650px, 178vw, 720px);
       aspect-ratio: auto;
-      flex-direction: column;
       overflow: hidden;
       border-radius: 18px;
       box-shadow: none;
     }
 
     .landing-hero-stage::after {
-      display: none;
+      display: block;
+      background: linear-gradient(180deg, transparent 34%, rgba(16, 40, 61, 0.18));
     }
 
     .landing-hero-photo {
-      position: relative;
-      inset: auto;
-      aspect-ratio: 4 / 4.25;
-      height: auto;
-      border-radius: 18px 18px 0 0;
-      object-position: 50% 34%;
+      position: absolute;
+      inset: 0;
+      height: 100%;
+      border-radius: inherit;
+      object-position: 50% 26%;
     }
 
     .landing-hero-panel {
-      position: relative;
-      bottom: auto;
-      left: auto;
-      width: 100%;
-      padding: 30px 22px 34px;
-      border-radius: 0;
+      position: absolute;
+      right: 12px;
+      bottom: 0;
+      left: 0;
+      width: auto;
+      padding: 28px 22px 30px;
+      border-radius: 0 18px 0 0;
+      box-shadow: 14px -14px 40px rgba(16, 40, 61, 0.12);
     }
 
     .landing-hero-panel::before,
@@ -2553,20 +2649,21 @@ const structuredData = {
 
     .landing-hero h1 {
       max-width: 100%;
-      font-size: clamp(34px, 9.5vw, 42px);
+      font-size: clamp(32px, 9vw, 40px);
       letter-spacing: -0.16px;
       line-height: 1.02;
     }
 
     .landing-hero-lead {
       margin-top: 18px;
-      font-size: 16px;
+      font-size: 15px;
       letter-spacing: -0.16px;
-      line-height: 1.5;
+      line-height: 1.45;
     }
 
     .landing-hero-link {
-      margin-top: 24px;
+      margin-top: 22px;
+      font-size: 14px;
     }
 
     .landing-overview {
@@ -2596,7 +2693,7 @@ const structuredData = {
 
     .landing-overview-content h2 {
       max-width: 100%;
-      font-size: clamp(32px, 8.8vw, 38px);
+      font-size: clamp(28px, 7.6vw, 33px);
       letter-spacing: -0.16px;
       line-height: 1.06;
     }
@@ -2663,10 +2760,6 @@ const structuredData = {
       margin-top: 28px;
       font-size: 15px;
       line-height: 1.55;
-    }
-
-    .landing-depth-media {
-      aspect-ratio: 4 / 3;
     }
 
     .landing-form-card {
@@ -2901,6 +2994,47 @@ const structuredData = {
       text-transform: uppercase;
     }
 
+  }
+
+  @media (max-width: 620px) {
+    html {
+      scroll-padding-top: 104px;
+    }
+
+    .header-experience-bar {
+      display: flex;
+    }
+
+    .header-experience-track {
+      width: max-content;
+      justify-content: flex-start;
+      gap: 44px;
+      animation: header-experience-marquee 22s linear infinite;
+      will-change: transform;
+    }
+
+    .header-experience-message + .header-experience-message {
+      display: inline;
+    }
+  }
+
+  @media (max-width: 620px) and (prefers-reduced-motion: reduce) {
+    .header-experience-track {
+      width: 100%;
+      justify-content: center;
+      animation: none;
+      will-change: auto;
+    }
+
+    .header-experience-message:first-child {
+      max-width: calc(100vw - 28px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .header-experience-message + .header-experience-message {
+      display: none;
+    }
   }
 
   @media (max-width: 420px) {

@@ -5,11 +5,19 @@ import vm from 'node:vm';
 
 const source = await readFile(new URL('../integrations/google-apps-script/booking-crm.gs', import.meta.url), 'utf8');
 
-function createSheet(rows) {
+function createSheet(rows, { failOnAppend = false, failOnFormat = false } = {}) {
+  let maxColumns = rows[0]?.length || 1;
+  const hiddenColumns = new Set();
   return {
     getLastColumn: () => rows[0]?.length || 0,
     getLastRow: () => rows.length,
-    appendRow(row) { rows.push(row); },
+    getMaxColumns: () => maxColumns,
+    insertColumnsAfter(_after, count) { maxColumns += count; },
+    hideColumns(column) { hiddenColumns.add(column); },
+    appendRow(row) {
+      if (failOnAppend) throw new Error('append unavailable');
+      rows.push(row);
+    },
     getRange(row, column, rowCount = 1, columnCount = 1) {
       return {
         getDisplayValues() {
@@ -17,7 +25,28 @@ function createSheet(rows) {
             .slice(row - 1, row - 1 + rowCount)
             .map((item) => item.slice(column - 1, column - 1 + columnCount));
         },
-        setNumberFormat() { return this; },
+        getDisplayValue() {
+          return rows[row - 1]?.[column - 1] || '';
+        },
+        setValue(value) {
+          while (rows.length < row) rows.push([]);
+          rows[row - 1][column - 1] = value;
+          return this;
+        },
+        setValues(values) {
+          if (failOnAppend) throw new Error('write unavailable');
+          values.forEach((item, rowOffset) => {
+            while (rows.length < row + rowOffset) rows.push([]);
+            item.forEach((value, columnOffset) => {
+              rows[row - 1 + rowOffset][column - 1 + columnOffset] = value;
+            });
+          });
+          return this;
+        },
+        setNumberFormat() {
+          if (failOnFormat) throw new Error('format unavailable');
+          return this;
+        },
         copyTo() { return this; },
         getDataValidations() { return [[]]; },
         setDataValidations() { return this; },
@@ -38,15 +67,15 @@ function createSheet(rows) {
   };
 }
 
-function loadScript(rows = [], logRows = []) {
+function loadScript(rows = [], logRows = [], options = {}) {
   const lock = {
     acquired: false,
     tryLock() { this.acquired = true; return true; },
     hasLock() { return this.acquired; },
     releaseLock() { this.acquired = false; },
   };
-  const mainSheet = createSheet(rows);
-  const logSheet = createSheet(logRows);
+  const mainSheet = createSheet(rows, options.mainSheet);
+  const logSheet = createSheet(logRows, options.logSheet);
   const spreadsheet = {
     getSheetByName(name) {
       if (name === 'Richieste dal sito') return mainSheet;
@@ -146,7 +175,7 @@ test('Apps Script matches the exact 12-column operational sheet', () => {
   assert.doesNotMatch(realRow[9], /TEST/);
 });
 
-test('Apps Script maps organic traffic to SEO and keeps the booking page link', () => {
+test('Apps Script maps every non-Ads lead to Risultato organico and keeps the booking page link', () => {
   const { mapPayloadToRow_ } = loadScript().__sheetTest;
   const row = Array.from(mapPayloadToRow_(payload({
     provenienza: 'Google organico',
@@ -155,11 +184,15 @@ test('Apps Script maps organic traffic to SEO and keeps the booking page link', 
     idAnnuncio: '',
     recordType: 'REALE',
   }), new Date()));
-  assert.equal(row[5], 'SEO');
+  assert.equal(row[5], 'Risultato organico');
   assert.equal(row[6], 'https://studiodentisticofederzonigranata.it/implantologia/');
 
+  for (const provenienza of ['Google organico', 'Google Maps', 'Diretto', 'Altro', 'Non rilevata']) {
+    const nonAds = Array.from(mapPayloadToRow_(payload({ provenienza, idAnnuncio: '' }), new Date()));
+    assert.equal(nonAds[5], 'Risultato organico');
+  }
+
   const unknown = Array.from(mapPayloadToRow_(payload({ provenienza: 'Diretto', idAnnuncio: '' }), new Date()));
-  assert.equal(unknown[5], '');
   assert.equal(unknown[6], 'https://studiodentisticofederzonigranata.it/urgenza-dentale/');
 });
 
@@ -192,7 +225,9 @@ test('Apps Script appends once, logs success and acknowledges duplicate request 
   assert.deepEqual(first, { ok: true, requestId: payload().requestId, duplicate: false });
   assert.deepEqual(second, { ok: true, requestId: payload().requestId, duplicate: true });
   assert.equal(rows.length, 2);
-  assert.equal(rows[1].length, 12);
+  assert.equal(rows[1].length, 13);
+  assert.equal(rows[0][12], 'ID richiesta');
+  assert.equal(rows[1][12], payload().requestId);
   assert.equal(rows[1][7], 'No');
   assert.equal(rows[1][11], 'No');
   assert.equal(logRows.length, 3);
@@ -214,6 +249,25 @@ test('Apps Script ignores an old error log and retries the compact row', () => {
   assert.equal(response.duplicate, false);
   assert.equal(rows.length, 2);
   assert.equal(logRows.at(-1)[1], 'OK');
+});
+
+test('Apps Script confirms a persisted lead and remains idempotent when formatting and the technical log fail', () => {
+  const bootstrap = loadScript();
+  const rows = [Array.from(bootstrap.__sheetTest.BOOKING_HEADERS_)];
+  const logRows = [Array.from(bootstrap.__sheetTest.BOOKING_LOG_HEADERS_)];
+  const context = loadScript(rows, logRows, {
+    mainSheet: { failOnFormat: true },
+    logSheet: { failOnAppend: true },
+  });
+  const event = { postData: { contents: JSON.stringify(payload()) } };
+
+  const first = JSON.parse(context.doPost(event).text);
+  const second = JSON.parse(context.doPost(event).text);
+
+  assert.deepEqual(first, { ok: true, requestId: payload().requestId, duplicate: false });
+  assert.deepEqual(second, { ok: true, requestId: payload().requestId, duplicate: true });
+  assert.equal(rows.length, 2);
+  assert.equal(logRows.length, 1);
 });
 
 test('Apps Script remains compatible with the previous 29-column sheet during rollout', () => {

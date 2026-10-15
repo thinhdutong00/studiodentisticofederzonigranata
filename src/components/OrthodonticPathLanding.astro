@@ -1,0 +1,169 @@
+---
+import CookieBanner from './CookieBanner.astro';
+import Footer from './Footer.astro';
+import HomeLocations from './HomeLocations.astro';
+import LandingPatientReviews from './LandingPatientReviews.astro';
+import OrthodonticLandingHeader from './OrthodonticLandingHeader.astro';
+import OrthodonticQuiz from './OrthodonticQuiz.astro';
+import TreatmentStickyCta from './TreatmentStickyCta.astro';
+import { featuredPatientReviews } from '../data/reviews';
+import { site } from '../data/site';
+import type { OrthodonticPath } from '../data/orthodonticPaths';
+import '../styles/inter-font.css';
+import '../styles/visit-landing.css';
+import '../styles/orthodontic-landing.css';
+import '../styles/orthodontic-pathways.css';
+
+interface Props { pathway: OrthodonticPath; }
+const { pathway } = Astro.props;
+const title = `${pathway.seoTitle} | Federzoni Granata`;
+const canonical = new URL(pathway.href, site.source).toString();
+const previewImage = new URL(pathway.image, site.source).toString();
+const isIndexable = import.meta.env.PROD && process.env.VERCEL_ENV !== 'preview';
+const reviewAuthors = new Set(['Francesca Tassinari', 'Rosa Castelluccio', 'Nazareno Colamaria']);
+const reviews = featuredPatientReviews.filter(review => reviewAuthors.has(review.author));
+const treatmentLabel = 'Ortodonzia e Allineatori invisibili (adulti e bimbi)';
+const requestHref = new URL(`/richiesta/?trattamento=${encodeURIComponent(treatmentLabel)}&motivo=${encodeURIComponent(pathway.name)}`, site.source).toString();
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'MedicalWebPage', '@id': `${canonical}#webpage`, url: canonical,
+      name: title, description: pathway.description, inLanguage: 'it-IT', dateModified: '2026-10-13',
+      primaryImageOfPage: previewImage, mainEntity: { '@id': `${canonical}#service` },
+    },
+    {
+      '@type': 'Service', '@id': `${canonical}#service`, name: pathway.name,
+      serviceType: 'Valutazione e trattamento ortodontico', url: canonical,
+      areaServed: ['Modena', 'Reggio Emilia'],
+      provider: { '@type': 'Organization', '@id': new URL('/#organization', site.source).toString(), name: site.name, url: site.source },
+    },
+    {
+      '@type': 'BreadcrumbList', itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: site.source },
+        { '@type': 'ListItem', position: 2, name: 'Ortodonzia', item: new URL('/visita-ortodonzia/', site.source).toString() },
+        { '@type': 'ListItem', position: 3, name: pathway.name, item: canonical },
+      ],
+    },
+    {
+      '@type': 'FAQPage', mainEntity: pathway.faqs.map(item => ({
+        '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer },
+      })),
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="preload" as="font" href="/fonts/inter/inter-latin.woff2" type="font/woff2" crossorigin />
+    <link rel="preload" as="image" href={pathway.image} type="image/webp" imagesrcset={pathway.imageSet} imagesizes="(max-width: 720px) calc(100vw - 32px), 560px" fetchpriority="high" />
+    <title>{title}</title>
+    <meta name="description" content={pathway.description} />
+    <meta name="robots" content={isIndexable ? 'index,follow,max-image-preview:large' : 'noindex,follow'} />
+    <meta name="theme-color" content="#10283D" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="it-IT" href={canonical} />
+    <link rel="icon" type="image/png" href="/assets/original/2020/10/cropped-favicon-32x32.png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/assets/original/2020/10/cropped-favicon-180x180.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={pathway.description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:image" content={previewImage} />
+    <meta property="og:image:alt" content={pathway.imageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={pathway.description} />
+    <meta name="twitter:image" content={previewImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g, '\\u003c')}></script>
+  </head>
+  <body class="ortho-landing" data-orthodontic-pathway={pathway.slug}>
+    <OrthodonticLandingHeader />
+    <a class="ortho-skip-link" href="#contenuto">Vai al contenuto</a>
+    <main id="contenuto" tabindex="-1">
+      <section class="ortho-hero ortho-pathway-hero" aria-labelledby="landing-title" data-treatment-sticky-hero>
+        <div class="ortho-shell">
+          <a class="ortho-text-link ortho-pathway-back" href="/visita-ortodonzia/#percorsi-ortodontici"><span aria-hidden="true">←</span> Tutti i percorsi ortodontici</a>
+          <div class="ortho-hero-grid">
+            <div class="ortho-hero-copy">
+              <p class="ortho-eyebrow">{pathway.name} · Modena e Reggio Emilia</p>
+              <h1 id="landing-title">{pathway.heroTitle}</h1>
+              <p class="ortho-hero-lead">{pathway.lead}</p>
+              <a class="ortho-cta" href="#il-tuo-obiettivo" data-quiz-cta>{pathway.ctaLabel}<span aria-hidden="true">↗</span></a>
+              <p class="ortho-hero-note">La segreteria ti ricontatterà per concordare la visita.</p>
+            </div>
+            <figure class="ortho-hero-visual">
+              <div class:list={[pathway.productImage && 'ortho-path-product-image']}>
+                <img src={pathway.image} srcset={pathway.imageSet} sizes="(max-width: 720px) calc(100vw - 32px), 560px" alt={pathway.imageAlt} width="1200" height="800" loading="eager" decoding="async" fetchpriority="high" />
+              </div>
+              <figcaption><span>{pathway.name}</span><span>Immagine illustrativa</span></figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="ortho-section ortho-concerns" aria-labelledby="ortho-assessment-title">
+        <div class="ortho-shell ortho-split">
+          <div class="ortho-section-heading">
+            <p class="ortho-eyebrow">Da dove partire</p>
+            <h2 id="ortho-assessment-title">{pathway.assessmentTitle}</h2>
+            <p>{pathway.assessmentIntro}</p>
+          </div>
+          <div class="ortho-concern-list">
+            {pathway.considerations.map((item, index) => <article><span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span><div><h3>{item.title}</h3><p>{item.text}</p></div></article>)}
+          </div>
+        </div>
+      </section>
+
+      <section class="ortho-section ortho-method ortho-pathway-method" aria-labelledby="ortho-method-title">
+        <div class="ortho-shell">
+          <div class="ortho-section-heading">
+            <p class="ortho-eyebrow">Il percorso in studio</p>
+            <h2 id="ortho-method-title">Dalla prima visita, un passo alla volta.</h2>
+          </div>
+          <ol class="ortho-method-steps">
+            {pathway.steps.map((item, index) => <li><span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span><h3>{item.title}</h3><p>{item.text}</p></li>)}
+          </ol>
+        </div>
+      </section>
+
+      <LandingPatientReviews reviews={reviews} />
+      <OrthodonticQuiz contextLabel={pathway.name} />
+
+      <section class="ortho-section ortho-faq" aria-labelledby="ortho-faq-title">
+        <div class="ortho-shell ortho-split">
+          <div class="ortho-section-heading">
+            <p class="ortho-eyebrow">Le informazioni utili</p>
+            <h2 id="ortho-faq-title">Prima della visita, qualche risposta.</h2>
+            <p>Le indicazioni per il tuo caso vengono definite durante la valutazione in studio.</p>
+            <a class="ortho-text-link" href="/visita-ortodonzia/#percorsi-ortodontici">Esplora gli altri percorsi <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="ortho-faq-list">
+            {pathway.faqs.map((item, index) => <details open={index === 0}><summary>{item.question}<span aria-hidden="true">+</span></summary><p>{item.answer}</p></details>)}
+            <p class="ortho-clinical-sources">Fonte informativa: <a href={pathway.source.href} target="_blank" rel="noopener noreferrer">{pathway.source.title}</a>.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="ortho-section ortho-final" aria-labelledby="ortho-final-title">
+        <div class="ortho-shell ortho-final-copy">
+          <p class="ortho-eyebrow">{pathway.name}</p>
+          <h2 id="ortho-final-title">Il primo passo è conoscere la tua situazione.</h2>
+          <p>Raccontaci le tue esigenze nel questionario. La segreteria ti ricontatterà per concordare giorno e orario della visita a Modena o Reggio Emilia.</p>
+          <a class="ortho-cta" href="#il-tuo-obiettivo" data-quiz-cta>{pathway.ctaLabel}<span aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+      <HomeLocations />
+    </main>
+    <div id="contatti-studio"><Footer /></div>
+    <TreatmentStickyCta treatment={treatmentLabel} href={requestHref} hideAtFooter={false} />
+    <CookieBanner />
+  </body>
+</html>

@@ -95,6 +95,8 @@ const BOOKING_LOG_HEADERS_ = Object.freeze([
   'ID richiesta',
   'Dettaglio',
 ]);
+const BOOKING_COMPACT_ID_COLUMN_ = BOOKING_HEADERS_.length + 1;
+const BOOKING_COMPACT_ID_HEADER_ = 'ID richiesta';
 
 function doPost(event) {
   let requestId = '';
@@ -120,6 +122,7 @@ function doPost(event) {
     const sheet = spreadsheet.getSheetByName(BOOKING_SHEET_NAME_);
     if (!sheet) throw new Error('Scheda richieste non trovata.');
     const schema = detectSchema_(sheet);
+    if (schema.version === 'compact') schema.idColumn = ensureCompactIdColumn_(sheet);
 
     const lastRow = sheet.getLastRow();
     if (schema.idColumn && lastRow > 1) {
@@ -130,34 +133,36 @@ function doPost(event) {
         .matchEntireCell(true)
         .findNext();
       if (existing) {
-        appendIntegrationLog_(spreadsheet, 'DUPLICATO', payload.requestId, 'Richiesta già presente; nessuna nuova riga creata.');
+        tryAppendIntegrationLog_(spreadsheet, 'DUPLICATO', payload.requestId, 'Richiesta già presente; nessuna nuova riga creata.');
         return jsonResponse_({ ok: true, requestId: payload.requestId, duplicate: true });
       }
     }
-    if (!schema.idColumn && hasSuccessfulLog_(spreadsheet, payload.requestId)) {
-      appendIntegrationLog_(spreadsheet, 'DUPLICATO', payload.requestId, 'Richiesta già presente; nessuna nuova riga creata.');
-      return jsonResponse_({ ok: true, requestId: payload.requestId, duplicate: true });
-    }
-
     const row = schema.version === 'compact'
       ? mapPayloadToRow_(payload, new Date())
       : schema.version === 'extended'
         ? mapPayloadToExtendedRow_(payload, new Date())
         : mapPayloadToLegacyRow_(payload, new Date());
-    sheet.appendRow(row);
-    const insertedRow = sheet.getLastRow();
-    copyRowRules_(sheet, insertedRow, schema.width);
-    formatInsertedRow_(sheet, insertedRow, schema.version);
-    SpreadsheetApp.flush();
-    appendIntegrationLog_(spreadsheet, 'OK', payload.requestId, `Riga ${insertedRow} creata come ${payload.recordType}.`);
+    const persistedRow = schema.version === 'compact' ? row.concat(payload.requestId) : row;
+    const insertedRow = lastRow + 1;
+    sheet.appendRow(persistedRow);
+    try {
+      copyRowRules_(sheet, insertedRow, schema.width);
+      formatInsertedRow_(sheet, insertedRow, schema.version);
+      SpreadsheetApp.flush();
+    } catch (error) {
+      console.error('Formattazione riga non riuscita', internalErrorMessage_(error));
+    }
+    tryAppendIntegrationLog_(spreadsheet, 'OK', payload.requestId, `Riga ${insertedRow} creata come ${payload.recordType}.`);
     return jsonResponse_({ ok: true, requestId: payload.requestId, duplicate: false });
   } catch (error) {
+    const safeMessage = safeErrorMessage_(error);
+    console.error('Webhook request failed', safeMessage);
     try {
-      if (spreadsheet) appendIntegrationLog_(spreadsheet, 'ERRORE', requestId, safeErrorMessage_(error));
+      if (spreadsheet) tryAppendIntegrationLog_(spreadsheet, 'ERRORE', requestId, safeMessage);
     } catch (_logError) {
       // Il log non deve mascherare la risposta del webhook.
     }
-    return jsonResponse_({ ok: false, requestId: requestId || null, duplicate: false });
+    return jsonResponse_({ ok: false, requestId: requestId || null, duplicate: false, error: safeMessage });
   } finally {
     if (lock && lock.hasLock()) lock.releaseLock();
   }
@@ -246,6 +251,18 @@ function detectSchema_(sheet) {
   throw new Error('Intestazioni foglio non valide.');
 }
 
+function ensureCompactIdColumn_(sheet) {
+  if (sheet.getMaxColumns() < BOOKING_COMPACT_ID_COLUMN_) {
+    sheet.insertColumnsAfter(sheet.getMaxColumns(), BOOKING_COMPACT_ID_COLUMN_ - sheet.getMaxColumns());
+  }
+  const headerRange = sheet.getRange(1, BOOKING_COMPACT_ID_COLUMN_);
+  const header = headerRange.getDisplayValue();
+  if (header && header !== BOOKING_COMPACT_ID_HEADER_) throw new Error('Intestazioni foglio non valide.');
+  if (!header) headerRange.setValue(BOOKING_COMPACT_ID_HEADER_);
+  sheet.hideColumns(BOOKING_COMPACT_ID_COLUMN_);
+  return BOOKING_COMPACT_ID_COLUMN_;
+}
+
 function headersMatch_(sheet, expected) {
   const actual = sheet.getRange(1, 1, 1, expected.length).getDisplayValues()[0];
   return !actual.some((value, index) => value !== expected[index]);
@@ -272,9 +289,7 @@ function campaignLabel_(payload) {
 }
 
 function compactProvenance_(payload) {
-  if (payload.provenienza === 'Google Ads') return 'Google Ads';
-  if (payload.provenienza === 'Google organico' || payload.provenienza === 'Google Maps') return 'SEO';
-  return '';
+  return payload.provenienza === 'Google Ads' ? 'Google Ads' : 'Risultato organico';
 }
 
 function absoluteSiteUrl_(path) {
@@ -420,6 +435,16 @@ function hasSuccessfulLog_(spreadsheet, requestId) {
     .some((row) => (row[0] === 'OK' || row[0] === 'DUPLICATO') && row[1] === requestId);
 }
 
+function tryAppendIntegrationLog_(spreadsheet, status, requestId, detail) {
+  try {
+    appendIntegrationLog_(spreadsheet, status, requestId, detail);
+    return true;
+  } catch (error) {
+    console.error('Log integrazione non disponibile', internalErrorMessage_(error));
+    return false;
+  }
+}
+
 function appendIntegrationLog_(spreadsheet, status, requestId, detail) {
   let logSheet = spreadsheet.getSheetByName(BOOKING_LOG_SHEET_NAME_);
   if (!logSheet) {
@@ -429,9 +454,15 @@ function appendIntegrationLog_(spreadsheet, status, requestId, detail) {
     logSheet.hideSheet();
   }
   verifyHeaders_(logSheet, BOOKING_LOG_HEADERS_);
-  logSheet.appendRow([new Date(), status, requestId || '', detail]);
-  const row = logSheet.getLastRow();
-  logSheet.getRange(row, 1).setNumberFormat('dd/mm/yyyy hh:mm:ss');
+  const row = Math.max(logSheet.getLastRow() + 1, 2);
+  logSheet.getRange(row, 1, 1, BOOKING_LOG_HEADERS_.length).setValues([
+    [new Date(), status, requestId || '', detail],
+  ]);
+  try {
+    logSheet.getRange(row, 1).setNumberFormat('dd/mm/yyyy hh:mm:ss');
+  } catch (error) {
+    console.error('Formattazione log non riuscita', internalErrorMessage_(error));
+  }
 }
 
 function sanitizeCell_(value) {
@@ -466,6 +497,11 @@ function safeErrorMessage_(error) {
     'Intestazioni foglio non valide.',
   ]);
   return error && allowed.has(error.message) ? error.message : 'Errore interno del webhook.';
+}
+
+function internalErrorMessage_(error) {
+  if (!error) return 'Errore senza dettagli.';
+  return error.stack || error.message || String(error);
 }
 
 function jsonResponse_(body) {

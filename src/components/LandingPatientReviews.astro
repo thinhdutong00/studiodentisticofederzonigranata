@@ -1,0 +1,167 @@
+---
+import type { PatientReview } from '../data/reviews';
+
+interface Props {
+  reviews: PatientReview[];
+}
+
+const { reviews } = Astro.props;
+---
+
+<section id="recensioni" class="patient-reviews" aria-labelledby="landing-reviews-title">
+  <div class="landing-shell">
+    <div class="patient-reviews-heading">
+      <div class="patient-reviews-intro">
+        <p class="landing-kicker">Esperienze dei pazienti</p>
+        <h2 id="landing-reviews-title">I nostri pazienti dicono</h2>
+        <p class="patient-reviews-description">Le parole dei nostri pazienti, l’esperienza del nostro studio.</p>
+      </div>
+      <div class="patient-reviews-highlights" aria-label="Valutazione ed esperienza dello studio">
+        <a class="patient-reviews-rating" href="/recensioni/" aria-label="5,0 stelle su Google. Leggi le recensioni">
+          <div class="patient-reviews-google">
+            <svg viewBox="0 0 48 48" role="img" aria-label="Google">
+              <path fill="#FFC107" d="M43.61 20.08H42V20H24v8h11.3A12 12 0 1 1 31.96 15.04l5.66-5.66A19.92 19.92 0 0 0 24 4 20 20 0 1 0 19.61 39.51 20 20 0 0 0 44 24c0-1.34-.14-2.65-.39-3.92Z" />
+              <path fill="#FF3D00" d="m6.31 14.69 6.57 4.82A12 12 0 0 1 31.96 15.04l5.66-5.66A20 20 0 0 0 6.31 14.69Z" />
+              <path fill="#4CAF50" d="M24 44c5.06 0 9.69-1.9 13.21-5.02l-6.19-5.24A11.9 11.9 0 0 1 12.9 28.49l-6.52 5.02A20 20 0 0 0 24 44Z" />
+              <path fill="#1976D2" d="M43.61 20.08H42V20H24v8h11.3a12.07 12.07 0 0 1-4.29 5.74l6.19 5.24C36.77 39.37 44 34 44 24c0-1.34-.14-2.65-.39-3.92Z" />
+            </svg>
+            <span>Recensioni Google</span>
+          </div>
+          <strong class="patient-reviews-score">5,0</strong>
+          <span class="patient-reviews-stars" aria-hidden="true">★★★★★</span>
+          <span class="patient-reviews-rating-caption">5,0 stelle su Google</span>
+          <span class="patient-reviews-link">Leggi le recensioni <span aria-hidden="true">↗</span></span>
+        </a>
+        <div class="patient-reviews-experience">
+          <span class="patient-reviews-over">Oltre</span>
+          <strong class="patient-reviews-years">35<span>anni</span></strong>
+          <p>di attività, al servizio<br />del tuo sorriso.</p>
+          <span class="patient-reviews-locations">Modena · Reggio Emilia</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="patient-review-grid">
+      {reviews.map((review) => (
+        <article class="patient-review">
+          <div class="patient-review-stars" aria-label={`${review.rating} stelle su 5`}>{'★'.repeat(review.rating)}</div>
+          <blockquote>“{review.text}”</blockquote>
+          <footer>
+            <span class="patient-review-avatar" aria-hidden="true">{review.initials}</span>
+            <p><strong>{review.author}</strong><small>Recensione Google</small></p>
+          </footer>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .patient-reviews {
+    padding: clamp(72px, 8vw, 128px) 0;
+    background: var(--brand-primary-dark);
+    color: var(--surface-white);
+  }
+  .patient-reviews-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(40px, 6vw, 88px);
+    align-items: center;
+  }
+  .patient-reviews-intro h2 {
+    max-width: 13ch;
+    margin: 20px 0 0;
+    font-size: clamp(42px, 4.6vw, 72px);
+    font-weight: 500;
+    line-height: 1.06;
+    letter-spacing: -.2px;
+  }
+  .patient-reviews-description {
+    max-width: 34ch;
+    margin: 24px 0 0;
+    color: rgba(255, 255, 255, .7);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .patient-reviews-highlights {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+    align-items: stretch;
+  }
+  .patient-reviews-rating {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 28px;
+    border: 1px solid rgba(217, 231, 242, .22);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, .055);
+    color: var(--surface-white);
+    text-decoration: none;
+    transition: background-color 160ms ease, border-color 160ms ease;
+  }
+  .patient-reviews-rating:hover {
+    border-color: var(--brand-blue);
+    background: rgba(255, 255, 255, .09);
+  }
+  .patient-reviews-rating:focus-visible {
+    outline: 3px solid var(--brand-blue);
+    outline-offset: 5px;
+  }
+  .patient-reviews-google { display: flex; align-items: center; gap: 9px; }
+  .patient-reviews-google svg { width: 26px; height: 26px; flex: 0 0 auto; }
+  .patient-reviews-google > span { font-size: 12px; font-weight: 500; line-height: 1.25; }
+  .patient-reviews-score { margin-top: 18px; font-size: 68px; font-weight: 500; line-height: 1; }
+  .patient-reviews-stars { margin-top: 14px; color: #fabc05; font-size: 21px; letter-spacing: 2px; line-height: 1; }
+  .patient-reviews-rating-caption { margin-top: 12px; color: rgba(255, 255, 255, .72); font-size: 13px; line-height: 1.4; }
+  .patient-reviews-link { display: flex; gap: 12px; margin-top: 22px; color: var(--brand-blue); font-size: 12px; font-weight: 500; line-height: 1.3; }
+  .patient-reviews-experience { display: flex; align-items: flex-start; justify-content: center; flex-direction: column; padding: 20px 0; }
+  .patient-reviews-over { color: var(--brand-blue); font-size: 16px; line-height: 1.3; }
+  .patient-reviews-years { display: flex; align-items: baseline; gap: 8px; margin-top: 10px; font-size: 68px; font-weight: 500; line-height: 1; }
+  .patient-reviews-years > span { font-size: 24px; font-weight: 400; }
+  .patient-reviews-experience p { margin: 20px 0 0; color: rgba(255, 255, 255, .85); font-size: 16px; line-height: 1.4; }
+  .patient-reviews-locations { margin-top: 20px; color: rgba(255, 255, 255, .56); font-size: 12px; line-height: 1.4; }
+  .patient-review-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 52px; }
+  .patient-review { display: flex; min-height: 330px; flex-direction: column; padding: 30px; border: 1px solid rgba(217, 231, 242, .18); border-radius: 6px; background: rgba(255, 255, 255, .055); }
+  .patient-review-stars { color: #f5c768; font-size: 15px; letter-spacing: 3px; }
+  .patient-review blockquote { flex: 1; margin: 24px 0 30px; color: var(--surface-white); font-size: 18px; font-weight: 400; line-height: 1.5; }
+  .patient-review footer { display: flex; align-items: center; gap: 12px; }
+  .patient-review-avatar { display: inline-flex; width: 42px; height: 42px; flex: 0 0 42px; align-items: center; justify-content: center; border-radius: 50%; background: var(--brand-blue); color: var(--brand-primary-dark); font-size: 12px; font-weight: 700; }
+  .patient-review footer p { display: grid; gap: 2px; margin: 0; }
+  .patient-review footer strong { font-size: 13px; font-weight: 600; }
+  .patient-review footer small { color: rgba(255, 255, 255, .55); font-size: 11px; }
+  @media (max-width: 1000px) {
+    .patient-reviews-heading { grid-template-columns: 1fr; gap: 36px; }
+    .patient-reviews-intro h2 { max-width: 18ch; }
+    .patient-reviews-highlights { max-width: 600px; gap: 36px; }
+    .patient-review-grid { gap: 12px; }
+    .patient-review { padding: 22px; }
+  }
+  @media (max-width: 720px) {
+    .patient-reviews { padding: 64px 0; }
+    .patient-reviews-intro h2 { max-width: 14ch; font-size: 40px; letter-spacing: -.16px; }
+    .patient-reviews-description { font-size: 16px; }
+    .patient-reviews-highlights { gap: 20px; }
+    .patient-reviews-rating { padding: 20px 16px; border-radius: 12px; }
+    .patient-reviews-google { gap: 7px; }
+    .patient-reviews-google svg { width: 22px; height: 22px; }
+    .patient-reviews-google > span { font-size: 11px; }
+    .patient-reviews-score, .patient-reviews-years { font-size: 54px; }
+    .patient-reviews-years { gap: 5px; }
+    .patient-reviews-years > span { font-size: 20px; }
+    .patient-reviews-stars { font-size: 18px; letter-spacing: 1px; }
+    .patient-reviews-rating-caption { font-size: 12px; }
+    .patient-reviews-link { gap: 7px; font-size: 11px; }
+    .patient-reviews-experience { padding: 12px 0; }
+    .patient-reviews-over { font-size: 14px; }
+    .patient-reviews-experience p { font-size: 14px; }
+    .patient-reviews-locations { font-size: 11px; }
+    .patient-review-grid { grid-template-columns: 1fr; gap: 16px; margin-top: 36px; }
+    .patient-review { min-height: 260px; padding: 24px; }
+    .patient-review blockquote { font-size: 17px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .patient-reviews-rating { transition: none; }
+  }
+</style>

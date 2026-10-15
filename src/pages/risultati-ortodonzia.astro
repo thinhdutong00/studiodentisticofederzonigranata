@@ -1,0 +1,142 @@
+---
+import CookieBanner from '../components/CookieBanner.astro';
+import Footer from '../components/Footer.astro';
+import HomeLocations from '../components/HomeLocations.astro';
+import OrthodonticLandingHeader from '../components/OrthodonticLandingHeader.astro';
+import OrthodonticQuiz from '../components/OrthodonticQuiz.astro';
+import TreatmentStickyCta from '../components/TreatmentStickyCta.astro';
+import { orthodonticResults, orthodonticResultsPath } from '../data/orthodonticResults';
+import { site } from '../data/site';
+import '../styles/inter-font.css';
+import '../styles/visit-landing.css';
+import '../styles/orthodontic-landing.css';
+import '../styles/orthodontic-results.css';
+
+const title = 'Risultati ortodontici: casi clinici prima e dopo | Federzoni Granata';
+const description = 'Le immagini prima e dopo di tre casi ortodontici dello Studio Dentistico Federzoni Granata. Scopri i risultati e richiedi una visita a Modena o Reggio Emilia.';
+const canonical = new URL(orthodonticResultsPath, site.source).toString();
+const previewImage = new URL(orthodonticResults[0].after.smile, site.source).toString();
+const isIndexable = import.meta.env.PROD && process.env.VERCEL_ENV !== 'preview';
+const treatmentLabel = 'Ortodonzia e Allineatori invisibili (adulti e bimbi)';
+const requestHref = new URL(`/richiesta/?trattamento=${encodeURIComponent(treatmentLabel)}`, site.source).toString();
+const phases = [{ key: 'before', label: 'Prima' }, { key: 'after', label: 'Dopo' }] as const;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'MedicalWebPage', '@id': `${canonical}#webpage`, url: canonical,
+      name: title, description, inLanguage: 'it-IT', dateModified: '2026-10-13',
+      primaryImageOfPage: previewImage,
+      publisher: { '@type': 'Organization', '@id': new URL('/#organization', site.source).toString(), name: site.name, url: site.source },
+    },
+    {
+      '@type': 'BreadcrumbList', itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: site.source },
+        { '@type': 'ListItem', position: 2, name: 'Ortodonzia', item: new URL('/visita-ortodonzia/', site.source).toString() },
+        { '@type': 'ListItem', position: 3, name: 'Risultati ortodontici', item: canonical },
+      ],
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="preload" as="font" href="/fonts/inter/inter-latin.woff2" type="font/woff2" crossorigin />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={isIndexable ? 'index,follow,max-image-preview:large' : 'noindex,follow'} />
+    <meta name="theme-color" content="#10283D" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="it-IT" href={canonical} />
+    <link rel="icon" type="image/png" href="/assets/original/2020/10/cropped-favicon-32x32.png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/assets/original/2020/10/cropped-favicon-180x180.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:image" content={previewImage} />
+    <meta property="og:image:width" content="600" />
+    <meta property="og:image:height" content="300" />
+    <meta property="og:image:alt" content="Caso ortodontico 1: sorriso dopo il trattamento" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={previewImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g, '\\u003c')}></script>
+  </head>
+  <body class="ortho-landing ortho-results-page">
+    <OrthodonticLandingHeader />
+    <a class="ortho-skip-link" href="#contenuto">Vai al contenuto</a>
+    <main id="contenuto" tabindex="-1">
+      <section class="ortho-results-hero" aria-labelledby="results-title" data-treatment-sticky-hero>
+        <div class="ortho-shell">
+          <a class="ortho-text-link ortho-results-back" href="/visita-ortodonzia/"><span aria-hidden="true">←</span> Torna alla landing ortodonzia</a>
+          <div class="ortho-results-heading">
+            <div>
+              <p class="ortho-eyebrow">Casi clinici dello studio</p>
+              <h1 id="results-title">Risultati<br />ortodontici</h1>
+            </div>
+            <div class="ortho-results-intro">
+              <p>Tre casi seguiti nello studio, raccontati attraverso le immagini prima e dopo il trattamento.</p>
+              <a class="ortho-cta" href="#casi-ortodontici">Esplora i casi <span aria-hidden="true">↓</span></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="ortho-section ortho-results-cases" id="casi-ortodontici" aria-labelledby="ortho-cases-title">
+        <div class="ortho-shell">
+          <div class="ortho-results-cases-heading">
+            <h2 id="ortho-cases-title">Prima e dopo, caso per caso.</h2>
+            <nav class="ortho-results-case-nav" aria-label="Scegli un caso ortodontico">
+              {orthodonticResults.map(result => <a href={`#${result.id}`}>{result.title}</a>)}
+            </nav>
+          </div>
+          <div class="ortho-results-list">
+            {orthodonticResults.map((result, index) => (
+              <article class="ortho-result-case" id={result.id} aria-labelledby={`${result.id}-title`}>
+                <header class="ortho-result-case-heading">
+                  <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                  <h3 id={`${result.id}-title`}>{result.title}</h3>
+                </header>
+                <div class="ortho-results-comparison">
+                  {phases.map(phase => (
+                    <figure>
+                      <figcaption><strong>{phase.label}</strong><span>Il sorriso</span></figcaption>
+                      <img src={result[phase.key].smile} alt={`${result.title}: sorriso ${phase.label.toLowerCase()} il trattamento ortodontico`} width="600" height="300" loading={index === 0 ? 'eager' : 'lazy'} decoding="async" />
+                    </figure>
+                  ))}
+                </div>
+                <details class="ortho-result-details">
+                  <summary>Guarda le foto intraorali <span aria-hidden="true">+</span></summary>
+                  <div class="ortho-results-comparison">
+                    {phases.map(phase => (
+                      <figure>
+                        <figcaption><strong>{phase.label}</strong><span>Dettaglio intraorale</span></figcaption>
+                        <img src={result[phase.key].detail} alt={`${result.title}: dettaglio intraorale ${phase.label.toLowerCase()} il trattamento ortodontico`} width="600" height="300" loading="lazy" decoding="async" />
+                      </figure>
+                    ))}
+                  </div>
+                </details>
+              </article>
+            ))}
+          </div>
+          <p class="ortho-results-note">Immagini dei casi clinici dello Studio Dentistico Federzoni Granata. Il percorso per il tuo sorriso viene definito dopo una visita ortodontica.</p>
+        </div>
+      </section>
+
+      <OrthodonticQuiz contextLabel="Risultati ortodontici" />
+      <HomeLocations />
+    </main>
+    <div id="contatti-studio"><Footer /></div>
+    <TreatmentStickyCta treatment={treatmentLabel} href={requestHref} hideAtFooter={false} />
+    <CookieBanner />
+  </body>
+</html>
