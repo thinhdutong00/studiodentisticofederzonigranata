@@ -222,6 +222,53 @@ const steps = [
   }
 
   @media (max-width: 720px) {
+    .ortho-personalized-path {
+      display: none;
+      background: var(--surface-white);
+      text-align: center;
+    }
+
+    .ortho-personalized-path .ortho-intro-heading h2,
+    .ortho-personalized-path .ortho-intro-lead,
+    .ortho-personalized-step p {
+      margin-inline: auto;
+    }
+
+    .ortho-personalized-path :global(.ortho-professional) {
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: center;
+      gap: 16px;
+      margin-top: 32px;
+      padding: 28px 0;
+      border-block: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .ortho-personalized-path :global(.ortho-professional > img) {
+      width: 88px;
+      height: 106px;
+      border-radius: 8px;
+    }
+
+    .ortho-personalized-path :global(.ortho-professional h3) {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .ortho-personalized-path :global(.ortho-professional p) {
+      max-width: 35ch;
+      margin: 12px auto 0;
+      font-size: 15px;
+    }
+
+    .ortho-personalized-path :global(.ortho-professional .ortho-text-link) {
+      justify-content: center;
+      max-width: 100%;
+      margin-top: 14px;
+      font-size: 13px;
+    }
+
     .ortho-functional-benefits {
       background: var(--brand-primary-dark);
       text-align: center;
@@ -304,18 +351,32 @@ const steps = [
     }
 
     .ortho-personalized-number {
-      margin: 2px 0 0;
-      font-size: 24px;
-      line-height: 1.3;
+      margin: 0;
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 1;
       letter-spacing: -.16px;
+    }
+
+    .ortho-personalized-steps {
+      gap: 36px;
+      margin-top: 32px;
+    }
+
+    .ortho-personalized-step {
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: center;
+      gap: 14px;
     }
 
     .ortho-personalized-cta {
       width: 100%;
-      justify-content: space-between;
+      justify-content: center;
+      gap: 14px;
       margin-top: 28px;
       font-size: 16px;
       line-height: 16px;
+      text-align: center;
     }
   }
 </style>

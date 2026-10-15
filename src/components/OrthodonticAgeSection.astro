@@ -176,15 +176,15 @@ const ageGroups = [
   :global(.ortho-landing-main:has(.ortho-age-sheet[open]) .treatment-sticky-cta) { visibility: hidden; pointer-events: none; }
 
   @media (max-width: 720px) {
-    .ortho-age-section { display: block; padding: 48px 34px; background: var(--soft-blue-bg); }
-    .ortho-age-section h2 { max-width: 14ch; margin: 0; color: var(--brand-primary-dark); font-size: 34px; font-weight: 500; line-height: 1.15; letter-spacing: -.16px; text-wrap: balance; }
-    .ortho-age-list { margin: 28px 0 0; padding: 0; border-top: 1px solid var(--border); list-style: none; }
-    .ortho-age-list li { border-bottom: 1px solid var(--border); }
-    .ortho-age-list button { display: flex; width: 100%; min-height: 84px; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 0; border: 0; background: transparent; color: var(--brand-primary-dark); font: inherit; font-size: 24px; font-weight: 500; line-height: 1.2; letter-spacing: -.16px; text-align: left; cursor: pointer; }
-    .ortho-age-open-icon { display: grid; flex: 0 0 40px; place-items: center; width: 40px; height: 40px; border: 1px solid var(--brand-blue); border-radius: 50%; color: var(--brand-cta); transition: background 160ms ease, color 160ms ease; }
+    .ortho-age-section { display: block; padding: 48px 34px; background: var(--brand-cta); color: var(--surface-white); }
+    .ortho-age-section h2 { max-width: 14ch; margin: 0; color: var(--surface-white); font-size: 34px; font-weight: 500; line-height: 1.15; letter-spacing: -.16px; text-wrap: balance; }
+    .ortho-age-list { margin: 28px 0 0; padding: 0; border-top: 1px solid rgba(255, 255, 255, .35); list-style: none; }
+    .ortho-age-list li { border-bottom: 1px solid rgba(255, 255, 255, .35); }
+    .ortho-age-list button { display: flex; width: 100%; min-height: 84px; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 0; border: 0; background: transparent; color: var(--surface-white); font: inherit; font-size: 24px; font-weight: 500; line-height: 1.2; letter-spacing: -.16px; text-align: left; cursor: pointer; }
+    .ortho-age-open-icon { display: grid; flex: 0 0 40px; place-items: center; width: 40px; height: 40px; border: 1px solid rgba(255, 255, 255, .65); border-radius: 50%; color: var(--surface-white); transition: background 160ms ease, color 160ms ease; }
     .ortho-age-open-icon svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-    .ortho-age-list button:hover .ortho-age-open-icon, .ortho-age-list button[aria-expanded="true"] .ortho-age-open-icon { background: var(--brand-cta); color: var(--surface-white); }
-    .ortho-age-list button:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 4px; border-radius: 4px; }
+    .ortho-age-list button:hover .ortho-age-open-icon, .ortho-age-list button[aria-expanded="true"] .ortho-age-open-icon { background: rgba(255, 255, 255, .16); color: var(--surface-white); }
+    .ortho-age-list button:focus-visible { outline: 3px solid var(--surface-white); outline-offset: 4px; border-radius: 4px; }
   }
 
   @keyframes ortho-age-sheet-in { from { transform: translateY(100%); } to { transform: translateY(0); } }

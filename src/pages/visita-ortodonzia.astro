@@ -252,7 +252,7 @@ const structuredData = {
         </div>
       </section>
 
-      <LandingPatientReviews reviews={reviews} />
+      <LandingPatientReviews reviews={reviews} mobileCarousel />
       <OrthodonticQuiz mobileObjectivesFirst>
         <svg slot="questionnaire-icon" class="ortho-questionnaire-check-icon" viewBox="0 0 48 48" width="56" height="56" fill="none" aria-hidden="true" focusable="false">
           <rect x="5" y="6" width="38" height="36" rx="5" />
@@ -321,6 +321,20 @@ const structuredData = {
         updateQuizPosition();
         mobileViewport.addEventListener('change', updateQuizPosition);
       }
+
+      const professional = document.querySelector<HTMLElement>('.ortho-landing-main .ortho-professional');
+      const personalizedSteps = document.querySelector<HTMLElement>('.ortho-landing-main #percorso-ortodontico .ortho-personalized-steps');
+      if (professional && personalizedSteps) {
+        const originalProfessionalPosition = document.createComment('Original professional position');
+        professional.before(originalProfessionalPosition);
+        const professionalViewport = window.matchMedia('(max-width: 720px)');
+        const updateProfessionalPosition = () => {
+          if (professionalViewport.matches) personalizedSteps.before(professional);
+          else originalProfessionalPosition.after(professional);
+        };
+        updateProfessionalPosition();
+        professionalViewport.addEventListener('change', updateProfessionalPosition);
+      }
     </script>
   </body>
 </html>
@@ -329,6 +343,15 @@ const structuredData = {
   .ortho-questionnaire-check-icon { display: none; }
 
   @media (max-width: 720px) {
+    :global(.ortho-landing-main #contenuto :is(.ortho-hero h1, .ortho-section-heading h2, .ortho-smile-preview h2, .ortho-age-section h2, .patient-reviews-intro h2, .ortho-consultation-heading h2)) {
+      font-family: Inter, sans-serif;
+      font-size: 30px;
+      font-weight: 500;
+      line-height: 1.16;
+      letter-spacing: -.16px;
+      word-spacing: 0;
+    }
+
     :global(.ortho-landing-main > .landing-header) {
       transition: transform 260ms ease;
     }
