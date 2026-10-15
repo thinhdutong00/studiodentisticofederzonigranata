@@ -37,7 +37,7 @@ const questions = [
         <h2 id="orthodontic-objectives-title">Richiedi la tua visita ortodontica.</h2>
         <p>Compila il questionario e lascia i recapiti: la segreteria ti ricontatterà per concordare giorno e orario della visita.</p>
         <button class="ortho-cta ortho-quiz-start" type="button" data-quiz-open aria-haspopup="dialog">Inizia il questionario <span aria-hidden="true">↗</span></button>
-        <h3 class="ortho-quiz-objective-title">Qual è il tuo obiettivo?</h3>
+        <h3 class="ortho-quiz-objective-title" id="ortho-quiz-objective-title">Qual è il tuo obiettivo?</h3>
       </div>
       <div class="orthodontic-objectives-grid">
         {orthodonticObjectives.map(objective => (
@@ -64,6 +64,7 @@ const questions = [
         ))}
       </div>
     </div>
+    <slot name="questionnaire-image" />
     <div class="orthodontic-questionnaire-banner">
       <p>Compila questo questionario di 30 secondi e scopri se un trattamento di ortodonzia invisibile fa al caso tuo.</p>
       <button type="button" data-quiz-open aria-haspopup="dialog">

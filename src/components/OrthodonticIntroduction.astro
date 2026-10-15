@@ -77,6 +77,8 @@ const steps = [
   </div>
 </section>
 
+<slot name="after-benefits" />
+
 <section class="ortho-section ortho-personalized-path" id="percorso-ortodontico" aria-labelledby="ortho-personalized-title">
   <div class="ortho-shell">
     <div class="ortho-section-heading ortho-intro-heading">
@@ -215,6 +217,32 @@ const steps = [
   }
 
   @media (max-width: 720px) {
+    .ortho-functional-benefits {
+      background: var(--brand-primary-dark);
+      text-align: center;
+    }
+
+    .ortho-functional-benefits .ortho-eyebrow,
+    .ortho-functional-benefits .ortho-benefit-icon {
+      color: var(--brand-blue);
+    }
+
+    .ortho-functional-benefits h2,
+    .ortho-functional-item h3 {
+      color: var(--surface-white);
+    }
+
+    .ortho-functional-benefits .ortho-intro-heading > .ortho-intro-lead,
+    .ortho-functional-item p {
+      color: var(--soft-blue-bg);
+    }
+
+    .ortho-functional-benefits .ortho-intro-heading h2,
+    .ortho-functional-benefits .ortho-intro-heading > .ortho-intro-lead,
+    .ortho-functional-item p {
+      margin-inline: auto;
+    }
+
     .ortho-intro-heading {
       gap: 20px;
     }
@@ -239,8 +267,13 @@ const steps = [
     }
 
     .ortho-benefit-icon {
-      width: 36px;
-      height: 36px;
+      width: 72px;
+      height: 72px;
+    }
+
+    .ortho-functional-item {
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: center;
     }
 
     .ortho-functional-copy {
