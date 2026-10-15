@@ -22,8 +22,8 @@ const description =
 const heroImagePath = '/assets/optimized/ortodonzia-sorriso-studio-1920.webp';
 const heroImageSet = '/assets/optimized/ortodonzia-sorriso-studio-720.webp 720w, /assets/optimized/ortodonzia-sorriso-studio-1440.webp 1440w, /assets/optimized/ortodonzia-sorriso-studio-1920.webp 1920w, /assets/optimized/ortodonzia-sorriso-studio-2400.webp 2400w';
 const heroImageSizes = '(max-width: 720px) calc(100vw - 24px), (max-width: 1000px) calc(140vw - 67.2px), (max-width: 1696px) calc(112vw - 53.76px), 1846px';
-const heroMobileImagePath = '/assets/optimized/ortodonzia-sorriso-blu-mobile-1440.webp';
-const heroMobileImageSet = '/assets/optimized/ortodonzia-sorriso-blu-mobile-720.webp 720w, /assets/optimized/ortodonzia-sorriso-blu-mobile-1440.webp 1440w';
+const heroMobileImagePath = '/assets/optimized/ortodonzia-allineatore-minimalposter-mobile-1440.webp';
+const heroMobileImageSet = '/assets/optimized/ortodonzia-allineatore-minimalposter-mobile-720.webp 720w, /assets/optimized/ortodonzia-allineatore-minimalposter-mobile-1440.webp 1440w';
 const heroMobileImageSizes = 'calc(100vw - 24px)';
 const isIndexable = import.meta.env.PROD && process.env.VERCEL_ENV !== 'preview';
 const socialPreviewImage = new URL(heroImagePath, canonical).toString();
@@ -203,7 +203,7 @@ const structuredData = {
             <div class="ortho-hero-photo-frame">
               <picture>
                 <source media="(max-width: 720px)" type="image/webp" srcset={heroMobileImageSet} sizes={heroMobileImageSizes} />
-                <img class="landing-hero-photo" src={heroImagePath} srcset={heroImageSet} sizes={heroImageSizes} alt="Paziente sorridente durante una visita nello studio dentistico" width="1920" height="1280" loading="eager" decoding="async" fetchpriority="high" />
+                <img class="landing-hero-photo" src={heroImagePath} srcset={heroImageSet} sizes={heroImageSizes} alt="Ortodonzia: sorrisi e allineatori trasparenti" width="1920" height="1280" loading="eager" decoding="async" fetchpriority="high" />
               </picture>
             </div>
             <div class="landing-hero-panel ortho-hero-copy">
@@ -281,6 +281,12 @@ const structuredData = {
 
 <style>
   @media (max-width: 720px) {
+    :global(.ortho-landing-main #sedi),
+    :global(.ortho-landing-main #percorsi-ortodontici),
+    :global(.ortho-landing-main .ortho-nav-list > li:has(> a[href="#sedi"])) {
+      display: none;
+    }
+
     .ortho-hero-overlay .landing-hero-stage {
       display: block;
       padding-top: 0;
