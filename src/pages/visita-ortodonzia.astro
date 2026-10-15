@@ -253,7 +253,13 @@ const structuredData = {
       </section>
 
       <LandingPatientReviews reviews={reviews} />
-      <OrthodonticQuiz mobileObjectivesFirst />
+      <OrthodonticQuiz mobileObjectivesFirst>
+        <svg slot="questionnaire-icon" class="ortho-questionnaire-check-icon" viewBox="0 0 48 48" width="56" height="56" fill="none" aria-hidden="true" focusable="false">
+          <rect x="5" y="6" width="38" height="36" rx="5" />
+          <path d="M5 18h38M5 30h38M20 6v36M25 12h12M25 24h12M25 36h12" />
+          <path class="ortho-questionnaire-checks" d="m10 12 3 3 4-5m-7 14 3 3 4-5m-7 14 3 3 4-5" />
+        </svg>
+      </OrthodonticQuiz>
 
       <section class="ortho-section ortho-faq" aria-labelledby="ortho-faq-title">
         <div class="ortho-shell ortho-split">
@@ -320,6 +326,8 @@ const structuredData = {
 </html>
 
 <style>
+  .ortho-questionnaire-check-icon { display: none; }
+
   @media (max-width: 720px) {
     :global(.ortho-landing-main > .landing-header) {
       transition: transform 260ms ease;
@@ -372,6 +380,19 @@ const structuredData = {
     :global(.ortho-landing-main .orthodontic-questionnaire-banner > p) {
       text-align: center;
     }
+
+    .ortho-questionnaire-check-icon {
+      display: block;
+      width: 56px;
+      height: 56px;
+      margin-inline: auto;
+      stroke: var(--brand-blue);
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .ortho-questionnaire-checks { stroke: var(--surface-white); }
 
     .ortho-hero-overlay .landing-hero-stage {
       display: block;
