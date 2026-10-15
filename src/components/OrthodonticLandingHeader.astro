@@ -2,9 +2,25 @@
 import { site } from '../data/site';
 import { orthodonticAgeMenu } from '../data/orthodonticPaths';
 import { orthodonticResultsPath } from '../data/orthodonticResults';
+
+interface Props {
+  showExperienceBar?: boolean;
+}
+
+const { showExperienceBar = false } = Astro.props;
+const experienceMessage = 'Studio dentistico a Modena e Reggio Emilia · Oltre 35 anni di esperienza e riconoscimenti dalle più prestigiose società scientifiche nazionali e internazionali.';
 ---
 
 <header class="landing-header">
+      {showExperienceBar && (
+        <div class="header-experience-bar" role="note">
+          <span class="landing-visually-hidden">{experienceMessage}</span>
+          <div class="header-experience-track" aria-hidden="true">
+            <span class="header-experience-message">{experienceMessage}</span>
+            <span class="header-experience-message">{experienceMessage}</span>
+          </div>
+        </div>
+      )}
       <div class="landing-shell landing-header-inner">
         <a class="landing-logo" href="/visita-ortodonzia/" aria-label={`${site.name} — Landing ortodonzia`}>
           <img
