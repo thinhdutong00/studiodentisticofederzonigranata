@@ -3,18 +3,24 @@ const ageGroups = [
   {
     id: 'adulti',
     label: 'Adulti',
+    imageSrc: '/assets/optimized/ortodonzia-popup-adulti-264.webp',
+    imageAlt: 'Donna sorridente nello studio dentistico',
     title: 'Il tuo sorriso, il tuo momento.',
     description: 'Dai spazio al sorriso che desideri, con un percorso pensato per te e per la tua quotidianità. Durante la visita valutiamo insieme le soluzioni più adatte alle tue esigenze.',
   },
   {
     id: 'adolescenti',
     label: 'Adolescenti',
+    imageSrc: '/assets/optimized/ortodonzia-popup-adolescenti-264.webp',
+    imageAlt: 'Ragazzo sorridente',
     title: 'Crescere con un sorriso più sicuro.',
     description: 'Un sorriso in cui riconoscersi, anche negli anni del cambiamento. Accompagniamo tuo figlio con un percorso personalizzato, attento alla crescita e alle sue abitudini.',
   },
   {
     id: 'bambini',
     label: 'Bambini',
+    imageSrc: '/assets/optimized/ortodonzia-popup-bambini-264.webp',
+    imageAlt: 'Ragazza sorridente durante una visita odontoiatrica',
     title: 'Un piccolo passo per il suo sorriso.',
     description: 'Ogni sorriso cresce con i suoi tempi. Una prima visita ci permette di conoscere le esigenze del tuo bambino e accompagnarlo con un percorso attento e su misura.',
   },
@@ -66,25 +72,7 @@ const smileTeeth = [
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6" /></svg>
   </button>
   {ageGroups.map(group => <article class="ortho-age-content" data-ortho-age-content={group.id} hidden>
-    <div class="ortho-age-illustration" aria-hidden="true">
-      <svg viewBox="0 0 64 64" fill="none">
-        {group.id === 'adulti' && <>
-          <path d="M17 55v-4c0-8 6-13 15-13s15 5 15 13v4M25 39l7 8 7-8" />
-          <path d="M44 22c0 9-5 15-12 15s-12-6-12-15S25 8 32 8s12 5 12 14Z" />
-          <path d="M20 21c7 0 10-4 11-7 3 5 7 7 13 7M27 28c3 3 7 3 10 0M50 11v8m-4-4h8" />
-        </>}
-        {group.id === 'adolescenti' && <>
-          <path d="M16 55v-4c0-8 6-13 16-13s16 5 16 13v4M23 41l9 8 9-8" />
-          <path d="M20 23c0 8 5 14 12 14s12-6 12-14M20 23c-4-6 0-13 5-13 2-5 8-6 11-2 6-2 11 3 10 8 3 3 2 7-2 9M21 21c3 0 5-2 6-5 2 3 5 4 8 3 2 3 5 4 9 3M27 28c3 3 7 3 10 0M52 7v8m-4-4h8" />
-        </>}
-        {group.id === 'bambini' && <>
-          <path d="M17 55v-3c0-8 6-13 15-13s15 5 15 13v3M26 41l6 6 6-6" />
-          <path d="M44 25c0 8-5 13-12 13s-12-5-12-13 5-14 12-14 12 6 12 14ZM21 22c6 0 9-2 10-6 2 4 6 6 12 6M27 29c3 4 7 4 10 0M32 11c-3-5 0-8 4-8M12 11v8m-4-4h8M51 28v6m-3-3h6" />
-        </>}
-        <circle cx="27.5" cy="24" r="1" class="ortho-age-eye" />
-        <circle cx="36.5" cy="24" r="1" class="ortho-age-eye" />
-      </svg>
-    </div>
+    <img class="ortho-age-photo" src={group.imageSrc} alt={group.imageAlt} width="88" height="88" loading="lazy" decoding="async" />
     <p class="ortho-age-label">{group.label}</p>
     <h2 id={`ortho-age-${group.id}-title`} tabindex="-1">{group.title}</h2>
     <p class="ortho-age-description" id={`ortho-age-${group.id}-description`}>{group.description}</p>
@@ -189,9 +177,7 @@ const smileTeeth = [
   .ortho-age-close { position: absolute; top: 16px; right: 16px; display: grid; place-items: center; width: 44px; height: 44px; padding: 11px; border: 1px solid var(--border); border-radius: 50%; background: var(--surface-white); color: var(--muted-text); cursor: pointer; }
   .ortho-age-close svg, .ortho-age-visit svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
   .ortho-age-content { padding: 52px 28px calc(32px + env(safe-area-inset-bottom, 0px)); text-align: center; }
-  .ortho-age-illustration { display: grid; place-items: center; width: 88px; height: 88px; margin: 0 auto 22px; border-radius: 28px; background: var(--soft-blue-bg); color: var(--brand-cta); }
-  .ortho-age-illustration svg { width: 64px; height: 64px; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
-  .ortho-age-eye { fill: currentColor; stroke: none; }
+  .ortho-age-photo { display: block; width: 88px; height: 88px; margin: 0 auto 22px; border-radius: 28px; background: var(--soft-blue-bg); object-fit: cover; }
   .ortho-age-label { margin: 0 0 12px; color: var(--brand-cta); font-size: 13px; font-weight: 500; line-height: 1.3; letter-spacing: normal; text-transform: uppercase; }
   .ortho-age-content h2 { margin: 0; color: var(--brand-primary-dark); font-size: 30px; font-weight: 500; line-height: 1.15; letter-spacing: -.16px; text-wrap: balance; }
   .ortho-age-description { max-width: 38ch; margin: 20px auto 0; color: var(--muted-text); font-size: 17px; font-weight: 400; line-height: 1.5; letter-spacing: -.16px; }
@@ -212,7 +198,7 @@ const smileTeeth = [
     .ortho-age-wire { stroke: var(--brand-cta); stroke-width: 4; stroke-linecap: round; }
     .ortho-age-bracket { fill: var(--surface-white); stroke: var(--brand-cta); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
     .ortho-age-section h2 { max-width: 14ch; margin: 0; color: var(--surface-white); font-size: 34px; font-weight: 500; line-height: 1.15; letter-spacing: -.16px; text-wrap: balance; }
-    .ortho-age-section h2 strong { font-weight: 700; }
+    .ortho-age-section h2 strong { display: block; margin-bottom: 4px; font-size: clamp(36px, 10vw, 44px); font-weight: 700; line-height: 1.1; }
     .ortho-age-intro { margin: 20px 0 0; color: var(--surface-white); font-size: 17px; font-weight: 400; line-height: 1.5; letter-spacing: -.16px; }
     .ortho-age-list { margin: 28px 0 0; padding: 0; border-top: 1px solid rgba(255, 255, 255, .35); list-style: none; }
     .ortho-age-list li { border-bottom: 1px solid rgba(255, 255, 255, .35); }

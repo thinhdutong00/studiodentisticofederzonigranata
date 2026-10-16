@@ -14,6 +14,7 @@ import TreatmentStickyCta from '../components/TreatmentStickyCta.astro';
 import { featuredPatientReviews } from '../data/reviews';
 import { orthodonticReviews } from '../data/orthodonticReviews';
 import { site } from '../data/site';
+import { treatmentMarketingPages } from '../data/treatmentMarketing';
 import '../styles/inter-font.css';
 import '../styles/visit-landing.css';
 import '../styles/orthodontic-landing.css';
@@ -50,6 +51,11 @@ const faqs = [
   { question: 'Quali soluzioni sono disponibili?', answer: 'Lo studio utilizza apparecchi fissi e allineatori trasparenti. Il fisso rimane sui denti; gli allineatori sono rimovibili e richiedono un uso costante. La scelta dipende dalle indicazioni cliniche e dai movimenti necessari.' },
   { question: 'Quanto può incidere sulla quotidianità?', answer: 'Servono cura dell’igiene, uso del dispositivo e controlli programmati. Possono comparire fastidi durante l’adattamento. Alimentazione, gestione degli allineatori e contenzione finale vengono spiegate secondo il piano individuale.' },
   { question: 'Come vengono definiti i costi?', answer: 'Dopo la valutazione viene presentato un preventivo personalizzato, con le prestazioni previste. Complessità del caso, dispositivo e percorso necessario incidono sul costo. Il questionario raccoglie la richiesta di visita.' },
+];
+const mobileFaqs = treatmentMarketingPages['/ortodonzia-allineatori-invisibili/'].faqs;
+const structuredFaqs = [
+  ...faqs,
+  ...mobileFaqs.filter((item) => !faqs.some((faq) => faq.question === item.question)),
 ];
 
 const officeSeoDetails = {
@@ -133,7 +139,7 @@ const structuredData = {
     {
       '@type': 'FAQPage',
       '@id': `${canonical}#faq`,
-      mainEntity: faqs.map((faq) => ({
+      mainEntity: structuredFaqs.map((faq) => ({
         '@type': 'Question',
         name: faq.question,
         acceptedAnswer: { '@type': 'Answer', text: faq.answer },
@@ -197,7 +203,7 @@ const structuredData = {
   </head>
 
   <body class="ortho-landing ortho-landing-main">
-    <OrthodonticLandingHeader showExperienceBar />
+    <OrthodonticLandingHeader showExperienceBar mobileSiteMenu />
 
     <a class="ortho-skip-link" href="#contenuto">Vai al contenuto</a>
     <main id="contenuto" tabindex="-1">
@@ -211,7 +217,7 @@ const structuredData = {
               </picture>
             </div>
             <div class="landing-hero-panel ortho-hero-copy">
-              <p class="landing-hero-eyebrow">Ortodonzia per adulti · Modena e Reggio Emilia</p>
+              <p class="landing-hero-eyebrow">Ortodonzia per adulti<span class="ortho-hero-mobile-audience"> e bambini</span> · Modena e Reggio Emilia</p>
               <h1 id="landing-title">Il sorriso che desideri, la naturalezza che cerchi.</h1>
               <p class="ortho-hero-lead">Sorridere nelle fotografie, ridere con gli amici e guardarti allo specchio sentendoti davvero a tuo agio. Con un percorso ortodontico personalizzato puoi prenderti cura dell'armonia del tuo sorriso e avvicinarti a quello che hai sempre desiderato.</p>
               <a class="ortho-cta ortho-hero-quiz-link" href="#il-tuo-obiettivo" data-quiz-cta>Prenota una visita ortodontica <span aria-hidden="true">↗</span></a>
@@ -271,6 +277,14 @@ const structuredData = {
           </div>
           <div class="ortho-faq-list">
             {faqs.map((faq, index) => <details open={index === 0}><summary>{faq.question}<span aria-hidden="true">+</span></summary><p>{faq.answer}</p></details>)}
+          </div>
+          <div class="ortho-faq-mobile-list">
+            {mobileFaqs.map((faq, index) => (
+              <details name="ortho-mobile-faq" open={index === 0}>
+                <summary><span>{faq.question}</span><i aria-hidden="true"></i></summary>
+                <div class="ortho-faq-mobile-answer"><p>{faq.answer}</p></div>
+              </details>
+            ))}
           </div>
         </div>
       </section>
@@ -342,8 +356,98 @@ const structuredData = {
 
 <style>
   .ortho-questionnaire-check-icon { display: none; }
+  .ortho-faq-mobile-list { display: none; }
+  .ortho-hero-mobile-audience { display: none; }
 
   @media (max-width: 720px) {
+    .ortho-hero-mobile-audience { display: inline; }
+
+    :global(.ortho-landing-main #contenuto :is(#landing-title, #ortho-personalized-title, #ortho-faq-title)) {
+      color: var(--brand-cta);
+    }
+
+    :global(.ortho-landing-main .ortho-hero-copy > .landing-hero-eyebrow),
+    :global(.ortho-landing-main #percorso-ortodontico .ortho-eyebrow),
+    :global(.ortho-landing-main .ortho-faq .ortho-eyebrow) {
+      color: var(--text-dark);
+    }
+
+    .ortho-faq { background: var(--surface-white); }
+    .ortho-faq-list { display: none; }
+    .ortho-faq-mobile-list { display: block; }
+
+    .ortho-faq-mobile-list details {
+      border-bottom: 2px solid color-mix(in srgb, var(--brand-cta) 72%, transparent);
+    }
+
+    .ortho-faq-mobile-list details:first-child {
+      border-top: 2px solid color-mix(in srgb, var(--brand-cta) 72%, transparent);
+    }
+
+    .ortho-faq-mobile-list summary {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 32px;
+      align-items: center;
+      gap: 16px;
+      padding: 24px 0;
+      color: var(--brand-cta-hover);
+      font-family: Inter, sans-serif;
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -.16px;
+      line-height: 30px;
+      list-style: none;
+      cursor: pointer;
+    }
+
+    .ortho-faq-mobile-list summary::-webkit-details-marker { display: none; }
+
+    .ortho-faq-mobile-list summary:focus-visible {
+      outline: 3px solid color-mix(in srgb, var(--brand-cta) 24%, transparent);
+      outline-offset: 7px;
+    }
+
+    .ortho-faq-mobile-list i {
+      position: relative;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--brand-cta);
+    }
+
+    .ortho-faq-mobile-list i::before,
+    .ortho-faq-mobile-list i::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 15px;
+      height: 2px;
+      background: var(--surface-white);
+      transform: translate(-50%, -50%);
+    }
+
+    .ortho-faq-mobile-list i::after {
+      transform: translate(-50%, -50%) rotate(90deg);
+      transition: opacity 140ms ease;
+    }
+
+    .ortho-faq-mobile-list details[open] i::after { opacity: 0; }
+    .ortho-faq-mobile-list details[open] { padding-bottom: 24px; }
+
+    .ortho-faq-mobile-answer {
+      padding: 22px 20px;
+      background: var(--soft-blue-bg);
+    }
+
+    .ortho-faq-mobile-answer p {
+      margin: 0;
+      color: var(--text-dark);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+    }
+
     :global(.ortho-landing-main #contenuto :is(.ortho-hero h1, .ortho-section-heading h2, .ortho-smile-preview h2, .ortho-age-section h2, .patient-reviews-intro h2, .ortho-consultation-heading h2)) {
       font-family: Inter, sans-serif;
       font-size: 30px;

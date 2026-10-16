@@ -1,0 +1,251 @@
+---
+import { site } from '../data/site';
+import { orthodonticAgeMenu } from '../data/orthodonticPaths';
+import { orthodonticResultsPath } from '../data/orthodonticResults';
+---
+
+<div class="ortho-site-menu" data-ortho-site-menu>
+  <button class="ortho-site-menu-trigger" type="button" aria-label="Apri menu" aria-haspopup="dialog" aria-expanded="false" aria-controls="ortho-site-menu-panel" data-ortho-site-menu-trigger>
+    <span class="ortho-site-menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+  </button>
+
+  <dialog class="ortho-site-menu-panel" id="ortho-site-menu-panel" aria-label="Menu ortodonzia" data-ortho-site-menu-panel>
+    <div class="ortho-site-menu-panel-header">
+      <a class="ortho-site-menu-logo" href="/visita-ortodonzia/" aria-label={`${site.name} — Landing ortodonzia`}>
+        <img src="/assets/optimized/studio-dentistico-federzoni-granata-300.webp" alt="" width="300" height="39" />
+      </a>
+      <button class="ortho-site-menu-close" type="button" data-ortho-site-menu-close autofocus>
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6" /></svg>
+        Chiudi
+      </button>
+    </div>
+
+    <nav class="ortho-site-menu-scroll" aria-label="Navigazione ortodonzia mobile">
+      <details class="ortho-site-menu-section" open>
+        <summary>
+          <span>Trattamenti ortodontici</span>
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true"><path d="m6.5 9.25 5.5 5.5 5.5-5.5" /></svg>
+        </summary>
+        <ul class="ortho-site-menu-links">
+          {orthodonticAgeMenu.map((item, index) => <li style={`--menu-item-order: ${index}`}><a href={item.href}>{item.label}</a></li>)}
+        </ul>
+      </details>
+      <a class="ortho-site-menu-results" href={orthodonticResultsPath}>Risultati</a>
+    </nav>
+
+    <div class="ortho-site-menu-actions">
+      <a href="#il-tuo-obiettivo">Fai il test <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12" /></svg></a>
+    </div>
+  </dialog>
+</div>
+
+<noscript><style is:inline>.ortho-site-menu { display: none !important; }</style></noscript>
+
+<script>
+  const menuRoot = document.querySelector<HTMLElement>('[data-ortho-site-menu]');
+  const menuPanel = menuRoot?.querySelector<HTMLDialogElement>('[data-ortho-site-menu-panel]');
+  const menuTrigger = menuRoot?.querySelector<HTMLButtonElement>('[data-ortho-site-menu-trigger]');
+  const menuClose = menuRoot?.querySelector<HTMLButtonElement>('[data-ortho-site-menu-close]');
+  const menuHeader = menuRoot?.closest<HTMLElement>('.landing-header');
+
+  if (menuPanel && menuTrigger && menuHeader) {
+    const menuViewport = window.matchMedia('(max-width: 720px)');
+    const treatmentSection = menuPanel.querySelector<HTMLDetailsElement>('details');
+    let previousOverflow = '';
+
+    const closeMenu = () => {
+      if (!menuPanel.open) return;
+      menuPanel.close();
+      document.body.style.overflow = previousOverflow;
+      menuHeader.removeAttribute('data-menu-open');
+      menuTrigger.setAttribute('aria-expanded', 'false');
+    };
+
+    menuTrigger.addEventListener('click', () => {
+      if (!menuViewport.matches || menuPanel.open) return;
+      previousOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      menuHeader.classList.remove('is-scroll-hidden');
+      menuHeader.setAttribute('data-menu-open', '');
+      menuTrigger.setAttribute('aria-expanded', 'true');
+      if (treatmentSection) treatmentSection.open = true;
+      menuPanel.showModal();
+    });
+
+    menuClose?.addEventListener('click', closeMenu);
+    menuPanel.addEventListener('cancel', (event) => {
+      event.preventDefault();
+      closeMenu();
+    });
+    // Escape belongs to this modal, rather than the desktop navigation underneath.
+    menuPanel.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') event.stopPropagation();
+    });
+    menuPanel.addEventListener('click', (event) => {
+      if (event.target instanceof Element && event.target.closest('a')) closeMenu();
+    });
+    menuViewport.addEventListener('change', () => {
+      if (!menuViewport.matches && menuPanel.open) {
+        closeMenu();
+        menuHeader.querySelector<HTMLAnchorElement>('.landing-logo')?.focus();
+      }
+    });
+    window.addEventListener('pagehide', closeMenu);
+  }
+</script>
+
+<style>
+  .ortho-site-menu { display: none; }
+  .ortho-site-menu-panel { display: none; }
+
+  @media (max-width: 720px) {
+    :global(.ortho-landing-main .landing-header[data-mobile-site-menu]) {
+      background: rgba(255, 255, 255, .96);
+      backdrop-filter: blur(16px);
+    }
+
+    :global(.ortho-landing-main .landing-header[data-mobile-site-menu] .landing-header-inner) {
+      width: calc(100% - 28px);
+      min-height: 80px;
+      gap: 8px;
+    }
+
+    :global(.ortho-landing-main .landing-header[data-mobile-site-menu] .landing-logo) {
+      flex: 0 1 204px;
+      min-width: 0;
+      max-width: 56vw;
+    }
+
+    :global(.ortho-landing-main .landing-header[data-mobile-site-menu] .landing-logo img) { width: 204px; }
+    :global(.ortho-landing-main .landing-header[data-mobile-site-menu] .landing-header-actions) { gap: 8px; }
+    :global(.ortho-landing-main .landing-header[data-mobile-site-menu] .landing-header-cta) {
+      min-height: 40px;
+      padding: 9px 12px;
+      border: 1px solid var(--brand-cta);
+      border-radius: 6px;
+      font-size: 14px;
+      line-height: 1;
+      letter-spacing: -.16px;
+      text-decoration: none;
+    }
+
+    :global(.ortho-landing-main .landing-header[data-mobile-site-menu] .ortho-menu-toggle),
+    :global(.ortho-landing-main .landing-header[data-mobile-site-menu] .ortho-header-nav) { display: none; }
+
+    .ortho-site-menu { display: block; }
+
+    .ortho-site-menu-trigger {
+      display: flex;
+      width: 44px;
+      min-height: 52px;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--brand-primary-dark);
+      cursor: pointer;
+    }
+
+    .ortho-site-menu-icon { display: inline-grid; width: 28px; gap: 5px; }
+    .ortho-site-menu-icon span { width: 100%; height: 2.5px; border-radius: 999px; background: currentColor; }
+    .ortho-site-menu-trigger:hover { color: var(--brand-blue); }
+
+    .ortho-site-menu-panel {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      max-width: none;
+      height: 100dvh;
+      max-height: none;
+      margin: 0;
+      padding: 20px 22px max(20px, env(safe-area-inset-bottom));
+      overflow: hidden;
+      border: 0;
+      border-radius: 0;
+      background: var(--brand-cta);
+      color: var(--surface-white);
+      font-family: Inter, sans-serif;
+      letter-spacing: -.16px;
+    }
+
+    .ortho-site-menu-panel[open] {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 8px;
+      animation: ortho-menu-enter 180ms ease-out;
+    }
+
+    .ortho-site-menu-panel::backdrop { background: transparent; }
+    .ortho-site-menu-panel-header { display: flex; align-items: center; justify-content: space-between; gap: 18px; min-height: 32px; }
+    .ortho-site-menu-logo { display: block; flex: 0 1 auto; width: min(190px, 50vw); }
+    .ortho-site-menu-logo img { width: 100%; height: auto; filter: brightness(0) invert(1); }
+    .ortho-site-menu-close {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      gap: 8px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--surface-white);
+      font: inherit;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .ortho-site-menu-close svg { stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+    .ortho-site-menu-scroll { min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 22px 2px 8px 0; }
+    .ortho-site-menu-section { padding: 20px 0; border-bottom: .5px solid rgba(255, 255, 255, .22); }
+    .ortho-site-menu-section summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      font-size: clamp(28px, 7.4vw, 32px);
+      font-weight: 500;
+      line-height: 1.08;
+      list-style: none;
+      cursor: pointer;
+    }
+
+    .ortho-site-menu-section summary::-webkit-details-marker { display: none; }
+    .ortho-site-menu-section summary > span { position: relative; }
+    .ortho-site-menu-section[open] summary > span::after { content: ''; position: absolute; left: 0; bottom: -9px; width: 48px; height: 3px; border-radius: 999px; background: var(--brand-blue); }
+    .ortho-site-menu-section summary > svg { flex: 0 0 24px; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: transform 180ms ease; }
+    .ortho-site-menu-section[open] summary > svg { transform: rotate(180deg); }
+    .ortho-site-menu-links { display: grid; gap: 4px; margin: 22px 0 0; padding: 0; list-style: none; }
+    .ortho-site-menu-links a { display: flex; min-height: 44px; align-items: center; color: inherit; font-size: 18px; font-weight: 400; line-height: 1.3; text-decoration: none; }
+    .ortho-site-menu-section[open] .ortho-site-menu-links li { animation: ortho-menu-item-enter 340ms ease-out both; animation-delay: calc(var(--menu-item-order, 0) * 55ms); }
+    .ortho-site-menu-results { display: block; padding: 20px 0; border-bottom: .5px solid rgba(255, 255, 255, .22); color: inherit; font-size: clamp(28px, 7.4vw, 32px); font-weight: 500; line-height: 1.08; text-decoration: none; }
+    .ortho-site-menu-actions { padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, .24); }
+    .ortho-site-menu-actions a { display: flex; min-height: 48px; align-items: center; justify-content: space-between; gap: 10px; padding: 14px; border-radius: 6px; background: var(--surface-white); color: var(--brand-cta); font-size: 16px; font-weight: 500; line-height: 16px; text-decoration: none; text-transform: uppercase; }
+    .ortho-site-menu-actions svg { stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+    .ortho-site-menu-panel a:hover, .ortho-site-menu-close:hover { color: var(--soft-blue-bg); }
+    .ortho-site-menu-actions a:hover { background: var(--soft-blue-bg); color: var(--brand-cta-hover); }
+    .ortho-site-menu-trigger:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 2px; }
+    .ortho-site-menu-panel :is(a, button, summary):focus-visible { outline: 2px solid var(--surface-white); outline-offset: 4px; }
+
+    @keyframes ortho-menu-enter { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes ortho-menu-item-enter { from { opacity: 0; clip-path: inset(0 100% 0 0); } to { opacity: 1; clip-path: inset(0 0 0 0); } }
+  }
+
+  @media (max-width: 620px) {
+    .ortho-site-menu-panel { top: 30px; height: calc(100dvh - 30px); }
+  }
+
+  @media (max-width: 420px) {
+    :global(.ortho-landing-main .landing-header[data-mobile-site-menu] .landing-logo) { flex-basis: 198px; max-width: 54vw; }
+    :global(.ortho-landing-main .landing-header[data-mobile-site-menu] .landing-logo img) { width: 198px; }
+    :global(.ortho-landing-main .landing-header[data-mobile-site-menu] .landing-header-cta) { min-height: 36px; padding-inline: 9px; font-size: 12.5px; }
+    .ortho-site-menu-icon { width: 27px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ortho-site-menu-panel[open], .ortho-site-menu-section[open] .ortho-site-menu-links li { animation: none; }
+    .ortho-site-menu-section summary > svg { transition: none; }
+  }
+</style>
