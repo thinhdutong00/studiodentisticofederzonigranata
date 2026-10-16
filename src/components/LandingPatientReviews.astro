@@ -17,7 +17,7 @@ const { reviews, mobileCarousel = false, mobilePopupReviews = [] } = Astro.props
   <div class="landing-shell">
     <div class="patient-reviews-heading">
       <div class="patient-reviews-intro">
-        <p class="landing-kicker">Esperienze dei pazienti</p>
+        <p class="landing-kicker"><slot name="eyebrow">Esperienze dei pazienti</slot></p>
         <h2 id="landing-reviews-title"><slot name="title">I nostri pazienti dicono</slot></h2>
         <p class="patient-reviews-description">Le parole dei nostri pazienti, l’esperienza del nostro studio.</p>
       </div>

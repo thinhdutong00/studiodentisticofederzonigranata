@@ -261,6 +261,7 @@ const structuredData = {
       </section>
 
       <LandingPatientReviews reviews={reviews} mobileCarousel mobilePopupReviews={orthodonticReviews}>
+        <Fragment slot="eyebrow"><span class="ortho-review-eyebrow-desktop">Esperienze dei pazienti</span><span class="ortho-review-eyebrow-mobile">Su di noi</span></Fragment>
         <Fragment slot="title">I <span class="ortho-review-title-emphasis">nostri pazienti</span> dicono</Fragment>
       </LandingPatientReviews>
       <OrthodonticQuiz mobileObjectivesFirst>
@@ -361,12 +362,17 @@ const structuredData = {
   .ortho-questionnaire-check-icon { display: none; }
   .ortho-faq-mobile-list { display: none; }
   .ortho-faq-eyebrow-mobile { display: none; }
+  .ortho-review-eyebrow-mobile { display: none; }
   .ortho-hero-mobile-audience { display: none; }
 
   @media (max-width: 720px) {
     .ortho-faq-eyebrow-desktop { display: none; }
     .ortho-faq-eyebrow-mobile { display: inline; }
+    .ortho-review-eyebrow-desktop { display: none; }
+    .ortho-review-eyebrow-mobile { display: inline; }
     .ortho-hero-mobile-audience { display: inline; }
+
+    :global(.ortho-landing-main #recensioni .patient-reviews-description) { display: none; }
 
     :global(.ortho-landing-main #contenuto :is(#landing-title, #ortho-personalized-title, #ortho-faq-title)) {
       color: var(--brand-cta);

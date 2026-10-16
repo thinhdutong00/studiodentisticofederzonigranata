@@ -4,12 +4,16 @@ export function bindOrthodonticMobileMotion() {
   header.dataset.mobileMotionBound = 'true';
 
   const mobileViewport = window.matchMedia('(max-width: 720px)');
+  const upwardRevealDistance = 100;
   let lastScrollY = Math.max(0, window.scrollY);
+  let upwardScrollDistance = 0;
+  let viewportWidth = window.innerWidth;
   let scrollFrame = 0;
 
   const revealHeader = () => {
     header.classList.remove('is-scroll-hidden');
     lastScrollY = Math.max(0, window.scrollY);
+    upwardScrollDistance = 0;
   };
 
   const updateHeader = () => {
@@ -23,17 +27,29 @@ export function bindOrthodonticMobileMotion() {
       return;
     }
 
-    // Ignore small touch movements, while revealing the header as soon as scrolling reverses.
+    // Ignore small touch movements and require a longer upward scroll to reveal the header.
     if (Math.abs(delta) >= 6) {
-      header.classList.toggle('is-scroll-hidden', delta > 0 && scrollY > header.offsetHeight + 16);
       lastScrollY = scrollY;
+      if (delta > 0) {
+        upwardScrollDistance = 0;
+        header.classList.toggle('is-scroll-hidden', scrollY > header.offsetHeight + 16);
+      } else if (header.classList.contains('is-scroll-hidden')) {
+        upwardScrollDistance -= delta;
+        if (upwardScrollDistance >= upwardRevealDistance) revealHeader();
+      }
     }
   };
 
   window.addEventListener('scroll', () => {
     if (!scrollFrame) scrollFrame = window.requestAnimationFrame(updateHeader);
   }, { passive: true });
-  window.addEventListener('resize', revealHeader);
+  window.addEventListener('resize', () => {
+    // Mobile browser bars can change the viewport height during a scroll.
+    if (window.innerWidth !== viewportWidth) {
+      viewportWidth = window.innerWidth;
+      revealHeader();
+    }
+  });
   window.addEventListener('pageshow', revealHeader);
   mobileViewport.addEventListener('change', revealHeader);
   header.addEventListener('focusin', revealHeader);
