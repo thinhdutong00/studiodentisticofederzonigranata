@@ -2,6 +2,7 @@
 import type { PatientReview } from '../data/reviews';
 import type { OrthodonticReview } from '../data/orthodonticReviews';
 import OrthodonticReviewSheet from './OrthodonticReviewSheet.astro';
+import OrthodonticLinkArrow from './OrthodonticLinkArrow.astro';
 
 interface Props {
   reviews: PatientReview[];
@@ -34,7 +35,7 @@ const { reviews, mobileCarousel = false, mobilePopupReviews = [] } = Astro.props
           <strong class="patient-reviews-score">5,0</strong>
           <span class="patient-reviews-stars" aria-hidden="true">★★★★★</span>
           <span class="patient-reviews-rating-caption">5,0 stelle su Google</span>
-          <span class="patient-reviews-link">Leggi le recensioni <span aria-hidden="true">↗</span></span>
+          <span class="patient-reviews-link">Leggi le recensioni {mobileCarousel ? <OrthodonticLinkArrow /> : <span aria-hidden="true">↗</span>}</span>
         </a>
         <div class="patient-reviews-experience">
           <span class="patient-reviews-over">Oltre</span>

@@ -1,0 +1,25 @@
+---
+import CtaArrowIcon from './CtaArrowIcon.astro';
+---
+
+<span class="ortho-link-arrow" aria-hidden="true">
+  <span class="ortho-link-arrow-text">↗</span>
+  <CtaArrowIcon className="ortho-link-arrow-icon" />
+</span>
+
+<style>
+  .ortho-link-arrow :global(.ortho-link-arrow-icon) { display: none; }
+
+  @media (max-width: 720px) {
+    :global(.ortho-landing-main) .ortho-link-arrow {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-self: center;
+      align-items: center;
+      line-height: 1;
+    }
+
+    :global(.ortho-landing-main) .ortho-link-arrow-text { display: none; }
+    :global(.ortho-landing-main) .ortho-link-arrow :global(.ortho-link-arrow-icon) { display: block; }
+  }
+</style>
