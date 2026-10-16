@@ -21,6 +21,7 @@ const phoneCountries = [
 
 <div class:list={['ortho-consultation-mobile', { 'ortho-consultation-hero': isHero }]}>
   {!isHero && <header class="ortho-consultation-heading">
+    <img class="ortho-consultation-symbol" src="/assets/original/2020/10/cropped-favicon-180x180.png" width="72" height="72" alt="" aria-hidden="true" decoding="async" />
     <h2 id={`${idPrefix}-title`}>Prenota la tua visita di <strong>valutazione ortodontica</strong></h2>
     <p>Fai il primo passo! Prenota la tua prima visita ortodontica per scoprire la diagnosi e il piano di trattamento più adatto a te.</p>
   </header>}
@@ -116,6 +117,15 @@ const phoneCountries = [
     .ortho-consultation-heading {
       margin: 0 34px 32px;
       text-align: center;
+    }
+
+    .ortho-consultation-symbol {
+      display: block;
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 24px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
     }
 
     .ortho-consultation-mobile .ortho-consultation-heading h2 {
