@@ -471,8 +471,17 @@ const structuredData = {
 
     :global(.ortho-landing-main #ortho-final) {
       padding: 48px 0 0;
-      background: var(--surface-white);
-      color: var(--text-dark);
+      background: var(--brand-cta);
+      color: var(--surface-white);
+    }
+
+    :global(.ortho-landing-main #ortho-final .ortho-consultation-heading h2),
+    :global(.ortho-landing-main #ortho-final .ortho-consultation-heading p) {
+      color: var(--surface-white);
+    }
+
+    :global(.ortho-landing-main #ortho-final .ortho-consultation-surface) {
+      background: transparent;
     }
 
     :global(.ortho-landing-main #ortho-final::after),
