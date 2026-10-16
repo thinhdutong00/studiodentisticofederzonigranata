@@ -7,7 +7,6 @@ interface Props {
 }
 
 const { reviews, mobileCarousel = false } = Astro.props;
-const reviewGroups = mobileCarousel ? [false, true] : [false];
 ---
 
 <section id="recensioni" class="patient-reviews" aria-labelledby="landing-reviews-title" data-mobile-review-carousel={mobileCarousel || undefined}>
@@ -45,86 +44,159 @@ const reviewGroups = mobileCarousel ? [false, true] : [false];
 
     <div class="patient-review-carousel" data-review-viewport>
       <div class="patient-review-track">
-        {reviewGroups.map(isCopy => (
-          <div class:list={['patient-review-grid', { 'patient-review-copy': isCopy }]} aria-hidden={isCopy || undefined} inert={isCopy || undefined}>
-            {reviews.map((review) => (
-              <article class="patient-review">
-                <div class="patient-review-stars" aria-label={`${review.rating} stelle su 5`}>{'★'.repeat(review.rating)}</div>
-                <blockquote>“{review.text}”</blockquote>
-                <footer>
-                  <span class="patient-review-avatar" aria-hidden="true">{review.initials}</span>
-                  <p><strong>{review.author}</strong><small>Recensione Google</small></p>
-                </footer>
-              </article>
-            ))}
-          </div>
-        ))}
+        <div class="patient-review-grid">
+          {reviews.map((review) => (
+            <article class="patient-review">
+              <div class="patient-review-stars" aria-label={`${review.rating} stelle su 5`}>{'★'.repeat(review.rating)}</div>
+              <blockquote>“{review.text}”</blockquote>
+              <footer>
+                <span class="patient-review-avatar" aria-hidden="true">{review.initials}</span>
+                <p><strong>{review.author}</strong><small>Recensione Google</small></p>
+              </footer>
+            </article>
+          ))}
+        </div>
       </div>
     </div>
-    {mobileCarousel && <div class="patient-review-controls">
-      <button class="patient-review-motion" type="button" data-review-motion-toggle aria-pressed="false">
-        <svg class="patient-review-pause-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7 5v10M13 5v10" /></svg>
-        <svg class="patient-review-play-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m7 4 9 6-9 6V4Z" /></svg>
-        <span data-review-motion-label>Metti in pausa</span>
-      </button>
-    </div>}
   </div>
 </section>
 
 <script>
   document.querySelectorAll<HTMLElement>('[data-mobile-review-carousel]').forEach(section => {
     const viewport = section.querySelector<HTMLElement>('[data-review-viewport]');
-    const button = section.querySelector<HTMLButtonElement>('[data-review-motion-toggle]');
-    const label = button?.querySelector<HTMLElement>('[data-review-motion-label]');
-    if (!viewport || !button || !label || section.dataset.carouselBound) return;
+    const grid = viewport?.querySelector<HTMLElement>('.patient-review-grid');
+    const cards = Array.from(grid?.querySelectorAll<HTMLElement>('.patient-review') || []);
+    if (!viewport || !grid || !cards.length || section.dataset.carouselBound) return;
     section.dataset.carouselBound = 'true';
     const mobile = window.matchMedia('(max-width: 720px)');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const slides = [...cards];
+    if (cards.length > 1) {
+      const clone = (card: HTMLElement) => {
+        const copy = card.cloneNode(true) as HTMLElement;
+        copy.classList.add('patient-review-clone');
+        copy.setAttribute('aria-hidden', 'true');
+        copy.inert = true;
+        return copy;
+      };
+      const first = clone(cards[cards.length - 1]);
+      const last = clone(cards[0]);
+      grid.prepend(first);
+      grid.append(last);
+      slides.unshift(first);
+      slides.push(last);
+    }
+
+    const hasLoop = cards.length > 1;
+    const firstSlide = hasLoop ? 1 : 0;
     let visible = false;
-    let paused = false;
     let hovering = false;
     let touching = false;
+    let pressing = false;
     let focused = false;
+    let moving = false;
+    let current = 0;
+    let lastWidth = 0;
+    let advanceTimer: ReturnType<typeof setTimeout> | undefined;
+    let settleTimer: ReturnType<typeof setTimeout> | undefined;
+
+    const slideOffset = (index: number) => slides[index].getBoundingClientRect().left - viewport.getBoundingClientRect().left + viewport.scrollLeft;
+    const closestSlide = () => slides.reduce((closest, _slide, index) => Math.abs(slideOffset(index) - viewport.scrollLeft) < Math.abs(slideOffset(closest) - viewport.scrollLeft) ? index : closest, 0);
 
     const updateMotion = () => {
-      const running = mobile.matches && visible && !document.hidden && !reducedMotion.matches && !paused && !hovering && !touching && !focused;
+      clearTimeout(advanceTimer);
+      const running = mobile.matches && hasLoop && visible && !document.hidden && !reducedMotion.matches && !hovering && !touching && !pressing && !focused && !moving;
       section.dataset.reviewMotion = running ? 'running' : 'paused';
+      if (running) {
+        advanceTimer = setTimeout(() => {
+          // Advance toward the right, preserving the carousel's existing direction.
+          moveTo(current + firstSlide - 1);
+        }, 4000);
+      }
+    };
+
+    const finishScroll = () => {
+      clearTimeout(settleTimer);
+      if (!mobile.matches) return;
+      let index = closestSlide();
+      if (hasLoop && (index === 0 || index === slides.length - 1)) {
+        index = index === 0 ? cards.length : firstSlide;
+        viewport.scrollTo({ left: slideOffset(index), behavior: 'instant' });
+      }
+      current = index - firstSlide;
+      moving = false;
+      updateMotion();
+    };
+
+    const moveTo = (index: number) => {
+      clearTimeout(settleTimer);
+      moving = true;
+      updateMotion();
+      viewport.scrollTo({ left: slideOffset(index), behavior: reducedMotion.matches ? 'instant' : 'smooth' });
+      settleTimer = setTimeout(finishScroll, 180);
+    };
+
+    const updateLayout = () => {
+      clearTimeout(settleTimer);
+      moving = false;
       if (mobile.matches) {
         viewport.setAttribute('role', 'region');
         viewport.setAttribute('aria-roledescription', 'carosello');
         viewport.setAttribute('aria-label', 'Recensioni dei pazienti');
         viewport.tabIndex = 0;
+        lastWidth = viewport.clientWidth;
+        viewport.scrollTo({ left: slideOffset(current + firstSlide), behavior: 'instant' });
       } else {
         ['role', 'aria-roledescription', 'aria-label', 'tabindex'].forEach(attribute => viewport.removeAttribute(attribute));
+        current = 0;
+        viewport.scrollTo({ left: 0, behavior: 'instant' });
       }
+      updateMotion();
     };
 
-    button.addEventListener('click', () => {
-      paused = !paused;
-      button.setAttribute('aria-pressed', String(paused));
-      label.textContent = paused ? 'Riprendi scorrimento' : 'Metti in pausa';
+    viewport.addEventListener('scroll', () => {
+      if (!mobile.matches) return;
+      moving = true;
       updateMotion();
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(finishScroll, 180);
+    }, { passive: true });
+    viewport.addEventListener('scrollend', finishScroll);
+    viewport.addEventListener('keydown', event => {
+      if (!mobile.matches || !hasLoop) return;
+      const targets: Record<string, number> = { ArrowLeft: current + firstSlide - 1, ArrowRight: current + firstSlide + 1, Home: firstSlide, End: cards.length };
+      if (!(event.key in targets)) return;
+      event.preventDefault();
+      focused = true;
+      moveTo(targets[event.key]);
     });
     viewport.addEventListener('pointerenter', event => { if (event.pointerType === 'mouse') { hovering = true; updateMotion(); } });
     viewport.addEventListener('pointerleave', () => { hovering = false; updateMotion(); });
-    viewport.addEventListener('pointerdown', event => { if (event.pointerType !== 'mouse') { touching = true; updateMotion(); } });
-    ['pointerup', 'pointercancel'].forEach(event => viewport.addEventListener(event, () => { touching = false; updateMotion(); }));
-    viewport.addEventListener('focusin', () => { focused = true; updateMotion(); });
+    viewport.addEventListener('pointerdown', event => { focused = false; if (event.pointerType !== 'touch') pressing = true; updateMotion(); });
+    ['pointerup', 'pointercancel'].forEach(event => window.addEventListener(event, () => { pressing = false; updateMotion(); }));
+    viewport.addEventListener('touchstart', () => { touching = true; updateMotion(); }, { passive: true });
+    const releaseTouch = (event: TouchEvent) => { touching = event.touches.length > 0; updateMotion(); };
+    viewport.addEventListener('touchend', releaseTouch, { passive: true });
+    viewport.addEventListener('touchcancel', releaseTouch, { passive: true });
+    viewport.addEventListener('focusin', () => { focused = viewport.matches(':focus-visible'); updateMotion(); });
     viewport.addEventListener('focusout', () => { focused = false; updateMotion(); });
     new IntersectionObserver(entries => {
       visible = entries.some(entry => entry.isIntersecting);
       updateMotion();
     }, { threshold: .15 }).observe(viewport);
+    new ResizeObserver(() => {
+      if (mobile.matches && viewport.clientWidth !== lastWidth) updateLayout();
+    }).observe(viewport);
     document.addEventListener('visibilitychange', updateMotion);
-    mobile.addEventListener('change', updateMotion);
+    mobile.addEventListener('change', updateLayout);
     reducedMotion.addEventListener('change', updateMotion);
-    updateMotion();
+    updateLayout();
   });
 </script>
 
 <style>
   .patient-review-carousel, .patient-review-track { display: contents; }
-  .patient-review-grid.patient-review-copy, .patient-review-controls { display: none; }
+  .patient-review.patient-review-clone { display: none; }
 
   .patient-reviews {
     padding: clamp(72px, 8vw, 128px) 0;
@@ -232,52 +304,34 @@ const reviewGroups = mobileCarousel ? [false, true] : [false];
 
     [data-mobile-review-carousel] .patient-review-carousel {
       display: block;
-      container-type: inline-size;
       margin-top: 36px;
-      overflow: hidden;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      overscroll-behavior-x: contain;
+      touch-action: pan-x pan-y pinch-zoom;
       border-radius: 12px;
     }
-    [data-mobile-review-carousel] .patient-review-track {
-      display: flex;
-      width: max-content;
-      animation: patient-reviews-slide-right 48s linear infinite;
-      animation-play-state: paused;
-      will-change: transform;
-    }
-    [data-mobile-review-carousel][data-review-motion="running"] .patient-review-track { animation-play-state: running; }
+    [data-mobile-review-carousel] .patient-review-carousel::-webkit-scrollbar { display: none; }
     [data-mobile-review-carousel] .patient-review-grid {
       display: flex;
-      flex: 0 0 auto;
       gap: 16px;
       margin: 0;
-      padding-right: 16px;
     }
     [data-mobile-review-carousel] .patient-review {
-      flex: 0 0 100cqw;
-      width: 100cqw;
+      display: flex;
+      flex: 0 0 100%;
+      width: 100%;
+      min-width: 0;
       min-height: 280px;
       border-radius: 12px;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
     }
-    [data-mobile-review-carousel] .patient-review-controls { display: flex; justify-content: flex-end; margin-top: 12px; }
-    .patient-review-motion { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: 8px; padding: 8px 0 8px 12px; border: 0; background: transparent; color: var(--border); font: inherit; font-size: 12px; font-weight: 500; line-height: 1.3; cursor: pointer; }
-    .patient-review-motion svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-    .patient-review-play-icon, .patient-review-motion[aria-pressed="true"] .patient-review-pause-icon { display: none; }
-    .patient-review-motion[aria-pressed="true"] .patient-review-play-icon { display: block; }
-    .patient-review-motion:focus-visible, .patient-review-carousel:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 4px; }
-  }
-
-  @keyframes patient-reviews-slide-right {
-    from { transform: translateX(-50%); }
-    to { transform: translateX(0); }
+    [data-mobile-review-carousel] .patient-review-carousel:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 4px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .patient-reviews-rating { transition: none; }
-  }
-  @media (max-width: 720px) and (prefers-reduced-motion: reduce) {
-    [data-mobile-review-carousel] .patient-review-carousel { overflow-x: auto; scroll-padding-inline: 0; }
-    [data-mobile-review-carousel] .patient-review-track { animation: none; will-change: auto; }
-    [data-mobile-review-carousel] .patient-review-copy,
-    [data-mobile-review-carousel] .patient-review-controls { display: none; }
   }
 </style>

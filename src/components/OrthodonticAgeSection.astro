@@ -34,6 +34,7 @@ const smileTeeth = [
 
 <section class="ortho-age-section" id="ortodonzia-tutte-le-eta" aria-labelledby="ortho-age-title">
   <h2 id="ortho-age-title"><strong>Ortodonzia</strong> per tutte le età</h2>
+  <p class="ortho-age-intro">Un percorso per guidare l’allineamento dei denti e migliorare, quando possibile, l’equilibrio del morso.</p>
   <ul class="ortho-age-list">
     {ageGroups.map(group => <li>
       <button type="button" data-ortho-age-open={group.id} aria-haspopup="dialog" aria-controls="ortho-age-sheet" aria-expanded="false">
@@ -212,6 +213,7 @@ const smileTeeth = [
     .ortho-age-bracket { fill: var(--surface-white); stroke: var(--brand-cta); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
     .ortho-age-section h2 { max-width: 14ch; margin: 0; color: var(--surface-white); font-size: 34px; font-weight: 500; line-height: 1.15; letter-spacing: -.16px; text-wrap: balance; }
     .ortho-age-section h2 strong { font-weight: 700; }
+    .ortho-age-intro { margin: 20px 0 0; color: var(--surface-white); font-size: 17px; font-weight: 400; line-height: 1.5; letter-spacing: -.16px; }
     .ortho-age-list { margin: 28px 0 0; padding: 0; border-top: 1px solid rgba(255, 255, 255, .35); list-style: none; }
     .ortho-age-list li { border-bottom: 1px solid rgba(255, 255, 255, .35); }
     .ortho-age-list button { display: flex; width: 100%; min-height: 84px; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 0; border: 0; background: transparent; color: var(--surface-white); font: inherit; font-size: 24px; font-weight: 500; line-height: 1.2; letter-spacing: -.16px; text-align: left; cursor: pointer; }
