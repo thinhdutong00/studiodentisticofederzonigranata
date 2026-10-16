@@ -1,0 +1,147 @@
+---
+import type { OrthodonticReview } from '../data/orthodonticReviews';
+
+interface Props {
+  reviews: OrthodonticReview[];
+}
+
+const { reviews } = Astro.props;
+---
+
+<dialog class="ortho-reviews-sheet" id="ortho-google-reviews-sheet" aria-labelledby="ortho-google-reviews-title" aria-describedby="ortho-google-reviews-description" data-ortho-review-sheet>
+  <header class="ortho-reviews-sheet-heading">
+    <span class="ortho-reviews-sheet-handle" aria-hidden="true"></span>
+    <button class="ortho-reviews-sheet-close" type="button" aria-label="Chiudi le recensioni" data-ortho-review-close>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6" /></svg>
+    </button>
+    <p class="ortho-reviews-sheet-eyebrow">Recensioni Google</p>
+    <h2 id="ortho-google-reviews-title" tabindex="-1">Esperienze di ortodonzia</h2>
+    <p id="ortho-google-reviews-description">Le parole di chi ha scelto un percorso ortodontico nel nostro studio.</p>
+  </header>
+  <div class="ortho-reviews-sheet-body" tabindex="0" role="region" aria-label="Recensioni di ortodonzia da scorrere">
+    {reviews.map(review => <article class="ortho-reviews-sheet-card">
+      <header>
+        <span class="ortho-reviews-sheet-avatar" aria-hidden="true">{review.initials}</span>
+        <div>
+          <h3>{review.author}</h3>
+          <p>Recensione Google · {review.office}</p>
+        </div>
+      </header>
+      <div class="ortho-reviews-sheet-stars" aria-label={`${review.rating} stelle su 5`}>{'★'.repeat(review.rating)}</div>
+      <span class="ortho-reviews-sheet-treatment">{review.treatment}</span>
+      <blockquote>“{review.excerpt}”</blockquote>
+      <footer>
+        <span>Estratto della recensione</span>
+        <a href={review.sourceUrl} target="_blank" rel="noopener noreferrer" aria-label={`Leggi la recensione di ${review.author} su Google`}>Leggi su Google <span aria-hidden="true">↗</span></a>
+      </footer>
+    </article>)}
+  </div>
+</dialog>
+
+<script>
+  document.querySelectorAll<HTMLDialogElement>('[data-ortho-review-sheet]').forEach(sheet => {
+    const section = sheet.closest<HTMLElement>('.patient-reviews');
+    const trigger = section?.querySelector<HTMLAnchorElement>('[data-review-sheet-trigger]');
+    const title = sheet.querySelector<HTMLElement>('#ortho-google-reviews-title');
+    const content = sheet.querySelector<HTMLElement>('.ortho-reviews-sheet-body');
+    if (!section || !trigger || !title || !content) return;
+    const mobile = window.matchMedia('(max-width: 720px)');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const originalLabel = trigger.getAttribute('aria-label') || '';
+    let previousOverflow = '';
+    let closeTimer: ReturnType<typeof setTimeout> | undefined;
+    const announceChange = () => section.dispatchEvent(new Event('ortho-review-sheet-change'));
+
+    const finishClose = () => {
+      clearTimeout(closeTimer);
+      sheet.classList.remove('is-closing');
+      sheet.close();
+    };
+    const closeSheet = (immediate = false) => {
+      if (!sheet.open) return;
+      if (immediate || reducedMotion.matches) finishClose();
+      else if (!sheet.classList.contains('is-closing')) {
+        sheet.classList.add('is-closing');
+        closeTimer = setTimeout(finishClose, 260);
+      }
+    };
+    const openSheet = () => {
+      if (!mobile.matches || sheet.open) return;
+      previousOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      sheet.showModal();
+      content.scrollTop = 0;
+      trigger.setAttribute('aria-expanded', 'true');
+      title.focus({ preventScroll: true });
+      announceChange();
+    };
+    const updateTrigger = () => {
+      if (mobile.matches) {
+        trigger.setAttribute('role', 'button');
+        trigger.setAttribute('aria-haspopup', 'dialog');
+        trigger.setAttribute('aria-controls', sheet.id);
+        trigger.setAttribute('aria-expanded', String(sheet.open));
+        trigger.setAttribute('aria-label', '5,0 stelle su Google. Apri le recensioni di ortodonzia');
+      } else {
+        closeSheet(true);
+        ['role', 'aria-haspopup', 'aria-controls', 'aria-expanded'].forEach(attribute => trigger.removeAttribute(attribute));
+        trigger.setAttribute('aria-label', originalLabel);
+      }
+    };
+
+    trigger.addEventListener('click', event => { if (mobile.matches) { event.preventDefault(); openSheet(); } });
+    trigger.addEventListener('keydown', event => { if (mobile.matches && event.key === ' ') { event.preventDefault(); openSheet(); } });
+    sheet.querySelector('[data-ortho-review-close]')?.addEventListener('click', () => closeSheet());
+    sheet.addEventListener('cancel', event => { event.preventDefault(); closeSheet(); });
+    sheet.addEventListener('click', event => {
+      const bounds = sheet.getBoundingClientRect();
+      if (event.target === sheet && (event.clientY < bounds.top || event.clientY > bounds.bottom || event.clientX < bounds.left || event.clientX > bounds.right)) closeSheet();
+    });
+    sheet.addEventListener('animationend', event => { if (event.target === sheet && event.animationName === 'ortho-reviews-sheet-out') finishClose(); });
+    sheet.addEventListener('close', () => {
+      clearTimeout(closeTimer);
+      sheet.classList.remove('is-closing');
+      document.body.style.overflow = previousOverflow;
+      trigger.setAttribute('aria-expanded', 'false');
+      if (mobile.matches) trigger.focus({ preventScroll: true });
+      else trigger.removeAttribute('aria-expanded');
+      announceChange();
+    });
+    mobile.addEventListener('change', updateTrigger);
+    updateTrigger();
+  });
+</script>
+
+<style>
+  .ortho-reviews-sheet { position: fixed; inset: auto 0 0; width: 100%; max-width: 720px; height: min(86svh, 860px); max-height: calc(100svh - 16px); margin: 0 auto; padding: 0; overflow: hidden; border: 0; border-radius: 28px 28px 0 0; background: var(--surface-white); color: var(--text-dark); font: inherit; }
+  .ortho-reviews-sheet[open] { display: flex; flex-direction: column; animation: ortho-reviews-sheet-in 360ms cubic-bezier(.22, 1, .36, 1) both; }
+  .ortho-reviews-sheet::backdrop { background: rgba(16, 40, 61, .55); backdrop-filter: blur(3px); }
+  .ortho-reviews-sheet.is-closing { animation: ortho-reviews-sheet-out 220ms ease-in both; }
+  .ortho-reviews-sheet-heading { position: relative; flex: 0 0 auto; padding: 40px 22px 22px; border-bottom: 1px solid var(--border); background: var(--surface-white); }
+  .ortho-reviews-sheet-handle { position: absolute; top: 12px; left: 50%; width: 40px; height: 4px; border-radius: 4px; background: var(--border); transform: translateX(-50%); }
+  .ortho-reviews-sheet-close { position: absolute; top: 25px; right: 16px; display: grid; place-items: center; width: 44px; height: 44px; padding: 11px; border: 1px solid var(--border); border-radius: 50%; background: var(--surface-white); color: var(--brand-primary-dark); cursor: pointer; }
+  .ortho-reviews-sheet-close svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
+  .ortho-reviews-sheet-eyebrow { margin: 0 50px 14px 0; color: var(--brand-cta); font-size: 12px; font-weight: 500; line-height: 1.3; letter-spacing: normal; text-transform: uppercase; }
+  .ortho-reviews-sheet h2 { max-width: 16ch; margin: 0; color: var(--brand-primary-dark); font-size: 30px; font-weight: 500; line-height: 1.16; letter-spacing: -.16px; }
+  #ortho-google-reviews-description { margin: 14px 0 0; color: var(--muted-text); font-size: 15px; line-height: 1.45; letter-spacing: -.16px; }
+  .ortho-reviews-sheet-body { display: grid; flex: 1 1 auto; align-content: start; gap: 16px; min-height: 0; padding: 20px 22px calc(28px + env(safe-area-inset-bottom, 0px)); overflow-y: auto; overscroll-behavior-y: contain; background: var(--background); }
+  .ortho-reviews-sheet-card { padding: 22px 20px; border: 1px solid var(--border); border-radius: 16px; background: var(--surface-white); }
+  .ortho-reviews-sheet-card header { display: flex; align-items: center; gap: 12px; }
+  .ortho-reviews-sheet-avatar { display: grid; flex: 0 0 42px; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: var(--soft-blue-bg); color: var(--brand-cta); font-size: 13px; font-weight: 700; }
+  .ortho-reviews-sheet-card h3 { margin: 0; color: var(--brand-primary-dark); font-size: 16px; font-weight: 600; line-height: 1.3; letter-spacing: -.16px; }
+  .ortho-reviews-sheet-card header p { margin: 4px 0 0; color: var(--muted-text); font-size: 12px; line-height: 1.4; }
+  .ortho-reviews-sheet-stars { margin-top: 18px; color: #f5c768; font-size: 17px; line-height: 1; letter-spacing: 2px; }
+  .ortho-reviews-sheet-treatment { display: inline-block; margin-top: 14px; padding: 6px 10px; border-radius: 20px; background: var(--soft-blue-bg); color: var(--brand-cta); font-size: 12px; font-weight: 500; line-height: 1.3; }
+  .ortho-reviews-sheet-card blockquote { margin: 16px 0 22px; color: var(--text-dark); font-size: 16px; font-weight: 400; line-height: 1.5; letter-spacing: -.16px; }
+  .ortho-reviews-sheet-card footer { display: grid; gap: 10px; }
+  .ortho-reviews-sheet-card footer > span { color: var(--muted-text); font-size: 11px; line-height: 1.4; }
+  .ortho-reviews-sheet-card a { display: inline-flex; width: fit-content; align-items: center; gap: 8px; color: var(--brand-cta); font-size: 13px; font-weight: 500; line-height: 1.4; text-underline-offset: 4px; }
+  .ortho-reviews-sheet :is(button, a):focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 4px; }
+  .ortho-reviews-sheet-body:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: -3px; }
+  .ortho-reviews-sheet h2:focus { outline: none; }
+  .ortho-reviews-sheet-close:hover { background: var(--soft-blue-bg); }
+  :global(.ortho-landing-main:has(.ortho-reviews-sheet[open]) .treatment-sticky-cta) { visibility: hidden; pointer-events: none; }
+  @keyframes ortho-reviews-sheet-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  @keyframes ortho-reviews-sheet-out { from { transform: translateY(0); } to { transform: translateY(100%); } }
+  @media (prefers-reduced-motion: reduce) { .ortho-reviews-sheet[open], .ortho-reviews-sheet.is-closing { animation: none; } }
+</style>

@@ -12,6 +12,7 @@ import OrthodonticPaths from '../components/OrthodonticPaths.astro';
 import OrthodonticLandingHeader from '../components/OrthodonticLandingHeader.astro';
 import TreatmentStickyCta from '../components/TreatmentStickyCta.astro';
 import { featuredPatientReviews } from '../data/reviews';
+import { orthodonticReviews } from '../data/orthodonticReviews';
 import { site } from '../data/site';
 import '../styles/inter-font.css';
 import '../styles/visit-landing.css';
@@ -252,7 +253,7 @@ const structuredData = {
         </div>
       </section>
 
-      <LandingPatientReviews reviews={reviews} mobileCarousel />
+      <LandingPatientReviews reviews={reviews} mobileCarousel mobilePopupReviews={orthodonticReviews} />
       <OrthodonticQuiz mobileObjectivesFirst>
         <svg slot="questionnaire-icon" class="ortho-questionnaire-check-icon" viewBox="0 0 48 48" width="56" height="56" fill="none" aria-hidden="true" focusable="false">
           <rect x="5" y="6" width="38" height="36" rx="5" />
