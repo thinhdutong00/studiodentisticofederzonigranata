@@ -28,8 +28,8 @@ const description =
 const heroImagePath = '/assets/optimized/ortodonzia-sorriso-studio-1920.webp';
 const heroImageSet = '/assets/optimized/ortodonzia-sorriso-studio-720.webp 720w, /assets/optimized/ortodonzia-sorriso-studio-1440.webp 1440w, /assets/optimized/ortodonzia-sorriso-studio-1920.webp 1920w, /assets/optimized/ortodonzia-sorriso-studio-2400.webp 2400w';
 const heroImageSizes = '(max-width: 720px) calc(100vw - 24px), (max-width: 1000px) calc(140vw - 67.2px), (max-width: 1696px) calc(112vw - 53.76px), 1846px';
-const heroMobileVideoPath = '/assets/optimized/ortodonzia-hero-mobile-720p.mp4';
-const heroMobilePosterPath = '/assets/optimized/ortodonzia-hero-video-poster.webp';
+const heroMobileVideoPath = '/assets/optimized/ortodonzia-hero-mobile-montaggio-720p.mp4';
+const heroMobilePosterPath = '/assets/optimized/ortodonzia-hero-mobile-montaggio-poster.webp';
 const isIndexable = import.meta.env.PROD && process.env.VERCEL_ENV !== 'preview';
 const socialPreviewImage = new URL(heroImagePath, canonical).toString();
 
@@ -286,7 +286,13 @@ const structuredData = {
             <div class="landing-hero-panel ortho-hero-copy">
               <p class="landing-hero-eyebrow">Ortodonzia per adulti<span class="ortho-hero-mobile-audience"> e bambini</span> · Modena e Reggio Emilia</p>
               <h1 id="landing-title">Il sorriso che desideri, la naturalezza che cerchi.</h1>
-              <p class="ortho-hero-lead">Sorridere nelle fotografie, ridere con gli amici e guardarti allo specchio sentendoti davvero a tuo agio. Con un percorso ortodontico personalizzato puoi prenderti cura dell'armonia del tuo sorriso e avvicinarti a quello che hai sempre desiderato.</p>
+              <p class="ortho-hero-lead">
+                <span class="ortho-hero-lead-desktop">Sorridere nelle fotografie, ridere con gli amici e guardarti allo specchio sentendoti davvero a tuo agio. Con un percorso ortodontico personalizzato puoi prenderti cura dell'armonia del tuo sorriso e avvicinarti a quello che hai sempre desiderato.</span>
+                <span class="ortho-hero-lead-mobile">
+                  <strong class="ortho-hero-subtitle">Sorridere nelle fotografie, ridere con gli amici e guardarti allo specchio sentendoti davvero a tuo agio.</strong>
+                  <span class="ortho-hero-description">Con il nostro percorso personalizzato puoi prenderti cura dell'armonia del tuo sorriso e avvicinarti a quello che hai sempre desiderato.</span>
+                </span>
+              </p>
               <a class="ortho-cta ortho-hero-quiz-link" href="#il-tuo-obiettivo" data-quiz-cta>Prenota una visita ortodontica <span aria-hidden="true">↗</span></a>
               <OrthodonticConsultationForm treatmentLabel={orthodonticTreatmentLabel} variant="hero" />
             </div>
@@ -431,6 +437,7 @@ const structuredData = {
   .ortho-review-eyebrow-mobile { display: none; }
   .ortho-hero-mobile-audience { display: none; }
   .ortho-hero-mobile-video { display: none; }
+  .ortho-hero-lead-mobile { display: none; }
 
   @media (max-width: 720px) {
     .ortho-faq-eyebrow-desktop { display: none; }
@@ -438,6 +445,21 @@ const structuredData = {
     .ortho-review-eyebrow-desktop { display: none; }
     .ortho-review-eyebrow-mobile { display: inline; }
     .ortho-hero-mobile-audience { display: inline; }
+    .ortho-hero-lead-desktop { display: none; }
+    .ortho-hero-lead-mobile { display: block; }
+
+    .ortho-hero-subtitle {
+      display: block;
+      color: var(--brand-primary-dark);
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .ortho-hero-description {
+      display: block;
+      margin-top: 14px;
+    }
 
     :global(.ortho-landing-main #recensioni .patient-reviews-description) { display: none; }
 
