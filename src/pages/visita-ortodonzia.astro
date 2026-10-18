@@ -230,6 +230,7 @@ const structuredData = {
                 controlslist="nodownload nofullscreen noplaybackrate noremoteplayback"
                 aria-label="Scene di sorrisi e vita quotidiana"
               ></video>
+              <p class="landing-hero-eyebrow ortho-hero-eyebrow-mobile">Ortodonzia · Modena e Reggio Emilia</p>
               <script is:inline>
                 (() => {
                   const video = document.querySelector('.ortho-hero-mobile-video');
@@ -284,13 +285,10 @@ const structuredData = {
               </script>
             </div>
             <div class="landing-hero-panel ortho-hero-copy">
-              <p class="landing-hero-eyebrow">
-                <span class="ortho-hero-eyebrow-desktop">Ortodonzia per adulti · Modena e Reggio Emilia</span>
-                <span class="ortho-hero-eyebrow-mobile">Ortodonzia · Modena e Reggio Emilia</span>
-              </p>
+              <p class="landing-hero-eyebrow ortho-hero-eyebrow-desktop">Ortodonzia per adulti · Modena e Reggio Emilia</p>
               <h1 id="landing-title">
                 <span class="ortho-hero-title-desktop">Il sorriso che desideri, la naturalezza che cerchi.</span>
-                <span class="ortho-hero-title-mobile">Non Esiste Un <strong class="ortho-hero-perfect-smile">Sorriso Perfetto</strong>. Esiste <strong>Quello Che Ti Valorizza.</strong></span>
+                <span class="ortho-hero-title-mobile"><span class="ortho-hero-title-context">Non Esiste Un</span> <strong>Sorriso Perfetto</strong>. <span class="ortho-hero-title-context">Esiste</span> <strong>Quello Che Ti Valorizza.</strong></span>
               </h1>
               <p class="ortho-hero-lead">
                 <span class="ortho-hero-lead-desktop">Sorridere nelle fotografie, ridere con gli amici e guardarti allo specchio sentendoti davvero a tuo agio. Con un percorso ortodontico personalizzato puoi prenderti cura dell'armonia del tuo sorriso e avvicinarti a quello che hai sempre desiderato.</span>
@@ -391,55 +389,6 @@ const structuredData = {
       import { bindOrthodonticMobileMotion } from '../utils/orthodonticMobileMotion';
       bindOrthodonticMobileMotion();
 
-      const heroTitle = document.querySelector<HTMLElement>('.ortho-landing-main .ortho-hero-title-mobile');
-      const heroForm = document.querySelector<HTMLElement>('.ortho-landing-main .ortho-consultation-hero');
-
-      if (heroTitle && heroForm) {
-        const heroViewport = window.matchMedia('(max-width: 720px)');
-        let scrollInput = false;
-        let previousScrollY = Math.max(0, window.scrollY);
-        let downwardDistance = 0;
-        let emphasisFrame = 0;
-
-        const armHeroEmphasis = () => {
-          if (!scrollInput) previousScrollY = Math.max(0, window.scrollY);
-          scrollInput = true;
-        };
-        const resetHeroEmphasis = () => {
-          scrollInput = false;
-          downwardDistance = 0;
-          previousScrollY = Math.max(0, window.scrollY);
-          if (!heroViewport.matches) heroTitle.classList.remove('is-perfect-smile-crossed');
-        };
-        const updateHeroEmphasis = () => {
-          emphasisFrame = 0;
-          const scrollY = Math.max(0, window.scrollY);
-          const delta = scrollY - previousScrollY;
-          previousScrollY = scrollY;
-          if (!heroViewport.matches || !scrollInput || heroTitle.classList.contains('is-perfect-smile-crossed')) return;
-
-          downwardDistance = delta < 0 ? 0 : downwardDistance + delta;
-          const formBounds = heroForm.getBoundingClientRect();
-          if (downwardDistance >= 24 && formBounds.top < window.innerHeight * 0.9 && formBounds.bottom > 0) {
-            heroTitle.classList.add('is-perfect-smile-crossed');
-          }
-        };
-
-        // A restored position or anchor jump must not cross out the title before the user scrolls.
-        window.addEventListener('wheel', event => { if (event.deltaY > 0) armHeroEmphasis(); }, { passive: true });
-        window.addEventListener('touchmove', armHeroEmphasis, { passive: true });
-        window.addEventListener('keydown', event => {
-          if (!['ArrowDown', 'PageDown', 'End', ' '].includes(event.key)) return;
-          if (event.target instanceof Element && event.target.closest('input, textarea, select, [contenteditable]')) return;
-          armHeroEmphasis();
-        });
-        window.addEventListener('scroll', () => {
-          if (!emphasisFrame) emphasisFrame = window.requestAnimationFrame(updateHeroEmphasis);
-        }, { passive: true });
-        window.addEventListener('pageshow', resetHeroEmphasis);
-        heroViewport.addEventListener('change', resetHeroEmphasis);
-      }
-
       const quizSection = document.querySelector<HTMLElement>('.ortho-landing-main #il-tuo-obiettivo');
       const smileSection = document.querySelector<HTMLElement>('.ortho-landing-main #sorrisi-prima-dopo');
       const finalSection = document.querySelector<HTMLElement>('.ortho-landing-main #ortho-final');
@@ -500,20 +449,37 @@ const structuredData = {
     .ortho-review-eyebrow-desktop { display: none; }
     .ortho-review-eyebrow-mobile { display: inline; }
     .ortho-hero-eyebrow-desktop { display: none; }
-    .ortho-hero-eyebrow-mobile { display: inline; }
+    .ortho-hero-overlay .ortho-hero-eyebrow-mobile {
+      position: absolute;
+      z-index: 1;
+      bottom: 0;
+      left: 0;
+      display: block;
+      width: fit-content;
+      max-width: calc(100% - 28px);
+      margin: 0;
+      padding: 8px 18px 6px 22px;
+      border-radius: 0 18px 0 0;
+      background: var(--surface-white);
+      color: var(--text-dark);
+      font-size: 11px;
+      line-height: 1.3;
+    }
+    .ortho-hero-eyebrow-mobile::before,
+    .ortho-hero-eyebrow-mobile::after {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: radial-gradient(circle at 100% 0, transparent 17px, var(--surface-white) 18px);
+      content: '';
+      pointer-events: none;
+    }
+    .ortho-hero-eyebrow-mobile::before { top: 0; left: 0; transform: translateY(-100%); }
+    .ortho-hero-eyebrow-mobile::after { bottom: 0; left: 100%; }
     .ortho-hero-title-desktop { display: none; }
     .ortho-hero-title-mobile { display: inline; text-transform: none; }
     .ortho-hero-title-mobile strong { font-weight: 700; }
-    .ortho-hero-perfect-smile {
-      background-image: linear-gradient(currentColor, currentColor);
-      background-repeat: no-repeat;
-      background-position: 0 56%;
-      background-size: 0% .08em;
-      -webkit-box-decoration-break: clone;
-      box-decoration-break: clone;
-      transition: background-size 480ms ease;
-    }
-    .is-perfect-smile-crossed .ortho-hero-perfect-smile { background-size: 100% .08em; }
+    .ortho-hero-title-context { color: var(--brand-primary-dark); }
     .ortho-hero-lead-desktop { display: none; }
     .ortho-hero-lead-mobile { display: block; }
 
@@ -711,7 +677,7 @@ const structuredData = {
       width: 100%;
       height: auto;
       aspect-ratio: 16 / 9;
-      border-radius: 18px 18px 0 0;
+      border-radius: 18px 18px 18px 0;
     }
 
     .ortho-hero-mobile-video {
@@ -752,7 +718,6 @@ const structuredData = {
   }
 
   @media (max-width: 720px) and (prefers-reduced-motion: reduce) {
-    .ortho-hero-perfect-smile { transition: none; }
     :global(.ortho-landing-main > .landing-header) {
       transition: none;
     }
