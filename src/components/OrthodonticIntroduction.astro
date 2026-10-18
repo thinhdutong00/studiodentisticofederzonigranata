@@ -343,8 +343,17 @@ const steps = [
       gap: 14px;
       margin: 40px auto 12px;
       padding: 22px 20px;
+      border-color: var(--surface-white);
       border-radius: 10px;
+      background: var(--surface-white);
+      color: var(--brand-cta);
       line-height: 16px;
+    }
+
+    .ortho-functional-benefits .ortho-benefits-cta:is(:hover, :focus-visible) {
+      border-color: var(--soft-blue-bg);
+      background: var(--soft-blue-bg);
+      color: var(--brand-cta-hover);
     }
 
     .ortho-functional-item h3,
