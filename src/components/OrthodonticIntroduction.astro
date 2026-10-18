@@ -19,6 +19,24 @@ const benefits = [
   },
 ];
 
+const firstVisitSteps = [
+  {
+    icon: 'conversation',
+    title: 'Un sorriso senza tempo',
+    text: 'Ci racconti cosa vorresti migliorare.',
+  },
+  {
+    icon: 'evaluation',
+    title: 'Verso il risultato che desideri',
+    text: 'Valutiamo denti, morso e salute della bocca.',
+  },
+  {
+    icon: 'possibilities',
+    title: 'Allineiamo il tuo percorso unico',
+    text: 'Ti spieghiamo le soluzioni indicate per il tuo caso.',
+  },
+];
+
 const steps = [
   {
     title: 'Partiamo dal tuo sorriso',
@@ -39,13 +57,13 @@ const steps = [
   <div class="ortho-shell">
     <div class="ortho-section-heading ortho-intro-heading">
       <div>
-        <p class="ortho-eyebrow">Salute e funzionalità</p>
-        <h2 id="ortho-functional-title">Un sorriso più armonioso, un equilibrio che va oltre l'estetica.</h2>
+        <p class="ortho-eyebrow"><span class="ortho-benefits-desktop">Salute e funzionalità</span><span class="ortho-first-visit-mobile">La tua prima visita</span></p>
+        <h2 id="ortho-functional-title"><span class="ortho-benefits-desktop">Un sorriso più armonioso, un equilibrio che va oltre l'estetica.</span><span class="ortho-first-visit-mobile"><strong>Denti più allineati?</strong> Scopri da dove iniziare.</span></h2>
       </div>
-      <p class="ortho-intro-lead">Un corretto allineamento dei denti può contribuire a migliorare la funzionalità della bocca e a favorire la salute orale nel tempo.</p>
+      <p class="ortho-intro-lead"><span class="ortho-benefits-desktop">Un corretto allineamento dei denti può contribuire a migliorare la funzionalità della bocca e a favorire la salute orale nel tempo.</span><span class="ortho-first-visit-mobile">Denti accavallati o spazi che vorresti correggere? Parliamo del sorriso che desideri.</span></p>
     </div>
 
-    <div class="ortho-functional-grid">
+    <div class="ortho-functional-grid ortho-benefits-desktop">
       {benefits.map((benefit) => (
         <article class="ortho-functional-item">
           <svg class="ortho-benefit-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
@@ -76,7 +94,36 @@ const steps = [
         </article>
       ))}
     </div>
-    <a class="ortho-cta ortho-benefits-cta" href="#ortho-final">Prenota una visita <OrthodonticLinkArrow /></a>
+    <ol class="ortho-first-visit-list" aria-label="Cosa aspettarti dalla prima visita" role="list">
+      {firstVisitSteps.map((step) => (
+        <li class="ortho-first-visit-step">
+          <span class="ortho-first-visit-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+              {step.icon === 'conversation' && (
+                <>
+                  <path d="M38 25.5a5.5 5.5 0 0 1-5.5 5.5H20l-9 7V16.5a5.5 5.5 0 0 1 5.5-5.5h16a5.5 5.5 0 0 1 5.5 5.5v9Z" />
+                  <path d="M19 19h11M19 24h7" />
+                </>
+              )}
+              {step.icon === 'evaluation' && (
+                <path d="M16.2 12.5c2.7 0 4.8 1.8 7.8 1.8s5.1-1.8 7.8-1.8c5 0 8.2 4.2 7.4 9.5-.8 5.7-3.2 14.3-7 14.3-3.1 0-3.4-6.4-8.2-6.4s-5.1 6.4-8.2 6.4c-3.8 0-6.2-8.6-7-14.3-.8-5.3 2.4-9.5 7.4-9.5Z" />
+              )}
+              {step.icon === 'possibilities' && (
+                <>
+                  <rect x="12" y="9" width="24" height="32" rx="4" />
+                  <path d="M19 9V6h10v3m-11 12 3 3 7-7m-10 15h12" />
+                </>
+              )}
+            </svg>
+          </span>
+          <div>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+    <a class="ortho-cta ortho-benefits-cta" href="#ortho-final">Prenota la tua prima visita <OrthodonticLinkArrow /></a>
   </div>
 </section>
 
@@ -115,6 +162,11 @@ const steps = [
   }
 
   .ortho-benefits-cta {
+    display: none;
+  }
+
+  .ortho-first-visit-mobile,
+  .ortho-first-visit-list {
     display: none;
   }
 
@@ -224,6 +276,9 @@ const steps = [
   }
 
   @media (max-width: 720px) {
+    .ortho-benefits-desktop { display: none; }
+    .ortho-first-visit-mobile { display: inline; }
+
     .ortho-personalized-path {
       display: block;
       background: var(--surface-white);
@@ -274,6 +329,58 @@ const steps = [
     .ortho-functional-benefits {
       background: var(--brand-primary-dark);
       text-align: center;
+    }
+
+    .ortho-functional-benefits h2 strong { font-weight: 700; }
+
+    .ortho-first-visit-list {
+      display: grid;
+      gap: 12px;
+      margin: 28px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .ortho-first-visit-step {
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr);
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      border: 1px solid rgba(217, 231, 242, .18);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, .04);
+      text-align: left;
+    }
+
+    .ortho-first-visit-icon {
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: rgba(var(--brand-blue-rgb), .12);
+      color: var(--brand-blue);
+    }
+
+    .ortho-first-visit-icon svg { width: 40px; height: 40px; }
+
+    .ortho-first-visit-step h3 {
+      margin: 0;
+      color: var(--surface-white);
+      font-size: 17px;
+      font-weight: 500;
+      line-height: 1.3;
+      letter-spacing: -.16px;
+    }
+
+    .ortho-first-visit-step p {
+      margin: 6px 0 0;
+      color: var(--soft-blue-bg);
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.4;
+      letter-spacing: -.16px;
     }
 
     .ortho-functional-benefits .ortho-eyebrow,
