@@ -290,7 +290,7 @@ const structuredData = {
               </p>
               <h1 id="landing-title">
                 <span class="ortho-hero-title-desktop">Il sorriso che desideri, la naturalezza che cerchi.</span>
-                <span class="ortho-hero-title-mobile">Non Esiste Un Sorriso Perfetto. Esiste Quello Che Ti Valorizza.</span>
+                <span class="ortho-hero-title-mobile">Non Esiste Un <strong class="ortho-hero-perfect-smile">Sorriso Perfetto</strong>. Esiste <strong>Quello Che Ti Valorizza.</strong></span>
               </h1>
               <p class="ortho-hero-lead">
                 <span class="ortho-hero-lead-desktop">Sorridere nelle fotografie, ridere con gli amici e guardarti allo specchio sentendoti davvero a tuo agio. Con un percorso ortodontico personalizzato puoi prenderti cura dell'armonia del tuo sorriso e avvicinarti a quello che hai sempre desiderato.</span>
@@ -391,6 +391,55 @@ const structuredData = {
       import { bindOrthodonticMobileMotion } from '../utils/orthodonticMobileMotion';
       bindOrthodonticMobileMotion();
 
+      const heroTitle = document.querySelector<HTMLElement>('.ortho-landing-main .ortho-hero-title-mobile');
+      const heroForm = document.querySelector<HTMLElement>('.ortho-landing-main .ortho-consultation-hero');
+
+      if (heroTitle && heroForm) {
+        const heroViewport = window.matchMedia('(max-width: 720px)');
+        let scrollInput = false;
+        let previousScrollY = Math.max(0, window.scrollY);
+        let downwardDistance = 0;
+        let emphasisFrame = 0;
+
+        const armHeroEmphasis = () => {
+          if (!scrollInput) previousScrollY = Math.max(0, window.scrollY);
+          scrollInput = true;
+        };
+        const resetHeroEmphasis = () => {
+          scrollInput = false;
+          downwardDistance = 0;
+          previousScrollY = Math.max(0, window.scrollY);
+          if (!heroViewport.matches) heroTitle.classList.remove('is-perfect-smile-crossed');
+        };
+        const updateHeroEmphasis = () => {
+          emphasisFrame = 0;
+          const scrollY = Math.max(0, window.scrollY);
+          const delta = scrollY - previousScrollY;
+          previousScrollY = scrollY;
+          if (!heroViewport.matches || !scrollInput || heroTitle.classList.contains('is-perfect-smile-crossed')) return;
+
+          downwardDistance = delta < 0 ? 0 : downwardDistance + delta;
+          const formBounds = heroForm.getBoundingClientRect();
+          if (downwardDistance >= 24 && formBounds.top < window.innerHeight * 0.9 && formBounds.bottom > 0) {
+            heroTitle.classList.add('is-perfect-smile-crossed');
+          }
+        };
+
+        // A restored position or anchor jump must not cross out the title before the user scrolls.
+        window.addEventListener('wheel', event => { if (event.deltaY > 0) armHeroEmphasis(); }, { passive: true });
+        window.addEventListener('touchmove', armHeroEmphasis, { passive: true });
+        window.addEventListener('keydown', event => {
+          if (!['ArrowDown', 'PageDown', 'End', ' '].includes(event.key)) return;
+          if (event.target instanceof Element && event.target.closest('input, textarea, select, [contenteditable]')) return;
+          armHeroEmphasis();
+        });
+        window.addEventListener('scroll', () => {
+          if (!emphasisFrame) emphasisFrame = window.requestAnimationFrame(updateHeroEmphasis);
+        }, { passive: true });
+        window.addEventListener('pageshow', resetHeroEmphasis);
+        heroViewport.addEventListener('change', resetHeroEmphasis);
+      }
+
       const quizSection = document.querySelector<HTMLElement>('.ortho-landing-main #il-tuo-obiettivo');
       const smileSection = document.querySelector<HTMLElement>('.ortho-landing-main #sorrisi-prima-dopo');
       const finalSection = document.querySelector<HTMLElement>('.ortho-landing-main #ortho-final');
@@ -454,6 +503,17 @@ const structuredData = {
     .ortho-hero-eyebrow-mobile { display: inline; }
     .ortho-hero-title-desktop { display: none; }
     .ortho-hero-title-mobile { display: inline; text-transform: none; }
+    .ortho-hero-title-mobile strong { font-weight: 700; }
+    .ortho-hero-perfect-smile {
+      background-image: linear-gradient(currentColor, currentColor);
+      background-repeat: no-repeat;
+      background-position: 0 56%;
+      background-size: 0% .08em;
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+      transition: background-size 480ms ease;
+    }
+    .is-perfect-smile-crossed .ortho-hero-perfect-smile { background-size: 100% .08em; }
     .ortho-hero-lead-desktop { display: none; }
     .ortho-hero-lead-mobile { display: block; }
 
@@ -692,6 +752,7 @@ const structuredData = {
   }
 
   @media (max-width: 720px) and (prefers-reduced-motion: reduce) {
+    .ortho-hero-perfect-smile { transition: none; }
     :global(.ortho-landing-main > .landing-header) {
       transition: none;
     }
