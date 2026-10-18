@@ -141,7 +141,10 @@ const steps = [
         <p class="ortho-eyebrow">Un percorso su misura</p>
         <h2 id="ortho-personalized-title">Ogni sorriso è unico. Anche il percorso per valorizzarlo.</h2>
       </div>
-      <p class="ortho-intro-lead">Non esiste un trattamento ortodontico uguale per tutti. Ogni percorso parte dall'ascolto delle tue esigenze e da un'attenta valutazione della salute e dell'allineamento dei denti, per individuare la soluzione più adatta al tuo sorriso.</p>
+      <p class="ortho-intro-lead">
+        <span class="ortho-personalized-copy-desktop">Non esiste un trattamento ortodontico uguale per tutti. Ogni percorso parte dall'ascolto delle tue esigenze e da un'attenta valutazione della salute e dell'allineamento dei denti, per individuare la soluzione più adatta al tuo sorriso.</span>
+        <span class="ortho-personalized-copy-mobile">Durante la prima visita definiamo da dove partire e quali soluzioni possono avvicinarti al sorriso che desideri.</span>
+      </p>
     </div>
 
     <ol class="ortho-personalized-steps" role="list">
@@ -171,7 +174,8 @@ const steps = [
   }
 
   .ortho-first-visit-mobile,
-  .ortho-first-visit-list {
+  .ortho-first-visit-list,
+  .ortho-personalized-copy-mobile {
     display: none;
   }
 
@@ -283,6 +287,8 @@ const steps = [
   @media (max-width: 720px) {
     .ortho-benefits-desktop { display: none; }
     .ortho-first-visit-mobile { display: inline; }
+    .ortho-personalized-copy-desktop { display: none; }
+    .ortho-personalized-copy-mobile { display: inline; }
 
     .ortho-personalized-path {
       display: block;
@@ -374,8 +380,8 @@ const steps = [
     .ortho-first-visit-step h3 {
       margin: 0;
       color: var(--surface-white);
-      font-size: 19px;
-      font-weight: 500;
+      font-size: 21px;
+      font-weight: 700;
       line-height: 1.3;
       letter-spacing: -.16px;
     }
