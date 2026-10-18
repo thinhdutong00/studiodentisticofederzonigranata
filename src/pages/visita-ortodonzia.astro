@@ -284,17 +284,22 @@ const structuredData = {
               </script>
             </div>
             <div class="landing-hero-panel ortho-hero-copy">
-              <p class="landing-hero-eyebrow">Ortodonzia per adulti<span class="ortho-hero-mobile-audience"> e bambini</span> · Modena e Reggio Emilia</p>
-              <h1 id="landing-title">Il sorriso che desideri, la naturalezza che cerchi.</h1>
+              <p class="landing-hero-eyebrow">
+                <span class="ortho-hero-eyebrow-desktop">Ortodonzia per adulti · Modena e Reggio Emilia</span>
+                <span class="ortho-hero-eyebrow-mobile">Ortodonzia · Modena e Reggio Emilia</span>
+              </p>
+              <h1 id="landing-title">
+                <span class="ortho-hero-title-desktop">Il sorriso che desideri, la naturalezza che cerchi.</span>
+                <span class="ortho-hero-title-mobile">Non Esiste Un Sorriso Perfetto. Esiste Quello Che Ti Valorizza.</span>
+              </h1>
               <p class="ortho-hero-lead">
                 <span class="ortho-hero-lead-desktop">Sorridere nelle fotografie, ridere con gli amici e guardarti allo specchio sentendoti davvero a tuo agio. Con un percorso ortodontico personalizzato puoi prenderti cura dell'armonia del tuo sorriso e avvicinarti a quello che hai sempre desiderato.</span>
                 <span class="ortho-hero-lead-mobile">
-                  <strong class="ortho-hero-subtitle">Sorridere nelle fotografie, ridere con gli amici e guardarti allo specchio sentendoti davvero a tuo agio.</strong>
-                  <span class="ortho-hero-description">Con il nostro percorso personalizzato puoi prenderti cura dell'armonia del tuo sorriso e avvicinarti a quello che hai sempre desiderato.</span>
+                  Allinea i tuoi denti con gli allineatori trasparenti <strong class="ortho-hero-invisalign">Invisalign®</strong>, apparecchi tradizionali o linguali. Scopri il percorso ortodontico più adatto a te, pensato per la tua salute, estetica e funzionalità orale.
                 </span>
               </p>
               <a class="ortho-cta ortho-hero-quiz-link" href="#il-tuo-obiettivo" data-quiz-cta>Prenota una visita ortodontica <span aria-hidden="true">↗</span></a>
-              <OrthodonticConsultationForm treatmentLabel={orthodonticTreatmentLabel} variant="hero" />
+              <OrthodonticConsultationForm treatmentLabel={orthodonticTreatmentLabel} variant="hero" submitLabel="Prenota una visita ortodontica" />
             </div>
           </div>
         </div>
@@ -435,8 +440,9 @@ const structuredData = {
   .ortho-faq-mobile-list { display: none; }
   .ortho-faq-eyebrow-mobile { display: none; }
   .ortho-review-eyebrow-mobile { display: none; }
-  .ortho-hero-mobile-audience { display: none; }
+  .ortho-hero-eyebrow-mobile { display: none; }
   .ortho-hero-mobile-video { display: none; }
+  .ortho-hero-title-mobile { display: none; }
   .ortho-hero-lead-mobile { display: none; }
 
   @media (max-width: 720px) {
@@ -444,22 +450,14 @@ const structuredData = {
     .ortho-faq-eyebrow-mobile { display: inline; }
     .ortho-review-eyebrow-desktop { display: none; }
     .ortho-review-eyebrow-mobile { display: inline; }
-    .ortho-hero-mobile-audience { display: inline; }
+    .ortho-hero-eyebrow-desktop { display: none; }
+    .ortho-hero-eyebrow-mobile { display: inline; }
+    .ortho-hero-title-desktop { display: none; }
+    .ortho-hero-title-mobile { display: inline; text-transform: none; }
     .ortho-hero-lead-desktop { display: none; }
     .ortho-hero-lead-mobile { display: block; }
 
-    .ortho-hero-subtitle {
-      display: block;
-      color: var(--brand-primary-dark);
-      font-size: 18px;
-      font-weight: 700;
-      line-height: 1.35;
-    }
-
-    .ortho-hero-description {
-      display: block;
-      margin-top: 14px;
-    }
+    .ortho-hero-invisalign { font-weight: 700; }
 
     :global(.ortho-landing-main #recensioni .patient-reviews-description) { display: none; }
 

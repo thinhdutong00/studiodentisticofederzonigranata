@@ -4,8 +4,8 @@ import BookingPrivacy from './BookingPrivacy.astro';
 import BookingFeedback from './BookingFeedback.astro';
 import { site } from '../data/site';
 
-interface Props { treatmentLabel: string; variant?: 'section' | 'hero'; }
-const { treatmentLabel, variant = 'section' } = Astro.props;
+interface Props { treatmentLabel: string; variant?: 'section' | 'hero'; submitLabel?: string; }
+const { treatmentLabel, variant = 'section', submitLabel = 'Continua' } = Astro.props;
 const isHero = variant === 'hero';
 const idPrefix = isHero ? 'ortho-hero-consultation' : 'ortho-consultation';
 const phoneCountries = [
@@ -70,7 +70,7 @@ const phoneCountries = [
       </div>
 
       <BookingPrivacy />
-      <button class="ortho-consultation-submit" type="submit">Continua</button>
+      <button class="ortho-consultation-submit" type="submit">{submitLabel}</button>
       <BookingFeedback />
       {!isHero && <p class="ortho-consultation-note">La segreteria ti ricontatterà per concordare giorno e orario della visita.</p>}
     </form>
