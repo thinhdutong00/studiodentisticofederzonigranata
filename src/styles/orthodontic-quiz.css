@@ -48,6 +48,7 @@
 .orthodontic-quiz-welcome-visual svg { width: 82%; height: auto; }
 .orthodontic-quiz-question-title { position: relative; }
 .orthodontic-quiz-question-title h2 { margin: 0; color: var(--text-dark); font-size: clamp(26px, 2.3vw, 34px); font-weight: 500; line-height: 1.2; }
+.ortho-landing-main #orthodontic-quiz-objectives-step-title:focus { outline: none; }
 .orthodontic-quiz-question-title h2 > span { padding-left: 3px; }
 .orthodontic-quiz-number { position: absolute; top: 5px; left: -34px; display: inline-flex; width: 24px; height: 24px; align-items: center; justify-content: center; border-radius: 4px; background: var(--quiz-accent); color: white; font-size: 14px; font-weight: 500; line-height: 1; }
 .orthodontic-quiz-description { margin: 16px 0 0; font-size: 19px; line-height: 1.4; }

@@ -190,6 +190,8 @@ body.ortho-landing .treatment-sticky-cta[data-treatment-sticky-cta] a:focus-visi
 }
 @media (max-width: 720px) {
   .ortho-landing { padding-bottom: var(--ortho-sticky-height, 116px); }
+  /* La barra della landing principale scompare già prima del footer. */
+  .ortho-landing-main.ortho-unified { padding-bottom: 0; }
   .ortho-shell, .ortho-landing .landing-header-inner, .ortho-landing .orthodontic-objectives-shell { width: calc(100% - 32px); }
   .ortho-section { padding: 48px 0; }
   .ortho-eyebrow { margin-bottom: 14px; font-size: 11px; }
