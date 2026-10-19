@@ -42,7 +42,7 @@ const { reviews } = Astro.props;
 <script>
   document.querySelectorAll<HTMLDialogElement>('[data-ortho-review-sheet]').forEach(sheet => {
     const section = sheet.closest<HTMLElement>('.patient-reviews');
-    const trigger = section?.querySelector<HTMLAnchorElement>('[data-review-sheet-trigger]');
+    const trigger = document.querySelector<HTMLAnchorElement>('[data-review-sheet-trigger]');
     const title = sheet.querySelector<HTMLElement>('#ortho-google-reviews-title');
     const content = sheet.querySelector<HTMLElement>('.ortho-reviews-sheet-body');
     if (!section || !trigger || !title || !content) return;

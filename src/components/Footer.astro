@@ -103,7 +103,9 @@ const footerEmail = site.offices[0];
       <nav class="footer-mobile-section" aria-labelledby="footer-mobile-navigation-title">
         <h2 id="footer-mobile-navigation-title">Navigazione</h2>
         <ul class="footer-mobile-navigation">
-          {mobileNavigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+          <slot name="mobile-navigation-links">
+            {mobileNavigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+          </slot>
         </ul>
       </nav>
 

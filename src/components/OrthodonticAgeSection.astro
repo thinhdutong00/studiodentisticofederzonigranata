@@ -26,16 +26,24 @@ const ageGroups = [
   },
 ];
 
+const toothShapes = {
+  incisor: 'M14 13C23 4 34 3 44 6c11-4 25-1 33 9 8 11 8 28 7 45l-2 52c-1 14-6 21-17 23-8 1-14-1-21 0-8-1-15 1-23-1-11-2-15-10-16-23L3 60C2 41 4 24 14 13Z',
+  lateral: 'M19 17C26 7 36 6 44 8c9-4 20-1 27 8 9 12 10 28 9 47l-3 48c-1 15-7 23-17 25-11 2-22 2-33-1-11-3-16-11-17-24L7 64C6 44 8 29 19 17Z',
+  canine: 'M23 14C29 5 38 3 45 5c10-3 20 2 27 13 9 14 9 32 6 51l-5 42c-2 12-11 21-21 26-6 3-13 3-19-1-12-6-19-14-21-24L7 68C4 47 9 27 23 14Z',
+  premolar: 'M17 19C24 10 34 8 43 12c9-5 23-2 31 9 8 13 8 30 5 47l-5 42c-2 16-9 24-18 22l-12-4-12 5c-10 2-18-6-20-21L7 70C4 49 7 31 17 19Z',
+};
+
 const smileTeeth = [
-  { x: -24, y: 1, angle: -12 },
-  { x: 72, y: 17, angle: -8 },
-  { x: 168, y: 29, angle: -4 },
-  { x: 264, y: 34, angle: 0 },
-  { x: 360, y: 34, angle: 0 },
-  { x: 456, y: 29, angle: 4 },
-  { x: 552, y: 17, angle: 8 },
-  { x: 648, y: 1, angle: 12 },
+  { x: 0, y: 4, angle: -15, shape: toothShapes.premolar },
+  { x: 66, y: 20, angle: -10, shape: toothShapes.canine },
+  { x: 139, y: 32, angle: -5, shape: toothShapes.lateral },
+  { x: 216, y: 37, angle: 0, shape: toothShapes.incisor },
+  { x: 296, y: 37, angle: 0, shape: toothShapes.incisor },
+  { x: 373, y: 32, angle: 5, shape: toothShapes.lateral },
+  { x: 446, y: 20, angle: 10, shape: toothShapes.canine },
+  { x: 512, y: 4, angle: 15, shape: toothShapes.premolar },
 ];
+const archWire = 'M-16 60Q300 162 616 60';
 ---
 
 <section class="ortho-age-section" id="ortodonzia-tutte-le-eta" aria-labelledby="ortho-age-title">
@@ -50,20 +58,39 @@ const smileTeeth = [
     </li>)}
   </ul>
   <noscript><a class="ortho-cta" href="#ortho-final">Prenota una visita</a></noscript>
-  <svg class="ortho-age-braces" viewBox="0 0 720 190" width="720" height="190" fill="none" aria-hidden="true" focusable="false">
+  <svg class="ortho-age-braces" viewBox="0 0 600 190" width="600" height="190" fill="none" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="ortho-age-enamel-fill" x1="0" y1="0" x2="88" y2="0" gradientUnits="userSpaceOnUse">
+        <stop stop-color="var(--border)" />
+        <stop offset=".3" stop-color="var(--surface-white)" />
+        <stop offset=".65" stop-color="var(--surface-white)" />
+        <stop offset="1" stop-color="var(--soft-blue-bg)" />
+      </linearGradient>
+      <linearGradient id="ortho-age-bracket-fill" x1="0" y1="-14" x2="0" y2="14" gradientUnits="userSpaceOnUse">
+        <stop stop-color="var(--surface-white)" />
+        <stop offset="1" stop-color="var(--border)" />
+      </linearGradient>
+    </defs>
     {smileTeeth.map(tooth => (
       <g transform={`translate(${tooth.x} ${tooth.y}) rotate(${tooth.angle} 44 72)`}>
-        <path class="ortho-age-enamel" d="M12 10C24 2 64 2 76 10c9 6 12 20 11 38l-5 60c-2 18-9 25-21 26H27c-13-1-20-8-22-26L0 48c-1-18 3-32 12-38Z" />
+        <path class="ortho-age-enamel" d={tooth.shape} fill="url(#ortho-age-enamel-fill)" />
+        <path class="ortho-age-enamel-shine" d="M20 30c-5 15-4 34-2 52" />
+        <path class="ortho-age-enamel-glint" d="M29 20c8-4 17-4 25-1" />
       </g>
     ))}
-    <path class="ortho-age-wire-halo" d="M-20 64Q360 150 740 64" />
-    <path class="ortho-age-wire" d="M-20 64Q360 150 740 64" />
     {smileTeeth.map(tooth => (
-      <g class="ortho-age-bracket" transform={`translate(${tooth.x + 44} ${tooth.y + 72}) rotate(${tooth.angle})`}>
-        <rect x="-15" y="-15" width="30" height="30" rx="5" />
-        <path d="M-7-15v30M7-15v30M-20 0h40" />
+      <g class="ortho-age-bracket" fill="url(#ortho-age-bracket-fill)" transform={`translate(${tooth.x + 44} ${tooth.y + 72}) rotate(${tooth.angle})`}>
+        <rect x="-15" y="-13" width="30" height="26" rx="5" />
+        <rect x="-12" y="-14" width="8" height="9" rx="2" />
+        <rect x="4" y="-14" width="8" height="9" rx="2" />
+        <rect x="-12" y="5" width="8" height="9" rx="2" />
+        <rect x="4" y="5" width="8" height="9" rx="2" />
+        <rect class="ortho-age-ligature" x="-11" y="-10" width="22" height="20" rx="4" />
       </g>
     ))}
+    <path class="ortho-age-wire-halo" d={archWire} />
+    <path class="ortho-age-wire" d={archWire} />
+    <path class="ortho-age-wire-shine" d={archWire} transform="translate(0 -1)" />
   </svg>
 </section>
 
@@ -190,13 +217,18 @@ const smileTeeth = [
   :global(.ortho-landing-main:has(.ortho-age-sheet[open]) .treatment-sticky-cta) { visibility: hidden; pointer-events: none; }
 
   @media (max-width: 720px) {
-    .ortho-age-section { position: relative; isolation: isolate; display: block; overflow: hidden; padding: 48px 34px clamp(156px, calc(26.4vw + 28px), 218px); background: var(--brand-cta); color: var(--surface-white); }
+    .ortho-age-section { position: relative; isolation: isolate; display: block; overflow: hidden; padding: 48px 34px clamp(156px, calc(26.4vw + 28px), 218px); background: var(--brand-primary-dark); color: var(--surface-white); }
     .ortho-age-section > :not(.ortho-age-braces) { position: relative; z-index: 1; }
     .ortho-age-braces { position: absolute; z-index: 0; bottom: -1px; left: 50%; display: block; width: max(100%, 480px); max-width: none; height: auto; transform: translateX(-50%); pointer-events: none; }
-    .ortho-age-enamel { fill: var(--surface-white); }
-    .ortho-age-wire-halo { stroke: var(--surface-white); stroke-width: 8; stroke-linecap: round; }
-    .ortho-age-wire { stroke: var(--brand-cta); stroke-width: 4; stroke-linecap: round; }
-    .ortho-age-bracket { fill: var(--surface-white); stroke: var(--brand-cta); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+    .ortho-age-enamel { stroke: var(--border); stroke-width: 1.4; stroke-linejoin: round; }
+    .ortho-age-enamel-shine, .ortho-age-enamel-glint { stroke: var(--surface-white); stroke-linecap: round; }
+    .ortho-age-enamel-shine { stroke-width: 5; opacity: .8; }
+    .ortho-age-enamel-glint { stroke-width: 3; opacity: .55; }
+    .ortho-age-wire-halo { stroke: var(--brand-primary-dark); stroke-width: 6; stroke-linecap: round; opacity: .25; }
+    .ortho-age-wire { stroke: var(--border); stroke-width: 3; stroke-linecap: round; }
+    .ortho-age-wire-shine { stroke: var(--surface-white); stroke-width: .8; stroke-linecap: round; opacity: .85; }
+    .ortho-age-bracket { stroke: var(--brand-cta); stroke-width: 1.6; stroke-linejoin: round; }
+    .ortho-age-ligature { fill: none; stroke: var(--brand-blue); stroke-width: 2; }
     .ortho-age-section h2 { max-width: 14ch; margin: 0; color: var(--surface-white); font-size: 34px; font-weight: 500; line-height: 1.15; letter-spacing: -.16px; text-wrap: balance; }
     .ortho-age-section h2 strong { display: block; margin-bottom: 4px; font-size: clamp(36px, 10vw, 44px); font-weight: 700; line-height: 1.1; }
     .ortho-age-intro { margin: 20px 0 0; color: var(--surface-white); font-size: 17px; font-weight: 400; line-height: 1.5; letter-spacing: -.16px; }
