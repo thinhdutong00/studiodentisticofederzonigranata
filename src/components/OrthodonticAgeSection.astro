@@ -9,7 +9,6 @@ interface AgeGroup {
   description: string;
   listIntro: string;
   points: string[];
-  reference?: { label: string; href: string };
 }
 
 const ageGroups: AgeGroup[] = [
@@ -21,7 +20,7 @@ const ageGroups: AgeGroup[] = [
     title: 'Trattamento per adulti',
     ageLabel: 'Dai 18 anni in su',
     description: 'Sempre più adulti scelgono un trattamento ortodontico. Che tu voglia migliorare la tua salute orale, prepararti a un intervento di estetica dentale o semplicemente sentirti più sicuro di te, anche da adulto puoi valutare un percorso per un sorriso più allineato e sano.',
-    listIntro: 'Motivi comuni per cui gli adulti ricorrono all’ortodonzia:',
+    listIntro: 'Motivi per cui ricorrere all’ortodonzia:',
     points: [
       'Denti affollati, distanziati o che si spostano',
       'Correzione complessa dell’occlusione che richiede una pianificazione terapeutica completa',
@@ -53,11 +52,7 @@ const ageGroups: AgeGroup[] = [
     imageAlt: 'Ragazza sorridente durante una visita odontoiatrica',
     title: 'Trattamento per bambini',
     ageLabel: 'Età 7–10 anni',
-    reference: {
-      label: 'La Società Italiana di Ortodonzia (SIDO)',
-      href: 'https://registrazioni.sido.it/public/Brochure/Ortodonzia.pdf',
-    },
-    description: 'consiglia una prima valutazione ortodontica con l’inizio dell’età scolare. Nei bambini è possibile individuare affollamento dentale, malocclusioni o alterazioni nella crescita delle arcate, per valutare se intervenire o monitorarne lo sviluppo.',
+    description: 'La Società Italiana di Ortodonzia (SIDO) consiglia una prima valutazione ortodontica con l’inizio dell’età scolare. Nei bambini è possibile individuare affollamento dentale, malocclusioni o alterazioni nella crescita delle arcate, per valutare se intervenire o monitorarne lo sviluppo.',
     listIntro: 'Tra i segnali che meritano una valutazione per tuo figlio:',
     points: [
       'Perdita anticipata o tardiva dei denti da latte',
@@ -150,9 +145,7 @@ const archWire = 'M-16 60Q300 162 616 60';
       <p class="ortho-age-range">{group.ageLabel}</p>
     </header>
     <div class="ortho-age-copy" tabindex="0" role="region" aria-label={`Informazioni sul trattamento per ${group.label.toLowerCase()}`}>
-      <p class="ortho-age-description" id={`ortho-age-${group.id}-description`}>
-        {group.reference && <><a href={group.reference.href} target="_blank" rel="noopener noreferrer">{group.reference.label}</a>{' '}</>}{group.description}
-      </p>
+      <p class="ortho-age-description" id={`ortho-age-${group.id}-description`}>{group.description}</p>
       <p class="ortho-age-list-intro">{group.listIntro}</p>
       <ul class="ortho-age-points">
         {group.points.map(point => <li>{point}</li>)}
@@ -265,18 +258,17 @@ const archWire = 'M-16 60Q300 162 616 60';
   .ortho-age-close { position: absolute; z-index: 1; top: 16px; right: 16px; display: grid; place-items: center; width: 44px; height: 44px; padding: 11px; border: 1px solid var(--border); border-radius: 50%; background: var(--surface-white); color: var(--muted-text); cursor: pointer; }
   .ortho-age-close svg, .ortho-age-visit svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
   .ortho-age-content { display: flex; flex-direction: column; min-height: 0; max-height: inherit; text-align: center; }
-  .ortho-age-heading { flex: 0 0 auto; padding: 40px 28px 24px; border-bottom: 1px solid var(--border); }
-  .ortho-age-photo { display: block; width: 88px; height: 88px; margin: 0 auto 22px; border-radius: 28px; background: var(--soft-blue-bg); object-fit: cover; }
-  .ortho-age-label { margin: 0 0 12px; color: var(--brand-cta); font-size: 13px; font-weight: 500; line-height: 1.3; letter-spacing: normal; text-transform: uppercase; }
-  .ortho-age-content h2 { margin: 0; color: var(--brand-primary-dark); font-size: 30px; font-weight: 500; line-height: 1.15; letter-spacing: -.16px; text-wrap: balance; }
-  .ortho-age-range { margin: 10px 0 0; color: var(--brand-cta); font-size: 16px; font-weight: 500; line-height: 1.3; }
+  .ortho-age-heading { flex: 0 0 auto; display: grid; grid-template-columns: 64px minmax(0, 1fr); align-items: center; column-gap: 16px; row-gap: 4px; padding: 28px 72px 22px 24px; border-bottom: 1px solid var(--border); text-align: left; }
+  .ortho-age-photo { grid-column: 1; grid-row: 1 / span 3; display: block; width: 64px; height: 64px; margin: 0; border-radius: 18px; background: var(--soft-blue-bg); object-fit: cover; }
+  .ortho-age-label { grid-column: 2; grid-row: 1; margin: 0; color: var(--brand-cta); font-size: 12px; font-weight: 500; line-height: 1.3; letter-spacing: normal; text-transform: uppercase; }
+  .ortho-age-content h2 { grid-column: 2; grid-row: 2; margin: 0; color: var(--brand-primary-dark); font-size: 24px; font-weight: 500; line-height: 1.18; letter-spacing: -.16px; text-wrap: balance; }
+  .ortho-age-range { grid-column: 2; grid-row: 3; margin: 0; color: var(--brand-cta); font-size: 14px; font-weight: 500; line-height: 1.3; }
   .ortho-age-copy { min-height: 0; padding: 24px 28px; overflow-y: auto; overscroll-behavior-y: contain; text-align: left; }
   .ortho-age-description { margin: 0; color: var(--muted-text); font-size: 17px; font-weight: 400; line-height: 1.5; letter-spacing: -.16px; }
-  .ortho-age-description a { color: var(--brand-cta); text-underline-offset: 3px; }
   .ortho-age-list-intro { margin: 24px 0 14px; color: var(--brand-primary-dark); font-size: 16px; font-weight: 500; line-height: 1.4; }
-  .ortho-age-points { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
-  .ortho-age-points li { display: flex; align-items: baseline; gap: 12px; padding: 14px 16px; border: 1px solid var(--border); border-radius: 10px; background: var(--soft-blue-bg); color: var(--brand-primary-dark); font-size: 15px; font-weight: 400; line-height: 1.5; }
-  .ortho-age-points li::before { content: ''; flex: 0 0 6px; width: 6px; height: 6px; border-radius: 50%; background: var(--brand-cta); }
+  .ortho-age-points { display: grid; gap: 12px; margin: 0; padding-left: 20px; list-style: disc; }
+  .ortho-age-points li { color: var(--brand-primary-dark); font-size: 15px; font-weight: 400; line-height: 1.5; }
+  .ortho-age-points li::marker { color: var(--brand-cta); }
   .ortho-age-copy:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: -3px; }
   .ortho-age-actions { flex: 0 0 auto; padding: 20px 28px calc(24px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--border); background: var(--surface-white); }
   .ortho-age-visit { display: flex; min-height: 54px; align-items: center; justify-content: center; gap: 14px; padding: 17px 16px; border-radius: 10px; background: var(--brand-cta); color: var(--surface-white); font-size: 16px; font-weight: 500; line-height: 16px; letter-spacing: normal; text-decoration: none; text-transform: uppercase; }
@@ -288,6 +280,7 @@ const archWire = 'M-16 60Q300 162 616 60';
   :global(.ortho-landing-main:has(.ortho-age-sheet[open]) .treatment-sticky-cta) { visibility: hidden; pointer-events: none; }
 
   @media (max-width: 720px) {
+    .ortho-age-actions { padding: 14px 28px max(8px, env(safe-area-inset-bottom, 0px)); }
     .ortho-age-section { position: relative; isolation: isolate; display: block; overflow: hidden; padding: 48px 34px clamp(156px, calc(26.4vw + 28px), 218px); background: var(--brand-primary-dark); color: var(--surface-white); }
     .ortho-age-section > :not(.ortho-age-braces, .ortho-age-anchor) { position: relative; z-index: 1; }
     .ortho-age-braces { position: absolute; z-index: 0; bottom: -1px; left: 50%; display: block; width: max(100%, 480px); max-width: none; height: auto; transform: translateX(-50%); pointer-events: none; }
