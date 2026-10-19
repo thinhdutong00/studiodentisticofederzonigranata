@@ -22,18 +22,18 @@ const benefits = [
 const firstVisitSteps = [
   {
     icon: 'scan',
-    title: 'Analizziamo la tua situazione di partenza',
-    text: "Valutiamo l'allineamento dei denti e individuiamo il trattamento più adatto.",
+    title: 'Conosciamo il tuo sorriso',
+    text: "Valutiamo l'allineamento dei denti, ascoltiamo i tuoi desideri e individuiamo le possibili soluzioni per te.",
   },
   {
     icon: 'route',
-    title: 'Il tuo sorriso prende forma',
-    text: 'Attraverso controlli periodici monitoriamo i progressi, accompagnandoti in ogni fase del cambiamento.',
+    title: 'Il cambiamento prende forma',
+    text: 'Iniziamo il percorso ortodontico personalizzato e monitoriamo i progressi attraverso controlli periodici.',
   },
   {
     icon: 'smile',
-    title: 'Un sorriso da vivere ogni giorno',
-    text: 'Al termine del trattamento, ti guideremo anche nella fase di mantenimento, per aiutarti a preservare il tuo nuovo sorriso nel tempo.',
+    title: 'Il piacere di un nuovo sorriso',
+    text: 'Scopri il risultato raggiunto e come prendertene cura nel tempo, grazie a un programma di mantenimento.',
   },
 ];
 
@@ -58,9 +58,9 @@ const steps = [
     <div class="ortho-section-heading ortho-intro-heading">
       <div>
         <p class="ortho-eyebrow"><span class="ortho-benefits-desktop">Salute e funzionalità</span><span class="ortho-first-visit-mobile">La tua prima visita</span></p>
-        <h2 id="ortho-functional-title"><span class="ortho-benefits-desktop">Un sorriso più armonioso, un equilibrio che va oltre l'estetica.</span><span class="ortho-first-visit-mobile"><strong>Denti più allineati?</strong> Scopri il nostro protocollo</span></h2>
+        <h2 id="ortho-functional-title"><span class="ortho-benefits-desktop">Un sorriso più armonioso, un equilibrio che va oltre l'estetica.</span><span class="ortho-first-visit-mobile"><strong>Denti più allineati?</strong> Scopri il nostro percorso</span></h2>
       </div>
-      <p class="ortho-intro-lead"><span class="ortho-benefits-desktop">Un corretto allineamento dei denti può contribuire a migliorare la funzionalità della bocca e a favorire la salute orale nel tempo.</span><span class="ortho-first-visit-mobile">Ogni cambiamento inizia con una scelta. Scopri come ti accompagniamo dalla prima visita al risultato finale.</span></p>
+      <p class="ortho-intro-lead"><span class="ortho-benefits-desktop">Un corretto allineamento dei denti può contribuire a migliorare la funzionalità della bocca e a favorire la salute orale nel tempo.</span><span class="ortho-first-visit-mobile">Lo studio dentistico Federzoni Granata ti accompagna dalla prima visita alla scelta del trattamento, fino al risultato finale e al suo mantenimento nel tempo.</span></p>
     </div>
 
     <div class="ortho-functional-grid ortho-benefits-desktop">
@@ -101,22 +101,21 @@ const steps = [
             <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false">
               {step.icon === 'smile' && (
                 <>
-                  <path d="M5 16c10 4 28 4 38 0-2 12-9 20-19 20S7 28 5 16Z" />
-                  <path d="M7 23c9 3 25 3 34 0" />
+                  <circle cx="24" cy="24" r="18" />
+                  <path d="M16 30c4 4 12 4 16 0" />
                 </>
               )}
               {step.icon === 'scan' && (
                 <>
-                  <path d="M6 15V7h8m20 0h8v8m0 18v8h-8m-20 0H6v-8" />
-                  <path d="M18 13c2 0 4 1.5 6 1.5s4-1.5 6-1.5c4.5 0 6.5 3.5 5.5 7.5C34.3 26.5 32.8 35 30 35c-2.3 0-2.4-6-6-6s-3.7 6-6 6c-2.8 0-4.3-8.5-5.5-14.5C11.5 16.5 13.5 13 18 13Z" />
-                  <path d="M9 24h30" stroke-dasharray="3 3" />
+                  <path d="M14 6h-4a4 4 0 0 0-4 4v4m28-8h4a4 4 0 0 1 4 4v4m0 20v4a4 4 0 0 1-4 4h-4m-20 0h-4a4 4 0 0 1-4-4v-4" />
+                  <path d="M18 20h.02M30 20h.02M16 29c4 5 12 5 16 0" />
                 </>
               )}
               {step.icon === 'route' && (
                 <>
-                  <circle cx="11" cy="12" r="4" />
-                  <path d="M15 12h15a7 7 0 0 1 0 14H18a5 5 0 0 0 0 10h15" />
-                  <circle cx="37" cy="36" r="4" />
+                  <circle cx="12" cy="36" r="6" />
+                  <path d="M18 36h6a6 6 0 0 0 0-12h-1a6 6 0 0 1 0-12h7" />
+                  <circle cx="36" cy="12" r="6" />
                 </>
               )}
             </svg>
