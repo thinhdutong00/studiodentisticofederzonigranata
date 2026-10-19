@@ -1,0 +1,81 @@
+---
+import { site } from '../data/site';
+import PeriodontalMobileMenu from './PeriodontalMobileMenu.astro';
+
+interface Props {
+  showExperienceBar?: boolean;
+  mobileSiteMenu?: boolean;
+  unifiedConcept?: boolean;
+}
+
+const { showExperienceBar = false, mobileSiteMenu = false, unifiedConcept = false } = Astro.props;
+const experienceMessage = 'Studio dentistico a Modena e Reggio Emilia · Oltre 35 anni di esperienza e riconoscimenti dalle più prestigiose società scientifiche nazionali e internazionali.';
+---
+
+<header class="landing-header" data-mobile-site-menu={mobileSiteMenu || undefined}>
+      {showExperienceBar && (
+        <div class="header-experience-bar" role="note">
+          <span class="landing-visually-hidden">{experienceMessage}</span>
+          <div class="header-experience-track" aria-hidden="true">
+            <span class="header-experience-message">{experienceMessage}</span>
+            <span class="header-experience-message">{experienceMessage}</span>
+          </div>
+        </div>
+      )}
+      <div class="landing-shell landing-header-inner">
+        <a class="landing-logo" href="/visita-parodontologia/" aria-label={`${site.name} — Landing parodontologia`}>
+          <img
+            src={site.logo}
+            srcset="/assets/optimized/studio-dentistico-federzoni-granata-300.webp 300w, /assets/optimized/studio-dentistico-federzoni-granata.webp 400w"
+            sizes="(max-width: 720px) 204px, 286px"
+            alt={site.name}
+            width="400"
+            height="52"
+          />
+        </a>
+
+        <div class="landing-header-actions">
+          <nav class="ortho-header-nav" id="ortho-header-navigation" aria-label="Navigazione parodontologia">
+            <ul class="ortho-nav-list">
+              <li>
+                <details class="ortho-treatment-menu">
+                  <summary>Percorso parodontale <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg></summary>
+                  <ul class="ortho-treatment-submenu">
+                    <li><a href="#benefici-ortodontici">La tua prima visita</a></li>
+                    <li><a href="#ortodonzia-tutte-le-eta">La salute delle gengive</a></li>
+                  </ul>
+                </details>
+              </li>
+              <li><a href="#sorrisi-prima-dopo">Prima e dopo</a></li>
+            </ul>
+          </nav>
+          <a class="landing-header-cta" href="#il-tuo-obiettivo" data-quiz-cta data-quiz-open>Fai il test</a>
+          {unifiedConcept && <a class="landing-header-booking" href="#ortho-final">Prenota una visita</a>}
+          {mobileSiteMenu && <PeriodontalMobileMenu />}
+          <button class="ortho-menu-toggle" type="button" aria-label="Apri menu di navigazione" aria-expanded="false" aria-controls="ortho-header-navigation">
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path class="ortho-menu-open-icon" d="M4 7h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /><path class="ortho-menu-close-icon" d="m6 6 12 12M6 18 18 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+    <noscript>
+      <style is:inline>
+        @media (max-width: 1024px) {
+          .ortho-landing .landing-header { position: relative; }
+          .ortho-landing .landing-header-inner, .ortho-landing .landing-header-actions { flex-wrap: wrap; }
+          .ortho-landing .landing-header-actions { flex: 1 0 100%; padding-bottom: 16px; }
+          .ortho-landing .ortho-header-nav { display: block; position: static; width: 100%; max-height: none; border: 0; padding: 0; }
+          .ortho-landing .ortho-menu-toggle { display: none; }
+          .ortho-landing-main .landing-header[data-mobile-site-menu] .ortho-header-nav { display: block; }
+        }
+      </style>
+    </noscript>
+
+<script>
+  import { bindOrthodonticLanding } from '../utils/orthodonticLanding';
+  bindOrthodonticLanding();
+</script>
+
+<style>
+  .landing-header-booking { display: none; }
+</style>

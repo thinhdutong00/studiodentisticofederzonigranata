@@ -1,0 +1,524 @@
+---
+import OrthodonticLinkArrow from './OrthodonticLinkArrow.astro';
+
+import { periodontalProcessSteps as firstVisitSteps } from '../data/periodontalLanding';
+---
+
+<section class="ortho-section ortho-functional-benefits" id="benefici-ortodontici" aria-labelledby="ortho-functional-title">
+  <div class="ortho-shell">
+    <div class="ortho-section-heading ortho-intro-heading">
+      <div>
+        <p class="ortho-eyebrow">La tua prima visita</p>
+        <h2 id="ortho-functional-title"><strong>Gengive più sane?</strong> Scopri il nostro percorso</h2>
+      </div>
+      <p class="ortho-intro-lead">Lo studio dentistico Federzoni Granata ti accompagna dalla prima valutazione alla terapia, fino al mantenimento della salute delle tue gengive nel tempo.</p>
+    </div>
+
+    <ol class="ortho-first-visit-list" aria-label="Le fasi del tuo percorso parodontale" role="list">
+      {firstVisitSteps.map((step) => (
+        <li class="ortho-first-visit-step">
+          <span class="ortho-first-visit-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+              {step.icon === 'smile' && (
+                <>
+                  <circle cx="24" cy="24" r="18" />
+                  <path d="M16 30c4 4 12 4 16 0" />
+                </>
+              )}
+              {step.icon === 'scan' && (
+                <>
+                  <path d="M14 6h-4a4 4 0 0 0-4 4v4m28-8h4a4 4 0 0 1 4 4v4m0 20v4a4 4 0 0 1-4 4h-4m-20 0h-4a4 4 0 0 1-4-4v-4" />
+                  <path d="M18 20h.02M30 20h.02M16 29c4 5 12 5 16 0" />
+                </>
+              )}
+              {step.icon === 'route' && (
+                <>
+                  <circle cx="12" cy="36" r="6" />
+                  <path d="M18 36h6a6 6 0 0 0 0-12h-1a6 6 0 0 1 0-12h7" />
+                  <circle cx="36" cy="12" r="6" />
+                </>
+              )}
+            </svg>
+          </span>
+          <div>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+    <a class="ortho-cta ortho-benefits-cta" href="#ortho-final">Prenota la tua prima visita <OrthodonticLinkArrow /></a>
+  </div>
+</section>
+
+<slot name="after-benefits" />
+
+<section class="ortho-section ortho-personalized-path" id="percorso-ortodontico" aria-labelledby="ortho-personalized-title">
+  <div class="ortho-shell ortho-professional-card">
+    <div class="ortho-section-heading ortho-intro-heading">
+      <div>
+        <p class="ortho-professional-eyebrow">Il professionista al tuo fianco</p>
+        <h2 id="ortho-personalized-title"><slot name="personalized-title">La salute delle tue gengive merita esperienza.</slot></h2>
+      </div>
+    </div>
+
+    <slot name="professional" />
+    <a class="ortho-cta ortho-personalized-cta" href="#ortho-final">Prenota una visita parodontale <OrthodonticLinkArrow /></a>
+  </div>
+</section>
+
+<script>
+  const visitCards = document.querySelector<HTMLOListElement>('.ortho-landing-main #benefici-ortodontici .ortho-first-visit-list');
+  if (visitCards) {
+    const cards = Array.from(visitCards.querySelectorAll<HTMLElement>('.ortho-first-visit-step'));
+    const mobile = window.matchMedia('(max-width: 720px)');
+    let scheduled = false;
+    let illuminatedThrough = -1;
+
+    const updateActiveCard = () => {
+      scheduled = false;
+      visitCards.classList.add('is-scroll-tracked');
+      let activeIndex = -1;
+      let nearestDistance = Infinity;
+
+      if (mobile.matches) {
+        const readingLine = window.innerHeight * .5;
+        cards.forEach((card, index) => {
+          const bounds = card.getBoundingClientRect();
+          if (bounds.bottom <= 0 || bounds.top >= window.innerHeight) return;
+          const distance = Math.abs(bounds.top + bounds.height / 2 - readingLine);
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            activeIndex = index;
+          }
+        });
+      } else {
+        cards.forEach((card, index) => {
+          if (card.getBoundingClientRect().top < window.innerHeight * .82) activeIndex = index;
+        });
+      }
+
+      illuminatedThrough = Math.max(illuminatedThrough, activeIndex);
+      cards.forEach((card, index) => card.classList.toggle('is-scroll-active', index <= illuminatedThrough));
+    };
+
+    const requestUpdate = () => {
+      if (scheduled) return;
+      scheduled = true;
+      window.requestAnimationFrame(updateActiveCard);
+    };
+
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+    window.addEventListener('pageshow', requestUpdate);
+    mobile.addEventListener('change', requestUpdate);
+    new ResizeObserver(requestUpdate).observe(visitCards);
+    requestUpdate();
+  }
+</script>
+
+<style>
+  .ortho-functional-benefits {
+    padding-block: clamp(48px, 4.5vw, 72px);
+    background: var(--surface-white);
+  }
+
+  .ortho-benefits-cta {
+    display: none;
+  }
+
+  .ortho-first-visit-mobile,
+  .ortho-first-visit-list,
+  .ortho-personalized-copy-mobile {
+    display: none;
+  }
+
+  .ortho-personalized-path {
+    background: var(--soft-blue-bg);
+  }
+
+  .ortho-professional-card {
+    display: grid;
+    gap: 24px;
+    padding: clamp(22px, 3vw, 40px);
+    border: 0;
+    border-radius: 24px;
+    background: var(--surface-white);
+    text-align: left;
+  }
+
+  .ortho-professional-eyebrow {
+    margin: 0 0 14px;
+    color: var(--muted-text);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: normal;
+    text-transform: uppercase;
+  }
+
+  #percorso-ortodontico #ortho-personalized-title {
+    max-width: none;
+    margin: 0;
+    color: var(--brand-primary-dark);
+    font-size: clamp(28px, 3vw, 36px);
+    font-weight: 700;
+    line-height: 1.15;
+    text-wrap: pretty;
+  }
+
+  .ortho-intro-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .ortho-intro-heading h2 {
+    max-width: 32ch;
+    text-wrap: balance;
+  }
+
+  .ortho-intro-heading > .ortho-intro-lead {
+    max-width: 72ch;
+    margin: 0;
+    color: var(--muted-text);
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .ortho-functional-grid,
+  .ortho-personalized-steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(28px, 3vw, 48px);
+    margin: 40px 0 0;
+    padding: 0;
+  }
+
+  .ortho-functional-item,
+  .ortho-personalized-step {
+    min-width: 0;
+  }
+
+  .ortho-benefit-icon {
+    display: block;
+    width: 44px;
+    height: 44px;
+    color: var(--brand-cta);
+  }
+
+  .ortho-functional-copy {
+    margin-top: 16px;
+  }
+
+  .ortho-functional-item h3,
+  .ortho-personalized-step h3 {
+    margin: 0;
+    color: var(--brand-primary-dark);
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -.2px;
+  }
+
+  .ortho-functional-item p,
+  .ortho-personalized-step p {
+    max-width: 44ch;
+    margin: 10px 0 0;
+    color: var(--muted-text);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .ortho-personalized-steps {
+    list-style: none;
+  }
+
+  .ortho-personalized-number {
+    display: block;
+    margin-bottom: 18px;
+    color: var(--brand-cta);
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -.2px;
+  }
+
+  .ortho-personalized-cta {
+    margin-top: 32px;
+    font-size: 16px;
+    line-height: 16px;
+  }
+
+  @media (max-width: 1000px) {
+    .ortho-intro-heading {
+      grid-template-columns: 1fr;
+      gap: 22px;
+    }
+
+    .ortho-intro-heading h2 {
+      max-width: 32ch;
+    }
+
+    .ortho-intro-heading > .ortho-intro-lead {
+      max-width: 64ch;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .ortho-benefits-desktop { display: none; }
+    .ortho-first-visit-mobile { display: inline; }
+    .ortho-personalized-copy-desktop { display: none; }
+    .ortho-personalized-copy-mobile { display: inline; }
+
+    .ortho-personalized-path {
+      display: block;
+      background: var(--surface-white);
+      text-align: left;
+    }
+
+    .ortho-personalized-path .ortho-intro-heading h2,
+    .ortho-personalized-path .ortho-intro-lead,
+    .ortho-personalized-step p {
+      margin-inline: 0;
+    }
+
+    .ortho-personalized-path :global(.ortho-professional) {
+      grid-template-columns: 104px minmax(0, 1fr);
+      align-items: center;
+      gap: 18px;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      text-align: left;
+    }
+
+    .ortho-personalized-path :global(.ortho-professional > div) { display: contents; }
+
+    .ortho-personalized-path :global(.ortho-professional > img) {
+      grid-column: 1;
+      grid-row: 1;
+      width: 104px;
+      height: 136px;
+      border-radius: 14px;
+    }
+
+    .ortho-personalized-path :global(.ortho-professional h3) {
+      margin: 0;
+      grid-column: 2;
+      grid-row: 1;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.25;
+    }
+
+    .ortho-personalized-path :global(.ortho-professional p) {
+      grid-column: 1 / -1;
+      max-width: none;
+      margin: 0;
+      color: var(--text-dark);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .ortho-personalized-path :global(.ortho-professional .ortho-text-link) {
+      grid-column: 1 / -1;
+      justify-content: flex-start;
+      justify-self: start;
+      max-width: 100%;
+      margin-top: 0;
+      font-size: 14px;
+      text-align: left;
+    }
+
+    .ortho-functional-benefits {
+      background: var(--brand-primary-dark);
+      text-align: center;
+    }
+
+    .ortho-functional-benefits h2 strong { font-weight: 700; }
+
+    .ortho-first-visit-list {
+      display: grid;
+      gap: 12px;
+      margin: 28px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .ortho-first-visit-step {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: center;
+      align-items: center;
+      gap: 14px;
+      padding: 20px;
+      border: 1px solid rgba(217, 231, 242, .18);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, .04);
+      text-align: center;
+    }
+
+    .ortho-first-visit-list.is-scroll-tracked .ortho-first-visit-step {
+      border-color: rgba(217, 231, 242, .08);
+      background: var(--brand-primary-dark);
+      transition: background-color 280ms ease, border-color 280ms ease;
+    }
+
+    .ortho-first-visit-list.is-scroll-tracked .ortho-first-visit-step.is-scroll-active {
+      border-color: rgba(217, 231, 242, .18);
+      background: rgba(255, 255, 255, .04);
+    }
+
+    .ortho-first-visit-icon {
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: rgba(var(--brand-blue-rgb), .12);
+      color: var(--brand-blue);
+    }
+
+    .ortho-first-visit-icon svg { width: 40px; height: 40px; }
+
+    .ortho-first-visit-step h3 {
+      margin: 0;
+      color: var(--surface-white);
+      font-size: 21px;
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -.16px;
+    }
+
+    .ortho-first-visit-step p {
+      margin: 6px 0 0;
+      color: var(--soft-blue-bg);
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.4;
+      letter-spacing: -.16px;
+    }
+
+    .ortho-functional-benefits .ortho-eyebrow,
+    .ortho-functional-benefits .ortho-benefit-icon {
+      color: var(--brand-blue);
+    }
+
+    .ortho-functional-benefits h2,
+    .ortho-functional-item h3 {
+      color: var(--surface-white);
+    }
+
+    .ortho-functional-benefits .ortho-intro-heading > .ortho-intro-lead,
+    .ortho-functional-item p {
+      color: var(--soft-blue-bg);
+    }
+
+    .ortho-functional-benefits .ortho-intro-heading h2,
+    .ortho-functional-benefits .ortho-intro-heading > .ortho-intro-lead,
+    .ortho-functional-item p {
+      margin-inline: auto;
+    }
+
+    .ortho-intro-heading {
+      gap: 20px;
+    }
+
+    .ortho-intro-heading > .ortho-intro-lead {
+      font-size: 16px;
+    }
+
+    .ortho-functional-grid,
+    .ortho-personalized-steps {
+      grid-template-columns: 1fr;
+      gap: 28px;
+      margin-top: 28px;
+    }
+
+    .ortho-functional-item,
+    .ortho-personalized-step {
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr);
+      align-items: start;
+      gap: 16px;
+    }
+
+    .ortho-benefit-icon {
+      width: 96px;
+      height: 96px;
+    }
+
+    .ortho-functional-item {
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: center;
+    }
+
+    .ortho-functional-copy {
+      margin-top: 0;
+    }
+
+    .ortho-functional-benefits .ortho-benefits-cta {
+      display: flex;
+      width: 100%;
+      max-width: 360px;
+      min-height: 66px;
+      justify-content: center;
+      gap: 14px;
+      margin: 40px auto 12px;
+      padding: 22px 20px;
+      border-color: var(--surface-white);
+      border-radius: 10px;
+      background: var(--surface-white);
+      color: var(--brand-cta);
+      line-height: 16px;
+    }
+
+    .ortho-functional-benefits .ortho-benefits-cta:is(:hover, :focus-visible) {
+      border-color: var(--soft-blue-bg);
+      background: var(--soft-blue-bg);
+      color: var(--brand-cta-hover);
+    }
+
+    .ortho-functional-item h3,
+    .ortho-personalized-step h3 {
+      letter-spacing: -.16px;
+    }
+
+    .ortho-personalized-number {
+      margin: 0;
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -.16px;
+    }
+
+    .ortho-personalized-steps {
+      gap: 36px;
+      margin-top: 32px;
+    }
+
+    .ortho-personalized-step {
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: center;
+      gap: 14px;
+    }
+
+    .ortho-personalized-cta {
+      width: 100%;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 0;
+      font-size: 16px;
+      line-height: 16px;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 720px) and (prefers-reduced-motion: reduce) {
+    .ortho-first-visit-list.is-scroll-tracked .ortho-first-visit-step { transition: none; }
+  }
+</style>

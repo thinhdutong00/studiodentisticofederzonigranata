@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import { orthodonticAgeRanges, orthodonticBites, orthodonticConcerns, orthodonticObjectives, orthodonticTimings, orthodonticVisitGoals } from '../src/data/orthodonticQuiz.js';
+import { periodontalAgeRanges, periodontalDurations, periodontalObjectives, periodontalSymptoms } from '../src/data/periodontalQuiz.js';
 
 export const RECIPIENT = 'info.federzonigranata@gmail.com';
 const MAX_BYTES = 24_000;
@@ -15,6 +16,7 @@ const KINDS = {
   contact: 'Informazioni',
   callback: 'Richiesta di richiamata',
   'orthodontic-quiz': 'Quiz ortodonzia',
+  'periodontal-quiz': 'Questionario parodontologia',
 };
 const LABELS = {
   fullName: 'Nome e cognome', phone: 'Telefono', email: 'Email',
@@ -28,6 +30,9 @@ const LABELS = {
   otherDetails: 'Altri sintomi o informazioni', otherRequest: 'Altra esigenza',
   source: 'Pagina di provenienza',
   patientAge: 'Età del paziente', occlusion: 'Morso indicato nel questionario',
+  periodontalObjective: 'Obiettivo della valutazione parodontale',
+  periodontalSymptom: 'Segnale riferito nel questionario parodontale',
+  symptomDuration: 'Da quanto tempo è stato notato il segnale',
 };
 const LONG_FIELDS = new Set(['notes', 'message', 'details', 'otherDetails', 'otherRequest']);
 const REQUIRED = {
@@ -36,6 +41,7 @@ const REQUIRED = {
   treatment: ['treatment', 'ageRange', 'office', 'preferredDates', 'preferredTimes'],
   contact: [], callback: [],
   'orthodontic-quiz': ['patientAge', 'problem', 'occlusion', 'office', 'availability'],
+  'periodontal-quiz': ['periodontalObjective', 'ageRange', 'periodontalSymptom', 'symptomDuration', 'office'],
 };
 const ATTRIBUTION_FIELDS = {
   attributionSource: 300,
@@ -131,6 +137,22 @@ export function validateBooking(input) {
     }
     data.treatment = 'Ortodonzia e allineatori';
   }
+  if (data.kind === 'periodontal-quiz') {
+    const choices = [
+      [data.periodontalObjective, periodontalObjectives.map(option => option.title)],
+      [data.ageRange, periodontalAgeRanges.map(option => option.value)],
+      [data.periodontalSymptom, periodontalSymptoms],
+      [data.symptomDuration, periodontalDurations],
+    ];
+    if (!['/visita-parodontologia/', '/visita-parodontologia'].includes(data.source) || choices.some(([value, options]) => !options.includes(value))) {
+      throw new RequestError(400, 'Seleziona le risposte tra le opzioni del questionario parodontale.');
+    }
+    if (data.patientAge || data.problem || data.occlusion || data.initialReason || data.visitGoal || data.availability || data.preferredDates || data.preferredTimes) {
+      throw new RequestError(400, 'I dati del questionario parodontale non sono validi. Ricarica la pagina e riprova.');
+    }
+    data.treatment = 'Parodontologia';
+    data.treatmentCategory = 'Salute delle gengive e dei tessuti di sostegno';
+  }
   if (data.kind === 'treatment') {
     if (data.treatment === 'Altro' ? data.otherRequest.length < 10 : !data.problem) throw new RequestError(400, 'Completa il motivo della richiesta.');
     const preferredDates = data.preferredDates.split(',').map((value) => value.trim()).filter(Boolean);
@@ -218,6 +240,7 @@ function buildSheetMessage(data) {
   const keys = [
     'visitReason', 'visitGoal', 'emergencyType', 'symptom', 'painLevel', 'problem',
     'initialReason', 'notes', 'message', 'details', 'otherDetails', 'otherRequest', 'ageRange', 'patientAge', 'occlusion',
+    'periodontalObjective', 'periodontalSymptom', 'symptomDuration',
   ];
   return keys
     .filter((key) => data[key])

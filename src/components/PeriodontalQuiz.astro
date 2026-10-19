@@ -1,0 +1,122 @@
+---
+import BookingFields from './BookingFields.astro';
+import BookingPrivacy from './BookingPrivacy.astro';
+import { site } from '../data/site';
+import { periodontalAgeRanges, periodontalDurations, periodontalObjectives, periodontalSymptoms } from '../data/periodontalQuiz.js';
+import '../styles/orthodontic-quiz.css';
+
+interface Props { contextLabel?: string; }
+const { contextLabel } = Astro.props;
+const questions = [
+  { number: 1, title: 'Indica la tua età', name: 'ageRange', type: 'age-pills', options: periodontalAgeRanges },
+  { number: 2, title: 'Quale segnale hai notato?', name: 'periodontalSymptom', type: 'choices', options: periodontalSymptoms.map(value => ({ value })) },
+  { number: 3, title: 'Da quanto tempo hai notato questo segnale?', name: 'symptomDuration', type: 'choices', options: periodontalDurations.map(value => ({ value })) },
+  { number: 4, title: 'Seleziona uno dei nostri studi dentistici', name: 'office', type: 'select' },
+  { number: 5, title: 'Come ti chiami?', name: 'fullName', type: 'text', label: 'Nome e cognome', placeholder: 'Nome e cognome', autocomplete: 'section-periodontal name' },
+  { number: 6, title: 'A quale email possiamo scriverti?', name: 'email', type: 'email', label: 'Email', placeholder: 'nome@esempio.it', autocomplete: 'section-periodontal email' },
+  { number: 7, title: 'Ultimo passo: a quale numero possiamo chiamarti?', name: 'phone', type: 'tel', label: 'Telefono', placeholder: '333 123 4567', autocomplete: 'section-periodontal tel' },
+];
+---
+
+<section class="orthodontic-objectives" id="il-tuo-obiettivo" aria-label="Questionario sulla salute delle gengive" data-periodontal-quiz>
+  <span id="richiedi" class="ortho-anchor" aria-hidden="true"></span>
+  <div class="landing-shell orthodontic-objectives-shell">
+    <div class="orthodontic-questionnaire-banner">
+      <slot name="questionnaire-icon" />
+      <p>Gengive che sanguinano o si ritirano? Rispondi a poche domande e richiedi una valutazione parodontale.</p>
+      <button type="button" data-quiz-open aria-haspopup="dialog">
+        <span>Compila il questionario</span>
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m8 5 5 5-5 5" /></svg>
+      </button>
+    </div>
+    <noscript><p>Per compilare il questionario abilita JavaScript oppure <a href="#ortho-final">richiedi una visita dal modulo in fondo alla pagina</a>.</p></noscript>
+  </div>
+</section>
+
+<dialog id="orthodontic-quiz" class="orthodontic-quiz" aria-labelledby="periodontal-objectives-title" data-quiz-dialog data-periodontal-quiz-dialog data-quiz-mobile-objectives-first data-quiz-all-viewports>
+  <div class="orthodontic-quiz-header">
+    <div class="orthodontic-quiz-progress" style="--quiz-question-count: 8" role="progressbar" aria-label="Avanzamento del questionario" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-quiz-progress>
+      {Array.from({ length: 8 }, (_, index) => <span data-progress-segment={index}></span>)}
+    </div>
+    <img src={site.logo} width="400" height="52" alt={site.name} />
+    <button type="button" class="orthodontic-quiz-close" data-quiz-close aria-label="Chiudi il questionario">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6" /></svg>
+    </button>
+  </div>
+
+  <form action="/api/booking" method="post" autocomplete="on" novalidate data-booking-kind="periodontal-quiz" data-periodontal-quiz-form>
+    <BookingFields />
+    <input type="hidden" name="periodontalObjective" value="" />
+    <input type="hidden" name="message" value={contextLabel ? `Richiesta dalla landing parodontologia — ${contextLabel}` : 'Richiesta di valutazione parodontale dal questionario della landing parodontologia.'} />
+
+    <section class="orthodontic-quiz-screen orthodontic-quiz-question orthodontic-quiz-objectives-step" data-quiz-panel data-question="0" data-quiz-objectives-panel>
+      <div class="orthodontic-quiz-question-title">
+        <h2 id="periodontal-objectives-title" tabindex="-1">Qual è il tuo obiettivo?</h2>
+      </div>
+      <div class="orthodontic-objectives-grid" role="group" aria-labelledby="periodontal-objectives-title">
+        {periodontalObjectives.map(objective => <button class="orthodontic-objective" type="button" data-quiz-objective={objective.title} aria-pressed="false">
+          <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            {objective.icon === 'bleeding' && <><path d="M22 5C18 11 10 18 10 25a12 12 0 0 0 24 0c0-7-8-14-12-20Z" /><path d="M17 26a5 5 0 0 0 5 5M38 5v10m-5-5h10" /></>}
+            {objective.icon === 'gum' && <><path d="M8 20c5-4 10 4 16 0s11-4 16 0v15H8V20ZM11 20v-9c0-4 5-5 8-2 3-3 8-2 8 2v8m0-8c0-4 5-5 8-2 3-3 7-2 7 2v10M6 39h36" /></>}
+            {objective.icon === 'tooth' && <><path d="M18 10c-5-3-10 0-10 6s4 10 5 17c1 7 5 7 7-1l2-5 2 5c2 8 6 8 7 1 1-7 5-11 5-17s-5-9-10-6c-3 2-5 2-8 0Z" /><path d="m3 19 4 4-4 4m42-8-4 4 4 4M17 8l-2-4m15 4 2-4" /></>}
+            {objective.icon === 'check' && <><path d="M29 9a16 16 0 1 0 10 13M18 22l6 6L41 9" /><path d="M15 34c4 3 9 3 13 0" /></>}
+          </svg>
+          <span>{objective.title}</span>
+        </button>)}
+      </div>
+      <p class="orthodontic-quiz-error" data-quiz-error role="alert" aria-live="polite"></p>
+    </section>
+
+    {questions.map(question => <>
+      <section class={`orthodontic-quiz-screen orthodontic-quiz-question orthodontic-quiz-question-${question.type}`} hidden data-quiz-panel data-question={question.number}>
+        <div class="orthodontic-quiz-question-title"><h2 id={`periodontal-question-${question.number}`} tabindex="-1">{question.title}</h2></div>
+        {question.type === 'select' && <p class="orthodontic-quiz-description">Scegli lo studio che ti è più comodo: Modena o Reggio Emilia.</p>}
+        {question.number === 3 && <p class="orthodontic-quiz-description">Se non hai notato segnali particolari, seleziona “Non saprei indicarlo”.</p>}
+        {question.type === 'email' && <p class="orthodontic-quiz-description">Useremo questo recapito per gestire la tua richiesta. <a href="/privacy-policy/" target="_blank" rel="noopener noreferrer">Informativa privacy</a>.</p>}
+        {question.name === 'fullName' && <p class="orthodontic-quiz-description" data-quiz-guardian hidden>Per un paziente minorenne, inserisci nome e cognome del genitore o del tutore che possiamo contattare.</p>}
+        {question.type === 'tel' && <p class="orthodontic-quiz-description">La segreteria ti ricontatterà per concordare giorno e orario della visita.<span data-quiz-guardian hidden>Per un paziente minorenne, inserisci il recapito del genitore o del tutore.</span></p>}
+
+        {['choices', 'age-pills'].includes(question.type) ? <div class={question.type === 'age-pills' ? 'orthodontic-quiz-age-options' : 'orthodontic-quiz-options'} role="radiogroup" aria-labelledby={`periodontal-question-${question.number}`}>
+          {question.options?.map(option => <label class="orthodontic-quiz-option">
+            <input type="radio" name={question.name} value={option.value} required data-quiz-minor={'minor' in option ? String(option.minor) : undefined} />
+            <span class="orthodontic-quiz-option-body"><span class="orthodontic-quiz-option-label"><span>{option.value}</span><svg class="orthodontic-quiz-check" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 10 4 4 8-8" /></svg></span></span>
+          </label>)}
+        </div> : question.type === 'select' ? <label class="orthodontic-quiz-input-label">
+          <span class="landing-visually-hidden">Sede preferita</span>
+          <select name="office" required aria-labelledby={`periodontal-question-${question.number}`}><option value="">Seleziona uno studio</option>{site.offices.map(office => <option value={office.city}>{office.city}</option>)}</select>
+        </label> : <label class="orthodontic-quiz-input-label">
+          <span class="landing-visually-hidden">{question.label}</span>
+          <div class={question.type === 'tel' ? 'orthodontic-quiz-phone' : ''}>
+            {question.type === 'tel' && <span class="orthodontic-quiz-phone-prefix">IT +39</span>}
+            <input type={question.type} name={question.name} placeholder={question.placeholder} autocomplete={question.autocomplete} required maxlength={question.name === 'fullName' ? 120 : question.type === 'tel' ? 30 : 254} minlength={question.name === 'fullName' ? 2 : question.type === 'tel' ? 6 : undefined} inputmode={question.type === 'email' ? 'email' : question.type === 'tel' ? 'tel' : 'text'} />
+          </div>
+        </label>}
+
+        {question.type === 'tel' && <div class="orthodontic-quiz-privacy"><BookingPrivacy /><p>L’invio è una richiesta di ricontatto. Giorno e orario della visita saranno concordati con la segreteria.</p></div>}
+        <p class="orthodontic-quiz-error" data-quiz-error role="alert" aria-live="polite"></p>
+        <div class="orthodontic-quiz-question-actions">
+          {question.type === 'tel' ? <button class="orthodontic-quiz-button" type="submit">Invia la richiesta <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 10 4 4 8-8" /></svg></button> : <button class="orthodontic-quiz-button" type="button" data-quiz-next>Avanti <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m8 5 5 5-5 5" /></svg></button>}
+        </div>
+      </section>
+
+      {question.number === 3 && <section class="orthodontic-quiz-screen orthodontic-quiz-interlude" hidden data-quiz-panel data-quiz-information>
+        <div class="orthodontic-quiz-question-title"><h2 id="periodontal-quiz-information-title" tabindex="-1">La salute delle gengive parte da una valutazione.</h2></div>
+        <p class="orthodontic-quiz-description">Durante la visita ascoltiamo le tue esigenze e valutiamo denti, gengive e tessuti di sostegno, per indicarti gli approfondimenti e le cure adatte alla tua situazione.</p>
+        <p class="orthodontic-quiz-caption">Il questionario raccoglie le tue esigenze e non fornisce una diagnosi.</p>
+        <button class="orthodontic-quiz-button" type="button" data-quiz-next>Prenota una visita <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m8 5 5 5-5 5" /></svg></button>
+      </section>}
+    </>)}
+  </form>
+</dialog>
+
+<style>
+  [data-periodontal-quiz-dialog] h2:focus { outline: none; }
+  [data-periodontal-quiz-dialog] .orthodontic-quiz-options { width: 100%; max-width: 680px; }
+  [data-periodontal-quiz-dialog] .orthodontic-quiz-options .orthodontic-quiz-option-body { min-height: 58px; justify-content: center; padding: 14px 18px; border-radius: 12px; }
+  [data-periodontal-quiz-dialog] .orthodontic-objective > svg { display: block; }
+</style>
+
+<script>
+  import { bindPeriodontalQuiz } from '../utils/periodontalQuiz';
+  bindPeriodontalQuiz();
+</script>

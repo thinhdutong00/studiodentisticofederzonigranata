@@ -1,0 +1,353 @@
+---
+import type { PatientReview } from '../data/reviews';
+import PeriodontalReviewSheet from './PeriodontalReviewSheet.astro';
+import OrthodonticLinkArrow from './OrthodonticLinkArrow.astro';
+
+interface Props {
+  reviews: PatientReview[];
+  mobileCarousel?: boolean;
+  conceptCarousel?: boolean;
+  mobilePopupReviews?: PatientReview[];
+}
+
+const { reviews, mobileCarousel = false, conceptCarousel = false, mobilePopupReviews = [] } = Astro.props;
+---
+
+<section id="recensioni" class="patient-reviews" aria-labelledby="landing-reviews-title" data-mobile-review-carousel={mobileCarousel || undefined} data-review-all-viewports={conceptCarousel || undefined}>
+  <div class="landing-shell">
+    <div class="patient-reviews-heading">
+      <div class="patient-reviews-intro">
+        <p class="landing-kicker"><slot name="eyebrow">Esperienze dei pazienti</slot></p>
+        <h2 id="landing-reviews-title"><slot name="title">I nostri pazienti dicono</slot></h2>
+        <p class="patient-reviews-description">Le parole dei nostri pazienti, l’esperienza del nostro studio.</p>
+      </div>
+      <div class="patient-reviews-highlights" aria-label="Valutazione ed esperienza dello studio">
+        <a class="patient-reviews-rating" href="/recensioni/" aria-label="5,0 stelle su Google. Leggi le recensioni" data-review-sheet-trigger={mobilePopupReviews.length > 0 || undefined}>
+          <div class="patient-reviews-google">
+            <svg viewBox="0 0 48 48" role="img" aria-label="Google">
+              <path fill="#FFC107" d="M43.61 20.08H42V20H24v8h11.3A12 12 0 1 1 31.96 15.04l5.66-5.66A19.92 19.92 0 0 0 24 4 20 20 0 1 0 19.61 39.51 20 20 0 0 0 44 24c0-1.34-.14-2.65-.39-3.92Z" />
+              <path fill="#FF3D00" d="m6.31 14.69 6.57 4.82A12 12 0 0 1 31.96 15.04l5.66-5.66A20 20 0 0 0 6.31 14.69Z" />
+              <path fill="#4CAF50" d="M24 44c5.06 0 9.69-1.9 13.21-5.02l-6.19-5.24A11.9 11.9 0 0 1 12.9 28.49l-6.52 5.02A20 20 0 0 0 24 44Z" />
+              <path fill="#1976D2" d="M43.61 20.08H42V20H24v8h11.3a12.07 12.07 0 0 1-4.29 5.74l6.19 5.24C36.77 39.37 44 34 44 24c0-1.34-.14-2.65-.39-3.92Z" />
+            </svg>
+            <span>Recensioni Google</span>
+          </div>
+          <strong class="patient-reviews-score">5,0</strong>
+          <span class="patient-reviews-stars" aria-hidden="true">★★★★★</span>
+          <span class="patient-reviews-rating-caption">5,0 stelle su Google</span>
+          <span class="patient-reviews-link">Leggi le recensioni <OrthodonticLinkArrow /></span>
+        </a>
+        <div class="patient-reviews-experience">
+          <span class="patient-reviews-over">Oltre</span>
+          <strong class="patient-reviews-years">35<span>anni</span></strong>
+          <p>di attività, al servizio<br />del tuo sorriso.</p>
+          <span class="patient-reviews-locations">Modena · Reggio Emilia</span>
+        </div>
+      </div>
+    </div>
+
+    <slot name="after-heading" />
+    <div class="patient-review-carousel" data-review-viewport>
+      <div class="patient-review-track">
+        <div class="patient-review-grid">
+          {reviews.map((review) => (
+            <article class="patient-review">
+              <div class="patient-review-stars" aria-label={`${review.rating} stelle su 5`}>{'★'.repeat(review.rating)}</div>
+              <blockquote>“{review.text}”</blockquote>
+              <footer>
+                <span class="patient-review-avatar" aria-hidden="true">{review.initials}</span>
+                <p><strong>{review.author}</strong><small>Recensione Google</small></p>
+              </footer>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+    <slot name="after-carousel" />
+    {conceptCarousel && <div class="patient-review-controls" aria-label="Sfoglia le recensioni">
+      <button type="button" data-review-prev aria-label="Recensione precedente"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6" /></svg></button>
+      <button type="button" data-review-next aria-label="Recensione successiva"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" /></svg></button>
+    </div>}
+  </div>
+  {mobilePopupReviews.length > 0 && <PeriodontalReviewSheet reviews={mobilePopupReviews} />}
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-mobile-review-carousel]').forEach(section => {
+    const viewport = section.querySelector<HTMLElement>('[data-review-viewport]');
+    const grid = viewport?.querySelector<HTMLElement>('.patient-review-grid');
+    const cards = Array.from(grid?.querySelectorAll<HTMLElement>('.patient-review') || []);
+    if (!viewport || !grid || !cards.length || section.dataset.carouselBound) return;
+    section.dataset.carouselBound = 'true';
+    const mobile = window.matchMedia('(max-width: 720px)');
+    const usesCarousel = () => section.hasAttribute('data-review-all-viewports') || mobile.matches;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const slides = [...cards];
+    if (cards.length > 1) {
+      const clone = (card: HTMLElement) => {
+        const copy = card.cloneNode(true) as HTMLElement;
+        copy.classList.add('patient-review-clone');
+        copy.setAttribute('aria-hidden', 'true');
+        copy.inert = true;
+        return copy;
+      };
+      const first = clone(cards[cards.length - 1]);
+      const last = clone(cards[0]);
+      grid.prepend(first);
+      grid.append(last);
+      slides.unshift(first);
+      slides.push(last);
+    }
+
+    const hasLoop = cards.length > 1;
+    const firstSlide = hasLoop ? 1 : 0;
+    let visible = false;
+    let hovering = false;
+    let touching = false;
+    let pressing = false;
+    let focused = false;
+    let moving = false;
+    let current = 0;
+    let lastWidth = 0;
+    let advanceTimer: ReturnType<typeof setTimeout> | undefined;
+    let settleTimer: ReturnType<typeof setTimeout> | undefined;
+
+    const slideOffset = (index: number) => slides[index].getBoundingClientRect().left - viewport.getBoundingClientRect().left + viewport.scrollLeft;
+    const closestSlide = () => slides.reduce((closest, _slide, index) => Math.abs(slideOffset(index) - viewport.scrollLeft) < Math.abs(slideOffset(closest) - viewport.scrollLeft) ? index : closest, 0);
+
+    const updateMotion = () => {
+      clearTimeout(advanceTimer);
+      const running = usesCarousel() && hasLoop && visible && !document.hidden && !reducedMotion.matches && !hovering && !touching && !pressing && !focused && !moving && !section.querySelector('[data-ortho-review-sheet][open]');
+      section.dataset.reviewMotion = running ? 'running' : 'paused';
+      if (running) {
+        advanceTimer = setTimeout(() => {
+          // Advance toward the right, preserving the carousel's existing direction.
+          moveTo(current + firstSlide - 1);
+        }, 4000);
+      }
+    };
+
+    const finishScroll = () => {
+      clearTimeout(settleTimer);
+      if (!usesCarousel()) return;
+      let index = closestSlide();
+      if (hasLoop && (index === 0 || index === slides.length - 1)) {
+        index = index === 0 ? cards.length : firstSlide;
+        viewport.scrollTo({ left: slideOffset(index), behavior: 'instant' });
+      }
+      current = index - firstSlide;
+      moving = false;
+      updateMotion();
+    };
+
+    const moveTo = (index: number) => {
+      clearTimeout(settleTimer);
+      moving = true;
+      updateMotion();
+      viewport.scrollTo({ left: slideOffset(index), behavior: reducedMotion.matches ? 'instant' : 'smooth' });
+      settleTimer = setTimeout(finishScroll, 180);
+    };
+
+    const updateLayout = () => {
+      clearTimeout(settleTimer);
+      moving = false;
+      if (usesCarousel()) {
+        viewport.setAttribute('role', 'region');
+        viewport.setAttribute('aria-roledescription', 'carosello');
+        viewport.setAttribute('aria-label', 'Recensioni dei pazienti');
+        viewport.tabIndex = 0;
+        lastWidth = viewport.clientWidth;
+        viewport.scrollTo({ left: slideOffset(current + firstSlide), behavior: 'instant' });
+      } else {
+        ['role', 'aria-roledescription', 'aria-label', 'tabindex'].forEach(attribute => viewport.removeAttribute(attribute));
+        current = 0;
+        viewport.scrollTo({ left: 0, behavior: 'instant' });
+      }
+      updateMotion();
+    };
+
+    viewport.addEventListener('scroll', () => {
+      if (!usesCarousel()) return;
+      moving = true;
+      updateMotion();
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(finishScroll, 180);
+    }, { passive: true });
+    viewport.addEventListener('scrollend', finishScroll);
+    viewport.addEventListener('keydown', event => {
+      if (!usesCarousel() || !hasLoop) return;
+      const targets: Record<string, number> = { ArrowLeft: current + firstSlide - 1, ArrowRight: current + firstSlide + 1, Home: firstSlide, End: cards.length };
+      if (!(event.key in targets)) return;
+      event.preventDefault();
+      focused = true;
+      moveTo(targets[event.key]);
+    });
+    viewport.addEventListener('pointerenter', event => { if (event.pointerType === 'mouse') { hovering = true; updateMotion(); } });
+    viewport.addEventListener('pointerleave', () => { hovering = false; updateMotion(); });
+    viewport.addEventListener('pointerdown', event => { focused = false; if (event.pointerType !== 'touch') pressing = true; updateMotion(); });
+    ['pointerup', 'pointercancel'].forEach(event => window.addEventListener(event, () => { pressing = false; updateMotion(); }));
+    viewport.addEventListener('touchstart', () => { touching = true; updateMotion(); }, { passive: true });
+    const releaseTouch = (event: TouchEvent) => { touching = event.touches.length > 0; updateMotion(); };
+    viewport.addEventListener('touchend', releaseTouch, { passive: true });
+    viewport.addEventListener('touchcancel', releaseTouch, { passive: true });
+    viewport.addEventListener('focusin', () => { focused = viewport.matches(':focus-visible'); updateMotion(); });
+    viewport.addEventListener('focusout', () => { focused = false; updateMotion(); });
+    new IntersectionObserver(entries => {
+      visible = entries.some(entry => entry.isIntersecting);
+      updateMotion();
+    }, { threshold: .15 }).observe(viewport);
+    new ResizeObserver(() => {
+      if (usesCarousel() && viewport.clientWidth !== lastWidth) updateLayout();
+    }).observe(viewport);
+    document.addEventListener('visibilitychange', updateMotion);
+    section.addEventListener('ortho-review-sheet-change', updateMotion);
+    mobile.addEventListener('change', updateLayout);
+    reducedMotion.addEventListener('change', updateMotion);
+    section.querySelector('[data-review-prev]')?.addEventListener('click', () => moveTo(current + firstSlide - 1));
+    section.querySelector('[data-review-next]')?.addEventListener('click', () => moveTo(current + firstSlide + 1));
+    updateLayout();
+  });
+</script>
+
+<style>
+  .patient-review-carousel, .patient-review-track { display: contents; }
+  .patient-review-controls { display: none; }
+  .patient-review.patient-review-clone { display: none; }
+
+  .patient-reviews {
+    padding: clamp(72px, 8vw, 128px) 0;
+    background: var(--brand-primary-dark);
+    color: var(--surface-white);
+  }
+  .patient-reviews-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(40px, 6vw, 88px);
+    align-items: center;
+  }
+  .patient-reviews-intro h2 {
+    max-width: 13ch;
+    margin: 20px 0 0;
+    font-size: clamp(42px, 4.6vw, 72px);
+    font-weight: 500;
+    line-height: 1.06;
+    letter-spacing: -.2px;
+  }
+  .patient-reviews-description {
+    max-width: 34ch;
+    margin: 24px 0 0;
+    color: rgba(255, 255, 255, .7);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .patient-reviews-highlights {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+    align-items: stretch;
+  }
+  .patient-reviews-rating {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 28px;
+    border: 1px solid rgba(217, 231, 242, .22);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, .055);
+    color: var(--surface-white);
+    text-decoration: none;
+    transition: background-color 160ms ease, border-color 160ms ease;
+  }
+  .patient-reviews-rating:hover {
+    border-color: var(--brand-blue);
+    background: rgba(255, 255, 255, .09);
+  }
+  .patient-reviews-rating:focus-visible {
+    outline: 3px solid var(--brand-blue);
+    outline-offset: 5px;
+  }
+  .patient-reviews-google { display: flex; align-items: center; gap: 9px; }
+  .patient-reviews-google svg { width: 26px; height: 26px; flex: 0 0 auto; }
+  .patient-reviews-google > span { font-size: 12px; font-weight: 500; line-height: 1.25; }
+  .patient-reviews-score { margin-top: 18px; font-size: 68px; font-weight: 500; line-height: 1; }
+  .patient-reviews-stars { margin-top: 14px; color: #fabc05; font-size: 21px; letter-spacing: 2px; line-height: 1; }
+  .patient-reviews-rating-caption { margin-top: 12px; color: rgba(255, 255, 255, .72); font-size: 13px; line-height: 1.4; }
+  .patient-reviews-link { display: flex; gap: 12px; margin-top: 22px; color: var(--brand-blue); font-size: 12px; font-weight: 500; line-height: 1.3; }
+  .patient-reviews-experience { display: flex; align-items: flex-start; justify-content: center; flex-direction: column; padding: 20px 0; }
+  .patient-reviews-over { color: var(--brand-blue); font-size: 16px; line-height: 1.3; }
+  .patient-reviews-years { display: flex; align-items: baseline; gap: 8px; margin-top: 10px; font-size: 68px; font-weight: 500; line-height: 1; }
+  .patient-reviews-years > span { font-size: 24px; font-weight: 400; }
+  .patient-reviews-experience p { margin: 20px 0 0; color: rgba(255, 255, 255, .85); font-size: 16px; line-height: 1.4; }
+  .patient-reviews-locations { margin-top: 20px; color: rgba(255, 255, 255, .56); font-size: 12px; line-height: 1.4; }
+  .patient-review-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 52px; }
+  .patient-review { display: flex; min-height: 330px; flex-direction: column; padding: 30px; border: 1px solid rgba(217, 231, 242, .18); border-radius: 6px; background: rgba(255, 255, 255, .055); }
+  .patient-review-stars { color: #f5c768; font-size: 15px; letter-spacing: 3px; }
+  .patient-review blockquote { flex: 1; margin: 24px 0 30px; color: var(--surface-white); font-size: 18px; font-weight: 400; line-height: 1.5; }
+  .patient-review footer { display: flex; align-items: center; gap: 12px; }
+  .patient-review-avatar { display: inline-flex; width: 42px; height: 42px; flex: 0 0 42px; align-items: center; justify-content: center; border-radius: 50%; background: var(--brand-blue); color: var(--brand-primary-dark); font-size: 12px; font-weight: 700; }
+  .patient-review footer p { display: grid; gap: 2px; margin: 0; }
+  .patient-review footer strong { font-size: 13px; font-weight: 600; }
+  .patient-review footer small { color: rgba(255, 255, 255, .55); font-size: 11px; }
+  @media (max-width: 1000px) {
+    .patient-reviews-heading { grid-template-columns: 1fr; gap: 36px; }
+    .patient-reviews-intro h2 { max-width: 18ch; }
+    .patient-reviews-highlights { max-width: 600px; gap: 36px; }
+    .patient-review-grid { gap: 12px; }
+    .patient-review { padding: 22px; }
+  }
+  @media (max-width: 720px) {
+    .patient-reviews { padding: 64px 0; }
+    .patient-reviews-intro h2 { max-width: 14ch; font-size: 40px; letter-spacing: -.16px; }
+    .patient-reviews-description { font-size: 16px; }
+    .patient-reviews-highlights { gap: 20px; }
+    .patient-reviews-rating { padding: 20px 16px; border-radius: 12px; }
+    .patient-reviews-google { gap: 7px; }
+    .patient-reviews-google svg { width: 22px; height: 22px; }
+    .patient-reviews-google > span { font-size: 11px; }
+    .patient-reviews-score, .patient-reviews-years { font-size: 54px; }
+    .patient-reviews-years { gap: 5px; }
+    .patient-reviews-years > span { font-size: 20px; }
+    .patient-reviews-stars { font-size: 18px; letter-spacing: 1px; }
+    .patient-reviews-rating-caption { font-size: 12px; }
+    .patient-reviews-link { gap: 7px; font-size: 11px; }
+    .patient-reviews-experience { padding: 12px 0; }
+    .patient-reviews-over { font-size: 14px; }
+    .patient-reviews-experience p { font-size: 14px; }
+    .patient-reviews-locations { font-size: 11px; }
+    .patient-review-grid { grid-template-columns: 1fr; gap: 16px; margin-top: 36px; }
+    .patient-review { min-height: 260px; padding: 24px; }
+    .patient-review blockquote { font-size: 17px; }
+
+    [data-mobile-review-carousel] .patient-review-carousel {
+      display: block;
+      margin-top: 36px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      overscroll-behavior-x: contain;
+      touch-action: pan-x pan-y pinch-zoom;
+      border-radius: 12px;
+    }
+    [data-mobile-review-carousel] .patient-review-carousel::-webkit-scrollbar { display: none; }
+    [data-mobile-review-carousel] .patient-review-grid {
+      display: flex;
+      gap: 16px;
+      margin: 0;
+    }
+    [data-mobile-review-carousel] .patient-review {
+      display: flex;
+      flex: 0 0 100%;
+      width: 100%;
+      min-width: 0;
+      min-height: 280px;
+      border-radius: 12px;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+    [data-mobile-review-carousel] .patient-review-carousel:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 4px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .patient-reviews-rating { transition: none; }
+  }
+</style>
