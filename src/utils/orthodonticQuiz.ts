@@ -117,14 +117,43 @@ export function bindOrthodonticQuiz() {
       previousOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
       dialog.showModal();
-      showPanel(current);
+      showPanel(objectivesPanel && mobileViewport.matches ? 0 : current);
     });
   });
 
   if (objectivesPanel && objectivesHost && objectivesGrid && objectivesDesktopParent) {
+    const mobileFlow = form.querySelector<HTMLInputElement>('[data-quiz-mobile-flow]');
+    const originalFormAutocomplete = form.getAttribute('autocomplete');
+    const contactAutofill = [
+      { name: 'fullName', token: 'name', inputmode: 'text' },
+      { name: 'email', token: 'email', inputmode: 'email' },
+      { name: 'phone', token: 'tel', inputmode: 'tel' },
+    ].map(field => {
+      const input = form.querySelector<HTMLInputElement>(`[name="${field.name}"]`);
+      return { ...field, input, autocomplete: input?.getAttribute('autocomplete'), originalInputmode: input?.getAttribute('inputmode') };
+    });
     const updateObjectivesStep = () => {
       const previousPanel = panels[current];
       const mobile = mobileViewport.matches;
+      if (mobileFlow) mobileFlow.disabled = !mobile;
+      if (mobile) form.setAttribute('autocomplete', 'on');
+      else if (originalFormAutocomplete === null) form.removeAttribute('autocomplete');
+      else form.setAttribute('autocomplete', originalFormAutocomplete);
+      contactAutofill.forEach(field => {
+        if (!field.input) return;
+        if (mobile) {
+          field.input.setAttribute('autocomplete', `section-orthodontic ${field.token}`);
+          field.input.setAttribute('inputmode', field.inputmode);
+        } else {
+          if (field.autocomplete) field.input.setAttribute('autocomplete', field.autocomplete);
+          else field.input.removeAttribute('autocomplete');
+          if (field.originalInputmode) field.input.setAttribute('inputmode', field.originalInputmode);
+          else field.input.removeAttribute('inputmode');
+        }
+      });
+      allPanels.filter(panel => panel.hasAttribute('data-quiz-desktop-only')).forEach(panel => {
+        panel.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLButtonElement>('input, select, button').forEach(control => { control.disabled = mobile; });
+      });
       (mobile ? objectivesHost : objectivesDesktopParent).append(objectivesGrid);
       objectivesGrid.querySelectorAll<HTMLButtonElement>('[data-quiz-objective]').forEach(button => {
         if (mobile) {
@@ -137,7 +166,7 @@ export function bindOrthodonticQuiz() {
           button.removeAttribute('aria-pressed');
         }
       });
-      panels = allPanels.filter(panel => mobile ? !panel.classList.contains('orthodontic-quiz-welcome') : panel !== objectivesPanel);
+      panels = allPanels.filter(panel => mobile ? !panel.classList.contains('orthodontic-quiz-welcome') && !panel.hasAttribute('data-quiz-desktop-only') : panel !== objectivesPanel);
       showPanel(Math.max(0, panels.indexOf(previousPanel)), dialog.open);
     };
     updateObjectivesStep();

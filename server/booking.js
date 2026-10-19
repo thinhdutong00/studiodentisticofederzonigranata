@@ -88,7 +88,10 @@ export function validateBooking(input) {
     throw new RequestError(400, 'Inserisci un indirizzo email valido.');
   }
   if (input.privacyConsent !== true) throw new RequestError(400, 'Accetta l’informativa privacy per inviare la richiesta.');
-  if (REQUIRED[data.kind].some((key) => !data[key])) throw new RequestError(400, 'Completa tutti i passaggi del modulo prima di inviare.');
+  const mobileOrthodonticQuiz = data.kind === 'orthodontic-quiz' && input.quizFlow === 'orthodontic-mobile-v2' && ['/visita-ortodonzia/', '/visita-ortodonzia'].includes(data.source);
+  const requiredFields = REQUIRED[data.kind].filter(key => !(mobileOrthodonticQuiz && key === 'availability'));
+  if (mobileOrthodonticQuiz) requiredFields.push('initialReason');
+  if (requiredFields.some((key) => !data[key])) throw new RequestError(400, 'Completa tutti i passaggi del modulo prima di inviare.');
   if (data.office && !['Modena', 'Reggio Emilia'].includes(data.office)) throw new RequestError(400, 'Seleziona una sede valida.');
   if (data.source && (!data.source.startsWith('/') || data.source.startsWith('//') || /[?#]/.test(data.source))) throw new RequestError(400, 'Pagina di provenienza non valida.');
   if (data.attributionLandingPage && (!data.attributionLandingPage.startsWith('/') || data.attributionLandingPage.startsWith('//') || /[?#]/.test(data.attributionLandingPage))) {
@@ -114,7 +117,7 @@ export function validateBooking(input) {
     const choices = [
       [data.problem, orthodonticConcerns.map(option => option.value)],
       [data.occlusion, orthodonticBites.map(option => option.value)],
-      [data.availability, orthodonticTimings],
+      [data.availability, mobileOrthodonticQuiz ? ['', ...orthodonticTimings] : orthodonticTimings],
       [data.visitGoal, ['', ...orthodonticVisitGoals]],
       [data.initialReason, ['', ...orthodonticObjectives.map(option => option.title)]],
     ];

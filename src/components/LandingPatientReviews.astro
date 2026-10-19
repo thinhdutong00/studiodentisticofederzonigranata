@@ -62,6 +62,7 @@ const { reviews, mobileCarousel = false, mobilePopupReviews = [] } = Astro.props
         </div>
       </div>
     </div>
+    <slot name="after-carousel" />
   </div>
   {mobilePopupReviews.length > 0 && <OrthodonticReviewSheet reviews={mobilePopupReviews} />}
 </section>

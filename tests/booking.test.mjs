@@ -158,6 +158,34 @@ test('orthodontic quiz permits skipping the optional visit goal and fixes its se
   assert.equal(findCrmCall(calls).body.servizio, 'Ortodonzia e allineatori');
 });
 
+test('mobile orthodontic quiz accepts the shorter flow without inventing removed answers', async () => {
+  const { handler, calls } = fixture();
+  const answers = { ...base, ...cases['orthodontic-quiz'], kind: 'orthodontic-quiz', source: '/visita-ortodonzia/', quizFlow: 'orthodontic-mobile-v2' };
+  delete answers.availability;
+  delete answers.visitGoal;
+  const res = await invoke(handler, answers);
+  assert.equal(res.statusCode, 200);
+  const crm = findCrmCall(calls).body;
+  assert.equal(crm.giorniPreferiti, '');
+  assert.ok(!crm.messaggio.includes('Obiettivo della visita:'));
+  assert.ok(crm.messaggio.includes(answers.initialReason));
+  assert.deepEqual(findEmailCall(calls).body.to, [RECIPIENT]);
+});
+
+for (const changes of [
+  { initialReason: '' },
+  { availability: 'Risposta non prevista' },
+  { source: '/visita-ortodonzia/ortodonzia-adulti/' },
+  { quizFlow: 'versione-non-prevista' },
+]) {
+  test(`shorter orthodontic quiz rejects invalid flow data ${JSON.stringify(changes)}`, async () => {
+    const { handler, calls } = fixture();
+    const res = await invoke(handler, { ...base, ...cases['orthodontic-quiz'], kind: 'orthodontic-quiz', source: '/visita-ortodonzia/', quizFlow: 'orthodontic-mobile-v2', availability: '', visitGoal: '', ...changes });
+    assert.equal(res.statusCode, 400);
+    assert.equal(calls.length, 0);
+  });
+}
+
 for (const changes of [
   { patientAge: '' }, { patientAge: '0' }, { patientAge: '101' }, { patientAge: '20.5' },
   { problem: '' }, { problem: 'Risposta non prevista' }, { occlusion: '' }, { occlusion: 'Risposta non prevista' },

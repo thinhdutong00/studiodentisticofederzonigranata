@@ -10,6 +10,10 @@
 .orthodontic-objectives-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 54px; row-gap: 64px; }
 .orthodontic-objective { display: flex; align-items: flex-start; flex-direction: column; gap: 18px; padding: 0; border: 0; background: transparent; color: var(--text-dark); font: inherit; cursor: pointer; text-align: left; }
 .orthodontic-objective > svg { width: 42px; height: 42px; color: var(--brand-blue); stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.orthodontic-objective > .orthodontic-objective-icon-mobile,
+.orthodontic-diagram-mobile,
+.orthodontic-quiz-mobile-copy { display: none; }
+.orthodontic-diagram-desktop { display: block; width: 100%; }
 .orthodontic-objective > span { max-width: 19ch; font-size: clamp(23px, 1.8vw, 32px); font-weight: 500; line-height: 1.15; text-transform: uppercase; }
 .orthodontic-objective:hover > span { color: var(--brand-cta); }
 .orthodontic-objective:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 8px; border-radius: 3px; }
@@ -144,6 +148,15 @@
   .orthodontic-quiz-clinical-case { grid-template-columns: 1fr; max-width: 280px; }
   .orthodontic-quiz-navigation { right: 14px; bottom: 14px; }
   [data-quiz-mobile-objectives-first] .orthodontic-quiz-navigation { display: none; }
+  [data-quiz-mobile-objectives-first] .orthodontic-quiz-number,
+  [data-quiz-mobile-objectives-first] .orthodontic-objective-icon-desktop,
+  [data-quiz-mobile-objectives-first] .orthodontic-diagram-desktop,
+  [data-quiz-mobile-objectives-first] .orthodontic-quiz-desktop-copy { display: none; }
+  [data-quiz-mobile-objectives-first] .orthodontic-objective-icon-mobile,
+  [data-quiz-mobile-objectives-first] .orthodontic-diagram-mobile { display: block; }
+  [data-quiz-mobile-objectives-first] .orthodontic-diagram-mobile { width: 100%; }
+  [data-quiz-mobile-objectives-first] .orthodontic-quiz-mobile-copy { display: inline; }
+  [data-quiz-mobile-objectives-first] .orthodontic-quiz-option-picture { min-height: 110px; margin: 0 0 10px; overflow: hidden; border-radius: 7px; }
   [data-quiz-mobile-objectives-first] .orthodontic-quiz-objectives-step { width: calc(100% - 48px); }
   .orthodontic-quiz-objectives-step h2 { color: var(--brand-primary-dark); text-align: center; }
   .orthodontic-quiz-objectives-step .orthodontic-objectives-grid { gap: 16px; margin-top: 32px; }

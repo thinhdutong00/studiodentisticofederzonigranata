@@ -1,0 +1,120 @@
+---
+interface Props {
+  variant: string;
+  kind: 'alignment' | 'bite';
+  idPrefix: string;
+}
+
+const { variant, kind, idPrefix } = Astro.props;
+const enamel = `${idPrefix}-enamel`;
+const gingiva = `${idPrefix}-gingiva`;
+const sideView = variant === 'underbite';
+// Illustrative relationships: https://aaoinfo.org/whats-trending/7-common-bite-problems/
+const occlusalShapes = {
+  molar: 'M-11-11C-6-16-2-13 0-13c4-3 10-3 13 2 4 5 1 10 2 14 0 7-6 12-12 10-4 2-10 1-13-3-4-4-2-8-3-12-1-5 0-8 2-11Z',
+  premolar: 'M-9-10C-5-15 4-15 9-10c5 5 4 13 0 19-4 5-11 6-16 1-5-5-6-15-2-20Z',
+  canine: 'M-8-8C-4-14 5-14 10-8c4 5 1 12-6 17-3 3-6 3-10 0-6-4-8-11-4-17Z',
+  lateral: 'M-9-6C-6-11 5-11 9-6l1 10C8 10-7 10-10 4Z',
+  incisor: 'M-12-6C-9-11 9-11 12-6l1 10C9 10-9 10-13 4Z',
+};
+const arch = [
+  { x: 48, y: 173, rotation: -3, type: 'molar' },
+  { x: 47, y: 143, rotation: -6, type: 'molar' },
+  { x: 52, y: 114, rotation: -14, type: 'premolar' },
+  { x: 62, y: 88, rotation: -26, type: 'premolar' },
+  { x: 78, y: 65, rotation: -42, type: 'canine' },
+  { x: 101, y: 48, rotation: -23, type: 'lateral' },
+  { x: 126, y: 41, rotation: -5, type: 'incisor' },
+  { x: 154, y: 41, rotation: 5, type: 'incisor' },
+  { x: 179, y: 48, rotation: 23, type: 'lateral' },
+  { x: 202, y: 65, rotation: 42, type: 'canine' },
+  { x: 218, y: 88, rotation: 26, type: 'premolar' },
+  { x: 228, y: 114, rotation: 14, type: 'premolar' },
+  { x: 233, y: 143, rotation: 6, type: 'molar' },
+  { x: 232, y: 173, rotation: 3, type: 'molar' },
+].map((tooth, index) => {
+  const crowding = variant === 'crowded' ? {
+    4: { x: 83, y: 67, rotation: -58 },
+    5: { x: 111, y: 49, rotation: 27 },
+    6: { x: 128, y: 38, rotation: -24 },
+    7: { x: 149, y: 45, rotation: 29 },
+    8: { x: 168, y: 48, rotation: -29 },
+    9: { x: 198, y: 64, rotation: 51 },
+  }[index] : undefined;
+  const spacing = variant === 'gapped' ? {
+    5: { x: 96, rotation: -28 }, 6: { x: 119, rotation: -7 },
+    7: { x: 161, rotation: 7 }, 8: { x: 184, rotation: 28 },
+  }[index] : undefined;
+  return { ...tooth, ...crowding, ...spacing };
+}).sort((a, b) => b.y - a.y);
+
+const crown = (width: number, height: number, pointed = false) => {
+  const w = width / 2;
+  return `M${-w} 9C${-w} 1 ${-w * .6} 0 0 0C${w * .6} 0 ${w} 1 ${w} 9L${w * .92} ${height - 8}Q${w * .85} ${height - 2} 0 ${height + (pointed ? 3 : 0)}Q${-w * .85} ${height - 2} ${-w * .92} ${height - 8}Z`;
+};
+const frontXs = [31, 52, 75, 99, 126, 154, 181, 205, 228, 249];
+const upperTeeth = frontXs.map((x, index) => {
+  const edge = Math.abs(index - 4.5);
+  const central = index >= 3 && index <= 6;
+  const height = variant === 'openbite' && central ? 42 : variant === 'overbite' && central ? 80 : 61 - edge * 3;
+  return { x: x + (variant === 'crossbite' && index < 3 ? 9 : 0), y: 43 + edge * 2, width: (index === 4 || index === 5 ? 28 : edge > 3 ? 21 : 24) * (variant === 'crossbite' && index < 3 ? .83 : 1), height, flip: false, pointed: index === 2 || index === 7, layer: 1, rotation: (index - 4.5) * 1.2 };
+});
+const lowerTeeth = frontXs.map((x, index) => {
+  const edge = Math.abs(index - 4.5);
+  const central = index >= 3 && index <= 6;
+  return { x: x + (variant === 'crossbite' && index < 3 ? -3 : 0), y: 160 - edge * 2, width: index === 4 || index === 5 ? 26 : 22, height: variant === 'openbite' && central ? 40 : 55 - edge * 2.5, flip: true, pointed: index === 2 || index === 7, layer: variant === 'crossbite' && index < 3 ? 2 : 0, rotation: (4.5 - index) * 1.2 };
+});
+const sideTeeth = [34, 69, 104, 139, 176, 208].flatMap((x, index) => [
+  { x, y: 51 + index, width: index < 4 ? 33 : 25, height: 48 + index * 1.8, flip: false, pointed: index === 4, layer: 0, rotation: index * -1.2 },
+  { x: x + 18, y: 155 - index, width: index < 4 ? 33 : 25, height: 49 + index, flip: true, pointed: index === 4, layer: 1, rotation: index * 1.1 },
+]);
+const biteTeeth = (sideView ? sideTeeth : [...lowerTeeth, ...upperTeeth]).sort((a, b) => a.layer - b.layer);
+---
+
+<svg class="orthodontic-arch-diagram" viewBox="0 0 280 210" width="280" height="210" fill="none" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id={enamel} x1="0" y1="0" x2="1" y2=".6">
+      <stop stop-color="#DCE6EA" /><stop offset=".3" stop-color="#FFFEF9" /><stop offset=".62" stop-color="#FFFFFF" /><stop offset="1" stop-color="#D6E1E7" />
+    </linearGradient>
+    <linearGradient id={gingiva} x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#D4A0AA" /><stop offset=".48" stop-color="#F0CDD1" /><stop offset="1" stop-color="#DDAEB9" />
+    </linearGradient>
+  </defs>
+  <rect width="280" height="210" rx="16" fill="#F7FAFC" />
+  <ellipse cx="140" cy="189" rx="112" ry="8" fill="#D9E7F2" opacity=".6" />
+
+  {kind === 'alignment' ? <>
+    <path d="M30 178v-38C30 72 74 24 140 24s110 48 110 116v38c0 14-29 14-29 0v-38c0-52-32-86-81-86s-81 34-81 86v38c0 14-29 14-29 0Z" fill={`url(#${gingiva})`} stroke="#CA9CA7" stroke-width="1.2" />
+    <path d="M66 170v-35c0-45 28-74 74-74s74 29 74 74v35c-44 16-104 16-148 0Z" fill="#EEF0F0" />
+    <path d="M72 160v-26c0-40 24-65 68-65s68 25 68 65v26" stroke="#E1E6E8" stroke-width="2" />
+    {arch.map(tooth => <g transform={`translate(${tooth.x} ${tooth.y}) rotate(${tooth.rotation})`}>
+      <path d={occlusalShapes[tooth.type as keyof typeof occlusalShapes]} transform="translate(1 2)" fill="#9BAAB1" opacity=".22" />
+      <path d={occlusalShapes[tooth.type as keyof typeof occlusalShapes]} fill={`url(#${enamel})`} stroke="#91A4AE" stroke-width="1.25" stroke-linejoin="round" />
+      {tooth.type === 'molar' ? <>
+        <path d="M-7-5C-3-2-3 4-7 7M7-6C3-2 3 4 7 7M-3 0h6" stroke="#A2B0B7" stroke-width="1.2" stroke-linecap="round" />
+        <path d="M-8-9q8-4 16 0" stroke="#FFF" stroke-width="2.3" stroke-linecap="round" />
+      </> : tooth.type === 'premolar' || tooth.type === 'canine' ? <>
+        <path d="M0-7C-3-1 3 2 0 7" stroke="#A3B0B7" stroke-width="1.15" stroke-linecap="round" />
+        <path d="M-5-8q4-3 8-1" stroke="#FFF" stroke-width="2" stroke-linecap="round" />
+      </> : <path d="M-7 4q7 4 14 0" stroke="#FFF" stroke-width="2.2" stroke-linecap="round" />}
+    </g>)}
+    {variant === 'other' && <g>
+      <circle cx="140" cy="128" r="21" fill="#FFFFFF" stroke="#D9E7F2" stroke-width="1.5" />
+      <text x="140" y="137" fill="#256D95" font-family="Inter, sans-serif" font-size="28" text-anchor="middle">?</text>
+    </g>}
+  </> : <>
+    <path d={sideView ? 'M13 47c62-24 146-24 210 8l4 29C146 65 78 69 13 83Z' : 'M17 46C74 18 206 18 263 46v35C200 57 80 57 17 81Z'} fill={`url(#${gingiva})`} stroke="#CA9CA7" stroke-width="1.2" />
+    <path d={sideView ? 'M32 161c65 27 155 24 226-8v-29c-73 23-155 22-226 1Z' : 'M17 162c57 28 189 28 246 0v-35c-63 24-183 24-246 0Z'} fill={`url(#${gingiva})`} stroke="#CA9CA7" stroke-width="1.2" />
+    <path d="M24 99c57-21 175-21 232 0v15c-57 21-175 21-232 0Z" fill="#C9B5BB" opacity=".6" />
+    {biteTeeth.map(tooth => <g transform={`translate(${tooth.x} ${tooth.y}) rotate(${tooth.rotation}) scale(1 ${tooth.flip ? -1 : 1})`}>
+      <path d={crown(tooth.width, tooth.height, tooth.pointed)} transform="translate(1 1.4)" fill="#9FA9AF" opacity=".25" />
+      <path d={crown(tooth.width, tooth.height, tooth.pointed)} fill={`url(#${enamel})`} stroke="#91A4AE" stroke-width="1.2" stroke-linejoin="round" />
+      <path d={`M${-tooth.width * .27} 12q-2 ${tooth.height * .3} 0 ${tooth.height * .5}`} stroke="#FFFFFF" stroke-width="2" opacity=".9" stroke-linecap="round" />
+      <path d={`M${-tooth.width * .3} ${tooth.height - 7}q${tooth.width * .3} 3 ${tooth.width * .6} 0`} stroke="#FFFFFF" stroke-width="1.6" opacity=".7" stroke-linecap="round" />
+    </g>)}
+    {variant === 'other' && <g>
+      <circle cx="237" cy="43" r="19" fill="#FFF" stroke="#D9E7F2" stroke-width="1.5" />
+      <text x="237" y="51" fill="#256D95" font-family="Inter, sans-serif" font-size="25" text-anchor="middle">?</text>
+    </g>}
+  </>}
+</svg>

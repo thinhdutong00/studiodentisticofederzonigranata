@@ -6,16 +6,21 @@ interface Props {
   href?: string;
   alwaysVisible?: boolean;
   hideAtFooter?: boolean;
+  mobileLabel?: string;
+  mobileHideFrom?: string;
 }
 
-const { treatment, href, alwaysVisible = false, hideAtFooter = true } = Astro.props;
+const { treatment, href, alwaysVisible = false, hideAtFooter = true, mobileLabel, mobileHideFrom } = Astro.props;
 const requestHref = href || `/richiesta/?trattamento=${encodeURIComponent(treatment)}`;
 ---
 
-<aside class:list={['treatment-sticky-cta', alwaysVisible && 'is-visible']} data-treatment-sticky-cta data-sticky-always={alwaysVisible ? 'true' : undefined} data-sticky-hide-at-footer={hideAtFooter ? undefined : 'false'} aria-hidden={alwaysVisible ? 'false' : 'true'}>
+<aside class:list={['treatment-sticky-cta', alwaysVisible && 'is-visible']} data-treatment-sticky-cta data-sticky-always={alwaysVisible ? 'true' : undefined} data-sticky-hide-at-footer={hideAtFooter ? undefined : 'false'} data-sticky-mobile-hide-from={mobileHideFrom} aria-hidden={alwaysVisible ? 'false' : 'true'}>
   <div class="treatment-sticky-cta-inner">
     <p>{treatment}</p>
-    <a href={requestHref} tabindex={alwaysVisible ? undefined : '-1'}>Richiedi informazioni <CtaArrowIcon className="ui-glyph" /></a>
+    <a href={requestHref} tabindex={alwaysVisible ? undefined : '-1'}>
+      {mobileLabel ? <><span class="treatment-sticky-label-default">Richiedi informazioni</span><span class="treatment-sticky-label-mobile">{mobileLabel}</span></> : 'Richiedi informazioni'}
+      <CtaArrowIcon className="ui-glyph" />
+    </a>
   </div>
 </aside>
 
@@ -29,6 +34,10 @@ const requestHref = href || `/richiesta/?trattamento=${encodeURIComponent(treatm
       const action = bar.querySelector('a');
       const alwaysVisible = bar.dataset.stickyAlways === 'true';
       const hideAtFooter = bar.dataset.stickyHideAtFooter !== 'false';
+      const mobileViewport = window.matchMedia('(max-width: 720px)');
+      const mobileHideFrom = bar.dataset.stickyMobileHideFrom
+        ? document.querySelector(bar.dataset.stickyMobileHideFrom)
+        : null;
       let ticking = false;
       let lastScrollY = window.scrollY;
       let isScrollingUp = false;
@@ -53,7 +62,9 @@ const requestHref = href || `/richiesta/?trattamento=${encodeURIComponent(treatm
         const footerEndReached = footerEnd instanceof HTMLElement
           ? footerEnd.getBoundingClientRect().top <= window.innerHeight - Math.min(barHeight, 110)
           : false;
-        const showBar = alwaysVisible || (isAfterHero && (!hideAtFooter || !footerEndReached || isScrollingUp));
+        const mobileHideFromReached = mobileViewport.matches && mobileHideFrom instanceof HTMLElement
+          && mobileHideFrom.getBoundingClientRect().top <= window.innerHeight;
+        const showBar = !mobileHideFromReached && (alwaysVisible || (isAfterHero && (!hideAtFooter || !footerEndReached || isScrollingUp)));
 
         setVisible(showBar);
         ticking = false;
@@ -159,7 +170,12 @@ const requestHref = href || `/richiesta/?trattamento=${encodeURIComponent(treatm
     line-height: 1;
   }
 
+  .treatment-sticky-cta a :is(.treatment-sticky-label-default, .treatment-sticky-label-mobile) { font: inherit; }
+  .treatment-sticky-label-mobile { display: none; }
+
   @media (max-width: 720px) {
+    .treatment-sticky-label-default { display: none; }
+    .treatment-sticky-label-mobile { display: inline; }
     .treatment-sticky-cta-inner {
       width: min(100% - 28px, 1840px);
       min-height: 112px;

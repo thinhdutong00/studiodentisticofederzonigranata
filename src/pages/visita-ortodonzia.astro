@@ -6,6 +6,7 @@ import LandingPatientReviews from '../components/LandingPatientReviews.astro';
 import OrthodonticQuiz from '../components/OrthodonticQuiz.astro';
 import OrthodonticIntroduction from '../components/OrthodonticIntroduction.astro';
 import OrthodonticLinkArrow from '../components/OrthodonticLinkArrow.astro';
+import OrthodonticProfessionalSheet from '../components/OrthodonticProfessionalSheet.astro';
 import OrthodonticSmileCarousel from '../components/OrthodonticSmileCarousel.astro';
 import OrthodonticAgeSection from '../components/OrthodonticAgeSection.astro';
 import OrthodonticConsultationForm from '../components/OrthodonticConsultationForm.astro';
@@ -15,7 +16,6 @@ import TreatmentStickyCta from '../components/TreatmentStickyCta.astro';
 import { featuredPatientReviews } from '../data/reviews';
 import { orthodonticReviews } from '../data/orthodonticReviews';
 import { site } from '../data/site';
-import { treatmentMarketingPages } from '../data/treatmentMarketing';
 import '../styles/inter-font.css';
 import '../styles/visit-landing.css';
 import '../styles/orthodontic-landing.css';
@@ -62,7 +62,40 @@ const faqs = [
   { question: 'Quanto può incidere sulla quotidianità?', answer: 'Servono cura dell’igiene, uso del dispositivo e controlli programmati. Possono comparire fastidi durante l’adattamento. Alimentazione, gestione degli allineatori e contenzione finale vengono spiegate secondo il piano individuale.' },
   { question: 'Come vengono definiti i costi?', answer: 'Dopo la valutazione viene presentato un preventivo personalizzato, con le prestazioni previste. Complessità del caso, dispositivo e percorso necessario incidono sul costo. Il questionario raccoglie la richiesta di visita.' },
 ];
-const mobileFaqs = treatmentMarketingPages['/ortodonzia-allineatori-invisibili/'].faqs;
+const mobileFaqs = [
+  {
+    question: 'Gli allineatori trasparenti Invisalign® sono adatti a tutti?',
+    answer: 'Gli allineatori trasparenti permettono di correggere numerose problematiche ortodontiche in modo discreto. Tuttavia, non sono indicati per ogni situazione. Durante la visita valuteremo se questa soluzione è adatta a te o se è preferibile un altro trattamento.',
+  },
+  {
+    question: 'Cosa succede durante la prima visita ortodontica?',
+    answer: "Ascolteremo ciò che desideri migliorare e valuteremo l'allineamento dei denti, il morso e la salute orale. Ti illustreremo le possibili soluzioni e gli eventuali approfondimenti necessari per definire un piano di trattamento.",
+  },
+  {
+    question: 'Una volta terminato il trattamento, i denti rimarranno allineati?',
+    answer: 'Al termine del percorso è prevista una fase di contenzione, fondamentale per aiutare a mantenere il risultato. Ti indicheremo i dispositivi e le attenzioni necessarie per prenderti cura del tuo sorriso anche negli anni successivi.',
+  },
+  {
+    question: 'È possibile allineare i denti anche da adulti?',
+    answer: "Assolutamente sì. Non esiste un'età massima prestabilita per iniziare un trattamento ortodontico. La possibilità di intervenire dipende soprattutto dalla salute di denti, gengive e strutture di sostegno.",
+  },
+  {
+    question: 'Quanto tempo serve per ottenere il sorriso desiderato?',
+    answer: 'Ogni sorriso ha i suoi tempi. La durata dipende dalla posizione iniziale dei denti, dalla complessità degli spostamenti e dal trattamento scelto. Dopo una valutazione approfondita potremo fornirti una stima personalizzata.',
+  },
+  {
+    question: 'Il trattamento ortodontico fa male?',
+    answer: "Durante i primi giorni o dopo alcune regolazioni potresti avvertire una sensazione di pressione o sensibilità ai denti. Generalmente si tratta di fastidi temporanei, legati all'adattamento al dispositivo e ai movimenti dentali.",
+  },
+  {
+    question: 'Dovrò cambiare le mie abitudini quotidiane?',
+    answer: "Dipende dal trattamento. Gli allineatori trasparenti sono rimovibili durante i pasti, mentre gli apparecchi fissi richiedono alcune attenzioni nell'alimentazione e nell'igiene orale. Ti spiegheremo come affrontare il percorso nella tua quotidianità.",
+  },
+  {
+    question: 'Quanto costa un trattamento ortodontico?',
+    answer: 'Il costo dipende dalla complessità del caso, dal dispositivo utilizzato e dalla durata del percorso. Dopo la valutazione e gli eventuali accertamenti necessari, riceverai un preventivo personalizzato con le prestazioni previste.',
+  },
+];
 const structuredFaqs = [
   ...faqs,
   ...mobileFaqs.filter((item) => !faqs.some((faq) => faq.question === item.question)),
@@ -303,7 +336,7 @@ const structuredData = {
               <p class="ortho-hero-lead">
                 <span class="ortho-hero-lead-desktop">Sorridere nelle fotografie, ridere con gli amici e guardarti allo specchio sentendoti davvero a tuo agio. Con un percorso ortodontico personalizzato puoi prenderti cura dell'armonia del tuo sorriso e avvicinarti a quello che hai sempre desiderato.</span>
                 <span class="ortho-hero-lead-mobile">
-                  Allinea i tuoi denti con gli allineatori trasparenti <strong class="ortho-hero-invisalign">Invisalign®</strong>, apparecchi tradizionali o linguali. Scopri il percorso ortodontico più adatto a te, pensato per la tua salute, estetica e funzionalità orale.
+                  Allinea i tuoi denti con gli allineatori trasparenti <strong class="ortho-hero-invisalign">Invisalign®</strong>, apparecchi tradizionali o linguali. Scopri il percorso ortodontico più adatto a te, pensato per la tua salute e funzionalità orale.
                 </span>
               </p>
               <a class="ortho-cta ortho-hero-quiz-link" href="#il-tuo-obiettivo" data-quiz-cta>Prenota una visita ortodontica <span aria-hidden="true">↗</span></a>
@@ -314,6 +347,7 @@ const structuredData = {
       </section>
 
       <OrthodonticIntroduction>
+        <Fragment slot="personalized-title"><span class="ortho-personalized-title-desktop">Ogni sorriso è unico. Anche il percorso per valorizzarlo.</span><span class="ortho-personalized-title-mobile">Il tuo percorso sarà seguito dalla</span></Fragment>
         <Fragment slot="after-benefits">
           <OrthodonticSmileCarousel />
           <OrthodonticAgeSection />
@@ -335,7 +369,8 @@ const structuredData = {
               <div>
                 <h3>Dott.ssa Chiara Federzoni</h3>
                 <p>Odontoiatra, laureata con lode a Modena nel 1987. Si occupa di ortodonzia nello studio dal 1992.</p>
-                <a class="ortho-text-link" href="/chi-siamo/">Formazione e percorso professionale <OrthodonticLinkArrow /></a>
+                <a class="ortho-text-link ortho-professional-desktop-link" href="/chi-siamo/">Formazione e percorso professionale <OrthodonticLinkArrow /></a>
+                <button class="ortho-text-link ortho-professional-mobile-trigger" type="button" aria-haspopup="dialog" aria-controls="ortho-professional-sheet" aria-expanded="false" data-ortho-professional-open>Formazione e percorso professionale <OrthodonticLinkArrow /></button>
               </div>
             </aside>
           </div>
@@ -347,7 +382,8 @@ const structuredData = {
 
       <LandingPatientReviews reviews={reviews} mobileCarousel mobilePopupReviews={orthodonticReviews}>
         <Fragment slot="eyebrow"><span class="ortho-review-eyebrow-desktop">Esperienze dei pazienti</span></Fragment>
-        <Fragment slot="title">I <span class="ortho-review-title-emphasis">nostri pazienti</span> dicono</Fragment>
+        <Fragment slot="title"><span class="ortho-review-title-desktop">I <span class="ortho-review-title-emphasis">nostri pazienti</span> dicono</span><span class="ortho-review-title-mobile"><strong class="ortho-review-title-emphasis">Esperienze</strong> di chi ci ha scelto</span></Fragment>
+        <p slot="after-carousel" class="ortho-review-proof-caption">Oltre 200 recensioni positive verificate con una media di 5,0 stelle</p>
       </LandingPatientReviews>
       <section class="ortho-experience-mobile" id="esperienza-studio" aria-labelledby="ortho-experience-over ortho-experience-title">
         <div class="ortho-shell">
@@ -357,17 +393,13 @@ const structuredData = {
         </div>
       </section>
       <OrthodonticQuiz mobileObjectivesFirst>
-        <svg slot="questionnaire-icon" class="ortho-questionnaire-check-icon" viewBox="0 0 48 48" width="56" height="56" fill="none" aria-hidden="true" focusable="false">
-          <rect x="5" y="6" width="38" height="36" rx="5" />
-          <path d="M5 18h38M5 30h38M20 6v36M25 12h12M25 24h12M25 36h12" />
-          <path class="ortho-questionnaire-checks" d="m10 12 3 3 4-5m-7 14 3 3 4-5m-7 14 3 3 4-5" />
-        </svg>
+        <img slot="questionnaire-icon" class="ortho-questionnaire-aligner-icon" src="/assets/optimized/ortodonzia-allineatore-quiz-frontale-384.webp" alt="" aria-hidden="true" width="384" height="135" loading="lazy" decoding="async" />
       </OrthodonticQuiz>
 
       <section class="ortho-section ortho-faq" aria-labelledby="ortho-faq-title">
         <div class="ortho-shell ortho-split">
           <div class="ortho-section-heading">
-            <p class="ortho-eyebrow"><span class="ortho-faq-eyebrow-desktop">Tempi, impegno e costi</span><span class="ortho-faq-eyebrow-mobile">Il tuo percorso ortodontico</span></p>
+            <p class="ortho-eyebrow"><span class="ortho-faq-eyebrow-desktop">Tempi, impegno e costi</span><span class="ortho-faq-eyebrow-mobile">Ortodonzia e allineatori trasparenti</span></p>
             <h2 id="ortho-faq-title">Domande frequenti</h2>
             <p>Indicazioni per orientarti nella scelta. Durante la visita potrai capire cosa richiederebbe il percorso nella tua situazione.</p>
           </div>
@@ -375,12 +407,21 @@ const structuredData = {
             {faqs.map((faq, index) => <details open={index === 0}><summary>{faq.question}<span aria-hidden="true">+</span></summary><p>{faq.answer}</p></details>)}
           </div>
           <div class="ortho-faq-mobile-list">
-            {mobileFaqs.map((faq, index) => (
+            {mobileFaqs.slice(0, 3).map((faq, index) => (
               <details name="ortho-mobile-faq" open={index === 0}>
                 <summary><span>{faq.question}</span><i aria-hidden="true"></i></summary>
                 <div class="ortho-faq-mobile-answer"><p>{faq.answer}</p></div>
               </details>
             ))}
+            <button class="ortho-cta ortho-faq-read-more" type="button" aria-expanded="false" aria-controls="ortho-mobile-extra-faqs">Leggi di più</button>
+            <div id="ortho-mobile-extra-faqs" hidden>
+              {mobileFaqs.slice(3).map((faq) => (
+                <details name="ortho-mobile-faq">
+                  <summary><span>{faq.question}</span><i aria-hidden="true"></i></summary>
+                  <div class="ortho-faq-mobile-answer"><p>{faq.answer}</p></div>
+                </details>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -405,7 +446,8 @@ const structuredData = {
       </Footer>
     </div>
 
-    <TreatmentStickyCta treatment={orthodonticTreatmentLabel} href={orthodonticRequestHref} hideAtFooter={false} />
+    <OrthodonticProfessionalSheet />
+    <TreatmentStickyCta treatment={orthodonticTreatmentLabel} href={orthodonticRequestHref} hideAtFooter={false} mobileLabel="Inizia il tuo percorso" mobileHideFrom="#ortho-final" />
     <CookieBanner />
 
     <script>
@@ -442,17 +484,40 @@ const structuredData = {
       const reviewsSection = document.querySelector<HTMLElement>('.ortho-landing-main #recensioni');
       const ageSection = document.querySelector<HTMLElement>('.ortho-landing-main #ortodonzia-tutte-le-eta');
       const experienceSection = document.querySelector<HTMLElement>('.ortho-landing-main #esperienza-studio');
-      if (reviewsSection && ageSection) {
+      const faqSection = document.querySelector<HTMLElement>('.ortho-landing-main .ortho-faq');
+      const faqReadMore = faqSection?.querySelector<HTMLButtonElement>('.ortho-faq-read-more');
+      const extraFaqs = faqSection?.querySelector<HTMLElement>('#ortho-mobile-extra-faqs');
+      if (faqReadMore && extraFaqs) {
+        faqReadMore.addEventListener('click', () => {
+          extraFaqs.hidden = false;
+          faqReadMore.setAttribute('aria-expanded', 'true');
+          faqReadMore.hidden = true;
+          extraFaqs.querySelector<HTMLElement>('summary')?.focus({ preventScroll: true });
+        }, { once: true });
+      }
+
+      if (reviewsSection && faqSection) {
         const originalReviewsPosition = document.createComment('Original patient reviews position');
         reviewsSection.before(originalReviewsPosition);
         const reviewsViewport = window.matchMedia('(max-width: 720px)');
         const updateReviewsPosition = () => {
-          if (reviewsViewport.matches) ageSection.after(reviewsSection);
+          if (reviewsViewport.matches) faqSection.before(reviewsSection);
           else originalReviewsPosition.after(reviewsSection);
-          if (experienceSection) reviewsSection.after(experienceSection);
         };
         updateReviewsPosition();
         reviewsViewport.addEventListener('change', updateReviewsPosition);
+      }
+
+      if (experienceSection && smileSection) {
+        const originalExperiencePosition = document.createComment('Original studio experience position');
+        experienceSection.before(originalExperiencePosition);
+        const experienceViewport = window.matchMedia('(max-width: 720px)');
+        const updateExperiencePosition = () => {
+          if (experienceViewport.matches) smileSection.before(experienceSection);
+          else originalExperiencePosition.after(experienceSection);
+        };
+        updateExperiencePosition();
+        experienceViewport.addEventListener('change', updateExperiencePosition);
       }
 
       const googleRating = reviewsSection?.querySelector<HTMLAnchorElement>('.patient-reviews-rating');
@@ -486,6 +551,7 @@ const structuredData = {
 
       const professional = document.querySelector<HTMLElement>('.ortho-landing-main .ortho-professional');
       const personalizedSteps = document.querySelector<HTMLElement>('.ortho-landing-main #percorso-ortodontico .ortho-personalized-steps');
+      const professionalCta = document.querySelector<HTMLAnchorElement>('.ortho-landing-main #percorso-ortodontico .ortho-personalized-cta');
       if (professional && personalizedSteps) {
         const originalProfessionalPosition = document.createComment('Original professional position');
         professional.before(originalProfessionalPosition);
@@ -493,6 +559,8 @@ const structuredData = {
         const updateProfessionalPosition = () => {
           if (professionalViewport.matches) personalizedSteps.before(professional);
           else originalProfessionalPosition.after(professional);
+          professionalCta?.setAttribute('href', professionalViewport.matches ? '#ortho-final' : '#il-tuo-obiettivo');
+          professionalCta?.toggleAttribute('data-quiz-cta', !professionalViewport.matches);
         };
         updateProfessionalPosition();
         professionalViewport.addEventListener('change', updateProfessionalPosition);
@@ -502,7 +570,11 @@ const structuredData = {
 </html>
 
 <style>
-  .ortho-questionnaire-check-icon { display: none; }
+  .ortho-professional-mobile-trigger { display: none; }
+  .ortho-personalized-title-mobile { display: none; }
+  .ortho-review-title-mobile { display: none; }
+  .ortho-review-proof-caption { display: none; }
+  .ortho-questionnaire-aligner-icon { display: none; }
   .ortho-faq-mobile-list { display: none; }
   .ortho-faq-eyebrow-mobile { display: none; }
   .ortho-experience-mobile { display: none; }
@@ -512,6 +584,12 @@ const structuredData = {
   .ortho-hero-lead-mobile { display: none; }
 
   @media (max-width: 720px) {
+    .ortho-professional-desktop-link { display: none; }
+    .ortho-professional-mobile-trigger { display: inline-flex; padding: 0; border: 0; background: transparent; font-family: inherit; text-decoration: underline; cursor: pointer; }
+    .ortho-personalized-title-desktop { display: none; }
+    .ortho-personalized-title-mobile { display: inline; }
+    .ortho-review-title-desktop { display: none; }
+    .ortho-review-title-mobile { display: inline; }
     .ortho-faq-eyebrow-desktop { display: none; }
     .ortho-faq-eyebrow-mobile { display: inline; }
     .ortho-review-eyebrow-desktop { display: none; }
@@ -540,8 +618,10 @@ const structuredData = {
     }
     .ortho-experience-photo { display: block; width: 100%; height: auto; margin-top: 28px; border-radius: 18px; }
     :global(.ortho-landing-main #percorso-ortodontico) { padding-top: 32px; }
+    :global(.ortho-landing-main #percorso-ortodontico .ortho-professional > img) { width: 120px; height: 145px; }
     :global(.ortho-landing-main #percorso-ortodontico .ortho-eyebrow),
-    :global(.ortho-landing-main #percorso-ortodontico .ortho-intro-lead) { display: none; }
+    :global(.ortho-landing-main #percorso-ortodontico .ortho-intro-lead),
+    :global(.ortho-landing-main #percorso-ortodontico .ortho-personalized-steps) { display: none; }
     .ortho-hero-eyebrow-desktop { display: none; }
     .ortho-hero-overlay .ortho-hero-eyebrow-mobile {
       position: absolute;
@@ -579,6 +659,41 @@ const structuredData = {
 
     .ortho-hero-invisalign { font-weight: 700; }
 
+    :global(.ortho-landing-main #recensioni) {
+      position: relative;
+      overflow: clip;
+      isolation: isolate;
+      background: var(--soft-blue-bg);
+      color: var(--brand-primary-dark);
+    }
+    :global(.ortho-landing-main #recensioni::before) {
+      content: '';
+      position: absolute;
+      z-index: 0;
+      top: 0;
+      right: 0;
+      height: 100%;
+      aspect-ratio: 488 / 496;
+      background: url('/assets/decorations/google-g-white.svg') center / contain no-repeat;
+      transform: translateX(33.333333%);
+      pointer-events: none;
+    }
+    :global(.ortho-landing-main #recensioni > .landing-shell) { position: relative; z-index: 1; }
+    .ortho-review-proof-caption {
+      display: block;
+      margin: 16px 0 0;
+      color: var(--muted-text);
+      font-size: 11px;
+      font-weight: 400;
+      line-height: 1.5;
+      text-align: center;
+    }
+    :global(.ortho-landing-main #recensioni .patient-reviews-intro h2) { color: var(--brand-primary-dark); }
+    :global(.ortho-landing-main #recensioni :is(.patient-review, .patient-reviews-rating)) { border-color: var(--border); background: var(--surface-white); color: var(--brand-primary-dark); }
+    :global(.ortho-landing-main #recensioni .patient-review blockquote) { color: var(--text-dark); }
+    :global(.ortho-landing-main #recensioni .patient-review footer strong) { color: var(--brand-primary-dark); }
+    :global(.ortho-landing-main #recensioni :is(.patient-review footer small, .patient-reviews-rating-caption)) { color: var(--muted-text); }
+    :global(.ortho-landing-main #recensioni .patient-reviews-link) { color: var(--brand-cta); }
     :global(.ortho-landing-main #recensioni .patient-reviews-description) { display: none; }
     :global(.ortho-landing-main #recensioni .landing-kicker) { display: none; }
     :global(.ortho-landing-main #recensioni .patient-reviews-intro h2) { margin-top: 0; }
@@ -599,8 +714,7 @@ const structuredData = {
       text-align: left;
     }
     :global(.ortho-landing-main .ortho-age-section.ortho-age-braces-in-footer) { padding-bottom: 48px; }
-    :global(.ortho-landing-main .ortho-footer-braces) { position: relative; overflow: hidden; margin: 28px -16px 0; }
-    :global(.ortho-landing-main #footer .ortho-age-braces) { position: relative; bottom: auto; margin: 0; }
+    :global(.ortho-landing-main .ortho-footer-braces) { display: none; }
     :global(.ortho-landing-main #footer .footer-mobile-section[aria-labelledby="footer-mobile-contacts-title"]),
     :global(.ortho-landing-main #footer .footer-mobile-section[aria-labelledby="footer-mobile-social-title"]),
     :global(.ortho-landing-main #footer .footer-mobile-content) { display: none; }
@@ -623,12 +737,15 @@ const structuredData = {
     .ortho-faq { background: var(--surface-white); }
     .ortho-faq-list { display: none; }
     .ortho-faq-mobile-list { display: block; }
+    .ortho-faq-read-more { width: 100%; margin-top: 24px; }
+    .ortho-faq-read-more[hidden],
+    #ortho-mobile-extra-faqs[hidden] { display: none; }
 
     .ortho-faq-mobile-list details {
       border-bottom: 2px solid color-mix(in srgb, var(--brand-cta) 72%, transparent);
     }
 
-    .ortho-faq-mobile-list details:first-child {
+    .ortho-faq-mobile-list > details:first-child {
       border-top: 2px solid color-mix(in srgb, var(--brand-cta) 72%, transparent);
     }
 
@@ -771,18 +888,13 @@ const structuredData = {
       text-align: center;
     }
 
-    .ortho-questionnaire-check-icon {
+    .ortho-questionnaire-aligner-icon {
       display: block;
-      width: 56px;
-      height: 56px;
+      width: 128px;
+      height: auto;
       margin-inline: auto;
-      stroke: var(--brand-blue);
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+      object-fit: contain;
     }
-
-    .ortho-questionnaire-checks { stroke: var(--surface-white); }
 
     .ortho-hero-overlay .landing-hero-stage {
       display: block;

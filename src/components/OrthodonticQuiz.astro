@@ -2,6 +2,7 @@
 import BookingFields from './BookingFields.astro';
 import BookingPrivacy from './BookingPrivacy.astro';
 import OrthodonticDiagram from './OrthodonticDiagram.astro';
+import OrthodonticArchDiagram from './OrthodonticArchDiagram.astro';
 import { site } from '../data/site';
 import {
   orthodonticBites,
@@ -42,7 +43,7 @@ const questions = [
       <div class="orthodontic-objectives-grid">
         {orthodonticObjectives.map(objective => (
           <button class="orthodontic-objective" type="button" data-quiz-open data-quiz-objective={objective.title} aria-haspopup="dialog">
-            <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <svg class={mobileObjectivesFirst && ['align', 'spark'].includes(objective.icon) ? 'orthodontic-objective-icon-desktop' : undefined} viewBox="0 0 48 48" fill="none" aria-hidden="true">
               {objective.icon === 'align' && <>
                 <path d="M15 27v-8a9 9 0 0 1 18 0v8a4 4 0 0 0 8 0V16a17 17 0 0 0-34 0v15a9 9 0 0 0 18 0V19a4 4 0 0 0-8 0v11" />
               </>}
@@ -59,6 +60,15 @@ const questions = [
                 <path d="M7 23c9 3 25 3 34 0" />
               </>}
             </svg>
+            {mobileObjectivesFirst && objective.icon === 'align' && <svg class="orthodontic-objective-icon-mobile" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+              <path d="M6 16c8-4 28-4 36 0l-2 13c-1 7-31 7-32 0L6 16Z" />
+              <path d="M15 14v17m9-18v19m9-18v17M9 25c8 3 22 3 30 0M12 40h24m-20-4-4 4 4 4m16-8 4 4-4 4" />
+            </svg>}
+            {mobileObjectivesFirst && objective.icon === 'spark' && <svg class="orthodontic-objective-icon-mobile" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+              <path d="M32 17a15 15 0 1 0 3 10M13 26c2 7 13 7 15 0" />
+              <circle cx="15" cy="20" r="1.2" fill="currentColor" stroke="none" /><circle cx="26" cy="20" r="1.2" fill="currentColor" stroke="none" />
+              <path d="m37 5 2.5 7.5L47 15l-7.5 2.5L37 25l-2.5-7.5L27 15l7.5-2.5L37 5Z" />
+            </svg>}
             <span>{objective.title}</span>
           </button>
         ))}
@@ -92,6 +102,7 @@ const questions = [
   <form action="/api/booking" method="post" novalidate data-booking-kind="orthodontic-quiz" data-orthodontic-quiz-form>
     <BookingFields />
     <input type="hidden" name="initialReason" value="" />
+    {mobileObjectivesFirst && <input type="hidden" name="quizFlow" value="orthodontic-mobile-v2" data-quiz-mobile-flow disabled />}
     <input type="hidden" name="message" value={contextLabel ? `Richiesta dalla landing ortodonzia — ${contextLabel}` : 'Richiesta dalla landing ortodonzia — questionario del sorriso'} />
     {contextLabel && <input type="hidden" name="treatmentCategory" value={contextLabel} />}
 
@@ -114,7 +125,7 @@ const questions = [
     </section>
 
     {questions.map(question => <>
-      <section class={`orthodontic-quiz-screen orthodontic-quiz-question orthodontic-quiz-question-${question.type}`} hidden data-quiz-panel data-question={question.number}>
+      <section class={`orthodontic-quiz-screen orthodontic-quiz-question orthodontic-quiz-question-${question.type}`} hidden data-quiz-panel data-question={question.number} data-quiz-desktop-only={mobileObjectivesFirst && ['availability', 'visitGoal'].includes(question.name) || undefined}>
         <div class="orthodontic-quiz-question-title">
           <span class="orthodontic-quiz-number" aria-hidden="true">{question.number}</span>
           <h2 id={`orthodontic-question-${question.number}`} tabindex="-1">{question.title}{question.required && <span aria-label="Campo obbligatorio">*</span>}</h2>
@@ -132,7 +143,12 @@ const questions = [
               <label class="orthodontic-quiz-option">
                 <input type="radio" name={question.name} value={option.value} required={question.required} />
                 <span class="orthodontic-quiz-option-body">
-                  {question.type === 'pictures' && <span class="orthodontic-quiz-option-picture"><OrthodonticDiagram variant={'illustration' in option ? option.illustration : 'other'} /></span>}
+                  {question.type === 'pictures' && <span class="orthodontic-quiz-option-picture">
+                    {mobileObjectivesFirst ? <>
+                      <span class="orthodontic-diagram-desktop"><OrthodonticDiagram variant={'illustration' in option ? option.illustration : 'other'} /></span>
+                      <span class="orthodontic-diagram-mobile"><OrthodonticArchDiagram variant={'illustration' in option ? option.illustration : 'other'} kind={question.name === 'problem' ? 'alignment' : 'bite'} idPrefix={`ortho-${question.name}-${index}`} /></span>
+                    </> : <OrthodonticDiagram variant={'illustration' in option ? option.illustration : 'other'} />}
+                  </span>}
                   <span class="orthodontic-quiz-option-label">
                     {question.type === 'choices' && <span class="orthodontic-quiz-letter" aria-hidden="true">{String.fromCharCode(65 + index)}</span>}
                     <span>{option.value}</span>
@@ -155,7 +171,7 @@ const questions = [
             <span class="landing-visually-hidden">{question.label}</span>
             <div class={question.type === 'tel' ? 'orthodontic-quiz-phone' : ''}>
               {question.type === 'tel' && <span class="orthodontic-quiz-phone-prefix">IT +39</span>}
-              <input type={question.type} name={question.name} placeholder={question.placeholder} autocomplete={question.autocomplete} required min={question.type === 'number' ? 1 : undefined} max={question.type === 'number' ? 100 : undefined} step={question.type === 'number' ? 1 : undefined} maxlength={question.name === 'fullName' ? 120 : question.type === 'tel' ? 30 : question.type === 'email' ? 254 : undefined} minlength={question.name === 'fullName' ? 2 : question.type === 'tel' ? 6 : undefined} inputmode={question.type === 'number' ? 'numeric' : undefined} />
+              <input id={`orthodontic-quiz-${question.name}`} type={question.type} name={question.name} placeholder={question.placeholder} autocomplete={question.autocomplete} required min={question.type === 'number' ? 1 : undefined} max={question.type === 'number' ? 100 : undefined} step={question.type === 'number' ? 1 : undefined} maxlength={question.name === 'fullName' ? 120 : question.type === 'tel' ? 30 : question.type === 'email' ? 254 : undefined} minlength={question.name === 'fullName' ? 2 : question.type === 'tel' ? 6 : undefined} inputmode={question.type === 'number' ? 'numeric' : undefined} />
             </div>
           </label>
         )}
@@ -180,7 +196,7 @@ const questions = [
           <figure><img src="/assets/original/2020/11/281.jpg" alt="Lo stesso caso ortodontico dello studio dopo il trattamento" width="600" height="300" loading="lazy" /><figcaption>Dopo</figcaption></figure>
         </div>
         <p class="orthodontic-quiz-caption">Il piano e i risultati dipendono dal singolo caso.</p>
-        <button class="orthodontic-quiz-button" type="button" data-quiz-next>Avanti</button>
+        <button class="orthodontic-quiz-button" type="button" data-quiz-next>{mobileObjectivesFirst ? <><span class="orthodontic-quiz-desktop-copy">Avanti</span><span class="orthodontic-quiz-mobile-copy">Prenota una visita</span></> : 'Avanti'}</button>
       </section>}
     </>)}
   </form>
