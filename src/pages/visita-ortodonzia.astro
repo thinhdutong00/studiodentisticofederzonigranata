@@ -35,7 +35,7 @@ const reviews = featuredPatientReviews.filter((review) => reviewAuthors.has(revi
 
 const offices = site.offices;
 const orthodonticTreatmentLabel = 'Ortodonzia e Allineatori invisibili (adulti e bimbi)';
-const orthodonticRequestHref = new URL(`/richiesta/?trattamento=${encodeURIComponent(orthodonticTreatmentLabel)}`, site.source).toString();
+const orthodonticRequestHref = `/richiesta/?trattamento=${encodeURIComponent(orthodonticTreatmentLabel)}`;
 
 const footerLinks = [
   { label: 'La tua prima visita', href: '#benefici-ortodontici' },
@@ -298,7 +298,7 @@ const structuredData = {
       </section>
 
       <OrthodonticIntroduction>
-        <Fragment slot="personalized-title"><span class="ortho-personalized-title-mobile">Il tuo percorso sarà seguito dalla</span></Fragment>
+        <Fragment slot="personalized-title">Il tuo sorriso merita esperienza.</Fragment>
         <Fragment slot="after-benefits">
           <section class="ortho-experience-mobile" id="esperienza-studio" aria-labelledby="ortho-experience-over ortho-experience-title">
             <div class="ortho-shell">
@@ -314,11 +314,11 @@ const structuredData = {
           <OrthodonticAgeSection />
         </Fragment>
         <Fragment slot="professional">
-          <aside class="ortho-professional" aria-label="Il professionista">
+          <aside class="ortho-professional" aria-label="La professionista">
             <img src="/assets/optimized/chiara-federzoni-ortodonzia-720.webp" alt="Dottoressa Chiara Federzoni, odontoiatra dello Studio Federzoni Granata" width="720" height="479" loading="lazy" decoding="async" />
             <div>
               <h3>Dott.ssa Chiara Federzoni</h3>
-              <p>Odontoiatra, laureata con lode a Modena nel 1987. Si occupa di ortodonzia nello studio dal 1992.</p>
+              <p>Da oltre 30 anni si occupa di ortodonzia, accompagnando i pazienti attraverso percorsi personalizzati. Laureata con lode in Odontoiatria a Modena nel 1987.</p>
               <a class="ortho-text-link ortho-professional-desktop-link" href="/chi-siamo/">Formazione e percorso professionale <OrthodonticLinkArrow /></a>
               <button class="ortho-text-link ortho-professional-mobile-trigger" type="button" aria-haspopup="dialog" aria-controls="ortho-professional-sheet" aria-expanded="false" data-ortho-professional-open>Formazione e percorso professionale <OrthodonticLinkArrow /></button>
             </div>
@@ -460,7 +460,7 @@ const structuredData = {
     }
     .ortho-experience-photo { display: block; width: 100%; height: auto; margin-top: 28px; border-radius: 18px; }
     :global(.ortho-landing-main #percorso-ortodontico) { padding-top: 32px; }
-    :global(.ortho-landing-main #percorso-ortodontico .ortho-professional > img) { width: 120px; height: 145px; }
+    :global(.ortho-landing-main #percorso-ortodontico .ortho-professional > img) { width: 104px; height: 136px; }
     :global(.ortho-landing-main #percorso-ortodontico .ortho-eyebrow),
     :global(.ortho-landing-main #percorso-ortodontico .ortho-intro-lead),
     :global(.ortho-landing-main #percorso-ortodontico .ortho-personalized-steps) { display: none; }
@@ -568,7 +568,7 @@ const structuredData = {
     :global(.ortho-landing-main .patient-reviews-rating .patient-reviews-rating-caption) { margin-top: 8px; font-size: 11px; }
     :global(.ortho-landing-main .patient-reviews-rating .patient-reviews-link) { margin-top: 12px; }
 
-    :global(.ortho-landing-main #contenuto :is(#landing-title, #ortho-personalized-title, #ortho-faq-title)) {
+    :global(.ortho-landing-main #contenuto :is(#landing-title, #ortho-faq-title)) {
       color: var(--brand-cta);
     }
 

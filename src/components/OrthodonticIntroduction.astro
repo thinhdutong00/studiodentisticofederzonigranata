@@ -134,11 +134,11 @@ const steps = [
 <slot name="after-benefits" />
 
 <section class="ortho-section ortho-personalized-path" id="percorso-ortodontico" aria-labelledby="ortho-personalized-title">
-  <div class="ortho-shell">
+  <div class="ortho-shell ortho-professional-card">
     <div class="ortho-section-heading ortho-intro-heading">
       <div>
-        <p class="ortho-eyebrow">Un percorso su misura</p>
-        <h2 id="ortho-personalized-title"><slot name="personalized-title">Ogni sorriso è unico. Anche il percorso per valorizzarlo.</slot></h2>
+        <p class="ortho-professional-eyebrow">La professionista al tuo fianco</p>
+        <h2 id="ortho-personalized-title"><slot name="personalized-title">Il tuo sorriso merita esperienza.</slot></h2>
       </div>
       <p class="ortho-intro-lead">
         <span class="ortho-personalized-copy-desktop">Non esiste un trattamento ortodontico uguale per tutti. Ogni percorso parte dall'ascolto delle tue esigenze e da un'attenta valutazione della salute e dell'allineamento dei denti, per individuare la soluzione più adatta al tuo sorriso.</span>
@@ -231,6 +231,36 @@ const steps = [
 
   .ortho-personalized-path {
     background: var(--soft-blue-bg);
+  }
+
+  .ortho-professional-card {
+    display: grid;
+    gap: 24px;
+    padding: clamp(22px, 3vw, 40px);
+    border: 0;
+    border-radius: 24px;
+    background: var(--surface-white);
+    text-align: left;
+  }
+
+  .ortho-professional-eyebrow {
+    margin: 0 0 14px;
+    color: var(--muted-text);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: normal;
+    text-transform: uppercase;
+  }
+
+  #percorso-ortodontico #ortho-personalized-title {
+    max-width: none;
+    margin: 0;
+    color: var(--brand-primary-dark);
+    font-size: clamp(28px, 3vw, 36px);
+    font-weight: 700;
+    line-height: 1.15;
+    text-wrap: pretty;
   }
 
   .ortho-intro-heading {
@@ -343,48 +373,61 @@ const steps = [
     .ortho-personalized-path {
       display: block;
       background: var(--surface-white);
-      text-align: center;
+      text-align: left;
     }
 
     .ortho-personalized-path .ortho-intro-heading h2,
     .ortho-personalized-path .ortho-intro-lead,
     .ortho-personalized-step p {
-      margin-inline: auto;
+      margin-inline: 0;
     }
 
     .ortho-personalized-path :global(.ortho-professional) {
-      grid-template-columns: minmax(0, 1fr);
-      justify-items: center;
-      gap: 16px;
-      margin-top: 32px;
-      padding: 28px 0;
-      border-block: 1px solid var(--border);
-      text-align: center;
+      grid-template-columns: 104px minmax(0, 1fr);
+      align-items: center;
+      gap: 18px;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      text-align: left;
     }
 
+    .ortho-personalized-path :global(.ortho-professional > div) { display: contents; }
+
     .ortho-personalized-path :global(.ortho-professional > img) {
-      width: 88px;
-      height: 106px;
-      border-radius: 8px;
+      grid-column: 1;
+      grid-row: 1;
+      width: 104px;
+      height: 136px;
+      border-radius: 14px;
     }
 
     .ortho-personalized-path :global(.ortho-professional h3) {
       margin: 0;
+      grid-column: 2;
+      grid-row: 1;
       font-size: 20px;
-      font-weight: 500;
+      font-weight: 600;
+      line-height: 1.25;
     }
 
     .ortho-personalized-path :global(.ortho-professional p) {
-      max-width: 35ch;
-      margin: 12px auto 0;
-      font-size: 15px;
+      grid-column: 1 / -1;
+      max-width: none;
+      margin: 0;
+      color: var(--text-dark);
+      font-size: 16px;
+      line-height: 1.5;
     }
 
     .ortho-personalized-path :global(.ortho-professional .ortho-text-link) {
-      justify-content: center;
+      grid-column: 1 / -1;
+      justify-content: flex-start;
+      justify-self: start;
       max-width: 100%;
-      margin-top: 14px;
-      font-size: 13px;
+      margin-top: 0;
+      font-size: 14px;
+      text-align: left;
     }
 
     .ortho-functional-benefits {
@@ -564,7 +607,7 @@ const steps = [
       width: 100%;
       justify-content: center;
       gap: 14px;
-      margin-top: 28px;
+      margin-top: 0;
       font-size: 16px;
       line-height: 16px;
       text-align: center;

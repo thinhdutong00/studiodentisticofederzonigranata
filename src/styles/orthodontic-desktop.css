@@ -152,18 +152,18 @@
   .ortho-landing-main.ortho-unified .ortho-age-braces { display: none; }
 
   .ortho-landing-main.ortho-unified #percorso-ortodontico { background: var(--surface-white); }
-  .ortho-landing-main.ortho-unified #percorso-ortodontico > .ortho-shell { display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; max-width: 940px; gap: 32px; text-align: center; }
-  .ortho-landing-main.ortho-unified #percorso-ortodontico .ortho-intro-heading { width: 100%; justify-items: center; }
+  .ortho-landing-main.ortho-unified #percorso-ortodontico > .ortho-shell { display: grid; grid-template-columns: minmax(0, 1fr); justify-items: start; max-width: 940px; gap: 28px; text-align: left; }
+  .ortho-landing-main.ortho-unified #percorso-ortodontico .ortho-intro-heading { width: 100%; justify-items: start; }
   .ortho-landing-main.ortho-unified #percorso-ortodontico :is(.ortho-eyebrow, .ortho-intro-lead, .ortho-personalized-steps) { display: none; }
   .ortho-landing-main.ortho-unified .ortho-personalized-title-mobile { display: inline; }
-  .ortho-landing-main.ortho-unified #ortho-personalized-title { max-width: 24ch; margin-inline: auto; color: var(--brand-cta); }
-  .ortho-landing-main.ortho-unified #percorso-ortodontico .ortho-professional { grid-column: 1; grid-row: 2; display: grid; grid-template-columns: 144px minmax(0, 1fr); align-items: center; gap: 28px; width: 100%; max-width: 720px; margin: 0 auto; padding: 32px; border: 1px solid var(--border); border-radius: 24px; background: var(--background); text-align: left; }
-  .ortho-landing-main.ortho-unified #percorso-ortodontico .ortho-professional > img { width: 144px; height: 174px; border-radius: 16px; object-fit: cover; object-position: 50% 25%; }
-  .ortho-landing-main.ortho-unified #percorso-ortodontico .ortho-professional h3 { color: var(--brand-primary-dark); font-size: 25px; font-weight: 500; line-height: 1.2; }
-  .ortho-landing-main.ortho-unified #percorso-ortodontico .ortho-professional p { margin: 14px 0 0; color: var(--muted-text); font-size: 16px; line-height: 1.5; }
+  .ortho-landing-main.ortho-unified #ortho-personalized-title { max-width: none; margin: 0; color: var(--brand-primary-dark); font-size: 36px; font-weight: 700; line-height: 1.15; }
+  .ortho-landing-main.ortho-unified #percorso-ortodontico .ortho-professional { grid-column: 1; grid-row: 2; display: grid; grid-template-columns: 190px minmax(0, 1fr); align-items: start; gap: 28px; width: 100%; max-width: none; margin: 0; padding: 0; border: 0; background: transparent; text-align: left; }
+  .ortho-landing-main.ortho-unified #percorso-ortodontico .ortho-professional > img { width: 190px; height: 252px; border-radius: 16px; object-fit: cover; object-position: 50% 25%; }
+  .ortho-landing-main.ortho-unified #percorso-ortodontico .ortho-professional h3 { margin: 0; color: var(--brand-primary-dark); font-size: 26px; font-weight: 600; line-height: 1.2; }
+  .ortho-landing-main.ortho-unified #percorso-ortodontico .ortho-professional p { margin: 14px 0 0; color: var(--text-dark); font-size: 18px; line-height: 1.5; }
   .ortho-landing-main.ortho-unified .ortho-professional-desktop-link { display: none; }
-  .ortho-landing-main.ortho-unified .ortho-professional-mobile-trigger { display: inline-flex; align-items: center; margin-top: 14px; padding: 0; border: 0; background: transparent; color: var(--brand-cta); font-family: inherit; font-size: 14px; text-decoration: underline; text-align: left; cursor: pointer; }
-  .ortho-landing-main.ortho-unified .ortho-personalized-cta { grid-column: 1; grid-row: 3; justify-self: center; margin-top: 0; }
+  .ortho-landing-main.ortho-unified .ortho-professional-mobile-trigger { display: inline-flex; align-items: center; margin-top: 16px; padding: 0; border: 0; background: transparent; color: var(--brand-cta); font-family: inherit; font-size: 16px; text-decoration: underline; text-align: left; cursor: pointer; }
+  .ortho-landing-main.ortho-unified .ortho-personalized-cta { grid-column: 1; grid-row: 3; justify-self: start; margin-top: 0; }
 
   /* Reviews retain the light blue surface, white Google silhouette and four-second carousel. */
   .ortho-landing-main.ortho-unified #recensioni { position: relative; isolation: isolate; overflow: clip; padding: 88px 0; background: var(--soft-blue-bg); color: var(--brand-primary-dark); }
@@ -284,8 +284,8 @@
   .ortho-landing-main.ortho-unified .ortho-questionnaire-aligner-icon { width: 80px; }
   .ortho-landing-main.ortho-unified .ortho-age-section { gap: 0 48px; }
   .ortho-landing-main.ortho-unified #percorso-ortodontico > .ortho-shell { gap: 28px; }
-  .ortho-landing-main.ortho-unified #percorso-ortodontico .ortho-professional { grid-template-columns: 100px minmax(0, 1fr); padding: 24px; gap: 22px; }
-  .ortho-landing-main.ortho-unified #percorso-ortodontico .ortho-professional > img { width: 100px; height: 132px; }
+  .ortho-landing-main.ortho-unified #percorso-ortodontico .ortho-professional { grid-template-columns: 160px minmax(0, 1fr); padding: 0; gap: 24px; }
+  .ortho-landing-main.ortho-unified #percorso-ortodontico .ortho-professional > img { width: 160px; height: 212px; }
   .ortho-landing-main.ortho-unified #recensioni > .landing-shell { gap: 24px; }
   .ortho-landing-main.ortho-unified .patient-review { padding: 28px; }
   .ortho-landing-main.ortho-unified .patient-review blockquote { font-size: 20px; }
@@ -309,8 +309,8 @@
   .ortho-landing-main.ortho-unified .ortho-age-section h2 strong { display: inline; font-size: inherit; }
   .ortho-landing-main.ortho-unified .ortho-age-list { grid-column: 1; grid-row: 3; margin-top: 16px; }
   .ortho-landing-main.ortho-unified #percorso-ortodontico > .ortho-shell { grid-template-columns: 1fr; }
-  .ortho-landing-main.ortho-unified #percorso-ortodontico .ortho-professional { grid-column: 1; grid-row: 2; grid-template-columns: 144px minmax(0, 1fr); }
-  .ortho-landing-main.ortho-unified #percorso-ortodontico .ortho-professional > img { width: 144px; height: 174px; }
+  .ortho-landing-main.ortho-unified #percorso-ortodontico .ortho-professional { grid-column: 1; grid-row: 2; grid-template-columns: 160px minmax(0, 1fr); }
+  .ortho-landing-main.ortho-unified #percorso-ortodontico .ortho-professional > img { width: 160px; height: 212px; }
   .ortho-landing-main.ortho-unified .ortho-personalized-cta { grid-row: 3; }
   .ortho-landing-main.ortho-unified #recensioni > .landing-shell { grid-template-columns: 1fr; }
   .ortho-landing-main.ortho-unified .patient-reviews-heading { grid-column: 1; grid-row: 1; }

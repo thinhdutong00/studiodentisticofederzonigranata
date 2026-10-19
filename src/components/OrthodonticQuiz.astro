@@ -181,7 +181,7 @@ const questions = [
         {question.type === 'tel' && <div class="orthodontic-quiz-privacy"><BookingPrivacy /><p>L’invio è una richiesta di ricontatto. Giorno e orario della visita saranno concordati con la segreteria.</p></div>}
         <p class="orthodontic-quiz-error" data-quiz-error role="alert" aria-live="polite"></p>
         <div class="orthodontic-quiz-question-actions">
-          {question.type === 'tel' ? <button class="orthodontic-quiz-button" type="submit">Invia la richiesta <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 10 4 4 8-8" /></svg></button> : <button class="orthodontic-quiz-button" type="button" data-quiz-next>{mobileObjectivesFirst && question.name === 'occlusion' ? 'Avanti' : 'Ok'} <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 10 4 4 8-8" /></svg></button>}
+          {question.type === 'tel' ? <button class="orthodontic-quiz-button" type="submit">Invia la richiesta <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 10 4 4 8-8" /></svg></button> : <button class="orthodontic-quiz-button" type="button" data-quiz-next>{mobileObjectivesFirst ? 'Avanti' : 'Ok'} <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d={mobileObjectivesFirst ? 'm8 5 5 5-5 5' : 'm4 10 4 4 8-8'} /></svg></button>}
           {!question.required && <button class="orthodontic-quiz-skip" type="button" data-quiz-next>Salta questa domanda</button>}
           <span class="orthodontic-quiz-enter">premi <strong>Invio ↵</strong></span>
         </div>
