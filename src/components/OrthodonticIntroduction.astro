@@ -147,6 +147,7 @@ const steps = [
       </p>
     </div>
 
+    <slot name="professional" />
     <ol class="ortho-personalized-steps" role="list">
       {steps.map((step, index) => (
         <li class="ortho-personalized-step">
@@ -173,7 +174,7 @@ const steps = [
 
     const updateActiveCard = () => {
       scheduled = false;
-      visitCards.classList.toggle('is-scroll-tracked', mobile.matches);
+      visitCards.classList.add('is-scroll-tracked');
       let activeIndex = -1;
       let nearestDistance = Infinity;
 
@@ -188,10 +189,14 @@ const steps = [
             activeIndex = index;
           }
         });
+      } else {
+        cards.forEach((card, index) => {
+          if (card.getBoundingClientRect().top < window.innerHeight * .82) activeIndex = index;
+        });
       }
 
-      if (mobile.matches) illuminatedThrough = Math.max(illuminatedThrough, activeIndex);
-      cards.forEach((card, index) => card.classList.toggle('is-scroll-active', mobile.matches && index <= illuminatedThrough));
+      illuminatedThrough = Math.max(illuminatedThrough, activeIndex);
+      cards.forEach((card, index) => card.classList.toggle('is-scroll-active', index <= illuminatedThrough));
     };
 
     const requestUpdate = () => {

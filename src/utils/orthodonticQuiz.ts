@@ -12,6 +12,7 @@ export function bindOrthodonticQuiz() {
   const objectivesGrid = objectivesPanel ? document.querySelector<HTMLElement>('[data-orthodontic-quiz] .orthodontic-objectives-grid') : null;
   const objectivesDesktopParent = objectivesGrid?.parentElement;
   const mobileViewport = window.matchMedia('(max-width: 720px)');
+  const usesRefinedFlow = () => dialog.hasAttribute('data-quiz-all-viewports') || mobileViewport.matches;
   const initialReason = form.querySelector<HTMLInputElement>('[name="initialReason"]');
   let panels = allPanels;
   const progress = dialog.querySelector<HTMLElement>('[data-quiz-progress]');
@@ -117,7 +118,7 @@ export function bindOrthodonticQuiz() {
       previousOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
       dialog.showModal();
-      showPanel(objectivesPanel && mobileViewport.matches ? 0 : current);
+      showPanel(objectivesPanel && usesRefinedFlow() ? 0 : current);
     });
   });
 
@@ -134,7 +135,7 @@ export function bindOrthodonticQuiz() {
     });
     const updateObjectivesStep = () => {
       const previousPanel = panels[current];
-      const mobile = mobileViewport.matches;
+      const mobile = usesRefinedFlow();
       if (mobileFlow) mobileFlow.disabled = !mobile;
       if (mobile) form.setAttribute('autocomplete', 'on');
       else if (originalFormAutocomplete === null) form.removeAttribute('autocomplete');

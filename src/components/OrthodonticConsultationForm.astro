@@ -32,6 +32,7 @@ const phoneCountries = [
       <input type="hidden" name="treatment" value={treatmentLabel} />
       <input type="hidden" name="treatmentCategory" value="Ortodonzia" />
       <input type="hidden" name="message" value={isHero ? 'Richiesta di visita di valutazione ortodontica dal modulo della hero della landing ortodonzia.' : 'Richiesta di visita di valutazione ortodontica dal modulo finale della landing ortodonzia.'} />
+      {isHero && <p class="ortho-consultation-hero-title">Prenota una visita ortodontica</p>}
 
       <div class="ortho-consultation-fields">
         <label class="ortho-consultation-field" for={`${idPrefix}-full-name`}>
@@ -96,6 +97,7 @@ const phoneCountries = [
 </script>
 
 <style>
+  .ortho-consultation-hero-title { display: none; }
   .ortho-consultation-mobile { display: none; }
 
   @media (max-width: 720px) {

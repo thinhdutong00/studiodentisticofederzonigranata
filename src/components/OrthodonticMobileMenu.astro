@@ -20,7 +20,7 @@ import { orthodonticResultsPath } from '../data/orthodonticResults';
       </button>
     </div>
 
-    <nav class="ortho-site-menu-scroll" aria-label="Navigazione ortodonzia mobile">
+    <nav class="ortho-site-menu-scroll" aria-label="Navigazione ortodonzia">
       <details class="ortho-site-menu-section" open>
         <summary>
           <span>Trattamenti ortodontici</span>
@@ -50,7 +50,7 @@ import { orthodonticResultsPath } from '../data/orthodonticResults';
   const menuHeader = menuRoot?.closest<HTMLElement>('.landing-header');
 
   if (menuPanel && menuTrigger && menuHeader) {
-    const menuViewport = window.matchMedia('(max-width: 720px)');
+    const menuViewport = window.matchMedia('(max-width: 1024px)');
     const treatmentSection = menuPanel.querySelector<HTMLDetailsElement>('details');
     let previousOverflow = '';
 
@@ -99,7 +99,7 @@ import { orthodonticResultsPath } from '../data/orthodonticResults';
   .ortho-site-menu { display: none; }
   .ortho-site-menu-panel { display: none; }
 
-  @media (max-width: 720px) {
+  @media (max-width: 1024px) {
     :global(.ortho-landing-main .landing-header[data-mobile-site-menu]) {
       background: rgba(255, 255, 255, .96);
       backdrop-filter: blur(16px);

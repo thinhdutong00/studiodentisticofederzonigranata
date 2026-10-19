@@ -22,7 +22,7 @@ export function bindOrthodonticMobileMotion() {
     const delta = scrollY - lastScrollY;
     const keepVisible = header.hasAttribute('data-menu-open') || Boolean(header.querySelector(':focus-visible'));
 
-    if (!mobileViewport.matches || scrollY <= 4 || keepVisible) {
+    if (scrollY <= 4 || keepVisible) {
       revealHeader();
       return;
     }

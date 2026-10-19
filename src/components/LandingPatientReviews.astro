@@ -7,13 +7,14 @@ import OrthodonticLinkArrow from './OrthodonticLinkArrow.astro';
 interface Props {
   reviews: PatientReview[];
   mobileCarousel?: boolean;
+  conceptCarousel?: boolean;
   mobilePopupReviews?: OrthodonticReview[];
 }
 
-const { reviews, mobileCarousel = false, mobilePopupReviews = [] } = Astro.props;
+const { reviews, mobileCarousel = false, conceptCarousel = false, mobilePopupReviews = [] } = Astro.props;
 ---
 
-<section id="recensioni" class="patient-reviews" aria-labelledby="landing-reviews-title" data-mobile-review-carousel={mobileCarousel || undefined}>
+<section id="recensioni" class="patient-reviews" aria-labelledby="landing-reviews-title" data-mobile-review-carousel={mobileCarousel || undefined} data-review-all-viewports={conceptCarousel || undefined}>
   <div class="landing-shell">
     <div class="patient-reviews-heading">
       <div class="patient-reviews-intro">
@@ -63,6 +64,10 @@ const { reviews, mobileCarousel = false, mobilePopupReviews = [] } = Astro.props
       </div>
     </div>
     <slot name="after-carousel" />
+    {conceptCarousel && <div class="patient-review-controls" aria-label="Sfoglia le recensioni">
+      <button type="button" data-review-prev aria-label="Recensione precedente"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6" /></svg></button>
+      <button type="button" data-review-next aria-label="Recensione successiva"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" /></svg></button>
+    </div>}
   </div>
   {mobilePopupReviews.length > 0 && <OrthodonticReviewSheet reviews={mobilePopupReviews} />}
 </section>
@@ -75,6 +80,7 @@ const { reviews, mobileCarousel = false, mobilePopupReviews = [] } = Astro.props
     if (!viewport || !grid || !cards.length || section.dataset.carouselBound) return;
     section.dataset.carouselBound = 'true';
     const mobile = window.matchMedia('(max-width: 720px)');
+    const usesCarousel = () => section.hasAttribute('data-review-all-viewports') || mobile.matches;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const slides = [...cards];
     if (cards.length > 1) {
@@ -111,7 +117,7 @@ const { reviews, mobileCarousel = false, mobilePopupReviews = [] } = Astro.props
 
     const updateMotion = () => {
       clearTimeout(advanceTimer);
-      const running = mobile.matches && hasLoop && visible && !document.hidden && !reducedMotion.matches && !hovering && !touching && !pressing && !focused && !moving && !section.querySelector('[data-ortho-review-sheet][open]');
+      const running = usesCarousel() && hasLoop && visible && !document.hidden && !reducedMotion.matches && !hovering && !touching && !pressing && !focused && !moving && !section.querySelector('[data-ortho-review-sheet][open]');
       section.dataset.reviewMotion = running ? 'running' : 'paused';
       if (running) {
         advanceTimer = setTimeout(() => {
@@ -123,7 +129,7 @@ const { reviews, mobileCarousel = false, mobilePopupReviews = [] } = Astro.props
 
     const finishScroll = () => {
       clearTimeout(settleTimer);
-      if (!mobile.matches) return;
+      if (!usesCarousel()) return;
       let index = closestSlide();
       if (hasLoop && (index === 0 || index === slides.length - 1)) {
         index = index === 0 ? cards.length : firstSlide;
@@ -145,7 +151,7 @@ const { reviews, mobileCarousel = false, mobilePopupReviews = [] } = Astro.props
     const updateLayout = () => {
       clearTimeout(settleTimer);
       moving = false;
-      if (mobile.matches) {
+      if (usesCarousel()) {
         viewport.setAttribute('role', 'region');
         viewport.setAttribute('aria-roledescription', 'carosello');
         viewport.setAttribute('aria-label', 'Recensioni dei pazienti');
@@ -161,7 +167,7 @@ const { reviews, mobileCarousel = false, mobilePopupReviews = [] } = Astro.props
     };
 
     viewport.addEventListener('scroll', () => {
-      if (!mobile.matches) return;
+      if (!usesCarousel()) return;
       moving = true;
       updateMotion();
       clearTimeout(settleTimer);
@@ -169,7 +175,7 @@ const { reviews, mobileCarousel = false, mobilePopupReviews = [] } = Astro.props
     }, { passive: true });
     viewport.addEventListener('scrollend', finishScroll);
     viewport.addEventListener('keydown', event => {
-      if (!mobile.matches || !hasLoop) return;
+      if (!usesCarousel() || !hasLoop) return;
       const targets: Record<string, number> = { ArrowLeft: current + firstSlide - 1, ArrowRight: current + firstSlide + 1, Home: firstSlide, End: cards.length };
       if (!(event.key in targets)) return;
       event.preventDefault();
@@ -191,18 +197,21 @@ const { reviews, mobileCarousel = false, mobilePopupReviews = [] } = Astro.props
       updateMotion();
     }, { threshold: .15 }).observe(viewport);
     new ResizeObserver(() => {
-      if (mobile.matches && viewport.clientWidth !== lastWidth) updateLayout();
+      if (usesCarousel() && viewport.clientWidth !== lastWidth) updateLayout();
     }).observe(viewport);
     document.addEventListener('visibilitychange', updateMotion);
     section.addEventListener('ortho-review-sheet-change', updateMotion);
     mobile.addEventListener('change', updateLayout);
     reducedMotion.addEventListener('change', updateMotion);
+    section.querySelector('[data-review-prev]')?.addEventListener('click', () => moveTo(current + firstSlide - 1));
+    section.querySelector('[data-review-next]')?.addEventListener('click', () => moveTo(current + firstSlide + 1));
     updateLayout();
   });
 </script>
 
 <style>
   .patient-review-carousel, .patient-review-track { display: contents; }
+  .patient-review-controls { display: none; }
   .patient-review.patient-review-clone { display: none; }
 
   .patient-reviews {

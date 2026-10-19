@@ -62,7 +62,7 @@ const requestHref = href || `/richiesta/?trattamento=${encodeURIComponent(treatm
         const footerEndReached = footerEnd instanceof HTMLElement
           ? footerEnd.getBoundingClientRect().top <= window.innerHeight - Math.min(barHeight, 110)
           : false;
-        const mobileHideFromReached = mobileViewport.matches && mobileHideFrom instanceof HTMLElement
+        const mobileHideFromReached = (document.body.classList.contains('ortho-unified') || mobileViewport.matches) && mobileHideFrom instanceof HTMLElement
           && mobileHideFrom.getBoundingClientRect().top <= window.innerHeight;
         const showBar = !mobileHideFromReached && (alwaysVisible || (isAfterHero && (!hideAtFooter || !footerEndReached || isScrollingUp)));
 

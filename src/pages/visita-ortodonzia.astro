@@ -1,7 +1,6 @@
 ---
 import CookieBanner from '../components/CookieBanner.astro';
 import Footer from '../components/Footer.astro';
-import HomeLocations from '../components/HomeLocations.astro';
 import LandingPatientReviews from '../components/LandingPatientReviews.astro';
 import OrthodonticQuiz from '../components/OrthodonticQuiz.astro';
 import OrthodonticIntroduction from '../components/OrthodonticIntroduction.astro';
@@ -10,7 +9,6 @@ import OrthodonticProfessionalSheet from '../components/OrthodonticProfessionalS
 import OrthodonticSmileCarousel from '../components/OrthodonticSmileCarousel.astro';
 import OrthodonticAgeSection from '../components/OrthodonticAgeSection.astro';
 import OrthodonticConsultationForm from '../components/OrthodonticConsultationForm.astro';
-import OrthodonticPaths from '../components/OrthodonticPaths.astro';
 import OrthodonticLandingHeader from '../components/OrthodonticLandingHeader.astro';
 import TreatmentStickyCta from '../components/TreatmentStickyCta.astro';
 import { featuredPatientReviews } from '../data/reviews';
@@ -19,15 +17,14 @@ import { site } from '../data/site';
 import '../styles/inter-font.css';
 import '../styles/visit-landing.css';
 import '../styles/orthodontic-landing.css';
+import '../styles/orthodontic-desktop.css';
 
 const canonicalPath = '/visita-ortodonzia/';
 const canonical = new URL(canonicalPath, site.source).toString();
 const title = 'Visita ortodontica a Modena e Reggio Emilia | Federzoni Granata';
 const description =
-  'Ortodonzia per adulti a Modena e Reggio Emilia. Valuta apparecchi e allineatori con un piano personalizzato. Richiedi una visita allo Studio Federzoni Granata.';
+  'Ortodonzia per adulti e bambini a Modena e Reggio Emilia. Valuta apparecchi e allineatori con un piano personalizzato. Richiedi una visita allo Studio Federzoni Granata.';
 const heroImagePath = '/assets/optimized/ortodonzia-sorriso-studio-1920.webp';
-const heroImageSet = '/assets/optimized/ortodonzia-sorriso-studio-720.webp 720w, /assets/optimized/ortodonzia-sorriso-studio-1440.webp 1440w, /assets/optimized/ortodonzia-sorriso-studio-1920.webp 1920w, /assets/optimized/ortodonzia-sorriso-studio-2400.webp 2400w';
-const heroImageSizes = '(max-width: 720px) calc(100vw - 24px), (max-width: 1000px) calc(140vw - 67.2px), (max-width: 1696px) calc(112vw - 53.76px), 1846px';
 const heroMobileVideoPath = '/assets/optimized/ortodonzia-hero-mobile-montaggio-720p.mp4';
 const heroMobilePosterPath = '/assets/optimized/ortodonzia-hero-mobile-montaggio-poster.webp';
 const isIndexable = import.meta.env.PROD && process.env.VERCEL_ENV !== 'preview';
@@ -40,7 +37,7 @@ const offices = site.offices;
 const orthodonticTreatmentLabel = 'Ortodonzia e Allineatori invisibili (adulti e bimbi)';
 const orthodonticRequestHref = new URL(`/richiesta/?trattamento=${encodeURIComponent(orthodonticTreatmentLabel)}`, site.source).toString();
 
-const mobileFooterLinks = [
+const footerLinks = [
   { label: 'La tua prima visita', href: '#benefici-ortodontici' },
   { label: 'Prima e dopo', href: '#sorrisi-prima-dopo' },
   { label: 'Questionario ortodontico', href: '#il-tuo-obiettivo' },
@@ -50,19 +47,7 @@ const mobileFooterLinks = [
   { label: 'Prenota una visita', href: '#ortho-final' },
 ];
 
-const methodSteps = [
-  { title: 'Analisi', text: 'Valutiamo posizione dei denti, occlusione e condizioni del cavo orale.' },
-  { title: 'Pianificazione', text: 'Individuiamo le opzioni di trattamento sulla base degli accertamenti necessari.' },
-  { title: 'Percorso', text: 'Condividiamo obiettivi, tempi indicativi, attenzioni quotidiane, controlli e mantenimento.' },
-];
-
 const faqs = [
-  { question: 'Quanto dura il trattamento?', answer: 'Dipende dalla situazione iniziale e dai movimenti necessari. Dopo la visita e gli accertamenti viene condivisa una stima, da verificare nei controlli anche in base alla risposta individuale e all’uso del dispositivo.' },
-  { question: 'Quali soluzioni sono disponibili?', answer: 'Lo studio utilizza apparecchi fissi e allineatori trasparenti. Il fisso rimane sui denti; gli allineatori sono rimovibili e richiedono un uso costante. La scelta dipende dalle indicazioni cliniche e dai movimenti necessari.' },
-  { question: 'Quanto può incidere sulla quotidianità?', answer: 'Servono cura dell’igiene, uso del dispositivo e controlli programmati. Possono comparire fastidi durante l’adattamento. Alimentazione, gestione degli allineatori e contenzione finale vengono spiegate secondo il piano individuale.' },
-  { question: 'Come vengono definiti i costi?', answer: 'Dopo la valutazione viene presentato un preventivo personalizzato, con le prestazioni previste. Complessità del caso, dispositivo e percorso necessario incidono sul costo. Il questionario raccoglie la richiesta di visita.' },
-];
-const mobileFaqs = [
   {
     question: 'Gli allineatori trasparenti Invisalign® sono adatti a tutti?',
     answer: 'Gli allineatori trasparenti permettono di correggere numerose problematiche ortodontiche in modo discreto. Tuttavia, non sono indicati per ogni situazione. Durante la visita valuteremo se questa soluzione è adatta a te o se è preferibile un altro trattamento.',
@@ -96,10 +81,7 @@ const mobileFaqs = [
     answer: 'Il costo dipende dalla complessità del caso, dal dispositivo utilizzato e dalla durata del percorso. Dopo la valutazione e gli eventuali accertamenti necessari, riceverai un preventivo personalizzato con le prestazioni previste.',
   },
 ];
-const structuredFaqs = [
-  ...faqs,
-  ...mobileFaqs.filter((item) => !faqs.some((faq) => faq.question === item.question)),
-];
+const structuredFaqs = faqs;
 
 const officeSeoDetails = {
   Modena: {
@@ -128,7 +110,7 @@ const structuredData = {
       name: title,
       description,
       inLanguage: 'it-IT',
-      dateModified: '2026-10-13',
+      dateModified: '2026-10-19',
       primaryImageOfPage: socialPreviewImage,
       about: [
         { '@type': 'MedicalCondition', name: 'Malocclusione dentale' },
@@ -199,24 +181,7 @@ const structuredData = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <link rel="preload" as="font" href="/fonts/inter/inter-latin.woff2" type="font/woff2" crossorigin />
-    <link
-      rel="preload"
-      as="image"
-      href={heroImagePath}
-      type="image/webp"
-      media="(min-width: 721px)"
-      imagesrcset={heroImageSet}
-      imagesizes={heroImageSizes}
-      fetchpriority="high"
-    />
-    <link
-      rel="preload"
-      as="image"
-      href={heroMobilePosterPath}
-      type="image/webp"
-      media="(max-width: 720px)"
-      fetchpriority="high"
-    />
+    <link rel="preload" as="image" href={heroMobilePosterPath} type="image/webp" fetchpriority="high" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content={isIndexable ? 'index,follow,max-image-preview:large' : 'noindex,follow'} />
@@ -243,8 +208,8 @@ const structuredData = {
     <script type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g, '\\u003c')}></script>
   </head>
 
-  <body class="ortho-landing ortho-landing-main">
-    <OrthodonticLandingHeader showExperienceBar mobileSiteMenu />
+  <body class="ortho-landing ortho-landing-main ortho-unified">
+    <OrthodonticLandingHeader showExperienceBar mobileSiteMenu unifiedConcept />
 
     <a class="ortho-skip-link" href="#contenuto">Vai al contenuto</a>
     <main id="contenuto" tabindex="-1">
@@ -252,10 +217,7 @@ const structuredData = {
         <div class="landing-shell landing-hero-shell">
           <div class="landing-hero-stage">
             <div class="ortho-hero-photo-frame">
-              <picture>
-                <source media="(max-width: 720px)" type="image/webp" srcset={heroMobilePosterPath} />
-                <img class="landing-hero-photo" src={heroImagePath} srcset={heroImageSet} sizes={heroImageSizes} alt="Ortodonzia: sorrisi e allineatori trasparenti" width="1920" height="1280" loading="eager" decoding="async" fetchpriority="high" />
-              </picture>
+              <img class="landing-hero-photo" src={heroMobilePosterPath} alt="Ortodonzia: sorrisi e allineatori trasparenti" width="1280" height="720" loading="eager" decoding="async" fetchpriority="high" />
               <video
                 class="ortho-hero-mobile-video"
                 data-src={heroMobileVideoPath}
@@ -273,42 +235,32 @@ const structuredData = {
                 controlslist="nodownload nofullscreen noplaybackrate noremoteplayback"
                 aria-label="Scene di sorrisi e vita quotidiana"
               ></video>
-              <p class="landing-hero-eyebrow ortho-hero-eyebrow-mobile">Ortodonzia · Modena e Reggio Emilia</p>
               <script is:inline>
                 (() => {
                   const video = document.querySelector('.ortho-hero-mobile-video');
                   if (!(video instanceof HTMLVideoElement)) return;
 
-                  const mobile = window.matchMedia('(max-width: 720px)');
                   let visible = true;
                   const playVideo = () => {
-                    if (!mobile.matches || document.hidden || !visible || !video.hasAttribute('src')) return;
+                    if (document.hidden || !visible || !video.hasAttribute('src')) return;
                     video.muted = true;
                     video.defaultMuted = true;
                     video.controls = false;
                     video.play().catch(() => {});
                   };
                   const syncVideo = () => {
-                    if (mobile.matches) {
-                      if (!video.hasAttribute('src')) {
-                        video.poster = video.dataset.poster;
-                        video.src = video.dataset.src;
-                        video.load();
-                      }
-                      playVideo();
-                    } else if (video.hasAttribute('src')) {
-                      video.pause();
-                      video.removeAttribute('src');
-                      video.removeAttribute('poster');
+                    if (!video.hasAttribute('src')) {
+                      video.poster = video.dataset.poster;
+                      video.src = video.dataset.src;
                       video.load();
                     }
+                    playVideo();
                   };
 
                   // Start as the hero HTML is parsed, without waiting for page scripts or images.
                   syncVideo();
                   video.addEventListener('canplay', playVideo);
                   video.addEventListener('pause', playVideo);
-                  mobile.addEventListener('change', syncVideo);
                   window.addEventListener('pageshow', syncVideo);
                   document.addEventListener('visibilitychange', () => {
                     if (document.hidden) video.pause();
@@ -328,18 +280,17 @@ const structuredData = {
               </script>
             </div>
             <div class="landing-hero-panel ortho-hero-copy">
-              <p class="landing-hero-eyebrow ortho-hero-eyebrow-desktop">Ortodonzia per adulti · Modena e Reggio Emilia</p>
-              <h1 id="landing-title">
-                <span class="ortho-hero-title-desktop">Il sorriso che desideri, la naturalezza che cerchi.</span>
-                <span class="ortho-hero-title-mobile"><span class="ortho-hero-title-context">Non Esiste Un</span> <strong>Sorriso Perfetto</strong>. <span class="ortho-hero-title-context">Esiste</span> <strong>Quello Che Ti Valorizza.</strong></span>
-              </h1>
-              <p class="ortho-hero-lead">
-                <span class="ortho-hero-lead-desktop">Sorridere nelle fotografie, ridere con gli amici e guardarti allo specchio sentendoti davvero a tuo agio. Con un percorso ortodontico personalizzato puoi prenderti cura dell'armonia del tuo sorriso e avvicinarti a quello che hai sempre desiderato.</span>
-                <span class="ortho-hero-lead-mobile">
-                  Allinea i tuoi denti con gli allineatori trasparenti <strong class="ortho-hero-invisalign">Invisalign®</strong>, apparecchi tradizionali o linguali. Scopri il percorso ortodontico più adatto a te, pensato per la tua salute e funzionalità orale.
-                </span>
-              </p>
-              <a class="ortho-cta ortho-hero-quiz-link" href="#il-tuo-obiettivo" data-quiz-cta>Prenota una visita ortodontica <span aria-hidden="true">↗</span></a>
+              <div class="ortho-hero-intro">
+                <p class="landing-hero-eyebrow ortho-hero-eyebrow-mobile">Ortodonzia · Modena e Reggio Emilia</p>
+                <h1 id="landing-title">
+                  <span class="ortho-hero-title-mobile"><span class="ortho-hero-title-context">Non Esiste Un</span> <strong>Sorriso Perfetto</strong>. <span class="ortho-hero-title-context">Esiste</span> <strong>Quello Che Ti Valorizza.</strong></span>
+                </h1>
+                <p class="ortho-hero-lead">
+                  <span class="ortho-hero-lead-mobile">
+                    Allinea i tuoi denti con gli allineatori trasparenti <strong class="ortho-hero-invisalign">Invisalign®</strong>, apparecchi tradizionali o linguali. Scopri il percorso ortodontico più adatto a te, pensato per la tua salute e funzionalità orale.
+                  </span>
+                </p>
+              </div>
               <OrthodonticConsultationForm treatmentLabel={orthodonticTreatmentLabel} variant="hero" submitLabel="Prenota una visita ortodontica" />
             </div>
           </div>
@@ -347,67 +298,50 @@ const structuredData = {
       </section>
 
       <OrthodonticIntroduction>
-        <Fragment slot="personalized-title"><span class="ortho-personalized-title-desktop">Ogni sorriso è unico. Anche il percorso per valorizzarlo.</span><span class="ortho-personalized-title-mobile">Il tuo percorso sarà seguito dalla</span></Fragment>
+        <Fragment slot="personalized-title"><span class="ortho-personalized-title-mobile">Il tuo percorso sarà seguito dalla</span></Fragment>
         <Fragment slot="after-benefits">
+          <section class="ortho-experience-mobile" id="esperienza-studio" aria-labelledby="ortho-experience-over ortho-experience-title">
+            <div class="ortho-shell">
+              <p class="ortho-experience-over" id="ortho-experience-over">Studio Dentistico Federzoni Granata</p>
+              <h2 class="ortho-experience-years" id="ortho-experience-title"><span class="ortho-experience-number">35</span> anni di attività, al servizio del tuo sorriso.</h2>
+              <img class="ortho-experience-photo" src="/assets/optimized/ortodonzia-sorriso-specchio-720.webp" srcset="/assets/optimized/ortodonzia-sorriso-specchio-720.webp 720w, /assets/optimized/ortodonzia-sorriso-specchio-1440.webp 1440w" sizes="(max-width: 720px) calc(100vw - 68px), (max-width: 1100px) 45vw, 640px" alt="Paziente che osserva il proprio sorriso allo specchio durante una visita nello studio" width="720" height="480" loading="lazy" decoding="async" />
+            </div>
+          </section>
           <OrthodonticSmileCarousel />
+          <OrthodonticQuiz objectivesFirst>
+            <img slot="questionnaire-icon" class="ortho-questionnaire-aligner-icon" src="/assets/optimized/ortodonzia-allineatore-quiz-frontale-384.webp" alt="" aria-hidden="true" width="384" height="135" loading="lazy" decoding="async" />
+          </OrthodonticQuiz>
           <OrthodonticAgeSection />
+        </Fragment>
+        <Fragment slot="professional">
+          <aside class="ortho-professional" aria-label="Il professionista">
+            <img src="/assets/optimized/chiara-federzoni-ortodonzia-720.webp" alt="Dottoressa Chiara Federzoni, odontoiatra dello Studio Federzoni Granata" width="720" height="479" loading="lazy" decoding="async" />
+            <div>
+              <h3>Dott.ssa Chiara Federzoni</h3>
+              <p>Odontoiatra, laureata con lode a Modena nel 1987. Si occupa di ortodonzia nello studio dal 1992.</p>
+              <a class="ortho-text-link ortho-professional-desktop-link" href="/chi-siamo/">Formazione e percorso professionale <OrthodonticLinkArrow /></a>
+              <button class="ortho-text-link ortho-professional-mobile-trigger" type="button" aria-haspopup="dialog" aria-controls="ortho-professional-sheet" aria-expanded="false" data-ortho-professional-open>Formazione e percorso professionale <OrthodonticLinkArrow /></button>
+            </div>
+          </aside>
         </Fragment>
       </OrthodonticIntroduction>
 
-      <OrthodonticPaths />
-
-      <section class="ortho-section ortho-method" aria-labelledby="ortho-method-title">
-        <div class="ortho-shell">
-          <div class="ortho-method-heading">
-            <div class="ortho-section-heading">
-              <p class="ortho-eyebrow">Il metodo dello studio</p>
-              <h2 id="ortho-method-title">Prima del trattamento, una valutazione precisa.</h2>
-              <p>La scelta del dispositivo segue lo studio del caso. Valutiamo denti, morso e salute della bocca, poi confrontiamo le alternative indicate con le tue esigenze.</p>
-            </div>
-            <aside class="ortho-professional" aria-label="Il professionista">
-              <img src="/assets/optimized/chiara-federzoni-ortodonzia-720.webp" alt="Dottoressa Chiara Federzoni, odontoiatra dello Studio Federzoni Granata" width="720" height="479" loading="lazy" decoding="async" />
-              <div>
-                <h3>Dott.ssa Chiara Federzoni</h3>
-                <p>Odontoiatra, laureata con lode a Modena nel 1987. Si occupa di ortodonzia nello studio dal 1992.</p>
-                <a class="ortho-text-link ortho-professional-desktop-link" href="/chi-siamo/">Formazione e percorso professionale <OrthodonticLinkArrow /></a>
-                <button class="ortho-text-link ortho-professional-mobile-trigger" type="button" aria-haspopup="dialog" aria-controls="ortho-professional-sheet" aria-expanded="false" data-ortho-professional-open>Formazione e percorso professionale <OrthodonticLinkArrow /></button>
-              </div>
-            </aside>
-          </div>
-          <ol class="ortho-method-steps">
-            {methodSteps.map((step, index) => <li><span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span><h3>{step.title}</h3><p>{step.text}</p></li>)}
-          </ol>
-        </div>
-      </section>
-
-      <LandingPatientReviews reviews={reviews} mobileCarousel mobilePopupReviews={orthodonticReviews}>
+      <LandingPatientReviews reviews={reviews} mobileCarousel conceptCarousel mobilePopupReviews={orthodonticReviews}>
         <Fragment slot="eyebrow"><span class="ortho-review-eyebrow-desktop">Esperienze dei pazienti</span></Fragment>
-        <Fragment slot="title"><span class="ortho-review-title-desktop">I <span class="ortho-review-title-emphasis">nostri pazienti</span> dicono</span><span class="ortho-review-title-mobile"><strong class="ortho-review-title-emphasis">Esperienze</strong> di chi ci ha scelto</span></Fragment>
+        <Fragment slot="title"><span class="ortho-review-title-mobile"><strong class="ortho-review-title-emphasis">Esperienze</strong> di chi ci ha scelto</span></Fragment>
         <p slot="after-carousel" class="ortho-review-proof-caption">Oltre 200 recensioni positive verificate con una media di 5,0 stelle</p>
       </LandingPatientReviews>
-      <section class="ortho-experience-mobile" id="esperienza-studio" aria-labelledby="ortho-experience-over ortho-experience-title">
-        <div class="ortho-shell">
-          <p class="ortho-experience-over" id="ortho-experience-over">Studio Dentistico Federzoni Granata</p>
-          <h2 class="ortho-experience-years" id="ortho-experience-title"><span class="ortho-experience-number">35</span> anni di attività, al servizio del tuo sorriso.</h2>
-          <img class="ortho-experience-photo" src="/assets/optimized/ortodonzia-sorriso-specchio-720.webp" srcset="/assets/optimized/ortodonzia-sorriso-specchio-720.webp 720w, /assets/optimized/ortodonzia-sorriso-specchio-1440.webp 1440w" sizes="calc(100vw - 68px)" alt="Paziente che osserva il proprio sorriso allo specchio durante una visita nello studio" width="720" height="480" loading="lazy" decoding="async" />
-        </div>
-      </section>
-      <OrthodonticQuiz mobileObjectivesFirst>
-        <img slot="questionnaire-icon" class="ortho-questionnaire-aligner-icon" src="/assets/optimized/ortodonzia-allineatore-quiz-frontale-384.webp" alt="" aria-hidden="true" width="384" height="135" loading="lazy" decoding="async" />
-      </OrthodonticQuiz>
+
 
       <section class="ortho-section ortho-faq" aria-labelledby="ortho-faq-title">
         <div class="ortho-shell ortho-split">
           <div class="ortho-section-heading">
-            <p class="ortho-eyebrow"><span class="ortho-faq-eyebrow-desktop">Tempi, impegno e costi</span><span class="ortho-faq-eyebrow-mobile">Ortodonzia e allineatori trasparenti</span></p>
+            <p class="ortho-eyebrow">Ortodonzia e allineatori trasparenti</p>
             <h2 id="ortho-faq-title">Domande frequenti</h2>
             <p>Indicazioni per orientarti nella scelta. Durante la visita potrai capire cosa richiederebbe il percorso nella tua situazione.</p>
           </div>
-          <div class="ortho-faq-list">
-            {faqs.map((faq, index) => <details open={index === 0}><summary>{faq.question}<span aria-hidden="true">+</span></summary><p>{faq.answer}</p></details>)}
-          </div>
           <div class="ortho-faq-mobile-list">
-            {mobileFaqs.slice(0, 3).map((faq, index) => (
+            {faqs.slice(0, 3).map((faq, index) => (
               <details name="ortho-mobile-faq" open={index === 0}>
                 <summary><span>{faq.question}</span><i aria-hidden="true"></i></summary>
                 <div class="ortho-faq-mobile-answer"><p>{faq.answer}</p></div>
@@ -415,7 +349,7 @@ const structuredData = {
             ))}
             <button class="ortho-cta ortho-faq-read-more" type="button" aria-expanded="false" aria-controls="ortho-mobile-extra-faqs">Leggi di più</button>
             <div id="ortho-mobile-extra-faqs" hidden>
-              {mobileFaqs.slice(3).map((faq) => (
+              {faqs.slice(3).map((faq) => (
                 <details name="ortho-mobile-faq">
                   <summary><span>{faq.question}</span><i aria-hidden="true"></i></summary>
                   <div class="ortho-faq-mobile-answer"><p>{faq.answer}</p></div>
@@ -426,27 +360,20 @@ const structuredData = {
         </div>
       </section>
 
-      <section class="ortho-section ortho-final ortho-final-with-instruments" id="ortho-final" aria-labelledby="ortho-final-title">
-        <div class="ortho-shell ortho-final-copy">
-          <p class="ortho-eyebrow">Richiedi una visita ortodontica</p>
-          <h2 id="ortho-final-title">Il primo passo è conoscere la tua situazione.</h2>
-          <p>Una visita ortodontica permette di valutare le caratteristiche del tuo sorriso e comprendere quali percorsi possono essere indicati.</p>
-          <a class="ortho-cta" href="#il-tuo-obiettivo" data-quiz-cta>Richiedi una visita ortodontica <span aria-hidden="true">↗</span></a>
-        </div>
+      <section class="ortho-section ortho-final ortho-final-with-instruments" id="ortho-final" aria-labelledby="ortho-consultation-title">
         <OrthodonticConsultationForm treatmentLabel={orthodonticTreatmentLabel} />
       </section>
-      <HomeLocations />
     </main>
 
     <div id="contatti-studio">
       <Footer>
         <Fragment slot="mobile-navigation-links">
-          {mobileFooterLinks.map(item => <li><a href={item.href}>{item.label}</a></li>)}
+          {footerLinks.map(item => <li><a href={item.href}>{item.label}</a></li>)}
         </Fragment>
       </Footer>
     </div>
 
-    <OrthodonticProfessionalSheet />
+    <OrthodonticProfessionalSheet bookingHref={orthodonticRequestHref} />
     <TreatmentStickyCta treatment={orthodonticTreatmentLabel} href={orthodonticRequestHref} hideAtFooter={false} mobileLabel="Inizia il tuo percorso" mobileHideFrom="#ortho-final" />
     <CookieBanner />
 
@@ -455,35 +382,9 @@ const structuredData = {
       bindOrthodonticMobileMotion();
 
       const quizSection = document.querySelector<HTMLElement>('.ortho-landing-main #il-tuo-obiettivo');
-      const smileSection = document.querySelector<HTMLElement>('.ortho-landing-main #sorrisi-prima-dopo');
-      const finalSection = document.querySelector<HTMLElement>('.ortho-landing-main #ortho-final');
-
-      if (quizSection && smileSection) {
-        const desktopPosition = document.createComment('Original quiz position');
-        quizSection.before(desktopPosition);
-        const mobileViewport = window.matchMedia('(max-width: 720px)');
-        // Move the existing section so keyboard and reading order follow the layout.
-        const updateQuizPosition = () => {
-          const anchor = mobileViewport.matches ? smileSection : desktopPosition;
-          anchor.after(quizSection);
-          finalSection?.setAttribute('aria-labelledby', mobileViewport.matches ? 'ortho-consultation-title' : 'ortho-final-title');
-
-          if (mobileViewport.matches) {
-            quizSection.removeAttribute('aria-labelledby');
-            quizSection.setAttribute('aria-label', 'Questionario ortodontico');
-          } else {
-            quizSection.setAttribute('aria-labelledby', 'orthodontic-objectives-title');
-            quizSection.removeAttribute('aria-label');
-          }
-        };
-
-        updateQuizPosition();
-        mobileViewport.addEventListener('change', updateQuizPosition);
-      }
-
+      quizSection?.removeAttribute('aria-labelledby');
+      quizSection?.setAttribute('aria-label', 'Questionario ortodontico');
       const reviewsSection = document.querySelector<HTMLElement>('.ortho-landing-main #recensioni');
-      const ageSection = document.querySelector<HTMLElement>('.ortho-landing-main #ortodonzia-tutte-le-eta');
-      const experienceSection = document.querySelector<HTMLElement>('.ortho-landing-main #esperienza-studio');
       const faqSection = document.querySelector<HTMLElement>('.ortho-landing-main .ortho-faq');
       const faqReadMore = faqSection?.querySelector<HTMLButtonElement>('.ortho-faq-read-more');
       const extraFaqs = faqSection?.querySelector<HTMLElement>('#ortho-mobile-extra-faqs');
@@ -496,75 +397,13 @@ const structuredData = {
         }, { once: true });
       }
 
-      if (reviewsSection && faqSection) {
-        const originalReviewsPosition = document.createComment('Original patient reviews position');
-        reviewsSection.before(originalReviewsPosition);
-        const reviewsViewport = window.matchMedia('(max-width: 720px)');
-        const updateReviewsPosition = () => {
-          if (reviewsViewport.matches) faqSection.before(reviewsSection);
-          else originalReviewsPosition.after(reviewsSection);
-        };
-        updateReviewsPosition();
-        reviewsViewport.addEventListener('change', updateReviewsPosition);
-      }
-
-      if (experienceSection && smileSection) {
-        const originalExperiencePosition = document.createComment('Original studio experience position');
-        experienceSection.before(originalExperiencePosition);
-        const experienceViewport = window.matchMedia('(max-width: 720px)');
-        const updateExperiencePosition = () => {
-          if (experienceViewport.matches) smileSection.before(experienceSection);
-          else originalExperiencePosition.after(experienceSection);
-        };
-        updateExperiencePosition();
-        experienceViewport.addEventListener('change', updateExperiencePosition);
-      }
-
       const googleRating = reviewsSection?.querySelector<HTMLAnchorElement>('.patient-reviews-rating');
       const footerDescription = document.querySelector<HTMLElement>('.ortho-landing-main #footer .footer-mobile-brand > p');
-      if (googleRating && footerDescription) {
-        const originalRatingPosition = document.createComment('Original Google rating position');
-        googleRating.before(originalRatingPosition);
-        const bracesGraphic = ageSection?.querySelector<SVGSVGElement>('.ortho-age-braces');
-        const originalBracesPosition = document.createComment('Original braces illustration position');
-        bracesGraphic?.before(originalBracesPosition);
-        const footerBraces = document.createElement('div');
-        footerBraces.className = 'ortho-footer-braces';
-        footerBraces.setAttribute('aria-hidden', 'true');
-        // Match the shared footer's mobile layout without changing other pages.
-        const footerViewport = window.matchMedia('(max-width: 640px)');
-        const updateFooterVisuals = () => {
-          const anchor = footerViewport.matches ? footerDescription : originalRatingPosition;
-          anchor.after(googleRating);
-          if (footerViewport.matches && bracesGraphic) {
-            googleRating.after(footerBraces);
-            footerBraces.append(bracesGraphic);
-          } else {
-            if (bracesGraphic) originalBracesPosition.after(bracesGraphic);
-            footerBraces.remove();
-          }
-          ageSection?.classList.toggle('ortho-age-braces-in-footer', footerViewport.matches && !!bracesGraphic);
-        };
-        updateFooterVisuals();
-        footerViewport.addEventListener('change', updateFooterVisuals);
-      }
+      if (googleRating && footerDescription) footerDescription.after(googleRating);
 
-      const professional = document.querySelector<HTMLElement>('.ortho-landing-main .ortho-professional');
-      const personalizedSteps = document.querySelector<HTMLElement>('.ortho-landing-main #percorso-ortodontico .ortho-personalized-steps');
       const professionalCta = document.querySelector<HTMLAnchorElement>('.ortho-landing-main #percorso-ortodontico .ortho-personalized-cta');
-      if (professional && personalizedSteps) {
-        const originalProfessionalPosition = document.createComment('Original professional position');
-        professional.before(originalProfessionalPosition);
-        const professionalViewport = window.matchMedia('(max-width: 720px)');
-        const updateProfessionalPosition = () => {
-          if (professionalViewport.matches) personalizedSteps.before(professional);
-          else originalProfessionalPosition.after(professional);
-          professionalCta?.setAttribute('href', professionalViewport.matches ? '#ortho-final' : '#il-tuo-obiettivo');
-          professionalCta?.toggleAttribute('data-quiz-cta', !professionalViewport.matches);
-        };
-        updateProfessionalPosition();
-        professionalViewport.addEventListener('change', updateProfessionalPosition);
-      }
+      professionalCta?.setAttribute('href', '#ortho-final');
+      professionalCta?.removeAttribute('data-quiz-cta');
     </script>
   </body>
 </html>
@@ -626,7 +465,7 @@ const structuredData = {
     .ortho-hero-overlay .ortho-hero-eyebrow-mobile {
       position: absolute;
       z-index: 1;
-      bottom: 0;
+      top: 0;
       left: 0;
       display: block;
       width: fit-content;
@@ -638,6 +477,7 @@ const structuredData = {
       color: var(--text-dark);
       font-size: 11px;
       line-height: 1.3;
+      transform: translateY(-100%);
     }
     .ortho-hero-eyebrow-mobile::before,
     .ortho-hero-eyebrow-mobile::after {
@@ -713,7 +553,8 @@ const structuredData = {
       align-items: flex-start;
       text-align: left;
     }
-    :global(.ortho-landing-main .ortho-age-section.ortho-age-braces-in-footer) { padding-bottom: 48px; }
+    :global(.ortho-landing-main .ortho-age-section) { padding-bottom: 48px; }
+    :global(.ortho-landing-main .ortho-age-braces) { display: none; }
     :global(.ortho-landing-main .ortho-footer-braces) { display: none; }
     :global(.ortho-landing-main #footer .footer-mobile-section[aria-labelledby="footer-mobile-contacts-title"]),
     :global(.ortho-landing-main #footer .footer-mobile-section[aria-labelledby="footer-mobile-social-title"]),
@@ -728,7 +569,7 @@ const structuredData = {
       color: var(--brand-cta);
     }
 
-    :global(.ortho-landing-main .ortho-hero-copy > .landing-hero-eyebrow),
+    :global(.ortho-landing-main .ortho-hero-copy .landing-hero-eyebrow),
     :global(.ortho-landing-main #percorso-ortodontico .ortho-eyebrow),
     :global(.ortho-landing-main .ortho-faq .ortho-eyebrow) {
       color: var(--text-dark);
@@ -858,7 +699,6 @@ const structuredData = {
     }
 
     :global(.ortho-landing-main #sedi),
-    :global(.ortho-landing-main #percorsi-ortodontici),
     :global(.ortho-landing-main .ortho-method),
     :global(.ortho-landing-main .ortho-nav-list > li:has(> a[href="#sedi"])) {
       display: none;

@@ -47,6 +47,7 @@ const { reviews } = Astro.props;
     const content = sheet.querySelector<HTMLElement>('.ortho-reviews-sheet-body');
     if (!section || !trigger || !title || !content) return;
     const mobile = window.matchMedia('(max-width: 720px)');
+    const enabled = () => document.body.classList.contains('ortho-unified') || mobile.matches;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const originalLabel = trigger.getAttribute('aria-label') || '';
     let previousOverflow = '';
@@ -67,7 +68,7 @@ const { reviews } = Astro.props;
       }
     };
     const openSheet = () => {
-      if (!mobile.matches || sheet.open) return;
+      if (!enabled() || sheet.open) return;
       previousOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
       sheet.showModal();
@@ -77,7 +78,7 @@ const { reviews } = Astro.props;
       announceChange();
     };
     const updateTrigger = () => {
-      if (mobile.matches) {
+      if (enabled()) {
         trigger.setAttribute('role', 'button');
         trigger.setAttribute('aria-haspopup', 'dialog');
         trigger.setAttribute('aria-controls', sheet.id);
@@ -90,8 +91,8 @@ const { reviews } = Astro.props;
       }
     };
 
-    trigger.addEventListener('click', event => { if (mobile.matches) { event.preventDefault(); openSheet(); } });
-    trigger.addEventListener('keydown', event => { if (mobile.matches && event.key === ' ') { event.preventDefault(); openSheet(); } });
+    trigger.addEventListener('click', event => { if (enabled()) { event.preventDefault(); openSheet(); } });
+    trigger.addEventListener('keydown', event => { if (enabled() && event.key === ' ') { event.preventDefault(); openSheet(); } });
     sheet.querySelector('[data-ortho-review-close]')?.addEventListener('click', () => closeSheet());
     sheet.addEventListener('cancel', event => { event.preventDefault(); closeSheet(); });
     sheet.addEventListener('click', event => {
@@ -104,7 +105,7 @@ const { reviews } = Astro.props;
       sheet.classList.remove('is-closing');
       document.body.style.overflow = previousOverflow;
       trigger.setAttribute('aria-expanded', 'false');
-      if (mobile.matches) trigger.focus({ preventScroll: true });
+      if (enabled()) trigger.focus({ preventScroll: true });
       else trigger.removeAttribute('aria-expanded');
       announceChange();
     });

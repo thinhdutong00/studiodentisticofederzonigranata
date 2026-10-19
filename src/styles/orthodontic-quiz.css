@@ -101,6 +101,27 @@
 .orthodontic-quiz-navigation svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 2; }
 
 @keyframes orthodontic-question-enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@media (min-width: 721px) {
+  .ortho-unified #orthodontic-quiz[data-quiz-all-viewports] { width: calc(100% - 64px); max-width: 1120px; height: min(880px, 92svh); max-height: 92svh; margin: auto; border-radius: 24px; }
+  .ortho-unified #orthodontic-quiz .orthodontic-quiz-header { min-height: 88px; padding: 22px 28px; }
+  .ortho-unified #orthodontic-quiz .orthodontic-quiz-header > img { width: 230px; }
+  .ortho-unified #orthodontic-quiz .orthodontic-quiz-screen { width: min(880px, calc(100% - 96px)); min-height: 0; padding: 44px 0 64px; }
+  .ortho-unified #orthodontic-quiz :is(.orthodontic-quiz-navigation, .orthodontic-quiz-number, .orthodontic-objective-icon-desktop, .orthodontic-diagram-desktop, .orthodontic-quiz-desktop-copy) { display: none; }
+  .ortho-unified #orthodontic-quiz :is(.orthodontic-objective-icon-mobile, .orthodontic-diagram-mobile) { display: block; }
+  .ortho-unified #orthodontic-quiz .orthodontic-diagram-mobile { width: 100%; }
+  .ortho-unified #orthodontic-quiz .orthodontic-quiz-mobile-copy { display: inline; }
+  .ortho-unified #orthodontic-quiz .orthodontic-quiz-objectives-step h2 { color: var(--brand-primary-dark); text-align: center; }
+  .ortho-unified #orthodontic-quiz .orthodontic-objectives-grid { grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 36px; }
+  .ortho-unified #orthodontic-quiz .orthodontic-objective { min-width: 0; min-height: 160px; align-items: center; justify-content: center; gap: 18px; padding: 28px; border: 1px solid var(--border); border-radius: 18px; background: var(--background); color: var(--brand-primary-dark); text-align: center; }
+  .ortho-unified #orthodontic-quiz .orthodontic-objective > svg { width: 48px; height: 48px; color: var(--brand-cta); }
+  .ortho-unified #orthodontic-quiz .orthodontic-objective > span { max-width: none; color: inherit; font-size: 20px; line-height: 1.3; text-transform: none; }
+  .ortho-unified #orthodontic-quiz .orthodontic-objective:hover,
+  .ortho-unified #orthodontic-quiz .orthodontic-objective[aria-pressed="true"] { border-color: var(--brand-cta); background: var(--soft-blue-bg); }
+  .ortho-unified #orthodontic-quiz .orthodontic-quiz-pictures { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: none; gap: 16px; }
+  .ortho-unified #orthodontic-quiz .orthodontic-quiz-option-picture { min-height: 150px; margin: 0 0 12px; overflow: hidden; border-radius: 7px; }
+  .ortho-unified #orthodontic-quiz .orthodontic-quiz-option-label { font-size: 16px; }
+  .ortho-unified #orthodontic-quiz .orthodontic-quiz-enter { display: none; }
+}
 @media (max-width: 1000px) {
   .orthodontic-objectives-shell { width: calc(100% - 64px); }
   .orthodontic-objectives-layout { grid-template-columns: .85fr 1.15fr; gap: 40px; }

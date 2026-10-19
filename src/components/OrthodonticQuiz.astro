@@ -13,8 +13,9 @@ import {
 } from '../data/orthodonticQuiz.js';
 import '../styles/orthodontic-quiz.css';
 
-interface Props { contextLabel?: string; mobileObjectivesFirst?: boolean; }
-const { contextLabel, mobileObjectivesFirst = false } = Astro.props;
+interface Props { contextLabel?: string; mobileObjectivesFirst?: boolean; objectivesFirst?: boolean; }
+const { contextLabel, mobileObjectivesFirst: mobileOnly = false, objectivesFirst = false } = Astro.props;
+const mobileObjectivesFirst = mobileOnly || objectivesFirst;
 
 const questions = [
   { number: 1, title: 'Quanti anni ha il paziente?', name: 'patientAge', type: 'number', label: 'Età del paziente', placeholder: 'Scrivi l’età', required: true },
@@ -87,7 +88,7 @@ const questions = [
   </div>
 </section>
 
-<dialog id="orthodontic-quiz" class="orthodontic-quiz" aria-labelledby="orthodontic-quiz-welcome-title" data-quiz-dialog data-quiz-mobile-objectives-first={mobileObjectivesFirst || undefined}>
+<dialog id="orthodontic-quiz" class="orthodontic-quiz" aria-labelledby="orthodontic-quiz-welcome-title" data-quiz-dialog data-quiz-mobile-objectives-first={mobileObjectivesFirst || undefined} data-quiz-all-viewports={objectivesFirst || undefined}>
   <div class="orthodontic-quiz-header">
     <div class="orthodontic-quiz-progress" style={`--quiz-question-count: ${questions.length}`} role="progressbar" aria-label="Avanzamento del questionario" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-quiz-progress>
       {questions.map((_, index) => <span data-progress-segment={index}></span>)}

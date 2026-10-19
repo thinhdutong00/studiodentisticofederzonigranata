@@ -1,3 +1,13 @@
+---
+import CtaArrowIcon from './CtaArrowIcon.astro';
+
+interface Props {
+  bookingHref: string;
+}
+
+const { bookingHref } = Astro.props;
+---
+
 <dialog class="ortho-professional-sheet" id="ortho-professional-sheet" aria-labelledby="ortho-professional-sheet-title" aria-describedby="ortho-professional-sheet-specialties" data-ortho-professional-sheet>
   <header class="ortho-professional-sheet-heading">
     <span class="ortho-professional-sheet-handle" aria-hidden="true"></span>
@@ -22,6 +32,12 @@
     <p><strong>Società scientifiche frequentate:</strong> Accademia Italiana di Conservativa, Società Italiana di Endodonzia, Società Italiana di Ortodonzia.</p>
     <p>Libera professione presso lo Studio dentistico Federzoni Granata di Modena e Reggio Emilia dal 1992, occupandosi di Pedodonzia, Ortodonzia, Endodonzia e Conservativa.</p>
   </div>
+  <footer class="ortho-professional-sheet-actions">
+    <a class="ortho-professional-sheet-visit" href={bookingHref} data-ortho-professional-visit>
+      Prenota una visita con la dottoressa
+      <CtaArrowIcon />
+    </a>
+  </footer>
 </dialog>
 
 <script>
@@ -32,6 +48,7 @@
 
   if (sheet && trigger && title && content) {
     const mobile = window.matchMedia('(max-width: 720px)');
+    const enabled = () => document.body.classList.contains('ortho-unified') || mobile.matches;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let previousOverflow = '';
     let closeTimer: ReturnType<typeof setTimeout> | undefined;
@@ -51,7 +68,7 @@
     };
 
     trigger.addEventListener('click', () => {
-      if (!mobile.matches || sheet.open) return;
+      if (!enabled() || sheet.open) return;
       previousOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
       sheet.showModal();
@@ -60,6 +77,7 @@
       title.focus({ preventScroll: true });
     });
     sheet.querySelector('[data-ortho-professional-close]')?.addEventListener('click', () => closeSheet());
+    sheet.querySelector('[data-ortho-professional-visit]')?.addEventListener('click', () => closeSheet(true));
     sheet.addEventListener('cancel', event => { event.preventDefault(); closeSheet(); });
     sheet.addEventListener('click', event => {
       const bounds = sheet.getBoundingClientRect();
@@ -73,9 +91,9 @@
       sheet.classList.remove('is-closing');
       document.body.style.overflow = previousOverflow;
       trigger.setAttribute('aria-expanded', 'false');
-      if (mobile.matches) trigger.focus({ preventScroll: true });
+      if (enabled()) trigger.focus({ preventScroll: true });
     });
-    mobile.addEventListener('change', () => { if (!mobile.matches) closeSheet(true); });
+    mobile.addEventListener('change', () => { if (!enabled()) closeSheet(true); });
   }
 </script>
 
@@ -113,6 +131,10 @@
   .ortho-professional-sheet-body p:last-child { margin-bottom: 0; }
   .ortho-professional-sheet-body strong { color: var(--brand-primary-dark); font-weight: 600; }
   .ortho-professional-sheet-body ul { display: grid; gap: 16px; margin: -8px 0 24px; padding-left: 20px; }
+  .ortho-professional-sheet-actions { flex: 0 0 auto; padding: 20px 24px calc(24px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--border); background: var(--surface-white); }
+  .ortho-professional-sheet-visit { display: flex; align-items: center; justify-content: center; gap: 14px; width: 100%; min-height: 56px; padding: 16px; border-radius: 10px; background: var(--brand-cta); color: var(--surface-white); font-size: 16px; font-weight: 500; line-height: 1.25; letter-spacing: normal; text-align: center; text-decoration: none; text-transform: uppercase; transition: background-color 180ms ease; }
+  .ortho-professional-sheet-visit:hover { background: var(--brand-cta-hover); color: var(--surface-white); }
+  .ortho-professional-sheet-visit:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 4px; }
   .ortho-professional-sheet-close:hover { background: var(--soft-blue-bg); }
   .ortho-professional-sheet-close:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 4px; }
   .ortho-professional-sheet-body:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: -3px; }
@@ -120,5 +142,6 @@
   :global(.ortho-landing-main:has(.ortho-professional-sheet[open]) .treatment-sticky-cta) { visibility: hidden; pointer-events: none; }
   @keyframes ortho-professional-sheet-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
   @keyframes ortho-professional-sheet-out { from { transform: translateY(0); } to { transform: translateY(100%); } }
+  @media (min-width: 721px) { .ortho-professional-sheet-actions { padding: 24px 36px; } }
   @media (prefers-reduced-motion: reduce) { .ortho-professional-sheet[open], .ortho-professional-sheet.is-closing { animation: none; } }
 </style>
