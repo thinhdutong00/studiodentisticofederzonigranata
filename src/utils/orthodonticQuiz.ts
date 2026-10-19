@@ -89,8 +89,10 @@ export function bindOrthodonticQuiz() {
   };
 
   const updateGuardianText = () => {
+    const ageRange = form.querySelector<HTMLInputElement>('[name="ageRange"]:checked');
     const age = Number(form.querySelector<HTMLInputElement>('[name="patientAge"]')?.value);
-    form.querySelectorAll<HTMLElement>('[data-quiz-guardian]').forEach(element => { element.hidden = !(age > 0 && age < 18); });
+    const isMinor = ageRange ? ageRange.dataset.quizMinor === 'true' : age > 0 && age < 18;
+    form.querySelectorAll<HTMLElement>('[data-quiz-guardian]').forEach(element => { element.hidden = !isMinor; });
   };
 
   const next = () => {

@@ -1,3 +1,12 @@
+export const orthodonticAgeRanges = [
+  { value: 'Fino a 10 anni', minor: true },
+  { value: '11–17 anni', minor: true },
+  { value: '18–29 anni', minor: false },
+  { value: '30–44 anni', minor: false },
+  { value: '45–59 anni', minor: false },
+  { value: '60 anni e oltre', minor: false },
+];
+
 export const orthodonticConcerns = [
   { value: 'Denti affollati', illustration: 'crowded' },
   { value: 'Denti separati', illustration: 'gapped' },

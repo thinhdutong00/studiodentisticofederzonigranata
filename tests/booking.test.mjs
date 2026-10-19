@@ -9,6 +9,7 @@ import {
   validateBooking,
 } from '../server/booking.js';
 import { deriveAttribution } from '../src/utils/attribution.js';
+import { orthodonticAgeRanges } from '../src/data/orthodonticQuiz.js';
 
 const origin = 'https://studiodentisticofederzonigranata.vercel.app';
 const crmUrl = 'https://script.google.com/macros/s/test-deployment/exec';
@@ -171,6 +172,39 @@ test('mobile orthodontic quiz accepts the shorter flow without inventing removed
   assert.ok(crm.messaggio.includes(answers.initialReason));
   assert.deepEqual(findEmailCall(calls).body.to, [RECIPIENT]);
 });
+
+for (const { value: ageRange } of orthodonticAgeRanges) {
+  test(`orthodontic quiz preserves the selected age range ${ageRange} without inventing an exact age`, async () => {
+    const { handler, calls } = fixture();
+    const answers = {
+      ...base, ...cases['orthodontic-quiz'], kind: 'orthodontic-quiz', source: '/visita-ortodonzia/',
+      quizFlow: 'orthodontic-mobile-v2', patientAge: '', ageRange, availability: '', visitGoal: '',
+    };
+    const res = await invoke(handler, answers);
+    assert.equal(res.statusCode, 200);
+    assert.ok(findEmailCall(calls).body.text.includes(`Fascia di età: ${ageRange}`));
+    assert.ok(findCrmCall(calls).body.messaggio.includes(`Fascia di età: ${ageRange}`));
+    assert.ok(!findCrmCall(calls).body.messaggio.includes('Età del paziente:'));
+  });
+}
+
+for (const changes of [
+  { ageRange: '' },
+  { ageRange: 'Risposta non prevista' },
+  { ageRange: '18–29 anni', patientAge: '25' },
+  { source: '/visita-ortodonzia/ortodonzia-adulti/' },
+  { quizFlow: '' },
+]) {
+  test(`orthodontic quiz rejects missing, ambiguous or unsupported age ranges ${JSON.stringify(changes)}`, async () => {
+    const { handler, calls } = fixture();
+    const res = await invoke(handler, {
+      ...base, ...cases['orthodontic-quiz'], kind: 'orthodontic-quiz', source: '/visita-ortodonzia/',
+      quizFlow: 'orthodontic-mobile-v2', patientAge: '', ageRange: '18–29 anni', availability: '', visitGoal: '', ...changes,
+    });
+    assert.equal(res.statusCode, 400);
+    assert.equal(calls.length, 0);
+  });
+}
 
 for (const changes of [
   { initialReason: '' },

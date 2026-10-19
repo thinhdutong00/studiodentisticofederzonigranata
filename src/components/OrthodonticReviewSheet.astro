@@ -42,14 +42,15 @@ const { reviews } = Astro.props;
 <script>
   document.querySelectorAll<HTMLDialogElement>('[data-ortho-review-sheet]').forEach(sheet => {
     const section = sheet.closest<HTMLElement>('.patient-reviews');
-    const trigger = document.querySelector<HTMLAnchorElement>('[data-review-sheet-trigger]');
+    const triggers = Array.from(document.querySelectorAll<HTMLAnchorElement | HTMLButtonElement>('[data-review-sheet-trigger]'));
     const title = sheet.querySelector<HTMLElement>('#ortho-google-reviews-title');
     const content = sheet.querySelector<HTMLElement>('.ortho-reviews-sheet-body');
-    if (!section || !trigger || !title || !content) return;
+    if (!section || !triggers.length || !title || !content) return;
     const mobile = window.matchMedia('(max-width: 720px)');
     const enabled = () => document.body.classList.contains('ortho-unified') || mobile.matches;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const originalLabel = trigger.getAttribute('aria-label') || '';
+    const originalLabels = new Map(triggers.map(trigger => [trigger, trigger.getAttribute('aria-label')]));
+    let returnFocus: HTMLElement | null = null;
     let previousOverflow = '';
     let closeTimer: ReturnType<typeof setTimeout> | undefined;
     const announceChange = () => section.dispatchEvent(new Event('ortho-review-sheet-change'));
@@ -67,32 +68,40 @@ const { reviews } = Astro.props;
         closeTimer = setTimeout(finishClose, 260);
       }
     };
-    const openSheet = () => {
+    const openSheet = (trigger: HTMLElement) => {
       if (!enabled() || sheet.open) return;
+      returnFocus = trigger;
       previousOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
       sheet.showModal();
       content.scrollTop = 0;
-      trigger.setAttribute('aria-expanded', 'true');
+      triggers.forEach(button => button.setAttribute('aria-expanded', 'true'));
       title.focus({ preventScroll: true });
       announceChange();
     };
-    const updateTrigger = () => {
-      if (enabled()) {
-        trigger.setAttribute('role', 'button');
-        trigger.setAttribute('aria-haspopup', 'dialog');
-        trigger.setAttribute('aria-controls', sheet.id);
-        trigger.setAttribute('aria-expanded', String(sheet.open));
-        trigger.setAttribute('aria-label', '5,0 stelle su Google. Apri le recensioni di ortodonzia');
-      } else {
-        closeSheet(true);
-        ['role', 'aria-haspopup', 'aria-controls', 'aria-expanded'].forEach(attribute => trigger.removeAttribute(attribute));
-        trigger.setAttribute('aria-label', originalLabel);
-      }
+    const updateTriggers = () => {
+      if (!enabled()) closeSheet(true);
+      triggers.forEach(trigger => {
+        if (enabled()) {
+          if (trigger instanceof HTMLAnchorElement) trigger.setAttribute('role', 'button');
+          trigger.setAttribute('aria-haspopup', 'dialog');
+          trigger.setAttribute('aria-controls', sheet.id);
+          trigger.setAttribute('aria-expanded', String(sheet.open));
+          if (trigger.classList.contains('patient-reviews-rating')) trigger.setAttribute('aria-label', '5,0 stelle su Google. Apri le recensioni di ortodonzia');
+        } else {
+          if (trigger instanceof HTMLAnchorElement) trigger.removeAttribute('role');
+          ['aria-haspopup', 'aria-controls', 'aria-expanded'].forEach(attribute => trigger.removeAttribute(attribute));
+          const originalLabel = originalLabels.get(trigger);
+          if (originalLabel === null || originalLabel === undefined) trigger.removeAttribute('aria-label');
+          else trigger.setAttribute('aria-label', originalLabel);
+        }
+      });
     };
 
-    trigger.addEventListener('click', event => { if (enabled()) { event.preventDefault(); openSheet(); } });
-    trigger.addEventListener('keydown', event => { if (enabled() && event.key === ' ') { event.preventDefault(); openSheet(); } });
+    triggers.forEach(trigger => {
+      trigger.addEventListener('click', event => { if (enabled()) { event.preventDefault(); openSheet(trigger); } });
+      trigger.addEventListener('keydown', event => { if (enabled() && trigger instanceof HTMLAnchorElement && event.key === ' ') { event.preventDefault(); openSheet(trigger); } });
+    });
     sheet.querySelector('[data-ortho-review-close]')?.addEventListener('click', () => closeSheet());
     sheet.addEventListener('cancel', event => { event.preventDefault(); closeSheet(); });
     sheet.addEventListener('click', event => {
@@ -104,13 +113,15 @@ const { reviews } = Astro.props;
       clearTimeout(closeTimer);
       sheet.classList.remove('is-closing');
       document.body.style.overflow = previousOverflow;
-      trigger.setAttribute('aria-expanded', 'false');
-      if (enabled()) trigger.focus({ preventScroll: true });
-      else trigger.removeAttribute('aria-expanded');
+      triggers.forEach(trigger => {
+        if (enabled()) trigger.setAttribute('aria-expanded', 'false');
+        else trigger.removeAttribute('aria-expanded');
+      });
+      if (enabled()) returnFocus?.focus({ preventScroll: true });
       announceChange();
     });
-    mobile.addEventListener('change', updateTrigger);
-    updateTrigger();
+    mobile.addEventListener('change', updateTriggers);
+    updateTriggers();
   });
 </script>
 

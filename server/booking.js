@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { orthodonticBites, orthodonticConcerns, orthodonticObjectives, orthodonticTimings, orthodonticVisitGoals } from '../src/data/orthodonticQuiz.js';
+import { orthodonticAgeRanges, orthodonticBites, orthodonticConcerns, orthodonticObjectives, orthodonticTimings, orthodonticVisitGoals } from '../src/data/orthodonticQuiz.js';
 
 export const RECIPIENT = 'info.federzonigranata@gmail.com';
 const MAX_BYTES = 24_000;
@@ -89,7 +89,8 @@ export function validateBooking(input) {
   }
   if (input.privacyConsent !== true) throw new RequestError(400, 'Accetta l’informativa privacy per inviare la richiesta.');
   const mobileOrthodonticQuiz = data.kind === 'orthodontic-quiz' && input.quizFlow === 'orthodontic-mobile-v2' && ['/visita-ortodonzia/', '/visita-ortodonzia'].includes(data.source);
-  const requiredFields = REQUIRED[data.kind].filter(key => !(mobileOrthodonticQuiz && key === 'availability'));
+  const rangedOrthodonticQuiz = mobileOrthodonticQuiz && Boolean(data.ageRange);
+  const requiredFields = REQUIRED[data.kind].filter(key => !(mobileOrthodonticQuiz && key === 'availability') && !(rangedOrthodonticQuiz && key === 'patientAge'));
   if (mobileOrthodonticQuiz) requiredFields.push('initialReason');
   if (requiredFields.some((key) => !data[key])) throw new RequestError(400, 'Completa tutti i passaggi del modulo prima di inviare.');
   if (data.office && !['Modena', 'Reggio Emilia'].includes(data.office)) throw new RequestError(400, 'Seleziona una sede valida.');
@@ -111,7 +112,11 @@ export function validateBooking(input) {
     if ((data.emergencyType === 'Altro' || data.symptom === 'Altro') && data.otherDetails.length < 10) throw new RequestError(400, 'Descrivi brevemente i sintomi.');
   }
   if (data.kind === 'orthodontic-quiz') {
-    if (!/^\d{1,3}$/.test(data.patientAge) || Number(data.patientAge) < 1 || Number(data.patientAge) > 100) {
+    if (data.ageRange) {
+      if (!rangedOrthodonticQuiz || data.patientAge || !orthodonticAgeRanges.some(range => range.value === data.ageRange)) {
+        throw new RequestError(400, 'Seleziona una fascia di età tra le opzioni del questionario.');
+      }
+    } else if (!/^\d{1,3}$/.test(data.patientAge) || Number(data.patientAge) < 1 || Number(data.patientAge) > 100) {
       throw new RequestError(400, 'Inserisci un’età valida tra 1 e 100 anni.');
     }
     const choices = [

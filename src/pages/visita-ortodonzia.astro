@@ -329,7 +329,8 @@ const structuredData = {
       <LandingPatientReviews reviews={reviews} mobileCarousel conceptCarousel mobilePopupReviews={orthodonticReviews}>
         <Fragment slot="eyebrow"><span class="ortho-review-eyebrow-desktop">Esperienze dei pazienti</span></Fragment>
         <Fragment slot="title"><span class="ortho-review-title-mobile"><strong class="ortho-review-title-emphasis">Esperienze</strong> di chi ci ha scelto</span></Fragment>
-        <p slot="after-carousel" class="ortho-review-proof-caption">Oltre 200 recensioni positive verificate con una media di 5,0 stelle</p>
+        <button slot="after-heading" class="ortho-reviews-more" type="button" data-review-sheet-trigger>Leggi di più</button>
+        <p slot="after-carousel" class="ortho-review-proof-caption">+ di 200 persone hanno lasciato una recensione positiva con una media di 5,0 stelle</p>
       </LandingPatientReviews>
 
 
@@ -338,7 +339,6 @@ const structuredData = {
           <div class="ortho-section-heading">
             <p class="ortho-eyebrow">Ortodonzia e allineatori trasparenti</p>
             <h2 id="ortho-faq-title">Domande frequenti</h2>
-            <p>Indicazioni per orientarti nella scelta. Durante la visita potrai capire cosa richiederebbe il percorso nella tua situazione.</p>
           </div>
           <div class="ortho-faq-mobile-list">
             {faqs.slice(0, 3).map((faq, index) => (
@@ -412,7 +412,10 @@ const structuredData = {
   .ortho-professional-mobile-trigger { display: none; }
   .ortho-personalized-title-mobile { display: none; }
   .ortho-review-title-mobile { display: none; }
-  .ortho-review-proof-caption { display: none; }
+  .ortho-reviews-more { display: inline-flex; min-height: 46px; align-items: center; justify-content: center; margin: 18px 0 0; padding: 14px 22px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface-white); color: var(--brand-primary-dark); font: inherit; font-size: 16px; font-weight: 500; line-height: 1; text-transform: uppercase; cursor: pointer; }
+  .ortho-reviews-more:hover { border-color: var(--brand-cta); color: var(--brand-cta); }
+  .ortho-reviews-more:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 4px; }
+  .ortho-review-proof-caption { display: none; text-decoration: underline; text-underline-offset: 3px; }
   .ortho-questionnaire-aligner-icon { display: none; }
   .ortho-faq-mobile-list { display: none; }
   .ortho-faq-eyebrow-mobile { display: none; }

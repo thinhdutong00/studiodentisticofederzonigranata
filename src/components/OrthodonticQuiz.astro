@@ -5,6 +5,7 @@ import OrthodonticDiagram from './OrthodonticDiagram.astro';
 import OrthodonticArchDiagram from './OrthodonticArchDiagram.astro';
 import { site } from '../data/site';
 import {
+  orthodonticAgeRanges,
   orthodonticBites,
   orthodonticConcerns,
   orthodonticObjectives,
@@ -18,13 +19,13 @@ const { contextLabel, mobileObjectivesFirst: mobileOnly = false, objectivesFirst
 const mobileObjectivesFirst = mobileOnly || objectivesFirst;
 
 const questions = [
-  { number: 1, title: 'Quanti anni ha il paziente?', name: 'patientAge', type: 'number', label: 'Età del paziente', placeholder: 'Scrivi l’età', required: true },
+  { number: 1, title: mobileObjectivesFirst ? 'Indica la tua età' : 'Quanti anni ha il paziente?', name: mobileObjectivesFirst ? 'ageRange' : 'patientAge', type: mobileObjectivesFirst ? 'age-pills' : 'number', options: orthodonticAgeRanges, label: 'Età del paziente', placeholder: 'Scrivi l’età', required: true },
   { number: 2, title: 'Quale immagine rappresenta meglio i tuoi denti?', name: 'problem', type: 'pictures', options: orthodonticConcerns, required: true },
-  { number: 3, title: 'Come si chiudono le tue arcate?', name: 'occlusion', type: 'pictures', options: orthodonticBites, required: true },
-  { number: 4, title: 'In quale sede vorresti venire?', name: 'office', type: 'select', required: true },
+  { number: 3, title: 'Come si chiudono le tue arcate?', name: 'occlusion', type: 'pictures', options: mobileObjectivesFirst ? [...orthodonticBites.filter(option => option.value !== 'Altro'), ...orthodonticBites.filter(option => option.value === 'Altro')] : orthodonticBites, required: true },
+  { number: 4, title: mobileObjectivesFirst ? 'Seleziona uno dei nostri studi dentistici' : 'In quale sede vorresti venire?', name: 'office', type: 'select', required: true },
   { number: 5, title: 'Quando vorresti iniziare il percorso?', name: 'availability', type: 'choices', options: orthodonticTimings.map(value => ({ value })), required: true },
   { number: 6, title: 'Cosa ti interessa di più della prima valutazione?', name: 'visitGoal', type: 'choices', options: orthodonticVisitGoals.map(value => ({ value })), required: false },
-  { number: 7, title: 'Come ti chiami? (Nome e cognome)', name: 'fullName', type: 'text', label: 'Nome e cognome', placeholder: 'Il tuo nome e cognome', autocomplete: 'name', required: true },
+  { number: 7, title: mobileObjectivesFirst ? 'Come ti chiami?' : 'Come ti chiami? (Nome e cognome)', name: 'fullName', type: 'text', label: 'Nome e cognome', placeholder: mobileObjectivesFirst ? 'Nome e cognome' : 'Il tuo nome e cognome', autocomplete: 'name', required: true },
   { number: 8, title: 'A quale email possiamo scriverti?', name: 'email', type: 'email', label: 'Email', placeholder: 'nome@esempio.it', autocomplete: 'email', required: true },
   { number: 9, title: 'Ultimo passo: a quale numero possiamo chiamarti?', name: 'phone', type: 'tel', label: 'Telefono', placeholder: '333 123 4567', autocomplete: 'tel-national', required: true },
 ];
@@ -129,7 +130,7 @@ const questions = [
       <section class={`orthodontic-quiz-screen orthodontic-quiz-question orthodontic-quiz-question-${question.type}`} hidden data-quiz-panel data-question={question.number} data-quiz-desktop-only={mobileObjectivesFirst && ['availability', 'visitGoal'].includes(question.name) || undefined}>
         <div class="orthodontic-quiz-question-title">
           <span class="orthodontic-quiz-number" aria-hidden="true">{question.number}</span>
-          <h2 id={`orthodontic-question-${question.number}`} tabindex="-1">{question.title}{question.required && <span aria-label="Campo obbligatorio">*</span>}</h2>
+          <h2 id={`orthodontic-question-${question.number}`} tabindex="-1">{question.title}{question.required && !(mobileObjectivesFirst && ['ageRange', 'fullName'].includes(question.name)) && <span aria-label="Campo obbligatorio">*</span>}</h2>
         </div>
         {question.type === 'pictures' && <p class="orthodontic-quiz-description">Scegli l’immagine più vicina al tuo caso. Se hai dubbi, seleziona “Altro”.<br /><small>Illustrazioni indicative, senza valore diagnostico.</small></p>}
         {question.type === 'select' && <p class="orthodontic-quiz-description">Scegli lo studio che ti è più comodo: Modena o Reggio Emilia.</p>}
@@ -138,16 +139,16 @@ const questions = [
         {question.type === 'tel' && <p class="orthodontic-quiz-description">La segreteria ti contatterà per comprendere l’esigenza e concordare l’appuntamento.<span data-quiz-guardian hidden>Per un paziente minorenne, inserisci i recapiti del genitore o del tutore.</span></p>}
         {question.name === 'fullName' && <p class="orthodontic-quiz-description" data-quiz-guardian hidden>Il paziente è minorenne: inserisci nome e cognome del genitore o del tutore che possiamo contattare.</p>}
 
-        {['pictures', 'choices'].includes(question.type) ? (
-          <div class={question.type === 'pictures' ? 'orthodontic-quiz-pictures' : 'orthodontic-quiz-options'} role="radiogroup" aria-labelledby={`orthodontic-question-${question.number}`}>
+        {['pictures', 'choices', 'age-pills'].includes(question.type) ? (
+          <div class={question.type === 'pictures' ? 'orthodontic-quiz-pictures' : question.type === 'age-pills' ? 'orthodontic-quiz-age-options' : 'orthodontic-quiz-options'} role="radiogroup" aria-labelledby={`orthodontic-question-${question.number}`}>
             {question.options?.map((option, index) => (
-              <label class="orthodontic-quiz-option">
-                <input type="radio" name={question.name} value={option.value} required={question.required} />
+              <label class:list={['orthodontic-quiz-option', { 'orthodontic-quiz-option-other': mobileObjectivesFirst && question.type === 'pictures' && option.value === 'Altro' }]}>
+                <input type="radio" name={question.name} value={option.value} required={question.required} data-quiz-minor={'minor' in option ? String(option.minor) : undefined} />
                 <span class="orthodontic-quiz-option-body">
-                  {question.type === 'pictures' && <span class="orthodontic-quiz-option-picture">
+                  {question.type === 'pictures' && !(mobileObjectivesFirst && option.value === 'Altro') && <span class="orthodontic-quiz-option-picture">
                     {mobileObjectivesFirst ? <>
                       <span class="orthodontic-diagram-desktop"><OrthodonticDiagram variant={'illustration' in option ? option.illustration : 'other'} /></span>
-                      <span class="orthodontic-diagram-mobile"><OrthodonticArchDiagram variant={'illustration' in option ? option.illustration : 'other'} kind={question.name === 'problem' ? 'alignment' : 'bite'} idPrefix={`ortho-${question.name}-${index}`} /></span>
+                      <span class="orthodontic-diagram-mobile"><OrthodonticArchDiagram variant={'illustration' in option ? option.illustration : 'other'} kind={question.name === 'problem' ? 'alignment' : 'bite'} /></span>
                     </> : <OrthodonticDiagram variant={'illustration' in option ? option.illustration : 'other'} />}
                   </span>}
                   <span class="orthodontic-quiz-option-label">
@@ -163,7 +164,7 @@ const questions = [
           <label class="orthodontic-quiz-input-label">
             <span class="landing-visually-hidden">Sede preferita</span>
             <select name="office" required aria-labelledby={`orthodontic-question-${question.number}`}>
-              <option value="">Seleziona una sede</option>
+              <option value="">{mobileObjectivesFirst ? 'Seleziona uno studio' : 'Seleziona una sede'}</option>
               {site.offices.map(office => <option value={office.city}>{office.city}</option>)}
             </select>
           </label>
@@ -180,7 +181,7 @@ const questions = [
         {question.type === 'tel' && <div class="orthodontic-quiz-privacy"><BookingPrivacy /><p>L’invio è una richiesta di ricontatto. Giorno e orario della visita saranno concordati con la segreteria.</p></div>}
         <p class="orthodontic-quiz-error" data-quiz-error role="alert" aria-live="polite"></p>
         <div class="orthodontic-quiz-question-actions">
-          {question.type === 'tel' ? <button class="orthodontic-quiz-button" type="submit">Invia la richiesta <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 10 4 4 8-8" /></svg></button> : <button class="orthodontic-quiz-button" type="button" data-quiz-next>Ok <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 10 4 4 8-8" /></svg></button>}
+          {question.type === 'tel' ? <button class="orthodontic-quiz-button" type="submit">Invia la richiesta <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 10 4 4 8-8" /></svg></button> : <button class="orthodontic-quiz-button" type="button" data-quiz-next>{mobileObjectivesFirst && question.name === 'occlusion' ? 'Avanti' : 'Ok'} <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 10 4 4 8-8" /></svg></button>}
           {!question.required && <button class="orthodontic-quiz-skip" type="button" data-quiz-next>Salta questa domanda</button>}
           <span class="orthodontic-quiz-enter">premi <strong>Invio ↵</strong></span>
         </div>
