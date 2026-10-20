@@ -219,10 +219,10 @@ export const periodontalLandingAssets = {
     height: 900,
   },
   studio: {
-    src: '/assets/optimized/ortodonzia-studio-1200.webp',
-    alt: 'Professionisti dello studio confrontano le immagini per pianificare le cure',
-    width: 1200,
-    height: 652,
+    src: '/assets/optimized/ortodonzia-sorriso-specchio-720.webp',
+    alt: 'Paziente che osserva il proprio sorriso allo specchio durante una visita nello studio',
+    width: 720,
+    height: 480,
   },
   gumCheck: {
     src: '/assets/optimized/parodontologia-controllo-gengive.webp',
