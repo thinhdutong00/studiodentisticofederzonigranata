@@ -87,7 +87,7 @@ const sourceFor = (review: PatientReview) => 'sourceUrl' in review && typeof rev
           trigger.setAttribute('aria-haspopup', 'dialog');
           trigger.setAttribute('aria-controls', sheet.id);
           trigger.setAttribute('aria-expanded', String(sheet.open));
-          if (trigger.classList.contains('patient-reviews-rating')) trigger.setAttribute('aria-label', '5,0 stelle su Google. Apri le recensioni dei pazienti');
+          if (trigger.classList.contains('patient-reviews-rating')) trigger.setAttribute('aria-label', '4,9 stelle su Google. Apri le recensioni dei pazienti');
         } else {
           if (trigger instanceof HTMLAnchorElement) trigger.removeAttribute('role');
           ['aria-haspopup', 'aria-controls', 'aria-expanded'].forEach(attribute => trigger.removeAttribute(attribute));

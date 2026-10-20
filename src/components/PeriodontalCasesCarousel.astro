@@ -5,7 +5,8 @@ const phases = [{ key: 'before', label: 'Prima' }, { key: 'after', label: 'Dopo'
 ---
 
 <section class="ortho-smile-preview" id="sorrisi-prima-dopo" aria-labelledby="ortho-smile-preview-title" data-ortho-smile-carousel>
-  <h2 id="ortho-smile-preview-title">Prendersi cura delle <strong>gengive</strong>, preservare il sorriso</h2>
+  <h2 id="ortho-smile-preview-title">Prenditi cura delle <strong>gengive ritirate</strong></h2>
+  <p class="periodontal-cases-description">Quando la gengiva si ritira, anche la radice del dente merita attenzione. Guarda alcuni trattamenti delle recessioni eseguiti nel nostro studio.</p>
 
   <div class="ortho-smile-book">
     {[2, 1].map(offset => (
@@ -171,6 +172,9 @@ const phases = [{ key: 'before', label: 'Prima' }, { key: 'after', label: 'Dopo'
 </script>
 
 <style>
+  #ortho-smile-preview-title { margin-bottom: 16px; }
+  .periodontal-cases-description { width: calc(100% - 68px); max-width: 72ch; margin: 0 auto 28px; color: var(--muted-text); font-size: 16px; font-weight: 400; line-height: 1.5; }
+  @media (min-width: 721px) { .periodontal-cases-description { margin-bottom: 32px; font-size: 18px; text-align: center; } }
   .periodontal-cases-note { max-width: 84ch; margin: 20px auto 0; padding-inline: 34px; color: var(--muted-text); font-size: 12px; font-weight: 400; line-height: 1.5; text-align: center; }
 
   .ortho-smile-preview {

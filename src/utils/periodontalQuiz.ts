@@ -1,4 +1,5 @@
 import { submitBooking } from './submitBooking';
+import { getPeriodontalQuizRecommendation } from '../data/periodontalQuizRecommendation.js';
 
 export function bindPeriodontalQuiz() {
   const dialog = document.querySelector<HTMLDialogElement>('[data-periodontal-quiz-dialog]');
@@ -29,10 +30,42 @@ export function bindPeriodontalQuiz() {
     const age = form.querySelector<HTMLInputElement>('[name="ageRange"]:checked');
     form.querySelectorAll<HTMLElement>('[data-quiz-guardian]').forEach(element => { element.hidden = age?.dataset.quizMinor !== 'true'; });
   };
+  const updateRecommendation = (panel: HTMLElement) => {
+    if (!panel.hasAttribute('data-periodontal-recommendation')) return;
+    const recommendation = getPeriodontalQuizRecommendation({
+      periodontalObjective: objective?.value,
+      periodontalSymptom: form.querySelector<HTMLInputElement>('[name="periodontalSymptom"]:checked')?.value,
+      symptomDuration: form.querySelector<HTMLInputElement>('[name="symptomDuration"]:checked')?.value,
+    });
+    const title = panel.querySelector<HTMLElement>('[data-periodontal-recommendation-title]');
+    const text = panel.querySelector<HTMLElement>('[data-periodontal-recommendation-text]');
+    const caption = panel.querySelector<HTMLElement>('[data-periodontal-recommendation-caption]');
+    const assessment = panel.querySelector<HTMLElement>('[data-periodontal-recommendation-assessment]');
+    const comparison = panel.querySelector<HTMLElement>('[data-periodontal-recommendation-case]');
+    if (title) title.textContent = recommendation.title;
+    if (text) text.textContent = recommendation.text;
+    if (caption) caption.textContent = recommendation.visualCaption;
+    panel.dataset.periodontalRecommendationKind = recommendation.visualKind;
+    if (assessment) assessment.hidden = recommendation.visualKind !== 'assessment';
+    if (comparison) {
+      comparison.hidden = recommendation.visualKind !== 'recession-case';
+      comparison.dataset.periodontalRecommendationCase = recommendation.caseId;
+    }
+    (['before', 'after'] as const).forEach(phase => {
+      const photo = recommendation[phase];
+      const image = panel.querySelector<HTMLImageElement>(`[data-periodontal-recommendation-${phase}]`);
+      if (!image || !photo) return;
+      image.alt = photo.alt;
+      image.width = photo.width;
+      image.height = photo.height;
+      if (image.getAttribute('src') !== photo.src) image.src = photo.src;
+    });
+  };
   const showPanel = (index: number, focus = true) => {
     clearAutoAdvance();
     current = Math.max(0, Math.min(index, panels.length - 1));
     const panel = panels[current];
+    updateRecommendation(panel);
     panels.forEach(candidate => { candidate.hidden = candidate !== panel; });
     const count = panels.filter(candidate => candidate.classList.contains('orthodontic-quiz-question')).length;
     const completed = panels.slice(0, current).filter(candidate => candidate.classList.contains('orthodontic-quiz-question')).length;

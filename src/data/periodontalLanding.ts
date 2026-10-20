@@ -9,27 +9,37 @@
 
 export const periodontalHero = {
   eyebrow: 'Parodontologia · Modena e Reggio Emilia',
-  title: 'Prenditi cura delle gengive. Proteggi il futuro del tuo sorriso.',
+  titleLead: 'Gengive più sane.',
+  titleEmphasis: 'Proteggi i tuoi denti naturali.',
+  title: 'Gengive più sane. Proteggi i tuoi denti naturali.',
+  descriptionLead: 'Sanguinamento, gengive ritirate o denti meno stabili? ',
+  descriptionEmphasis: 'Capire la causa è il primo passo',
+  descriptionTail: ' per prenderci cura delle tue gengive e dei tuoi denti, con un percorso personalizzato di terapia e mantenimento.',
   description:
-    'Gengive che sanguinano, recessioni o denti che si muovono? Parti da una visita parodontale per capire le cause e conoscere il percorso più adatto a te, dalla terapia al mantenimento.',
+    'Sanguinamento, gengive ritirate o denti meno stabili? Capire la causa è il primo passo per prenderci cura delle tue gengive e dei tuoi denti, con un percorso personalizzato di terapia e mantenimento.',
   ctaLabel: 'Prenota una visita parodontale',
 };
 
 export const periodontalProcessSteps = [
   {
-    title: 'Conosciamo la salute delle tue gengive',
-    text: 'Ascoltiamo le tue esigenze e valutiamo gengive e sostegno dei denti con un esame clinico e il sondaggio parodontale.',
-    icon: 'scan',
+    title: 'Valutiamo gengive e sostegno dei denti',
+    text: 'Ascoltiamo ciò che hai notato ed eseguiamo la visita e il sondaggio parodontale. Se servono, completiamo la valutazione con radiografie mirate.',
+    icon: 'checkup',
   },
   {
-    title: 'Il tuo percorso prende forma',
-    text: 'Definiamo la terapia indicata, ti guidiamo nell’igiene quotidiana e rivalutiamo la risposta prima di decidere eventuali ulteriori cure.',
-    icon: 'route',
+    title: 'Costruiamo il tuo piano di cura',
+    text: 'Ti spieghiamo la diagnosi, le cure indicate e il preventivo. Concordiamo le fasi del percorso e ti aiutiamo a migliorare l’igiene quotidiana.',
+    icon: 'plan',
+  },
+  {
+    title: 'Curiamo e rivalutiamo le gengive',
+    text: 'Trattiamo le aree che ne hanno bisogno, anche sotto gengiva. Poi controlliamo la risposta alla terapia per capire se sono necessarie altre cure.',
+    icon: 'therapy',
   },
   {
     title: 'Proteggiamo i progressi nel tempo',
-    text: 'Con richiami personalizzati monitoriamo la stabilità raggiunta e ti aiutiamo a prenderti cura delle gengive ogni giorno.',
-    icon: 'smile',
+    text: 'Con richiami personalizzati seguiamo la salute delle gengive e il sostegno dei denti. Controlli e cura a casa ci aiutano a mantenere i risultati nel tempo.',
+    icon: 'retention',
   },
 ] as const;
 
@@ -37,11 +47,11 @@ export const periodontalTopics = [
   {
     id: 'sanguinamento',
     label: 'Gengive che sanguinano',
-    title: 'Ascolta i segnali delle tue gengive',
+    title: 'Prendiamoci cura delle gengive che sanguinano',
     kicker: 'Sanguinamento e infiammazione',
     paragraphs: [
       'Noti sangue quando lavi i denti o gengive gonfie? Sono segnali da approfondire, anche se non provi dolore. La visita serve a capire la causa e a distinguere una gengivite da una parodontite.',
-      'Il percorso parte dal controllo della placca e da indicazioni pratiche per la tua igiene. Quando necessario, la terapia comprende anche la pulizia professionale sotto gengiva.',
+      'Per ridurre l’infiammazione lavoriamo insieme sulla pulizia quotidiana e sulla rimozione professionale di placca e tartaro. Quando serve, la terapia raggiunge anche le zone sotto gengiva.',
     ],
     items: [
       'Sangue durante lo spazzolamento o la pulizia tra i denti',
@@ -75,11 +85,11 @@ export const periodontalTopics = [
   {
     id: 'supporto-denti',
     label: 'Stabilità dei denti',
-    title: 'Diamo attenzione al sostegno dei tuoi denti',
+    title: 'Proteggiamo il sostegno dei tuoi denti naturali',
     kicker: 'Parodontite e mantenimento',
     paragraphs: [
       'Un dente si muove o ha cambiato posizione? Una valutazione permette di capire quanto supporto conserva e quali possibilità di cura sono indicate. La mobilità non significa automaticamente doverlo estrarre.',
-      'L’obiettivo è controllare l’infiammazione e preservare i denti quando possibile. Diagnosi, risposta alla terapia e collaborazione quotidiana guidano le decisioni e il programma di mantenimento.',
+      'L’obiettivo è controllare l’infiammazione e conservare i denti naturali quando possibile. Ti spieghiamo cosa possiamo fare e seguiamo la risposta alle cure, insieme alle abitudini e ai controlli che aiutano a proteggerli nel tempo.',
     ],
     items: [
       'Mobilità o spostamenti che hai notato nei denti',
@@ -98,17 +108,17 @@ export const periodontalFaqs = [
   {
     question: 'Cosa succede durante la prima visita parodontale?',
     answer:
-      'Ascoltiamo ciò che hai notato, raccogliamo la tua storia clinica ed esaminiamo gengive e sostegno dei denti. Il sondaggio parodontale e, quando indicate, le radiografie aiutano a definire il quadro. Ti spieghiamo poi le possibilità di cura e gli eventuali approfondimenti necessari.',
+      'Partiamo da ciò che hai notato e dalla tua storia clinica. Controlliamo le gengive e il sostegno dei denti con il sondaggio parodontale e, quando indicate, le radiografie. Poi ti spieghiamo il quadro, le possibilità di cura e gli eventuali approfondimenti.',
   },
   {
     question: 'Come si cura la parodontite?',
     answer:
-      'Il percorso comprende igiene quotidiana guidata, controllo dei fattori di rischio e rimozione professionale di placca e tartaro, anche sotto gengiva. Dopo la prima fase rivalutiamo la risposta: solo se necessario possono essere proposte ulteriori terapie, comprese procedure chirurgiche.',
+      'Si parte da una pulizia quotidiana più efficace, dal controllo dei fattori di rischio e dalla rimozione professionale di placca e tartaro, anche sotto gengiva. Rivalutiamo poi la risposta delle gengive: eventuali altre terapie, compresa la chirurgia, si decidono in base alle necessità del singolo caso.',
   },
   {
     question: 'Dopo la terapia servono ancora i controlli?',
     answer:
-      'Sì. La parodontite può riattivarsi anche dopo una buona risposta al trattamento. Il mantenimento comprende controlli, igiene professionale e indicazioni per la cura a casa. La frequenza dei richiami viene personalizzata in base alla situazione e ai fattori di rischio.',
+      'Sì. I controlli aiutano a riconoscere eventuali nuove infiammazioni e a proteggere i progressi raggiunti. Il mantenimento comprende valutazioni periodiche, igiene professionale e indicazioni per la pulizia a casa. Personalizziamo la frequenza dei richiami in base alle tue necessità e ai fattori di rischio.',
   },
   {
     question: 'Le gengive che sanguinano indicano sempre parodontite?',
@@ -118,7 +128,7 @@ export const periodontalFaqs = [
   {
     question: 'Un dente che si muove deve essere estratto?',
     answer:
-      'Non sempre. Valutiamo il supporto residuo, la funzione, il controllo dell’infiammazione e la risposta alla terapia. Questi elementi aiutano a capire se il dente può essere mantenuto e quale percorso sia ragionevole per la tua situazione.',
+      'Non sempre: la mobilità non equivale automaticamente alla perdita del dente. Valutiamo il sostegno che conserva, la funzione e la risposta alla terapia. Ti spieghiamo quali possibilità ci sono per mantenerlo e quali limiti presenta la tua situazione.',
   },
   {
     question: 'Le gengive ritirate possono essere trattate?',
@@ -133,7 +143,7 @@ export const periodontalFaqs = [
   {
     question: 'Quanto costa un percorso di cura delle gengive?',
     answer:
-      'Il costo dipende dalla diagnosi, dalle aree da trattare e dalle prestazioni indicate. Dopo la valutazione e gli eventuali accertamenti riceverai un piano di cura con un preventivo personalizzato, così da conoscere le fasi previste e i relativi costi.',
+      'Dopo la valutazione ti presentiamo un piano di cura e un preventivo chiaro, in base alle aree da trattare e alle prestazioni indicate. Offriamo anche soluzioni di pagamento frazionato, per aiutarti a organizzare la spesa e affrontare il percorso con più serenità.',
   },
 ] as const;
 
@@ -141,7 +151,7 @@ export const periodontalProfessional = {
   name: 'Dott. Stefano Granata',
   role: 'Odontoiatra · Protesi, implantologia e chirurgia computer guidata',
   eyebrow: 'Il professionista al tuo fianco',
-  title: 'La salute del tuo sorriso merita esperienza.',
+  title: 'La salute delle tue gengive merita esperienza.',
   summary:
     'Un approccio che mette in relazione denti, gengive e funzione. Il Dott. Stefano Granata si occupa di protesi, implantologia e chirurgia computer guidata, con attività clinica, didattica e scientifica.',
   image: '/assets/optimized/parodontologia-landing-stefano-granata.webp',
@@ -209,8 +219,10 @@ export const periodontalLandingAssets = {
     height: 900,
   },
   studio: {
-    src: '/assets/original/2026/10/MatteoDomenicali_MG_6819.jpg',
-    alt: 'Paziente nello Studio Federzoni Granata osserva il proprio sorriso allo specchio',
+    src: '/assets/optimized/ortodonzia-studio-1200.webp',
+    alt: 'Professionisti dello studio confrontano le immagini per pianificare le cure',
+    width: 1200,
+    height: 652,
   },
   gumCheck: {
     src: '/assets/optimized/parodontologia-controllo-gengive.webp',

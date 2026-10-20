@@ -1,27 +1,49 @@
 ---
+import PeriodontalPointIcon from './PeriodontalPointIcon.astro';
+
 interface PeriodontalPath {
   id: string;
   label: string;
   title: string;
   subtitle: string;
   description: string;
+  imageSrc: string;
+  imageAlt: string;
   listIntro: string;
-  points: string[];
+  points: { text: string; icon: string }[];
+  faqs: { question: string; answer: string }[];
 }
 
+// Informazioni per i pazienti verificate sulle fonti EFP e SIdP in periodontalLanding.ts.
 const paths: PeriodontalPath[] = [
   {
     id: 'sanguinamento',
     label: 'Sanguinamento',
     title: 'Le gengive sanguinano?',
     subtitle: 'Ascolta i segnali delle tue gengive',
-    description: 'Il sanguinamento durante lo spazzolamento, il rossore o il gonfiore meritano attenzione. Una visita ci permette di distinguere un’infiammazione gengivale da problemi che coinvolgono anche il sostegno dei denti e di valutare come intervenire.',
-    listIntro: 'Durante la valutazione possiamo approfondire:',
+    description: 'Vorresti lavare i denti senza vedere sangue? Partiamo dalla causa: sanguinamento, rossore e gonfiore possono indicare un’infiammazione delle gengive. Con la visita capiamo se riguarda solo la gengiva o anche il sostegno dei denti e definiamo le cure per migliorare la loro salute.',
+    imageSrc: '/assets/optimized/parodontologia-controllo-gengive.webp',
+    imageAlt: 'Controllo professionale della salute delle gengive',
+    listIntro: 'I segnali che possiamo valutare insieme:',
     points: [
-      'Sanguinamento durante lo spazzolamento o l’uso del filo',
-      'Gengive arrossate, gonfie o sensibili',
-      'Presenza di placca e tartaro',
-      'Alito persistente e difficoltà nell’igiene quotidiana',
+      { text: 'Sangue quando lavi i denti o pulisci gli spazi', icon: 'bleeding' },
+      { text: 'Gengive arrossate, gonfie o sensibili', icon: 'inflammation' },
+      { text: 'Placca e tartaro lungo il bordo gengivale', icon: 'plaque' },
+      { text: 'Alito persistente o sapore sgradevole', icon: 'breath' },
+    ],
+    faqs: [
+      {
+        question: 'Il sanguinamento significa sempre parodontite?',
+        answer: 'No. Può dipendere da una gengivite o da altre condizioni. Se si ripete, una visita aiuta a capirne la causa e a verificare anche i tessuti che sostengono i denti.',
+      },
+      {
+        question: 'Devo smettere di pulire la zona che sanguina?',
+        answer: 'La placca può alimentare l’infiammazione. Ti aiutiamo a scegliere strumenti e gesti delicati ma efficaci per pulire denti e spazi interdentali, senza trascurare le zone più sensibili.',
+      },
+      {
+        question: 'Un collutorio è sufficiente?',
+        answer: 'Può essere un aiuto quando indicato dal professionista, ma non sostituisce la pulizia e la valutazione della causa. Il percorso si decide dopo aver controllato le gengive.',
+      },
     ],
   },
   {
@@ -29,27 +51,59 @@ const paths: PeriodontalPath[] = [
     label: 'Gengive ritirate',
     title: 'I denti sembrano più lunghi?',
     subtitle: 'Valutiamo le recessioni gengivali',
-    description: 'Quando il margine gengivale si ritira, una parte della radice può rimanere esposta. Le cause possono essere diverse: non tutte le recessioni indicano una parodontite. Valutiamo la situazione e le possibilità di trattamento, senza proporre una soluzione uguale per tutti.',
+    description: 'Se noti radici più visibili o fastidio con il freddo, potresti avere una recessione gengivale. Valutiamo perché la gengiva si è ritirata, come rendere più confortevole la pulizia e quali cure possono proteggere la zona esposta.',
+    imageSrc: '/assets/optimized/parodontologia-landing-recessioni-1-prima.webp',
+    imageAlt: 'Recessioni gengivali prima del trattamento nello studio',
     listIntro: 'I segnali da riferire durante la visita:',
     points: [
-      'Denti che appaiono più lunghi o radici visibili',
-      'Sensibilità al freddo o durante lo spazzolamento',
-      'Cambiamenti del margine gengivale',
-      'Difficoltà nel pulire le zone esposte',
+      { text: 'Denti che sembrano più lunghi o radici visibili', icon: 'recession' },
+      { text: 'Sensibilità al freddo o durante la pulizia', icon: 'sensitivity' },
+      { text: 'Cambiamenti del bordo della gengiva', icon: 'gumline' },
+      { text: 'Difficoltà a pulire le zone esposte', icon: 'hygiene' },
+    ],
+    faqs: [
+      {
+        question: 'Le gengive ritirate indicano sempre parodontite?',
+        answer: 'No. Possono influire anche uno spazzolamento troppo energico, la posizione dei denti e le caratteristiche della gengiva. La visita serve a distinguere le cause e scegliere come intervenire.',
+      },
+      {
+        question: 'Si può ricoprire la radice esposta?',
+        answer: 'Nei casi indicati si può valutare un trattamento mucogengivale. La possibilità e l’entità della copertura dipendono dal tipo di recessione e dai tessuti disponibili: te ne spieghiamo benefici e limiti.',
+      },
+      {
+        question: 'Come si affronta la sensibilità?',
+        answer: 'Controlliamo la zona esposta e la causa del fastidio. Possiamo consigliarti una tecnica di pulizia adatta e valutare prodotti o trattamenti desensibilizzanti, secondo le tue necessità.',
+      },
     ],
   },
   {
     id: 'supporto-dei-denti',
     label: 'Supporto dei denti',
-    title: 'Prendiamoci cura del sostegno dei denti',
-    subtitle: 'Una valutazione parodontale approfondita',
-    description: 'La parodontite può coinvolgere i tessuti e l’osso che sostengono i denti, anche senza dolore. Se noti mobilità, spostamenti o hai già ricevuto una diagnosi, una valutazione serve a definire lo stato di salute e il percorso di cura più indicato.',
+    title: 'Denti meno stabili?',
+    subtitle: 'Valutiamo il sostegno dei denti',
+    description: 'Sentire un dente meno stabile può preoccupare. La visita ci aiuta a capire quanto sostegno conserva e quali cure possono essere utili. Se è presente una parodontite, lavoriamo per controllare l’infiammazione e conservare i denti naturali quando possibile, seguendoti anche nel mantenimento.',
+    imageSrc: '/assets/optimized/parodontologia-equipe-clinica.webp',
+    imageAlt: 'Équipe dello studio durante una cura odontoiatrica',
     listIntro: 'La visita può essere utile in presenza di:',
     points: [
-      'Denti che si muovono o che hanno cambiato posizione',
-      'Spazi tra i denti comparsi nel tempo',
-      'Una precedente diagnosi di parodontite',
-      'Necessità di riprendere controlli e mantenimento parodontale',
+      { text: 'Denti che si muovono o cambiano posizione', icon: 'mobility' },
+      { text: 'Spazi tra i denti comparsi nel tempo', icon: 'spacing' },
+      { text: 'Una precedente diagnosi di parodontite', icon: 'history' },
+      { text: 'Controlli e mantenimento da riprendere', icon: 'maintenance' },
+    ],
+    faqs: [
+      {
+        question: 'Un dente che si muove va sempre estratto?',
+        answer: 'Non automaticamente. Consideriamo il sostegno residuo, la funzione e la risposta alle cure. La valutazione ci permette di spiegarti quali possibilità ci sono per conservarlo e quali limiti presenta il caso.',
+      },
+      {
+        question: 'Per curare la parodontite serve la chirurgia?',
+        answer: 'Il percorso parte generalmente dalla terapia non chirurgica e dall’igiene quotidiana. Dopo la rivalutazione, solo se indicato, consideriamo ulteriori trattamenti, compresa la chirurgia.',
+      },
+      {
+        question: 'Ogni quanto dovrò fare i controlli?',
+        answer: 'La frequenza dipende dalla salute delle gengive, dalla risposta alla terapia e dai fattori di rischio. Concordiamo richiami personalizzati per seguire la stabilità nel tempo e aggiornare le indicazioni per casa.',
+      },
     ],
   },
 ];
@@ -58,7 +112,7 @@ const paths: PeriodontalPath[] = [
 <section class="ortho-age-section" id="ortodonzia-tutte-le-eta" aria-labelledby="ortho-age-title">
   <span id="percorsi-ortodontici" class="ortho-age-anchor" aria-hidden="true"></span>
   <h2 id="ortho-age-title"><strong>Un percorso</strong> per la salute delle tue gengive</h2>
-  <p class="ortho-age-intro">Sanguinamento, gengive che si ritirano o denti che si muovono: riconoscere un cambiamento è il primo passo per capire come prendertene cura.</p>
+  <p class="ortho-age-intro">Vuoi prenderti cura di gengive che sanguinano e proteggere i tuoi denti? Una parodontite non trattata può danneggiare il loro sostegno, fino alla perdita dei denti. Capire la causa è il primo passo per scegliere le cure.</p>
   <ul class="ortho-age-list">
     {paths.map(path => <li>
       <button type="button" data-ortho-age-open={path.id} aria-haspopup="dialog" aria-controls="ortho-age-sheet" aria-expanded="false">
@@ -76,22 +130,7 @@ const paths: PeriodontalPath[] = [
   </button>
   {paths.map(path => <article class="ortho-age-content" data-ortho-age-content={path.id} hidden>
     <header class="ortho-age-heading">
-      <span class="ortho-age-photo" aria-hidden="true">
-        <svg viewBox="0 0 48 48" fill="none" focusable="false">
-          {path.id === 'sanguinamento' && <>
-            <path d="M13 12c4-2 7 1 11 1s7-3 11-1c6 3 5 10 3 16-2 7-4 12-7 12-3 0-2-11-7-11s-4 11-7 11c-3 0-5-5-7-12-2-6-3-13 3-16Z" />
-            <path d="M8 24c5-3 10-3 16 0 5 3 11 3 16 0M35 5c0 0-4 5-4 7a4 4 0 0 0 8 0c0-2-4-7-4-7Z" />
-          </>}
-          {path.id === 'gengive-ritirate' && <>
-            <path d="M13 9c4-2 7 1 11 1s7-3 11-1c6 3 5 10 3 16-2 8-4 15-7 15-3 0-2-12-7-12s-4 12-7 12c-3 0-5-7-7-15-2-6-3-13 3-16Z" />
-            <path d="M7 27c7 0 10-5 17-5s10 5 17 5M16 20v-5m-3 3 3 3 3-3M32 20v-5m-3 3 3 3 3-3" />
-          </>}
-          {path.id === 'supporto-dei-denti' && <>
-            <path d="M15 8c3-1 6 1 9 1s6-2 9-1c5 2 5 8 3 14-1 5-3 10-5 10-3 0-3-9-7-9s-4 9-7 9c-2 0-4-5-5-10-2-6-2-12 3-14Z" />
-            <path d="M6 24v9c5 1 6 7 18 7s13-6 18-7v-9M7 31c5 0 6 5 17 5s12-5 17-5M24 41v3" />
-          </>}
-        </svg>
-      </span>
+      <img class="ortho-age-photo" src={path.imageSrc} alt={path.imageAlt} width="88" height="88" loading="lazy" decoding="async" />
       <p class="ortho-age-label">{path.label}</p>
       <h2 id={`ortho-age-${path.id}-title`} tabindex="-1">{path.title}</h2>
       <p class="ortho-age-range">{path.subtitle}</p>
@@ -99,9 +138,27 @@ const paths: PeriodontalPath[] = [
     <div class="ortho-age-copy" tabindex="0" role="region" aria-label={`Informazioni: ${path.label.toLowerCase()}`}>
       <p class="ortho-age-description" id={`ortho-age-${path.id}-description`}>{path.description}</p>
       <p class="ortho-age-list-intro">{path.listIntro}</p>
-      <ul class="ortho-age-points">
-        {path.points.map(point => <li>{point}</li>)}
+      <ul class="ortho-age-points" role="list">
+        {path.points.map(point => <li>
+          <span class="ortho-age-point-symbol" aria-hidden="true"><PeriodontalPointIcon name={point.icon} /></span>
+          <span>{point.text}</span>
+        </li>)}
       </ul>
+      <section class="ortho-age-faq" aria-labelledby={`ortho-age-${path.id}-faq-title`}>
+        <h3 id={`ortho-age-${path.id}-faq-title`}>Domande frequenti</h3>
+        <div class="ortho-age-faq-list">
+          {path.faqs.map(faq => <details name={`ortho-age-${path.id}-faq`}>
+            <summary>
+              <span>{faq.question}</span>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                <path d="M5 12h14" />
+                <path class="ortho-age-faq-plus" d="M12 5v14" />
+              </svg>
+            </summary>
+            <p>{faq.answer}</p>
+          </details>)}
+        </div>
+      </section>
     </div>
     <footer class="ortho-age-actions">
       <a class="ortho-age-visit" href="#ortho-final" data-ortho-age-visit>
@@ -211,16 +268,28 @@ const paths: PeriodontalPath[] = [
   .ortho-age-close svg, .ortho-age-visit svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
   .ortho-age-content { display: flex; flex-direction: column; min-height: 0; max-height: inherit; text-align: center; }
   .ortho-age-heading { flex: 0 0 auto; display: grid; grid-template-columns: 64px minmax(0, 1fr); align-items: center; column-gap: 16px; row-gap: 4px; padding: 28px 72px 22px 24px; border-bottom: 1px solid var(--border); text-align: left; }
-  .ortho-age-photo { padding: 12px; color: var(--brand-cta); grid-column: 1; grid-row: 1 / span 3; display: block; width: 64px; height: 64px; margin: 0; border-radius: 18px; background: var(--soft-blue-bg); object-fit: cover; }
+  .ortho-age-photo { grid-column: 1; grid-row: 1 / span 3; display: block; width: 64px; height: 64px; margin: 0; border-radius: 18px; background: var(--soft-blue-bg); object-fit: cover; }
   .ortho-age-label { grid-column: 2; grid-row: 1; margin: 0; color: var(--brand-cta); font-size: 12px; font-weight: 500; line-height: 1.3; letter-spacing: normal; text-transform: uppercase; }
   .ortho-age-content h2 { grid-column: 2; grid-row: 2; margin: 0; color: var(--brand-primary-dark); font-size: 24px; font-weight: 500; line-height: 1.18; letter-spacing: -.16px; text-wrap: balance; }
   .ortho-age-range { grid-column: 2; grid-row: 3; margin: 0; color: var(--brand-cta); font-size: 14px; font-weight: 500; line-height: 1.3; }
   .ortho-age-copy { min-height: 0; padding: 24px 28px; overflow-y: auto; overscroll-behavior-y: contain; text-align: left; }
   .ortho-age-description { margin: 0; color: var(--muted-text); font-size: 17px; font-weight: 400; line-height: 1.5; letter-spacing: -.16px; }
   .ortho-age-list-intro { margin: 24px 0 14px; color: var(--brand-primary-dark); font-size: 16px; font-weight: 500; line-height: 1.4; }
-  .ortho-age-points { display: grid; gap: 12px; margin: 0; padding-left: 20px; list-style: disc; }
-  .ortho-age-points li { color: var(--brand-primary-dark); font-size: 15px; font-weight: 400; line-height: 1.5; }
-  .ortho-age-points li::marker { color: var(--brand-cta); }
+  .ortho-age-points { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 24px; margin: 24px 0 0; padding: 0; list-style: none; }
+  .ortho-age-points li { display: flex; min-width: 0; flex-direction: column; align-items: center; gap: 12px; color: var(--brand-primary-dark); font-size: 15px; font-weight: 400; line-height: 1.45; text-align: center; }
+  .ortho-age-point-symbol { display: block; flex: 0 0 auto; width: 42px; height: 42px; color: var(--brand-cta); }
+  .ortho-age-point-symbol :global(svg) { display: block; width: 100%; height: 100%; }
+  .ortho-age-faq { margin-top: 32px; }
+  .ortho-age-faq h3 { margin: 0 0 12px; color: var(--brand-primary-dark); font-size: 20px; font-weight: 500; line-height: 1.3; }
+  .ortho-age-faq-list { border-top: 1px solid var(--border); }
+  .ortho-age-faq details { border-bottom: 1px solid var(--border); }
+  .ortho-age-faq summary { display: flex; min-height: 54px; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; color: var(--brand-primary-dark); font-size: 15px; font-weight: 500; line-height: 1.4; cursor: pointer; list-style: none; }
+  .ortho-age-faq summary::-webkit-details-marker { display: none; }
+  .ortho-age-faq summary svg { flex: 0 0 20px; width: 20px; height: 20px; color: var(--brand-cta); stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
+  .ortho-age-faq summary:hover { color: var(--brand-cta); }
+  .ortho-age-faq summary:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 3px; border-radius: 3px; }
+  .ortho-age-faq details[open] .ortho-age-faq-plus { opacity: 0; }
+  .ortho-age-faq details > p { margin: 0; padding: 0 36px 18px 0; color: var(--muted-text); font-size: 15px; font-weight: 400; line-height: 1.5; }
   .ortho-age-copy:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: -3px; }
   .ortho-age-actions { flex: 0 0 auto; padding: 20px 28px calc(24px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--border); background: var(--surface-white); }
   .ortho-age-visit { display: flex; min-height: 54px; align-items: center; justify-content: center; gap: 14px; padding: 17px 16px; border-radius: 10px; background: var(--brand-cta); color: var(--surface-white); font-size: 16px; font-weight: 500; line-height: 16px; letter-spacing: normal; text-decoration: none; text-transform: uppercase; }
@@ -231,10 +300,9 @@ const paths: PeriodontalPath[] = [
   .ortho-age-content h2:focus { outline: none; }
   :global(.ortho-landing-main:has(.ortho-age-sheet[open]) .treatment-sticky-cta) { visibility: hidden; pointer-events: none; }
 
-  .ortho-age-photo svg { display: block; width: 100%; height: 100%; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
-
   @media (max-width: 720px) {
     .ortho-age-actions { padding: 14px 28px max(8px, env(safe-area-inset-bottom, 0px)); }
+    .ortho-age-points { gap: 26px 18px; }
     .ortho-age-section { position: relative; isolation: isolate; display: block; overflow: hidden; padding: 48px 34px; background: var(--brand-primary-dark); color: var(--surface-white); }
     .ortho-age-section > :not(.ortho-age-braces, .ortho-age-anchor) { position: relative; z-index: 1; }
     .ortho-age-braces { position: absolute; z-index: 0; bottom: -1px; left: 50%; display: block; width: max(100%, 480px); max-width: none; height: auto; transform: translateX(-50%); pointer-events: none; }

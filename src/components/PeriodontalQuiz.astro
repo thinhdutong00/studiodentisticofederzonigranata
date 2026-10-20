@@ -3,10 +3,13 @@ import BookingFields from './BookingFields.astro';
 import BookingPrivacy from './BookingPrivacy.astro';
 import { site } from '../data/site';
 import { periodontalAgeRanges, periodontalDurations, periodontalObjectives, periodontalSymptoms } from '../data/periodontalQuiz.js';
+import { getPeriodontalQuizRecommendation } from '../data/periodontalQuizRecommendation.js';
 import '../styles/orthodontic-quiz.css';
 
 interface Props { contextLabel?: string; }
 const { contextLabel } = Astro.props;
+const initialRecommendation = getPeriodontalQuizRecommendation();
+const recessionExample = getPeriodontalQuizRecommendation({ periodontalSymptom: 'Gengive che si ritirano' });
 const questions = [
   { number: 1, title: 'Indica la tua età', name: 'ageRange', type: 'age-pills', options: periodontalAgeRanges },
   { number: 2, title: 'Quale segnale hai notato?', name: 'periodontalSymptom', type: 'choices', options: periodontalSymptoms.map(value => ({ value })) },
@@ -56,10 +59,10 @@ const questions = [
       <div class="orthodontic-objectives-grid" role="group" aria-labelledby="periodontal-objectives-title">
         {periodontalObjectives.map(objective => <button class="orthodontic-objective" type="button" data-quiz-objective={objective.title} aria-pressed="false">
           <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-            {objective.icon === 'bleeding' && <><path d="M22 5C18 11 10 18 10 25a12 12 0 0 0 24 0c0-7-8-14-12-20Z" /><path d="M17 26a5 5 0 0 0 5 5M38 5v10m-5-5h10" /></>}
-            {objective.icon === 'gum' && <><path d="M8 20c5-4 10 4 16 0s11-4 16 0v15H8V20ZM11 20v-9c0-4 5-5 8-2 3-3 8-2 8 2v8m0-8c0-4 5-5 8-2 3-3 7-2 7 2v10M6 39h36" /></>}
-            {objective.icon === 'tooth' && <><path d="M18 10c-5-3-10 0-10 6s4 10 5 17c1 7 5 7 7-1l2-5 2 5c2 8 6 8 7 1 1-7 5-11 5-17s-5-9-10-6c-3 2-5 2-8 0Z" /><path d="m3 19 4 4-4 4m42-8-4 4 4 4M17 8l-2-4m15 4 2-4" /></>}
-            {objective.icon === 'check' && <><path d="M29 9a16 16 0 1 0 10 13M18 22l6 6L41 9" /><path d="M15 34c4 3 9 3 13 0" /></>}
+            {objective.icon === 'bleeding' && <><path d="M9 25V14c0-5 4-7 8-5 2 1 4 1 6 0 4-2 8 0 8 5v11M5 29c5-4 10-4 15-1s10 3 14 0M5 29v11h26" /><path d="M38 20c-2 3-6 7-6 11a6 6 0 0 0 12 0c0-4-4-8-6-11Z" /></>}
+            {objective.icon === 'gum' && <><path d="M7 25V12c0-5 8-5 8 0v12m5 0V10c0-5 8-5 8 0v14m5 0V12c0-5 8-5 8 0v13M4 28c4-5 9-5 13 0 4-5 10-5 14 0 4-5 9-5 13 0v13H4V28Z" /></>}
+            {objective.icon === 'tooth' && <><path d="M19 9c-4-2-8 0-8 5 0 6 3 10 4 16l1 7c.5 4 3 4 4 0l4-11 4 11c1 4 3.5 4 4 0l1-7c1-6 4-10 4-16 0-5-4-7-8-5-4 2-6 2-10 0Z" /><path d="M3 20h5m-3-3-3 3 3 3m35-3h5m-2-3 3 3-3 3" /></>}
+            {objective.icon === 'check' && <><path d="M18 10c-4-2-8 0-8 5 0 6 3 10 4 16l1 7c.5 4 3 4 4 0l4-11M31 10c-4 2-6 2-10 0M7 31H4V19m0-7V7h10m24 0h6v6" /><path d="m26 30 6 6 12-14" /></>}
           </svg>
           <span>{objective.title}</span>
         </button>)}
@@ -74,7 +77,7 @@ const questions = [
         {question.number === 3 && <p class="orthodontic-quiz-description">Se non hai notato segnali particolari, seleziona “Non saprei indicarlo”.</p>}
         {question.type === 'email' && <p class="orthodontic-quiz-description">Useremo questo recapito per gestire la tua richiesta. <a href="/privacy-policy/" target="_blank" rel="noopener noreferrer">Informativa privacy</a>.</p>}
         {question.name === 'fullName' && <p class="orthodontic-quiz-description" data-quiz-guardian hidden>Per un paziente minorenne, inserisci nome e cognome del genitore o del tutore che possiamo contattare.</p>}
-        {question.type === 'tel' && <p class="orthodontic-quiz-description">La segreteria ti ricontatterà per concordare giorno e orario della visita.<span data-quiz-guardian hidden>Per un paziente minorenne, inserisci il recapito del genitore o del tutore.</span></p>}
+        {question.type === 'tel' && <p class="orthodontic-quiz-description">La segreteria ti ricontatterà entro due ore per concordare giorno e orario della visita.<span data-quiz-guardian hidden>Per un paziente minorenne, inserisci il recapito del genitore o del tutore.</span></p>}
 
         {['choices', 'age-pills'].includes(question.type) ? <div class={question.type === 'age-pills' ? 'orthodontic-quiz-age-options' : 'orthodontic-quiz-options'} role="radiogroup" aria-labelledby={`periodontal-question-${question.number}`}>
           {question.options?.map(option => <label class="orthodontic-quiz-option">
@@ -99,10 +102,20 @@ const questions = [
         </div>
       </section>
 
-      {question.number === 3 && <section class="orthodontic-quiz-screen orthodontic-quiz-interlude" hidden data-quiz-panel data-quiz-information>
-        <div class="orthodontic-quiz-question-title"><h2 id="periodontal-quiz-information-title" tabindex="-1">La salute delle gengive parte da una valutazione.</h2></div>
-        <p class="orthodontic-quiz-description">Durante la visita ascoltiamo le tue esigenze e valutiamo denti, gengive e tessuti di sostegno, per indicarti gli approfondimenti e le cure adatte alla tua situazione.</p>
-        <p class="orthodontic-quiz-caption">Il questionario raccoglie le tue esigenze e non fornisce una diagnosi.</p>
+      {question.number === 3 && <section class="orthodontic-quiz-screen orthodontic-quiz-interlude periodontal-quiz-recommendation" hidden data-quiz-panel data-quiz-information data-periodontal-recommendation data-periodontal-recommendation-kind={initialRecommendation.visualKind}>
+        <div class="orthodontic-quiz-question-title"><h2 id="periodontal-quiz-information-title" tabindex="-1" data-periodontal-recommendation-title>{initialRecommendation.title}</h2></div>
+        <p class="orthodontic-quiz-description" data-periodontal-recommendation-text>{initialRecommendation.text}</p>
+        <div class="periodontal-quiz-visual">
+          <figure class="periodontal-quiz-assessment" data-periodontal-recommendation-assessment>
+            <img src={initialRecommendation.image.src} alt={initialRecommendation.image.alt} width={initialRecommendation.image.width} height={initialRecommendation.image.height} loading="lazy" decoding="async" />
+          </figure>
+          <div class="periodontal-quiz-case" hidden data-periodontal-recommendation-case="" role="group" aria-label="Esempio dello studio: prima e dopo un trattamento delle recessioni gengivali">
+            <figure><img src={recessionExample.before?.src} alt={recessionExample.before?.alt} width={recessionExample.before?.width} height={recessionExample.before?.height} loading="lazy" decoding="async" data-periodontal-recommendation-before /><figcaption>Prima</figcaption></figure>
+            <figure><img src={recessionExample.after?.src} alt={recessionExample.after?.alt} width={recessionExample.after?.width} height={recessionExample.after?.height} loading="lazy" decoding="async" data-periodontal-recommendation-after /><figcaption>Dopo</figcaption></figure>
+          </div>
+          <p class="orthodontic-quiz-caption periodontal-quiz-visual-caption" data-periodontal-recommendation-caption>{initialRecommendation.visualCaption}</p>
+        </div>
+        <p class="orthodontic-quiz-caption periodontal-quiz-information-note">Il questionario raccoglie le tue esigenze e non fornisce una diagnosi.</p>
         <button class="orthodontic-quiz-button" type="button" data-quiz-next>Prenota una visita <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m8 5 5 5-5 5" /></svg></button>
       </section>}
     </>)}
@@ -114,6 +127,39 @@ const questions = [
   [data-periodontal-quiz-dialog] .orthodontic-quiz-options { width: 100%; max-width: 680px; }
   [data-periodontal-quiz-dialog] .orthodontic-quiz-options .orthodontic-quiz-option-body { min-height: 58px; justify-content: center; padding: 14px 18px; border-radius: 12px; }
   [data-periodontal-quiz-dialog] .orthodontic-objective > svg { display: block; }
+  [data-periodontal-quiz-dialog] .periodontal-quiz-recommendation h2 { max-width: 28ch; color: var(--brand-primary-dark); }
+  [data-periodontal-quiz-dialog] .periodontal-quiz-recommendation .orthodontic-quiz-description { max-width: 68ch; }
+  .periodontal-quiz-assessment { width: min(100%, 440px); margin: 24px 0 0; }
+  .periodontal-quiz-assessment img { display: block; width: 100%; height: auto; border-radius: 12px; }
+  .periodontal-quiz-case { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 680px; gap: 14px; margin-top: 24px; }
+  .periodontal-quiz-case figure { min-width: 0; margin: 0; }
+  .periodontal-quiz-case img { display: block; width: 100%; height: auto; aspect-ratio: 600 / 352; border-radius: 10px; background: var(--background); object-fit: contain; }
+  .periodontal-quiz-case figcaption { margin-top: 7px; color: var(--muted-text); font-size: 14px; line-height: 1.3; }
+  [data-periodontal-quiz-dialog] .periodontal-quiz-visual-caption { max-width: 76ch; margin: 14px 0 0; font-size: 14px; }
+  [data-periodontal-quiz-dialog] .periodontal-quiz-information-note { margin: 12px 0 0; font-size: 14px; }
+  @media (min-width: 721px) {
+    [data-periodontal-quiz-dialog] .periodontal-quiz-recommendation {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      grid-template-rows: auto auto auto 1fr;
+      grid-template-areas: "title visual" "summary visual" "note visual" "action visual";
+      align-items: start;
+      gap: 18px 36px;
+    }
+    .periodontal-quiz-recommendation > .orthodontic-quiz-question-title { grid-area: title; }
+    [data-periodontal-quiz-dialog] .periodontal-quiz-recommendation h2 { font-size: clamp(26px, 2.2vw, 32px); }
+    [data-periodontal-quiz-dialog] .periodontal-quiz-recommendation > .orthodontic-quiz-description { grid-area: summary; margin: 0; font-size: 18px; }
+    .periodontal-quiz-visual { grid-area: visual; min-width: 0; }
+    .periodontal-quiz-assessment, .periodontal-quiz-case { width: 100%; margin-top: 0; }
+    [data-periodontal-quiz-dialog] .periodontal-quiz-information-note { grid-area: note; margin: 0; }
+    [data-periodontal-quiz-dialog] .periodontal-quiz-recommendation > .orthodontic-quiz-button { grid-area: action; justify-self: start; margin-top: 0; }
+  }
+  @media (max-width: 720px) {
+    [data-periodontal-quiz-dialog] .periodontal-quiz-recommendation { width: calc(100% - 48px); padding-top: 36px; }
+    .periodontal-quiz-assessment { max-width: 360px; }
+    .periodontal-quiz-case { gap: 10px; }
+    .periodontal-quiz-case figcaption { font-size: 13px; }
+  }
 </style>
 
 <script>

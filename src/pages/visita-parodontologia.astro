@@ -36,10 +36,10 @@ const periodontalTreatmentLabel = 'Parodontologia (cure gengivali)';
 const periodontalRequestHref = `/richiesta/?trattamento=${encodeURIComponent(periodontalTreatmentLabel)}`;
 
 const footerLinks = [
-  { label: 'La tua prima visita', href: '#benefici-ortodontici' },
+  { label: 'La salute delle gengive', href: '#ortodonzia-tutte-le-eta' },
   { label: 'Prima e dopo', href: '#sorrisi-prima-dopo' },
   { label: 'Questionario sulle gengive', href: '#il-tuo-obiettivo' },
-  { label: 'La salute delle gengive', href: '#ortodonzia-tutte-le-eta' },
+  { label: 'La tua prima visita', href: '#benefici-ortodontici' },
   { label: 'Recensioni', href: '#recensioni' },
   { label: 'Domande frequenti', href: '#ortho-faq-title' },
   { label: 'Prenota una visita', href: '#ortho-final' },
@@ -188,11 +188,11 @@ const structuredData = {
               <div class="ortho-hero-intro">
                 <p class="landing-hero-eyebrow ortho-hero-eyebrow-mobile">{periodontalHero.eyebrow}</p>
                 <h1 id="landing-title">
-                  <span class="ortho-hero-title-mobile"><span class="ortho-hero-title-context">Prenditi cura delle gengive.</span> Proteggi <strong>il futuro del tuo sorriso.</strong></span>
+                  <span class="ortho-hero-title-mobile"><span class="ortho-hero-title-context">{periodontalHero.titleLead}</span> <strong>{periodontalHero.titleEmphasis}</strong></span>
                 </h1>
                 <p class="ortho-hero-lead">
                   <span class="ortho-hero-lead-mobile">
-                    {periodontalHero.description}
+                    {periodontalHero.descriptionLead}<strong>{periodontalHero.descriptionEmphasis}</strong>{periodontalHero.descriptionTail}
                   </span>
                 </p>
               </div>
@@ -202,14 +202,16 @@ const structuredData = {
         </div>
       </section>
 
+      <PeriodontalPathsSection />
+
       <PeriodontalIntroduction>
         <Fragment slot="personalized-title">{periodontalProfessional.title}</Fragment>
-        <Fragment slot="after-benefits">
+        <Fragment slot="before-first-visit">
           <section class="ortho-experience-mobile" id="esperienza-studio" aria-labelledby="ortho-experience-over ortho-experience-title">
             <div class="ortho-shell">
               <p class="ortho-experience-over" id="ortho-experience-over">Studio Dentistico Federzoni Granata</p>
               <h2 class="ortho-experience-years" id="ortho-experience-title"><span class="ortho-experience-number">35</span> anni di attività, al servizio del tuo sorriso.</h2>
-              <img class="ortho-experience-photo" src="/assets/optimized/ortodonzia-sorriso-specchio-720.webp" srcset="/assets/optimized/ortodonzia-sorriso-specchio-720.webp 720w, /assets/optimized/ortodonzia-sorriso-specchio-1440.webp 1440w" sizes="(max-width: 720px) calc(100vw - 68px), (max-width: 978px) 92vw, 900px" alt="Paziente che osserva il proprio sorriso allo specchio durante una visita nello studio" width="720" height="480" loading="lazy" decoding="async" />
+              <img class="ortho-experience-photo" src={periodontalLandingAssets.studio.src} srcset="/assets/optimized/ortodonzia-studio-720.webp 720w, /assets/optimized/ortodonzia-studio-1200.webp 1200w" sizes="(max-width: 720px) calc(100vw - 68px), (max-width: 978px) 92vw, 900px" alt={periodontalLandingAssets.studio.alt} width="1200" height="652" loading="lazy" decoding="async" />
             </div>
           </section>
           <PeriodontalCasesCarousel />
@@ -221,7 +223,6 @@ const structuredData = {
               <circle cx="73" cy="40" r="20" stroke-opacity=".45" />
             </svg>
           </PeriodontalQuiz>
-          <PeriodontalPathsSection />
         </Fragment>
         <Fragment slot="professional">
           <aside class="ortho-professional" aria-label="Il professionista">
@@ -240,7 +241,7 @@ const structuredData = {
         <Fragment slot="eyebrow"><span class="ortho-review-eyebrow-desktop">Esperienze dei pazienti</span></Fragment>
         <Fragment slot="title"><span class="ortho-review-title-mobile"><strong class="ortho-review-title-emphasis">Esperienze</strong> di chi ci ha scelto</span></Fragment>
         <button slot="after-heading" class="ortho-reviews-more" type="button" data-review-sheet-trigger>Leggi di più</button>
-        <p slot="after-carousel" class="ortho-review-proof-caption">+ di 200 persone hanno lasciato una recensione positiva con una media di 5,0 stelle</p>
+        <p slot="after-carousel" class="ortho-review-proof-caption">+ di 200 persone hanno lasciato una recensione positiva con una media di 4,9 stelle</p>
       </PeriodontalPatientReviews>
 
 
