@@ -219,8 +219,8 @@ export const periodontalLandingAssets = {
     height: 900,
   },
   studio: {
-    src: '/assets/optimized/ortodonzia-sorriso-specchio-720.webp',
-    alt: 'Paziente che osserva il proprio sorriso allo specchio durante una visita nello studio',
+    src: '/assets/optimized/parodontologia-studio-federzoni-granata-720.webp',
+    alt: 'Dottor Stefano Granata e dottoressa Chiara Federzoni nello studio dentistico',
     width: 720,
     height: 480,
   },
