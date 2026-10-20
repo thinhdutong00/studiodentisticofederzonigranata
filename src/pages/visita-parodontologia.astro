@@ -12,7 +12,7 @@ import PeriodontalConsultationForm from '../components/PeriodontalConsultationFo
 import PeriodontalLandingHeader from '../components/PeriodontalLandingHeader.astro';
 import TreatmentStickyCta from '../components/TreatmentStickyCta.astro';
 import { featuredPatientReviews } from '../data/reviews';
-import { periodontalHero, periodontalFaqs, periodontalProfessional } from '../data/periodontalLanding';
+import { periodontalHero, periodontalFaqs, periodontalProfessional, periodontalLandingAssets } from '../data/periodontalLanding';
 import { site } from '../data/site';
 import '../styles/inter-font.css';
 import '../styles/visit-landing.css';
@@ -24,9 +24,8 @@ const canonical = new URL(canonicalPath, site.source).toString();
 const title = 'Visita parodontale a Modena e Reggio Emilia | Federzoni Granata';
 const description =
   'Gengive che sanguinano, recessioni o denti mobili? Scopri il percorso di valutazione, terapia e mantenimento parodontale a Modena e Reggio Emilia.';
-const heroImagePath = '/assets/optimized/parodontologia-equipe-clinica.webp';
-const heroMobileVideoPath = '/assets/optimized/ortodonzia-hero-mobile-montaggio-720p.mp4';
-const heroMobilePosterPath = '/assets/optimized/ortodonzia-hero-mobile-montaggio-poster.webp';
+const heroImage = periodontalLandingAssets.hero;
+const heroImagePath = heroImage.src;
 const socialPreviewImage = new URL(heroImagePath, canonical).toString();
 
 const reviewAuthors = new Set(['Francesca Tassinari', 'Rosa Castelluccio', 'Umberto Salatino']);
@@ -76,7 +75,7 @@ const structuredData = {
       name: title,
       description,
       inLanguage: 'it-IT',
-      dateModified: '2026-10-19',
+      dateModified: '2026-10-20',
       primaryImageOfPage: socialPreviewImage,
       about: [
         { '@type': 'MedicalCondition', name: 'Malattia parodontale' },
@@ -147,7 +146,7 @@ const structuredData = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <link rel="preload" as="font" href="/fonts/inter/inter-latin.woff2" type="font/woff2" crossorigin />
-    <link rel="preload" as="image" href={heroMobilePosterPath} type="image/webp" fetchpriority="high" />
+    <link rel="preload" as="image" href={heroImagePath} type="image/webp" fetchpriority="high" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="noindex,nofollow,noarchive" />
@@ -163,14 +162,14 @@ const structuredData = {
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:image" content={socialPreviewImage} />
-    <meta property="og:image:width" content="1920" />
-    <meta property="og:image:height" content="1280" />
-    <meta property="og:image:alt" content="Paziente sorridente durante una visita nello studio dentistico" />
+    <meta property="og:image:width" content={String(heroImage.width)} />
+    <meta property="og:image:height" content={String(heroImage.height)} />
+    <meta property="og:image:alt" content={heroImage.alt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialPreviewImage} />
-    <meta name="twitter:image:alt" content="Paziente sorridente durante una visita nello studio dentistico" />
+    <meta name="twitter:image:alt" content={heroImage.alt} />
     <script type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g, '\\u003c')}></script>
   </head>
 
@@ -183,67 +182,7 @@ const structuredData = {
         <div class="landing-shell landing-hero-shell">
           <div class="landing-hero-stage">
             <div class="ortho-hero-photo-frame">
-              <img class="landing-hero-photo" src={heroMobilePosterPath} alt="Sorrisi e vita quotidiana" width="1280" height="720" loading="eager" decoding="async" fetchpriority="high" />
-              <video
-                class="ortho-hero-mobile-video"
-                data-src={heroMobileVideoPath}
-                data-poster={heroMobilePosterPath}
-                width="1280"
-                height="720"
-                autoplay
-                muted
-                loop
-                playsinline
-                preload="auto"
-                tabindex="-1"
-                disablepictureinpicture
-                disableremoteplayback
-                controlslist="nodownload nofullscreen noplaybackrate noremoteplayback"
-                aria-label="Scene di sorrisi e vita quotidiana"
-              ></video>
-              <script is:inline>
-                (() => {
-                  const video = document.querySelector('.ortho-hero-mobile-video');
-                  if (!(video instanceof HTMLVideoElement)) return;
-
-                  let visible = true;
-                  const playVideo = () => {
-                    if (document.hidden || !visible || !video.hasAttribute('src')) return;
-                    video.muted = true;
-                    video.defaultMuted = true;
-                    video.controls = false;
-                    video.play().catch(() => {});
-                  };
-                  const syncVideo = () => {
-                    if (!video.hasAttribute('src')) {
-                      video.poster = video.dataset.poster;
-                      video.src = video.dataset.src;
-                      video.load();
-                    }
-                    playVideo();
-                  };
-
-                  // Start as the hero HTML is parsed, without waiting for page scripts or images.
-                  syncVideo();
-                  video.addEventListener('canplay', playVideo);
-                  video.addEventListener('pause', playVideo);
-                  window.addEventListener('pageshow', syncVideo);
-                  document.addEventListener('visibilitychange', () => {
-                    if (document.hidden) video.pause();
-                    else playVideo();
-                  });
-                  document.addEventListener('pointerdown', playVideo, { once: true, passive: true });
-
-                  if ('IntersectionObserver' in window) {
-                    const observer = new IntersectionObserver(([entry]) => {
-                      visible = Boolean(entry?.isIntersecting);
-                      if (visible) playVideo();
-                      else video.pause();
-                    }, { threshold: 0.01 });
-                    observer.observe(video);
-                  }
-                })();
-              </script>
+              <img class="landing-hero-photo" src={heroImagePath} alt={heroImage.alt} width={heroImage.width} height={heroImage.height} loading="eager" decoding="async" fetchpriority="high" />
             </div>
             <div class="landing-hero-panel ortho-hero-copy">
               <div class="ortho-hero-intro">
@@ -393,7 +332,6 @@ const structuredData = {
   .ortho-faq-eyebrow-mobile { display: none; }
   .ortho-experience-mobile { display: none; }
   .ortho-hero-eyebrow-mobile { display: none; }
-  .ortho-hero-mobile-video { display: none; }
   .ortho-hero-title-mobile { display: none; }
   .ortho-hero-lead-mobile { display: none; }
 
@@ -730,23 +668,6 @@ const structuredData = {
       border-radius: 18px 18px 18px 0;
     }
 
-    .ortho-hero-mobile-video {
-      position: absolute;
-      inset: 0;
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      pointer-events: none;
-      user-select: none;
-      -webkit-user-select: none;
-      -webkit-touch-callout: none;
-    }
-
-    .ortho-hero-mobile-video::-webkit-media-controls,
-    .ortho-hero-mobile-video::-webkit-media-controls-start-playback-button {
-      display: none !important;
-    }
 
     .ortho-hero-overlay .landing-hero-panel {
       inset: auto;

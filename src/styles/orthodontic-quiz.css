@@ -106,6 +106,9 @@
 .orthodontic-quiz-clinical-case img { width: 100%; height: auto; border-radius: 10px; }
 .orthodontic-quiz-clinical-case figcaption { margin-top: 6px; color: var(--muted-text); font-size: 14px; }
 .orthodontic-quiz-interlude > .orthodontic-quiz-button { margin-top: 20px; }
+[data-quiz-personalized-information] .orthodontic-quiz-description { max-width: 72ch; }
+[data-quiz-personalized-information] .orthodontic-quiz-clinical-case img { display: block; aspect-ratio: 2 / 1; object-fit: contain; background: var(--background); }
+[data-quiz-personalized-information] .orthodontic-quiz-caption { max-width: 65ch; margin: 18px 0 0; font-size: 14px; }
 .orthodontic-quiz-navigation { position: fixed; z-index: 4; right: 24px; bottom: 20px; display: flex; align-items: center; gap: 2px; padding: 5px; border-radius: 5px; background: var(--surface-white); }
 .orthodontic-quiz-navigation button { display: inline-flex; width: 38px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 4px; background: var(--quiz-accent); color: white; cursor: pointer; }
 .orthodontic-quiz-navigation svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 2; }

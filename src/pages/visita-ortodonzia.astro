@@ -66,7 +66,11 @@ const faqs = [
   },
   {
     question: 'Quanto tempo serve per ottenere il sorriso desiderato?',
-    answer: 'Ogni sorriso ha i suoi tempi. La durata dipende dalla posizione iniziale dei denti, dalla complessità degli spostamenti e dal trattamento scelto. Dopo una valutazione approfondita potremo fornirti una stima personalizzata.',
+    answer: 'Ogni sorriso ha i suoi tempi. La durata dipende dalla posizione iniziale dei denti, dalla complessità degli spostamenti e dal trattamento scelto. Dopo una valutazione approfondita potremo fornirti una stima realistica.',
+  },
+  {
+    question: 'Quanto costa un trattamento ortodontico?',
+    answer: 'Dopo la valutazione ti presenteremo un preventivo chiaro e personalizzato. Offriamo anche soluzioni di pagamento frazionato, per aiutarti a organizzare la spesa e affrontare il percorso con più serenità.',
   },
   {
     question: 'Il trattamento ortodontico fa male?',
@@ -75,10 +79,6 @@ const faqs = [
   {
     question: 'Dovrò cambiare le mie abitudini quotidiane?',
     answer: "Dipende dal trattamento. Gli allineatori trasparenti sono rimovibili durante i pasti, mentre gli apparecchi fissi richiedono alcune attenzioni nell'alimentazione e nell'igiene orale. Ti spiegheremo come affrontare il percorso nella tua quotidianità.",
-  },
-  {
-    question: 'Quanto costa un trattamento ortodontico?',
-    answer: 'Il costo dipende dalla complessità del caso, dal dispositivo utilizzato e dalla durata del percorso. Dopo la valutazione e gli eventuali accertamenti necessari, riceverai un preventivo personalizzato con le prestazioni previste.',
   },
 ];
 const structuredFaqs = faqs;
@@ -297,9 +297,11 @@ const structuredData = {
         </div>
       </section>
 
+      <OrthodonticAgeSection />
+
       <OrthodonticIntroduction>
         <Fragment slot="personalized-title">Il tuo sorriso merita esperienza.</Fragment>
-        <Fragment slot="after-benefits">
+        <Fragment slot="before-first-visit">
           <section class="ortho-experience-mobile" id="esperienza-studio" aria-labelledby="ortho-experience-over ortho-experience-title">
             <div class="ortho-shell">
               <p class="ortho-experience-over" id="ortho-experience-over">Studio Dentistico Federzoni Granata</p>
@@ -311,7 +313,6 @@ const structuredData = {
           <OrthodonticQuiz objectivesFirst>
             <img slot="questionnaire-icon" class="ortho-questionnaire-aligner-icon" src="/assets/optimized/ortodonzia-allineatore-quiz-frontale-384.webp" alt="" aria-hidden="true" width="384" height="135" loading="lazy" decoding="async" />
           </OrthodonticQuiz>
-          <OrthodonticAgeSection />
         </Fragment>
         <Fragment slot="professional">
           <aside class="ortho-professional" aria-label="La professionista">
@@ -330,7 +331,7 @@ const structuredData = {
         <Fragment slot="eyebrow"><span class="ortho-review-eyebrow-desktop">Esperienze dei pazienti</span></Fragment>
         <Fragment slot="title"><span class="ortho-review-title-mobile"><strong class="ortho-review-title-emphasis">Esperienze</strong> di chi ci ha scelto</span></Fragment>
         <button slot="after-heading" class="ortho-reviews-more" type="button" data-review-sheet-trigger>Leggi di più</button>
-        <p slot="after-carousel" class="ortho-review-proof-caption">+ di 200 persone hanno lasciato una recensione positiva con una media di 5,0 stelle</p>
+        <p slot="after-carousel" class="ortho-review-proof-caption">+ di 200 persone hanno lasciato una recensione positiva con una media di 4,9 stelle</p>
       </LandingPatientReviews>
 
 

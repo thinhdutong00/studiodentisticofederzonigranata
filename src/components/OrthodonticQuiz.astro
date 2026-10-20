@@ -4,6 +4,7 @@ import BookingPrivacy from './BookingPrivacy.astro';
 import OrthodonticDiagram from './OrthodonticDiagram.astro';
 import OrthodonticArchDiagram from './OrthodonticArchDiagram.astro';
 import { site } from '../data/site';
+import { getOrthodonticQuizRecommendation } from '../data/orthodonticQuizRecommendation.js';
 import {
   orthodonticAgeRanges,
   orthodonticBites,
@@ -17,6 +18,7 @@ import '../styles/orthodontic-quiz.css';
 interface Props { contextLabel?: string; mobileObjectivesFirst?: boolean; objectivesFirst?: boolean; }
 const { contextLabel, mobileObjectivesFirst: mobileOnly = false, objectivesFirst = false } = Astro.props;
 const mobileObjectivesFirst = mobileOnly || objectivesFirst;
+const initialRecommendation = getOrthodonticQuizRecommendation();
 
 const questions = [
   { number: 1, title: mobileObjectivesFirst ? 'Indica la tua età' : 'Quanti anni ha il paziente?', name: mobileObjectivesFirst ? 'ageRange' : 'patientAge', type: mobileObjectivesFirst ? 'age-pills' : 'number', options: orthodonticAgeRanges, label: 'Età del paziente', placeholder: 'Scrivi l’età', required: true },
@@ -63,8 +65,12 @@ const questions = [
               </>}
             </svg>
             {mobileObjectivesFirst && objective.icon === 'align' && <svg class="orthodontic-objective-icon-mobile" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-              <path d="M6 16c8-4 28-4 36 0l-2 13c-1 7-31 7-32 0L6 16Z" />
-              <path d="M15 14v17m9-18v19m9-18v17M9 25c8 3 22 3 30 0M12 40h24m-20-4-4 4 4 4m16-8 4 4-4 4" />
+              <path d="M5 15c-.5-4.5 1.5-7 5-7s5.5 2.5 5 7l-.8 8c-.2 2-7.2 2-7.4 0L5 15Z" />
+              <path d="M18 13c-.4-4.7 1.5-7 5-7s5.4 2.3 5 7l-.6 10c-.1 2-8.7 2-8.8 0L18 13Z" />
+              <path d="M31 15c-.5-4.5 1.5-7 5-7s5.5 2.5 5 7l-1.8 8c-.2 2-7.2 2-7.4 0L31 15Z" />
+              <path d="M7 31c4.8 2.2 10.2 2.7 15.5 1.3" />
+              <circle cx="34" cy="34" r="6.5" />
+              <path d="m38.6 38.6 5.4 5.4" />
             </svg>}
             {mobileObjectivesFirst && objective.icon === 'spark' && <svg class="orthodontic-objective-icon-mobile" viewBox="0 0 48 48" fill="none" aria-hidden="true">
               <path d="M32 17a15 15 0 1 0 3 10M13 26c2 7 13 7 15 0" />
@@ -187,17 +193,17 @@ const questions = [
         </div>
       </section>
 
-      {question.number === 3 && <section class="orthodontic-quiz-screen orthodontic-quiz-interlude" hidden data-quiz-panel data-question="3" data-quiz-information>
+      {question.number === 3 && <section class="orthodontic-quiz-screen orthodontic-quiz-interlude" hidden data-quiz-panel data-question="3" data-quiz-information data-quiz-personalized-information>
         <div class="orthodontic-quiz-question-title">
           <span class="orthodontic-quiz-quote" aria-hidden="true">“</span>
           <h2 id="orthodontic-quiz-information-title" tabindex="-1">Ogni sorriso ha la sua storia.<br />Un percorso nasce dalla valutazione.</h2>
         </div>
-        <p class="orthodontic-quiz-description">Un caso di ortodonzia documentato dallo Studio Federzoni Granata.</p>
-        <div class="orthodontic-quiz-clinical-case">
-          <figure><img src="/assets/original/2020/11/280.jpg" alt="Caso ortodontico dello studio: situazione prima del trattamento" width="600" height="300" loading="lazy" /><figcaption>Prima</figcaption></figure>
-          <figure><img src="/assets/original/2020/11/281.jpg" alt="Lo stesso caso ortodontico dello studio dopo il trattamento" width="600" height="300" loading="lazy" /><figcaption>Dopo</figcaption></figure>
+        <p class="orthodontic-quiz-description" data-quiz-recommendation-text>{initialRecommendation.text}</p>
+        <div class="orthodontic-quiz-clinical-case" data-quiz-recommendation-case={initialRecommendation.caseId} role="group" aria-label="Esempio dello studio: prima e dopo il trattamento">
+          <figure><img src={initialRecommendation.before.src} alt={initialRecommendation.before.alt} width="600" height="300" loading="lazy" decoding="async" data-quiz-case-before /><figcaption>Prima</figcaption></figure>
+          <figure><img src={initialRecommendation.after.src} alt={initialRecommendation.after.alt} width="600" height="300" loading="lazy" decoding="async" data-quiz-case-after /><figcaption>Dopo</figcaption></figure>
         </div>
-        <p class="orthodontic-quiz-caption">Il piano e i risultati dipendono dal singolo caso.</p>
+        <p class="orthodontic-quiz-caption" data-quiz-case-caption>{initialRecommendation.caseCaption}</p>
         <button class="orthodontic-quiz-button" type="button" data-quiz-next>{mobileObjectivesFirst ? <><span class="orthodontic-quiz-desktop-copy">Avanti</span><span class="orthodontic-quiz-mobile-copy">Prenota una visita</span></> : 'Avanti'}</button>
       </section>}
     </>)}

@@ -203,10 +203,10 @@ export const periodontalCasesNote =
 
 export const periodontalLandingAssets = {
   hero: {
-    src: '/assets/optimized/parodontologia-equipe-clinica.webp',
-    alt: 'Équipe dello Studio Federzoni Granata durante un trattamento odontoiatrico',
-    width: 1080,
-    height: 1350,
+    src: '/assets/optimized/parodontologia-controllo-gengive.webp',
+    alt: 'Controllo odontoiatrico delle gengive',
+    width: 1200,
+    height: 900,
   },
   studio: {
     src: '/assets/original/2026/10/MatteoDomenicali_MG_6819.jpg',

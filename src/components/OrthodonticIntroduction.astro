@@ -21,19 +21,24 @@ const benefits = [
 
 const firstVisitSteps = [
   {
-    icon: 'scan',
-    title: 'Conosciamo il tuo sorriso',
-    text: "Valutiamo l'allineamento dei denti, ascoltiamo i tuoi desideri e individuiamo le possibili soluzioni per te.",
+    icon: 'checkup',
+    title: 'Check-up ortodontico',
+    text: "Denti storti, affollati o troppo distanziati? Analizziamo l'allineamento dei denti, il morso e la salute orale per individuare il percorso più adatto.",
   },
   {
-    icon: 'route',
-    title: 'Il cambiamento prende forma',
-    text: 'Iniziamo il percorso ortodontico personalizzato e monitoriamo i progressi attraverso controlli periodici.',
+    icon: 'plan',
+    title: 'Piano di trattamento personalizzato',
+    text: 'Valutiamo le soluzioni ortodontiche più indicate per te e definiamo obiettivi e tempi indicativi del percorso.',
   },
   {
-    icon: 'smile',
-    title: 'Il piacere di un nuovo sorriso',
-    text: 'Scopri il risultato raggiunto e come prendertene cura nel tempo, grazie a un programma di mantenimento.',
+    icon: 'alignment',
+    title: 'Allineamento e monitoraggio',
+    text: 'Iniziamo il trattamento e monitoriamo progressivamente gli spostamenti dentali attraverso controlli periodici.',
+  },
+  {
+    icon: 'retention',
+    title: 'Risultato e mantenimento',
+    text: 'Al termine del trattamento, definiamo la fase di contenzione per aiutarti a mantenere il nuovo allineamento nel tempo.',
   },
 ];
 
@@ -52,6 +57,8 @@ const steps = [
   },
 ];
 ---
+
+<slot name="before-first-visit" />
 
 <section class="ortho-section ortho-functional-benefits" id="benefici-ortodontici" aria-labelledby="ortho-functional-title">
   <div class="ortho-shell">
@@ -94,28 +101,39 @@ const steps = [
         </article>
       ))}
     </div>
-    <ol class="ortho-first-visit-list" aria-label="Cosa aspettarti dalla prima visita" role="list">
+    <ol class="ortho-first-visit-list ortho-first-visit-list--four" aria-label="Le fasi del tuo percorso ortodontico" role="list">
       {firstVisitSteps.map((step) => (
         <li class="ortho-first-visit-step">
           <span class="ortho-first-visit-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false">
-              {step.icon === 'smile' && (
+              {step.icon === 'checkup' && (
                 <>
-                  <circle cx="24" cy="24" r="18" />
-                  <path d="M16 30c4 4 12 4 16 0" />
+                  <path d="M14 5H9a4 4 0 0 0-4 4v5m29-9h5a4 4 0 0 1 4 4v5m0 20v5a4 4 0 0 1-4 4h-5m-20 0H9a4 4 0 0 1-4-4v-5" />
+                  <path d="M19 13c-3-2-8-1-8 4 0 5 3 9 4 14 1 3 3 3 4 0l2-6c1-2 5-2 6 0l2 6c1 3 3 3 4 0 1-5 4-9 4-14 0-5-5-6-8-4-3 2-7 2-10 0Z" />
                 </>
               )}
-              {step.icon === 'scan' && (
+              {step.icon === 'plan' && (
                 <>
-                  <path d="M14 6h-4a4 4 0 0 0-4 4v4m28-8h4a4 4 0 0 1 4 4v4m0 20v4a4 4 0 0 1-4 4h-4m-20 0h-4a4 4 0 0 1-4-4v-4" />
-                  <path d="M18 20h.02M30 20h.02M16 29c4 5 12 5 16 0" />
+                  <path d="M17 9h-4a3 3 0 0 0-3 3v28a3 3 0 0 0 3 3h22a3 3 0 0 0 3-3V12a3 3 0 0 0-3-3h-4" />
+                  <rect x="17" y="5" width="14" height="8" rx="2" />
+                  <path d="M17 21h14m-14 7h7m0 8 4 4 7-8" />
                 </>
               )}
-              {step.icon === 'route' && (
+              {step.icon === 'alignment' && (
                 <>
-                  <circle cx="12" cy="36" r="6" />
-                  <path d="M18 36h6a6 6 0 0 0 0-12h-1a6 6 0 0 1 0-12h7" />
-                  <circle cx="36" cy="12" r="6" />
+                  <path d="M5 15c-.5-4.5 1.5-7 5-7s5.5 2.5 5 7l-.8 8c-.2 2-7.2 2-7.4 0L5 15Z" />
+                  <path d="M18 13c-.4-4.7 1.5-7 5-7s5.4 2.3 5 7l-.6 10c-.1 2-8.7 2-8.8 0L18 13Z" />
+                  <path d="M31 15c-.5-4.5 1.5-7 5-7s5.5 2.5 5 7l-1.8 8c-.2 2-7.2 2-7.4 0L31 15Z" />
+                  <path d="M7 31c4.8 2.2 10.2 2.7 15.5 1.3" />
+                  <circle cx="34" cy="34" r="6.5" />
+                  <path d="m38.6 38.6 5.4 5.4" />
+                </>
+              )}
+              {step.icon === 'retention' && (
+                <>
+                  <path d="M25 9c-3 0-5 2-8 2S12 9 9 9C3 9 4 19 7 25c2 5 1 15 5 15s3-9 6-12" />
+                  <path d="M24 12c2-2 4-3 7-3 5 0 7 4 7 8M22 20h19v12c0 7-9.5 11-9.5 11S22 39 22 32V20Z" />
+                  <path d="M31.5 25v11M26 30.5h11" />
                 </>
               )}
             </svg>
@@ -130,8 +148,6 @@ const steps = [
     <a class="ortho-cta ortho-benefits-cta" href="#ortho-final">Prenota la tua prima visita <OrthodonticLinkArrow /></a>
   </div>
 </section>
-
-<slot name="after-benefits" />
 
 <section class="ortho-section ortho-personalized-path" id="percorso-ortodontico" aria-labelledby="ortho-personalized-title">
   <div class="ortho-shell ortho-professional-card">

@@ -6,6 +6,7 @@ const phases = [{ key: 'before', label: 'Prima' }, { key: 'after', label: 'Dopo'
 
 <section class="ortho-smile-preview" id="sorrisi-prima-dopo" aria-labelledby="ortho-smile-preview-title" data-ortho-smile-carousel>
   <h2 id="ortho-smile-preview-title">Trattamento con allineatori trasparenti <strong>Invisalign®</strong></h2>
+  <p class="ortho-smile-description">Guarda il tuo sorriso trasformato con risultati già visibili da 6 mesi, grazie alla tecnologia Invisalign. I tempi variano in base al caso</p>
 
   <div class="ortho-smile-book">
     {[2, 1].map(offset => (
@@ -172,6 +173,21 @@ const phases = [{ key: 'before', label: 'Prima' }, { key: 'after', label: 'Dopo'
 <style>
   .ortho-smile-preview {
     display: none;
+  }
+
+  #ortho-smile-preview-title { margin-bottom: 16px; }
+  .ortho-smile-description {
+    width: calc(100% - 68px);
+    max-width: 72ch;
+    margin: 0 auto 28px;
+    color: var(--muted-text);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  @media (min-width: 721px) {
+    .ortho-smile-description { margin-bottom: 32px; font-size: 18px; text-align: center; }
   }
 
   @media (max-width: 720px) {

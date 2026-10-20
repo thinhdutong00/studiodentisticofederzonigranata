@@ -270,6 +270,11 @@
   .ortho-landing-main.ortho-unified .footer-powered { grid-column: 2; grid-row: 2; display: block; font-size: 12px; }
 }
 
+@media (min-width: 979px) {
+  .ortho-landing-main.ortho-unified .ortho-first-visit-list.ortho-first-visit-list--four { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 1040px; margin-inline: auto; }
+  .ortho-landing-main.ortho-unified .ortho-first-visit-list--four .ortho-first-visit-step:nth-child(4) { transition-delay: 300ms; }
+}
+
 @media (min-width: 721px) and (max-width: 1100px) {
   .ortho-landing-main.ortho-unified .landing-logo { flex-basis: 232px; }
   .ortho-landing-main.ortho-unified .landing-header-booking { display: none; }

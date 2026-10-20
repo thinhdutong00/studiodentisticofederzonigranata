@@ -1,0 +1,104 @@
+---
+interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+
+// A gently tapered incisor crown, shared by the alignment and bite diagrams.
+const incisorCrown = 'M2 1h6a2 2 0 0 1 2 2v3.5L9 16a2 2 0 0 1-2 1.8H3A2 2 0 0 1 1 16L0 6.5V3a2 2 0 0 1 2-2Z';
+const tooth = 'M24 12c-3.2 0-5.2-2.5-8.5-1.6-4.9 1.3-5.1 6.2-3.7 10.6 1 3.1 2.4 5.2 2.9 8.8.5 3.8 1.2 8.2 3.4 8.2 2 0 2.2-8 5.9-8s3.9 8 5.9 8c2.2 0 2.9-4.4 3.4-8.2.5-3.6 1.9-5.7 2.9-8.8 1.4-4.4 1.2-9.3-3.7-10.6C29.2 9.5 27.2 12 24 12Z';
+---
+
+<svg
+  class="ortho-age-point-icon"
+  viewBox="0 0 48 48"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.7"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+>
+  {name === 'alignment' && (
+    <>
+      <path d={incisorCrown} transform="translate(7 14)"></path>
+      <path d={incisorCrown} transform="translate(19 14)"></path>
+      <path d={incisorCrown} transform="translate(31 14)"></path>
+    </>
+  )}
+  {name === 'plan' && (
+    <>
+      <path d="M18 9h-5a3 3 0 0 0-3 3v27a3 3 0 0 0 3 3h22a3 3 0 0 0 3-3V12a3 3 0 0 0-3-3h-5"></path>
+      <rect x="18" y="6" width="12" height="7" rx="2"></rect>
+      <path d="m17 26 5 5 10-11"></path>
+      <path d="M18 36h12"></path>
+    </>
+  )}
+  {name === 'bite-wear' && (
+    <>
+      <path d="M15.5 10.4c-4.9 1.3-5.1 6.2-3.7 10.6 1 3.1 2.4 5.2 2.9 8.8.5 3.8 1.2 8.2 3.4 8.2 2 0 2.2-8 5.9-8s3.9 8 5.9 8c2.2 0 2.9-4.4 3.4-8.2.5-3.6 1.9-5.7 2.9-8.8 1.4-4.4 1.2-9.3-3.7-10.6L29 10l-1.7 3.1-3.3-1.6c-3 0-5.2-2-8.5-1.1Z"></path>
+      <path d="M18 18c2.6 1 5 .9 7 .2"></path>
+    </>
+  )}
+  {name === 'restoration' && (
+    <>
+      <path d={tooth} transform="translate(-2 3) scale(.87)"></path>
+      <path d="m36 6 1.6 4.4L42 12l-4.4 1.6L36 18l-1.6-4.4L30 12l4.4-1.6L36 6Z"></path>
+    </>
+  )}
+  {name === 'relapse' && (
+    <>
+      <path d={tooth} transform="translate(6 8) scale(.75)"></path>
+      <path d="M37.5 32a17 17 0 1 0-27-19"></path>
+      <path d="M10.5 6.5V13H17"></path>
+    </>
+  )}
+  {name === 'spacing' && (
+    <>
+      <path d={incisorCrown} transform="translate(7 11) scale(1.15)"></path>
+      <path d={incisorCrown} transform="translate(29.5 11) scale(1.15)"></path>
+      <path d="M18 38h12m-9-3-3 3 3 3m6-6 3 3-3 3"></path>
+    </>
+  )}
+  {name === 'bite' && (
+    <>
+      <path d={incisorCrown} transform="translate(11 6) scale(1 .85)"></path>
+      <path d={incisorCrown} transform="translate(24 6) scale(1 .85)"></path>
+      <path d={incisorCrown} transform="translate(15 42) scale(1 -.85)"></path>
+      <path d={incisorCrown} transform="translate(28 42) scale(1 -.85)"></path>
+    </>
+  )}
+  {name === 'chew' && (
+    <>
+      <path d="M17 7h13c0 3 5 3.5 5 7v4c-2 3.2-5.1 3.2-7 0-2 3.2-5.1 3.2-7 0-2 3.2-5.1 3.2-7 0l-2-1.2V14c0-3.5 5-4 5-7Z"></path>
+      <path d="M20 41h13c0-3 5-3.5 5-7v-4c-2-3.2-5.1-3.2-7 0-2-3.2-5.1-3.2-7 0-2-3.2-5.1-3.2-7 0L15 31.2V34c0 3.5 5 4 5 7Z"></path>
+    </>
+  )}
+  {name === 'baby-tooth' && (
+    <>
+      <path d={tooth} transform="translate(4 8) scale(.83)"></path>
+      <path d="m13 11-2-4M34 11l2-4"></path>
+    </>
+  )}
+  {name === 'sleep' && (
+    <>
+      <path d="M32.5 34.5A16 16 0 1 1 23 7a17 17 0 0 0 9.5 27.5Z"></path>
+      <path d="M29 17h8a3 3 0 1 0-2.3-5"></path>
+      <path d="M30 25h9a3 3 0 1 1-2.3 5"></path>
+    </>
+  )}
+  {name === 'thumb' && (
+    <>
+      <path d="M15 25 22 15l1-7.4c.3-2.4 3.4-3.3 4.8-1.3 1.1 1.5 1.2 3.3.8 5.4L27.4 19h9.7c2.5 0 4.3 2.4 3.6 4.8l-3.3 12.6a5 5 0 0 1-4.8 3.6H21l-6-3"></path>
+      <rect x="7" y="24" width="8" height="17" rx="1.5"></rect>
+    </>
+  )}
+  {name === 'protrusion' && (
+    <>
+      <path d="M13 13c4-1.4 8 1 8.5 5l.8 14.5c-3.3 2.1-7 2.1-10.3 0L10.6 19c-.3-2.8.2-5.2 2.4-6Z" transform="rotate(-13 16 24)"></path>
+      <path d="M29 13c4-1.4 8 1 8.5 5l.8 14.5c-3.3 2.1-7 2.1-10.3 0L26.6 19c-.3-2.8.2-5.2 2.4-6Z" transform="rotate(-13 32 24)"></path>
+    </>
+  )}
+</svg>

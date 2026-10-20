@@ -1,4 +1,5 @@
 import { submitBooking } from './submitBooking';
+import { getOrthodonticQuizRecommendation } from '../data/orthodonticQuizRecommendation.js';
 
 export function bindOrthodonticQuiz() {
   const dialog = document.querySelector<HTMLDialogElement>('[data-quiz-dialog]');
@@ -35,10 +36,35 @@ export function bindOrthodonticQuiz() {
     if (output) output.textContent = message;
   };
 
+  const updateRecommendation = (panel: HTMLElement) => {
+    if (!panel.hasAttribute('data-quiz-personalized-information')) return;
+    const recommendation = getOrthodonticQuizRecommendation({
+      problem: form.querySelector<HTMLInputElement>('[name="problem"]:checked')?.value,
+      occlusion: form.querySelector<HTMLInputElement>('[name="occlusion"]:checked')?.value,
+      initialReason: initialReason?.value,
+    });
+    const text = panel.querySelector<HTMLElement>('[data-quiz-recommendation-text]');
+    const caption = panel.querySelector<HTMLElement>('[data-quiz-case-caption]');
+    const comparison = panel.querySelector<HTMLElement>('[data-quiz-recommendation-case]');
+    if (text) text.textContent = recommendation.text;
+    if (caption) caption.textContent = recommendation.caseCaption;
+    if (comparison) comparison.dataset.quizRecommendationCase = recommendation.caseId;
+    (['before', 'after'] as const).forEach(phase => {
+      const image = panel.querySelector<HTMLImageElement>(`[data-quiz-case-${phase}]`);
+      const photo = recommendation[phase];
+      if (!image) return;
+      image.alt = photo.alt;
+      image.width = photo.width;
+      image.height = photo.height;
+      if (image.getAttribute('src') !== photo.src) image.src = photo.src;
+    });
+  };
+
   const showPanel = (index: number, focus = true) => {
     clearAutoAdvance();
     current = Math.max(0, Math.min(index, panels.length - 1));
     const panel = panels[current];
+    updateRecommendation(panel);
     allPanels.forEach(candidate => { candidate.hidden = candidate !== panel; });
     const questionCount = panels.filter(candidate => candidate.classList.contains('orthodontic-quiz-question')).length;
     const completed = panels.slice(0, current).filter(previous => previous.classList.contains('orthodontic-quiz-question')).length;

@@ -1,4 +1,6 @@
 ---
+import OrthodonticAgePointIcon from './OrthodonticAgePointIcon.astro';
+
 interface AgeGroup {
   id: string;
   label: string;
@@ -8,9 +10,14 @@ interface AgeGroup {
   ageLabel: string;
   description: string;
   listIntro: string;
-  points: string[];
+  points: { text: string; icon: string }[];
+  faqs: { question: string; answer: string }[];
 }
 
+// Patient information checked against NHS orthodontics guidance and the AAO family guide:
+// https://www.nhs.uk/tests-and-treatments/orthodontics/
+// https://www.nhs.uk/tests-and-treatments/braces/
+// https://aaoinfo.org/whats-trending/family-orthodontic-health-guide/
 const ageGroups: AgeGroup[] = [
   {
     id: 'adulti',
@@ -22,11 +29,25 @@ const ageGroups: AgeGroup[] = [
     description: 'Sempre più adulti scelgono un trattamento ortodontico. Che tu voglia migliorare la tua salute orale, prepararti a un intervento di estetica dentale o semplicemente sentirti più sicuro di te, anche da adulto puoi valutare un percorso per un sorriso più allineato e sano.',
     listIntro: 'Motivi per cui ricorrere all’ortodonzia:',
     points: [
-      'Denti affollati, distanziati o che si spostano',
-      'Correzione complessa dell’occlusione che richiede una pianificazione terapeutica completa',
-      'Problemi di morso che causano usura o scheggiature',
-      'Preparazione dei denti per interventi di odontoiatria restaurativa',
-      'Recidiva ortodontica dopo un precedente trattamento',
+      { text: 'Denti affollati, distanziati o che si spostano', icon: 'alignment' },
+      { text: 'Denti che non combaciano correttamente quando chiudi la bocca', icon: 'bite' },
+      { text: 'Problemi di morso che causano usura o scheggiature', icon: 'bite-wear' },
+      { text: 'Preparazione dei denti per interventi di odontoiatria restaurativa', icon: 'restoration' },
+      { text: 'Recidiva ortodontica dopo un precedente trattamento', icon: 'relapse' },
+    ],
+    faqs: [
+      {
+        question: 'Devo curare denti e gengive prima di iniziare?',
+        answer: 'Prima di programmare il trattamento valutiamo la salute di denti e gengive. Se sono necessarie altre cure, ti spieghiamo quali affrontare e come inserirle nel percorso ortodontico.',
+      },
+      {
+        question: 'Posso fare ortodonzia se ho corone o impianti?',
+        answer: 'Corone e impianti vanno considerati nel piano di trattamento. Durante la visita valutiamo i restauri esistenti, i denti da spostare e le eventuali altre cure, per capire quali soluzioni siano possibili.',
+      },
+      {
+        question: 'Ho già portato l’apparecchio: posso ricominciare?',
+        answer: 'Se i denti si sono spostati, valutiamo cosa è cambiato e controlliamo l’eventuale contenzione. Ti spiegheremo se può essere utile un nuovo trattamento e come prenderti cura dell’allineamento nel tempo.',
+      },
     ],
   },
   {
@@ -39,10 +60,24 @@ const ageGroups: AgeGroup[] = [
     description: 'Gli apparecchi ortodontici non sono più quelli di una volta, e questa è un’ottima notizia. Le opzioni di trattamento odierne sono più eleganti, raffinate e progettate per adattarsi al tuo stile di vita.',
     listIntro: 'Gli adolescenti possono trarre beneficio da un trattamento ortodontico se presentano:',
     points: [
-      'Denti affollati, storti o sovrapposti',
-      'Spazi tra i denti',
-      'Discrepanze tra le arcate: prognatismo, morso incrociato o morso aperto',
-      'Difficoltà a masticare o a parlare chiaramente',
+      { text: 'Denti affollati, storti o sovrapposti', icon: 'alignment' },
+      { text: 'Spazi tra i denti', icon: 'spacing' },
+      { text: 'Discrepanze tra le arcate: prognatismo, morso incrociato o morso aperto', icon: 'bite' },
+      { text: 'Difficoltà a masticare o a parlare chiaramente', icon: 'chew' },
+    ],
+    faqs: [
+      {
+        question: 'Posso continuare a fare sport con l’apparecchio?',
+        answer: 'Il percorso va organizzato anche in base alle tue attività. Se pratichi sport, soprattutto di contatto, ti indichiamo le protezioni e le attenzioni adatte al dispositivo scelto.',
+      },
+      {
+        question: 'Quanto conta il mio impegno durante il percorso?',
+        answer: 'Pulire bene denti e apparecchio, rispettare i controlli e seguire le indicazioni sull’uso dei dispositivi è importante per il trattamento. Ti spieghiamo come gestire queste abitudini anche a scuola e fuori casa.',
+      },
+      {
+        question: 'Devo aspettare di aver finito di crescere?',
+        answer: 'Non necessariamente. Il momento più indicato dipende dallo sviluppo dei denti, dalla crescita delle arcate e dal problema da affrontare. Durante la visita valutiamo questi aspetti insieme: l’età da sola non basta a decidere.',
+      },
     ],
   },
   {
@@ -55,11 +90,25 @@ const ageGroups: AgeGroup[] = [
     description: 'La Società Italiana di Ortodonzia (SIDO) consiglia una prima valutazione ortodontica con l’inizio dell’età scolare. Nei bambini è possibile individuare affollamento dentale, malocclusioni o alterazioni nella crescita delle arcate, per valutare se intervenire o monitorarne lo sviluppo.',
     listIntro: 'Tra i segnali che meritano una valutazione per tuo figlio:',
     points: [
-      'Perdita anticipata o tardiva dei denti da latte',
-      'Disturbi respiratori del sonno',
-      'Difficoltà a masticare o mordere',
-      'Abitudine a succhiare il pollice dopo i 5 anni',
-      'Denti frontali affollati o sporgenti',
+      { text: 'Perdita anticipata o tardiva dei denti da latte', icon: 'baby-tooth' },
+      { text: 'Disturbi respiratori del sonno', icon: 'sleep' },
+      { text: 'Difficoltà a masticare o mordere', icon: 'chew' },
+      { text: 'Abitudine a succhiare il pollice dopo i 5 anni', icon: 'thumb' },
+      { text: 'Denti frontali affollati o sporgenti', icon: 'protrusion' },
+    ],
+    faqs: [
+      {
+        question: 'La prima visita significa già mettere l’apparecchio?',
+        answer: 'No. La visita serve a capire come stanno crescendo denti e arcate. In alcuni casi è indicato intervenire, in altri bastano controlli periodici. Ti spieghiamo cosa abbiamo osservato e perché proponiamo di agire oppure attendere.',
+      },
+      {
+        question: 'Devo aspettare che cadano tutti i denti da latte?',
+        answer: 'Non serve aspettare per una prima valutazione. Anche con denti da latte ancora presenti possiamo osservare il morso, gli spazi e lo sviluppo delle arcate, per capire se monitorare la crescita o valutare un trattamento.',
+      },
+      {
+        question: 'Come preparo mio figlio alla prima visita?',
+        answer: 'Raccontagli con parole semplici che controlleremo come stanno crescendo i suoi denti. Puoi segnalarci eventuali timori o abitudini che hai osservato: lo accompagneremo con spiegazioni adatte alla sua età.',
+      },
     ],
   },
 ];
@@ -87,7 +136,7 @@ const archWire = 'M-16 60Q300 162 616 60';
 <section class="ortho-age-section" id="ortodonzia-tutte-le-eta" aria-labelledby="ortho-age-title">
   <span id="percorsi-ortodontici" class="ortho-age-anchor" aria-hidden="true"></span>
   <h2 id="ortho-age-title"><strong>Ortodonzia</strong> per tutte le età</h2>
-  <p class="ortho-age-intro">Ogni età ha esigenze diverse. Che tu voglia migliorare il tuo sorriso o prenderti cura di quello di tuo figlio, scopri il percorso ortodontico più adatto.</p>
+  <p class="ortho-age-intro">Ogni età ha esigenze diverse. Che tu voglia migliorare il tuo sorriso o prenderti cura di quello della tua famiglia, scopri il percorso ortodontico più adatto.</p>
   <ul class="ortho-age-list">
     {ageGroups.map(group => <li>
       <button type="button" data-ortho-age-open={group.id} aria-haspopup="dialog" aria-controls="ortho-age-sheet" aria-expanded="false">
@@ -147,9 +196,27 @@ const archWire = 'M-16 60Q300 162 616 60';
     <div class="ortho-age-copy" tabindex="0" role="region" aria-label={`Informazioni sul trattamento per ${group.label.toLowerCase()}`}>
       <p class="ortho-age-description" id={`ortho-age-${group.id}-description`}>{group.description}</p>
       <p class="ortho-age-list-intro">{group.listIntro}</p>
-      <ul class="ortho-age-points">
-        {group.points.map(point => <li>{point}</li>)}
+      <ul class="ortho-age-points" role="list">
+        {group.points.map(point => <li>
+          <span class="ortho-age-point-symbol" aria-hidden="true"><OrthodonticAgePointIcon name={point.icon} /></span>
+          <span>{point.text}</span>
+        </li>)}
       </ul>
+      <section class="ortho-age-faq" aria-labelledby={`ortho-age-${group.id}-faq-title`}>
+        <h3 id={`ortho-age-${group.id}-faq-title`}>Domande frequenti</h3>
+        <div class="ortho-age-faq-list">
+          {group.faqs.map(faq => <details name={`ortho-age-${group.id}-faq`}>
+            <summary>
+              <span>{faq.question}</span>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                <path d="M5 12h14" />
+                <path class="ortho-age-faq-plus" d="M12 5v14" />
+              </svg>
+            </summary>
+            <p>{faq.answer}</p>
+          </details>)}
+        </div>
+      </section>
     </div>
     <footer class="ortho-age-actions">
       <a class="ortho-age-visit" href="#ortho-final" data-ortho-age-visit>
@@ -266,9 +333,21 @@ const archWire = 'M-16 60Q300 162 616 60';
   .ortho-age-copy { min-height: 0; padding: 24px 28px; overflow-y: auto; overscroll-behavior-y: contain; text-align: left; }
   .ortho-age-description { margin: 0; color: var(--muted-text); font-size: 17px; font-weight: 400; line-height: 1.5; letter-spacing: -.16px; }
   .ortho-age-list-intro { margin: 24px 0 14px; color: var(--brand-primary-dark); font-size: 16px; font-weight: 500; line-height: 1.4; }
-  .ortho-age-points { display: grid; gap: 12px; margin: 0; padding-left: 20px; list-style: disc; }
-  .ortho-age-points li { color: var(--brand-primary-dark); font-size: 15px; font-weight: 400; line-height: 1.5; }
-  .ortho-age-points li::marker { color: var(--brand-cta); }
+  .ortho-age-points { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 24px; margin: 24px 0 0; padding: 0; list-style: none; }
+  .ortho-age-points li { display: flex; min-width: 0; flex-direction: column; align-items: center; gap: 12px; color: var(--brand-primary-dark); font-size: 15px; font-weight: 400; line-height: 1.45; text-align: center; }
+  .ortho-age-point-symbol { display: block; flex: 0 0 auto; width: 42px; height: 42px; color: var(--brand-cta); }
+  .ortho-age-point-symbol :global(svg) { display: block; width: 100%; height: 100%; }
+  .ortho-age-faq { margin-top: 32px; }
+  .ortho-age-faq h3 { margin: 0 0 12px; color: var(--brand-primary-dark); font-size: 20px; font-weight: 500; line-height: 1.3; }
+  .ortho-age-faq-list { border-top: 1px solid var(--border); }
+  .ortho-age-faq details { border-bottom: 1px solid var(--border); }
+  .ortho-age-faq summary { display: flex; min-height: 54px; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; color: var(--brand-primary-dark); font-size: 15px; font-weight: 500; line-height: 1.4; cursor: pointer; list-style: none; }
+  .ortho-age-faq summary::-webkit-details-marker { display: none; }
+  .ortho-age-faq summary svg { flex: 0 0 20px; width: 20px; height: 20px; color: var(--brand-cta); stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
+  .ortho-age-faq summary:hover { color: var(--brand-cta); }
+  .ortho-age-faq summary:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 3px; border-radius: 3px; }
+  .ortho-age-faq details[open] .ortho-age-faq-plus { opacity: 0; }
+  .ortho-age-faq details > p { margin: 0; padding: 0 36px 18px 0; color: var(--muted-text); font-size: 15px; font-weight: 400; line-height: 1.5; }
   .ortho-age-copy:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: -3px; }
   .ortho-age-actions { flex: 0 0 auto; padding: 20px 28px calc(24px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--border); background: var(--surface-white); }
   .ortho-age-visit { display: flex; min-height: 54px; align-items: center; justify-content: center; gap: 14px; padding: 17px 16px; border-radius: 10px; background: var(--brand-cta); color: var(--surface-white); font-size: 16px; font-weight: 500; line-height: 16px; letter-spacing: normal; text-decoration: none; text-transform: uppercase; }
@@ -280,6 +359,8 @@ const archWire = 'M-16 60Q300 162 616 60';
   :global(.ortho-landing-main:has(.ortho-age-sheet[open]) .treatment-sticky-cta) { visibility: hidden; pointer-events: none; }
 
   @media (max-width: 720px) {
+    .ortho-age-points { gap: 26px 18px; }
+    .ortho-age-point-symbol { width: 38px; height: 38px; }
     .ortho-age-actions { padding: 14px 28px max(8px, env(safe-area-inset-bottom, 0px)); }
     .ortho-age-section { position: relative; isolation: isolate; display: block; overflow: hidden; padding: 48px 34px clamp(156px, calc(26.4vw + 28px), 218px); background: var(--brand-primary-dark); color: var(--surface-white); }
     .ortho-age-section > :not(.ortho-age-braces, .ortho-age-anchor) { position: relative; z-index: 1; }
