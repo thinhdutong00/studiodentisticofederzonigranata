@@ -268,6 +268,7 @@ const archWire = 'M-16 60Q300 162 616 60';
       ageSheet.setAttribute('aria-labelledby', heading.id);
       ageSheet.setAttribute('aria-describedby', description.id);
       activeTrigger = trigger;
+      trigger.closest<HTMLDetailsElement>('.ortho-treatment-menu')?.removeAttribute('open');
       activeTrigger.setAttribute('aria-expanded', 'true');
       previousOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
@@ -303,7 +304,14 @@ const archWire = 'M-16 60Q300 162 616 60';
         destination?.focus({ preventScroll: true });
         destination?.scrollIntoView({ behavior: reducedMotion.matches ? 'instant' : 'smooth', block: 'start' });
       } else if (enabled()) {
-        activeTrigger?.focus({ preventScroll: true });
+        const returnTargets = [
+          activeTrigger,
+          activeTrigger?.closest('.ortho-treatment-menu')?.querySelector<HTMLElement>('summary'),
+          document.querySelector<HTMLElement>('[data-ortho-site-menu-trigger]'),
+          document.querySelector<HTMLElement>('.ortho-treatment-menu > summary'),
+          document.querySelector<HTMLElement>('.landing-logo'),
+        ];
+        returnTargets.find(target => target && target.getClientRects().length > 0)?.focus({ preventScroll: true });
       }
       visitRequested = false;
     });

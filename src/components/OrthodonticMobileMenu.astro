@@ -4,9 +4,14 @@ import { site } from '../data/site';
 const landingSections = [
   { label: 'La tua prima visita', href: '#benefici-ortodontici' },
   { label: 'Prima e dopo', href: '#sorrisi-prima-dopo' },
-  { label: 'Ortodonzia per tutte le età', href: '#ortodonzia-tutte-le-eta' },
+  { label: 'Ortodonzia', href: '#ortodonzia-tutte-le-eta' },
   { label: 'Recensioni', href: '#recensioni' },
   { label: 'Domande frequenti', href: '#ortho-faq-title' },
+];
+const ageGroups = [
+  { id: 'adulti', label: 'Adulti' },
+  { id: 'adolescenti', label: 'Adolescenti' },
+  { id: 'bambini', label: 'Bambini' },
 ];
 ---
 
@@ -28,7 +33,14 @@ const landingSections = [
 
     <nav class="ortho-site-menu-scroll" aria-label="Navigazione ortodonzia">
       <ul class="ortho-site-menu-links">
-        {landingSections.map((item, index) => <li style={`--menu-item-order: ${index}`}><a href={item.href}>{item.label}</a></li>)}
+        {landingSections.map((item, index) => <li style={`--menu-item-order: ${index}`}>
+          {item.href === '#ortodonzia-tutte-le-eta' ? <details class="ortho-site-menu-group">
+            <summary>{item.label}<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 7 5 5 5-5" /></svg></summary>
+            <ul class="ortho-site-menu-submenu">
+              {ageGroups.map(group => <li><button type="button" data-ortho-age-open={group.id} aria-haspopup="dialog" aria-controls="ortho-age-sheet" aria-expanded="false">{group.label}</button></li>)}
+            </ul>
+          </details> : <a href={item.href}>{item.label}</a>}
+        </li>)}
       </ul>
     </nav>
 
@@ -80,8 +92,8 @@ const landingSections = [
       if (event.key === 'Escape') event.stopPropagation();
     });
     menuPanel.addEventListener('click', (event) => {
-      if (event.target instanceof Element && event.target.closest('a')) closeMenu();
-    });
+      if (event.target instanceof Element && event.target.closest('a, [data-ortho-age-open]')) closeMenu();
+    }, { capture: true });
     menuViewport.addEventListener('change', () => {
       if (!menuViewport.matches && menuPanel.open) {
         closeMenu();
@@ -198,7 +210,14 @@ const landingSections = [
     .ortho-site-menu-close svg { stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
     .ortho-site-menu-scroll { min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 22px 2px 8px 0; }
     .ortho-site-menu-links { display: grid; margin: 0; padding: 0; list-style: none; }
-    .ortho-site-menu-links a { display: block; padding: 18px 0; border-bottom: .5px solid rgba(255, 255, 255, .22); color: inherit; font-size: clamp(28px, 7.4vw, 32px); font-weight: 500; line-height: 1.15; text-decoration: none; }
+    .ortho-site-menu-links a, .ortho-site-menu-group > summary { display: block; padding: 18px 0; border-bottom: .5px solid rgba(255, 255, 255, .22); color: inherit; font-size: clamp(28px, 7.4vw, 32px); font-weight: 500; line-height: 1.15; text-decoration: none; }
+    .ortho-site-menu-group > summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; list-style: none; }
+    .ortho-site-menu-group > summary::-webkit-details-marker { display: none; }
+    .ortho-site-menu-group > summary svg { flex: 0 0 22px; width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .ortho-site-menu-group[open] > summary svg { transform: rotate(180deg); }
+    .ortho-site-menu-submenu { display: grid; margin: 12px 0 12px 6px; padding: 0 0 0 20px; border-left: 1px solid rgba(255, 255, 255, .35); list-style: none; }
+    .ortho-site-menu-submenu button { display: block; width: 100%; min-height: 48px; padding: 12px 0; border: 0; background: transparent; color: inherit; font: inherit; font-size: 21px; font-weight: 400; line-height: 1.2; text-align: left; cursor: pointer; }
+    .ortho-site-menu-group > summary:hover, .ortho-site-menu-submenu button:hover { color: var(--soft-blue-bg); }
     .ortho-site-menu-panel[open] .ortho-site-menu-links li { animation: ortho-menu-item-enter 340ms ease-out both; animation-delay: calc(var(--menu-item-order, 0) * 55ms); }
     .ortho-site-menu-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, .24); }
     .ortho-site-menu-actions a { display: flex; min-height: 48px; align-items: center; justify-content: space-between; gap: 10px; padding: 14px; border-radius: 6px; background: var(--surface-white); color: var(--brand-cta); font-size: 16px; font-weight: 500; line-height: 16px; text-decoration: none; text-transform: uppercase; }
