@@ -89,6 +89,8 @@ body.ortho-landing .treatment-sticky-cta[data-treatment-sticky-cta] a:focus-visi
 .ortho-hero-overlay { padding: 10px 0 clamp(48px, 4vw, 68px); }
 .ortho-hero-overlay .landing-hero-stage { width: 100%; min-height: 640px; }
 .ortho-hero-photo-frame { position: absolute; inset: 0; overflow: hidden; border-radius: inherit; }
+.ortho-landing-main.ortho-unified .ortho-hero-photo-frame picture { display: block; width: 100%; height: 100%; }
+.ortho-landing-main.ortho-unified .ortho-hero-overlay .landing-hero-photo { object-position: center; }
 .ortho-hero-overlay .landing-hero-photo { width: 112%; max-width: none; border-radius: 0; object-position: left 56%; }
 .ortho-hero-overlay .landing-hero-panel { width: min(52%, 720px); padding: clamp(28px, 3vw, 48px) clamp(28px, 4vw, 56px); }
 .ortho-hero-overlay .ortho-hero-lead { font-size: 18px; line-height: 1.3; }

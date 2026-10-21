@@ -212,10 +212,10 @@ export const periodontalCasesNote =
 
 export const periodontalLandingAssets = {
   hero: {
-    src: '/assets/optimized/parodontologia-controllo-gengive.webp',
-    alt: 'Controllo odontoiatrico delle gengive',
+    src: '/assets/optimized/home-hero-desktop.avif',
+    alt: 'I dottori Federzoni e Granata nello studio dentistico',
     width: 1200,
-    height: 900,
+    height: 800,
   },
   studio: {
     src: '/assets/optimized/parodontologia-studio-federzoni-granata-720.webp',

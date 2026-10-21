@@ -26,7 +26,7 @@ const description =
   'Gengive che sanguinano, recessioni o denti mobili? Scopri il percorso di valutazione, terapia e mantenimento parodontale a Modena e Reggio Emilia.';
 const heroImage = periodontalLandingAssets.hero;
 const heroImagePath = heroImage.src;
-const socialPreviewImage = new URL(heroImagePath, canonical).toString();
+const socialPreviewImage = new URL('/assets/original/2021/02/HOME.jpg', canonical).toString();
 
 const reviewAuthors = new Set(['Francesca Tassinari', 'Rosa Castelluccio', 'Umberto Salatino']);
 const reviews = featuredPatientReviews.filter((review) => reviewAuthors.has(review.author));
@@ -146,7 +146,7 @@ const structuredData = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <link rel="preload" as="font" href="/fonts/inter/inter-latin.woff2" type="font/woff2" crossorigin />
-    <link rel="preload" as="image" href={heroImagePath} type="image/webp" fetchpriority="high" />
+    <link rel="preload" as="image" href={heroImagePath} type="image/avif" fetchpriority="high" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="noindex,nofollow,noarchive" />
@@ -182,7 +182,10 @@ const structuredData = {
         <div class="landing-shell landing-hero-shell">
           <div class="landing-hero-stage">
             <div class="ortho-hero-photo-frame">
-              <img class="landing-hero-photo" src={heroImagePath} alt={heroImage.alt} width={heroImage.width} height={heroImage.height} loading="eager" decoding="async" fetchpriority="high" />
+              <picture>
+                <source srcset={heroImagePath} type="image/avif" />
+                <img class="landing-hero-photo" src="/assets/original/2021/02/HOME.jpg" alt={heroImage.alt} width={heroImage.width} height={heroImage.height} loading="eager" decoding="async" fetchpriority="high" />
+              </picture>
             </div>
             <div class="landing-hero-panel ortho-hero-copy">
               <div class="ortho-hero-intro">

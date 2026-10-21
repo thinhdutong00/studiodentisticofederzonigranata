@@ -24,11 +24,10 @@ const canonical = new URL(canonicalPath, site.source).toString();
 const title = 'Visita ortodontica a Modena e Reggio Emilia | Federzoni Granata';
 const description =
   'Ortodonzia per adulti e bambini a Modena e Reggio Emilia. Valuta apparecchi e allineatori con un piano personalizzato. Richiedi una visita allo Studio Federzoni Granata.';
-const heroImagePath = '/assets/optimized/ortodonzia-sorriso-studio-1920.webp';
-const heroMobileVideoPath = '/assets/optimized/ortodonzia-hero-mobile-montaggio-720p.mp4';
-const heroMobilePosterPath = '/assets/optimized/ortodonzia-hero-mobile-montaggio-poster.webp';
+const heroImagePath = '/assets/optimized/home-hero-desktop.avif';
+const heroImageAlt = 'I dottori Federzoni e Granata nello studio dentistico';
 const isIndexable = import.meta.env.PROD && process.env.VERCEL_ENV !== 'preview';
-const socialPreviewImage = new URL(heroImagePath, canonical).toString();
+const socialPreviewImage = new URL('/assets/original/2021/02/HOME.jpg', canonical).toString();
 
 const reviewAuthors = new Set(['Francesca Tassinari', 'Rosa Castelluccio', 'Nazareno Colamaria']);
 const reviews = featuredPatientReviews.filter((review) => reviewAuthors.has(review.author));
@@ -181,7 +180,7 @@ const structuredData = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <link rel="preload" as="font" href="/fonts/inter/inter-latin.woff2" type="font/woff2" crossorigin />
-    <link rel="preload" as="image" href={heroMobilePosterPath} type="image/webp" fetchpriority="high" />
+    <link rel="preload" as="image" href={heroImagePath} type="image/avif" fetchpriority="high" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content={isIndexable ? 'index,follow,max-image-preview:large' : 'noindex,follow'} />
@@ -197,14 +196,14 @@ const structuredData = {
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:image" content={socialPreviewImage} />
-    <meta property="og:image:width" content="1920" />
-    <meta property="og:image:height" content="1280" />
-    <meta property="og:image:alt" content="Paziente sorridente durante una visita nello studio dentistico" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="800" />
+    <meta property="og:image:alt" content={heroImageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialPreviewImage} />
-    <meta name="twitter:image:alt" content="Paziente sorridente durante una visita nello studio dentistico" />
+    <meta name="twitter:image:alt" content={heroImageAlt} />
     <script type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g, '\\u003c')}></script>
   </head>
 
@@ -217,67 +216,10 @@ const structuredData = {
         <div class="landing-shell landing-hero-shell">
           <div class="landing-hero-stage">
             <div class="ortho-hero-photo-frame">
-              <img class="landing-hero-photo" src={heroMobilePosterPath} alt="Ortodonzia: sorrisi e allineatori trasparenti" width="1280" height="720" loading="eager" decoding="async" fetchpriority="high" />
-              <video
-                class="ortho-hero-mobile-video"
-                data-src={heroMobileVideoPath}
-                data-poster={heroMobilePosterPath}
-                width="1280"
-                height="720"
-                autoplay
-                muted
-                loop
-                playsinline
-                preload="auto"
-                tabindex="-1"
-                disablepictureinpicture
-                disableremoteplayback
-                controlslist="nodownload nofullscreen noplaybackrate noremoteplayback"
-                aria-label="Scene di sorrisi e vita quotidiana"
-              ></video>
-              <script is:inline>
-                (() => {
-                  const video = document.querySelector('.ortho-hero-mobile-video');
-                  if (!(video instanceof HTMLVideoElement)) return;
-
-                  let visible = true;
-                  const playVideo = () => {
-                    if (document.hidden || !visible || !video.hasAttribute('src')) return;
-                    video.muted = true;
-                    video.defaultMuted = true;
-                    video.controls = false;
-                    video.play().catch(() => {});
-                  };
-                  const syncVideo = () => {
-                    if (!video.hasAttribute('src')) {
-                      video.poster = video.dataset.poster;
-                      video.src = video.dataset.src;
-                      video.load();
-                    }
-                    playVideo();
-                  };
-
-                  // Start as the hero HTML is parsed, without waiting for page scripts or images.
-                  syncVideo();
-                  video.addEventListener('canplay', playVideo);
-                  video.addEventListener('pause', playVideo);
-                  window.addEventListener('pageshow', syncVideo);
-                  document.addEventListener('visibilitychange', () => {
-                    if (document.hidden) video.pause();
-                    else playVideo();
-                  });
-                  document.addEventListener('pointerdown', playVideo, { once: true, passive: true });
-
-                  if ('IntersectionObserver' in window) {
-                    const observer = new IntersectionObserver(([entry]) => {
-                      visible = Boolean(entry?.isIntersecting);
-                      if (visible) playVideo();
-                      else video.pause();
-                    }, { threshold: 0.01 });
-                    observer.observe(video);
-                  }
-                })();
-              </script>
+              <picture>
+                <source srcset={heroImagePath} type="image/avif" />
+                <img class="landing-hero-photo" src="/assets/original/2021/02/HOME.jpg" alt={heroImageAlt} width="1200" height="800" loading="eager" decoding="async" fetchpriority="high" />
+              </picture>
             </div>
             <div class="landing-hero-panel ortho-hero-copy">
               <div class="ortho-hero-intro">
@@ -422,7 +364,6 @@ const structuredData = {
   .ortho-faq-eyebrow-mobile { display: none; }
   .ortho-experience-mobile { display: none; }
   .ortho-hero-eyebrow-mobile { display: none; }
-  .ortho-hero-mobile-video { display: none; }
   .ortho-hero-title-mobile { display: none; }
   .ortho-hero-lead-mobile { display: none; }
 
@@ -757,24 +698,6 @@ const structuredData = {
       height: auto;
       aspect-ratio: 16 / 9;
       border-radius: 18px 18px 18px 0;
-    }
-
-    .ortho-hero-mobile-video {
-      position: absolute;
-      inset: 0;
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      pointer-events: none;
-      user-select: none;
-      -webkit-user-select: none;
-      -webkit-touch-callout: none;
-    }
-
-    .ortho-hero-mobile-video::-webkit-media-controls,
-    .ortho-hero-mobile-video::-webkit-media-controls-start-playback-button {
-      display: none !important;
     }
 
     .ortho-hero-overlay .landing-hero-panel {
