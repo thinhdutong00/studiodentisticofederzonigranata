@@ -55,7 +55,7 @@ const firstVisitConfigJson = JSON.stringify({
 >
   <section class="first-visit-request-page booking-questionnaire" aria-labelledby="first-visit-request-title">
     <div class="first-visit-request-shell">
-      <form class="first-visit-request-form" data-first-visit-form data-booking-kind="first-visit" action="/api/booking" method="post" novalidate>
+      <form class="first-visit-request-form" data-first-visit-form data-booking-kind="first-visit" action="/api/booking" method="post" autocomplete="on" novalidate>
         <BookingFields />
         <script id="first-visit-config" type="application/json" set:html={firstVisitConfigJson}></script>
         <input type="hidden" name="visitReason" data-field="visitReason" />
@@ -169,11 +169,11 @@ const firstVisitConfigJson = JSON.stringify({
             </label>
             <label>
               <span>Telefono</span>
-              <input type="tel" name="phone" autocomplete="tel" minlength="6" maxlength="30" required />
+              <input type="tel" name="phone" autocomplete="tel" inputmode="tel" minlength="6" maxlength="30" required />
             </label>
             <label class="first-visit-field-wide">
               <span>Email</span>
-              <input type="email" name="email" autocomplete="email" maxlength="254" required />
+              <input type="email" name="email" autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false" maxlength="254" required />
             </label>
             <label class="first-visit-field-wide">
               <span>Messaggio <em>facoltativo</em></span>

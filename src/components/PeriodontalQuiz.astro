@@ -91,7 +91,7 @@ const questions = [
           <span class="landing-visually-hidden">{question.label}</span>
           <div class={question.type === 'tel' ? 'orthodontic-quiz-phone' : ''}>
             {question.type === 'tel' && <span class="orthodontic-quiz-phone-prefix">IT +39</span>}
-            <input type={question.type} name={question.name} placeholder={question.placeholder} autocomplete={question.autocomplete} required maxlength={question.name === 'fullName' ? 120 : question.type === 'tel' ? 30 : 254} minlength={question.name === 'fullName' ? 2 : question.type === 'tel' ? 6 : undefined} inputmode={question.type === 'email' ? 'email' : question.type === 'tel' ? 'tel' : 'text'} />
+            <input type={question.type} name={question.name} placeholder={question.placeholder} autocomplete={question.autocomplete} required maxlength={question.name === 'fullName' ? 120 : question.type === 'tel' ? 30 : 254} minlength={question.name === 'fullName' ? 2 : question.type === 'tel' ? 6 : undefined} inputmode={question.type === 'email' ? 'email' : question.type === 'tel' ? 'tel' : 'text'} autocapitalize={question.type === 'email' ? 'none' : undefined} spellcheck={question.type === 'email' ? false : undefined} />
           </div>
         </label>}
 

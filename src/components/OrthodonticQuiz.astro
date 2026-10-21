@@ -29,7 +29,7 @@ const questions = [
   { number: 6, title: 'Cosa ti interessa di più della prima valutazione?', name: 'visitGoal', type: 'choices', options: orthodonticVisitGoals.map(value => ({ value })), required: false },
   { number: 7, title: mobileObjectivesFirst ? 'Come ti chiami?' : 'Come ti chiami? (Nome e cognome)', name: 'fullName', type: 'text', label: 'Nome e cognome', placeholder: mobileObjectivesFirst ? 'Nome e cognome' : 'Il tuo nome e cognome', autocomplete: 'name', required: true },
   { number: 8, title: 'A quale email possiamo scriverti?', name: 'email', type: 'email', label: 'Email', placeholder: 'nome@esempio.it', autocomplete: 'email', required: true },
-  { number: 9, title: 'Ultimo passo: a quale numero possiamo chiamarti?', name: 'phone', type: 'tel', label: 'Telefono', placeholder: '333 123 4567', autocomplete: 'tel-national', required: true },
+  { number: 9, title: 'Ultimo passo: a quale numero possiamo chiamarti?', name: 'phone', type: 'tel', label: 'Telefono', placeholder: '333 123 4567', autocomplete: 'tel', required: true },
 ];
 ---
 
@@ -107,7 +107,7 @@ const questions = [
     </button>
   </div>
 
-  <form action="/api/booking" method="post" novalidate data-booking-kind="orthodontic-quiz" data-orthodontic-quiz-form>
+  <form action="/api/booking" method="post" autocomplete="on" novalidate data-booking-kind="orthodontic-quiz" data-orthodontic-quiz-form>
     <BookingFields />
     <input type="hidden" name="initialReason" value="" />
     {mobileObjectivesFirst && <input type="hidden" name="quizFlow" value="orthodontic-mobile-v2" data-quiz-mobile-flow disabled />}
@@ -179,7 +179,7 @@ const questions = [
             <span class="landing-visually-hidden">{question.label}</span>
             <div class={question.type === 'tel' ? 'orthodontic-quiz-phone' : ''}>
               {question.type === 'tel' && <span class="orthodontic-quiz-phone-prefix">IT +39</span>}
-              <input id={`orthodontic-quiz-${question.name}`} type={question.type} name={question.name} placeholder={question.placeholder} autocomplete={question.autocomplete} required min={question.type === 'number' ? 1 : undefined} max={question.type === 'number' ? 100 : undefined} step={question.type === 'number' ? 1 : undefined} maxlength={question.name === 'fullName' ? 120 : question.type === 'tel' ? 30 : question.type === 'email' ? 254 : undefined} minlength={question.name === 'fullName' ? 2 : question.type === 'tel' ? 6 : undefined} inputmode={question.type === 'number' ? 'numeric' : undefined} />
+              <input id={`orthodontic-quiz-${question.name}`} type={question.type} name={question.name} placeholder={question.placeholder} autocomplete={question.autocomplete} required min={question.type === 'number' ? 1 : undefined} max={question.type === 'number' ? 100 : undefined} step={question.type === 'number' ? 1 : undefined} maxlength={question.name === 'fullName' ? 120 : question.type === 'tel' ? 30 : question.type === 'email' ? 254 : undefined} minlength={question.name === 'fullName' ? 2 : question.type === 'tel' ? 6 : undefined} inputmode={question.type === 'number' ? 'numeric' : question.type === 'email' ? 'email' : question.type === 'tel' ? 'tel' : 'text'} autocapitalize={question.type === 'email' ? 'none' : undefined} spellcheck={question.type === 'email' ? false : undefined} />
             </div>
           </label>
         )}

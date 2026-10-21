@@ -1,6 +1,6 @@
 # Invio delle richieste del sito e CRM
 
-Destinatario fisso di tutti i moduli: **info.federzonigranata@gmail.com**.
+Destinatario fisso delle notifiche interne di tutti i moduli: **info.federzonigranata@gmail.com**.
 Archivio operativo: foglio privato **Federzoni Granata Thin leads**, scheda `Richieste dal sito`.
 
 ## Percorso
@@ -12,6 +12,7 @@ Archivio operativo: foglio privato **Federzoni Granata Thin leads**, scheda `Ric
 - I moduli introduttivi dei trattamenti (incluso sbiancamento) aprono `/richiesta/` con trattamento, sede e motivo preselezionati; l’invio avviene dopo aver raccolto i recapiti. Anche un motivo iniziale che non coincide con le opzioni del questionario viene conservato nell’email.
 - Le landing `/visita-ortodonzia/ortodonzia-adulti/`, `/visita-ortodonzia/ortodonzia-bambini-adolescenti/`, `/visita-ortodonzia/allineatori-trasparenti/` e `/visita-ortodonzia/apparecchio-fisso/` riutilizzano lo stesso quiz ortodontico. La macro area viene inclusa nel messaggio, quindi compare sia nell’email sia in `Comunicazioni` nel CRM; la pagina del modulo resta nel campo `source`. La provenienza della sessione viene acquisita prima della navigazione tra le card e le landing dedicate.
 - Il server controlla i dati e chiama in parallelo Resend e la web app Google Apps Script del CRM. La conferma appare solo se Resend restituisce un identificativo email e il CRM conferma la registrazione della stessa richiesta.
+- Dopo entrambe le conferme, il server invia anche una ricevuta all'indirizzo email indicato dal paziente, con lo stesso mittente verificato e le risposte indirizzate alla segreteria. La ricevuta conferma soltanto la ricezione della richiesta: non conferma un appuntamento e non contiene risposte cliniche, dettagli sanitari, testo libero o dati di provenienza pubblicitaria. I moduli di richiamata che non raccolgono l'email non inviano questa ricevuta.
 - In caso di errore o timeout il modulo conserva i valori e permette di riprovare. Lo stesso tentativo mantiene lo stesso `requestId`: Resend riutilizza la chiave di idempotenza e Apps Script non inserisce una seconda riga con lo stesso ID.
 - Il foglio riceve solo dati già validati dal server. Le nuove richieste entrano con `Contattato = No` e `Accettato = No`; questi valori non possono essere impostati dal browser.
 - La scheda visibile conserva soltanto i campi operativi richiesti. Una tredicesima colonna tecnica nascosta conserva l’ID univoco nella stessa scrittura del lead, così un errore del log non può creare duplicati. Il valore dei click ID pubblicitari non viene salvato.
@@ -32,7 +33,9 @@ Il Gmail destinatario non è il mittente autenticato. Non usare `mailto:` nelle 
 
 Verificare il dominio mittente in Resend tramite i record DNS indicati dal servizio. Dopo aver configurato le variabili, eseguire un nuovo deploy. Senza configurazione il server risponde `503` e non mostra una conferma falsa.
 
-Le funzioni Vercel in `api/` sono distribuite insieme al sito Astro statico; il runtime è Node 22. L’endpoint usa timeout separati di 12 secondi per Resend e 45 secondi per il CRM, eseguiti in parallelo entro il limite di 60 secondi della funzione. Il browser attende fino a 65 secondi, così può ricevere anche l’esito di una funzione arrivata vicino al proprio limite. Il margine del CRM copre anche l’avvio a freddo e il redirect della web app Apps Script.
+Le funzioni Vercel in `api/` sono distribuite insieme al sito Astro statico; il runtime è Node 22. L’endpoint usa timeout separati di 12 secondi per l'email interna e 45 secondi per il CRM, eseguiti in parallelo. Dopo il loro successo attende l'invio della ricevuta al paziente per un massimo di altri 8 secondi, restando entro il limite di 60 secondi della funzione. Il browser attende fino a 65 secondi, così può ricevere anche l’esito di una funzione arrivata vicino al proprio limite. Il margine del CRM copre anche l’avvio a freddo e il redirect della web app Apps Script.
+
+La ricevuta al paziente usa una chiave di idempotenza distinta dalla notifica interna, derivata dal contenuto che include l'ID richiesta: i tentativi identici non generano una nuova email nella finestra di 24 ore di Resend. Un errore della sola ricevuta non annulla una richiesta già registrata e non mostra un falso errore di invio al paziente; viene registrato un messaggio tecnico senza recapiti o contenuto dell'email. Non è presente una coda per riprogrammare automaticamente le ricevute fallite: un nuovo tentativo della stessa richiesta riprova anche la ricevuta, mantenendo l'idempotenza. L'accettazione da parte di Resend non certifica l'arrivo in posta in entrata.
 
 ## Configurazione del CRM Google Sheets
 
@@ -69,14 +72,14 @@ Per la SEO non serve modificare gli URL: un accesso proveniente da un risultato 
 
 ## Verifica
 
-1. `npm test` verifica destinazione, risposte dei sei tipi di modulo, consenso, mapping CRM, schema Apps Script, errori parziali, deduplicazione, neutralizzazione delle formule, chiavi di idempotenza e limite ai tentativi. I provider sono simulati: questi test non inviano email reali e non scrivono nel foglio.
+1. `npm test` verifica destinazione, risposte dei tipi di modulo, consenso, mapping CRM, schema Apps Script, errori parziali, deduplicazione, neutralizzazione delle formule, chiavi di idempotenza e limite ai tentativi. Verifica anche l'ordine di invio della ricevuta al paziente, l'assenza di dati clinici nel suo testo, il mancato invio senza email o senza conferma dei provider principali e gli errori non bloccanti della sola ricevuta. I provider sono simulati: questi test non inviano email reali e non scrivono nel foglio.
 2. `npm run build` verifica la compilazione del sito.
 3. Per lo sviluppo, copiare `.env.example` in `.env` e configurare le variabili. `npm run dev` serve anche l’endpoint locale; con credenziali reali il modulo invia email reali allo stesso destinatario.
 4. Dopo il deploy configurato, inviare una richiesta chiaramente identificata come prova tecnica. Verificare l’evento `delivered` su Resend, la ricezione nella casella e una sola riga nel foglio. In Preview `Comunicazioni` deve iniziare con `TEST – non contattare`; in Production questa dicitura non deve comparire. Ripetere lo stesso `requestId` e controllare nel log tecnico nascosto che non venga creata una seconda riga.
 
 ## Protezioni e limiti
 
-Il destinatario è definito solo sul server: il browser non può cambiarlo. Il server accetta solo POST JSON dalla stessa origine, controlla consenso, formato e lunghezze, usa un campo esca e limita i tentativi per indirizzo IP nella singola istanza. Il limite in memoria non è distribuito tra tutte le istanze Vercel; per bloccare campagne automatizzate impostare anche una regola di rate limiting nel firewall Vercel per `/api/booking`.
+Il destinatario della notifica interna è definito solo sul server: il browser non può cambiarlo. La ricevuta al paziente usa soltanto l'unico indirizzo email validato nel modulo; intestazioni, oggetto e testo operativo sono definiti dal server. Il server accetta solo POST JSON dalla stessa origine, controlla consenso, formato e lunghezze, usa un campo esca e limita i tentativi per indirizzo IP nella singola istanza. Il limite in memoria non è distribuito tra tutte le istanze Vercel; per bloccare campagne automatizzate impostare anche una regola di rate limiting nel firewall Vercel per `/api/booking`.
 
 Nessun dato dei moduli viene salvato in localStorage o nei log del server. Le query URL dei moduli introduttivi contengono solo le opzioni selezionate di trattamento, motivo e sede, mai recapiti o testo libero. Email e CRM contengono i dati forniti, inclusi gli eventuali dettagli sanitari. Il foglio deve restare privato e accessibile solo al personale autorizzato. Non è prevista una cancellazione automatica: tempi di conservazione e revisione periodica restano sotto la responsabilità dello Studio. Le date restano preferenze da confermare con la segreteria.
 

@@ -15,7 +15,7 @@ const {
 } = Astro.props;
 ---
 
-<form class:list={['pill-form', `pill-form-${variant}`]} data-contact-form data-booking-kind={variant === 'compact' ? 'callback' : 'contact'} action="/api/booking" method="post">
+<form class:list={['pill-form', `pill-form-${variant}`]} data-contact-form data-booking-kind={variant === 'compact' ? 'callback' : 'contact'} action="/api/booking" method="post" autocomplete="on">
   <BookingFields />
   {title && <h2>{title}</h2>}
 
@@ -27,7 +27,7 @@ const {
       </label>
       <label>
         <span>Telefono</span>
-        <input type="tel" name="phone" placeholder="Telefono" autocomplete="tel" minlength="6" maxlength="30" required />
+        <input type="tel" name="phone" placeholder="Telefono" autocomplete="tel" inputmode="tel" minlength="6" maxlength="30" required />
       </label>
       <button class="button button-primary" type="submit">Richiedi Info <span aria-hidden="true">↗</span></button>
     </div>
@@ -41,10 +41,10 @@ const {
           <input type="text" name="lastName" placeholder="Cognome" autocomplete="family-name" maxlength="59" required />
         </label>
         <label>Telefono
-          <input type="tel" name="phone" placeholder="Telefono" autocomplete="tel" minlength="6" maxlength="30" required />
+          <input type="tel" name="phone" placeholder="Telefono" autocomplete="tel" inputmode="tel" minlength="6" maxlength="30" required />
         </label>
         <label>Email
-          <input type="email" name="email" placeholder="Email" autocomplete="email" maxlength="254" required />
+          <input type="email" name="email" placeholder="Email" autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false" maxlength="254" required />
         </label>
         <label class="full-span">Messaggio
           <textarea name="message" placeholder="Messaggio" maxlength="3000"></textarea>

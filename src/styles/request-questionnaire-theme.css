@@ -1,0 +1,232 @@
+/* Light theme for /richiesta/ only. Shared questionnaire layout and behavior stay unchanged. */
+body:has(.request-page.booking-questionnaire) {
+  background: var(--surface-white) !important;
+}
+
+body .request-page.booking-questionnaire,
+body .request-page.booking-questionnaire .request-form {
+  background: var(--surface-white) !important;
+  color: var(--text-dark) !important;
+}
+
+body .request-page.booking-questionnaire .request-progress {
+  background: var(--border) !important;
+}
+
+body .request-page.booking-questionnaire .request-progress > span {
+  background: var(--brand-blue) !important;
+}
+
+body .request-page.booking-questionnaire .request-office-help {
+  margin: 0 0 16px;
+}
+
+body .request-page.booking-questionnaire :is(.booking-questionnaire-heading h1, .request-step legend strong, .request-office-choice h2) {
+  color: var(--brand-primary-dark) !important;
+}
+
+body .request-page.booking-questionnaire :is(.booking-questionnaire-eyebrow, .slot-date, .calendar-weekdays, .schedule-section-help, .privacy-copy) {
+  color: var(--muted-text) !important;
+}
+
+body .request-page.booking-questionnaire [data-step-key="treatment"] .quiz-options {
+  scrollbar-color: var(--brand-blue) transparent;
+}
+
+body .request-page.booking-questionnaire .choice-btn {
+  border-color: var(--border) !important;
+  background: var(--surface-white) !important;
+  color: var(--brand-primary-dark) !important;
+}
+
+body .request-page.booking-questionnaire .choice-btn::before {
+  border-color: var(--border) !important;
+  background: var(--surface-white) !important;
+}
+
+body .request-page.booking-questionnaire .choice-btn::after {
+  background: var(--brand-cta) !important;
+}
+
+body .request-page.booking-questionnaire .choice-btn:enabled:is(:hover, :focus-visible) {
+  border-color: var(--brand-blue) !important;
+  background: var(--background) !important;
+}
+
+body .request-page.booking-questionnaire .choice-btn:is(.is-selected, [aria-pressed="true"]),
+body .request-page.booking-questionnaire .choice-btn:is(.is-selected, [aria-pressed="true"]):enabled:is(:hover, :focus-visible) {
+  border-color: var(--brand-cta) !important;
+  background: var(--soft-blue-bg) !important;
+  color: var(--brand-primary-dark) !important;
+}
+
+body .request-page.booking-questionnaire .choice-btn:is(.is-selected, [aria-pressed="true"])::before {
+  border-color: var(--brand-cta) !important;
+  background: var(--surface-white) !important;
+}
+
+body .request-page.booking-questionnaire .choice-btn:disabled {
+  border-color: var(--border) !important;
+  background: var(--background) !important;
+  color: var(--muted-text) !important;
+}
+
+body .request-page.booking-questionnaire :is(.calendar-card, .slot-card, .schedule-confirmation) {
+  border-color: var(--border) !important;
+  background: var(--surface-white) !important;
+  color: var(--text-dark) !important;
+}
+
+body .request-page.booking-questionnaire :is(.calendar-title, .slot-title, .schedule-section-title) {
+  color: var(--brand-primary-dark) !important;
+}
+
+body .request-page.booking-questionnaire :is(.calendar-nav, .date-btn, .slot-btn) {
+  border-color: var(--border) !important;
+  background: var(--surface-white) !important;
+  color: var(--brand-primary-dark) !important;
+}
+
+body .request-page.booking-questionnaire .calendar-nav {
+  color: var(--brand-cta) !important;
+}
+
+body .request-page.booking-questionnaire :is(.calendar-nav, .date-btn, .slot-btn):enabled:is(:hover, :focus-visible) {
+  border-color: var(--brand-blue) !important;
+  background: var(--soft-blue-bg) !important;
+}
+
+body .request-page.booking-questionnaire :is(.date-btn, .slot-btn).is-selected,
+body .request-page.booking-questionnaire :is(.date-btn, .slot-btn).is-selected:enabled:is(:hover, :focus-visible) {
+  border-color: var(--brand-cta) !important;
+  background: var(--brand-cta) !important;
+  color: var(--surface-white) !important;
+}
+
+body .request-page.booking-questionnaire .calendar-nav:disabled {
+  border-color: var(--border) !important;
+  background: var(--surface-white) !important;
+  color: var(--muted-text) !important;
+}
+
+body .request-page.booking-questionnaire .date-btn:disabled {
+  border-color: transparent !important;
+  background: transparent !important;
+  color: rgba(var(--brand-primary-dark-rgb), 0.3) !important;
+}
+
+body .request-page.booking-questionnaire :is(.date-btn, .slot-btn).is-limit-disabled:disabled {
+  border-color: var(--border) !important;
+  background: var(--background) !important;
+  color: var(--muted-text) !important;
+}
+
+body .request-page.booking-questionnaire .field-grid label {
+  color: var(--text-dark) !important;
+}
+
+body .request-page.booking-questionnaire .field-grid :is(input, textarea) {
+  border-color: var(--border) !important;
+  background: var(--surface-white) !important;
+  color: var(--text-dark) !important;
+  caret-color: var(--text-dark);
+}
+
+body .request-page.booking-questionnaire :is(input, textarea)::placeholder {
+  color: var(--muted-text) !important;
+}
+
+body .request-page.booking-questionnaire :is(input, textarea):focus {
+  border-color: var(--brand-cta) !important;
+  outline: 3px solid rgba(var(--brand-blue-rgb), 0.25) !important;
+}
+
+body .request-page.booking-questionnaire .field-grid :is(input, textarea):is(.is-invalid, [aria-invalid="true"]) {
+  border-color: var(--error) !important;
+  box-shadow: 0 0 0 3px rgba(var(--error-rgb), 0.12) !important;
+}
+
+body .request-page.booking-questionnaire .field-grid :is(input, textarea):is(.is-invalid, [aria-invalid="true"]):focus {
+  outline-color: rgba(var(--error-rgb), 0.22) !important;
+}
+
+body .request-page.booking-questionnaire .booking-privacy-consent {
+  color: var(--muted-text) !important;
+}
+
+body .request-page.booking-questionnaire .booking-privacy-consent a {
+  color: var(--brand-cta) !important;
+}
+
+body .request-page.booking-questionnaire .booking-privacy-consent a:is(:hover, :focus-visible) {
+  color: var(--brand-cta-hover) !important;
+}
+
+body .request-page.booking-questionnaire :is(.booking-privacy-consent, .schedule-confirmation) input {
+  border-color: var(--brand-blue) !important;
+  background: var(--surface-white) !important;
+  accent-color: var(--brand-cta) !important;
+}
+
+body .request-page.booking-questionnaire :is(.booking-privacy-consent, .schedule-confirmation) input:focus {
+  border-color: var(--brand-cta) !important;
+}
+
+body .request-page.booking-questionnaire :is(.booking-privacy-consent, .schedule-confirmation) input[aria-invalid="true"] {
+  border-color: var(--error) !important;
+  outline: 3px solid rgba(var(--error-rgb), 0.22) !important;
+}
+
+body .request-page.booking-questionnaire .request-error {
+  color: var(--error) !important;
+}
+
+body .request-page.booking-questionnaire .request-btn {
+  border-color: var(--brand-cta) !important;
+  background: var(--brand-cta) !important;
+  color: var(--surface-white) !important;
+}
+
+body .request-page.booking-questionnaire .request-btn:enabled:is(:hover, :focus-visible) {
+  border-color: var(--brand-cta-hover) !important;
+  background: var(--brand-cta-hover) !important;
+  color: var(--surface-white) !important;
+}
+
+body .request-page.booking-questionnaire .request-btn:disabled {
+  border-color: var(--border) !important;
+  background: var(--background) !important;
+  color: var(--muted-text) !important;
+}
+
+body .request-page.booking-questionnaire .multistep-backbar {
+  border-color: var(--border) !important;
+  background: var(--surface-white) !important;
+  box-shadow: none !important;
+  color: var(--brand-cta) !important;
+}
+
+body .request-page.booking-questionnaire .multistep-backbar:is(:hover, :focus-visible) {
+  border-color: var(--brand-cta) !important;
+  background: var(--soft-blue-bg) !important;
+  color: var(--brand-cta-hover) !important;
+}
+
+body .request-page.booking-questionnaire :is(.choice-btn, .calendar-nav, .date-btn, .slot-btn, .request-btn):enabled:focus-visible,
+body .request-page.booking-questionnaire :is(.multistep-backbar, .booking-privacy-consent a):focus-visible {
+  outline: 3px solid rgba(var(--brand-blue-rgb), 0.35);
+  outline-offset: 3px;
+}
+
+@media (max-width: 720px) {
+  body .request-page.booking-questionnaire .booking-questionnaire-heading h1 {
+    position: absolute;
+    width: 1px !important;
+    height: 1px;
+    margin: -1px !important;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

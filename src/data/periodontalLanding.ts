@@ -22,8 +22,8 @@ export const periodontalHero = {
 
 export const periodontalProcessSteps = [
   {
-    title: 'Valutiamo gengive e sostegno dei denti',
-    text: 'Ascoltiamo ciò che hai notato ed eseguiamo la visita e il sondaggio parodontale. Se servono, completiamo la valutazione con radiografie mirate.',
+    title: 'Controlliamo gengive e sostegno dei denti',
+    text: 'Utilizzeremo una sottile sonda millimetrata per misurare lo spazio tra il dente e la gengiva per comprendere nel dettaglio lo stato attuale della tua salute orale.',
     icon: 'checkup',
   },
   {
@@ -151,7 +151,6 @@ export const periodontalProfessional = {
   name: 'Dott. Stefano Granata',
   role: 'Odontoiatra · Protesi, implantologia e chirurgia computer guidata',
   eyebrow: 'Il professionista al tuo fianco',
-  title: 'La salute delle tue gengive merita esperienza.',
   summary:
     'Un approccio che mette in relazione denti, gengive e funzione. Il Dott. Stefano Granata si occupa di protesi, implantologia e chirurgia computer guidata, con attività clinica, didattica e scientifica.',
   image: '/assets/optimized/parodontologia-landing-stefano-granata.webp',

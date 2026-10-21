@@ -4,7 +4,7 @@ import { periodontalAgeRanges, periodontalDurations, periodontalObjectives, peri
 
 export const RECIPIENT = 'info.federzonigranata@gmail.com';
 const MAX_BYTES = 24_000;
-const EMAIL = /^[^\s<>@]+@[^\s<>@]+\.[^\s<>@]+$/;
+const EMAIL = /^[^\s<>@,;]+@[^\s<>@,;]+\.[^\s<>@,;]+$/;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const TIME_SLOTS = ['09:00', '10:00', '11:00', '14:30', '15:30', '16:30', '17:30'];
 const MAX_PREFERRED_DATES = 2;
@@ -204,6 +204,31 @@ export function buildEmail(data, from) {
   };
 }
 
+export function buildPatientReceipt(data, from) {
+  if (!data.email) return null;
+  const informationRequest = data.kind === 'contact' || data.kind === 'callback';
+  return {
+    from,
+    to: [data.email],
+    reply_to: RECIPIENT,
+    subject: 'Abbiamo ricevuto la tua richiesta — Studio Dentistico Federzoni Granata',
+    text: [
+      `Ciao ${data.fullName},`, '',
+      'grazie per aver contattato lo Studio Dentistico Federzoni Granata. Abbiamo ricevuto la tua richiesta.', '',
+      informationRequest
+        ? 'La segreteria ti ricontatterà per rispondere alla tua richiesta.'
+        : 'La segreteria ti ricontatterà per verificare i dettagli e concordare giorno e orario della visita.', '',
+      'Questa email conferma la ricezione della richiesta, non la prenotazione di un appuntamento. Giorno e orario della visita devono essere confermati dalla segreteria.', '',
+      'Per qualsiasi necessità puoi rispondere a questa email oppure contattare lo studio:',
+      'Modena: +39 059 345557',
+      'Reggio Emilia: +39 0522 436618', '',
+      'Studio Dentistico Federzoni Granata',
+      `Riferimento richiesta: ${data.requestId}`, '',
+      'Visita il nostro sito: https://studiodentisticofederzonigranata.it/',
+    ].join('\n'),
+  };
+}
+
 function normalizedSignal(value) {
   return String(value || '').trim().toLowerCase().replace(/[\s-]+/g, '_');
 }
@@ -286,7 +311,7 @@ async function parseJsonResponse(response) {
   try { return await response.json(); } catch { return null; }
 }
 
-async function deliverEmail(send, env, email) {
+async function deliverEmail(send, env, email, timeoutMs = 12_000) {
   let response;
   try {
     const key = createHash('sha256').update(JSON.stringify(email)).digest('hex');
@@ -294,7 +319,7 @@ async function deliverEmail(send, env, email) {
       method: 'POST',
       headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json', 'Idempotency-Key': `booking-${key}` },
       body: JSON.stringify(email),
-      signal: AbortSignal.timeout(12_000),
+      signal: AbortSignal.timeout(timeoutMs),
     });
   } catch {
     console.error('Booking email provider request failed');
@@ -411,6 +436,15 @@ export function createBookingHandler({ env = process.env, send = fetch, now = Da
         }, data),
       ]);
       if (outcomes.some((outcome) => outcome.status === 'rejected')) throw new RequestError(502, BOOKING_ERROR);
+      const receipt = buildPatientReceipt(data, from);
+      if (receipt) {
+        try {
+          await deliverEmail(send, env, receipt, 8_000);
+        } catch {
+          // The request is already received: a receipt failure must not prompt a duplicate submission.
+          console.error('Booking patient receipt could not be confirmed');
+        }
+      }
       return json(res, 200, { ok: true, requestId: data.requestId });
     } catch (error) {
       const status = error instanceof RequestError ? error.status : 400;

@@ -1,21 +1,15 @@
 ---
-import BookingFields from './BookingFields.astro';
-import BookingPrivacy from './BookingPrivacy.astro';
-import BookingFeedback from './BookingFeedback.astro';
 import { site } from '../data/site';
 
 interface Props { treatmentLabel: string; variant?: 'section' | 'hero'; submitLabel?: string; }
 const { treatmentLabel, variant = 'section', submitLabel = 'Prenota una visita parodontale' } = Astro.props;
 const isHero = variant === 'hero';
 const idPrefix = isHero ? 'ortho-hero-consultation' : 'ortho-consultation';
-const phoneCountries = [
-  { code: '+39', flag: '🇮🇹', country: 'Italia' },
-  { code: '+33', flag: '🇫🇷', country: 'Francia' },
-  { code: '+49', flag: '🇩🇪', country: 'Germania' },
-  { code: '+41', flag: '🇨🇭', country: 'Svizzera' },
-  { code: '+43', flag: '🇦🇹', country: 'Austria' },
-  { code: '+34', flag: '🇪🇸', country: 'Spagna' },
-  { code: '+44', flag: '🇬🇧', country: 'Regno Unito' },
+const requestReasons = [
+  'Gengive che sanguinano o sono infiammate',
+  'Recessione gengivale o denti che si muovono',
+  'Mantenimento dopo una terapia parodontale',
+  'Voglio prima confrontarmi con un vostro specialista',
 ];
 ---
 
@@ -27,76 +21,41 @@ const phoneCountries = [
   </header>}
 
   <div class="ortho-consultation-surface">
-    <form class="ortho-consultation-form" data-ortho-consultation-form data-contact-form data-booking-kind="contact" action="/api/booking" method="post" aria-labelledby={isHero ? undefined : `${idPrefix}-title`} aria-label={isHero ? 'Richiedi una visita parodontale' : undefined}>
-      <BookingFields />
-      <input type="hidden" name="treatment" value={treatmentLabel} />
-      <input type="hidden" name="treatmentCategory" value="Parodontologia" />
-      <input type="hidden" name="message" value={isHero ? 'Richiesta di visita di valutazione parodontale dal modulo della hero della landing parodontologia.' : 'Richiesta di visita di valutazione parodontale dal modulo finale della landing parodontologia.'} />
+    <form class="ortho-consultation-form" data-landing-request-form action="/richiesta/" method="get" aria-labelledby={isHero ? undefined : `${idPrefix}-title`} aria-label={isHero ? 'Richiedi una visita parodontale' : undefined} aria-describedby={`${idPrefix}-note`}>
+      <input type="hidden" name="trattamento" value={treatmentLabel} />
       {isHero && <p class="ortho-consultation-hero-title">Prenota una visita parodontale</p>}
 
       <div class="ortho-consultation-fields">
-        <label class="ortho-consultation-field" for={`${idPrefix}-full-name`}>
-          <span class="landing-visually-hidden">Nome e cognome</span>
-          <input id={`${idPrefix}-full-name`} name="fullName" type="text" placeholder="Nome e cognome" autocomplete="name" minlength="2" maxlength="120" required />
-        </label>
-
-        <label class="ortho-consultation-field" for={`${idPrefix}-email`}>
-          <span class="landing-visually-hidden">Email</span>
-          <input id={`${idPrefix}-email`} name="email" type="email" placeholder="E-Mail" autocomplete="email" maxlength="254" required />
-        </label>
-
-        <div class="ortho-consultation-phone">
-          <label class="ortho-consultation-country" for={`${idPrefix}-country`}>
-            <span class="landing-visually-hidden">Prefisso internazionale</span>
-            <select id={`${idPrefix}-country`} name="phoneCountry" autocomplete="tel-country-code">
-              {phoneCountries.map(country => <option value={country.code} aria-label={`${country.country} ${country.code}`}>{country.flag} {country.code}</option>)}
-            </select>
-            <svg class="ortho-consultation-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 7 5 5 5-5" /></svg>
-          </label>
-          <label class="ortho-consultation-field" for={`${idPrefix}-phone`}>
-            <span class="landing-visually-hidden">Numero di telefono</span>
-            <input id={`${idPrefix}-phone`} name="phone" type="tel" placeholder="Numero di telefono" autocomplete="tel-national" minlength="6" maxlength="30" required />
-          </label>
-        </div>
-
         <label class="ortho-consultation-office" for={`${idPrefix}-office`}>
-          <span class="landing-visually-hidden">Città dello studio</span>
+          <span class="landing-visually-hidden">Seleziona lo studio dentistico più vicino a te</span>
           <svg class="ortho-consultation-search" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" /></svg>
-          <select id={`${idPrefix}-office`} name="office" required>
-            <option value="" disabled selected>Città</option>
+          <select id={`${idPrefix}-office`} name="sede">
+            <option value="" selected>Seleziona lo studio dentistico più vicino a te</option>
             {site.offices.map(office => <option value={office.city}>{office.city}</option>)}
+          </select>
+          <span class="ortho-consultation-office-placeholder" aria-hidden="true">Seleziona lo studio dentistico più vicino a te</span>
+          <svg class="ortho-consultation-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 7 5 5 5-5" /></svg>
+        </label>
+
+        <label class="ortho-consultation-country" for={`${idPrefix}-reason`}>
+          <span class="landing-visually-hidden">Motivo della richiesta</span>
+          <select id={`${idPrefix}-reason`} name="motivo">
+            <option value="" selected>Motivo della richiesta</option>
+            {requestReasons.map(reason => <option value={reason}>{reason}</option>)}
           </select>
           <svg class="ortho-consultation-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 7 5 5 5-5" /></svg>
         </label>
       </div>
 
-      <BookingPrivacy />
       <button class="ortho-consultation-submit" type="submit">{submitLabel}</button>
-      <BookingFeedback />
-      <p class="ortho-consultation-note">La segreteria ti ricontatterà entro due ore per concordare giorno e orario della visita.</p>
+      <p class="ortho-consultation-note" id={`${idPrefix}-note`}>Prosegui per indicarci le tue preferenze e i tuoi recapiti. La segreteria ti ricontatterà entro due ore per concordare giorno e orario della visita.</p>
     </form>
   </div>
 </div>
 
-<script>
-  import { bindContactForms } from '../utils/submitBooking';
-
-  document.querySelectorAll<HTMLFormElement>('[data-ortho-consultation-form]').forEach(form => {
-    if (form.dataset.phonePrefixBound) return;
-    form.dataset.phonePrefixBound = 'true';
-    form.addEventListener('formdata', event => {
-      const phone = String(event.formData.get('phone') || '').trim();
-      const prefix = String(event.formData.get('phoneCountry') || '+39');
-      if (phone) {
-        event.formData.set('phone', phone.startsWith('+') ? phone : phone.startsWith('00') ? `+${phone.slice(2)}` : `${prefix} ${phone}`);
-      }
-      event.formData.delete('phoneCountry');
-    });
-  });
-  bindContactForms();
-</script>
-
 <style>
+  .ortho-consultation-office-placeholder { position: absolute; inset: 0 24px 1px 30px; display: none; align-items: center; background: var(--surface-white); color: var(--muted-text); font-size: 16px; font-weight: 400; line-height: 1.3; pointer-events: none; }
+  .ortho-consultation-office:has(select option[value=""]:checked) .ortho-consultation-office-placeholder { display: flex; }
   .ortho-consultation-hero-title { display: none; }
   .ortho-consultation-mobile { display: none; }
 

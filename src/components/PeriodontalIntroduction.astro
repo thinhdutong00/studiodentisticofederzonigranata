@@ -62,12 +62,11 @@ import { periodontalProcessSteps as firstVisitSteps } from '../data/periodontalL
   </div>
 </section>
 
-<section class="ortho-section ortho-personalized-path" id="percorso-ortodontico" aria-labelledby="ortho-personalized-title">
+<section class="ortho-section ortho-personalized-path" id="percorso-ortodontico" aria-labelledby="ortho-professional-eyebrow">
   <div class="ortho-shell ortho-professional-card">
     <div class="ortho-section-heading ortho-intro-heading">
       <div>
-        <p class="ortho-professional-eyebrow">Il professionista al tuo fianco</p>
-        <h2 id="ortho-personalized-title"><slot name="personalized-title">La salute delle tue gengive merita esperienza.</slot></h2>
+        <p class="ortho-professional-eyebrow" id="ortho-professional-eyebrow">Il professionista al tuo fianco</p>
       </div>
     </div>
 
@@ -157,23 +156,13 @@ import { periodontalProcessSteps as firstVisitSteps } from '../data/periodontalL
   }
 
   .ortho-professional-eyebrow {
-    margin: 0 0 14px;
+    margin: 0;
     color: var(--muted-text);
     font-size: 14px;
     font-weight: 500;
     line-height: 1.4;
     letter-spacing: normal;
     text-transform: uppercase;
-  }
-
-  #percorso-ortodontico #ortho-personalized-title {
-    max-width: none;
-    margin: 0;
-    color: var(--brand-primary-dark);
-    font-size: clamp(28px, 3vw, 36px);
-    font-weight: 700;
-    line-height: 1.15;
-    text-wrap: pretty;
   }
 
   .ortho-intro-heading {

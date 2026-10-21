@@ -4,6 +4,7 @@ import BookingFields from '../components/BookingFields.astro';
 import { bookingAgeRangeOptions } from '../data/bookingForms';
 import { site } from '../data/site';
 import '../styles/booking-questionnaire.css';
+import '../styles/request-questionnaire-theme.css';
 
 const title = `Richiedi una valutazione - ${site.name}`;
 const description =
@@ -200,7 +201,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 <BaseLayout title={title} description={description} ogImage={site.heroImage} canonicalPath="/richiesta/">
   <section class="request-page booking-questionnaire" aria-labelledby="request-questionnaire-title">
     <div class="request-shell">
-      <form class="request-form" data-request-form data-booking-kind="treatment" action="/api/booking" method="post" novalidate>
+      <form class="request-form" data-request-form data-booking-kind="treatment" action="/api/booking" method="post" autocomplete="on" novalidate>
         <BookingFields />
         <script id="request-config" type="application/json" set:html={requestConfigJson}></script>
         <input type="hidden" name="treatment" data-field="treatment" />
@@ -304,6 +305,7 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 
           <div class="request-office-choice">
             <h2>Sede preferita</h2>
+            <p class="schedule-section-help request-office-help">Seleziona lo studio dentistico più vicino a te</p>
             <div class="quiz-options request-office-options">
               {offices.map((office) => (
                 <button class="choice-btn" type="button" data-choice="office" data-value={office}>
@@ -368,11 +370,11 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
             </label>
             <label>
               <span>Numero di telefono</span>
-              <input type="tel" name="phone" autocomplete="tel" minlength="6" maxlength="30" required />
+              <input type="tel" name="phone" autocomplete="tel" inputmode="tel" minlength="6" maxlength="30" required />
             </label>
             <label class="field-wide">
               <span>Email</span>
-              <input type="email" name="email" autocomplete="email" maxlength="254" required />
+              <input type="email" name="email" autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false" maxlength="254" required />
             </label>
             <label class="field-wide">
               <span>Dettagli prima della visita <em>(facoltativo)</em></span>
@@ -1809,7 +1811,10 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
         );
         if (matchingOffice instanceof HTMLButtonElement) selectChoice(matchingOffice);
 
-        state.step = Math.min(1, getActiveSteps().length - 1);
+        const nextStepKey = matchingProblem instanceof HTMLButtonElement
+          ? 'ageRange'
+          : needsOtherDetails() ? 'otherDetails' : 'treatmentDetail';
+        state.step = Math.max(0, getActiveSteps().findIndex((step) => step.dataset.stepKey === nextStepKey));
       }
     };
 

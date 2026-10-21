@@ -75,7 +75,7 @@ for (const [kind, fields] of Object.entries(cases)) {
     assert.equal(res.statusCode, 200);
     assert.equal(res.body.ok, true);
     assert.equal(res.body.requestId, base.requestId);
-    assert.equal(calls.length, 2);
+    assert.equal(calls.length, data.email ? 3 : 2);
     const emailCall = findEmailCall(calls);
     const crmCall = findCrmCall(calls);
     assert.deepEqual(emailCall.body.to, [RECIPIENT]);
@@ -117,7 +117,7 @@ test('simple orthodontic consultation keeps its treatment, office and landing in
   };
   const res = await invoke(handler, data);
   assert.equal(res.statusCode, 200);
-  assert.equal(calls.length, 2);
+  assert.equal(calls.length, 3);
   const crm = findCrmCall(calls).body;
   assert.equal(crm.servizio, data.treatment);
   assert.equal(crm.sede, data.office);
@@ -281,7 +281,7 @@ test('rejects cross-origin, non-JSON and non-POST requests', async () => {
 test('reads JSON from a native Node request as well as Vercel parsed bodies', async () => {
   const { handler, calls } = fixture();
   assert.equal((await invoke(handler, null, { raw: JSON.stringify(base) })).statusCode, 200);
-  assert.equal(calls.length, 2);
+  assert.equal(calls.length, 3);
 });
 
 test('missing or invalid provider configuration never calls either provider', async () => {
@@ -346,7 +346,7 @@ test('retries retain the same email idempotency key and CRM request ID', async (
   await invoke(handler);
   await invoke(handler);
   await invoke(handler, { ...base, requestId: 'f2ca977f-168d-4115-8f18-91370c1ef746', message: 'A corrected message' });
-  const emailCalls = calls.filter((call) => call.url === 'https://api.resend.com/emails');
+  const emailCalls = calls.filter((call) => call.url === 'https://api.resend.com/emails' && call.body.to.includes(RECIPIENT));
   const crmCalls = calls.filter((call) => call.url === crmUrl);
   assert.equal(emailCalls[0].headers['Idempotency-Key'], emailCalls[1].headers['Idempotency-Key']);
   assert.deepEqual(emailCalls[0].body, emailCalls[1].body);
@@ -361,10 +361,10 @@ test('limits rapid repeated attempts and allows requests after the window expire
   const { handler, calls } = fixture({ now: () => time });
   for (let i = 0; i < 10; i++) assert.equal((await invoke(handler)).statusCode, 200);
   assert.equal((await invoke(handler)).statusCode, 429);
-  assert.equal(calls.length, 20);
+  assert.equal(calls.length, 30);
   time = 600_001;
   assert.equal((await invoke(handler)).statusCode, 200);
-  assert.equal(calls.length, 22);
+  assert.equal(calls.length, 33);
 });
 
 test('classifies attribution conservatively without inventing organic or campaign data', () => {

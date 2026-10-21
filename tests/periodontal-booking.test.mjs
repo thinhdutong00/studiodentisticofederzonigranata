@@ -50,7 +50,7 @@ test('periodontal quiz delivers every clinical answer with correct labels and ke
   const res = await invoke(f.handler, answers);
   assert.equal(res.statusCode, 200);
   assert.deepEqual(res.body, { ok: true, requestId: base.requestId });
-  assert.equal(f.calls.length, 2);
+  assert.equal(f.calls.length, 3);
   const email = f.calls.find(call => call.url === 'https://api.resend.com/emails').body;
   const crm = f.calls.find(call => call.url === crmUrl).body;
   assert.deepEqual(email.to, [RECIPIENT]);
