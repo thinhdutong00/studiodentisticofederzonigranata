@@ -218,8 +218,8 @@ export const periodontalLandingAssets = {
     height: 800,
   },
   studio: {
-    src: '/assets/optimized/parodontologia-studio-federzoni-granata-720.webp',
-    alt: 'Dottor Stefano Granata e dottoressa Chiara Federzoni nello studio dentistico',
+    src: '/assets/optimized/parodontologia-cura-paziente-720.webp',
+    alt: 'Professionista dello Studio Federzoni Granata durante una visita odontoiatrica',
     width: 720,
     height: 480,
   },

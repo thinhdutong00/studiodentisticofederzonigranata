@@ -1,13 +1,15 @@
 /* Desktop adaptation of the approved main landing concept. Other pages keep their layouts. */
 @media (min-width: 721px) {
   .ortho-landing-main.ortho-unified {
+    --ortho-desktop-max-width: 1320px;
     --ortho-desktop-gutter: clamp(32px, 4vw, 80px);
-    --ortho-desktop-width: min(1320px, calc(100% - var(--ortho-desktop-gutter) * 2));
+    --ortho-desktop-width: min(var(--ortho-desktop-max-width), calc(100% - var(--ortho-desktop-gutter) * 2));
     padding-bottom: 0;
   }
   .ortho-landing-main.ortho-unified main { background: var(--surface-white); }
-  .ortho-landing-main.ortho-unified main :is(.ortho-shell, .landing-shell) { width: var(--ortho-desktop-width); max-width: 1320px; margin-inline: auto; }
-  .ortho-landing-main.ortho-unified .landing-header-inner { width: calc(100% - clamp(28px, 3vw, 56px) * 2); max-width: none; margin-inline: auto; }
+  /* Header, sections, footer and fixed CTA use the hero's outer content grid. */
+  .ortho-landing-main.ortho-unified main :is(.ortho-shell, .landing-shell) { width: var(--ortho-desktop-width); max-width: var(--ortho-desktop-max-width); margin-inline: auto; }
+  body.ortho-landing-main.ortho-unified > .landing-header .landing-header-inner { width: var(--ortho-desktop-width); max-width: var(--ortho-desktop-max-width); margin-inline: auto; }
   .ortho-landing-main.ortho-unified .ortho-section { padding-block: 96px; }
   .ortho-landing-main.ortho-unified #contenuto :is(.ortho-section-heading h2, .ortho-smile-preview h2, .ortho-age-section h2, .patient-reviews-intro h2, .ortho-consultation-heading h2) {
     margin-top: 0; font-family: Inter, sans-serif; font-size: clamp(36px, 3.35vw, 48px); font-weight: 500; line-height: 1.14; letter-spacing: -.2px; text-wrap: balance;
@@ -83,7 +85,7 @@
   .ortho-landing-main.ortho-unified .ortho-benefits-desktop { display: none; }
   .ortho-landing-main.ortho-unified .ortho-first-visit-mobile { display: inline; }
   .ortho-landing-main.ortho-unified .ortho-functional-benefits { background: var(--brand-primary-dark); text-align: center; }
-  .ortho-landing-main.ortho-unified .ortho-functional-benefits > .ortho-shell { display: flex; flex-direction: column; align-items: center; max-width: 1180px; }
+  .ortho-landing-main.ortho-unified .ortho-functional-benefits > .ortho-shell { display: flex; flex-direction: column; align-items: center; }
   .ortho-landing-main.ortho-unified .ortho-functional-benefits .ortho-intro-heading { width: 100%; justify-items: center; gap: 22px; text-align: center; }
   .ortho-landing-main.ortho-unified .ortho-functional-benefits .ortho-eyebrow { color: var(--brand-blue); }
   .ortho-landing-main.ortho-unified .ortho-functional-benefits .ortho-intro-heading h2 { max-width: 24ch; margin-inline: auto; color: var(--surface-white); }
@@ -103,7 +105,7 @@
   .ortho-landing-main.ortho-unified .ortho-benefits-cta:hover { background: var(--soft-blue-bg); }
 
   .ortho-landing-main.ortho-unified .ortho-experience-mobile { display: block; padding: 96px 0 0; background: var(--surface-white); }
-  .ortho-landing-main.ortho-unified .ortho-experience-mobile > .ortho-shell { display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; max-width: 1040px; gap: 20px; text-align: center; }
+  .ortho-landing-main.ortho-unified .ortho-experience-mobile > .ortho-shell { display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 20px; text-align: center; }
   .ortho-landing-main.ortho-unified .ortho-experience-over { grid-column: 1; margin: 0; color: var(--brand-cta); font-size: 16px; line-height: 1.4; }
   .ortho-landing-main.ortho-unified .ortho-experience-years { grid-column: 1; display: flex; align-items: center; justify-content: center; gap: 24px; width: 100%; max-width: 660px; margin: 0 auto; color: var(--brand-primary-dark); font-size: clamp(28px, 2.4vw, 34px); font-weight: 400; line-height: 1.35; text-align: left; }
   .ortho-landing-main.ortho-unified .ortho-experience-number { flex: 0 0 auto; float: none; margin: 0; color: var(--brand-primary-dark); font-size: clamp(112px, 9.7vw, 144px); font-weight: 500; line-height: .92; }
@@ -130,13 +132,13 @@
   .ortho-landing-main.ortho-unified :is(.ortho-smile-page-corner, .ortho-smile-track):focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 5px; }
   .ortho-landing-main.ortho-unified #il-tuo-obiettivo { padding: 24px 0 88px; }
   .ortho-landing-main.ortho-unified #il-tuo-obiettivo .orthodontic-objectives-layout { display: none; }
-  .ortho-landing-main.ortho-unified #il-tuo-obiettivo .orthodontic-objectives-shell { width: min(1120px, var(--ortho-desktop-width)); margin-inline: auto; }
+  .ortho-landing-main.ortho-unified #il-tuo-obiettivo .orthodontic-objectives-shell { width: var(--ortho-desktop-width); max-width: var(--ortho-desktop-max-width); margin-inline: auto; }
   .ortho-landing-main.ortho-unified .orthodontic-questionnaire-banner { grid-template-columns: 104px minmax(0, 1fr) auto; gap: 32px; margin-top: 0; padding: 36px 40px; border-radius: 24px; background: var(--brand-cta); }
   .ortho-landing-main.ortho-unified .ortho-questionnaire-aligner-icon { display: block; width: 104px; height: auto; object-fit: contain; }
   .ortho-landing-main.ortho-unified .orthodontic-questionnaire-banner > p { font-size: 24px; font-weight: 500; line-height: 1.3; }
   .ortho-landing-main.ortho-unified .orthodontic-questionnaire-banner > button { min-height: 54px; padding: 16px 24px; border-radius: 999px; font-size: 16px; white-space: nowrap; }
 
-  .ortho-landing-main.ortho-unified .ortho-age-section { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 96px; padding: 88px max(var(--ortho-desktop-gutter), calc((100vw - 1320px) / 2)); background: var(--brand-primary-dark); color: var(--surface-white); }
+  .ortho-landing-main.ortho-unified .ortho-age-section { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 96px; padding: 88px max(var(--ortho-desktop-gutter), calc((100% - var(--ortho-desktop-max-width)) / 2)); background: var(--brand-primary-dark); color: var(--surface-white); }
   .ortho-landing-main.ortho-unified .ortho-age-section h2 { grid-column: 1; align-self: end; max-width: 13ch; margin-bottom: 24px; color: var(--surface-white); }
   .ortho-landing-main.ortho-unified .ortho-age-section h2 strong { display: block; margin-bottom: 6px; font-size: clamp(48px, 4.5vw, 64px); font-weight: 700; line-height: 1.05; }
   .ortho-landing-main.ortho-unified .ortho-age-intro { grid-column: 1; align-self: start; max-width: 44ch; margin: 0; color: var(--soft-blue-bg); font-size: 18px; line-height: 1.5; }
@@ -150,7 +152,7 @@
   .ortho-landing-main.ortho-unified .ortho-age-braces { display: none; }
 
   .ortho-landing-main.ortho-unified #percorso-ortodontico { background: var(--surface-white); }
-  .ortho-landing-main.ortho-unified #percorso-ortodontico > .ortho-shell { display: grid; grid-template-columns: minmax(0, 1fr); justify-items: start; max-width: 940px; gap: 28px; text-align: left; }
+  .ortho-landing-main.ortho-unified #percorso-ortodontico > .ortho-shell { display: grid; grid-template-columns: minmax(0, 1fr); justify-items: start; gap: 28px; padding-inline: 0; text-align: left; }
   .ortho-landing-main.ortho-unified #percorso-ortodontico .ortho-intro-heading { width: 100%; justify-items: start; }
   .ortho-landing-main.ortho-unified #percorso-ortodontico :is(.ortho-eyebrow, .ortho-intro-lead, .ortho-personalized-steps) { display: none; }
   .ortho-landing-main.ortho-unified .ortho-personalized-title-mobile { display: inline; }
@@ -166,7 +168,7 @@
   /* Reviews retain the light blue surface, white Google silhouette and four-second carousel. */
   .ortho-landing-main.ortho-unified #recensioni { position: relative; isolation: isolate; overflow: clip; padding: 88px 0; background: var(--soft-blue-bg); color: var(--brand-primary-dark); }
   .ortho-landing-main.ortho-unified #recensioni::before { position: absolute; z-index: 0; top: 0; right: 0; height: 100%; aspect-ratio: 488 / 496; background: url('/assets/decorations/google-g-white.svg') center / contain no-repeat; transform: translateX(33.333333%); content: ''; pointer-events: none; }
-  .ortho-landing-main.ortho-unified #recensioni > .landing-shell { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 24px; max-width: 1040px; text-align: center; }
+  .ortho-landing-main.ortho-unified #recensioni > .landing-shell { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 24px; text-align: center; }
   .ortho-landing-main.ortho-unified .patient-reviews-heading { grid-column: 1; grid-row: 1; display: block; width: 100%; }
   .ortho-landing-main.ortho-unified .ortho-review-title-mobile { display: inline; }
   .ortho-landing-main.ortho-unified #recensioni .patient-reviews-intro h2 { max-width: 24ch; margin: 0 auto 8px; color: var(--brand-primary-dark); text-align: center; }
@@ -190,7 +192,8 @@
   .ortho-landing-main.ortho-unified .patient-review-controls button:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 4px; }
 
   .ortho-landing-main.ortho-unified .ortho-faq { background: var(--surface-white); }
-  .ortho-landing-main.ortho-unified .ortho-faq .ortho-split { width: min(960px, var(--ortho-desktop-width)); max-width: 960px; grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .ortho-landing-main.ortho-unified .ortho-faq .ortho-split { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .ortho-landing-main.ortho-unified .ortho-faq .ortho-split > * { width: 100%; max-width: 960px; margin-inline: auto; }
   .ortho-landing-main.ortho-unified .ortho-faq .ortho-section-heading { text-align: center; }
   .ortho-landing-main.ortho-unified .ortho-faq .ortho-section-heading > p:not(.ortho-eyebrow) { max-width: 60ch; margin-inline: auto; }
   .ortho-landing-main.ortho-unified .ortho-faq .ortho-eyebrow { color: var(--text-dark); }
@@ -215,7 +218,7 @@
 
   .ortho-landing-main.ortho-unified #ortho-final { padding: 96px 0; background: var(--brand-primary-dark); }
   .ortho-landing-main.ortho-unified #ortho-final::after { display: none; }
-  .ortho-landing-main.ortho-unified #ortho-final > .ortho-consultation-mobile { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 100px; width: var(--ortho-desktop-width); max-width: 1320px; margin-inline: auto; }
+  .ortho-landing-main.ortho-unified #ortho-final > .ortho-consultation-mobile { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 100px; width: var(--ortho-desktop-width); max-width: var(--ortho-desktop-max-width); margin-inline: auto; }
   .ortho-landing-main.ortho-unified .ortho-consultation-heading { margin: 0; text-align: left; }
   .ortho-landing-main.ortho-unified .ortho-consultation-symbol { display: block; width: 80px; height: 80px; margin: 0 0 32px; filter: brightness(0) invert(1); object-fit: contain; }
   .ortho-landing-main.ortho-unified #ortho-final .ortho-consultation-heading h2 { max-width: 18ch; margin: 0; color: var(--surface-white); }
@@ -242,7 +245,7 @@
   /* The main landing footer keeps the focused navigation and Google rating. */
   .ortho-landing-main.ortho-unified #footer { padding-top: 72px; }
   .ortho-landing-main.ortho-unified #footer .footer-shell,
-  .ortho-landing-main.ortho-unified #footer .footer-bottom-inner { width: var(--ortho-desktop-width); max-width: 1320px; margin-inline: auto; }
+  .ortho-landing-main.ortho-unified #footer .footer-bottom-inner { width: var(--ortho-desktop-width); max-width: var(--ortho-desktop-max-width); margin-inline: auto; }
   .ortho-landing-main.ortho-unified #footer .footer-desktop,
   .ortho-landing-main.ortho-unified #footer .footer-mobile-section[aria-labelledby="footer-mobile-contacts-title"],
   .ortho-landing-main.ortho-unified #footer .footer-mobile-section[aria-labelledby="footer-mobile-social-title"],
