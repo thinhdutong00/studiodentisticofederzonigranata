@@ -1,0 +1,201 @@
+---
+import PeriodontalRecognitionIcon from './PeriodontalRecognitionIcon.astro';
+
+const situations = [
+  {
+    title: 'Il sangue appena svegli',
+    description: 'Ti svegli, vai in bagno e sputi nel lavandino. Noti del sangue, ma non hai ancora nemmeno lavato i denti.',
+    icon: 'morning',
+  },
+  {
+    title: 'La mela',
+    description: 'Hai mai morso una mela e notato una piccola traccia di sangue proprio dove avevi dato il morso?',
+    icon: 'apple',
+  },
+  {
+    title: 'Lo spazzolino',
+    description: 'Finisci di lavarti i denti, sciacqui la bocca e vedi l’acqua nel lavandino colorarsi di rosa.',
+    icon: 'brush',
+  },
+  {
+    title: 'Il filo interdentale',
+    description: 'Ti è mai capitato di passare il filo interdentale e ritrovarlo macchiato di sangue?',
+    icon: 'floss',
+  },
+  {
+    title: 'Il sapore al mattino',
+    description: 'Appena sveglio, senti uno strano sapore metallico in bocca, ancora prima di fare colazione?',
+    icon: 'taste',
+  },
+  {
+    title: 'Il sorriso davanti allo specchio',
+    description: 'Guardandoti allo specchio, hai notato che alcuni denti sembrano più lunghi rispetto a qualche tempo fa?',
+    icon: 'mirror',
+  },
+  {
+    title: 'L’alito durante la giornata',
+    description: 'Ti lavi accuratamente i denti, ma dopo poco hai di nuovo la sensazione di avere l’alito pesante?',
+    icon: 'breath',
+  },
+  {
+    title: 'Le gengive gonfie',
+    description: 'Ti è mai capitato di passare la lingua sulle gengive e sentirle gonfie o particolarmente sensibili?',
+    icon: 'swelling',
+  },
+  {
+    title: 'La paura di usare il filo interdentale',
+    description: 'Hai iniziato a evitare il filo interdentale perché ogni volta che lo passi ti sanguinano le gengive?',
+    icon: 'avoid-floss',
+  },
+  {
+    title: 'Il sangue che ritorna',
+    description: 'Ti lavi i denti con più delicatezza del solito, ma continui a notare sangue quando risciacqui la bocca?',
+    icon: 'recurring',
+  },
+];
+---
+
+<section class="periodontal-recognition" id="riconoscere-i-segnali" aria-labelledby="periodontal-recognition-title">
+  <div class="ortho-shell periodontal-recognition-shell">
+    <div class="periodontal-recognition-intro">
+      <h2 id="periodontal-recognition-title">Quando è il momento di una <strong>visita parodontale?</strong></h2>
+      <p>Ci sono situazioni di ogni giorno che meritano attenzione. Scopri se ti riconosci in ciò che succede quando ti svegli, mangi o ti lavi i denti.</p>
+    </div>
+    <button class="periodontal-recognition-trigger" type="button" aria-haspopup="dialog" aria-controls="periodontal-recognition-sheet" aria-expanded="false" data-periodontal-recognition-open>
+      <span>Quando ti riconosci in questi sintomi</span>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 12h12m-5-5 5 5-5 5" /></svg>
+    </button>
+  </div>
+</section>
+
+<dialog class="periodontal-recognition-sheet" id="periodontal-recognition-sheet" aria-labelledby="periodontal-recognition-sheet-title" aria-describedby="periodontal-recognition-sheet-description" data-periodontal-recognition-sheet>
+  <header class="periodontal-recognition-heading">
+    <h2 id="periodontal-recognition-sheet-title" tabindex="-1">Ti riconosci in una di queste situazioni?</h2>
+    <p id="periodontal-recognition-sheet-description">Piccoli segnali nella vita di tutti i giorni, da raccontare durante la visita.</p>
+    <button class="periodontal-recognition-close" type="button" aria-label="Chiudi le situazioni da riconoscere" data-periodontal-recognition-close>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6" /></svg>
+    </button>
+  </header>
+  <div class="periodontal-recognition-body" tabindex="0" role="region" aria-label="Le dieci situazioni quotidiane">
+    <ul class="periodontal-recognition-list" role="list">
+      {situations.map(situation => <li>
+        <span class="periodontal-recognition-icon" aria-hidden="true"><PeriodontalRecognitionIcon name={situation.icon} /></span>
+        <div>
+          <h3>{situation.title}</h3>
+          <p>{situation.description}</p>
+        </div>
+      </li>)}
+    </ul>
+  </div>
+  <footer class="periodontal-recognition-actions">
+    <a class="periodontal-recognition-booking" href="#ortho-final" data-periodontal-recognition-booking>
+      Prenota una visita parodontale
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12" /></svg>
+    </a>
+  </footer>
+</dialog>
+
+<script>
+  const recognitionTrigger = document.querySelector<HTMLButtonElement>('[data-periodontal-recognition-open]');
+  const recognitionDialog = document.querySelector<HTMLDialogElement>('[data-periodontal-recognition-sheet]');
+
+  if (recognitionTrigger && recognitionDialog) {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let previousOverflow = '';
+    let visitRequested = false;
+
+    recognitionTrigger.addEventListener('click', () => {
+      if (recognitionDialog.open) return;
+      previousOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      visitRequested = false;
+      recognitionTrigger.setAttribute('aria-expanded', 'true');
+      recognitionDialog.showModal();
+      const scrollableBody = recognitionDialog.querySelector<HTMLElement>('.periodontal-recognition-body');
+      if (scrollableBody) scrollableBody.scrollTop = 0;
+      recognitionDialog.querySelector<HTMLElement>('#periodontal-recognition-sheet-title')?.focus({ preventScroll: true });
+    });
+
+    recognitionDialog.querySelector('[data-periodontal-recognition-close]')?.addEventListener('click', () => recognitionDialog.close());
+    recognitionDialog.addEventListener('click', event => {
+      const bounds = recognitionDialog.getBoundingClientRect();
+      if (event.target === recognitionDialog && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) recognitionDialog.close();
+    });
+    recognitionDialog.querySelector('[data-periodontal-recognition-booking]')?.addEventListener('click', event => {
+      event.preventDefault();
+      visitRequested = true;
+      recognitionDialog.close();
+    });
+    recognitionDialog.addEventListener('close', () => {
+      document.body.style.overflow = previousOverflow;
+      recognitionTrigger.setAttribute('aria-expanded', 'false');
+      if (visitRequested) {
+        const destination = document.querySelector<HTMLElement>('#ortho-final');
+        destination?.setAttribute('tabindex', '-1');
+        destination?.focus({ preventScroll: true });
+        destination?.scrollIntoView({ behavior: reducedMotion.matches ? 'instant' : 'smooth', block: 'start' });
+      } else {
+        recognitionTrigger.focus({ preventScroll: true });
+      }
+      visitRequested = false;
+    });
+  }
+</script>
+
+<style>
+  .periodontal-recognition { padding: 56px 0; background: var(--soft-blue-bg); color: var(--brand-primary-dark); }
+  .periodontal-recognition-shell { display: grid; align-items: center; gap: 28px; }
+  .periodontal-recognition-intro h2 { max-width: 28ch; margin: 0; font-family: Inter, sans-serif; font-size: 30px; font-weight: 500; line-height: 1.16; letter-spacing: -.16px; text-wrap: balance; }
+  .periodontal-recognition-intro h2 strong { font-weight: 700; }
+  .periodontal-recognition-intro p { max-width: 60ch; margin: 20px 0 0; color: var(--muted-text); font-size: 17px; font-weight: 400; line-height: 1.5; }
+  .periodontal-recognition-trigger, .periodontal-recognition-booking { display: inline-flex; min-height: 54px; align-items: center; justify-content: center; gap: 16px; padding: 18px 22px; border: 0; border-radius: 10px; background: var(--brand-cta); color: var(--surface-white); font: inherit; font-size: 16px; font-weight: 500; line-height: 1.3; letter-spacing: normal; text-align: center; text-decoration: none; text-transform: uppercase; cursor: pointer; }
+  .periodontal-recognition-trigger { justify-self: start; max-width: 100%; }
+  .periodontal-recognition-trigger svg, .periodontal-recognition-booking svg { flex: 0 0 22px; width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .periodontal-recognition-trigger:hover, .periodontal-recognition-booking:hover { background: var(--brand-cta-hover); }
+  .periodontal-recognition-trigger:focus-visible, .periodontal-recognition-sheet :is(button, a):focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 4px; }
+  .periodontal-recognition-sheet { position: fixed; inset: auto 0 0; width: 100%; max-width: 920px; max-height: 90svh; margin: 0 auto; padding: 0; overflow: hidden; border: 0; border-radius: 28px 28px 0 0; background: var(--surface-white); color: var(--brand-primary-dark); font-family: Inter, sans-serif; }
+  .periodontal-recognition-sheet::backdrop { background: rgba(16, 40, 61, .48); backdrop-filter: blur(3px); }
+  .periodontal-recognition-sheet[open] { display: flex; flex-direction: column; animation: periodontal-recognition-in 260ms cubic-bezier(.22, 1, .36, 1) both; }
+  .periodontal-recognition-heading { position: relative; flex: 0 0 auto; padding: 28px 68px 22px 24px; border-bottom: 1px solid var(--border); }
+  .periodontal-recognition-heading h2 { margin: 0; font-size: 24px; font-weight: 500; line-height: 1.2; letter-spacing: -.16px; text-wrap: balance; }
+  .periodontal-recognition-heading h2:focus { outline: none; }
+  .periodontal-recognition-heading p { margin: 12px 0 0; color: var(--muted-text); font-size: 14px; font-weight: 400; line-height: 1.45; }
+  .periodontal-recognition-close { position: absolute; top: 16px; right: 16px; display: grid; place-items: center; width: 40px; height: 40px; padding: 10px; border: 1px solid var(--border); border-radius: 50%; background: var(--surface-white); color: var(--muted-text); cursor: pointer; }
+  .periodontal-recognition-close:hover { background: var(--soft-blue-bg); }
+  .periodontal-recognition-close svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
+  .periodontal-recognition-body { flex: 1 1 auto; min-height: 0; padding: 4px 24px 16px; overflow-y: auto; overscroll-behavior-y: contain; }
+  .periodontal-recognition-body:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: -3px; }
+  .periodontal-recognition-list { display: grid; margin: 0; padding: 0; list-style: none; }
+  .periodontal-recognition-list li { display: grid; grid-template-columns: 44px minmax(0, 1fr); align-items: start; gap: 16px; min-width: 0; padding: 22px 0; border-bottom: 1px solid var(--border); }
+  .periodontal-recognition-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: var(--soft-blue-bg); color: var(--brand-cta); }
+  .periodontal-recognition-icon :global(svg) { display: block; width: 36px; height: 36px; }
+  .periodontal-recognition-list h3 { margin: 0; font-size: 17px; font-weight: 600; line-height: 1.3; letter-spacing: -.16px; }
+  .periodontal-recognition-list p { margin: 9px 0 0; color: var(--muted-text); font-size: 16px; font-weight: 400; line-height: 1.5; letter-spacing: -.16px; }
+  .periodontal-recognition-actions { flex: 0 0 auto; padding: 16px 24px max(12px, env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--border); background: var(--surface-white); }
+  .periodontal-recognition-booking { width: 100%; }
+  :global(.periodontal-landing:has(.periodontal-recognition-sheet[open]) .treatment-sticky-cta) { visibility: hidden; pointer-events: none; }
+  @media (min-width: 721px) {
+    .periodontal-recognition { padding-block: 72px; }
+    .periodontal-recognition-intro h2 { font-size: clamp(36px, 3.1vw, 44px); letter-spacing: -.2px; }
+    .periodontal-recognition-intro p { font-size: 18px; }
+    .periodontal-recognition-sheet { inset: 0; width: calc(100% - 64px); max-height: min(86svh, 900px); margin: auto; border-radius: 28px; }
+    .periodontal-recognition-heading { padding: 30px 76px 24px 32px; }
+    .periodontal-recognition-heading h2 { font-size: 28px; letter-spacing: -.2px; }
+    .periodontal-recognition-heading p { font-size: 15px; }
+    .periodontal-recognition-body { padding-inline: 32px; }
+    .periodontal-recognition-list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; }
+    .periodontal-recognition-list :is(h3, p) { letter-spacing: -.2px; }
+    .periodontal-recognition-actions { padding: 20px 32px 24px; }
+    .periodontal-recognition-booking { display: flex; width: min(100%, 420px); margin-inline: auto; }
+  }
+  @media (min-width: 1101px) {
+    .periodontal-recognition-shell { grid-template-columns: minmax(0, 1fr) minmax(280px, 380px); gap: 64px; }
+  }
+  @media (max-width: 720px) {
+    .periodontal-recognition-trigger { width: 100%; }
+  }
+  @keyframes periodontal-recognition-in { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+  @media (prefers-reduced-motion: reduce) {
+    .periodontal-recognition-sheet[open] { animation: none; }
+  }
+</style>
