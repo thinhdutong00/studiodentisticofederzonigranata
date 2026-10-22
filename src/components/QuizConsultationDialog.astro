@@ -79,12 +79,11 @@ const firstQuestions = isOrtho ? [
         </div>
         <p class="cq-field-note" data-cq-caption>{orthoRecommendation.caseCaption}</p>
       </> : <>
-        <figure class="cq-assessment" data-cq-assessment><img src={periodontalRecommendation.image.src} alt={periodontalRecommendation.image.alt} width={periodontalRecommendation.image.width} height={periodontalRecommendation.image.height} loading="lazy" decoding="async" /></figure>
-        <div class="cq-clinical-case" role="group" aria-label="Esempio dello studio: prima e dopo un trattamento delle recessioni gengivali" hidden data-cq-case>
+        <div class="cq-clinical-case" role="group" aria-label="Esempio dello studio: prima e dopo un trattamento delle recessioni gengivali" data-cq-case>
           <figure><img src={recessionExample.before?.src} alt={recessionExample.before?.alt} width="600" height="352" loading="lazy" decoding="async" data-cq-before /><figcaption>Prima</figcaption></figure>
           <figure><img src={recessionExample.after?.src} alt={recessionExample.after?.alt} width="600" height="352" loading="lazy" decoding="async" data-cq-after /><figcaption>Dopo</figcaption></figure>
         </div>
-        <p class="cq-field-note" data-cq-caption>{periodontalRecommendation.visualCaption}</p>
+        <p class="cq-field-note" data-cq-caption>{recessionExample.visualCaption}</p>
       </>}
     </section>
 

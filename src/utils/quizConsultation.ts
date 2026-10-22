@@ -50,12 +50,11 @@ export function bindQuizConsultation() {
       ? getOrthodonticQuizRecommendation({ problem: value('problem'), occlusion: value('occlusion'), initialReason: value('initialReason') })
       : getPeriodontalQuizRecommendation({ periodontalObjective: value('periodontalObjective'), periodontalSymptom: value('periodontalSymptom'), symptomDuration: value('symptomDuration') });
     panel.querySelector<HTMLElement>('[data-cq-recommendation-text]')!.textContent = recommendation.text;
-    panel.querySelector<HTMLElement>('[data-cq-caption]')!.textContent = isOrtho ? recommendation.caseCaption : recommendation.visualCaption;
     if (!isOrtho) {
       panel.querySelector<HTMLElement>('[data-cq-recommendation-title]')!.textContent = recommendation.title;
-      panel.querySelector<HTMLElement>('[data-cq-assessment]')!.hidden = recommendation.visualKind !== 'assessment';
-      panel.querySelector<HTMLElement>('[data-cq-case]')!.hidden = recommendation.visualKind !== 'recession-case';
+      return;
     }
+    panel.querySelector<HTMLElement>('[data-cq-caption]')!.textContent = recommendation.caseCaption;
     (['before', 'after'] as const).forEach(phase => {
       const photo = recommendation[phase];
       const image = panel.querySelector<HTMLImageElement>(`[data-cq-${phase}]`);
