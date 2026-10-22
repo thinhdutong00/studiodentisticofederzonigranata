@@ -10,11 +10,12 @@ import PeriodontalCasesCarousel from '../components/PeriodontalCasesCarousel.ast
 import PeriodontalPathsSection from '../components/PeriodontalPathsSection.astro';
 import PeriodontalRecognitionSection from '../components/PeriodontalRecognitionSection.astro';
 import LandingBookingCta from '../components/LandingBookingCta.astro';
+import LandingTreatmentHero from '../components/LandingTreatmentHero.astro';
 import LandingBookingDialog from '../components/LandingBookingDialog.astro';
 import PeriodontalLandingHeader from '../components/PeriodontalLandingHeader.astro';
 import TreatmentStickyCta from '../components/TreatmentStickyCta.astro';
 import { featuredPatientReviews } from '../data/reviews';
-import { periodontalHero, periodontalFaqs, periodontalProfessional, periodontalLandingAssets } from '../data/periodontalLanding';
+import { periodontalFaqs, periodontalProfessional, periodontalLandingAssets } from '../data/periodontalLanding';
 import { site } from '../data/site';
 import '../styles/inter-font.css';
 import '../styles/visit-landing.css';
@@ -27,7 +28,7 @@ const title = 'Visita parodontale a Modena e Reggio Emilia | Federzoni Granata';
 const description =
   'Gengive che sanguinano, recessioni o denti mobili? Scopri il percorso di valutazione, terapia e mantenimento parodontale a Modena e Reggio Emilia.';
 const heroImage = periodontalLandingAssets.hero;
-const heroImagePath = heroImage.src;
+const heroImagePath = '/assets/optimized/parodontologia-granata-hero-1920.webp';
 const socialPreviewImage = new URL('/assets/original/2021/02/HOME.jpg', canonical).toString();
 
 const reviewAuthors = new Set(['Francesca Tassinari', 'Rosa Castelluccio', 'Umberto Salatino']);
@@ -148,7 +149,8 @@ const structuredData = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <link rel="preload" as="font" href="/fonts/inter/inter-latin.woff2" type="font/woff2" crossorigin />
-    <link rel="preload" as="image" href={heroImagePath} type="image/avif" fetchpriority="high" />
+    <link rel="preload" as="image" href={heroImagePath} type="image/webp" media="(min-width: 721px)" fetchpriority="high" />
+    <link rel="preload" as="image" href="/assets/optimized/parodontologia-granata-hero-720.webp" type="image/webp" media="(max-width: 720px)" fetchpriority="high" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="noindex,nofollow,noarchive" />
@@ -180,32 +182,7 @@ const structuredData = {
 
     <a class="ortho-skip-link" href="#contenuto">Vai al contenuto</a>
     <main id="contenuto" tabindex="-1">
-      <section class="landing-hero ortho-hero ortho-hero-overlay" aria-labelledby="landing-title" data-treatment-sticky-hero>
-        <div class="landing-shell landing-hero-shell">
-          <div class="landing-hero-stage">
-            <div class="ortho-hero-photo-frame">
-              <picture>
-                <source srcset={heroImagePath} type="image/avif" />
-                <img class="landing-hero-photo" src="/assets/original/2021/02/HOME.jpg" alt={heroImage.alt} width={heroImage.width} height={heroImage.height} loading="eager" decoding="async" fetchpriority="high" />
-              </picture>
-            </div>
-            <div class="landing-hero-panel ortho-hero-copy">
-              <div class="ortho-hero-intro">
-                <p class="landing-hero-eyebrow ortho-hero-eyebrow-mobile">{periodontalHero.eyebrow}</p>
-                <h1 id="landing-title">
-                  <span class="ortho-hero-title-mobile"><span class="ortho-hero-title-context">{periodontalHero.titleLead}</span> <strong>{periodontalHero.titleEmphasis}</strong></span>
-                </h1>
-                <p class="ortho-hero-lead">
-                  <span class="ortho-hero-lead-mobile">
-                    {periodontalHero.descriptionLead}<strong>{periodontalHero.descriptionEmphasis}</strong>{periodontalHero.descriptionTail}
-                  </span>
-                </p>
-              </div>
-              <LandingBookingCta treatment="parodontologia" variant="hero" />
-            </div>
-          </div>
-        </div>
-      </section>
+      <LandingTreatmentHero treatment="parodontologia" reviewInitials={reviews.map(review => review.author.split(' ').map(part => part[0]).slice(0, 2).join(''))} />
 
       <PeriodontalRecognitionSection />
 
@@ -222,11 +199,16 @@ const structuredData = {
           </section>
           <PeriodontalCasesCarousel />
           <PeriodontalQuiz consultationFlow>
-            <svg slot="questionnaire-icon" class="ortho-questionnaire-aligner-icon periodontal-questionnaire-icon" viewBox="0 0 96 72" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M28 10c-8-4-16 1-16 10 0 12 7 22 9 32 1 6 3 10 6 10 4 0 4-16 8-16s4 16 8 16c3 0 5-4 6-10 2-10 9-20 9-32 0-9-8-14-16-10-5 2-9 2-14 0Z" fill="white" fill-opacity=".08" />
-              <path d="M12 34c7-3 10 7 23 7s16-10 23-7M27 17c4 2 7 3 11 1" />
-              <path d="m62 41 8 8 16-19" stroke-width="3" />
-              <circle cx="73" cy="40" r="20" stroke-opacity=".45" />
+            <svg slot="questionnaire-icon" class="ortho-questionnaire-aligner-icon periodontal-questionnaire-icon" viewBox="0 0 112 88" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="6" y="6" width="86" height="72" rx="22" fill="currentColor" fill-opacity=".06" stroke-opacity=".18" />
+              <path d="M19 46V31c0-7 5-11 11-9l3 1M65 23l3-1c6-2 11 2 11 9v15" />
+              <path d="M33 46V27c0-7 5-12 11-10l3 1c2 1 4 1 6 0l3-1c6-2 11 3 11 10v19" fill="currentColor" fill-opacity=".07" />
+              <path d="M42 25c4 2 10 2 14 0" stroke-opacity=".65" />
+              <path d="M14 48c6-7 15-7 21 0 6-7 15-7 21 0 6-7 15-7 21 0v16H14Z" fill="currentColor" fill-opacity=".14" />
+              <path d="M22 57h34" stroke-opacity=".4" />
+              <path d="m95 68 10 10" stroke-width="5" />
+              <circle cx="82" cy="55" r="18" fill="var(--brand-cta)" stroke-width="2.8" />
+              <path d="M76 56v-8c0-4 3-7 6-6 3-1 6 2 6 6v8M71 61c4-4 8-4 11 0 3-4 7-4 11 0" stroke-width="2" />
             </svg>
           </PeriodontalQuiz>
         </Fragment>
@@ -486,7 +468,7 @@ const structuredData = {
     :global(.ortho-landing-main .patient-reviews-rating .patient-reviews-rating-caption) { margin-top: 8px; font-size: 11px; }
     :global(.ortho-landing-main .patient-reviews-rating .patient-reviews-link) { margin-top: 12px; }
 
-    :global(.ortho-landing-main #contenuto :is(#landing-title, #ortho-faq-title)) {
+    :global(.ortho-landing-main #contenuto #ortho-faq-title) {
       color: var(--brand-cta);
     }
 
@@ -608,6 +590,14 @@ const structuredData = {
     :global(.ortho-landing-main #ortho-final .ortho-consultation-heading h2),
     :global(.ortho-landing-main #ortho-final .ortho-consultation-heading p) {
       color: var(--surface-white);
+    }
+
+    :global(.periodontal-landing #ortho-final .ortho-consultation-heading) {
+      text-align: center;
+    }
+
+    :global(.periodontal-landing #ortho-final .ortho-consultation-symbol) {
+      margin-inline: auto;
     }
 
     :global(.ortho-landing-main #ortho-final .ortho-consultation-surface) {

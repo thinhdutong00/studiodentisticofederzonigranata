@@ -20,8 +20,14 @@ export function bindQuizConsultation() {
   let current = 0;
   let returnFocus: HTMLElement | null = null;
   let previousOverflow = '';
+  let autoAdvance: ReturnType<typeof setTimeout> | undefined;
   const busy = () => form.hasAttribute('aria-busy');
   const value = (name: string) => String(new FormData(form).get(name) || '');
+
+  function clearAutoAdvance() {
+    if (autoAdvance !== undefined) clearTimeout(autoAdvance);
+    autoAdvance = undefined;
+  }
 
   function valid(index: number) {
     const fields = Array.from(steps[index].querySelectorAll<HTMLInputElement>('input'));
@@ -36,7 +42,6 @@ export function bindQuizConsultation() {
     next.hidden = last;
     next.disabled = busy() || !valid(current);
     submit.hidden = !last;
-    form.querySelector<HTMLElement>('[data-cq-enter]')!.hidden = last;
   }
   function updateRecommendation() {
     const panel = steps[current];
@@ -82,6 +87,7 @@ export function bindQuizConsultation() {
     });
   }
   function showStep(index: number, focus = true) {
+    clearAutoAdvance();
     current = Math.max(0, Math.min(index, steps.length - 1));
     steps.forEach((step, i) => { step.hidden = i !== current; });
     const heading = steps[current].querySelector<HTMLElement>('h2')!;
@@ -124,12 +130,26 @@ export function bindQuizConsultation() {
   close.addEventListener('click', () => { if (!busy()) dialog.close(); });
   dialog.addEventListener('cancel', event => { if (busy()) event.preventDefault(); });
   dialog.addEventListener('close', () => {
+    clearAutoAdvance();
     document.body.style.overflow = previousOverflow;
     returnFocus?.focus({ preventScroll: true });
   });
   next.addEventListener('click', () => { if (!busy() && valid(current)) showStep(current + 1); });
   back.addEventListener('click', () => { if (!busy()) showStep(current - 1); });
   ['input', 'change'].forEach(eventName => form.addEventListener(eventName, () => { error.textContent = ''; updateNavigation(); }));
+  function advanceFromChoice(event: Event) {
+    const input = event.target;
+    const step = steps[current];
+    if (!(input instanceof HTMLInputElement) || input.type !== 'radio' || !input.checked
+      || !dialog.open || busy() || !step.hasAttribute('data-cq-auto-advance')
+      || input.closest('[data-cq-step]') !== step || !valid(current)) return;
+    clearAutoAdvance();
+    autoAdvance = setTimeout(() => {
+      autoAdvance = undefined;
+      if (dialog.open && !busy() && steps[current] === step && valid(current)) showStep(current + 1);
+    }, 220);
+  }
+  ['click', 'change'].forEach(eventName => form.addEventListener(eventName, advanceFromChoice));
   form.addEventListener('keydown', event => {
     if (event.key !== 'Enter' || event.isComposing || !(event.target instanceof HTMLInputElement)) return;
     if (current < steps.length - 1) { event.preventDefault(); next.click(); }

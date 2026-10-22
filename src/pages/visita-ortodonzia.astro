@@ -9,6 +9,7 @@ import OrthodonticProfessionalSheet from '../components/OrthodonticProfessionalS
 import OrthodonticSmileCarousel from '../components/OrthodonticSmileCarousel.astro';
 import OrthodonticAgeSection from '../components/OrthodonticAgeSection.astro';
 import LandingBookingCta from '../components/LandingBookingCta.astro';
+import LandingTreatmentHero from '../components/LandingTreatmentHero.astro';
 import LandingBookingDialog from '../components/LandingBookingDialog.astro';
 import OrthodonticLandingHeader from '../components/OrthodonticLandingHeader.astro';
 import TreatmentStickyCta from '../components/TreatmentStickyCta.astro';
@@ -25,10 +26,10 @@ const canonical = new URL(canonicalPath, site.source).toString();
 const title = 'Visita ortodontica a Modena e Reggio Emilia | Federzoni Granata';
 const description =
   'Ortodonzia per adulti e bambini a Modena e Reggio Emilia. Valuta apparecchi e allineatori con un piano personalizzato. Richiedi una visita allo Studio Federzoni Granata.';
-const heroImagePath = '/assets/optimized/home-hero-desktop.avif';
-const heroImageAlt = 'I dottori Federzoni e Granata nello studio dentistico';
+const heroImagePath = '/assets/optimized/ortodonzia-sorriso-specchio-1920.webp';
+const heroImageAlt = 'Una paziente osserva il proprio sorriso nello studio Federzoni Granata';
 const isIndexable = import.meta.env.PROD && process.env.VERCEL_ENV !== 'preview';
-const socialPreviewImage = new URL('/assets/original/2021/02/HOME.jpg', canonical).toString();
+const socialPreviewImage = new URL(heroImagePath, canonical).toString();
 
 const reviewAuthors = new Set(['Francesca Tassinari', 'Rosa Castelluccio', 'Nazareno Colamaria']);
 const reviews = featuredPatientReviews.filter((review) => reviewAuthors.has(review.author));
@@ -181,7 +182,8 @@ const structuredData = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <link rel="preload" as="font" href="/fonts/inter/inter-latin.woff2" type="font/woff2" crossorigin />
-    <link rel="preload" as="image" href={heroImagePath} type="image/avif" fetchpriority="high" />
+    <link rel="preload" as="image" href={heroImagePath} type="image/webp" media="(min-width: 721px)" fetchpriority="high" />
+    <link rel="preload" as="image" href="/assets/optimized/ortodonzia-sorriso-studio-720.webp" type="image/webp" media="(max-width: 720px)" fetchpriority="high" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content={isIndexable ? 'index,follow,max-image-preview:large' : 'noindex,follow'} />
@@ -213,32 +215,7 @@ const structuredData = {
 
     <a class="ortho-skip-link" href="#contenuto">Vai al contenuto</a>
     <main id="contenuto" tabindex="-1">
-      <section class="landing-hero ortho-hero ortho-hero-overlay" aria-labelledby="landing-title" data-treatment-sticky-hero>
-        <div class="landing-shell landing-hero-shell">
-          <div class="landing-hero-stage">
-            <div class="ortho-hero-photo-frame">
-              <picture>
-                <source srcset={heroImagePath} type="image/avif" />
-                <img class="landing-hero-photo" src="/assets/original/2021/02/HOME.jpg" alt={heroImageAlt} width="1200" height="800" loading="eager" decoding="async" fetchpriority="high" />
-              </picture>
-            </div>
-            <div class="landing-hero-panel ortho-hero-copy">
-              <div class="ortho-hero-intro">
-                <p class="landing-hero-eyebrow ortho-hero-eyebrow-mobile">Ortodonzia · Modena e Reggio Emilia</p>
-                <h1 id="landing-title">
-                  <span class="ortho-hero-title-mobile"><span class="ortho-hero-title-context">Non Esiste Un</span> <strong>Sorriso Perfetto</strong>. <span class="ortho-hero-title-context">Esiste</span> <strong>Quello Che Ti Valorizza.</strong></span>
-                </h1>
-                <p class="ortho-hero-lead">
-                  <span class="ortho-hero-lead-mobile">
-                    Allinea i tuoi denti con gli allineatori trasparenti <strong class="ortho-hero-invisalign">Invisalign®</strong>, apparecchi tradizionali o linguali. Scopri il percorso ortodontico più adatto a te, pensato per la tua salute e funzionalità orale.
-                  </span>
-                </p>
-              </div>
-              <LandingBookingCta treatment="ortodonzia" variant="hero" />
-            </div>
-          </div>
-        </div>
-      </section>
+      <LandingTreatmentHero treatment="ortodonzia" reviewInitials={orthodonticReviews.map(review => review.initials)} />
 
       <OrthodonticAgeSection />
 
@@ -512,7 +489,7 @@ const structuredData = {
     :global(.ortho-landing-main .patient-reviews-rating .patient-reviews-rating-caption) { margin-top: 8px; font-size: 11px; }
     :global(.ortho-landing-main .patient-reviews-rating .patient-reviews-link) { margin-top: 12px; }
 
-    :global(.ortho-landing-main #contenuto :is(#landing-title, #ortho-faq-title)) {
+    :global(.ortho-landing-main #contenuto #ortho-faq-title) {
       color: var(--brand-cta);
     }
 

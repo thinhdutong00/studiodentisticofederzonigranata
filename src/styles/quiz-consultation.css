@@ -8,8 +8,8 @@
 .cq-dialog :is(button, a, input):focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 5px; }
 .cq-header { position: sticky; top: 0; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 112px; padding: 24px 32px; background: var(--surface-white); }
 .cq-header > img { display: block; width: 250px; max-width: calc(100% - 72px); height: auto; }
-.cq-close { display: grid; width: 48px; height: 48px; flex: 0 0 48px; place-items: center; padding: 10px; border: 0; border-radius: 50%; background: transparent; color: var(--muted-text); }
-.cq-close svg { width: 24px; height: 24px; stroke: currentColor; stroke-width: 1.6; }
+.cq-dialog .cq-close { display: inline-flex; width: 48px; height: 48px; flex: 0 0 48px; align-items: center; justify-content: center; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--muted-text); line-height: 1; }
+.cq-close svg { display: block; width: 24px; height: 24px; flex: 0 0 24px; margin: 0; stroke: currentColor; stroke-width: 1.6; }
 .cq-close:hover { background: var(--soft-blue-bg); color: var(--brand-primary-dark); }
 .cq-progress { position: sticky; top: 112px; z-index: 3; height: 3px; background: var(--background); }
 .cq-progress > span { display: block; width: var(--progress, 0%); height: 100%; background: var(--brand-blue); transition: width .3s; }
@@ -31,9 +31,12 @@
 .cq-option:has(input:checked) > i { border-color: var(--brand-cta); background: var(--brand-cta); }
 .cq-option:has(input:checked) > i::after { content: '✓'; color: var(--surface-white); font-size: 13px; font-style: normal; }
 .cq-option:has(input:focus-visible) { outline: 3px solid var(--brand-blue); outline-offset: 4px; }
-.cq-objectives { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.cq-objective { align-items: flex-start; }
-.cq-objective .lb-icon { width: 34px; height: 34px; margin-bottom: 18px; color: var(--brand-cta); stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.cq-objectives { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.cq-objective { min-height: 160px; align-items: center; justify-content: center; padding: 28px; border-radius: 18px; background: var(--background); color: var(--brand-primary-dark); box-shadow: none; text-align: center; }
+.cq-objective .cq-option-content { align-items: center; gap: 18px; font-size: 20px; font-weight: 500; }
+.cq-objective > i { display: none; }
+.cq-objective .lb-icon { width: 48px; height: 48px; color: var(--brand-cta); stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.cq-objective:hover, .cq-objective:has(input:checked) { border-color: var(--brand-cta); background: var(--soft-blue-bg); box-shadow: none; }
 .cq-pictures { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .cq-pictures .cq-option { padding: 18px 14px; }
 .cq-pictures .cq-option-content { align-items: center; text-align: center; font-size: 16px; }
@@ -62,8 +65,6 @@
 .cq-dialog .cq-back { display: flex; align-items: center; gap: 8px; padding: 12px 8px; border: 0; background: transparent; color: var(--muted-text); font-size: 15px; }
 .cq-back:hover { color: var(--brand-primary-dark); }
 .cq-back > span { font-size: 24px; line-height: 1; }
-.cq-enter-hint { margin: 34px 0 0; color: var(--muted-text); font-size: 11px; text-align: right; }
-.cq-enter-hint kbd { margin-left: 5px; padding: 3px 5px; border: 1px solid var(--border); border-radius: 3px; background: var(--background); font-family: inherit; }
 .cq-error { margin: 20px 0 0; color: var(--error, #C94A4A); font-size: 14px; }
 .cq-error:empty { display: none; }
 .cq-summary { margin: 24px 0; padding: 8px 24px; border: 1px solid var(--border); border-radius: 16px; background: var(--background); }
@@ -89,16 +90,16 @@
   .cq-option { min-height: 72px; padding: 18px; gap: 14px; }
   .cq-option-content { font-size: 18px; }
   .cq-option > i { width: 22px; height: 22px; flex-basis: 22px; }
-  .cq-objectives { grid-template-columns: 1fr; }
-  .cq-objective .cq-option-content { flex-direction: row; align-items: center; gap: 18px; }
-  .cq-objective .lb-icon { flex: 0 0 30px; width: 30px; height: 30px; margin: 0; }
+  .cq-objectives { gap: 16px; }
+  .cq-objective { padding: 24px 12px; border-radius: 16px; }
+  .cq-objective .cq-option-content { gap: 14px; font-size: 16px; }
+  .cq-objective .lb-icon { width: 42px; height: 42px; }
   .cq-pictures { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .cq-pictures .cq-option { padding-inline: 12px; }
   .cq-pictures .cq-option-content { font-size: 15px; }
   .cq-actions { margin-top: 32px; }
   .cq-dialog .cq-next { min-height: 54px; padding: 17px 24px; font-size: 14px; gap: 12px; }
   .cq-dialog .cq-back { font-size: 13px; }
-  .cq-enter-hint { margin-top: 24px; }
   .cq-description { font-size: 14px; }
   .cq-summary { padding-inline: 18px; }
   .cq-summary > div { grid-template-columns: 90px minmax(0, 1fr); gap: 10px; font-size: 12px; }

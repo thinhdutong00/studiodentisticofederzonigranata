@@ -12,12 +12,10 @@ const requestHref = `/richiesta/?trattamento=${encodeURIComponent(config.request
     <h2 id="ortho-consultation-title">Prenota la tua visita di <strong>valutazione {treatment === 'ortodonzia' ? 'ortodontica' : 'parodontale'}</strong></h2>
     <p>{treatment === 'ortodonzia' ? 'Facciamo il primo passo verso il tuo nuovo sorriso. Raccontaci le tue esigenze e organizziamo la tua visita.' : 'Facciamo il primo passo per prenderci cura delle tue gengive e proteggere i tuoi denti naturali.'}</p>
   </header>}
-  <div class="lb-launch">
-    <button class="lb-open" type="button" data-landing-booking-open aria-haspopup="dialog" aria-controls="landing-booking-dialog">
-      Prenota una {config.visit}<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6" /></svg>
-    </button>
-    <noscript><p><a href={requestHref}>Compila la richiesta di visita</a> oppure chiama lo studio.</p></noscript>
-  </div>
+  <button class:list={['lb-open', { 'lb-open-final': !isHero }]} type="button" data-landing-booking-open aria-haspopup="dialog" aria-controls="landing-booking-dialog">
+    Prenota una {config.visit}<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6" /></svg>
+  </button>
+  <noscript><p><a href={requestHref}>Compila la richiesta di visita</a> oppure chiama lo studio.</p></noscript>
 </div>
 
 <style>
@@ -26,6 +24,8 @@ const requestHref = `/richiesta/?trattamento=${encodeURIComponent(config.request
   .lb-open svg { flex: 0 0 22px; width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
   .lb-open:hover { background: var(--brand-cta-hover); }
   .lb-open:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 4px; }
+  .lb-open-final { background: var(--surface-white); color: var(--brand-primary-dark); }
+  .lb-open-final:hover { background: var(--soft-blue-bg); }
   @media (max-width: 720px) {
     .ortho-consultation-hero.lb-cta { margin-top: 28px; }
     .ortho-consultation-heading { margin: 0 34px 28px; text-align: left; }
@@ -33,7 +33,7 @@ const requestHref = `/richiesta/?trattamento=${encodeURIComponent(config.request
     .ortho-consultation-heading h2 { margin: 0; }
     .ortho-consultation-heading p { margin-top: 20px; font-size: 17px; line-height: 1.45; }
     .lb-cta:not(.ortho-consultation-hero) { padding-bottom: 40px; }
-    .lb-cta:not(.ortho-consultation-hero) .lb-launch { margin-inline: 24px; }
+    .lb-cta:not(.ortho-consultation-hero) > .lb-open { width: calc(100% - 48px); margin-inline: 24px; }
     .lb-open { gap: 12px; padding-inline: 16px; }
   }
 </style>
