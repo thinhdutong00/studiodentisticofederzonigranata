@@ -100,6 +100,16 @@ La formulazione dell’informativa privacy relativa ai fornitori tecnologici, ai
 
 Riferimenti: [invio email Resend](https://resend.com/docs/api-reference/emails/send-email), [idempotenza Resend](https://resend.com/docs/dashboard/emails/idempotency-keys), [funzioni Node su Vercel](https://vercel.com/docs/functions/runtimes/node-js).
 
+## Prenotazione multistep delle landing ortodonzia e parodontologia
+
+Le landing `/visita-ortodonzia/` e `/visita-parodontologia/` usano `LandingBookingCta` in apertura e chiusura e una sola istanza di `LandingBookingDialog`. Anche le CTA di prenotazione nell’header, nelle sezioni e nella barra fissa aprono lo stesso modulo. I quiz e la landing `/visita-trattamento-ortondonzia/` mantengono i loro percorsi.
+
+Il nuovo tipo API `landing-consultation` raccoglie sei passaggi: motivo della visita, fascia di età del paziente, studio, giorni della settimana preferiti (anche multipli), fascia oraria e recapiti con riepilogo modificabile. L’email è facoltativa; nome, telefono e consenso privacy sono obbligatori. Per i minorenni vengono richiesti i recapiti del genitore o del tutore. Giorni e orari sono preferenze da confermare con la segreteria.
+
+Il server valida le scelte con la configurazione condivisa `src/data/landingBooking.js` e determina il servizio dalla pagina di provenienza. `availability` alimenta `Giorni preferiti`, `preferredTimes` alimenta `Orari preferiti`; motivo, fascia di età e note confluiscono in `Comunicazioni`. Restano attivi attribuzione automatica, controllo dei provider, idempotenza e reindirizzamento a `/thank-you-page/` solo dopo conferma dell’invio. Le risposte restano solo nella memoria della pagina e si conservano chiudendo e riaprendo il modulo.
+
+`tests/landing-booking.test.mjs` verifica entrambe le landing con provider simulati, inclusi risposte valide, rifiuto delle opzioni non ammesse, mapping CRM, email facoltativa e assenza di conferma se un provider fallisce.
+
 ## Collaudo del 18 settembre 2026
 
 - 32 test server superati e build Astro completata (54 pagine).

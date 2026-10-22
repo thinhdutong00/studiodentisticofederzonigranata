@@ -1,0 +1,46 @@
+---
+import { landingBookingTreatments } from '../data/landingBooking.js';
+interface Props { treatment: 'ortodonzia' | 'parodontologia'; variant?: 'hero' | 'section'; }
+const { treatment, variant = 'section' } = Astro.props;
+const config = landingBookingTreatments[treatment];
+const isHero = variant === 'hero';
+const requestHref = `/richiesta/?trattamento=${encodeURIComponent(config.requestTreatment)}`;
+---
+<div class:list={['ortho-consultation-mobile', 'lb-cta', { 'ortho-consultation-hero': isHero }]}>
+  {!isHero && <header class="ortho-consultation-heading">
+    <img class="ortho-consultation-symbol" src="/assets/original/2020/10/cropped-favicon-180x180.png" width="72" height="72" alt="" aria-hidden="true" loading="lazy" />
+    <h2 id="ortho-consultation-title">Prenota la tua visita di <strong>valutazione {treatment === 'ortodonzia' ? 'ortodontica' : 'parodontale'}</strong></h2>
+    <p>{treatment === 'ortodonzia' ? 'Facciamo il primo passo verso il tuo nuovo sorriso. Raccontaci le tue esigenze e organizziamo la tua visita.' : 'Facciamo il primo passo per prenderci cura delle tue gengive e proteggere i tuoi denti naturali.'}</p>
+  </header>}
+  <div class="lb-launch">
+    <p class="lb-launch-kicker">{isHero ? 'Il primo passo comincia qui' : 'Iniziamo dalle tue esigenze'}</p>
+    <button class="lb-open" type="button" data-landing-booking-open aria-haspopup="dialog" aria-controls="landing-booking-dialog">
+      Prenota una {config.visit}<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6" /></svg>
+    </button>
+    <p class="lb-launch-note">Poche semplici domande, poi la segreteria ti ricontatterà per concordare giorno e orario della visita.</p>
+    <noscript><p><a href={requestHref}>Compila la richiesta di visita</a> oppure chiama lo studio.</p></noscript>
+  </div>
+</div>
+
+<style>
+  .lb-cta { display: block; }
+  .lb-launch { padding: 32px; border: 1px solid var(--border); border-radius: 24px; background: var(--soft-blue-bg); color: var(--brand-primary-dark); }
+  .lb-launch-kicker { margin: 0 0 20px; font-size: 22px; font-weight: 500; line-height: 1.25; }
+  .lb-open { display: flex; width: 100%; min-height: 60px; align-items: center; justify-content: center; gap: 18px; padding: 20px; border: 0; border-radius: 10px; background: var(--brand-cta); color: var(--surface-white); font: inherit; font-size: 16px; font-weight: 500; line-height: 1.25; text-transform: uppercase; cursor: pointer; }
+  .lb-open svg { flex: 0 0 22px; width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .lb-open:hover { background: var(--brand-cta-hover); }
+  .lb-open:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 4px; }
+  .lb-launch-note { margin: 18px 0 0; color: var(--muted-text); font-size: 15px; line-height: 1.5; }
+  @media (max-width: 720px) {
+    .ortho-consultation-hero.lb-cta { margin-top: 28px; }
+    .lb-launch { padding: 24px 20px; border-radius: 18px; }
+    .lb-launch-kicker { font-size: 20px; }
+    .ortho-consultation-heading { margin: 0 34px 28px; text-align: left; }
+    .ortho-consultation-symbol { display: block; width: 64px; height: 64px; margin-bottom: 24px; filter: brightness(0) invert(1); }
+    .ortho-consultation-heading h2 { margin: 0; }
+    .ortho-consultation-heading p { margin-top: 20px; font-size: 17px; line-height: 1.45; }
+    .lb-cta:not(.ortho-consultation-hero) { padding-bottom: 40px; }
+    .lb-cta:not(.ortho-consultation-hero) .lb-launch { margin-inline: 24px; }
+    .lb-open { gap: 12px; padding-inline: 16px; }
+  }
+</style>

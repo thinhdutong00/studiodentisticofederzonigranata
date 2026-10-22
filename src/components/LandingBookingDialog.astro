@@ -1,0 +1,128 @@
+---
+import BookingFields from './BookingFields.astro';
+import BookingPrivacy from './BookingPrivacy.astro';
+import LandingBookingIcon from './LandingBookingIcon.astro';
+import { site } from '../data/site';
+import { landingBookingTreatments, landingBookingAges, landingBookingDays, landingBookingTimes } from '../data/landingBooking.js';
+import '../styles/landing-booking.css';
+
+interface Props { treatment: 'ortodonzia' | 'parodontologia'; }
+const { treatment } = Astro.props;
+const config = landingBookingTreatments[treatment];
+const stepLabels = ['La tua esigenza', 'Il paziente', 'Lo studio', 'I giorni', 'L’orario', 'I tuoi dati'];
+const summaryLabels = ['Motivo della visita', 'Età del paziente', 'Studio', 'Giorni preferiti', 'Fascia oraria'];
+const summaryFields = ['problem', 'ageRange', 'office', 'availability', 'preferredTimes'];
+---
+<dialog class="lb-dialog" id="landing-booking-dialog" aria-labelledby="lb-question-0" data-lb-dialog>
+  <div class="lb-layout">
+    <aside class="lb-sidebar" aria-label="Avanzamento della richiesta di visita">
+      <img class="lb-logo" src={site.logo} alt={site.name} width="400" height="52" />
+      <div class="lb-sidebar-copy">
+        <p class="lb-treatment">{config.label} · La tua visita</p>
+        <h2 class="lb-sidebar-title" data-lb-sidebar-title>{stepLabels[0]}</h2>
+        <p class="lb-sidebar-description">Rispondi a poche semplici domande e richiedi la tua {config.visit}.</p>
+        <p class="lb-counter" aria-live="polite" data-lb-counter>Passaggio 1 di 6</p>
+        <nav class="lb-progress" aria-label="Passaggi della richiesta">
+          <ol>{stepLabels.map((label, index) => <li data-lb-progress-item>
+            <button type="button" data-lb-progress-step={index} aria-label={`${index + 1}. ${label}`} aria-current={index === 0 ? 'step' : undefined} disabled={index !== 0}>
+              <span class="lb-progress-number">{index + 1}</span><span class="lb-progress-label">{label}</span>
+            </button>
+          </li>)}</ol>
+        </nav>
+      </div>
+      <footer class="lb-sidebar-footer">
+        <p>Preferisci parlare con noi?</p>
+        <div class="lb-help-phones">{site.offices.map(office => <a href={office.phoneHref}>{office.city} <strong>{office.phone}</strong></a>)}</div>
+        <div class="lb-legal"><a href="/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy</a><a href="/cookie-privacy/" target="_blank" rel="noopener noreferrer">Cookie</a><span>Federzoni Granata</span></div>
+      </footer>
+    </aside>
+    <button class="lb-close" type="button" data-lb-close aria-label="Chiudi il modulo di prenotazione"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6" /></svg></button>
+
+    <form class="lb-form" action="/api/booking" method="post" novalidate autocomplete="on" data-booking-kind="landing-consultation" data-lb-form>
+      <BookingFields />
+      <input type="hidden" name="treatment" value={config.treatment} />
+      <input type="hidden" name="availability" value="" />
+      <div class="lb-body" data-lb-body>
+        <section class="lb-step" data-lb-step data-title={stepLabels[0]}>
+          <h2 id="lb-question-0" tabindex="-1">{config.question}</h2>
+          <p class="lb-description">{config.description}</p>
+          <fieldset class="lb-options lb-options-reasons">
+            <legend class="lb-sr-only">Motivo della visita</legend>
+            {config.options.map(option => <label class="lb-option">
+              <input type="radio" name="problem" value={option.value} required />
+              <span class="lb-option-content"><LandingBookingIcon name={option.icon} /><strong>{option.label}</strong><span>{option.description}</span></span>
+              <span class="lb-choice-mark" aria-hidden="true">✓</span>
+            </label>)}
+          </fieldset>
+        </section>
+
+        <section class="lb-step" data-lb-step data-title={stepLabels[1]} hidden>
+          <h2 id="lb-question-1" tabindex="-1">Qual è l’età del paziente?</h2>
+          <p class="lb-description">Puoi richiedere una visita per te o per un familiare. Per un minorenne, lascia alla fine i recapiti del genitore o del tutore.</p>
+          <fieldset class="lb-options lb-options-compact">
+            <legend class="lb-sr-only">Fascia di età del paziente</legend>
+            {landingBookingAges.map(age => <label class="lb-option"><input type="radio" name="ageRange" value={age} required /><span class="lb-option-content"><strong>{age}</strong></span><span class="lb-choice-mark" aria-hidden="true">✓</span></label>)}
+          </fieldset>
+        </section>
+
+        <section class="lb-step" data-lb-step data-title={stepLabels[2]} hidden>
+          <h2 id="lb-question-2" tabindex="-1">In quale studio vorresti venire?</h2>
+          <p class="lb-description">Scegli la sede più comoda per la tua visita.</p>
+          <fieldset class="lb-options">
+            <legend class="lb-sr-only">Studio dentistico preferito</legend>
+            {site.offices.map(office => <label class="lb-option"><input type="radio" name="office" value={office.city} required /><span class="lb-option-content"><LandingBookingIcon name="pin" /><strong>{office.city}</strong><span>{office.address}</span></span><span class="lb-choice-mark" aria-hidden="true">✓</span></label>)}
+          </fieldset>
+        </section>
+
+        <section class="lb-step" data-lb-step data-title={stepLabels[3]} hidden>
+          <h2 id="lb-question-3" tabindex="-1">Quali giorni preferisci?</h2>
+          <p class="lb-description">Puoi scegliere più giorni oppure indicarci che non hai preferenze.</p>
+          <fieldset class="lb-options lb-options-compact">
+            <legend class="lb-sr-only">Giorni preferiti</legend>
+            {landingBookingDays.map(day => <label class="lb-option"><input type="checkbox" value={day} data-lb-day /><span class="lb-option-content"><strong>{day}</strong></span><span class="lb-choice-mark" aria-hidden="true">✓</span></label>)}
+          </fieldset>
+          <p class="lb-field-note">Le preferenze non riservano un appuntamento. La segreteria verificherà con te le disponibilità.</p>
+        </section>
+
+        <section class="lb-step" data-lb-step data-title={stepLabels[4]} hidden>
+          <h2 id="lb-question-4" tabindex="-1">Quale fascia oraria preferisci?</h2>
+          <p class="lb-description">Ci aiuta a proporti un appuntamento compatibile con i tuoi impegni.</p>
+          <fieldset class="lb-options lb-options-times">
+            <legend class="lb-sr-only">Fascia oraria preferita</legend>
+            {landingBookingTimes.map(time => <label class="lb-option"><input type="radio" name="preferredTimes" value={time.value} required /><span class="lb-option-content"><LandingBookingIcon name={time.icon} /><strong>{time.value}</strong><span>{time.description}</span></span><span class="lb-choice-mark" aria-hidden="true">✓</span></label>)}
+          </fieldset>
+        </section>
+
+        <section class="lb-step" data-lb-step data-title={stepLabels[5]} hidden>
+          <h2 id="lb-question-5" tabindex="-1">Come possiamo ricontattarti?</h2>
+          <p class="lb-description">Lascia i tuoi recapiti. La segreteria ti ricontatterà per concordare giorno e orario della {config.visit}.</p>
+          <details class="lb-summary" open>
+            <summary>La tua richiesta <span>{config.label}</span></summary>
+            <dl>{summaryLabels.map((label, index) => <div><dt>{label}</dt><dd data-lb-summary-value={summaryFields[index]}>—</dd><button type="button" data-lb-goto={index} aria-label={`Modifica: ${label}`}>Modifica</button></div>)}</dl>
+          </details>
+          <div class="lb-contact-fields">
+            <label class="lb-field lb-field-wide">Nome e cognome <span aria-hidden="true">*</span><input type="text" name="fullName" autocomplete="name" placeholder="Il tuo nome e cognome" minlength="2" maxlength="120" required /></label>
+            <label class="lb-field">Numero di telefono <span aria-hidden="true">*</span><input type="tel" name="phone" autocomplete="tel" inputmode="tel" placeholder="Es. 333 123 4567" minlength="6" maxlength="30" required /></label>
+            <label class="lb-field">Email <span class="lb-optional">(facoltativa)</span><input type="email" name="email" autocomplete="email" inputmode="email" placeholder="nome@email.it" maxlength="254" autocapitalize="none" spellcheck="false" /></label>
+          </div>
+          <p class="lb-field-note" data-lb-guardian hidden>Per un paziente minorenne, inserisci il nome e i recapiti del genitore o del tutore.</p>
+          <details class="lb-notes"><summary>Vuoi aggiungere qualche dettaglio? <span>Facoltativo</span></summary><label class="lb-field">Note per lo studio<textarea name="notes" rows="3" maxlength="1500" placeholder="Scrivi qui eventuali indicazioni per la segreteria"></textarea></label></details>
+          <BookingPrivacy />
+          <p class="lb-field-note">Giorni e orari sono preferenze da confermare con la segreteria.</p>
+        </section>
+      </div>
+      <footer class="lb-form-footer">
+        <p class="lb-error" role="alert" data-lb-error></p>
+        <div class="lb-actions">
+          <button class="lb-back" type="button" data-lb-back disabled><span aria-hidden="true">←</span> Indietro</button>
+          <button class="lb-next" type="button" data-lb-next>Avanti <span aria-hidden="true">→</span></button>
+          <button class="lb-next" type="submit" hidden>Richiedi la visita <span aria-hidden="true">→</span></button>
+        </div>
+      </footer>
+    </form>
+  </div>
+</dialog>
+<script>
+  import { bindLandingBooking } from '../utils/landingBooking';
+  bindLandingBooking();
+</script>

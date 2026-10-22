@@ -1,0 +1,16 @@
+---
+interface Props { name: string; }
+const { name } = Astro.props;
+---
+<svg viewBox="0 0 32 32" fill="none" aria-hidden="true" class="lb-icon">
+  {name === 'aligner' && <><path d="M7 7c0-3 4-4 9-1 5-3 9-2 9 1 0 7-1 18-5 18-2 0-1-8-4-8s-2 8-4 8C8 25 7 14 7 7Z" /><path d="M8 12c4 3 12 3 16 0M11 10v4m5-3v4m5-5v4" /></>}
+  {name === 'braces' && <><path d="M4 9h24v14H4zM4 16h24M10 9v14m12-14v14" /><path d="M8 14h4v4H8zm12 0h4v4h-4z" /></>}
+  {name === 'person' && <><circle cx="16" cy="10" r="5" /><path d="M6 28v-3a10 10 0 0 1 20 0v3" /></>}
+  {name === 'talk' && <><path d="M5 5h22v16H15l-7 6v-6H5zM10 11h12m-12 5h8" /></>}
+  {name === 'gum' && <><path d="M5 21c4-5 6 3 11-1s7 4 11 0v8H5zM9 18V7c0-3 4-3 7-1 3-2 7-2 7 1v11" /><path d="M5 8 3 5m24 3 2-3" /></>}
+  {name === 'tooth' && <path d="M7 7c0-3 4-4 9-1 5-3 9-2 9 1 0 7-1 20-5 20-2 0-1-10-4-10s-2 10-4 10C8 27 7 14 7 7Z" />}
+  {name === 'pin' && <><path d="M26 13c0 8-10 16-10 16S6 21 6 13a10 10 0 0 1 20 0Z" /><circle cx="16" cy="13" r="3.5" /></>}
+  {name === 'calendar' && <><rect x="5" y="7" width="22" height="21" rx="2" /><path d="M10 4v6m12-6v6M5 14h22m-16 5h2m6 0h2m-10 5h2m6 0h2" /></>}
+  {name === 'clock' && <><circle cx="16" cy="16" r="12" /><path d="M16 8v8l5 3" /></>}
+  {name === 'sun' && <><circle cx="16" cy="16" r="6" /><path d="M16 2v4m0 20v4M2 16h4m20 0h4M6 6l3 3m14 14 3 3M6 26l3-3M23 9l3-3" /></>}
+</svg>

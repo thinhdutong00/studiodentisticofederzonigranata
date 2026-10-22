@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { orthodonticAgeRanges, orthodonticBites, orthodonticConcerns, orthodonticObjectives, orthodonticTimings, orthodonticVisitGoals } from '../src/data/orthodonticQuiz.js';
 import { periodontalAgeRanges, periodontalDurations, periodontalObjectives, periodontalSymptoms } from '../src/data/periodontalQuiz.js';
+import { getLandingBookingConfig, landingBookingAges, landingBookingTimes, validLandingBookingDays } from '../src/data/landingBooking.js';
 
 export const RECIPIENT = 'info.federzonigranata@gmail.com';
 const MAX_BYTES = 24_000;
@@ -15,6 +16,7 @@ const KINDS = {
   treatment: 'Valutazione di un trattamento',
   contact: 'Informazioni',
   callback: 'Richiesta di richiamata',
+  'landing-consultation': 'Richiesta di visita',
   'orthodontic-quiz': 'Quiz ortodonzia',
   'periodontal-quiz': 'Questionario parodontologia',
 };
@@ -40,6 +42,7 @@ const REQUIRED = {
   urgent: ['emergencyType', 'symptom', 'painLevel', 'ageRange', 'office', 'availability'],
   treatment: ['treatment', 'ageRange', 'office', 'preferredDates', 'preferredTimes'],
   contact: [], callback: [],
+  'landing-consultation': ['problem', 'ageRange', 'office', 'availability', 'preferredTimes'],
   'orthodontic-quiz': ['patientAge', 'problem', 'occlusion', 'office', 'availability'],
   'periodontal-quiz': ['periodontalObjective', 'ageRange', 'periodontalSymptom', 'symptomDuration', 'office'],
 };
@@ -90,7 +93,7 @@ export function validateBooking(input) {
   if (data.fullName.length < 2 || data.fullName.length > 120 || !/^[+\d\s()./-]{6,30}$/.test(data.phone) || data.phone.replace(/\D/g, '').length < 6) {
     throw new RequestError(400, 'Controlla nome e numero di telefono.');
   }
-  if ((data.kind !== 'callback' || data.email) && !EMAIL.test(data.email)) {
+  if ((!['callback', 'landing-consultation'].includes(data.kind) || data.email) && !EMAIL.test(data.email)) {
     throw new RequestError(400, 'Inserisci un indirizzo email valido.');
   }
   if (input.privacyConsent !== true) throw new RequestError(400, 'Accetta l’informativa privacy per inviare la richiesta.');
@@ -112,6 +115,15 @@ export function validateBooking(input) {
     } catch {
       throw new RequestError(400, 'Provenienza esterna non valida.');
     }
+  }
+  if (data.kind === 'landing-consultation') {
+    const config = getLandingBookingConfig(data.source);
+    if (!config || !config.options.some(option => option.value === data.problem)
+      || !landingBookingAges.includes(data.ageRange) || !validLandingBookingDays(data.availability)
+      || !landingBookingTimes.some(time => time.value === data.preferredTimes)) {
+      throw new RequestError(400, 'Controlla le risposte del modulo di prenotazione prima di inviare.');
+    }
+    data.treatment = config.treatment;
   }
   if (data.kind === 'urgent') {
     if (!/^(?:[0-9]|10)$/.test(data.painLevel)) throw new RequestError(400, 'Seleziona un livello di dolore valido.');

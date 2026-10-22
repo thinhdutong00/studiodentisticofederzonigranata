@@ -9,7 +9,8 @@ import PeriodontalProfessionalSheet from '../components/PeriodontalProfessionalS
 import PeriodontalCasesCarousel from '../components/PeriodontalCasesCarousel.astro';
 import PeriodontalPathsSection from '../components/PeriodontalPathsSection.astro';
 import PeriodontalRecognitionSection from '../components/PeriodontalRecognitionSection.astro';
-import PeriodontalConsultationForm from '../components/PeriodontalConsultationForm.astro';
+import LandingBookingCta from '../components/LandingBookingCta.astro';
+import LandingBookingDialog from '../components/LandingBookingDialog.astro';
 import PeriodontalLandingHeader from '../components/PeriodontalLandingHeader.astro';
 import TreatmentStickyCta from '../components/TreatmentStickyCta.astro';
 import { featuredPatientReviews } from '../data/reviews';
@@ -200,7 +201,7 @@ const structuredData = {
                   </span>
                 </p>
               </div>
-              <PeriodontalConsultationForm treatmentLabel={periodontalTreatmentLabel} variant="hero" submitLabel={periodontalHero.ctaLabel} />
+              <LandingBookingCta treatment="parodontologia" variant="hero" />
             </div>
           </div>
         </div>
@@ -277,7 +278,7 @@ const structuredData = {
       </section>
 
       <section class="ortho-section ortho-final ortho-final-with-instruments" id="ortho-final" aria-labelledby="ortho-consultation-title">
-        <PeriodontalConsultationForm treatmentLabel={periodontalTreatmentLabel} />
+        <LandingBookingCta treatment="parodontologia" />
       </section>
     </main>
 
@@ -289,6 +290,7 @@ const structuredData = {
       </Footer>
     </div>
 
+    <LandingBookingDialog treatment="parodontologia" />
     <PeriodontalProfessionalSheet bookingHref={periodontalRequestHref} />
     <TreatmentStickyCta treatment={periodontalTreatmentLabel} href={periodontalRequestHref} hideAtFooter={false} mobileLabel="Inizia il tuo percorso" mobileHideFrom="#ortho-final" />
     <CookieBanner />

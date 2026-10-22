@@ -8,7 +8,8 @@ import OrthodonticLinkArrow from '../components/OrthodonticLinkArrow.astro';
 import OrthodonticProfessionalSheet from '../components/OrthodonticProfessionalSheet.astro';
 import OrthodonticSmileCarousel from '../components/OrthodonticSmileCarousel.astro';
 import OrthodonticAgeSection from '../components/OrthodonticAgeSection.astro';
-import OrthodonticConsultationForm from '../components/OrthodonticConsultationForm.astro';
+import LandingBookingCta from '../components/LandingBookingCta.astro';
+import LandingBookingDialog from '../components/LandingBookingDialog.astro';
 import OrthodonticLandingHeader from '../components/OrthodonticLandingHeader.astro';
 import TreatmentStickyCta from '../components/TreatmentStickyCta.astro';
 import { featuredPatientReviews } from '../data/reviews';
@@ -233,7 +234,7 @@ const structuredData = {
                   </span>
                 </p>
               </div>
-              <OrthodonticConsultationForm treatmentLabel={orthodonticTreatmentLabel} variant="hero" submitLabel="Prenota una visita ortodontica" />
+              <LandingBookingCta treatment="ortodonzia" variant="hero" />
             </div>
           </div>
         </div>
@@ -304,7 +305,7 @@ const structuredData = {
       </section>
 
       <section class="ortho-section ortho-final ortho-final-with-instruments" id="ortho-final" aria-labelledby="ortho-consultation-title">
-        <OrthodonticConsultationForm treatmentLabel={orthodonticTreatmentLabel} />
+        <LandingBookingCta treatment="ortodonzia" />
       </section>
     </main>
 
@@ -316,6 +317,7 @@ const structuredData = {
       </Footer>
     </div>
 
+    <LandingBookingDialog treatment="ortodonzia" />
     <OrthodonticProfessionalSheet bookingHref={orthodonticRequestHref} />
     <TreatmentStickyCta treatment={orthodonticTreatmentLabel} href={orthodonticRequestHref} hideAtFooter={false} mobileLabel="Inizia il tuo percorso" mobileHideFrom="#ortho-final" />
     <CookieBanner />
