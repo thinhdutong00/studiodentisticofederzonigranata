@@ -21,7 +21,6 @@ const summaryFields = ['problem', 'ageRange', 'office', 'availability', 'preferr
         <p class="lb-treatment">{config.label} · La tua visita</p>
         <h2 class="lb-sidebar-title" data-lb-sidebar-title>{stepLabels[0]}</h2>
         <p class="lb-sidebar-description">Rispondi a poche semplici domande e richiedi la tua {config.visit}.</p>
-        <p class="lb-counter" aria-live="polite" data-lb-counter>Passaggio 1 di 6</p>
         <nav class="lb-progress" aria-label="Passaggi della richiesta">
           <ol>{stepLabels.map((label, index) => <li data-lb-progress-item>
             <button type="button" data-lb-progress-step={index} aria-label={`${index + 1}. ${label}`} aria-current={index === 0 ? 'step' : undefined} disabled={index !== 0}>

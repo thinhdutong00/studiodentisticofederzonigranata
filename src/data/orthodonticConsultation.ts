@@ -5,7 +5,7 @@ export const consultationObjectives = [
   'Vorrei un consiglio sul trattamento',
 ] as const;
 
-export const consultationAges = ['Fino a 17 anni', '18–35 anni', '36–50 anni', 'Oltre 50 anni'] as const;
+export { quizConsultationAges as consultationAges } from './quizConsultation.js';
 
 export const consultationSolutions = [
   {

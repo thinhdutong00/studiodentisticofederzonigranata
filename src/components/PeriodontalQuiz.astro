@@ -1,13 +1,14 @@
 ---
 import BookingFields from './BookingFields.astro';
 import BookingPrivacy from './BookingPrivacy.astro';
+import QuizConsultationDialog from './QuizConsultationDialog.astro';
 import { site } from '../data/site';
 import { periodontalAgeRanges, periodontalDurations, periodontalObjectives, periodontalSymptoms } from '../data/periodontalQuiz.js';
 import { getPeriodontalQuizRecommendation } from '../data/periodontalQuizRecommendation.js';
 import '../styles/orthodontic-quiz.css';
 
-interface Props { contextLabel?: string; }
-const { contextLabel } = Astro.props;
+interface Props { contextLabel?: string; consultationFlow?: boolean; }
+const { contextLabel, consultationFlow = false } = Astro.props;
 const initialRecommendation = getPeriodontalQuizRecommendation();
 const recessionExample = getPeriodontalQuizRecommendation({ periodontalSymptom: 'Gengive che si ritirano' });
 const questions = [
@@ -36,7 +37,8 @@ const questions = [
   </div>
 </section>
 
-<dialog id="orthodontic-quiz" class="orthodontic-quiz" aria-labelledby="periodontal-objectives-title" data-quiz-dialog data-periodontal-quiz-dialog data-quiz-mobile-objectives-first data-quiz-all-viewports>
+{consultationFlow && <QuizConsultationDialog treatment="parodontologia" />}
+{!consultationFlow && <dialog id="orthodontic-quiz" class="orthodontic-quiz" aria-labelledby="periodontal-objectives-title" data-quiz-dialog data-periodontal-quiz-dialog data-quiz-mobile-objectives-first data-quiz-all-viewports>
   <div class="orthodontic-quiz-header">
     <div class="orthodontic-quiz-progress" style="--quiz-question-count: 8" role="progressbar" aria-label="Avanzamento del questionario" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-quiz-progress>
       {Array.from({ length: 8 }, (_, index) => <span data-progress-segment={index}></span>)}
@@ -120,7 +122,7 @@ const questions = [
       </section>}
     </>)}
   </form>
-</dialog>
+</dialog>}
 
 <style>
   [data-periodontal-quiz-dialog] h2:focus { outline: none; }

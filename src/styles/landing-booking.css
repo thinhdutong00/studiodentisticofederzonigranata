@@ -19,7 +19,7 @@
 .lb-treatment { margin: 0 0 14px; color: var(--brand-blue); font-size: 14px; font-weight: 500; }
 .lb-sidebar .lb-sidebar-title { margin: 0; color: var(--surface-white); font-size: clamp(32px, 3.1vw, 44px); font-weight: 500; line-height: 1.14; }
 .lb-sidebar-description { max-width: 32ch; margin: 22px 0 0; color: rgba(255, 255, 255, .85); font-size: 17px; line-height: 1.5; }
-.lb-counter { margin: 28px 0 14px; color: rgba(255, 255, 255, .7); font-size: 13px; }
+.lb-progress { margin-top: 28px; }
 .lb-progress ol { display: flex; margin: 0; padding: 0; list-style: none; }
 .lb-progress li { position: relative; flex: 1; min-width: 0; }
 .lb-progress li:last-child { flex: 0 0 30px; }
@@ -116,8 +116,7 @@
   .lb-treatment { display: none; }
   .lb-sidebar .lb-sidebar-title { font-size: 24px; }
   .lb-sidebar-description { display: none; }
-  .lb-counter { margin: 8px 0 16px; font-size: 12px; }
-  .lb-progress { margin-bottom: 25px; }
+  .lb-progress { margin-block: 20px 25px; }
   .lb-progress-label { font-size: 11px; }
   .lb-sidebar-footer { display: none; }
   .lb-close { top: 16px; right: 20px; width: 40px; height: 40px; border-color: rgba(255, 255, 255, .35); background: var(--brand-primary-dark); color: var(--surface-white); }

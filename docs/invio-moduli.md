@@ -110,6 +110,12 @@ Il server valida le scelte con la configurazione condivisa `src/data/landingBook
 
 `tests/landing-booking.test.mjs` verifica entrambe le landing con provider simulati, inclusi risposte valide, rifiuto delle opzioni non ammesse, mapping CRM, email facoltativa e assenza di conferma se un provider fallisce.
 
+## Quiz delle due landing con percorso di ricontatto
+
+Su `/visita-ortodonzia/` e `/visita-parodontologia/`, la variante `consultationFlow` usa `QuizConsultationDialog` e il design del modulo di `/visita-trattamento-ortondonzia/`. Dopo le domande iniziali e la schermata informativa, il percorso comprende nome, fascia di età (chiesta una sola volta), sede, telefono con email facoltativa e conferma con riepilogo e consenso privacy. In parodontologia viene aggiunto il motivo della richiesta attuale, distinto dal segnale notato nelle domande iniziali. In ortodonzia non viene chiesto di scegliere un tipo di trattamento.
+
+I marcatori `orthodontic-consultation-v3` e `periodontal-consultation-v2` vengono validati sul server solo per la rispettiva landing e il relativo tipo di quiz. Le fasce di età sono condivise con il modulo di riferimento. I percorsi precedenti mantengono le proprie regole API. Tutte le risposte confluiscono in email e CRM; la provenienza automatica e l’idempotenza restano attive. `tests/quiz-consultation.test.mjs` verifica i nuovi percorsi con provider simulati.
+
 ## Collaudo del 18 settembre 2026
 
 - 32 test server superati e build Astro completata (54 pagine).

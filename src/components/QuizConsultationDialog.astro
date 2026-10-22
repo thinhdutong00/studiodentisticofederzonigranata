@@ -1,0 +1,153 @@
+---
+import BookingFields from './BookingFields.astro';
+import BookingPrivacy from './BookingPrivacy.astro';
+import OrthodonticArchDiagram from './OrthodonticArchDiagram.astro';
+import LandingBookingIcon from './LandingBookingIcon.astro';
+import { site } from '../data/site';
+import { orthodonticObjectives, orthodonticConcerns, orthodonticBites } from '../data/orthodonticQuiz.js';
+import { periodontalObjectives, periodontalSymptoms, periodontalDurations } from '../data/periodontalQuiz.js';
+import { getOrthodonticQuizRecommendation } from '../data/orthodonticQuizRecommendation.js';
+import { getPeriodontalQuizRecommendation } from '../data/periodontalQuizRecommendation.js';
+import { landingBookingTreatments } from '../data/landingBooking.js';
+import { quizConsultationAges, quizConsultationFlows } from '../data/quizConsultation.js';
+import '../styles/quiz-consultation.css';
+
+interface Props { treatment: 'ortodonzia' | 'parodontologia'; }
+const { treatment } = Astro.props;
+const isOrtho = treatment === 'ortodonzia';
+const config = quizConsultationFlows[treatment];
+const orthoRecommendation = getOrthodonticQuizRecommendation();
+const periodontalRecommendation = getPeriodontalQuizRecommendation();
+const recessionExample = getPeriodontalQuizRecommendation({ periodontalSymptom: 'Gengive che si ritirano' });
+const objectives = isOrtho ? orthodonticObjectives : periodontalObjectives;
+const objectiveName = isOrtho ? 'initialReason' : 'periodontalObjective';
+const firstQuestions = isOrtho ? [
+  { key: 'alignment', title: 'Quale immagine rappresenta meglio i tuoi denti?', label: 'Il tuo sorriso', name: 'problem', options: orthodonticConcerns, kind: 'alignment' as const },
+  { key: 'bite', title: 'Come si chiudono le tue arcate?', label: 'Le tue arcate', name: 'occlusion', options: [...orthodonticBites.filter(option => option.value !== 'Altro'), ...orthodonticBites.filter(option => option.value === 'Altro')], kind: 'bite' as const },
+] : [
+  { key: 'symptom', title: 'Quale segnale hai notato?', label: 'Le tue gengive', name: 'periodontalSymptom', options: periodontalSymptoms.map(value => ({ value })), kind: undefined },
+  { key: 'duration', title: 'Da quanto tempo hai notato questo segnale?', label: 'Da quanto tempo', name: 'symptomDuration', options: periodontalDurations.map(value => ({ value })), kind: undefined },
+];
+---
+
+<dialog id="orthodontic-quiz" class="cq-dialog" aria-labelledby="cq-objective-title" data-quiz-dialog data-quiz-consultation={treatment} data-periodontal-quiz-dialog={!isOrtho || undefined}>
+  <header class="cq-header">
+    <img src={site.logo} alt={site.name} width="400" height="52" />
+    <button class="cq-close" type="button" data-quiz-close aria-label="Chiudi il questionario"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6" /></svg></button>
+  </header>
+  <div class="cq-progress" role="progressbar" aria-label="Avanzamento del questionario" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-cq-progress><span></span></div>
+  <form class="cq-form" action="/api/booking" method="post" autocomplete="on" novalidate data-booking-kind={config.kind} data-cq-form>
+    <BookingFields />
+    <input type="hidden" name="quizFlow" value={config.marker} />
+    <input type="hidden" name="message" value={`Richiesta dal questionario della landing ${config.source}. Le risposte raccolgono le esigenze del paziente e non costituiscono una diagnosi.`} />
+
+    <section class="cq-step" data-cq-step data-cq-key="objective">
+      <p class="cq-kicker">Il tuo obiettivo</p>
+      <h2 id="cq-objective-title" tabindex="-1">Qual è il tuo obiettivo?</h2>
+      <div class="cq-options cq-objectives" role="radiogroup" aria-labelledby="cq-objective-title">
+        {objectives.map((objective, index) => <label class="cq-option cq-objective">
+          <input type="radio" name={objectiveName} value={objective.title} required />
+          <span class="cq-option-content"><LandingBookingIcon name={isOrtho ? ['aligner', 'person', 'tooth', 'talk'][index] : ['gum', 'tooth', 'tooth', 'calendar'][index]} /><span>{objective.title}</span></span><i aria-hidden="true"></i>
+        </label>)}
+      </div>
+    </section>
+
+    {firstQuestions.map(question => <section class="cq-step" hidden data-cq-step data-cq-key={question.key}>
+      <p class="cq-kicker">{question.label}</p>
+      <h2 id={`cq-${question.key}-title`} tabindex="-1">{question.title}</h2>
+      {isOrtho && <p class="cq-description">Scegli l’immagine più vicina al tuo caso. Se hai dubbi, seleziona “Altro”.<br /><small>Illustrazioni indicative, senza valore diagnostico.</small></p>}
+      {!isOrtho && question.key === 'duration' && <p class="cq-description">Se non hai notato segnali particolari, seleziona “Non saprei indicarlo”.</p>}
+      <div class:list={['cq-options', isOrtho && 'cq-pictures']} role="radiogroup" aria-labelledby={`cq-${question.key}-title`}>
+        {question.options.map(option => <label class:list={['cq-option', { 'cq-option-other': isOrtho && option.value === 'Altro' }]}>
+          <input type="radio" name={question.name} value={option.value} required />
+          <span class="cq-option-content">
+            {isOrtho && question.kind && option.value !== 'Altro' && <span class="cq-arch"><OrthodonticArchDiagram variant={'illustration' in option ? option.illustration : 'other'} kind={question.kind} /></span>}
+            <span>{option.value}</span>
+          </span><i aria-hidden="true"></i>
+        </label>)}
+      </div>
+    </section>)}
+
+    <section class="cq-step cq-information" hidden data-cq-step data-cq-key="information">
+      <p class="cq-kicker">La valutazione</p>
+      <h2 id="cq-information-title" tabindex="-1" data-cq-recommendation-title>{isOrtho ? <Fragment>Ogni sorriso ha la sua storia.<br />Un percorso nasce dalla valutazione.</Fragment> : periodontalRecommendation.title}</h2>
+      <p class="cq-description" data-cq-recommendation-text>{isOrtho ? orthoRecommendation.text : periodontalRecommendation.text}</p>
+      {isOrtho ? <>
+        <div class="cq-clinical-case" role="group" aria-label="Esempio dello studio: prima e dopo il trattamento" data-cq-case>
+          <figure><img src={orthoRecommendation.before.src} alt={orthoRecommendation.before.alt} width="600" height="300" loading="lazy" decoding="async" data-cq-before /><figcaption>Prima</figcaption></figure>
+          <figure><img src={orthoRecommendation.after.src} alt={orthoRecommendation.after.alt} width="600" height="300" loading="lazy" decoding="async" data-cq-after /><figcaption>Dopo</figcaption></figure>
+        </div>
+        <p class="cq-field-note" data-cq-caption>{orthoRecommendation.caseCaption}</p>
+      </> : <>
+        <figure class="cq-assessment" data-cq-assessment><img src={periodontalRecommendation.image.src} alt={periodontalRecommendation.image.alt} width={periodontalRecommendation.image.width} height={periodontalRecommendation.image.height} loading="lazy" decoding="async" /></figure>
+        <div class="cq-clinical-case" role="group" aria-label="Esempio dello studio: prima e dopo un trattamento delle recessioni gengivali" hidden data-cq-case>
+          <figure><img src={recessionExample.before?.src} alt={recessionExample.before?.alt} width="600" height="352" loading="lazy" decoding="async" data-cq-before /><figcaption>Prima</figcaption></figure>
+          <figure><img src={recessionExample.after?.src} alt={recessionExample.after?.alt} width="600" height="352" loading="lazy" decoding="async" data-cq-after /><figcaption>Dopo</figcaption></figure>
+        </div>
+        <p class="cq-field-note" data-cq-caption>{periodontalRecommendation.visualCaption}</p>
+      </>}
+    </section>
+
+    <section class="cq-step" hidden data-cq-step data-cq-key="name">
+      <p class="cq-kicker">Introduzione</p>
+      <h2 id="cq-name-title" tabindex="-1">Ciao! {isOrtho ? 'Parliamo del tuo sorriso.' : 'Prendiamoci cura delle tue gengive.'}<br />Come ti chiami?</h2>
+      <label class="cq-line-field"><span class="cq-sr-only">Nome e cognome</span><input name="fullName" type="text" placeholder="Il tuo nome e cognome…" autocomplete="name" minlength="2" maxlength="120" required /></label>
+      <p class="cq-field-note">Per un minorenne, inserisci il nome del genitore o del tutore.</p>
+    </section>
+
+    {!isOrtho && <section class="cq-step" hidden data-cq-step data-cq-key="current-problem">
+      <p class="cq-kicker">Il problema attuale</p>
+      <h2 id="cq-current-problem-title" tabindex="-1">Piacere, <span data-cq-name></span>.<br />Quale problema vorresti affrontare?</h2>
+      <div class="cq-options" role="radiogroup" aria-labelledby="cq-current-problem-title">
+        {landingBookingTreatments.parodontologia.options.map(option => <label class="cq-option"><input type="radio" name="problem" value={option.value} required /><span class="cq-option-content"><span>{option.label}</span><small>{option.description}</small></span><i aria-hidden="true"></i></label>)}
+      </div>
+    </section>}
+
+    <section class="cq-step" hidden data-cq-step data-cq-key="age">
+      <p class="cq-kicker">Il paziente</p>
+      <h2 id="cq-age-title" tabindex="-1">Qual è l’età del paziente?</h2>
+      <p class="cq-description">Puoi richiedere la visita per te o per tuo figlio o tua figlia.</p>
+      <div class="cq-options" role="radiogroup" aria-labelledby="cq-age-title">
+        {quizConsultationAges.map(age => <label class="cq-option"><input type="radio" name="ageRange" value={age} required /><span class="cq-option-content"><span>{age}</span></span><i aria-hidden="true"></i></label>)}
+      </div>
+    </section>
+
+    <section class="cq-step" hidden data-cq-step data-cq-key="office">
+      <p class="cq-kicker">Lo studio</p>
+      <h2 id="cq-office-title" tabindex="-1">In quale studio vorresti venire?</h2>
+      <div class="cq-options" role="radiogroup" aria-labelledby="cq-office-title">
+        {site.offices.map(office => <label class="cq-option"><input type="radio" name="office" value={office.city} required /><span class="cq-option-content"><span>{office.city}</span></span><i aria-hidden="true"></i></label>)}
+      </div>
+    </section>
+
+    <section class="cq-step" hidden data-cq-step data-cq-key="contact">
+      <p class="cq-kicker">Contatto</p>
+      <h2 id="cq-contact-title" tabindex="-1">Ottimo. A quale numero possiamo ricontattarti?</h2>
+      <label class="cq-line-field"><span class="cq-sr-only">Numero di cellulare</span><input name="phone" type="tel" placeholder="Numero di cellulare…" autocomplete="tel" inputmode="tel" minlength="6" maxlength="30" required /></label>
+      <label class="cq-line-field cq-email-field"><span class="cq-sr-only">Email (facoltativa)</span><input name="email" type="email" placeholder="Email (facoltativa)…" autocomplete="email" inputmode="email" maxlength="254" autocapitalize="none" spellcheck="false" /></label>
+      <p class="cq-field-note">Useremo i recapiti per gestire la tua richiesta. Per un minorenne, indica quelli del genitore o del tutore.</p>
+    </section>
+
+    <section class="cq-step" hidden data-cq-step data-cq-key="confirmation">
+      <p class="cq-kicker">Conferma</p>
+      <h2 id="cq-confirmation-title" tabindex="-1">Il primo passo è fatto.<br />Ci sentiamo presto.</h2>
+      <p class="cq-description">Controlla i tuoi dati e invia la richiesta. La segreteria ti ricontatterà per concordare giorno e orario della visita.</p>
+      <dl class="cq-summary" data-cq-summary></dl>
+      <BookingPrivacy />
+      <p class="cq-field-note">Il questionario raccoglie le tue esigenze. Il trattamento viene definito solo dopo una valutazione clinica.</p>
+    </section>
+
+    <p class="cq-error" role="alert" data-cq-error></p>
+    <div class="cq-actions">
+      <button class="cq-back" type="button" data-cq-back hidden><span aria-hidden="true">‹</span> Indietro</button>
+      <button class="cq-next" type="button" data-cq-next disabled>Avanti <span aria-hidden="true">→</span></button>
+      <button class="cq-next" type="submit" hidden>Invia la richiesta <span aria-hidden="true">→</span></button>
+    </div>
+    <p class="cq-enter-hint" data-cq-enter>premi <kbd>Invio ↵</kbd></p>
+  </form>
+</dialog>
+
+<script>
+  import { bindQuizConsultation } from '../utils/quizConsultation';
+  bindQuizConsultation();
+</script>

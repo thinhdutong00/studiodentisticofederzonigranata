@@ -53,7 +53,6 @@ export function bindLandingBooking() {
     const heading = steps[index].querySelector<HTMLHeadingElement>('h2')!;
     dialog.setAttribute('aria-labelledby', heading.id);
     dialog.querySelector<HTMLElement>('[data-lb-sidebar-title]')!.textContent = steps[index].dataset.title!;
-    dialog.querySelector<HTMLElement>('[data-lb-counter]')!.textContent = `Passaggio ${index + 1} di ${steps.length}`;
     error.textContent = '';
     updateNavigation();
     if (index === steps.length - 1) updateSummary();
