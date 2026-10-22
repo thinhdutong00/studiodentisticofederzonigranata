@@ -36,7 +36,7 @@ const facts = [
     <p class="treatment-hero-eyebrow">{isOrthodontic ? 'Ortodonzia · Modena e Reggio Emilia' : periodontalHero.eyebrow}</p>
     <h1 id="landing-title">{isOrthodontic ? 'Il tuo nuovo sorriso,' : periodontalHero.titleLead}<br /><span>{isOrthodontic ? 'Inizia da te.' : periodontalHero.titleEmphasis}</span></h1>
     <p class="treatment-hero-lead">
-      {isOrthodontic ? <>Scegli un percorso pensato per il <strong>tuo sorriso.</strong><br class="treatment-hero-desktop-break" /> Allineatori trasparenti e apparecchi ortodontici, con un piano su misura e un team che ti segue. Dalla prima visita alla contenzione.</> : periodontalHero.descriptionParts.map(part => part.emphasis ? <strong>{part.text}</strong> : part.text)}
+      {isOrthodontic ? <>Allinea i tuoi denti con gli allineatori trasparenti <strong>Invisalign®</strong>, apparecchi tradizionali o linguali. Scopri il percorso ortodontico più adatto a te, pensato per la tua salute e funzionalità orale.</> : periodontalHero.descriptionParts.map(part => part.emphasis ? <strong>{part.text}</strong> : part.text)}
     </p>
     <button class="treatment-hero-button" type="button" data-landing-booking-open aria-haspopup="dialog" aria-controls="landing-booking-dialog">Inizia il trattamento <span aria-hidden="true">→</span></button>
     <div class="treatment-hero-trust">
