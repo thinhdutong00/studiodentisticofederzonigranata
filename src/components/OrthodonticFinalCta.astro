@@ -1,0 +1,39 @@
+---
+import { landingBookingTreatments } from '../data/landingBooking.js';
+const requestHref = `/richiesta/?trattamento=${encodeURIComponent(landingBookingTreatments.ortodonzia.requestTreatment)}`;
+---
+
+<section class="ortho-final-invitation" id="ortho-final" aria-labelledby="ortho-consultation-title">
+  <div class="invitation-content">
+    <p class="invitation-kicker">Il primo passo è una visita</p>
+    <h2 id="ortho-consultation-title">Dai spazio al tuo sorriso.<br /><span>Inizia con noi.</span></h2>
+    <p class="invitation-description">Raccontaci cosa desideri migliorare.<br />Ti aiutiamo a capire da dove cominciare.</p>
+    <button class="invitation-button" type="button" data-landing-booking-open aria-haspopup="dialog" aria-controls="landing-booking-dialog">Richiedi una visita <span aria-hidden="true">→</span></button>
+    <small class="invitation-note">Poche domande · Richiesta di ricontatto senza impegno</small>
+    <noscript><p><a href={requestHref}>Compila la richiesta di visita</a> oppure chiama lo studio.</p></noscript>
+  </div>
+</section>
+
+<style>
+  :global(.ortho-unified) #ortho-final.ortho-final-invitation { padding: 104px 0; background: var(--soft-blue-bg); color: var(--text-dark); text-align: center; }
+  .invitation-content { width: min(100% - 64px, 1280px); margin-inline: auto; }
+  .invitation-kicker { margin: 0 0 14px; color: var(--brand-cta); font-size: 12px; font-weight: 600; line-height: 1.55; letter-spacing: .5px; text-transform: uppercase; }
+  .invitation-content h2 { margin: 0; color: var(--text-dark); font-family: Inter, sans-serif; font-size: clamp(40px, 5.2vw, 68px); font-weight: 500; line-height: 1.08; letter-spacing: -2.8px; text-wrap: balance; }
+  .invitation-content h2 span { color: var(--brand-cta); }
+  .invitation-description { margin: 28px 0 32px; color: var(--muted-text); font-size: 20px; font-weight: 400; line-height: 1.55; }
+  .invitation-button { display: inline-flex; align-items: center; justify-content: center; gap: 18px; min-height: 60px; padding: 20px 32px; border: 0; border-radius: 999px; background: var(--brand-cta); color: var(--surface-white); font: inherit; font-size: 16px; font-weight: 500; line-height: 20px; text-transform: none; cursor: pointer; transition: background .2s, transform .2s; }
+  .invitation-button span { font-size: 23px; line-height: 18px; }
+  .invitation-button:hover { background: var(--brand-cta-hover); transform: translateY(-2px); }
+  .invitation-button:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 5px; }
+  .invitation-note { display: block; margin-top: 20px; color: var(--muted-text); font-size: 10px; line-height: 1.55; letter-spacing: .5px; text-transform: uppercase; }
+  @media (max-width: 720px) {
+    :global(.ortho-unified) #ortho-final.ortho-final-invitation { padding-block: 76px; }
+    .invitation-content { width: calc(100% - 40px); }
+    .invitation-content h2 { font-size: 42px; letter-spacing: -1.7px; }
+    .invitation-description { font-size: 17px; }
+    .invitation-note { font-size: 9px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .invitation-button { transition: none; }
+  }
+</style>

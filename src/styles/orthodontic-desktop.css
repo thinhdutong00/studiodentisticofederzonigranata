@@ -156,7 +156,6 @@
   .ortho-landing-main.ortho-unified #percorso-ortodontico .ortho-intro-heading { width: 100%; justify-items: start; }
   .ortho-landing-main.ortho-unified #percorso-ortodontico :is(.ortho-eyebrow, .ortho-intro-lead, .ortho-personalized-steps) { display: none; }
   .ortho-landing-main.ortho-unified .ortho-personalized-title-mobile { display: inline; }
-  .ortho-landing-main.ortho-unified #ortho-personalized-title { max-width: none; margin: 0; color: var(--brand-primary-dark); font-size: 36px; font-weight: 700; line-height: 1.15; }
   .ortho-landing-main.ortho-unified #percorso-ortodontico .ortho-professional { grid-column: 1; grid-row: 2; display: grid; grid-template-columns: 190px minmax(0, 1fr); align-items: start; gap: 28px; width: 100%; max-width: none; margin: 0; padding: 0; border: 0; background: transparent; text-align: left; }
   .ortho-landing-main.ortho-unified #percorso-ortodontico .ortho-professional > img { width: 190px; height: 252px; border-radius: 16px; object-fit: cover; object-position: 50% 25%; }
   .ortho-landing-main.ortho-unified #percorso-ortodontico .ortho-professional h3 { margin: 0; color: var(--brand-primary-dark); font-size: 26px; font-weight: 600; line-height: 1.2; }

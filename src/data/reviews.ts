@@ -27,6 +27,7 @@ const getInitials = (name: string) => {
 const rawPatientReviews: RawPatientReview[] = [
   {
     author: 'Francesca Tassinari',
+    avatar: '/assets/reviews/francesca-tassinari.png',
     rating: 5,
     relativeTime: '6 giorni fa',
     text: 'Gentili, cordiali e super professionali sia con adulti che con bambini. Siamo clienti da ben 25 anni: il top.',

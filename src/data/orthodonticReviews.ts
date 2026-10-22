@@ -1,6 +1,7 @@
 export interface OrthodonticReview {
   author: string;
   initials: string;
+  avatar?: string;
   rating: number;
   treatment: string;
   office: 'Modena' | 'Reggio Emilia';
@@ -32,6 +33,7 @@ export const orthodonticReviews: OrthodonticReview[] = [
   {
     author: 'Emilio Spanghero',
     initials: 'ES',
+    avatar: '/assets/reviews/emilio-spanghero.png',
     rating: 5,
     treatment: 'Percorso ortodontico',
     office: 'Reggio Emilia',

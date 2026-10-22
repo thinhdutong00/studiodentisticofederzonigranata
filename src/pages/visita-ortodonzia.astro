@@ -8,7 +8,7 @@ import OrthodonticLinkArrow from '../components/OrthodonticLinkArrow.astro';
 import OrthodonticProfessionalSheet from '../components/OrthodonticProfessionalSheet.astro';
 import OrthodonticSmileCarousel from '../components/OrthodonticSmileCarousel.astro';
 import OrthodonticAgeSection from '../components/OrthodonticAgeSection.astro';
-import LandingBookingCta from '../components/LandingBookingCta.astro';
+import OrthodonticFinalCta from '../components/OrthodonticFinalCta.astro';
 import LandingTreatmentHero from '../components/LandingTreatmentHero.astro';
 import LandingBookingDialog from '../components/LandingBookingDialog.astro';
 import OrthodonticLandingHeader from '../components/OrthodonticLandingHeader.astro';
@@ -215,18 +215,17 @@ const structuredData = {
 
     <a class="ortho-skip-link" href="#contenuto">Vai al contenuto</a>
     <main id="contenuto" tabindex="-1">
-      <LandingTreatmentHero treatment="ortodonzia" reviewInitials={orthodonticReviews.map(review => review.initials)} />
+      <LandingTreatmentHero treatment="ortodonzia" reviewers={orthodonticReviews} />
 
       <OrthodonticAgeSection />
 
       <OrthodonticIntroduction>
-        <Fragment slot="personalized-title">Il tuo sorriso merita esperienza.</Fragment>
         <Fragment slot="before-first-visit">
           <section class="ortho-experience-mobile" id="esperienza-studio" aria-labelledby="ortho-experience-over ortho-experience-title">
             <div class="ortho-shell">
               <p class="ortho-experience-over" id="ortho-experience-over">Studio Dentistico Federzoni Granata</p>
               <h2 class="ortho-experience-years" id="ortho-experience-title"><span class="ortho-experience-number">35</span> anni di attività, al servizio del tuo sorriso.</h2>
-              <img class="ortho-experience-photo" src="/assets/optimized/ortodonzia-sorriso-specchio-720.webp" srcset="/assets/optimized/ortodonzia-sorriso-specchio-720.webp 720w, /assets/optimized/ortodonzia-sorriso-specchio-1440.webp 1440w" sizes="(max-width: 720px) calc(100vw - 68px), (max-width: 978px) 92vw, 900px" alt="Paziente che osserva il proprio sorriso allo specchio durante una visita nello studio" width="720" height="480" loading="lazy" decoding="async" />
+              <img class="ortho-experience-photo" src="/assets/optimized/ortodonzia-visita-studio-720.webp" srcset="/assets/optimized/ortodonzia-visita-studio-720.webp 720w, /assets/optimized/ortodonzia-visita-studio-1440.webp 1440w, /assets/optimized/ortodonzia-visita-studio-1920.webp 1920w" sizes="(max-width: 720px) calc(100vw - 68px), (max-width: 978px) 92vw, 900px" alt="Professionista dello Studio Federzoni Granata durante una visita odontoiatrica" width="720" height="480" loading="lazy" decoding="async" />
             </div>
           </section>
           <OrthodonticSmileCarousel />
@@ -238,7 +237,7 @@ const structuredData = {
           <aside class="ortho-professional" aria-label="La professionista">
             <img src="/assets/optimized/chiara-federzoni-ortodonzia-720.webp" alt="Dottoressa Chiara Federzoni, odontoiatra dello Studio Federzoni Granata" width="720" height="479" loading="lazy" decoding="async" />
             <div>
-              <h3>Dott.ssa Chiara Federzoni</h3>
+              <h3><span class="ortho-professional-prefix">Dott.ssa</span> Chiara Federzoni</h3>
               <p>Da oltre 30 anni si occupa di ortodonzia, accompagnando i pazienti attraverso percorsi personalizzati. Laureata con lode in Odontoiatria a Modena nel 1987.</p>
               <a class="ortho-text-link ortho-professional-desktop-link" href="/chi-siamo/">Formazione e percorso professionale <OrthodonticLinkArrow /></a>
               <button class="ortho-text-link ortho-professional-mobile-trigger" type="button" aria-haspopup="dialog" aria-controls="ortho-professional-sheet" aria-expanded="false" data-ortho-professional-open>Formazione e percorso professionale <OrthodonticLinkArrow /></button>
@@ -249,7 +248,7 @@ const structuredData = {
 
       <LandingPatientReviews reviews={reviews} mobileCarousel conceptCarousel mobilePopupReviews={orthodonticReviews}>
         <Fragment slot="eyebrow"><span class="ortho-review-eyebrow-desktop">Esperienze dei pazienti</span></Fragment>
-        <Fragment slot="title"><span class="ortho-review-title-mobile"><strong class="ortho-review-title-emphasis">Esperienze</strong> di chi ci ha scelto</span></Fragment>
+        <Fragment slot="title"><span class="ortho-review-title-mobile"><strong class="ortho-review-title-emphasis">Dicono</strong> di noi</span></Fragment>
         <button slot="after-heading" class="ortho-reviews-more" type="button" data-review-sheet-trigger>Leggi di più</button>
         <p slot="after-carousel" class="ortho-review-proof-caption">+ di 200 persone hanno lasciato una recensione positiva con una media di 4,9 stelle</p>
       </LandingPatientReviews>
@@ -281,9 +280,7 @@ const structuredData = {
         </div>
       </section>
 
-      <section class="ortho-section ortho-final ortho-final-with-instruments" id="ortho-final" aria-labelledby="ortho-consultation-title">
-        <LandingBookingCta treatment="ortodonzia" />
-      </section>
+      <OrthodonticFinalCta />
     </main>
 
     <div id="contatti-studio">

@@ -308,10 +308,13 @@ import { periodontalProcessSteps as firstVisitSteps } from '../data/periodontalL
       margin: 0;
       grid-column: 2;
       grid-row: 1;
-      font-size: 20px;
+      font-size: clamp(22px, 6vw, 28px);
       font-weight: 600;
       line-height: 1.25;
     }
+
+    .ortho-personalized-path :global(.ortho-professional-prefix) { display: block; }
+    .ortho-professional-card { padding-inline: 0; }
 
     .ortho-personalized-path :global(.ortho-professional p) {
       grid-column: 1 / -1;
@@ -514,6 +517,10 @@ import { periodontalProcessSteps as firstVisitSteps } from '../data/periodontalL
       line-height: 16px;
       text-align: center;
     }
+  }
+
+  @media (max-width: 360px) {
+    .ortho-personalized-path :global(.ortho-professional h3) { grid-column: 1 / -1; grid-row: 2; }
   }
 
   @media (max-width: 720px) and (prefers-reduced-motion: reduce) {

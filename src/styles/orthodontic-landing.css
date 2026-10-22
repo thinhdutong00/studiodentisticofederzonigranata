@@ -51,7 +51,8 @@ body.ortho-landing .treatment-sticky-cta[data-treatment-sticky-cta] a:focus-visi
 }
 .ortho-shell { width: min(1180px, calc(100% - 64px)); margin: 0 auto; }
 .ortho-landing-main { --ortho-main-text-gutter: clamp(28px, 4vw, 56px); --ortho-main-shell-width: min(1648px, calc(100% - var(--ortho-main-text-gutter) - var(--ortho-main-text-gutter))); }
-.ortho-landing-main main :is(.ortho-shell, .landing-shell:not(.landing-hero-shell), .locations-layout) { width: var(--ortho-main-shell-width); margin-inline: var(--ortho-main-text-gutter) auto; }
+/* Keep the legacy shell below viewport-specific layouts, regardless of bundled CSS order. */
+.ortho-landing-main main :where(.ortho-shell, .landing-shell:not(.landing-hero-shell), .locations-layout) { width: var(--ortho-main-shell-width); margin-inline: var(--ortho-main-text-gutter) auto; }
 .ortho-landing-main main .locations-copy { padding-inline-start: 0; }
 @media (max-width: 760px) {
   .ortho-landing-main { --ortho-main-text-gutter: calc(12px + clamp(28px, 4vw, 56px)); }

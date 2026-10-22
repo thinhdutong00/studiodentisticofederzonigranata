@@ -12,11 +12,20 @@ export const periodontalHero = {
   titleLead: 'Gengive più sane.',
   titleEmphasis: 'Proteggi i tuoi denti naturali.',
   title: 'Gengive più sane. Proteggi i tuoi denti naturali.',
-  descriptionLead: 'Sanguinamento, gengive ritirate o denti meno stabili? ',
-  descriptionEmphasis: 'Capire la causa è il primo passo',
-  descriptionTail: ' per prenderci cura delle tue gengive e dei tuoi denti, con un percorso personalizzato di terapia e mantenimento.',
+  descriptionParts: [
+    { text: 'Sanguinamento', emphasis: true },
+    { text: ', ' },
+    { text: 'gengive ritirate', emphasis: true },
+    { text: ' o ' },
+    { text: 'denti meno stabili', emphasis: true },
+    { text: '? ' },
+    { text: 'Prenditi' },
+    { text: ' cura delle tue gengive e dei tuoi denti, con il nostro efficace percorso ' },
+    { text: 'salvadenti', emphasis: true },
+    { text: '.' },
+  ],
   description:
-    'Sanguinamento, gengive ritirate o denti meno stabili? Capire la causa è il primo passo per prenderci cura delle tue gengive e dei tuoi denti, con un percorso personalizzato di terapia e mantenimento.',
+    'Sanguinamento, gengive ritirate o denti meno stabili? Prenditi cura delle tue gengive e dei tuoi denti, con il nostro efficace percorso salvadenti.',
   ctaLabel: 'Prenota una visita parodontale',
 };
 
@@ -33,7 +42,7 @@ export const periodontalProcessSteps = [
   },
   {
     title: 'Curiamo e rivalutiamo le gengive',
-    text: 'Trattiamo le aree che ne hanno bisogno, anche sotto gengiva. Poi controlliamo la risposta alla terapia per capire se sono necessarie altre cure.',
+    text: 'Trattiamo le aree che ne hanno bisogno, anche sotto gengiva, per rallentare o arrestare la progressione della patologia.',
     icon: 'therapy',
   },
   {
