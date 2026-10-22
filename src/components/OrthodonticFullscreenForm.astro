@@ -1,0 +1,183 @@
+---
+import BookingFields from './BookingFields.astro';
+import BookingPrivacy from './BookingPrivacy.astro';
+import { site } from '../data/site';
+import { consultationObjectives, consultationAges } from '../data/orthodonticConsultation';
+
+const choices = [
+  { number: 2, label: 'Obiettivo', name: 'problem', title: 'Cosa ti piacerebbe valutare?', options: consultationObjectives },
+  { number: 3, label: 'Il paziente', name: 'ageRange', title: 'Qual è l’età del paziente?', options: consultationAges },
+  { number: 4, label: 'Lo studio', name: 'office', title: 'In quale studio vorresti venire?', options: site.offices.map(office => office.city) },
+];
+---
+
+<dialog class="oc-form-dialog" id="oc-consultation" aria-labelledby="oc-step-title-1" data-oc-dialog>
+  <header class="oc-form-header">
+    <img src={site.logo} alt={site.name} width="400" height="52" />
+    <button class="oc-icon-button" type="button" data-oc-close aria-label="Chiudi il questionario"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6" /></svg></button>
+  </header>
+  <div class="oc-form-progress" role="progressbar" aria-label="Avanzamento del questionario" aria-valuemin="0" aria-valuemax="6" aria-valuenow="1" data-oc-progress><span></span></div>
+
+  <form class="oc-form" action="/api/booking" method="post" novalidate autocomplete="on" data-booking-kind="callback" data-oc-form>
+    <BookingFields />
+    <input type="hidden" name="treatment" value="Ortodonzia e allineatori" />
+    <input type="hidden" name="message" value="Richiesta di visita ortodontica dalla landing /visita-trattamento-ortondonzia/. Le risposte indicano preferenze, non una diagnosi." />
+
+    <section class="oc-form-step" data-oc-step>
+      <p class="oc-step-kicker"><span>01</span><i></i> Introduzione</p>
+      <h2 id="oc-step-title-1" tabindex="-1">Ciao! Parliamo del tuo sorriso.<br />Come ti chiami?</h2>
+      <label class="oc-line-field"><span class="oc-sr-only">Nome e cognome</span><input name="fullName" type="text" placeholder="Il tuo nome e cognome…" autocomplete="name" minlength="2" maxlength="120" required /></label>
+      <p class="oc-field-note">Per un minorenne, inserisci il nome del genitore o del tutore.</p>
+    </section>
+
+    {choices.map(choice => <section class="oc-form-step" data-oc-step hidden>
+      <p class="oc-step-kicker"><span>{String(choice.number).padStart(2, '0')}</span><i></i> {choice.label}</p>
+      <h2 id={`oc-step-title-${choice.number}`} tabindex="-1">{choice.number === 2 && <Fragment>Piacere, <span data-oc-name></span>.<br /></Fragment>}{choice.title}</h2>
+      {choice.number === 3 && <p class="oc-form-description">Puoi richiedere la visita per te o per tuo figlio o tua figlia.</p>}
+      <div class="oc-form-options" role="radiogroup" aria-labelledby={`oc-step-title-${choice.number}`}>
+        {choice.options.map(option => <label class="oc-form-option"><input type="radio" name={choice.name} value={option} required /><span>{option}</span><i aria-hidden="true"></i></label>)}
+      </div>
+    </section>)}
+
+    <section class="oc-form-step" data-oc-step hidden>
+      <p class="oc-step-kicker"><span>05</span><i></i> Contatto</p>
+      <h2 id="oc-step-title-5" tabindex="-1">Ottimo. A quale numero possiamo ricontattarti?</h2>
+      <label class="oc-line-field"><span class="oc-sr-only">Numero di cellulare</span><input name="phone" type="tel" placeholder="Numero di cellulare…" autocomplete="tel" inputmode="tel" minlength="6" maxlength="30" required /></label>
+      <label class="oc-line-field oc-email-field"><span class="oc-sr-only">Email (facoltativa)</span><input name="email" type="email" placeholder="Email (facoltativa)…" autocomplete="email" inputmode="email" maxlength="254" autocapitalize="none" spellcheck="false" /></label>
+      <p class="oc-field-note">Useremo i recapiti per gestire la tua richiesta. Per un minorenne, indica quelli del genitore o del tutore.</p>
+    </section>
+
+    <section class="oc-form-step" data-oc-step hidden>
+      <p class="oc-step-kicker"><span>06</span><i></i> Conferma</p>
+      <h2 id="oc-step-title-6" tabindex="-1">Il primo passo è fatto.<br />Ci sentiamo presto.</h2>
+      <p class="oc-form-description">Controlla i tuoi dati e invia la richiesta. La segreteria ti ricontatterà per concordare giorno e orario della visita.</p>
+      <dl class="oc-form-summary" data-oc-summary></dl>
+      <BookingPrivacy />
+      <p class="oc-field-note">Il questionario raccoglie le tue preferenze. Il trattamento viene definito solo dopo una valutazione clinica.</p>
+    </section>
+
+    <p class="oc-form-error" role="alert" data-oc-error></p>
+    <div class="oc-form-actions">
+      <button class="oc-form-back" type="button" data-oc-back hidden><span aria-hidden="true">‹</span> Indietro</button>
+      <button class="oc-button" type="button" data-oc-next disabled>Avanti <span aria-hidden="true">→</span></button>
+      <button class="oc-button" type="submit" hidden>Invia la richiesta <span aria-hidden="true">→</span></button>
+    </div>
+    <p class="oc-enter-hint" data-oc-enter>premi <kbd>Invio ↵</kbd></p>
+  </form>
+</dialog>
+
+<script>
+  import { submitBooking } from '../utils/submitBooking';
+  import { captureAttribution } from '../utils/attribution';
+  captureAttribution();
+
+  const dialog = document.querySelector<HTMLDialogElement>('[data-oc-dialog]');
+  const form = dialog?.querySelector<HTMLFormElement>('[data-oc-form]');
+  if (dialog && form) {
+    const steps = Array.from(form.querySelectorAll<HTMLElement>('[data-oc-step]'));
+    const next = form.querySelector<HTMLButtonElement>('[data-oc-next]')!;
+    const back = form.querySelector<HTMLButtonElement>('[data-oc-back]')!;
+    const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const error = form.querySelector<HTMLElement>('[data-oc-error]')!;
+    const progress = dialog.querySelector<HTMLElement>('[data-oc-progress]')!;
+    const summary = form.querySelector<HTMLElement>('[data-oc-summary]')!;
+    let current = 0;
+    let opener: HTMLElement | null = null;
+
+    function stepIsValid(index: number) {
+      const fields = Array.from(steps[index].querySelectorAll<HTMLInputElement>('input'));
+      return fields.every(field => field.validity.valid && (!field.required || field.type === 'radio' || field.type === 'checkbox' || field.value.trim().length >= (field.minLength > 0 ? field.minLength : 1)))
+        && (index !== 4 || (/^[+\d\s()./-]{6,30}$/.test((form!.elements.namedItem('phone') as HTMLInputElement).value) && (form!.elements.namedItem('phone') as HTMLInputElement).value.replace(/\D/g, '').length >= 6));
+    }
+
+    function updateNext() { next.disabled = !stepIsValid(current); }
+
+    function updateSummary() {
+      const data = new FormData(form!);
+      const labels = [['Nome', 'fullName'], ['Interesse', 'problem'], ['Età del paziente', 'ageRange'], ['Studio', 'office'], ['Telefono', 'phone'], ['Email', 'email']];
+      summary.replaceChildren();
+      labels.forEach(([label, name]) => {
+        const value = String(data.get(name) || '');
+        if (!value) return;
+        const row = document.createElement('div');
+        const term = document.createElement('dt');
+        const description = document.createElement('dd');
+        term.textContent = label;
+        description.textContent = value;
+        row.append(term, description);
+        summary.append(row);
+      });
+    }
+
+    function showStep(index: number, focus = true) {
+      current = index;
+      steps.forEach((step, i) => { step.hidden = i !== current; });
+      const title = steps[current].querySelector<HTMLHeadingElement>('h2')!;
+      dialog!.setAttribute('aria-labelledby', title.id);
+      progress.setAttribute('aria-valuenow', String(current + 1));
+      progress.setAttribute('aria-valuetext', `Passaggio ${current + 1} di ${steps.length}`);
+      progress.style.setProperty('--progress', `${((current + 1) / steps.length) * 100}%`);
+      back.hidden = current === 0;
+      next.hidden = current === steps.length - 1;
+      submit.hidden = current !== steps.length - 1;
+      form!.querySelector<HTMLElement>('[data-oc-enter]')!.hidden = current === steps.length - 1;
+      const name = (form!.elements.namedItem('fullName') as HTMLInputElement).value.trim().split(/\s+/)[0];
+      form!.querySelector<HTMLElement>('[data-oc-name]')!.textContent = name;
+      error.textContent = '';
+      if (current === steps.length - 1) updateSummary();
+      updateNext();
+      dialog!.scrollTop = 0;
+      if (focus) {
+        if ([0, 4].includes(current)) steps[current].querySelector<HTMLInputElement>('input')?.focus({ preventScroll: true });
+        else title.focus({ preventScroll: true });
+      }
+    }
+
+    document.querySelectorAll<HTMLElement>('[data-oc-open]').forEach(button => {
+      button.addEventListener('click', () => {
+        opener = button;
+        const objective = button.dataset.ocObjective;
+        if (objective) {
+          form.querySelectorAll<HTMLInputElement>('input[name="problem"]').forEach(input => { input.checked = input.value === objective; });
+        }
+        document.querySelectorAll<HTMLDialogElement>('[data-oc-solution-dialog]').forEach(detail => { if (detail.open) detail.close(); });
+        dialog.showModal();
+        document.body.classList.add('oc-dialog-open');
+        showStep(current);
+      });
+    });
+
+    dialog.querySelector('[data-oc-close]')?.addEventListener('click', () => { if (form.getAttribute('aria-busy') !== 'true') dialog.close(); });
+    dialog.addEventListener('cancel', event => { if (form.getAttribute('aria-busy') === 'true') event.preventDefault(); });
+    dialog.addEventListener('close', () => {
+      document.body.classList.remove('oc-dialog-open');
+      if (opener?.isConnected) {
+        const detail = opener.closest('dialog');
+        if (!detail || (detail as HTMLDialogElement).open) opener.focus();
+        else document.querySelector<HTMLElement>(`[data-oc-solution-open="${detail.id}"]`)?.focus();
+      }
+    });
+    form.addEventListener('input', updateNext);
+    form.addEventListener('change', updateNext);
+    next.addEventListener('click', () => { if (stepIsValid(current) && current < steps.length - 1) showStep(current + 1); });
+    back.addEventListener('click', () => { if (current > 0 && form.getAttribute('aria-busy') !== 'true') showStep(current - 1); });
+    form.addEventListener('keydown', event => {
+      if (event.key !== 'Enter' || event.isComposing || (event.target as HTMLElement).closest('button, a')) return;
+      if (current < steps.length - 1) { event.preventDefault(); next.click(); }
+    });
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      if (current !== steps.length - 1 || form.getAttribute('aria-busy') === 'true') return;
+      const invalid = steps.findIndex((_, index) => !stepIsValid(index));
+      if (invalid !== -1) {
+        showStep(invalid);
+        steps[invalid].querySelector<HTMLInputElement>('input:invalid')?.reportValidity();
+        error.textContent = invalid === steps.length - 1 ? 'Accetta l’informativa privacy per inviare la richiesta.' : 'Controlla i dati inseriti prima di proseguire.';
+        return;
+      }
+      back.disabled = true;
+      await submitBooking(form, message => { error.textContent = message; });
+      back.disabled = false;
+    });
+  }
+</script>

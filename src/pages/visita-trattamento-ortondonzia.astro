@@ -1,0 +1,210 @@
+---
+import CookieBanner from '../components/CookieBanner.astro';
+import OrthodonticFullscreenForm from '../components/OrthodonticFullscreenForm.astro';
+import { site } from '../data/site';
+import { orthodonticReviews } from '../data/orthodonticReviews';
+import { consultationSolutions } from '../data/orthodonticConsultation';
+import '../styles/inter-font.css';
+import '../styles/orthodontic-consultation.css';
+
+const canonicalPath = '/visita-trattamento-ortondonzia/';
+const canonical = new URL(canonicalPath, site.source).toString();
+const title = 'Il tuo percorso di ortodonzia | Studio Federzoni Granata';
+const description = 'Allineatori trasparenti e ortodonzia per adulti, bambini e ragazzi a Modena e Reggio Emilia. Raccontaci le tue esigenze e richiedi una visita ortodontica.';
+const heroImage = '/assets/optimized/ortodonzia-sorriso-specchio-1920.webp';
+const nav = [
+  { href: '#soluzioni', label: 'Soluzioni' }, { href: '#vantaggi', label: 'Vantaggi' },
+  { href: '#come-funziona', label: 'Come funziona' }, { href: '#faq', label: 'FAQ' },
+];
+const benefits = [
+  { icon: 'shield', title: 'Esperienza che ti accompagna', text: 'Da 35 anni ci prendiamo cura del sorriso. Con la Dott.ssa Chiara Federzoni trovi un riferimento per valutare il tuo percorso ortodontico.' },
+  { icon: 'plan', title: 'Scelte spiegate, costi chiari', text: 'Ti presentiamo le alternative indicate per il tuo caso, una stima dei tempi e un preventivo personalizzato. Puoi valutare anche il pagamento frazionato.' },
+  { icon: 'pin', title: 'Vicini, anche durante il percorso', text: 'Due studi, a Modena e Reggio Emilia. Scegli la sede più comoda e concorda con noi visite e controlli.' },
+];
+const method = [
+  { icon: 'plan', title: 'Raccontaci di te', text: 'Rispondi a poche domande e lascia i tuoi recapiti. La segreteria ti contatterà per organizzare la visita.' },
+  { icon: 'smile', title: 'Valutiamo il tuo sorriso', text: 'Ascoltiamo i tuoi obiettivi, valutiamo denti e morso e indichiamo gli eventuali approfondimenti.' },
+  { icon: 'align', title: 'Scegli con chiarezza', text: 'Ti spieghiamo le opzioni adatte, i tempi previsti e i costi. Il percorso comincia dopo una scelta condivisa.' },
+  { icon: 'shield', title: 'Ti seguiamo nel tempo', text: 'Controlli periodici durante il trattamento e indicazioni sulla contenzione per aiutarti a mantenere il risultato.' },
+];
+const faqs = [
+  { question: 'Gli allineatori trasparenti sono adatti al mio caso?', answer: 'Gli allineatori, come Invisalign®, possono essere indicati in molte situazioni, ma non in tutte. La visita permette di valutare la posizione dei denti, il morso e la salute orale e di confrontare le alternative più adatte a te.' },
+  { question: 'Quanto costa un trattamento ortodontico?', answer: 'Il costo dipende dalla situazione iniziale e dal percorso indicato. Dopo la valutazione riceverai un preventivo personalizzato e le informazioni sui pagamenti frazionati disponibili. La segreteria ti fornirà anche le informazioni sul costo della visita prima dell’appuntamento.' },
+  { question: 'Posso iniziare anche se sono adulto?', answer: 'Sì, l’ortodonzia può essere valutata anche in età adulta. La possibilità di iniziare dipende dalla salute dei denti, delle gengive e delle strutture di sostegno. È un aspetto che approfondiamo durante la visita.' },
+  { question: 'Quanto dura il percorso?', answer: 'La durata cambia in base alla complessità del caso, agli spostamenti necessari e al dispositivo scelto. Dopo gli approfondimenti potremo darti una stima realistica dei tempi e spiegarti quali controlli saranno necessari.' },
+  { question: 'Posso richiedere una visita per mio figlio?', answer: 'Certamente. Valutiamo bambini e ragazzi per capire se intervenire o monitorare la crescita. Nel questionario indica l’età del paziente e inserisci il nome e i recapiti del genitore o del tutore che la segreteria può contattare.' },
+  { question: 'Dopo il trattamento serviranno altri dispositivi?', answer: 'Al termine è prevista una fase di contenzione per aiutare a mantenere l’allineamento. Ti spiegheremo come utilizzare i dispositivi indicati e come organizzare i controlli successivi.' },
+];
+const structuredData = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: faqs.map(faq => ({ '@type': 'Question', name: faq.question, acceptedAnswer: { '@type': 'Answer', text: faq.answer } })),
+};
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex,follow" />
+    <meta name="theme-color" content="#10283D" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href="/assets/original/2020/10/cropped-favicon-32x32.png" sizes="32x32" />
+    <link rel="preload" as="font" href="/fonts/inter/inter-latin.woff2" type="font/woff2" crossorigin />
+    <link rel="preload" as="image" href={heroImage} media="(min-width: 721px)" fetchpriority="high" />
+    <link rel="preload" as="image" href="/assets/optimized/ortodonzia-sorriso-studio-720.webp" media="(max-width: 720px)" fetchpriority="high" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(heroImage, site.source).toString()} />
+    <meta property="og:image:alt" content="Una paziente osserva il proprio sorriso nello studio Federzoni Granata" />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g, '\\u003c')}></script>
+  </head>
+  <body class="oc-page">
+    <svg class="oc-svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <symbol id="oc-icon-plan" viewBox="0 0 24 24"><path d="M9 5H6a2 2 0 0 0-2 2v13h16V7a2 2 0 0 0-2-2h-3M9 3h6v4H9zM8 12h8M8 16h5" /></symbol>
+      <symbol id="oc-icon-shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6zM8 12l3 3 5-6" /></symbol>
+      <symbol id="oc-icon-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z" /><circle cx="12" cy="10" r="2.5" /></symbol>
+      <symbol id="oc-icon-smile" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M7 13c1 6 9 6 10 0M8 8h.01M16 8h.01" /></symbol>
+      <symbol id="oc-icon-align" viewBox="0 0 24 24"><path d="M4 4h16v16H4zM8 4v16M16 4v16M4 10h16M4 14h16" /></symbol>
+    </svg>
+    <a class="oc-skip" href="#contenuto">Vai al contenuto</a>
+    <header class="oc-header" data-oc-header>
+      <a class="oc-logo" href="/" aria-label="Studio Federzoni Granata, homepage"><img src={site.logo} alt="Federzoni Granata" width="400" height="52" /></a>
+      <nav class="oc-nav" id="oc-navigation" aria-label="Navigazione della pagina">
+        {nav.map(link => <a href={link.href}>{link.label}</a>)}
+      </nav>
+      <button class="oc-header-cta" type="button" data-oc-open aria-haspopup="dialog" aria-controls="oc-consultation"><span class="oc-desktop-label">Richiedi una visita</span><span class="oc-mobile-label">Prenota</span><span aria-hidden="true">↗</span></button>
+      <button class="oc-menu-toggle oc-icon-button" type="button" data-oc-menu aria-controls="oc-navigation" aria-expanded="false" aria-label="Apri il menu"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg></button>
+    </header>
+
+    <main id="contenuto">
+      <section class="oc-hero" aria-labelledby="oc-title">
+        <picture class="oc-hero-image">
+          <source media="(max-width: 720px)" srcset="/assets/optimized/ortodonzia-sorriso-studio-720.webp" />
+          <img src={heroImage} alt="Una paziente nello Studio Dentistico Federzoni Granata" width="1920" height="1280" loading="eager" fetchpriority="high" />
+        </picture>
+        <div class="oc-hero-content oc-shell">
+          <p class="oc-hero-eyebrow">Ortodonzia · Modena e Reggio Emilia</p>
+          <h1 id="oc-title">Il tuo nuovo sorriso.<br /><span>Inizia da te.</span></h1>
+          <p class="oc-hero-lead">Scegli un percorso pensato per il <strong>tuo sorriso.</strong><br class="oc-desktop-break" /> Allineatori trasparenti e apparecchi ortodontici, con un piano su misura e un team che ti segue. Dalla prima visita alla contenzione.</p>
+          <button class="oc-button oc-hero-cta" type="button" data-oc-open aria-haspopup="dialog" aria-controls="oc-consultation">Trova il tuo percorso <span aria-hidden="true">→</span></button>
+          <div class="oc-hero-trust">
+            <div class="oc-avatars" aria-hidden="true">{orthodonticReviews.map(review => <span>{review.initials}</span>)}</div>
+            <div><span class="oc-stars" aria-label="5 stelle su 5">★★★★★</span><p>Le esperienze dei nostri pazienti <a href="#recensioni">Leggile qui ↗</a></p></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="oc-proof-band">
+        <div class="oc-shell oc-proof-grid">
+          <p><strong>35 anni</strong><span>Al servizio del sorriso</span></p>
+          <p><strong>2 studi</strong><span>Modena e Reggio Emilia</span></p>
+          <p><strong>Ogni età</strong><span>Adulti, bambini e ragazzi</span></p>
+          <p><strong>Su misura</strong><span>Il tuo piano ortodontico</span></p>
+        </div>
+      </div>
+
+      <section class="oc-solutions oc-section" id="soluzioni" aria-labelledby="oc-solutions-title">
+        <div class="oc-shell">
+          <header class="oc-section-heading oc-heading-split">
+            <div><p class="oc-kicker">Le nostre soluzioni</p><h2 id="oc-solutions-title">Un sorriso. Il tuo.</h2></div>
+            <p>Esigenze diverse, percorsi diversi. Troviamo insieme la soluzione per l’allineamento e la funzionalità dei tuoi denti.</p>
+          </header>
+          <div class="oc-bento">
+            {consultationSolutions.map((solution, index) => <button class={`oc-solution oc-solution-${index + 1}`} type="button" data-oc-solution-open={`oc-detail-${solution.id}`} aria-haspopup="dialog" aria-controls={`oc-detail-${solution.id}`}>
+              <img src={`/assets/optimized/${solution.image}`} alt={solution.alt} width="1200" height="800" loading="lazy" decoding="async" />
+              <span class="oc-info">Info <span aria-hidden="true">↗</span></span>
+              <span class="oc-solution-copy"><h3>{solution.title}</h3><span>{solution.description}</span></span>
+            </button>)}
+          </div>
+          <p class="oc-section-note">L’indicazione al trattamento viene definita dopo una valutazione clinica individuale.</p>
+        </div>
+      </section>
+
+      <section class="oc-benefits oc-section" id="vantaggi" aria-labelledby="oc-benefits-title">
+        <div class="oc-shell oc-benefits-layout">
+          <div class="oc-benefits-visual">
+            <img class="oc-benefits-main" src="/assets/optimized/chiara-federzoni-ortodonzia-720.webp" alt="Dott.ssa Chiara Federzoni, odontoiatra dello Studio Federzoni Granata" width="720" height="479" loading="lazy" decoding="async" />
+            <img class="oc-benefits-inset" src="/assets/optimized/ortodonzia-sorriso-specchio-720.webp" alt="Un momento di attenzione al paziente nello studio" width="720" height="480" loading="lazy" decoding="async" />
+            <div class="oc-doctor-caption"><span>Dott.ssa Chiara Federzoni</span><small>Il tuo riferimento per l’ortodonzia</small></div>
+          </div>
+          <div>
+            <p class="oc-kicker">Perché sceglierci</p>
+            <h2 id="oc-benefits-title">Un piano chiaro.<br />Un team vicino.<br /><span>Più serenità.</span></h2>
+            <p class="oc-benefits-intro">Non devi sapere già quale apparecchio scegliere. Partiamo da quello che desideri migliorare e ti aiutiamo a capire come farlo, con attenzione alla tua salute orale.</p>
+            <div class="oc-benefit-list">{benefits.map(benefit => <div class="oc-benefit"><span class="oc-benefit-icon"><svg aria-hidden="true"><use href={`#oc-icon-${benefit.icon}`} /></svg></span><div><h3>{benefit.title}</h3><p>{benefit.text}</p></div></div>)}</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="oc-method oc-section" id="come-funziona" aria-labelledby="oc-method-title">
+        <div class="oc-shell">
+          <header class="oc-section-heading"><p class="oc-kicker">Il metodo</p><h2 id="oc-method-title">Dalla prima domanda.<br />Al tuo percorso.</h2><p>Quattro passaggi per iniziare con consapevolezza.<br />Con i tuoi obiettivi al centro, dall’inizio.</p></header>
+          <div class="oc-method-grid">{method.map((step, index) => <article class="oc-method-card"><div class="oc-method-top"><span class="oc-method-icon"><svg aria-hidden="true"><use href={`#oc-icon-${step.icon}`} /></svg></span><span class="oc-method-number">0{index + 1}</span></div><h3>{step.title}</h3><p>{step.text}</p></article>)}</div>
+        </div>
+      </section>
+
+      <section class="oc-reviews oc-section" id="recensioni" aria-labelledby="oc-reviews-title">
+        <div class="oc-shell">
+          <header class="oc-section-heading oc-centered"><p class="oc-kicker">Le loro parole</p><h2 id="oc-reviews-title">Dicono di noi.</h2><p>Le esperienze di chi ha scelto un percorso ortodontico nei nostri studi.</p></header>
+          <div class="oc-review-grid">{orthodonticReviews.map(review => <article class="oc-review"><span class="oc-stars" aria-label={`${review.rating} stelle su 5`}>★★★★★</span><blockquote>“{review.excerpt}”</blockquote><div class="oc-review-author"><span class="oc-review-avatar" aria-hidden="true">{review.initials}</span><div><h3>{review.author}</h3><span>{review.office} · {review.treatment}</span></div></div><a href={review.sourceUrl} target="_blank" rel="noopener noreferrer">Leggi su Google <span aria-hidden="true">↗</span></a></article>)}</div>
+          <p class="oc-section-note oc-centered">Estratti di recensioni pubblicate su Google. Ogni esperienza e ogni risultato sono individuali.</p>
+        </div>
+      </section>
+
+      <section class="oc-faq oc-section" id="faq" aria-labelledby="oc-faq-title">
+        <div class="oc-shell oc-faq-shell">
+          <header class="oc-section-heading oc-centered"><h2 id="oc-faq-title">Domande frequenti.</h2><p>Dubbi su apparecchi, tempi e costi? Partiamo da qui.</p></header>
+          <div class="oc-faq-list">{faqs.map((faq, index) => <details name="oc-faq" open={index === 0}><summary>{faq.question}<span aria-hidden="true">+</span></summary><p>{faq.answer}</p></details>)}</div>
+        </div>
+      </section>
+
+      <section class="oc-final oc-section" aria-labelledby="oc-final-title">
+        <div class="oc-shell oc-centered"><p class="oc-kicker">Il primo passo è una visita</p><h2 id="oc-final-title">Dai spazio al tuo sorriso.<br /><span>Inizia con noi.</span></h2><p>Raccontaci cosa desideri migliorare.<br />Ti aiutiamo a capire da dove cominciare.</p><button class="oc-button" type="button" data-oc-open aria-haspopup="dialog" aria-controls="oc-consultation">Richiedi una visita <span aria-hidden="true">→</span></button><small>Poche domande · Richiesta di ricontatto senza impegno</small></div>
+      </section>
+    </main>
+
+    <footer class="oc-footer">
+      <div class="oc-shell">
+        <div class="oc-footer-grid">
+          <div class="oc-footer-about"><a href="/"><img src={site.logo} alt={site.name} width="400" height="52" loading="lazy" /></a><p>Da 35 anni ci prendiamo cura del sorriso di adulti e bambini. Odontoiatria e percorsi ortodontici a Modena e Reggio Emilia.</p><div class="oc-social">{site.social.map(social => <a href={social.url} target="_blank" rel="noopener noreferrer">{social.label} ↗</a>)}</div></div>
+          <nav aria-label="Esplora la landing"><h3>Esplora</h3>{nav.map(link => <a href={link.href}>{link.label}</a>)}<a href="#recensioni">Recensioni</a></nav>
+          <div class="oc-footer-offices"><h3>I nostri studi</h3>{site.offices.map(office => <address><a href={office.href}><strong>{office.city}</strong></a><span>{office.address}</span><a href={office.phoneHref}>{office.phone}</a></address>)}<a href={site.offices[0].emailHref}>{site.offices[0].email}</a></div>
+        </div>
+        <div class="oc-footer-bottom"><p>© {new Date().getFullYear()} Studio Odontoiatri Ass.ti Federzoni Granata · P. IVA 02082850369</p><div><a href="/privacy-policy/">Privacy Policy</a><a href="/cookie-privacy/">Cookie Policy</a><button type="button" data-cookie-settings-open>Preferenze cookie</button></div></div>
+      </div>
+    </footer>
+
+    {consultationSolutions.map(solution => <dialog class="oc-detail-dialog" id={`oc-detail-${solution.id}`} aria-labelledby={`oc-detail-title-${solution.id}`} data-oc-solution-dialog><div class="oc-detail-photo"><img src={`/assets/optimized/${solution.image}`} alt={solution.alt} width="1200" height="800" loading="lazy" /><button class="oc-icon-button" type="button" data-oc-detail-close aria-label="Chiudi il dettaglio"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6" /></svg></button></div><div class="oc-detail-copy"><p class="oc-kicker">Il tuo percorso ortodontico</p><h2 id={`oc-detail-title-${solution.id}`}>{solution.title}</h2><p>{solution.detail}</p><button class="oc-button" type="button" data-oc-open data-oc-objective={solution.objective} aria-haspopup="dialog" aria-controls="oc-consultation">Parliamone insieme <span aria-hidden="true">→</span></button></div></dialog>)}
+    <OrthodonticFullscreenForm />
+    <CookieBanner />
+    <noscript><div class="oc-noscript">Per richiedere una visita chiama lo studio di <a href={site.offices[0].phoneHref}>Modena</a> o di <a href={site.offices[1].phoneHref}>Reggio Emilia</a>.</div></noscript>
+
+    <script>
+      const header = document.querySelector<HTMLElement>('[data-oc-header]');
+      const menu = document.querySelector<HTMLButtonElement>('[data-oc-menu]');
+      const updateHeader = () => header?.classList.toggle('is-scrolled', window.scrollY > 80);
+      updateHeader();
+      window.addEventListener('scroll', updateHeader, { passive: true });
+      const closeMenu = () => { header?.classList.remove('is-menu-open'); menu?.setAttribute('aria-expanded', 'false'); menu?.setAttribute('aria-label', 'Apri il menu'); };
+      menu?.addEventListener('click', () => { const open = header?.classList.toggle('is-menu-open'); menu.setAttribute('aria-expanded', String(Boolean(open))); menu.setAttribute('aria-label', open ? 'Chiudi il menu' : 'Apri il menu'); });
+      header?.querySelectorAll('a, [data-oc-open]').forEach(link => link.addEventListener('click', closeMenu));
+      document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
+
+      document.querySelectorAll<HTMLButtonElement>('[data-oc-solution-open]').forEach(button => {
+        const detail = document.getElementById(button.dataset.ocSolutionOpen || '') as HTMLDialogElement | null;
+        button.addEventListener('click', () => { detail?.showModal(); document.body.classList.add('oc-dialog-open'); });
+        detail?.querySelector('[data-oc-detail-close]')?.addEventListener('click', () => detail.close());
+        detail?.addEventListener('click', event => { if (event.target === detail) detail.close(); });
+        detail?.addEventListener('close', () => {
+          if (!document.querySelector('dialog[open]')) { document.body.classList.remove('oc-dialog-open'); button.focus(); }
+        });
+      });
+    </script>
+  </body>
+</html>
