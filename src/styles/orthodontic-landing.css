@@ -70,6 +70,20 @@ body.ortho-landing .treatment-sticky-cta[data-treatment-sticky-cta] a:focus-visi
 .ortho-cta > span { flex: 0 0 auto; font-size: 21px; font-weight: 400; line-height: 1; }
 .ortho-cta:hover { border-color: var(--brand-cta-hover); background: var(--brand-cta-hover); }
 .ortho-cta:focus-visible, .ortho-text-link:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 5px; }
+/* Match the hero CTA's pill shape in the two main treatment landings. */
+body.ortho-landing-main.ortho-unified .landing-header :is(.landing-header-cta, .landing-header-booking),
+.ortho-landing-main.ortho-unified #contenuto :is(
+  .periodontal-recognition-trigger,
+  .ortho-benefits-cta,
+  .ortho-personalized-cta,
+  .ortho-faq-read-more,
+  .lb-open-final
+) { border-radius: 999px; }
+body.ortho-landing-main.ortho-unified .landing-header .landing-header-cta {
+  border: 1px solid var(--brand-primary-dark);
+  background: var(--surface-white);
+  color: var(--brand-primary-dark);
+}
 .ortho-text-link { display: inline-flex; width: fit-content; min-height: 44px; align-items: center; gap: 10px; color: var(--brand-cta); font-size: 14px; font-weight: 500; line-height: 1.35; text-underline-offset: 4px; }
 .ortho-skip-link { position: fixed; z-index: 100; top: 10px; left: 16px; padding: 12px 18px; transform: translateY(-180%); border: 2px solid var(--brand-cta); background: var(--surface-white); color: var(--brand-primary-dark); }
 .ortho-skip-link:focus { transform: none; }

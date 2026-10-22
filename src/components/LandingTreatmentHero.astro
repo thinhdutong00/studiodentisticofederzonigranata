@@ -38,7 +38,7 @@ const facts = [
     <p class="treatment-hero-lead">
       {isOrthodontic ? <>Scegli un percorso pensato per il <strong>tuo sorriso.</strong><br class="treatment-hero-desktop-break" /> Allineatori trasparenti e apparecchi ortodontici, con un piano su misura e un team che ti segue. Dalla prima visita alla contenzione.</> : periodontalHero.descriptionParts.map(part => part.emphasis ? <strong>{part.text}</strong> : part.text)}
     </p>
-    <button class="treatment-hero-button" type="button" data-landing-booking-open aria-haspopup="dialog" aria-controls="landing-booking-dialog">Trova il tuo percorso <span aria-hidden="true">→</span></button>
+    <button class="treatment-hero-button" type="button" data-landing-booking-open aria-haspopup="dialog" aria-controls="landing-booking-dialog">Inizia il trattamento <span aria-hidden="true">→</span></button>
     <div class="treatment-hero-trust">
       <div class="treatment-hero-avatars" aria-hidden="true">{heroReviewers.map(review => <span>{review.avatar ? <img src={review.avatar} alt="" width="72" height="72" loading="lazy" decoding="async" /> : review.initial}</span>)}</div>
       <div><span class="treatment-hero-stars" aria-label="5 stelle su 5">★★★★★</span><p>Le esperienze dei nostri pazienti <a href="#recensioni">Leggile qui <CtaArrowIcon /></a></p></div>
