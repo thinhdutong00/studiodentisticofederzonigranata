@@ -26,8 +26,8 @@ const canonical = new URL(canonicalPath, site.source).toString();
 const title = 'Visita ortodontica a Modena e Reggio Emilia | Federzoni Granata';
 const description =
   'Ortodonzia per adulti e bambini a Modena e Reggio Emilia. Valuta apparecchi e allineatori con un piano personalizzato. Richiedi una visita allo Studio Federzoni Granata.';
-const heroImagePath = '/assets/optimized/ortodonzia-sorriso-specchio-1920.webp';
-const heroImageAlt = 'Una paziente osserva il proprio sorriso nello studio Federzoni Granata';
+const heroImagePath = '/assets/optimized/ortodonzia-federzoni-hero-1200.webp';
+const heroImageAlt = 'La professionista dello Studio Dentistico Federzoni Granata';
 const isIndexable = import.meta.env.PROD && process.env.VERCEL_ENV !== 'preview';
 const socialPreviewImage = new URL(heroImagePath, canonical).toString();
 
@@ -183,7 +183,7 @@ const structuredData = {
     <meta name="generator" content={Astro.generator} />
     <link rel="preload" as="font" href="/fonts/inter/inter-latin.woff2" type="font/woff2" crossorigin />
     <link rel="preload" as="image" href={heroImagePath} type="image/webp" media="(min-width: 721px)" fetchpriority="high" />
-    <link rel="preload" as="image" href="/assets/optimized/ortodonzia-sorriso-studio-720.webp" type="image/webp" media="(max-width: 720px)" fetchpriority="high" />
+    <link rel="preload" as="image" href="/assets/optimized/ortodonzia-federzoni-hero-720.webp" type="image/webp" media="(max-width: 720px)" fetchpriority="high" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content={isIndexable ? 'index,follow,max-image-preview:large' : 'noindex,follow'} />
@@ -200,7 +200,7 @@ const structuredData = {
     <meta property="og:site_name" content={site.name} />
     <meta property="og:image" content={socialPreviewImage} />
     <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="800" />
+    <meta property="og:image:height" content="1800" />
     <meta property="og:image:alt" content={heroImageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
@@ -225,7 +225,7 @@ const structuredData = {
             <div class="ortho-shell">
               <p class="ortho-experience-over" id="ortho-experience-over">Studio Dentistico Federzoni Granata</p>
               <h2 class="ortho-experience-years" id="ortho-experience-title"><span class="ortho-experience-number">35</span> anni di attività, al servizio del tuo sorriso.</h2>
-              <img class="ortho-experience-photo" src="/assets/optimized/ortodonzia-visita-studio-720.webp" srcset="/assets/optimized/ortodonzia-visita-studio-720.webp 720w, /assets/optimized/ortodonzia-visita-studio-1440.webp 1440w, /assets/optimized/ortodonzia-visita-studio-1920.webp 1920w" sizes="(max-width: 720px) calc(100vw - 68px), (max-width: 978px) 92vw, 900px" alt="Professionista dello Studio Federzoni Granata durante una visita odontoiatrica" width="720" height="480" loading="lazy" decoding="async" />
+              <img class="ortho-experience-photo" src="/assets/optimized/ortodonzia-sorriso-specchio-720.webp" srcset="/assets/optimized/ortodonzia-sorriso-specchio-720.webp 720w, /assets/optimized/ortodonzia-sorriso-specchio-1440.webp 1440w" sizes="(max-width: 720px) calc(100vw - 68px), (max-width: 978px) 92vw, 900px" alt="Paziente che osserva il proprio sorriso allo specchio durante una visita nello studio" width="720" height="480" loading="lazy" decoding="async" />
             </div>
           </section>
           <OrthodonticSmileCarousel />

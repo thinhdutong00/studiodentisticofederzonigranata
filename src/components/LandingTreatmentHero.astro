@@ -14,10 +14,10 @@ const heroReviewers = reviewers.slice(0, 3).map(review => ({
 }));
 const isOrthodontic = treatment === 'ortodonzia';
 const image = isOrthodontic
-  ? '/assets/optimized/ortodonzia-sorriso-specchio-1920.webp'
+  ? '/assets/optimized/ortodonzia-federzoni-hero-1200.webp'
   : '/assets/optimized/parodontologia-granata-hero-1920.webp';
 const mobileImage = isOrthodontic
-  ? '/assets/optimized/ortodonzia-sorriso-studio-720.webp'
+  ? '/assets/optimized/ortodonzia-federzoni-hero-720.webp'
   : '/assets/optimized/parodontologia-granata-hero-720.webp';
 const facts = [
   { title: '35 anni', description: 'Al servizio del sorriso' },
@@ -27,10 +27,10 @@ const facts = [
 ];
 ---
 
-<section class:list={['treatment-hero', { 'treatment-hero-periodontal': !isOrthodontic }]} aria-labelledby="landing-title" data-treatment-sticky-hero>
+<section class:list={['treatment-hero', 'treatment-hero-portrait', { 'treatment-hero-periodontal': !isOrthodontic }]} aria-labelledby="landing-title" data-treatment-sticky-hero>
   <picture class="treatment-hero-image">
     <source media="(max-width: 720px)" srcset={mobileImage} />
-    <img src={image} alt={isOrthodontic ? 'Una paziente osserva il proprio sorriso nello studio Federzoni Granata' : 'Dott. Stefano Granata, Studio Dentistico Federzoni Granata'} width="1920" height={isOrthodontic ? 1280 : 2880} loading="eager" fetchpriority="high" />
+    <img src={image} alt={isOrthodontic ? 'La professionista dello Studio Dentistico Federzoni Granata' : 'Dott. Stefano Granata, Studio Dentistico Federzoni Granata'} width={isOrthodontic ? 1200 : 1920} height={isOrthodontic ? 1800 : 2880} loading="eager" fetchpriority="high" />
   </picture>
   <div class="treatment-hero-content">
     <p class="treatment-hero-eyebrow">{isOrthodontic ? 'Ortodonzia · Modena e Reggio Emilia' : periodontalHero.eyebrow}</p>
@@ -55,14 +55,14 @@ const facts = [
   .treatment-hero { position: relative; display: grid; place-items: center; min-height: 670px; overflow: hidden; isolation: isolate; background: var(--text-dark); color: var(--surface-white); }
   .treatment-hero-image { position: absolute; z-index: -2; inset: 0; }
   .treatment-hero-image img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 48%; }
-  .treatment-hero-periodontal { min-height: 900px; background: #a6a4a5; }
+  .treatment-hero-portrait { min-height: 900px; background: #a6a4a5; }
   /* Keep the portrait at its natural proportions, with the face above the copy. */
-  .treatment-hero-periodontal .treatment-hero-image { width: min(100%, 600px); margin-inline: auto; mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent); }
-  .treatment-hero-periodontal .treatment-hero-image img { object-fit: contain; object-position: center top; }
+  .treatment-hero-portrait .treatment-hero-image { width: min(100%, 600px); margin-inline: auto; mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent); }
+  .treatment-hero-portrait .treatment-hero-image img { object-fit: contain; object-position: center top; }
   .treatment-hero::after { position: absolute; z-index: -1; inset: 0; background: linear-gradient(180deg, rgb(29 29 29 / .82), rgb(29 29 29 / .57) 50%, rgb(29 29 29 / .96)); content: ''; }
-  .treatment-hero-periodontal::after { background: linear-gradient(180deg, rgb(29 29 29 / .38), rgb(29 29 29 / .78) 44%, rgb(29 29 29 / .98)); }
+  .treatment-hero-portrait::after { background: linear-gradient(180deg, rgb(29 29 29 / .38), rgb(29 29 29 / .78) 44%, rgb(29 29 29 / .98)); }
   .treatment-hero-content { width: min(100% - 64px, 1280px); margin-inline: auto; padding-block: 64px; text-align: center; }
-  .treatment-hero-periodontal .treatment-hero-content { padding-block: 310px 64px; }
+  .treatment-hero-portrait .treatment-hero-content { padding-block: 310px 64px; }
   .treatment-hero-eyebrow { margin: 0 0 22px; color: var(--border); font-size: 12px; font-weight: 500; line-height: 1.4; letter-spacing: 1.5px; text-transform: uppercase; }
   .treatment-hero h1 { margin: 0; color: var(--surface-white); font-family: Inter, sans-serif; font-size: clamp(58px, 7.4vw, 100px); font-weight: 500; line-height: 1.01; letter-spacing: -5px; text-transform: none; }
   .treatment-hero h1 span { color: var(--brand-blue); }
@@ -91,13 +91,13 @@ const facts = [
   .treatment-hero-proof-grid span { color: var(--border); font-size: 10px; line-height: 1.5; letter-spacing: 1px; text-transform: uppercase; }
   @media (max-width: 720px) {
     .treatment-hero { min-height: 620px; }
-    .treatment-hero-periodontal { min-height: 800px; }
+    .treatment-hero-portrait { min-height: 800px; }
     .treatment-hero-content { width: calc(100% - 40px); padding-block: 56px 48px; }
-    .treatment-hero-periodontal .treatment-hero-content { padding-block: clamp(240px, 65vw, 310px) 48px; }
-    .treatment-hero-periodontal .treatment-hero-image { bottom: auto; height: min(150vw, 900px); }
+    .treatment-hero-portrait .treatment-hero-content { padding-block: clamp(240px, 65vw, 310px) 48px; }
+    .treatment-hero-portrait .treatment-hero-image { bottom: auto; height: min(150vw, 900px); }
     .treatment-hero-image img { object-position: 57% center; }
     .treatment-hero::after { background: linear-gradient(180deg, rgb(29 29 29 / .78), rgb(29 29 29 / .7) 40%, rgb(29 29 29 / .94)); }
-    .treatment-hero-periodontal::after { background: linear-gradient(180deg, rgb(29 29 29 / .2), rgb(29 29 29 / .8) 42%, var(--text-dark) 76%); }
+    .treatment-hero-portrait::after { background: linear-gradient(180deg, rgb(29 29 29 / .2), rgb(29 29 29 / .8) 42%, var(--text-dark) 76%); }
     .treatment-hero-eyebrow { margin-bottom: 24px; font-size: 9px; letter-spacing: 1px; }
     .treatment-hero h1 { font-size: clamp(39px, 10.1vw, 68px); line-height: 1.06; letter-spacing: -1.9px; }
     .treatment-hero-periodontal h1 { font-size: clamp(36px, 9.5vw, 62px); }

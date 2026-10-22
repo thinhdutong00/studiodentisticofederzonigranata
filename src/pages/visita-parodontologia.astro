@@ -255,7 +255,7 @@ const structuredData = {
         </div>
       </section>
 
-      <section class="ortho-section ortho-final ortho-final-with-instruments" id="ortho-final" aria-labelledby="ortho-consultation-title">
+      <section class="ortho-section ortho-final ortho-final-with-instruments periodontal-final-light" id="ortho-final" aria-labelledby="ortho-consultation-title">
         <LandingBookingCta treatment="parodontologia" />
       </section>
     </main>
@@ -305,6 +305,29 @@ const structuredData = {
 </html>
 
 <style>
+  :global(.periodontal-landing.ortho-unified #ortho-final.periodontal-final-light) {
+    background: var(--soft-blue-bg);
+    color: var(--text-dark);
+  }
+  :global(.periodontal-landing.ortho-unified #ortho-final.periodontal-final-light .ortho-consultation-heading h2) {
+    color: var(--text-dark);
+  }
+  :global(.periodontal-landing.ortho-unified #ortho-final.periodontal-final-light .ortho-consultation-heading strong) {
+    color: var(--brand-cta);
+  }
+  :global(.periodontal-landing.ortho-unified #ortho-final.periodontal-final-light .ortho-consultation-heading p) {
+    color: var(--muted-text);
+  }
+  :global(.periodontal-landing.ortho-unified #ortho-final.periodontal-final-light .ortho-consultation-symbol) {
+    filter: none;
+  }
+  :global(.periodontal-landing.ortho-unified #ortho-final.periodontal-final-light .lb-open-final) {
+    background: var(--brand-cta);
+    color: var(--surface-white);
+  }
+  :global(.periodontal-landing.ortho-unified #ortho-final.periodontal-final-light .lb-open-final:hover) {
+    background: var(--brand-cta-hover);
+  }
   .ortho-professional-mobile-trigger { display: none; }
   .ortho-personalized-title-mobile { display: none; }
   .ortho-review-title-mobile { display: none; }
