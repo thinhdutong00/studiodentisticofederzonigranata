@@ -17,7 +17,7 @@
   .ortho-landing-main.ortho-unified :is(.ortho-eyebrow, .landing-kicker) { font-size: 13px; letter-spacing: normal; }
   .ortho-landing-main.ortho-unified .ortho-cta { min-height: 54px; border-radius: 8px; padding: 18px 24px; font-size: 16px; line-height: 16px; text-align: center; }
 
-  /* The hero image, latest copy and direct booking form share the first screen. */
+  /* A full-width hero image sits above the copy and booking form columns. */
   .ortho-landing-main.ortho-unified > .landing-header { transition: transform 260ms ease; }
   .ortho-landing-main.ortho-unified > .landing-header.is-scroll-hidden { transform: translateY(calc(-100% - 2px)); pointer-events: none; }
   .ortho-landing-main.ortho-unified .header-experience-bar { display: flex; }
@@ -38,8 +38,8 @@
   .ortho-landing-main.ortho-unified .landing-hero-stage::after,
   .ortho-landing-main.ortho-unified .landing-hero-panel::before,
   .ortho-landing-main.ortho-unified .landing-hero-panel::after { display: none; }
-  .ortho-landing-main.ortho-unified .ortho-hero-photo-frame { position: relative; inset: auto; grid-column: 1; grid-row: 1; width: 100%; aspect-ratio: 16 / 9; border-radius: 24px 24px 24px 0; }
-  .ortho-landing-main.ortho-unified .landing-hero-photo { width: 100%; object-position: center; }
+  .ortho-landing-main.ortho-unified .ortho-hero-photo-frame { position: relative; inset: auto; grid-column: 1 / -1; grid-row: 1; width: 100%; aspect-ratio: 16 / 6; border-radius: 24px 24px 24px 0; }
+  .ortho-landing-main.ortho-unified .ortho-hero-overlay .landing-hero-photo { width: 100%; object-position: center 20%; }
   .ortho-landing-main.ortho-unified .ortho-hero-eyebrow-mobile { position: absolute; z-index: 1; top: 0; left: 0; display: block; max-width: calc(100% - 24px); margin: 0; padding: 12px 22px 8px 0; border-radius: 0 20px 0 0; background: var(--surface-white); color: var(--text-dark); font-size: 12px; line-height: 1.35; transform: translateY(-100%); }
   .ortho-landing-main.ortho-unified .ortho-hero-eyebrow-mobile::before,
   .ortho-landing-main.ortho-unified .ortho-hero-eyebrow-mobile::after { position: absolute; width: 20px; height: 20px; background: radial-gradient(circle at 100% 0, transparent 19px, var(--surface-white) 20px); content: ''; pointer-events: none; }
@@ -57,7 +57,7 @@
 
   /* The same accessible form is used in the hero and in the closing section. */
   .ortho-landing-main.ortho-unified .ortho-consultation-mobile { display: block; }
-  .ortho-landing-main.ortho-unified .ortho-consultation-hero { grid-column: 2; grid-row: 1 / span 2; margin: 0; }
+  .ortho-landing-main.ortho-unified .ortho-consultation-hero { grid-column: 2; grid-row: 2; margin: 28px 0 0; }
   .ortho-landing-main.ortho-unified .ortho-consultation-surface { padding: 0; background: transparent; }
   .ortho-landing-main.ortho-unified .ortho-consultation-form { position: relative; margin: 0; padding: clamp(28px, 2.5vw, 40px); border: 1px solid var(--border); border-radius: 24px; background: var(--surface-white); color: var(--text-dark); }
   .ortho-landing-main.ortho-unified .ortho-consultation-hero-title { display: block; margin: 0 0 20px; color: var(--brand-primary-dark); font-size: 25px; font-weight: 500; line-height: 1.2; }
