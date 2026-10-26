@@ -2,6 +2,7 @@ import { submitBooking } from './submitBooking';
 import { captureAttribution } from './attribution';
 import { getOrthodonticQuizRecommendation } from '../data/orthodonticQuizRecommendation.js';
 import { getPeriodontalQuizRecommendation } from '../data/periodontalQuizRecommendation.js';
+import { getPeriodontalSymptomLabel } from '../data/periodontalQuiz.js';
 
 export function bindQuizConsultation() {
   const dialog = document.querySelector<HTMLDialogElement>('[data-quiz-consultation]');
@@ -80,7 +81,7 @@ export function bindQuizConsultation() {
       const term = document.createElement('dt');
       const description = document.createElement('dd');
       term.textContent = label;
-      description.textContent = answer;
+      description.textContent = name === 'periodontalSymptom' ? getPeriodontalSymptomLabel(answer) : answer;
       row.append(term, description);
       summary.append(row);
     });

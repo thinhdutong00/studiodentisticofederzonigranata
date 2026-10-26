@@ -3,7 +3,7 @@ import BookingFields from './BookingFields.astro';
 import BookingPrivacy from './BookingPrivacy.astro';
 import QuizConsultationDialog from './QuizConsultationDialog.astro';
 import { site } from '../data/site';
-import { periodontalAgeRanges, periodontalDurations, periodontalObjectives, periodontalSymptoms } from '../data/periodontalQuiz.js';
+import { periodontalAgeRanges, periodontalDurations, periodontalObjectives, periodontalSymptoms, getPeriodontalSymptomLabel } from '../data/periodontalQuiz.js';
 import { getPeriodontalQuizRecommendation } from '../data/periodontalQuizRecommendation.js';
 import '../styles/orthodontic-quiz.css';
 
@@ -13,7 +13,7 @@ const initialRecommendation = getPeriodontalQuizRecommendation();
 const recessionExample = getPeriodontalQuizRecommendation({ periodontalSymptom: 'Gengive che si ritirano' });
 const questions = [
   { number: 1, title: 'Indica la tua età', name: 'ageRange', type: 'age-pills', options: periodontalAgeRanges },
-  { number: 2, title: 'Quale segnale hai notato?', name: 'periodontalSymptom', type: 'choices', options: periodontalSymptoms.map(value => ({ value })) },
+  { number: 2, title: 'Quale segnale hai notato?', name: 'periodontalSymptom', type: 'choices', options: periodontalSymptoms.map(value => ({ value, label: getPeriodontalSymptomLabel(value) })) },
   { number: 3, title: 'Da quanto tempo hai notato questo segnale?', name: 'symptomDuration', type: 'choices', options: periodontalDurations.map(value => ({ value })) },
   { number: 4, title: 'Seleziona uno dei nostri studi dentistici', name: 'office', type: 'select' },
   { number: 5, title: 'Come ti chiami?', name: 'fullName', type: 'text', label: 'Nome e cognome', placeholder: 'Nome e cognome', autocomplete: 'section-periodontal name' },
@@ -27,7 +27,7 @@ const questions = [
   <div class="landing-shell orthodontic-objectives-shell">
     <div class="orthodontic-questionnaire-banner">
       <slot name="questionnaire-icon" />
-      <p>Gengive che sanguinano o si ritirano? Rispondi a poche domande e richiedi una valutazione parodontale.</p>
+      <p>Sanguinamento o recessioni gengivali? Rispondi a poche domande e richiedi una valutazione parodontale.</p>
       <button type="button" data-quiz-open aria-haspopup="dialog">
         <span>Compila il questionario</span>
         <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m8 5 5 5-5 5" /></svg>
@@ -84,7 +84,7 @@ const questions = [
         {['choices', 'age-pills'].includes(question.type) ? <div class={question.type === 'age-pills' ? 'orthodontic-quiz-age-options' : 'orthodontic-quiz-options'} role="radiogroup" aria-labelledby={`periodontal-question-${question.number}`}>
           {question.options?.map(option => <label class="orthodontic-quiz-option">
             <input type="radio" name={question.name} value={option.value} required data-quiz-minor={'minor' in option ? String(option.minor) : undefined} />
-            <span class="orthodontic-quiz-option-body"><span class="orthodontic-quiz-option-label"><span>{option.value}</span><svg class="orthodontic-quiz-check" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 10 4 4 8-8" /></svg></span></span>
+            <span class="orthodontic-quiz-option-body"><span class="orthodontic-quiz-option-label"><span>{'label' in option ? option.label : option.value}</span><svg class="orthodontic-quiz-check" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 10 4 4 8-8" /></svg></span></span>
           </label>)}
         </div> : question.type === 'select' ? <label class="orthodontic-quiz-input-label">
           <span class="landing-visually-hidden">Sede preferita</span>

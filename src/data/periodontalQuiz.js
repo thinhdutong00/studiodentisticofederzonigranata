@@ -22,6 +22,13 @@ export const periodontalSymptoms = [
   'Altro / non ho notato segnali particolari',
 ];
 
+// Keep submitted values compatible with existing requests while updating the copy.
+export function getPeriodontalSymptomLabel(value) {
+  if (value === 'Gengive che si ritirano') return 'Recessioni gengivali';
+  if (value === 'Alito persistente') return 'Alito cattivo';
+  return value;
+}
+
 export const periodontalDurations = [
   'Da pochi giorni',
   'Da alcune settimane',

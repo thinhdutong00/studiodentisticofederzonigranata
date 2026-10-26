@@ -6,9 +6,9 @@ import { getPeriodontalQuizRecommendation } from '../src/data/periodontalQuizRec
 
 const symptoms = {
   'Sanguinamento quando mi lavo i denti': /le gengive sanguinano quando lavi i denti/,
-  'Gengive che si ritirano': /noti che le gengive si ritirano/,
+  'Gengive che si ritirano': /noti recessioni gengivali/,
   'Uno o più denti che si muovono': /senti che uno o più denti si muovono/,
-  'Alito persistente': /noti un alito persistente/,
+  'Alito persistente': /noti un alito cattivo/,
 };
 const durations = {
   'Da pochi giorni': /da pochi giorni/,
@@ -71,7 +71,7 @@ test('recent or longstanding answers add context without changing the assessment
 test('unknown timing never invents a duration', () => {
   for (const symptomDuration of ['Non saprei indicarlo', undefined, 'Da moltissimi anni']) {
     const result = getPeriodontalQuizRecommendation({ periodontalSymptom: 'Alito persistente', symptomDuration });
-    assert.match(result.text, /^Se noti un alito persistente, /);
+    assert.match(result.text, /^Se noti un alito cattivo, /);
     assert.doesNotMatch(result.text, /giorni|settimane|mesi|anno|anni/);
   }
 });

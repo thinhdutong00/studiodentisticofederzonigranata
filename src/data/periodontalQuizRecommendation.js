@@ -2,9 +2,9 @@ import { periodontalDurations, periodontalObjectives, periodontalSymptoms } from
 
 const symptomConditions = Object.freeze({
   'Sanguinamento quando mi lavo i denti': 'le gengive sanguinano quando lavi i denti',
-  'Gengive che si ritirano': 'noti che le gengive si ritirano',
+  'Gengive che si ritirano': 'noti recessioni gengivali',
   'Uno o più denti che si muovono': 'senti che uno o più denti si muovono',
-  'Alito persistente': 'noti un alito persistente',
+  'Alito persistente': 'noti un alito cattivo',
 });
 const durationConditions = Object.freeze({
   'Da pochi giorni': 'da pochi giorni',

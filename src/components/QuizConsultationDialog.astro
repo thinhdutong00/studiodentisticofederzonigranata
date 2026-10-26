@@ -5,7 +5,7 @@ import OrthodonticArchDiagram from './OrthodonticArchDiagram.astro';
 import LandingBookingIcon from './LandingBookingIcon.astro';
 import { site } from '../data/site';
 import { orthodonticObjectives, orthodonticConcerns, orthodonticBites } from '../data/orthodonticQuiz.js';
-import { periodontalObjectives, periodontalSymptoms, periodontalDurations } from '../data/periodontalQuiz.js';
+import { periodontalObjectives, periodontalSymptoms, periodontalDurations, getPeriodontalSymptomLabel } from '../data/periodontalQuiz.js';
 import { getOrthodonticQuizRecommendation } from '../data/orthodonticQuizRecommendation.js';
 import { getPeriodontalQuizRecommendation } from '../data/periodontalQuizRecommendation.js';
 import { landingBookingTreatments } from '../data/landingBooking.js';
@@ -25,7 +25,7 @@ const firstQuestions = isOrtho ? [
   { key: 'alignment', title: 'Quale immagine rappresenta meglio i tuoi denti?', label: 'Il tuo sorriso', name: 'problem', options: orthodonticConcerns, kind: 'alignment' as const },
   { key: 'bite', title: 'Come si chiudono le tue arcate?', label: 'Le tue arcate', name: 'occlusion', options: [...orthodonticBites.filter(option => option.value !== 'Altro'), ...orthodonticBites.filter(option => option.value === 'Altro')], kind: 'bite' as const },
 ] : [
-  { key: 'symptom', title: 'Quale segnale hai notato?', label: 'Le tue gengive', name: 'periodontalSymptom', options: periodontalSymptoms.map(value => ({ value })), kind: undefined },
+  { key: 'symptom', title: 'Quale segnale hai notato?', label: 'Le tue gengive', name: 'periodontalSymptom', options: periodontalSymptoms.map(value => ({ value, label: getPeriodontalSymptomLabel(value) })), kind: undefined },
   { key: 'duration', title: 'Da quanto tempo hai notato questo segnale?', label: 'Da quanto tempo', name: 'symptomDuration', options: periodontalDurations.map(value => ({ value })), kind: undefined },
 ];
 ---
@@ -62,7 +62,7 @@ const firstQuestions = isOrtho ? [
           <input type="radio" name={question.name} value={option.value} required />
           <span class="cq-option-content">
             {isOrtho && question.kind && option.value !== 'Altro' && <span class="cq-arch"><OrthodonticArchDiagram variant={'illustration' in option ? option.illustration : 'other'} kind={question.kind} /></span>}
-            <span>{option.value}</span>
+            <span>{'label' in option ? option.label : option.value}</span>
           </span><i aria-hidden="true"></i>
         </label>)}
       </div>

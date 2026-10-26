@@ -15,17 +15,17 @@ export const periodontalHero = {
   descriptionParts: [
     { text: 'Sanguinamento', emphasis: true },
     { text: ', ' },
-    { text: 'gengive ritirate', emphasis: true },
+    { text: 'recessioni gengivali', emphasis: true },
     { text: ' o ' },
     { text: 'denti meno stabili', emphasis: true },
     { text: '? ' },
     { text: 'Prenditi' },
-    { text: ' cura delle tue gengive e dei tuoi denti, con il nostro efficace percorso ' },
-    { text: 'salvadenti', emphasis: true },
+    { text: ' cura delle tue gengive e dei tuoi denti, con il nostro efficace percorso per ' },
+    { text: 'preservare i denti', emphasis: true },
     { text: '.' },
   ],
   description:
-    'Sanguinamento, gengive ritirate o denti meno stabili? Prenditi cura delle tue gengive e dei tuoi denti, con il nostro efficace percorso salvadenti.',
+    'Sanguinamento, recessioni gengivali o denti meno stabili? Prenditi cura delle tue gengive e dei tuoi denti, con il nostro efficace percorso per preservare i denti.',
   ctaLabel: 'Prenota una visita parodontale',
 };
 
@@ -65,7 +65,7 @@ export const periodontalTopics = [
     items: [
       'Sangue durante lo spazzolamento o la pulizia tra i denti',
       'Gengive gonfie, arrossate o sensibili',
-      'Alito persistente o sapore sgradevole',
+      'Alito cattivo o sapore sgradevole',
       'Infiammazione che si ripresenta',
     ],
     image: '/assets/optimized/parodontologia-controllo-gengive.webp',
@@ -74,7 +74,7 @@ export const periodontalTopics = [
   },
   {
     id: 'recessioni',
-    label: 'Gengive ritirate',
+    label: 'Recessioni gengivali',
     title: 'Prenditi cura delle radici esposte',
     kicker: 'Recessioni e sensibilità',
     paragraphs: [
@@ -140,7 +140,7 @@ export const periodontalFaqs = [
       'Non sempre: la mobilità non equivale automaticamente alla perdita del dente. Valutiamo il sostegno che conserva, la funzione e la risposta alla terapia. Ti spieghiamo quali possibilità ci sono per mantenerlo e quali limiti presenta la tua situazione.',
   },
   {
-    question: 'Le gengive ritirate possono essere trattate?',
+    question: 'Le recessioni gengivali possono essere trattate?',
     answer:
       'Le possibilità dipendono dalla causa, dalla quantità di tessuto disponibile e dalla situazione del dente. Possiamo correggere le abitudini che favoriscono il problema, gestire la sensibilità e, nei casi indicati, valutare una chirurgia mucogengivale. Non tutte le recessioni possono essere ricoperte allo stesso modo.',
   },
