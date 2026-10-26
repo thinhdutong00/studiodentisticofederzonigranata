@@ -14,6 +14,7 @@ const script = stripTypeScriptTypes(source)
 function fixture(response) {
   const redirects = [];
   const requests = [];
+  const receipts = [];
   const attributes = new Map();
   const button = { innerHTML: 'Invia la richiesta', textContent: 'Invia la richiesta', disabled: false };
   const form = {
@@ -31,7 +32,7 @@ function fixture(response) {
     AbortSignal,
     FormData: class { constructor(form) { this.fields = form.fields; } entries() { return this.fields.entries(); } },
     getBookingAttribution: () => ({ attributionLandingPage: '/visita-ortodonzia/' }),
-    rememberConfirmedLead: () => {},
+    rememberConfirmedLead: receipt => receipts.push(receipt),
     window: { location: { pathname: '/visita-ortodonzia/', assign: path => redirects.push(path) } },
     fetch: async (url, options) => {
       const body = JSON.parse(options.body);
@@ -39,7 +40,7 @@ function fixture(response) {
       return response(body);
     },
   });
-  return { submitBooking, form, redirects, requests, attributes, button };
+  return { submitBooking, form, redirects, requests, receipts, attributes, button };
 }
 
 test('successful orthodontic quiz redirects to the shared thank-you page after confirmation', async () => {
@@ -53,6 +54,9 @@ test('successful orthodontic quiz redirects to the shared thank-you page after c
   assert.equal(f.requests[0].body.ageRange, '30–44 anni');
   assert.equal(f.requests[0].body.patientAge, undefined);
   assert.equal(f.attributes.get('aria-busy'), 'true');
+  assert.deepEqual(JSON.parse(JSON.stringify(f.receipts)), [{
+    requestId: f.requests[0].body.requestId, kind: 'orthodontic-quiz', source: '/visita-ortodonzia/',
+  }]);
 });
 
 for (const [label, response] of [
@@ -68,5 +72,6 @@ for (const [label, response] of [
     assert.equal(f.attributes.has('aria-busy'), false);
     assert.equal(f.button.disabled, false);
     assert.equal(f.form.fields.get('ageRange'), '30–44 anni');
+    assert.equal(f.receipts.length, 0);
   });
 }
