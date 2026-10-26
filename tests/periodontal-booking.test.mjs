@@ -139,9 +139,10 @@ for (const [name, state] of [['email failure', { emailOk: false }], ['CRM failur
 }
 
 const submitSource = stripTypeScriptTypes(await readFile(new URL('../src/utils/submitBooking.ts', import.meta.url), 'utf8'))
-  .replace(/^import .* from '\.\/attribution';\n/m, '').replace(/^export /gm, '');
+  .replace(/^import .* from '\.\/attribution';\n/m, '')
+  .replace(/^import .* from '\.\/googleAds';\n/m, '').replace(/^export /gm, '');
 function submitFixture(confirmed = true) {
-  const redirects = [], requests = [], attrs = new Map();
+  const redirects = [], requests = [], receipts = [], attrs = new Map();
   const button = { innerHTML: 'Invia la richiesta', textContent: '', disabled: false };
   const form = {
     dataset: { bookingKind: 'periodontal-quiz' }, fields: new Map(Object.entries({ ...base, privacyConsent: 'on' })),
@@ -151,13 +152,14 @@ function submitFixture(confirmed = true) {
     crypto: webcrypto, AbortSignal,
     FormData: class { constructor(form) { this.fields = form.fields; } entries() { return this.fields.entries(); } },
     getBookingAttribution: () => ({ attributionLandingPage: '/visita-parodontologia/' }),
+    rememberConfirmedLead: data => receipts.push(data),
     window: { location: { pathname: '/visita-parodontologia/', assign: path => redirects.push(path) } },
     fetch: async (url, options) => {
       const body = JSON.parse(options.body); requests.push({ url, body });
       return { ok: true, json: async () => ({ ok: true, requestId: confirmed ? body.requestId : 'unconfirmed-request' }) };
     },
   });
-  return { submitBooking, form, redirects, requests, attrs, button };
+  return { submitBooking, form, redirects, requests, receipts, attrs, button };
 }
 
 test('periodontal quiz uses the shared thank-you redirect only after matching server confirmation', async () => {
@@ -169,12 +171,16 @@ test('periodontal quiz uses the shared thank-you redirect only after matching se
   assert.equal(f.requests[0].body.kind, 'periodontal-quiz');
   assert.equal(f.requests[0].body.source, '/visita-parodontologia/');
   assert.equal(f.requests[0].body.periodontalSymptom, base.periodontalSymptom);
+  assert.equal(f.receipts.length, 1);
+  assert.equal(f.receipts[0].requestId, f.requests[0].body.requestId);
+  assert.deepEqual(Object.keys(f.receipts[0]).sort(), ['kind', 'requestId', 'source']);
 });
 
 test('periodontal quiz stays on the form when the server has not confirmed its request', async () => {
   const f = submitFixture(false), errors = [];
   await f.submitBooking(f.form, error => { if (error) errors.push(error); });
   assert.deepEqual(f.redirects, []);
+  assert.equal(f.receipts.length, 0);
   assert.equal(errors.length, 1);
   assert.equal(f.attrs.has('aria-busy'), false);
   assert.equal(f.button.disabled, false);
