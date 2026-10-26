@@ -60,6 +60,7 @@ const showSectionReveal = !sectionRevealExcludedPaths.has(canonicalPath);
     {canonicalPath === '/' && <link rel="preload" as="image" href="/assets/optimized/home-hero-desktop.avif" type="image/avif" media="(min-width: 721px)" fetchpriority="high" />}
     <title>{title}</title>
     <meta name="description" content={description} />
+    {canonicalPath === '/thank-you-page/' && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/png" href="/assets/original/2020/10/cropped-favicon-32x32.png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/assets/original/2020/10/cropped-favicon-180x180.png" />
