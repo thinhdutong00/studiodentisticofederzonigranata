@@ -8,6 +8,7 @@ import { webcrypto } from 'node:crypto';
 const source = await readFile(new URL('../src/utils/submitBooking.ts', import.meta.url), 'utf8');
 const script = stripTypeScriptTypes(source)
   .replace(/^import .* from '\.\/attribution';\n/m, '')
+  .replace(/^import .* from '\.\/googleAds';\n/m, '')
   .replace(/^export /gm, '');
 
 function fixture(response) {
@@ -30,6 +31,7 @@ function fixture(response) {
     AbortSignal,
     FormData: class { constructor(form) { this.fields = form.fields; } entries() { return this.fields.entries(); } },
     getBookingAttribution: () => ({ attributionLandingPage: '/visita-ortodonzia/' }),
+    rememberConfirmedLead: () => {},
     window: { location: { pathname: '/visita-ortodonzia/', assign: path => redirects.push(path) } },
     fetch: async (url, options) => {
       const body = JSON.parse(options.body);
