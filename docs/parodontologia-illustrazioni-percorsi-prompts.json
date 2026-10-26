@@ -1,0 +1,104 @@
+{
+  "generatedOn": "2026-10-26",
+  "tool": "Built-in imagegen",
+  "transparentBackground": false,
+  "images": [
+    {
+      "key": "recessioni-problema",
+      "prompt": "Use case: scientific-educational. Regenerate this reference dental illustration as the MASTER DESIGN for a coherent set of nine professional patient-education graphics. The reference is a composition/anatomy and style starting point, not a photograph. Produce a substantially cleaner, more polished DRAWN medical illustration.\nKeep the tight straight-on view of four adjacent LOWER anterior teeth, outer teeth partly cropped left and right; two complete central crowns, gum at bottom, pale ice-blue background at top, landscape 3:2 format 1536x1024. Retain the LOCALIZED RECESSION on the central-right tooth: pale beige root exposed below a clearly identifiable ivory crown, pink margin dipping toward the root, intact neighboring papillae. Other teeth and gums normal. This is the PROBLEM image for the recession pathway.\nDESIGN SYSTEM FOR ALL NINE: clean vector-like 2D shapes, elegant local-color boundaries, restrained soft gradients only, ivory #F5EFE3 crowns, warm pale beige roots, coral pink #EFA2A1 gums, muted rose shaded areas, pale blue #EAF5FB background. Anatomy readable and serious. Remove noisy brush marks, mottled wet tissue, glitter, plastic gloss, photoreal texture. No black, navy or heavy strokes around tooth crowns, roots or gum. Fine warm beige separation lines between neighboring teeth are acceptable. More graphic and editorial than realistic, but recognizable teeth rather than toy blocks. Balanced use of space with crowns in upper half and gums in lower half, main finding centered slightly right. No full arch, lips, face, bone cutaway, plaque, tartar, pocket, tool or blood in this frame. No labels, text, arrows, numbers, icons, logos or watermark.",
+      "references": [
+        "public/assets/optimized/parodontologia-recessione-grafica.webp"
+      ],
+      "path": "/Users/dutongthinh/.codex/generated_images/01a16309-c135-7953-8cdb-b8a66ceb867c/exec-c2b45b40-5832-454a-88c5-6f72f9c01744.png",
+      "file": "public/assets/optimized/parodontologia-recessioni-problema.webp",
+      "original": "output/imagegen/parodontologia-percorsi/recessioni-problema.png"
+    },
+    {
+      "key": "recessioni-cura",
+      "prompt": "Use case: precise-object-edit. Create a NEW companion frame in a coordinated set of nine medical patient-education illustrations, editing the reference. LOCK the exact four-tooth LOWER anterior arch front view, ivory crown geometry and positions, crop (outer teeth cut off), landscape 3:2 1536x1024, pale ice-blue background, coral-pink gum palette, elegant clean DRAWN pastel graphic style. Restrained soft shading, no photorealistic tissue textures, plastic gloss or dark contours around crowns/roots. No text, labels, numerals, arrows, logos, watermarks or full arch. Show analysis/care for LOCALIZED GINGIVAL RECESSION. At the central-right recession site, advance the pink gum UPWARD coronally to the crown-root junction, covering the previously exposed beige root. Show 3 small neat blue suture loops and tiny knots stabilizing the advanced gum flap. No other tools or inset diagrams. Closed flap, no bleeding or open wound. The SAME ivory crown remains unchanged and is NOT cut shorter or covered by gum. Other teeth/papillae and background remain identical. This is a surgical root-coverage example; no miraculous spontaneous growth.",
+      "references": [
+        "/Users/dutongthinh/.codex/generated_images/01a16309-c135-7953-8cdb-b8a66ceb867c/exec-c2b45b40-5832-454a-88c5-6f72f9c01744.png"
+      ],
+      "path": "/Users/dutongthinh/.codex/generated_images/01a16309-c135-7953-8cdb-b8a66ceb867c/exec-dc5d8bc2-8877-4f7f-b2ca-b8d0c125fbc8.png",
+      "file": "public/assets/optimized/parodontologia-recessioni-cura.webp",
+      "original": "output/imagegen/parodontologia-percorsi/recessioni-cura.png"
+    },
+    {
+      "key": "recessioni-risultato",
+      "prompt": "Use case: precise-object-edit. Create a NEW companion frame in a coordinated set of nine medical patient-education illustrations, editing the reference. LOCK the exact four-tooth LOWER anterior arch front view, ivory crown geometry and positions, crop (outer teeth cut off), landscape 3:2 1536x1024, pale ice-blue background, coral-pink gum palette, elegant clean DRAWN pastel graphic style. Restrained soft shading, no photorealistic tissue textures, plastic gloss or dark contours around crowns/roots. No text, labels, numerals, arrows, logos, watermarks or full arch. Show a possible HEALED COMPLETE ROOT-COVERAGE RESULT in a favorable recession case. At the central-right tooth ONLY, replace the exposed beige root with healthy pink gum advanced UPWARD to its crown-root junction. Natural scalloped gum margin at the same approximate cervical level as neighboring teeth; no sutures, wound, tools, blood, exposed root or plaque. Keep the ORIGINAL ivory crown shape and size exactly, do not cover the enamel crown. The gums have healed after surgery. Everything else identical. No cutaway or invented bone regrowth.",
+      "references": [
+        "/Users/dutongthinh/.codex/generated_images/01a16309-c135-7953-8cdb-b8a66ceb867c/exec-c2b45b40-5832-454a-88c5-6f72f9c01744.png"
+      ],
+      "path": "/Users/dutongthinh/.codex/generated_images/01a16309-c135-7953-8cdb-b8a66ceb867c/exec-f0d39438-776f-45b1-ad2e-7e2794e2789f.png",
+      "file": "public/assets/optimized/parodontologia-recessioni-risultato.webp",
+      "original": "output/imagegen/parodontologia-percorsi/recessioni-risultato.png"
+    },
+    {
+      "key": "sanguinamento-problema",
+      "prompt": "Use case: precise-object-edit. Create a NEW companion frame in a coordinated set of nine medical patient-education illustrations, editing the reference. LOCK the exact four-tooth LOWER anterior arch front view, ivory crown geometry and positions, crop (outer teeth cut off), landscape 3:2 1536x1024, pale ice-blue background, coral-pink gum palette, elegant clean DRAWN pastel graphic style. Restrained soft shading, no photorealistic tissue textures, plastic gloss or dark contours around crowns/roots. No text, labels, numerals, arrows, logos, watermarks or full arch. Show a different condition on the SAME four teeth: PLAQUE-RELATED GINGIVITIS with BLEEDING at the gumline. REMOVE the localized recession completely: all four pink gum margins lie at the normal crown-root junction, NO exposed beige root and no loss of tissue support. Add a delicate pale-yellow plaque band on parts of the lower cervical crown margins and mildly swollen reddish gum edges around the central two teeth. Show just TWO TINY red beads of blood emerging exactly at the gum-tooth margin, restrained clinical appearance, not red symbols floating in space. No brush, probe or tool, no bone cutaway, no periodontal pocket. Clearly a drawn medical graphic, not frightening or gory.",
+      "references": [
+        "/Users/dutongthinh/.codex/generated_images/01a16309-c135-7953-8cdb-b8a66ceb867c/exec-c2b45b40-5832-454a-88c5-6f72f9c01744.png"
+      ],
+      "path": "/Users/dutongthinh/.codex/generated_images/01a16309-c135-7953-8cdb-b8a66ceb867c/exec-733ad8e0-7274-4173-bbb8-e5a9306eaf8b.png",
+      "file": "public/assets/optimized/parodontologia-sanguinamento-problema.webp",
+      "original": "output/imagegen/parodontologia-percorsi/sanguinamento-problema.png"
+    },
+    {
+      "key": "tasche-problema",
+      "prompt": "Use case: precise-object-edit. Create a NEW companion frame in a coordinated set of nine medical patient-education illustrations, editing the reference. LOCK the exact four-tooth LOWER anterior arch front view, ivory crown geometry and positions, crop (outer teeth cut off), landscape 3:2 1536x1024, pale ice-blue background, coral-pink gum palette, elegant clean DRAWN pastel graphic style. Restrained soft shading, no photorealistic tissue textures, plastic gloss or dark contours around crowns/roots. No text, labels, numerals, arrows, logos, watermarks or full arch. Show a PERIODONTAL POCKET, as a carefully designed local cutaway in the SAME front-view arch at the central-right tooth. REMOVE the wide external recession dip; instead show a slim longitudinal cutaway window below the central-right crown that reveals its beige root, a narrow DEEP RED SPACE BETWEEN ROOT SURFACE AND DETACHED INNER GUM, and small muted ochre deposits along that root surface. The pocket must descend from the gum margin on one side of the root, not be a hole drilled into enamel. Reveal a small stylized pale beige supporting bone region with simple sparse rounded cellular shapes below/around the root, including a lowered bone crest at the affected side. Keep outer neighboring gums opaque pink and other crowns identical. Preserve the overall soft graphic palette and exact scale, do not turn the whole picture into a full anatomical cross-section. No blood beads, tools or exposed dental pulp. Root and bone distinct; periodontal space external to tooth.",
+      "references": [
+        "/Users/dutongthinh/.codex/generated_images/01a16309-c135-7953-8cdb-b8a66ceb867c/exec-c2b45b40-5832-454a-88c5-6f72f9c01744.png"
+      ],
+      "path": "/Users/dutongthinh/.codex/generated_images/01a16309-c135-7953-8cdb-b8a66ceb867c/exec-1c09d162-4fd8-4975-9ed9-4545a15767ef.png",
+      "file": "public/assets/optimized/parodontologia-tasche-problema.webp",
+      "original": "output/imagegen/parodontologia-percorsi/tasche-problema.png"
+    },
+    {
+      "key": "sanguinamento-cura",
+      "prompt": "Use case: precise-object-edit. Create a NEW companion frame in a coordinated set of nine medical patient-education illustrations, editing the reference. LOCK the exact four-tooth LOWER anterior arch front view, ivory crown geometry and positions, crop (outer teeth cut off), landscape 3:2 1536x1024, pale ice-blue background, coral-pink gum palette, elegant clean DRAWN pastel graphic style. Restrained soft shading, no photorealistic tissue textures, plastic gloss or dark contours around crowns/roots. No text, labels, numerals, arrows, logos, watermarks or full arch. This frame shows PROFESSIONAL CLEANING for plaque-related gingivitis. Preserve exactly the reference geometry: no recession, no bone loss, no deep pocket. Show ONE slim silver dental scaler tip entering diagonally from upper right, gently contacting the cervical surface of the central-right tooth AT the gumline to remove the yellow plaque/calculus band. A small adjacent segment is already clean. Keep the instrument OUTSIDE the tooth, no drilling or penetration of enamel/gum, no sharp impaling effect. Inflamed pink-red gum margin remains mildly red during treatment, but REMOVE the two red blood beads for a calm clinical view. One instrument only, no inset, no hand or glove. Same pastel drawn style and full framing as the reference. The text outside the picture will explain that assessment precedes cleaning.",
+      "references": [
+        "/Users/dutongthinh/.codex/generated_images/01a16309-c135-7953-8cdb-b8a66ceb867c/exec-733ad8e0-7274-4173-bbb8-e5a9306eaf8b.png"
+      ],
+      "path": "/Users/dutongthinh/.codex/generated_images/01a16309-c135-7953-8cdb-b8a66ceb867c/exec-d25bcb7f-cf51-479f-a5cb-a65d0e03406a.png",
+      "file": "public/assets/optimized/parodontologia-sanguinamento-cura.webp",
+      "original": "output/imagegen/parodontologia-percorsi/sanguinamento-cura.png"
+    },
+    {
+      "key": "sanguinamento-risultato",
+      "prompt": "Use case: precise-object-edit. Create a NEW companion frame in a coordinated set of nine medical patient-education illustrations, editing the reference. LOCK the exact four-tooth LOWER anterior arch front view, ivory crown geometry and positions, crop (outer teeth cut off), landscape 3:2 1536x1024, pale ice-blue background, coral-pink gum palette, elegant clean DRAWN pastel graphic style. Restrained soft shading, no photorealistic tissue textures, plastic gloss or dark contours around crowns/roots. No text, labels, numerals, arrows, logos, watermarks or full arch. This frame shows a POSSIBLE RESULT after treatment for plaque-related gingivitis. Preserve the exact reference four-tooth anatomy, scale and normal gumline height. Remove ALL yellow plaque/calculus bands and ALL blood beads. Show clean warm-ivory crowns with firm, natural light coral-pink gingiva, less swollen and less red at the margin, no visible bleeding. No recession, no bone loss, no tissue magically replacing a lost root, since this example was gingivitis without support loss. No tool, sutures or sparkle symbols. Healthy gum should remain a natural pink, not white or intensely saturated red. Same drawn style, background and framing.",
+      "references": [
+        "/Users/dutongthinh/.codex/generated_images/01a16309-c135-7953-8cdb-b8a66ceb867c/exec-733ad8e0-7274-4173-bbb8-e5a9306eaf8b.png"
+      ],
+      "path": "/Users/dutongthinh/.codex/generated_images/01a16309-c135-7953-8cdb-b8a66ceb867c/exec-a1bd2d35-fef9-41a6-b50f-1bb01d9707ed.png",
+      "file": "public/assets/optimized/parodontologia-sanguinamento-risultato.webp",
+      "original": "output/imagegen/parodontologia-percorsi/sanguinamento-risultato.png"
+    },
+    {
+      "key": "tasche-cura",
+      "prompt": "Use case: precise-object-edit. Create a NEW companion frame in a coordinated set of nine medical patient-education illustrations, editing the reference. LOCK the exact four-tooth LOWER anterior arch front view, ivory crown geometry and positions, crop (outer teeth cut off), landscape 3:2 1536x1024, pale ice-blue background, coral-pink gum palette, elegant clean DRAWN pastel graphic style. Restrained soft shading, no photorealistic tissue textures, plastic gloss or dark contours around crowns/roots. No text, labels, numerals, arrows, logos, watermarks or full arch. This is the ANALYSIS/CARE frame for the periodontal pocket shown in the reference. Preserve the EXACT local cutaway window, beige central-right root, lowered bone crest and bone defect contour, red pocket channel outside the root and small ochre deposits. Add ONE thin silver PERIODONTAL PROBE entering from upper right, with tiny black measurement graduation bands ON THE INSTRUMENT ONLY and a rounded blunt tip. The tip must sit INSIDE the narrow red POCKET SPACE between root and detached inner gum, alongside the root, not penetrating tooth, bone or gum. Probe is not a drill or hook. Keep the crown and all other anatomy identical. Do not invent new bone or cure the pocket in this frame. This illustrates measurement; text outside explains subsequent subgingival debridement. No other tools, callouts or blood.",
+      "references": [
+        "/Users/dutongthinh/.codex/generated_images/01a16309-c135-7953-8cdb-b8a66ceb867c/exec-1c09d162-4fd8-4975-9ed9-4545a15767ef.png"
+      ],
+      "path": "/Users/dutongthinh/.codex/generated_images/01a16309-c135-7953-8cdb-b8a66ceb867c/exec-052506dc-53cf-4f62-a204-fcac02b1e7c8.png",
+      "revision": {
+        "prompt": "Use case: precise-object-edit. Make a SINGLE precise correction to this dental drawing: move the lower measuring segment of the silver periodontal probe SLIGHTLY LEFT, so its BLUNT TIP and lower shaft are clearly INSIDE the RED PERIODONTAL POCKET between the BEIGE ROOT surface (on its left) and PINK inner gum (on its right). The tip must be within the soft red pocket lumen beside the root, NOT resting on or passing through the cream-colored bone ridge at the right, NOT lying outside the gum, and NOT penetrating the tooth. Let the lower shaft follow the root surface nearly parallel to it; black bands only on instrument. Preserve all existing tooth crowns, cutaway anatomy, bone height/defect, plaque, colors, exact crop, 3:2 frame, soft pastel drawn graphic style and no text. No other changes.",
+        "references": [
+          "/Users/dutongthinh/.codex/generated_images/01a16309-c135-7953-8cdb-b8a66ceb867c/exec-44dc00b6-f834-47b1-89e9-45ada96fa710.png"
+        ],
+        "previousPath": "/Users/dutongthinh/.codex/generated_images/01a16309-c135-7953-8cdb-b8a66ceb867c/exec-44dc00b6-f834-47b1-89e9-45ada96fa710.png"
+      },
+      "file": "public/assets/optimized/parodontologia-tasche-cura.webp",
+      "original": "output/imagegen/parodontologia-percorsi/tasche-cura.png"
+    },
+    {
+      "key": "tasche-risultato",
+      "prompt": "Use case: precise-object-edit. Create a NEW companion frame in a coordinated set of nine medical patient-education illustrations, editing the reference. LOCK the exact four-tooth LOWER anterior arch front view, ivory crown geometry and positions, crop (outer teeth cut off), landscape 3:2 1536x1024, pale ice-blue background, coral-pink gum palette, elegant clean DRAWN pastel graphic style. Restrained soft shading, no photorealistic tissue textures, plastic gloss or dark contours around crowns/roots. No text, labels, numerals, arrows, logos, watermarks or full arch. This is the POSSIBLE RESULT after periodontal treatment of the SAME site. Preserve EXACTLY the reference local cutaway window, crown/root geometry, bone height AND bone-defect contour, neighboring anatomy and camera. Remove ALL ochre plaque/calculus deposits. Replace swollen deep red detached inner gum with firm lighter-pink soft tissue adapted closely to the root, so the deep pocket channel becomes a visibly SHORTER SHALLOW crevice at its upper opening. Mild apical shift of the gum margin is acceptable. IMPORTANT: keep the LOW BONE CREST and existing bone defect at exactly the same height as before; do NOT grow bone around the root, fill the defect with new bone or make the tissue support look completely restored. The change is reduced inflammation and pocket depth, NOT complete anatomical regeneration. Keep the cutaway visible so before/after can be compared. No instrument, blood, sutures, arrows or text.",
+      "references": [
+        "/Users/dutongthinh/.codex/generated_images/01a16309-c135-7953-8cdb-b8a66ceb867c/exec-1c09d162-4fd8-4975-9ed9-4545a15767ef.png"
+      ],
+      "path": "/Users/dutongthinh/.codex/generated_images/01a16309-c135-7953-8cdb-b8a66ceb867c/exec-260fe447-480f-430d-bfc6-42fce122d288.png",
+      "file": "public/assets/optimized/parodontologia-tasche-risultato.webp",
+      "original": "output/imagegen/parodontologia-percorsi/tasche-risultato.png"
+    }
+  ]
+}

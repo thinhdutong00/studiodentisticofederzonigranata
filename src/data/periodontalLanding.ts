@@ -250,6 +250,7 @@ export const periodontalContentSources = [
   { title: 'EFP · Gengivite, parodontite e recessioni', url: 'https://www.efp.org/for-patients/gum-diseases/faqs' },
   { title: 'SIdP · Tasche parodontali e cure', url: 'https://www.gengive.org/cosa-sono-le-tasche-parodontali/' },
   { title: 'SIdP · Copertura delle recessioni gengivali', url: 'https://www.gengive.org/le-gengive-ritirate-ricrescono/' },
+  { title: 'AAP · Chirurgia mucogengivale e ricopertura radicolare', url: 'https://www.perio.org/for-patients/periodontal-treatments-and-procedures/surgical-procedures/' },
   { title: 'EFP · Diagnosi e trattamento della parodontite', url: 'https://www.efp.org/for-patients/what-is-periodontitis/' },
   { title: 'SIdP · Recessioni gengivali', url: 'https://www.gengive.org/recessione-gengivale-cause-e-terapia/' },
   { title: 'SIdP · Sanguinamento delle gengive', url: 'https://www.gengive.org/sanguinamento-delle-gengive-quando-spazzolo-i-denti-sentinella-di-infiammazione/' },

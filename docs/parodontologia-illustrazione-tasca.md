@@ -1,50 +1,49 @@
-# Sequenza illustrata: tasca, sondaggio e risposta alle cure
+# Parodontologia: nove illustrazioni per tre percorsi
 
-Creata il 26 ottobre 2026 con lo strumento integrato imagegen, per la landing `/visita-parodontologia/`.
+Aggiornamento del 26 ottobre 2026 per `/visita-parodontologia/`.
 
-Le tre immagini mantengono la stessa inquadratura ravvicinata della medesima porzione di arcata. Lo stile è disegnato, con colori pastello e bordi locali morbidi; non ci sono contorni neri o blu sulle corone. Le tacche scure sulla sonda rappresentano le graduazioni dello strumento.
+La nuova sezione «La salute delle gengive, spiegata in tre passaggi» mantiene separate le tre situazioni e usa sempre la stessa sequenza:
 
-## File del progetto
+1. Identificazione del problema.
+2. Analisi e cura.
+3. Risultati.
 
-- `public/assets/optimized/parodontologia-tasca-grafica.webp` — 1536 × 1024, circa 76 KB: tasca parodontale e depositi.
-- `public/assets/optimized/parodontologia-sondaggio-grafico.webp` — 1536 × 1024, circa 86 KB: sondaggio della stessa zona.
-- `public/assets/optimized/parodontologia-dopo-cure-grafica.webp` — 1536 × 1024, circa 74 KB: possibile miglioramento dopo la terapia.
-- Originali PNG e versioni precedenti conservati in `output/imagegen/`; `output/` è escluso da Git.
+## Sistema grafico e provenienza
 
-Le immagini sono schemi didattici generati, non fotografie di pazienti o risultati clinici documentati. La terza mostra la rimozione dei depositi, tessuti meno infiammati e riduzione della tasca; non rappresenta una ricrescita automatica dell’osso perduto. La risposta individuale e le ulteriori cure dipendono dalla situazione clinica. I testi ricordano rivalutazione e mantenimento.
+Tutte e nove le immagini sono state rigenerate con lo strumento **imagegen integrato**. Il disegno delle recessioni è stato usato come riferimento iniziale, poi rielaborato come master. Le altre immagini derivano dal nuovo master e dai relativi primi fotogrammi: stessa porzione frontale di quattro denti inferiori, stessa scala, corone avorio, gengive rosa corallo e sfondo azzurro. Contorni locali morbidi, nessuna bordatura scura sulle corone. Lo spaccato delle tasche è limitato al sito interessato.
 
-Riferimenti: [SIdP · Tasche parodontali e riduzione della profondità dopo le cure](https://www.gengive.org/cosa-sono-le-tasche-parodontali/), [SIdP · Terapia e mantenimento](https://www.gengive.org/parodontite-cura/), [EFP · Esame e sondaggio parodontale](https://www.efp.org/for-patients/what-is-periodontitis/).
+Non sono fotografie di pazienti o risultati clinici documentati. Gli originali PNG sono conservati in `output/imagegen/parodontologia-percorsi/`. Le immagini precedenti sostituite sono archiviate in `output/imagegen/parodontologia-percorsi/precedenti/`. La directory `output/` è esclusa da Git.
 
-## Prompt finale: tasca parodontale
+I prompt completi di ogni immagine, i riferimenti e la correzione della posizione della sonda sono in [parodontologia-illustrazioni-percorsi-prompts.json](parodontologia-illustrazioni-percorsi-prompts.json).
 
-Riferimento: la precedente illustrazione ravvicinata della tasca.
+## Asset finali
 
-```text
-Edit the referenced medical drawing. Preserve the EXACT close-up composition, cropped portion of dental arch, tooth shapes and positions, root anatomy, gum and bone contours, periodontal pocket and small ochre deposits. Keep the image clearly a TWO-DIMENSIONAL drawn medical graphic with flat pastel colors and restrained tonal shading.
-Change only the rendering of edges: REMOVE EVERY black, navy or dark-blue contour line around crowns, roots and gums. Crowns must have soft warm ivory/beige boundaries, with subtle pale grey-beige separation between teeth. Tissue boundaries should use soft local colors, not dark ink. Separate shapes using gentle colored transitions. There must be no dark stroke tracing the outer perimeter of any tooth.
-Retain a professional drawn/vector-like style, without realistic enamel or flesh texture, without glossy 3D rendering. Same pale blue-white background, same 3:2 framing with edge teeth partly outside the frame, no full arch, no tool, no text, no arrows, no labels, no watermark.
-```
+WebP qualità 86, tutti 1536 × 1024, circa 318 KB complessivi.
 
-## Prompt finale: sondaggio
+| Percorso | Passaggio | File in `public/assets/optimized/` | Byte |
+| --- | --- | --- | ---: |
+| Sanguinamento | Problema | `parodontologia-sanguinamento-problema.webp` | 37514 |
+| Sanguinamento | Analisi e cura | `parodontologia-sanguinamento-cura.webp` | 45540 |
+| Sanguinamento | Risultati | `parodontologia-sanguinamento-risultato.webp` | 29542 |
+| Tasche | Problema | `parodontologia-tasche-problema.webp` | 36464 |
+| Tasche | Analisi e cura | `parodontologia-tasche-cura.webp` | 46070 |
+| Tasche | Risultati | `parodontologia-tasche-risultato.webp` | 35242 |
+| Recessioni | Problema | `parodontologia-recessioni-problema.webp` | 28484 |
+| Recessioni | Analisi e cura | `parodontologia-recessioni-cura.webp` | 31114 |
+| Recessioni | Risultati | `parodontologia-recessioni-risultato.webp` | 27678 |
 
-Riferimenti: precedente disegno del sondaggio e nuova immagine della tasca senza contorni scuri.
+## Coerenza dei contenuti
 
-```text
-Image 1 is the EDIT TARGET: the close-up medical drawing with a periodontal measuring probe. Image 2 is the approved SOFT-EDGE STYLE reference.
-Keep the exact composition, cropped row of neighboring teeth, tooth and root geometry, gum and bone anatomy, periodontal pocket and probe position from image 1.
-Remove all black/navy/dark-blue contour strokes around the tooth crowns, roots and gum surfaces. Match image 2: warm ivory/beige edges for teeth, muted coral-pink tissue boundaries and subtle local-color transitions, with no dark line tracing any tooth.
-Keep the thin silver BLUNT periodontal measuring probe and its small black graduation bands, since these are marks on the instrument. The probe stays gently inserted between tooth root and gum, not penetrating the tooth or bone.
-Maintain a clearly drawn TWO-DIMENSIONAL pastel medical illustration, no photographic texture, no glossy 3D render, same pale blue-white background and landscape 3:2 framing. No text, labels, numbers, arrows, watermark or additional objects.
-```
+- **Sanguinamento:** esempio di gengivite da placca. La visita distingue infiammazione superficiale e parodontite. Il secondo fotogramma rappresenta la pulizia; il testo spiega la valutazione che la precede. Il risultato illustrato è il controllo dell’infiammazione e del sanguinamento, non la rigenerazione del sostegno.
+- **Tasche:** spaccato locale con depositi, sondaggio e possibile riduzione della profondità dopo la terapia. Il secondo fotogramma mostra la misurazione; il testo comprende anche la rimozione dei depositi. L’immagine finale conserva il livello osseo e non promette una ricrescita automatica.
+- **Recessioni:** radice esposta, riposizionamento con suture e possibile copertura completa dopo guarigione. L’eliminazione della recessione è riferita ai casi favorevoli; altrove la copertura può essere parziale. Non tutte le recessioni richiedono chirurgia.
 
-## Prompt finale: dopo le cure
+Le fisarmoniche sono indipendenti; quella delle tasche rimane aperta all’ingresso. Il design mantiene i controlli delle pagine dei trattamenti, con tre card su desktop, card orizzontali su tablet e sequenza verticale su mobile. Nessuna modifica alle immagini o ai passaggi dei quiz.
 
-Riferimento: nuova immagine della tasca, per mantenere la stessa anatomia e inquadratura.
+## Fonti cliniche
 
-```text
-Edit the referenced soft-edge medical drawing to create the THIRD FRAME of a consistent patient-education sequence: the SAME segment of dental arch AFTER SUCCESSFUL PERIODONTAL TREATMENT, in a stable, less inflamed condition.
-Preserve the EXACT camera, crop, tooth positions and shapes, root geometry, background, 3:2 framing, flat drawn pastel style and soft ivory/beige edges. No dark outlines around crowns, roots or gums, no photographic textures, no 3D render.
-Change the treated central site: remove ALL yellow/ochre calculus deposits so the root surface is clean; change swollen red gum to firm, lighter healthy pink gum that fits closely along the tooth; show the formerly deep pocket substantially reduced to a shallow gingival crevice. A modest apical shift of the gum margin is acceptable to illustrate pocket reduction with mild residual recession.
-IMPORTANT ANATOMICAL CONSTRAINT: keep the pre-existing BONE HEIGHT AND BONE DEFECT CONTOUR the SAME as in the reference. Do not regenerate missing bone, raise the bone crest, cover the root with new bone or imply complete anatomical restoration. The change is in soft tissue inflammation and pocket depth, not miraculous bone regrowth. Keep the cutaway so the supporting structures are still comparable to the first frame.
-No periodontal instrument, no arrows, text, numbers, labels, logos or watermark. This should read as a possible stable post-treatment result of the SAME teeth, not a new perfect mouth.
-```
+- [SIdP · Sanguinamento e distinzione tra gengivite e parodontite](https://www.gengive.org/sanguinamento-delle-gengive-quando-spazzolo-i-denti-sentinella-di-infiammazione/)
+- [EFP · Valutazione, terapia e mantenimento](https://www.efp.org/for-patients/gum-diseases/gum-disease-treatment/)
+- [SIdP · Tasche parodontali e riduzione della profondità](https://www.gengive.org/cosa-sono-le-tasche-parodontali/)
+- [SIdP · Recessioni e ricopertura delle radici](https://www.gengive.org/le-gengive-ritirate-ricrescono/)
+- [AAP · Chirurgia mucogengivale](https://www.perio.org/for-patients/periodontal-treatments-and-procedures/surgical-procedures/)
