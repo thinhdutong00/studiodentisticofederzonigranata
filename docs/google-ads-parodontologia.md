@@ -6,11 +6,11 @@
 - Tag: `AW-988575526`.
 - Nuova azione manuale: `mago system | Parodontologia | Contatto confermato`, ID `7873980888`.
 - Destinazione evento: `AW-988575526/I2pSCNjTzaodEKbusdcD`.
-- Obiettivo personalizzato della sola nuova bozza: `mago system | Parodontologia | Modulo inviato`.
+- Obiettivo personalizzato della sola campagna: `mago system | Parodontologia | Modulo inviato`.
 - Una conversione per clic; finestra clickthrough 30 giorni; nessun valore monetario.
-- Azione secondaria nell’account, inclusa nell’obiettivo personalizzato della bozza. Le campagne che usano gli obiettivi standard non devono ereditare la nuova azione.
+- Azione secondaria nell’account, inclusa nell’obiettivo personalizzato della campagna. Le campagne che usano gli obiettivi standard non devono ereditare la nuova azione.
 - La precedente azione automatica di questa configurazione (ID `7873501595`), basata sulla sola URL `thank-you-page`, è stata rimossa. Non riattivarla insieme al metodo manuale.
-- La campagna resta in bozza e non deve essere pubblicata durante il collaudo.
+- Il 26 ottobre 2026 la campagna è stata pubblicata e subito messa in pausa su richiesta dell’utente (ID `24405452578`). Non riattivarla durante il collaudo.
 
 ## Quando scatta
 

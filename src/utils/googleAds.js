@@ -1,8 +1,14 @@
 // Basic consent mode: no Google script/network request before explicit consent.
 export const ADS_TAG_ID = 'AW-988575526';
 export const ADS_LEAD_DESTINATION = 'AW-988575526/I2pSCNjTzaodEKbusdcD';
+export const ADS_ORTHODONTIC_DESTINATION = 'AW-988575526/gUQ-COLP2aodEKbusdcD';
 export const COOKIE_PREFERENCE_KEY = 'fg-cookie-preference-v2';
 const RECEIPT_KEY = 'fg-confirmed-lead-v1';
+const ORTHODONTIC_RECEIPT_KEY = 'fg-confirmed-orthodontic-lead-v1';
+const LEAD_EVENTS = [
+  { key: RECEIPT_KEY, destination: ADS_LEAD_DESTINATION, paths: ['/visita-parodontologia', '/visita-parodontologia/'], kinds: ['landing-consultation', 'periodontal-quiz'] },
+  { key: ORTHODONTIC_RECEIPT_KEY, destination: ADS_ORTHODONTIC_DESTINATION, paths: ['/visita-ortodonzia', '/visita-ortodonzia/'], kinds: ['landing-consultation', 'orthodontic-quiz'] },
+];
 const RECEIPT_TTL = 30 * 60 * 1000;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const SITE_HOSTS = new Set(['studiodentisticofederzonigranata.it', 'www.studiodentisticofederzonigranata.it']);
@@ -18,19 +24,23 @@ function productionHost() {
   return window.location.protocol === 'https:' && SITE_HOSTS.has(window.location.hostname);
 }
 
-function forgetReceipt() {
-  try { sessionStorage.removeItem(RECEIPT_KEY); } catch { /* Storage may be disabled. */ }
+function forgetReceipt(key) {
+  try { sessionStorage.removeItem(key); } catch { /* Storage may be disabled. */ }
+}
+
+function forgetReceipts() {
+  for (const { key } of LEAD_EVENTS) forgetReceipt(key);
 }
 
 // Called only after /api/booking has acknowledged this exact requestId.
 // Store no form fields, clinical answers, contact details, or attribution data.
 export function rememberConfirmedLead({ requestId, kind, source }) {
-  forgetReceipt();
-  if (!consentGranted() || !UUID.test(requestId)
-    || !['landing-consultation', 'periodontal-quiz'].includes(kind)
-    || !['/visita-parodontologia', '/visita-parodontologia/'].includes(source)) return;
+  forgetReceipts();
+  if (!productionHost() || !consentGranted() || !UUID.test(requestId)) return;
+  const event = LEAD_EVENTS.find(event => event.paths.includes(source) && event.kinds.includes(kind));
+  if (!event) return;
   try {
-    sessionStorage.setItem(RECEIPT_KEY, JSON.stringify({ requestId, createdAt: Date.now() }));
+    sessionStorage.setItem(event.key, JSON.stringify({ requestId, createdAt: Date.now() }));
   } catch {
     // Measurement failure must never prevent an accepted request's confirmation.
   }
@@ -38,22 +48,24 @@ export function rememberConfirmedLead({ requestId, kind, source }) {
 
 function sendConfirmedLead() {
   if (!loaded || !consentGranted() || !['/thank-you-page', '/thank-you-page/'].includes(window.location.pathname)) return;
-  let receipt;
-  try {
-    receipt = JSON.parse(sessionStorage.getItem(RECEIPT_KEY) || 'null');
-    if (!receipt || !UUID.test(receipt.requestId) || !Number.isFinite(receipt.createdAt)
-      || receipt.createdAt > Date.now() || Date.now() - receipt.createdAt > RECEIPT_TTL) {
-      forgetReceipt();
-      return;
-    }
-    // Consume before sending: reload/back/consent events cannot enqueue it twice.
-    sessionStorage.removeItem(RECEIPT_KEY);
-  } catch { forgetReceipt(); return; }
-  window.gtag('event', 'conversion', {
-    send_to: ADS_LEAD_DESTINATION,
-    transaction_id: receipt.requestId,
-    user_data: {},
-  });
+  for (const { key, destination } of LEAD_EVENTS) {
+    let receipt;
+    try {
+      receipt = JSON.parse(sessionStorage.getItem(key) || 'null');
+      if (!receipt || !UUID.test(receipt.requestId) || !Number.isFinite(receipt.createdAt)
+        || receipt.createdAt > Date.now() || Date.now() - receipt.createdAt > RECEIPT_TTL) {
+        sessionStorage.removeItem(key);
+        continue;
+      }
+      // Consume before sending: reload/back/consent events cannot enqueue it twice.
+      sessionStorage.removeItem(key);
+    } catch { forgetReceipt(key); continue; }
+    window.gtag('event', 'conversion', {
+      send_to: destination,
+      transaction_id: receipt.requestId,
+      user_data: {},
+    });
+  }
 }
 
 function updateConsent() {
@@ -64,7 +76,7 @@ function updateConsent() {
     ad_personalization: 'denied',
     analytics_storage: 'denied',
   });
-  if (!granted) { forgetReceipt(); return; }
+  if (!granted) { forgetReceipts(); return; }
   if (!configured) {
     configured = true;
     window.gtag('set', 'ads_data_redaction', true);
