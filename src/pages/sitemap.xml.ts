@@ -13,7 +13,6 @@ export async function GET({ site: astroSite }: { site: URL }) {
     '/visita-ortodonzia/',
     orthodonticResultsPath,
     ...orthodonticPaths.map(pathway => pathway.href),
-    '/thank-you-page/',
   ]
     .map((path) => {
       const loc = new URL(path, base).toString();

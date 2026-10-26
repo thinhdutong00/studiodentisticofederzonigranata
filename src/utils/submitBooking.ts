@@ -1,4 +1,5 @@
 import { getBookingAttribution } from './attribution';
+import { rememberConfirmedLead } from './googleAds';
 
 type Attempt = { fingerprint: string; requestId: string };
 const attempts = new WeakMap<HTMLFormElement, Attempt>();
@@ -42,6 +43,7 @@ export async function submitBooking(form: HTMLFormElement, setError: (message: s
     }
     succeeded = true;
     buttons.forEach((button) => { button.textContent = 'Richiesta inviata'; });
+    rememberConfirmedLead({ requestId: attempt.requestId, kind: payload.kind, source: payload.source });
     window.location.assign('/thank-you-page/');
   } catch (error) {
     setError(error instanceof Error && error.name === 'Error' ? error.message : fallback);
