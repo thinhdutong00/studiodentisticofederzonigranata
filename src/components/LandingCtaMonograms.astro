@@ -1,0 +1,31 @@
+<div class="landing-cta-monograms" aria-hidden="true">
+  {[0, 1, 2].map(() => <img class="landing-cta-monogram" src="/assets/decorations/studio-fg-white.svg" alt="" width="530" height="520" loading="lazy" decoding="async" />)}
+</div>
+
+<style>
+  .landing-cta-monograms {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: center;
+    justify-items: center;
+    overflow: hidden;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .landing-cta-monogram {
+    display: block;
+    width: clamp(180px, 26vw, 400px);
+    max-width: none;
+    height: auto;
+  }
+
+  @media (max-width: 720px) {
+    .landing-cta-monograms { grid-template-columns: minmax(0, 1fr); }
+    .landing-cta-monogram { width: clamp(320px, 96vw, 560px); }
+    .landing-cta-monogram:not(:first-child) { display: none; }
+  }
+</style>

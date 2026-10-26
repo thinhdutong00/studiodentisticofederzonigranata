@@ -1,15 +1,20 @@
 ---
 import CtaArrowIcon from './CtaArrowIcon.astro';
+import PeriodontalJourneyIcon from './PeriodontalJourneyIcon.astro';
 
 // Fonti SIdP, EFP e AAP raccolte in periodontalContentSources e nella documentazione delle immagini.
-const phases = ['Identificazione del problema', 'Analisi e cura', 'Risultati'];
+const phases = [
+  { label: 'Cosa osserviamo', icon: 'observation' },
+  { label: 'Analisi e cura', icon: 'care' },
+  { label: 'Risultato finale', icon: 'outcome' },
+] as const;
 const careJourneys = [
   {
     id: 'periodontal-bleeding-title',
     title: 'Perché le gengive sanguinano e come si curano?',
-    open: false,
+    open: true,
     lead: 'Il sanguinamento è un segnale da approfondire. La visita serve a capire se l’infiammazione riguarda solo la gengiva oppure anche i tessuti che sostengono i denti. Le immagini mostrano un esempio di gengivite da placca.',
-    listLabel: 'Sanguinamento: dal problema ai risultati delle cure',
+    listLabel: 'Sanguinamento: dal problema al risultato finale',
     steps: [
       {
         title: 'Sangue e gengive arrossate',
@@ -38,9 +43,9 @@ const careJourneys = [
   {
     id: 'periodontal-pockets-title',
     title: 'Che cosa sono le tasche parodontali e come si curano?',
-    open: true,
+    open: false,
     lead: 'La parodontite, chiamata anche piorrea, può creare spazi più profondi tra dente e gengiva: le tasche parodontali. Le cure puntano a ridurne la profondità e a controllare l’infiammazione.',
-    listLabel: 'Tasche parodontali: dal problema ai risultati delle cure',
+    listLabel: 'Tasche parodontali: dal problema al risultato finale',
     steps: [
       {
         title: 'Batteri sotto gengiva',
@@ -71,7 +76,7 @@ const careJourneys = [
     title: 'Come si curano le recessioni gengivali?',
     open: false,
     lead: 'Quando la gengiva si ritira, lascia scoperta una parte della radice. Può accadere anche senza parodontite. Valutiamo la causa e se è indicato un trattamento di ricopertura.',
-    listLabel: 'Recessioni gengivali: dal problema ai risultati delle cure',
+    listLabel: 'Recessioni gengivali: dal problema al risultato finale',
     steps: [
       {
         title: 'La radice esposta',
@@ -104,8 +109,8 @@ const careJourneys = [
   <div class="ortho-shell periodontal-care-shell">
     <header class="periodontal-care-heading">
       <p class="periodontal-care-eyebrow">Dai sintomi alle cure</p>
-      <h2 id="periodontal-care-title">La salute delle gengive,<span>spiegata in tre passaggi.</span></h2>
-      <p class="periodontal-care-comparison">Sanguinamento, tasche e recessioni richiedono valutazioni diverse. Scopri come <strong>identifichiamo il problema</strong>, scegliamo <strong>analisi e cure</strong> e controlliamo <strong>i risultati</strong>.</p>
+      <h2 id="periodontal-care-title">La salute delle gengive,<span>dalla diagnosi alla cura.</span></h2>
+      <p class="periodontal-care-comparison">Sanguinamento, tasche e recessioni richiedono valutazioni diverse. Scopri come <strong>identifichiamo il problema</strong>, scegliamo <strong>analisi e cure</strong> e controlliamo <strong>il risultato finale</strong>.</p>
     </header>
 
     <div class="periodontal-care-accordions">
@@ -118,9 +123,9 @@ const careJourneys = [
           <p class="periodontal-journey-lead">{journey.lead}</p>
           <ol class="periodontal-care-journey" aria-label={journey.listLabel} role="list">
             {journey.steps.map((step, index) => <li>
-              <article class="periodontal-journey-card">
+              <article class="periodontal-journey-step">
                 <header class="periodontal-journey-heading">
-                  <p class="periodontal-journey-phase"><span aria-hidden="true">{index + 1}</span>{phases[index]}</p>
+                  <p class="periodontal-journey-phase"><PeriodontalJourneyIcon phase={phases[index].icon} />{phases[index].label}</p>
                   <h4>{step.title}</h4>
                 </header>
                 <figure class="periodontal-journey-figure">
@@ -136,10 +141,6 @@ const careJourneys = [
       </details>)}
     </div>
 
-    <aside class="periodontal-care-note" aria-label="Mantenimento dei risultati">
-      <h4>Il risultato continua con la cura quotidiana.</h4>
-      <p>Spazzolamento corretto, pulizia interdentale e controlli personalizzati aiutano a mantenere la salute delle gengive e a intercettare nuovi cambiamenti.</p>
-    </aside>
     <p class="periodontal-journey-schematic">Illustrazioni schematiche di possibili percorsi di cura. Indicazioni e risultati variano in base alla situazione clinica e alla risposta individuale.</p>
     <button class="periodontal-care-cta" type="button" data-landing-booking-open aria-haspopup="dialog" aria-controls="landing-booking-dialog">
       <span>Prenota una visita parodontale</span>
@@ -176,14 +177,13 @@ const careJourneys = [
   .periodontal-care-toggle::after { transform: translate(-50%, -50%) rotate(90deg); transition: opacity 140ms ease; }
   .periodontal-care-accordion[open] > summary .periodontal-care-toggle::after { opacity: 0; }
   .periodontal-care-answer { padding-bottom: clamp(36px, 5vw, 70px); }
-  .periodontal-journey-lead, .periodontal-journey-description, .periodontal-care-note p { margin: 0; color: var(--muted-text); font-size: 18px; font-weight: 400; line-height: 1.5; }
+  .periodontal-journey-lead, .periodontal-journey-description { margin: 0; color: var(--muted-text); font-size: 18px; font-weight: 400; line-height: 1.5; }
   .periodontal-journey-lead { max-width: 76ch; margin-bottom: 28px; }
-  .periodontal-care-journey { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin: 0; padding: 0; list-style: none; }
+  .periodontal-care-journey { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin: 0; padding: 0; list-style: none; }
   .periodontal-care-journey > li { min-width: 0; }
-  .periodontal-journey-card { display: grid; grid-template-areas: 'heading' 'figure' 'copy'; grid-template-rows: auto auto 1fr; gap: 22px; height: 100%; padding: 24px; border: 1px solid var(--border); border-radius: 24px; background: var(--surface-white); }
+  .periodontal-journey-step { display: grid; grid-template-areas: 'heading' 'figure' 'copy'; grid-template-rows: auto auto 1fr; gap: 22px; height: 100%; }
   .periodontal-journey-heading { grid-area: heading; }
-  .periodontal-journey-phase { display: flex; align-items: center; gap: 12px; min-height: 34px; margin: 0 0 16px; color: var(--brand-cta); font-size: 12px; font-weight: 500; line-height: 1.4; letter-spacing: normal; text-transform: uppercase; }
-  .periodontal-journey-phase span { display: grid; flex: 0 0 34px; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--soft-blue-bg); font-size: 16px; }
+  .periodontal-journey-phase { display: flex; align-items: center; gap: 12px; min-height: 40px; margin: 0 0 16px; color: var(--brand-cta); font-size: 12px; font-weight: 500; line-height: 1.4; letter-spacing: normal; text-transform: uppercase; }
   .periodontal-care .periodontal-journey-heading h4 { min-height: 2.4em; margin: 0; font-size: 25px; font-weight: 500; line-height: 1.2; text-wrap: balance; }
   .periodontal-journey-figure { grid-area: figure; margin: 0; }
   .periodontal-journey-figure img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; border-radius: 14px; }
@@ -192,15 +192,13 @@ const careJourneys = [
   .periodontal-journey-note { max-width: 95ch; margin: 24px 0 0; color: var(--muted-text); font-size: 16px; font-weight: 400; line-height: 1.5; }
   .periodontal-journey-schematic { margin: 0; color: var(--muted-text); font-size: 13px; font-weight: 400; line-height: 1.5; }
   .periodontal-care strong { color: var(--brand-primary-dark); font-weight: 600; }
-  .periodontal-care-note { padding: 24px; border-left: 3px solid var(--brand-blue); border-radius: 0 16px 16px 0; background: var(--surface-white); }
-  .periodontal-care-note h4 { margin: 0 0 10px; font-size: 18px; font-weight: 500; line-height: 1.4; }
   .periodontal-care-cta { display: inline-flex; justify-self: center; align-items: center; justify-content: center; gap: 18px; max-width: 100%; min-height: 56px; padding: 20px 28px; border: 0; border-radius: 999px; background: var(--brand-cta); color: var(--surface-white); font: inherit; font-size: 16px; font-weight: 500; line-height: 16px; letter-spacing: normal; text-align: center; text-transform: uppercase; cursor: pointer; }
   .periodontal-care-cta:hover { background: var(--brand-cta-hover); }
   .periodontal-care-cta:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 4px; }
 
   @media (min-width: 721px) and (max-width: 1099px) {
     .periodontal-care-journey { grid-template-columns: minmax(0, 1fr); }
-    .periodontal-journey-card { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); grid-template-areas: 'figure heading' 'figure copy'; grid-template-rows: auto 1fr; align-items: start; gap: 18px 28px; }
+    .periodontal-journey-step { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); grid-template-areas: 'figure heading' 'figure copy'; grid-template-rows: auto 1fr; align-items: start; gap: 18px 28px; }
     .periodontal-care .periodontal-journey-heading h4 { min-height: 0; }
   }
 
@@ -213,12 +211,12 @@ const careJourneys = [
     .periodontal-care-accordion summary h3 { font-size: 28px; line-height: 30px; }
     .periodontal-care-toggle { width: 30px; height: 30px; }
     .periodontal-care-answer { padding-bottom: 36px; }
-    .periodontal-care-journey { grid-template-columns: minmax(0, 1fr); gap: 20px; }
-    .periodontal-journey-card { gap: 20px; padding: 20px; }
+    .periodontal-care-journey { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+    .periodontal-journey-step { gap: 20px; }
+    .periodontal-journey-phase { min-height: 36px; }
     .periodontal-care .periodontal-journey-heading h4 { min-height: 0; font-size: 24px; }
     .periodontal-journey-figure figcaption { min-height: 0; }
-    .periodontal-care-comparison, .periodontal-journey-lead, .periodontal-journey-description, .periodontal-care-note p { font-size: 17px; }
-    .periodontal-care-note { padding: 20px; }
+    .periodontal-care-comparison, .periodontal-journey-lead, .periodontal-journey-description { font-size: 17px; }
     .periodontal-care-cta { width: 100%; gap: 12px; padding-inline: 22px; }
     .periodontal-care-cta span { min-width: 0; line-height: 1.3; }
   }

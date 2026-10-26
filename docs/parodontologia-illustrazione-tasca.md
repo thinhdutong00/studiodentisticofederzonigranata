@@ -2,11 +2,13 @@
 
 Aggiornamento del 26 ottobre 2026 per `/visita-parodontologia/`.
 
-La nuova sezione «La salute delle gengive, spiegata in tre passaggi» mantiene separate le tre situazioni e usa sempre la stessa sequenza:
+La nuova sezione «La salute delle gengive, dalla diagnosi alla cura» mantiene separate le tre situazioni e usa sempre la stessa sequenza:
 
-1. Identificazione del problema.
+1. Cosa osserviamo.
 2. Analisi e cura.
-3. Risultati.
+3. Risultato finale.
+
+I tre passaggi sono identificati da icone SVG coordinate, al posto dei numeri: occhio per l’osservazione, cartella clinica con croce per analisi e cura, cerchio con spunta per il risultato finale. Le icone sono decorative e accompagnate dall’etichetta testuale.
 
 ## Sistema grafico e provenienza
 
@@ -24,13 +26,13 @@ WebP qualità 86, tutti 1536 × 1024, circa 318 KB complessivi.
 | --- | --- | --- | ---: |
 | Sanguinamento | Problema | `parodontologia-sanguinamento-problema.webp` | 37514 |
 | Sanguinamento | Analisi e cura | `parodontologia-sanguinamento-cura.webp` | 45540 |
-| Sanguinamento | Risultati | `parodontologia-sanguinamento-risultato.webp` | 29542 |
+| Sanguinamento | Risultato finale | `parodontologia-sanguinamento-risultato.webp` | 29542 |
 | Tasche | Problema | `parodontologia-tasche-problema.webp` | 36464 |
 | Tasche | Analisi e cura | `parodontologia-tasche-cura.webp` | 46070 |
-| Tasche | Risultati | `parodontologia-tasche-risultato.webp` | 35242 |
+| Tasche | Risultato finale | `parodontologia-tasche-risultato.webp` | 35242 |
 | Recessioni | Problema | `parodontologia-recessioni-problema.webp` | 28484 |
 | Recessioni | Analisi e cura | `parodontologia-recessioni-cura.webp` | 31114 |
-| Recessioni | Risultati | `parodontologia-recessioni-risultato.webp` | 27678 |
+| Recessioni | Risultato finale | `parodontologia-recessioni-risultato.webp` | 27678 |
 
 ## Coerenza dei contenuti
 
@@ -38,7 +40,7 @@ WebP qualità 86, tutti 1536 × 1024, circa 318 KB complessivi.
 - **Tasche:** spaccato locale con depositi, sondaggio e possibile riduzione della profondità dopo la terapia. Il secondo fotogramma mostra la misurazione; il testo comprende anche la rimozione dei depositi. L’immagine finale conserva il livello osseo e non promette una ricrescita automatica.
 - **Recessioni:** radice esposta, riposizionamento con suture e possibile copertura completa dopo guarigione. L’eliminazione della recessione è riferita ai casi favorevoli; altrove la copertura può essere parziale. Non tutte le recessioni richiedono chirurgia.
 
-Le fisarmoniche sono indipendenti; quella delle tasche rimane aperta all’ingresso. Il design mantiene i controlli delle pagine dei trattamenti, con tre card su desktop, card orizzontali su tablet e sequenza verticale su mobile. Nessuna modifica alle immagini o ai passaggi dei quiz.
+Le fisarmoniche sono indipendenti; quella del sanguinamento rimane aperta all’ingresso, mentre tasche e recessioni sono inizialmente chiuse. Il design mantiene i controlli delle pagine dei trattamenti, con tre colonne su desktop, passaggi orizzontali su tablet e sequenza verticale su mobile. Immagini e testi poggiano direttamente sul fondo azzurro della sezione, senza card bianche, bordi o imbottitura intorno ai singoli passaggi. Nessuna modifica alle immagini o ai passaggi dei quiz.
 
 ## Fonti cliniche
 

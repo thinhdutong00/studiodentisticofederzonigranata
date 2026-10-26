@@ -1,9 +1,11 @@
 ---
 import { landingBookingTreatments } from '../data/landingBooking.js';
+import LandingCtaMonograms from './LandingCtaMonograms.astro';
 const requestHref = `/richiesta/?trattamento=${encodeURIComponent(landingBookingTreatments.ortodonzia.requestTreatment)}`;
 ---
 
 <section class="ortho-final-invitation" id="ortho-final" aria-labelledby="ortho-consultation-title">
+  <LandingCtaMonograms />
   <div class="invitation-content">
     <p class="invitation-kicker">Il primo passo è una visita</p>
     <h2 id="ortho-consultation-title">Dai spazio al tuo sorriso.<br /><span>Inizia con noi.</span></h2>
@@ -15,8 +17,8 @@ const requestHref = `/richiesta/?trattamento=${encodeURIComponent(landingBooking
 </section>
 
 <style>
-  :global(.ortho-unified) #ortho-final.ortho-final-invitation { padding: 104px 0; background: var(--soft-blue-bg); color: var(--text-dark); text-align: center; }
-  .invitation-content { width: min(100% - 64px, 1280px); margin-inline: auto; }
+  :global(.ortho-unified) #ortho-final.ortho-final-invitation { position: relative; isolation: isolate; overflow: hidden; padding: 104px 0; background: var(--soft-blue-bg); color: var(--text-dark); text-align: center; }
+  .invitation-content { position: relative; z-index: 1; width: min(100% - 64px, 1280px); margin-inline: auto; }
   .invitation-kicker { margin: 0 0 14px; color: var(--brand-cta); font-size: 12px; font-weight: 600; line-height: 1.55; letter-spacing: .5px; text-transform: uppercase; }
   .invitation-content h2 { margin: 0; color: var(--text-dark); font-family: Inter, sans-serif; font-size: clamp(40px, 5.2vw, 68px); font-weight: 500; line-height: 1.08; letter-spacing: -2.8px; text-wrap: balance; }
   .invitation-content h2 span { color: var(--brand-cta); }

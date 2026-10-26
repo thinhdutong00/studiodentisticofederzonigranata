@@ -11,6 +11,7 @@ import PeriodontalPathsSection from '../components/PeriodontalPathsSection.astro
 import PeriodontalCareSection from '../components/PeriodontalCareSection.astro';
 import PeriodontalRecognitionSection from '../components/PeriodontalRecognitionSection.astro';
 import LandingBookingCta from '../components/LandingBookingCta.astro';
+import LandingCtaMonograms from '../components/LandingCtaMonograms.astro';
 import LandingTreatmentHero from '../components/LandingTreatmentHero.astro';
 import LandingBookingDialog from '../components/LandingBookingDialog.astro';
 import PeriodontalLandingHeader from '../components/PeriodontalLandingHeader.astro';
@@ -259,6 +260,7 @@ const structuredData = {
       </section>
 
       <section class="ortho-section ortho-final ortho-final-with-instruments periodontal-final-light" id="ortho-final" aria-labelledby="ortho-consultation-title">
+        <LandingCtaMonograms />
         <LandingBookingCta treatment="parodontologia" />
       </section>
     </main>
@@ -311,6 +313,10 @@ const structuredData = {
   :global(.periodontal-landing.ortho-unified #ortho-final.periodontal-final-light) {
     background: var(--soft-blue-bg);
     color: var(--text-dark);
+  }
+  :global(.periodontal-landing.ortho-unified #ortho-final.periodontal-final-light > .lb-cta) {
+    position: relative;
+    z-index: 1;
   }
   :global(.periodontal-landing.ortho-unified #ortho-final.periodontal-final-light .ortho-consultation-heading h2) {
     color: var(--text-dark);
