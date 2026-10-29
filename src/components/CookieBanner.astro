@@ -5,23 +5,12 @@
   <div class="cookie-banner-inner">
     <div class="cookie-banner-heading">
       <p class="cookie-banner-title">La tua privacy è importante</p>
-      <button
-        type="button"
-        class="cookie-banner-close"
-        data-cookie-choice="reject"
-        aria-label="Chiudi e continua con i soli cookie necessari"
-        title="Continua senza accettare"
-      >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false">
-          <path d="m6 6 12 12M18 6 6 18" />
-        </svg>
-      </button>
     </div>
     <div class="cookie-banner-intro">
       <div class="cookie-banner-copy">
         <p>
           Usiamo cookie necessari e, con il tuo consenso, cookie facoltativi
-          per valutare l’efficacia degli annunci. Con la X mantieni solo quelli necessari.
+          per valutare l’efficacia degli annunci.
           Consulta la <a href="/cookie-privacy/">Cookie Policy</a>.
         </p>
       </div>
@@ -203,30 +192,8 @@
   }
 
   .cookie-banner-heading {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
     margin-bottom: 12px;
   }
-
-  .cookie-banner-close {
-    display: grid;
-    flex: 0 0 48px;
-    place-items: center;
-    width: 48px;
-    height: 48px;
-    border: 1px solid var(--brand-cta);
-    border-radius: 8px;
-    padding: 0;
-    background: var(--brand-cta);
-    color: var(--surface-white);
-    cursor: pointer;
-  }
-
-  .cookie-banner-close svg { display: block; width: 24px; height: 24px; }
-  .cookie-banner-close:hover { background: var(--brand-cta-hover); border-color: var(--brand-cta-hover); }
-  .cookie-banner-close:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 3px; }
 
   .cookie-banner-intro {
     display: grid;
