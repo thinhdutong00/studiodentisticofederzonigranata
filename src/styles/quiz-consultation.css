@@ -44,6 +44,10 @@
 .cq-arch { display: block; width: 100%; margin-bottom: 12px; color: var(--brand-primary-dark); }
 .cq-arch > svg { display: block; width: 100%; height: auto; }
 .cq-pictures .cq-option-other { min-height: 90px; }
+.cq-periodontal-pictures { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.cq-periodontal-pictures .cq-option:not(.cq-option-other) { align-items: flex-start; }
+.cq-periodontal-pictures .cq-arch { max-width: 240px; }
+.cq-periodontal-pictures .cq-option-other { grid-column: 1 / -1; }
 .cq-clinical-case { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
 .cq-clinical-case figure { min-width: 0; margin: 0; }
 .cq-clinical-case img { display: block; width: 100%; height: auto; border-radius: 12px; }

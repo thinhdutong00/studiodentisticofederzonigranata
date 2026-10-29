@@ -36,6 +36,14 @@ Il tag è limitato ai due hostname di produzione e HTTPS: localhost e anteprime 
 
 Le conversioni Ads misurano richieste attribuite ai clic, non persone uniche verificate. Rifiuti del consenso, ad blocker e limiti di attribuzione possono causare differenze rispetto ai contatti effettivamente ricevuti nel CRM.
 
+## Interfaccia del consenso
+
+Il banner condiviso mostra «Accetta tutti» e «Gestisci le preferenze». La X in alto a destra consente di proseguire immediatamente con i soli cookie necessari e salva la scelta `reject`, come spiegato nel testo del banner. Il pulsante «Rifiuta» è disponibile nelle preferenze e produce lo stesso effetto, anche se la casella facoltativa è stata selezionata.
+
+La categoria facoltativa è presentata come «Efficacia degli annunci», con la finalità di misurazione indicata esplicitamente nella descrizione. Il nome del fornitore e i dettagli del servizio restano nella Cookie Policy, collegata sia dal banner sia dal pannello delle preferenze. La casella resta disattivata al primo accesso; la logica di consenso, le preferenze già salvate e le condizioni di invio delle conversioni non cambiano. Il comando «Preferenze cookie» nel footer permette di modificare la scelta.
+
+Riferimento per la chiusura senza consenso accessibile dal primo livello: [Linee guida cookie del Garante](https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/9677876), paragrafo 7.1.
+
 ## Riferimenti tecnici
 
 - [Google: consenso](https://developers.google.com/tag-platform/security/guides/consent)

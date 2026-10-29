@@ -55,7 +55,7 @@ const ageGroups = [
                 </details>
               </li>
               <li><a href="#sedi">Sedi</a></li>
-              <li><a href={orthodonticResultsPath} aria-current={Astro.url.pathname === orthodonticResultsPath ? 'page' : undefined}>Risultati</a></li>
+              <li><a href={unifiedConcept ? '#sorrisi-prima-dopo' : orthodonticResultsPath} aria-current={Astro.url.pathname === orthodonticResultsPath ? 'page' : undefined}>Risultati</a></li>
             </ul>
           </nav>
           <a class="landing-header-cta" href="#il-tuo-obiettivo" data-quiz-cta>Fai il test</a>

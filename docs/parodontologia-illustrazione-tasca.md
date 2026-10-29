@@ -8,7 +8,7 @@ La nuova sezione «La salute delle gengive, dalla diagnosi alla cura» mantiene 
 2. Analisi e cura.
 3. Risultato finale.
 
-I tre passaggi sono identificati da icone SVG coordinate, al posto dei numeri: occhio per l’osservazione, cartella clinica con croce per analisi e cura, cerchio con spunta per il risultato finale. Le icone sono decorative e accompagnate dall’etichetta testuale.
+I tre passaggi sono identificati da icone SVG coordinate, al posto dei numeri: occhio per l’osservazione, cartella clinica con croce per analisi e cura, sorriso con denti stilizzati e un piccolo punto luce per il risultato finale. Le icone sono decorative e accompagnate dall’etichetta testuale.
 
 ## Sistema grafico e provenienza
 

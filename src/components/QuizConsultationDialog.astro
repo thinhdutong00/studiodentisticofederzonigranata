@@ -3,6 +3,8 @@ import BookingFields from './BookingFields.astro';
 import BookingPrivacy from './BookingPrivacy.astro';
 import OrthodonticArchDiagram from './OrthodonticArchDiagram.astro';
 import LandingBookingIcon from './LandingBookingIcon.astro';
+import PeriodontalQuizObjectiveIcon from './PeriodontalQuizObjectiveIcon.astro';
+import PeriodontalSymptomDiagram from './PeriodontalSymptomDiagram.astro';
 import { site } from '../data/site';
 import { orthodonticObjectives, orthodonticConcerns, orthodonticBites } from '../data/orthodonticQuiz.js';
 import { periodontalObjectives, periodontalSymptoms, periodontalDurations, getPeriodontalSymptomLabel } from '../data/periodontalQuiz.js';
@@ -21,11 +23,17 @@ const periodontalRecommendation = getPeriodontalQuizRecommendation();
 const recessionExample = getPeriodontalQuizRecommendation({ periodontalSymptom: 'Gengive che si ritirano' });
 const objectives = isOrtho ? orthodonticObjectives : periodontalObjectives;
 const objectiveName = isOrtho ? 'initialReason' : 'periodontalObjective';
+const symptomDiagrams: Record<string, 'bleeding' | 'recession' | 'mobility' | 'breath' | undefined> = {
+  'Sanguinamento quando mi lavo i denti': 'bleeding',
+  'Gengive che si ritirano': 'recession',
+  'Uno o più denti che si muovono': 'mobility',
+  'Alito persistente': 'breath',
+};
 const firstQuestions = isOrtho ? [
   { key: 'alignment', title: 'Quale immagine rappresenta meglio i tuoi denti?', label: 'Il tuo sorriso', name: 'problem', options: orthodonticConcerns, kind: 'alignment' as const },
   { key: 'bite', title: 'Come si chiudono le tue arcate?', label: 'Le tue arcate', name: 'occlusion', options: [...orthodonticBites.filter(option => option.value !== 'Altro'), ...orthodonticBites.filter(option => option.value === 'Altro')], kind: 'bite' as const },
 ] : [
-  { key: 'symptom', title: 'Quale segnale hai notato?', label: 'Le tue gengive', name: 'periodontalSymptom', options: periodontalSymptoms.map(value => ({ value, label: getPeriodontalSymptomLabel(value) })), kind: undefined },
+  { key: 'symptom', title: 'Quale segnale hai notato?', label: 'Le tue gengive', name: 'periodontalSymptom', options: periodontalSymptoms.map(value => ({ value, label: getPeriodontalSymptomLabel(value), diagram: symptomDiagrams[value] })), kind: undefined },
   { key: 'duration', title: 'Da quanto tempo hai notato questo segnale?', label: 'Da quanto tempo', name: 'symptomDuration', options: periodontalDurations.map(value => ({ value })), kind: undefined },
 ];
 ---
@@ -47,7 +55,10 @@ const firstQuestions = isOrtho ? [
       <div class="cq-options cq-objectives" role="radiogroup" aria-labelledby="cq-objective-title">
         {objectives.map((objective, index) => <label class="cq-option cq-objective">
           <input type="radio" name={objectiveName} value={objective.title} required />
-          <span class="cq-option-content"><LandingBookingIcon name={isOrtho ? ['aligner', 'person', 'tooth', 'talk'][index] : ['gum', 'tooth', 'tooth', 'calendar'][index]} /><span>{objective.title}</span></span><i aria-hidden="true"></i>
+          <span class="cq-option-content">
+            {isOrtho ? <LandingBookingIcon name={['aligner', 'person', 'tooth', 'talk'][index]} /> : <PeriodontalQuizObjectiveIcon name={objective.icon} />}
+            <span>{objective.title}</span>
+          </span><i aria-hidden="true"></i>
         </label>)}
       </div>
     </section>
@@ -56,12 +67,14 @@ const firstQuestions = isOrtho ? [
       <p class="cq-kicker">{question.label}</p>
       <h2 id={`cq-${question.key}-title`} tabindex="-1">{question.title}</h2>
       {isOrtho && <p class="cq-description">Scegli l’immagine più vicina al tuo caso. Se hai dubbi, seleziona “Altro”.<br /><small>Illustrazioni indicative, senza valore diagnostico.</small></p>}
+      {!isOrtho && question.key === 'symptom' && <p class="cq-description">Scegli il segnale che riconosci di più.<br /><small>Illustrazioni indicative, senza valore diagnostico.</small></p>}
       {!isOrtho && question.key === 'duration' && <p class="cq-description">Se non hai notato segnali particolari, seleziona “Non saprei indicarlo”.</p>}
-      <div class:list={['cq-options', isOrtho && 'cq-pictures']} role="radiogroup" aria-labelledby={`cq-${question.key}-title`}>
-        {question.options.map(option => <label class:list={['cq-option', { 'cq-option-other': isOrtho && option.value === 'Altro' }]}>
+      <div class:list={['cq-options', (isOrtho || question.key === 'symptom') && 'cq-pictures', !isOrtho && question.key === 'symptom' && 'cq-periodontal-pictures']} role="radiogroup" aria-labelledby={`cq-${question.key}-title`}>
+        {question.options.map(option => <label class:list={['cq-option', { 'cq-option-other': isOrtho ? option.value === 'Altro' : question.key === 'symptom' && !('diagram' in option && option.diagram) }]}>
           <input type="radio" name={question.name} value={option.value} required />
           <span class="cq-option-content">
             {isOrtho && question.kind && option.value !== 'Altro' && <span class="cq-arch"><OrthodonticArchDiagram variant={'illustration' in option ? option.illustration : 'other'} kind={question.kind} /></span>}
+            {!isOrtho && question.key === 'symptom' && 'diagram' in option && option.diagram && <span class="cq-arch"><PeriodontalSymptomDiagram variant={option.diagram} /></span>}
             <span>{'label' in option ? option.label : option.value}</span>
           </span><i aria-hidden="true"></i>
         </label>)}

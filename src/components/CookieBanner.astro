@@ -3,18 +3,30 @@
 
 <aside class="cookie-banner" data-cookie-banner role="note" aria-label="GDPR Cookie Banner">
   <div class="cookie-banner-inner">
+    <div class="cookie-banner-heading">
+      <p class="cookie-banner-title">La tua privacy è importante</p>
+      <button
+        type="button"
+        class="cookie-banner-close"
+        data-cookie-choice="reject"
+        aria-label="Chiudi e continua con i soli cookie necessari"
+        title="Continua senza accettare"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false">
+          <path d="m6 6 12 12M18 6 6 18" />
+        </svg>
+      </button>
+    </div>
     <div class="cookie-banner-intro">
       <div class="cookie-banner-copy">
-        <p class="cookie-banner-title">La tua privacy è importante</p>
         <p>
-          Usiamo cookie necessari e, solo con il tuo consenso, cookie Google Ads per misurare
-          l’efficacia degli annunci e le richieste inviate. Puoi rifiutare senza impedire l’invio
-          dei moduli. Consulta la <a href="/cookie-privacy/">Cookie Policy</a>.
+          Usiamo cookie necessari e, con il tuo consenso, cookie facoltativi
+          per valutare l’efficacia degli annunci. Con la X mantieni solo quelli necessari.
+          Consulta la <a href="/cookie-privacy/">Cookie Policy</a>.
         </p>
       </div>
       <div class="cookie-actions cookie-primary-actions">
         <button type="button" data-cookie-choice="accept">Accetta tutti</button>
-        <button type="button" class="secondary" data-cookie-choice="reject">Rifiuta</button>
         <button
           type="button"
           class="secondary"
@@ -44,13 +56,14 @@
       </div>
       <label class="cookie-settings-row cookie-ads-choice">
         <span>
-          <strong>Misurazione pubblicitaria (Google Ads)</strong>
-          <small>Facoltativa. Misura le richieste dagli annunci, senza inviare i dati compilati nei moduli. Nessuna personalizzazione degli annunci.</small>
+          <strong>Efficacia degli annunci</strong>
+          <small>Con il tuo consenso, questi cookie ci aiutano a capire quali annunci portano visite al sito e richieste di appuntamento. La scelta è facoltativa: la misurazione non include i dati compilati nei moduli e non attiva annunci personalizzati. Puoi cambiare scelta dalle «Preferenze cookie» nel footer. Dettagli nella <a href="/cookie-privacy/">Cookie Policy</a>.</small>
         </span>
-        <input type="checkbox" data-cookie-ads aria-label="Consenti la misurazione pubblicitaria Google Ads" />
+        <input type="checkbox" data-cookie-ads aria-label="Consenti i cookie facoltativi per valutare l’efficacia degli annunci" />
       </label>
       <div class="cookie-actions cookie-settings-actions">
         <button type="button" class="cookie-settings-back secondary" data-cookie-settings-back>Indietro</button>
+        <button type="button" class="secondary" data-cookie-choice="reject">Rifiuta</button>
         <button type="button" data-cookie-settings-save>Salva le preferenze</button>
       </div>
     </div>
@@ -154,6 +167,9 @@
     left: 0;
     z-index: 80;
     width: 100%;
+    max-height: 100dvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
     display: block;
     border: 0;
     border-top: 1px solid var(--border);
@@ -186,6 +202,32 @@
     padding: 24px 0 calc(24px + env(safe-area-inset-bottom, 0px));
   }
 
+  .cookie-banner-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 12px;
+  }
+
+  .cookie-banner-close {
+    display: grid;
+    flex: 0 0 48px;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--brand-cta);
+    border-radius: 8px;
+    padding: 0;
+    background: var(--brand-cta);
+    color: var(--surface-white);
+    cursor: pointer;
+  }
+
+  .cookie-banner-close svg { display: block; width: 24px; height: 24px; }
+  .cookie-banner-close:hover { background: var(--brand-cta-hover); border-color: var(--brand-cta-hover); }
+  .cookie-banner-close:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 3px; }
+
   .cookie-banner-intro {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
@@ -193,6 +235,7 @@
     gap: 32px;
   }
 
+  .cookie-banner.settings-open .cookie-banner-heading,
   .cookie-banner.settings-open .cookie-banner-intro {
     display: none;
   }
@@ -202,7 +245,7 @@
   }
 
   .cookie-banner .cookie-banner-title {
-    margin: 0 0 6px;
+    margin: 0;
     color: var(--brand-primary-dark);
     font-size: 1.18rem;
     font-weight: 500;
@@ -348,6 +391,8 @@
     justify-content: flex-end;
   }
 
+  .cookie-settings-back { margin-inline-end: auto; }
+
   @media (max-width: 620px) {
     .cookie-banner {
       font-size: 0.9rem;
@@ -392,6 +437,9 @@
     .cookie-settings-actions button {
       width: 100%;
     }
+
+    .cookie-settings-back { margin-inline-end: 0; }
+    .cookie-settings-actions [data-cookie-settings-save] { grid-column: 1 / -1; }
   }
 
   @media (max-width: 620px) and (prefers-reduced-motion: reduce) {
