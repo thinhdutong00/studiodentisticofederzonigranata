@@ -1,6 +1,13 @@
 ---
 import { site } from '../data/site';
 
+interface Props {
+  logoHref?: string;
+  logoLabel?: string;
+}
+
+const { logoHref = '/', logoLabel = 'Home' } = Astro.props;
+
 const footerColumns = [
   {
     title: 'Prenota',
@@ -94,7 +101,7 @@ const footerEmail = site.offices[0];
 
     <div class="footer-mobile">
       <div class="footer-mobile-brand">
-        <a class="footer-mobile-logo" href="/" aria-label={`${site.name} — Home`}>
+        <a class="footer-mobile-logo" href={logoHref} aria-label={`${site.name} — ${logoLabel}`}>
           <img src="/assets/optimized/studio-dentistico-federzoni-granata-300.webp" alt={site.name} width="300" height="39" loading="lazy" decoding="async" />
         </a>
         <p>Professionisti con oltre 35 anni di esperienza e riconoscimenti dalle più prestigiose società scientifiche nazionali e internazionali.</p>
