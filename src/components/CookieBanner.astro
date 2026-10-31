@@ -10,7 +10,7 @@
       <div class="cookie-banner-copy">
         <p>
           Usiamo cookie necessari e, con il tuo consenso, cookie facoltativi
-          per valutare l’efficacia degli annunci.
+          per valutare l’efficacia degli annunci e, nelle due landing dedicate, analizzare la navigazione con Microsoft Clarity. Le due scelte sono indipendenti.
           Consulta la <a href="/cookie-privacy/">Cookie Policy</a>.
         </p>
       </div>
@@ -50,6 +50,13 @@
         </span>
         <input type="checkbox" data-cookie-ads aria-label="Consenti i cookie facoltativi per valutare l’efficacia degli annunci" />
       </label>
+      <label class="cookie-settings-row cookie-ads-choice">
+        <span>
+          <strong>Analisi della navigazione (Microsoft Clarity)</strong>
+          <small>Facoltativa. Mappe di calore e registrazioni delle interazioni nelle landing di ortodonzia e parodontologia. Moduli e questionari sono mascherati. Il consenso pubblicitario verso Microsoft resta disattivato.</small>
+        </span>
+        <input type="checkbox" data-cookie-analytics aria-label="Consenti l’analisi della navigazione Microsoft Clarity" />
+      </label>
       <div class="cookie-actions cookie-settings-actions">
         <button type="button" class="cookie-settings-back secondary" data-cookie-settings-back>Indietro</button>
         <button type="button" class="secondary" data-cookie-choice="reject">Rifiuta</button>
@@ -61,11 +68,13 @@
 
 <script>
   import { COOKIE_PREFERENCE_KEY, initGoogleAds } from '../utils/googleAds';
+  import { initClarity, isClarityLanding, readClarityConsent, saveClarityConsent, CLARITY_CONSENT_KEY } from '../utils/clarity';
   const banner = document.querySelector('[data-cookie-banner]');
   const settingsToggle = banner?.querySelector('[data-cookie-settings-toggle]');
   const settingsBack = banner?.querySelector('[data-cookie-settings-back]');
   const settingsPanel = banner?.querySelector('[data-cookie-settings-panel]');
   const adsCheckbox = banner?.querySelector<HTMLInputElement>('[data-cookie-ads]');
+  const analyticsCheckbox = banner?.querySelector<HTMLInputElement>('[data-cookie-analytics]');
   // Previous consent mentioned necessary cookies only: ask again for Ads.
   const storageKey = COOKIE_PREFERENCE_KEY;
 
@@ -91,7 +100,7 @@
     banner?.classList.toggle('settings-open', isOpen);
   };
 
-  const savePreference = (preference) => {
+  const savePreference = (preference, analytics = analyticsCheckbox?.checked === true) => {
     try {
       localStorage.setItem(storageKey, preference);
     } catch {
@@ -99,6 +108,8 @@
     }
 
     applyPreference(preference);
+    saveClarityConsent(analytics);
+    if (analyticsCheckbox) analyticsCheckbox.checked = analytics;
     setSettingsOpen(false);
     banner?.classList.remove('is-visible');
   };
@@ -107,8 +118,10 @@
   const savedPreference = storedPreference === 'accept' || storedPreference === 'reject' ? storedPreference : null;
   applyPreference(savedPreference);
   initGoogleAds();
+  if (analyticsCheckbox) analyticsCheckbox.checked = readClarityConsent() === true;
+  initClarity('z6cksjkefy');
 
-  if (banner && !savedPreference) {
+  if (banner && (!savedPreference || (isClarityLanding() && readClarityConsent() === null))) {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => banner.classList.add('is-visible'));
     });
@@ -139,8 +152,14 @@
   banner?.querySelectorAll('[data-cookie-choice]').forEach((button) => {
     button.addEventListener('click', () => {
       const preference = button.getAttribute('data-cookie-choice');
-      if (preference === 'accept' || preference === 'reject') savePreference(preference);
+      if (preference === 'accept' || preference === 'reject') savePreference(preference, preference === 'accept');
     });
+  });
+
+  window.addEventListener('storage', (event) => {
+    if (event.key === CLARITY_CONSENT_KEY || event.key === null) {
+      if (analyticsCheckbox) analyticsCheckbox.checked = readClarityConsent() === true;
+    }
   });
 
   document.addEventListener('keydown', (event) => {

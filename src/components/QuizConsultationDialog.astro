@@ -38,13 +38,13 @@ const firstQuestions = isOrtho ? [
 ];
 ---
 
-<dialog id="orthodontic-quiz" class="cq-dialog" aria-labelledby="cq-objective-title" data-quiz-dialog data-quiz-consultation={treatment} data-periodontal-quiz-dialog={!isOrtho || undefined}>
+<dialog data-clarity-mask="true" id="orthodontic-quiz" class="cq-dialog" aria-labelledby="cq-objective-title" data-quiz-dialog data-quiz-consultation={treatment} data-periodontal-quiz-dialog={!isOrtho || undefined}>
   <header class="cq-header">
     <img src={site.logo} alt={site.name} width="400" height="52" />
     <button class="cq-close" type="button" data-quiz-close aria-label="Chiudi il questionario"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6" /></svg></button>
   </header>
   <div class="cq-progress" role="progressbar" aria-label="Avanzamento del questionario" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-cq-progress><span></span></div>
-  <form class="cq-form" action="/api/booking" method="post" autocomplete="on" novalidate data-booking-kind={config.kind} data-cq-form>
+  <form data-clarity-mask="true" class="cq-form" action="/api/booking" method="post" autocomplete="on" novalidate data-booking-kind={config.kind} data-cq-form>
     <BookingFields />
     <input type="hidden" name="quizFlow" value={config.marker} />
     <input type="hidden" name="message" value={`Richiesta dal questionario della landing ${config.source}. Le risposte raccolgono le esigenze del paziente e non costituiscono una diagnosi.`} />
