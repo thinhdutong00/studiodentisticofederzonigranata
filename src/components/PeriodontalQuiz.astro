@@ -38,7 +38,7 @@ const questions = [
 </section>
 
 {consultationFlow && <QuizConsultationDialog treatment="parodontologia" />}
-{!consultationFlow && <dialog id="orthodontic-quiz" class="orthodontic-quiz" aria-labelledby="periodontal-objectives-title" data-quiz-dialog data-periodontal-quiz-dialog data-quiz-mobile-objectives-first data-quiz-all-viewports>
+{!consultationFlow && <dialog data-clarity-mask="true" id="orthodontic-quiz" class="orthodontic-quiz" aria-labelledby="periodontal-objectives-title" data-quiz-dialog data-periodontal-quiz-dialog data-quiz-mobile-objectives-first data-quiz-all-viewports>
   <div class="orthodontic-quiz-header">
     <div class="orthodontic-quiz-progress" style="--quiz-question-count: 8" role="progressbar" aria-label="Avanzamento del questionario" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-quiz-progress>
       {Array.from({ length: 8 }, (_, index) => <span data-progress-segment={index}></span>)}
@@ -49,7 +49,7 @@ const questions = [
     </button>
   </div>
 
-  <form action="/api/booking" method="post" autocomplete="on" novalidate data-booking-kind="periodontal-quiz" data-periodontal-quiz-form>
+  <form data-clarity-mask="true" action="/api/booking" method="post" autocomplete="on" novalidate data-booking-kind="periodontal-quiz" data-periodontal-quiz-form>
     <BookingFields />
     <input type="hidden" name="periodontalObjective" value="" />
     <input type="hidden" name="message" value={contextLabel ? `Richiesta dalla landing parodontologia — ${contextLabel}` : 'Richiesta di valutazione parodontale dal questionario della landing parodontologia.'} />

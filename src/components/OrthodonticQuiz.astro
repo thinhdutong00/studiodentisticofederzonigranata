@@ -97,7 +97,7 @@ const questions = [
 </section>
 
 {consultationFlow && <QuizConsultationDialog treatment="ortodonzia" />}
-{!consultationFlow && <dialog id="orthodontic-quiz" class="orthodontic-quiz" aria-labelledby="orthodontic-quiz-welcome-title" data-quiz-dialog data-quiz-mobile-objectives-first={mobileObjectivesFirst || undefined} data-quiz-all-viewports={objectivesFirst || undefined}>
+{!consultationFlow && <dialog data-clarity-mask="true" id="orthodontic-quiz" class="orthodontic-quiz" aria-labelledby="orthodontic-quiz-welcome-title" data-quiz-dialog data-quiz-mobile-objectives-first={mobileObjectivesFirst || undefined} data-quiz-all-viewports={objectivesFirst || undefined}>
   <div class="orthodontic-quiz-header">
     <div class="orthodontic-quiz-progress" style={`--quiz-question-count: ${questions.length}`} role="progressbar" aria-label="Avanzamento del questionario" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-quiz-progress>
       {questions.map((_, index) => <span data-progress-segment={index}></span>)}
@@ -109,7 +109,7 @@ const questions = [
     </button>
   </div>
 
-  <form action="/api/booking" method="post" autocomplete="on" novalidate data-booking-kind="orthodontic-quiz" data-orthodontic-quiz-form>
+  <form data-clarity-mask="true" action="/api/booking" method="post" autocomplete="on" novalidate data-booking-kind="orthodontic-quiz" data-orthodontic-quiz-form>
     <BookingFields />
     <input type="hidden" name="initialReason" value="" />
     {mobileObjectivesFirst && <input type="hidden" name="quizFlow" value="orthodontic-mobile-v2" data-quiz-mobile-flow disabled />}
