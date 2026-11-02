@@ -2,6 +2,7 @@
 import BookingFields from './BookingFields.astro';
 import BookingPrivacy from './BookingPrivacy.astro';
 import LandingBookingIcon from './LandingBookingIcon.astro';
+import PeriodontalQuizObjectiveIcon from './PeriodontalQuizObjectiveIcon.astro';
 import { site } from '../data/site';
 import { landingBookingTreatments, landingBookingAges, landingBookingDays, landingBookingTimes } from '../data/landingBooking.js';
 import '../styles/landing-booking.css';
@@ -49,7 +50,10 @@ const summaryFields = ['problem', 'ageRange', 'office', 'availability', 'preferr
             <legend class="lb-sr-only">Motivo della visita</legend>
             {config.options.map(option => <label class="lb-option">
               <input type="radio" name="problem" value={option.value} required />
-              <span class="lb-option-content"><LandingBookingIcon name={option.icon} /><strong>{option.label}</strong><span>{option.description}</span></span>
+              <span class="lb-option-content">
+                {option.icon === 'bleeding' ? <PeriodontalQuizObjectiveIcon name="bleeding" /> : <LandingBookingIcon name={option.icon} />}
+                <strong>{option.label}</strong><span>{option.description}</span>
+              </span>
               <span class="lb-choice-mark" aria-hidden="true">✓</span>
             </label>)}
           </fieldset>

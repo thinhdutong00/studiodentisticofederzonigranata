@@ -31,7 +31,7 @@ export const landingBookingTreatments = {
     question: 'Da cosa vorresti iniziare per le tue gengive?',
     description: 'Indica il motivo della richiesta. Sarà il punto di partenza del confronto con lo specialista.',
     options: [
-      { value: 'Gengive che sanguinano o sono infiammate', label: 'Sanguinamento o infiammazione', description: 'Ho notato sangue o fastidio alle gengive.', icon: 'gum' },
+      { value: 'Gengive che sanguinano o sono infiammate', label: 'Sanguinamento o infiammazione', description: 'Ho notato sangue o fastidio alle gengive.', icon: 'bleeding' },
       { value: 'Recessione gengivale o denti che si muovono', label: 'Recessioni o denti mobili', description: 'Le gengive si ritirano o i denti sono meno stabili.', icon: 'tooth' },
       { value: 'Mantenimento dopo una terapia parodontale', label: 'Controllo e mantenimento', description: 'Vorrei proseguire le cure o fare un controllo.', icon: 'calendar' },
       { value: 'Voglio prima confrontarmi con un vostro specialista', label: 'Un consiglio dallo specialista', description: 'Vorrei capire come prendermi cura delle gengive.', icon: 'talk' },
