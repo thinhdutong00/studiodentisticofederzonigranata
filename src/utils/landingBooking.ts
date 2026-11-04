@@ -21,9 +21,15 @@ export function bindLandingBooking() {
   let current = 0;
   let reached = 0;
   let opener: HTMLElement | null = null;
+  let autoAdvance: ReturnType<typeof setTimeout> | undefined;
 
   const busy = () => form.getAttribute('aria-busy') === 'true';
   const field = (name: string) => form.elements.namedItem(name) as HTMLInputElement;
+
+  function clearAutoAdvance() {
+    if (autoAdvance !== undefined) clearTimeout(autoAdvance);
+    autoAdvance = undefined;
+  }
 
   function updateNavigation() {
     back.disabled = current === 0 || busy();
@@ -47,6 +53,7 @@ export function bindLandingBooking() {
   }
 
   function showStep(index: number, focus = true) {
+    clearAutoAdvance();
     current = index;
     reached = Math.max(reached, index);
     steps.forEach((step, i) => { step.hidden = i !== index; });
@@ -102,6 +109,7 @@ export function bindLandingBooking() {
   close.addEventListener('click', () => { if (!busy()) dialog.close(); });
   dialog.addEventListener('cancel', event => { if (busy()) event.preventDefault(); });
   dialog.addEventListener('close', () => {
+    clearAutoAdvance();
     document.body.classList.remove('lb-dialog-open');
     if (opener?.isConnected && !opener.closest('dialog:not([open])')) opener.focus({ preventScroll: true });
     else document.querySelector<HTMLElement>('[data-landing-booking-open]')?.focus({ preventScroll: true });
@@ -130,6 +138,21 @@ export function bindLandingBooking() {
     if (event.target instanceof HTMLInputElement) event.target.setCustomValidity('');
     error.textContent = '';
   });
+  function advanceFromChoice(event: Event) {
+    const input = event.target;
+    const step = steps[current];
+    if (!(input instanceof HTMLInputElement) || input.type !== 'radio' || !input.checked
+      || !dialog.open || busy() || !step.hasAttribute('data-lb-auto-advance')
+      || input.closest('[data-lb-step]') !== step || !stepIsValid(current)) return;
+    clearAutoAdvance();
+    autoAdvance = setTimeout(() => {
+      autoAdvance = undefined;
+      if (dialog.open && !busy() && steps[current] === step && stepIsValid(current)) {
+        showStep(Math.min(current + 1, steps.length - 1));
+      }
+    }, 220);
+  }
+  ['click', 'change'].forEach(eventName => form.addEventListener(eventName, advanceFromChoice));
   form.addEventListener('keydown', event => {
     if (event.key !== 'Enter' || event.isComposing || !(event.target instanceof HTMLInputElement)) return;
     if (current < steps.length - 1) { event.preventDefault(); next.click(); }

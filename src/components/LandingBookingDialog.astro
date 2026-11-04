@@ -43,7 +43,7 @@ const summaryFields = ['problem', 'ageRange', 'office', 'availability', 'preferr
       <input type="hidden" name="treatment" value={config.treatment} />
       <input type="hidden" name="availability" value="" />
       <div class="lb-body" data-lb-body>
-        <section class="lb-step" data-lb-step data-title={stepLabels[0]}>
+        <section class="lb-step" data-lb-step data-title={stepLabels[0]} data-lb-auto-advance>
           <h2 id="lb-question-0" tabindex="-1">{config.question}</h2>
           <p class="lb-description">{config.description}</p>
           <fieldset class="lb-options lb-options-reasons">
@@ -59,7 +59,7 @@ const summaryFields = ['problem', 'ageRange', 'office', 'availability', 'preferr
           </fieldset>
         </section>
 
-        <section class="lb-step" data-lb-step data-title={stepLabels[1]} hidden>
+        <section class="lb-step" data-lb-step data-title={stepLabels[1]} data-lb-auto-advance hidden>
           <h2 id="lb-question-1" tabindex="-1">Qual è l’età del paziente?</h2>
           <p class="lb-description">Puoi richiedere una visita per te o per un familiare. Per un minorenne, lascia alla fine i recapiti del genitore o del tutore.</p>
           <fieldset class="lb-options lb-options-compact">
@@ -68,7 +68,7 @@ const summaryFields = ['problem', 'ageRange', 'office', 'availability', 'preferr
           </fieldset>
         </section>
 
-        <section class="lb-step" data-lb-step data-title={stepLabels[2]} hidden>
+        <section class="lb-step" data-lb-step data-title={stepLabels[2]} data-lb-auto-advance hidden>
           <h2 id="lb-question-2" tabindex="-1">In quale studio vorresti venire?</h2>
           <p class="lb-description">Scegli la sede più comoda per la tua visita.</p>
           <fieldset class="lb-options">
@@ -87,7 +87,7 @@ const summaryFields = ['problem', 'ageRange', 'office', 'availability', 'preferr
           <p class="lb-field-note">Le preferenze non riservano un appuntamento. La segreteria verificherà con te le disponibilità.</p>
         </section>
 
-        <section class="lb-step" data-lb-step data-title={stepLabels[4]} hidden>
+        <section class="lb-step" data-lb-step data-title={stepLabels[4]} data-lb-auto-advance hidden>
           <h2 id="lb-question-4" tabindex="-1">Quale fascia oraria preferisci?</h2>
           <p class="lb-description">Ci aiuta a proporti un appuntamento compatibile con i tuoi impegni.</p>
           <fieldset class="lb-options lb-options-times">
