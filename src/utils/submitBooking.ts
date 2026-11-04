@@ -1,5 +1,6 @@
 import { getBookingAttribution } from './attribution';
 import { rememberConfirmedLead } from './googleAds';
+import { clearBookingSummary, rememberConfirmedBookingSummary } from './bookingSummary';
 
 type Attempt = { fingerprint: string; requestId: string };
 const attempts = new WeakMap<HTMLFormElement, Attempt>();
@@ -14,6 +15,7 @@ export async function submitBooking(form: HTMLFormElement, setError: (message: s
   let succeeded = false;
   try {
     setError('');
+    clearBookingSummary();
     const fields = Object.fromEntries(new FormData(form).entries());
     const payload = {
       ...fields,
@@ -43,6 +45,7 @@ export async function submitBooking(form: HTMLFormElement, setError: (message: s
     }
     succeeded = true;
     buttons.forEach((button) => { button.textContent = 'Richiesta inviata'; });
+    rememberConfirmedBookingSummary({ ...payload, requestId: attempt.requestId });
     rememberConfirmedLead({ requestId: attempt.requestId, kind: payload.kind, source: payload.source });
     window.location.assign('/thank-you-page/');
   } catch (error) {

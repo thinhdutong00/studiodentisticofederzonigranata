@@ -123,13 +123,6 @@ const firstQuestions = isOrtho ? [
       <label class="cq-line-field"><span class="cq-sr-only">Numero di cellulare</span><input name="phone" type="tel" placeholder="Numero di cellulare…" autocomplete={`section-${treatment}-contact tel`} inputmode="tel" minlength="6" maxlength="30" required /></label>
       <label class="cq-line-field cq-email-field"><span class="cq-sr-only">Email (facoltativa)</span><input name="email" type="email" placeholder="Email (facoltativa)…" autocomplete={`section-${treatment}-contact email`} inputmode="email" maxlength="254" autocapitalize="none" spellcheck="false" /></label>
       <p class="cq-field-note">Useremo i recapiti per gestire la tua richiesta. Per un minorenne, indica quelli del genitore o del tutore.</p>
-    </section>
-
-    <section class="cq-step" hidden data-cq-step data-cq-key="confirmation">
-      <p class="cq-kicker">Conferma</p>
-      <h2 id="cq-confirmation-title" tabindex="-1">Il primo passo è fatto.<br />Ci sentiamo presto.</h2>
-      <p class="cq-description">Controlla i tuoi dati e invia la richiesta. La segreteria ti ricontatterà per concordare giorno e orario della visita.</p>
-      <dl class="cq-summary" data-cq-summary></dl>
       <BookingPrivacy />
       <p class="cq-field-note">Il questionario raccoglie le tue esigenze. Il trattamento viene definito solo dopo una valutazione clinica.</p>
     </section>

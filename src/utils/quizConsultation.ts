@@ -2,7 +2,6 @@ import { submitBooking } from './submitBooking';
 import { captureAttribution } from './attribution';
 import { getOrthodonticQuizRecommendation } from '../data/orthodonticQuizRecommendation.js';
 import { getPeriodontalQuizRecommendation } from '../data/periodontalQuizRecommendation.js';
-import { getPeriodontalSymptomLabel } from '../data/periodontalQuiz.js';
 
 export function bindQuizConsultation() {
   const dialog = document.querySelector<HTMLDialogElement>('[data-quiz-consultation]');
@@ -66,26 +65,6 @@ export function bindQuizConsultation() {
       if (image.getAttribute('src') !== photo.src) image.src = photo.src;
     });
   }
-  function updateSummary() {
-    const rows = [
-      ['Nome', 'fullName'], ['Obiettivo', isOrtho ? 'initialReason' : 'periodontalObjective'],
-      ...(isOrtho ? [['Allineamento', 'problem'], ['Chiusura delle arcate', 'occlusion']] : [['Segnale notato', 'periodontalSymptom'], ['Da quanto tempo', 'symptomDuration']]),
-      ['Età del paziente', 'ageRange'], ['Studio', 'office'], ['Telefono', 'phone'], ['Email', 'email'],
-    ];
-    const summary = form.querySelector<HTMLElement>('[data-cq-summary]')!;
-    summary.replaceChildren();
-    rows.forEach(([label, name]) => {
-      const answer = value(name);
-      if (!answer) return;
-      const row = document.createElement('div');
-      const term = document.createElement('dt');
-      const description = document.createElement('dd');
-      term.textContent = label;
-      description.textContent = name === 'periodontalSymptom' ? getPeriodontalSymptomLabel(answer) : answer;
-      row.append(term, description);
-      summary.append(row);
-    });
-  }
   function showStep(index: number, focus = true) {
     clearAutoAdvance();
     current = Math.max(0, Math.min(index, steps.length - 1));
@@ -97,7 +76,6 @@ export function bindQuizConsultation() {
     progress.setAttribute('aria-valuenow', String(percent));
     error.textContent = '';
     updateRecommendation();
-    if (current === steps.length - 1) updateSummary();
     updateNavigation();
     dialog.scrollTop = 0;
     if (focus) {
@@ -106,8 +84,9 @@ export function bindQuizConsultation() {
     }
   }
   function reportInvalid(index: number) {
-    error.textContent = steps[index].dataset.cqKey === 'confirmation' ? 'Accetta l’informativa privacy per inviare la richiesta.' : 'Controlla il campo o seleziona una risposta prima di proseguire.';
-    steps[index].querySelector<HTMLInputElement>('input:invalid')?.reportValidity();
+    const invalid = steps[index].querySelector<HTMLInputElement>('input:invalid');
+    error.textContent = invalid?.name === 'privacyConsent' ? 'Accetta l’informativa privacy per inviare la richiesta.' : 'Controlla il campo o seleziona una risposta prima di proseguire.';
+    invalid?.reportValidity();
   }
 
   document.querySelectorAll<HTMLElement>('[data-quiz-open], .landing-header [data-quiz-cta]').forEach(opener => {

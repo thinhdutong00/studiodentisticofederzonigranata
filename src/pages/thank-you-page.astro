@@ -24,6 +24,11 @@ const description =
         </p>
       </div>
 
+      <section class="thank-you-summary" hidden data-booking-summary data-clarity-private data-clarity-mask="true" aria-labelledby="thank-you-summary-title">
+        <h2 id="thank-you-summary-title">Riepilogo della richiesta</h2>
+        <dl></dl>
+      </section>
+
       <nav class="thank-you-actions" aria-label="Prossime azioni">
         <a class="thank-you-btn thank-you-btn-primary" href="/">Torna alla home <span aria-hidden="true">↗</span></a>
         <a class="thank-you-btn thank-you-btn-outline" href="/#trattamenti">I nostri trattamenti <span aria-hidden="true">↗</span></a>
@@ -31,6 +36,11 @@ const description =
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  import { renderBookingSummary } from '../utils/bookingSummary';
+  renderBookingSummary();
+</script>
 
 <style>
   :global(body) {
@@ -120,6 +130,44 @@ const description =
     letter-spacing: -0.2px;
     line-height: 1.5;
   }
+
+  .thank-you-summary {
+    max-width: 760px;
+    margin-top: 32px;
+    padding: 24px 28px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: var(--background);
+    letter-spacing: -0.2px;
+    word-spacing: 0;
+  }
+
+  .thank-you-summary[hidden] { display: none; }
+
+  .thank-you-summary h2 {
+    margin: 0;
+    color: var(--brand-primary-dark);
+    font-size: clamp(22px, 2.4vw, 28px);
+    font-weight: 500;
+    line-height: 1.25;
+  }
+
+  .thank-you-summary dl { margin: 18px 0 0; }
+
+  .thank-you-summary dl > :global(div) {
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: 20px;
+    padding-block: 14px;
+    border-bottom: 1px solid var(--border);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .thank-you-summary dl > :global(div:last-child) { border-bottom: 0; padding-bottom: 0; }
+  .thank-you-summary :global(dt) { color: var(--muted-text); }
+  .thank-you-summary :global(dd) { margin: 0; color: var(--text-dark); overflow-wrap: anywhere; }
 
   .thank-you-actions {
     display: grid;
@@ -212,6 +260,9 @@ const description =
     .thank-you-actions {
       grid-template-columns: 1fr;
     }
+
+    .thank-you-summary { padding: 20px 18px; letter-spacing: -0.16px; }
+    .thank-you-summary dl > :global(div) { grid-template-columns: 100px minmax(0, 1fr); gap: 12px; font-size: 14px; }
   }
 
   @media (prefers-reduced-motion: reduce) {

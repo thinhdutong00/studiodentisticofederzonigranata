@@ -140,7 +140,8 @@ for (const [name, state] of [['email failure', { emailOk: false }], ['CRM failur
 
 const submitSource = stripTypeScriptTypes(await readFile(new URL('../src/utils/submitBooking.ts', import.meta.url), 'utf8'))
   .replace(/^import .* from '\.\/attribution';\n/m, '')
-  .replace(/^import .* from '\.\/googleAds';\n/m, '').replace(/^export /gm, '');
+  .replace(/^import .* from '\.\/googleAds';\n/m, '')
+  .replace(/^import .* from '\.\/bookingSummary';\n/m, '').replace(/^export /gm, '');
 function submitFixture(confirmed = true) {
   const redirects = [], requests = [], receipts = [], attrs = new Map();
   const button = { innerHTML: 'Invia la richiesta', textContent: '', disabled: false };
@@ -153,6 +154,7 @@ function submitFixture(confirmed = true) {
     FormData: class { constructor(form) { this.fields = form.fields; } entries() { return this.fields.entries(); } },
     getBookingAttribution: () => ({ attributionLandingPage: '/visita-parodontologia/' }),
     rememberConfirmedLead: data => receipts.push(data),
+    clearBookingSummary: () => {}, rememberConfirmedBookingSummary: () => {},
     window: { location: { pathname: '/visita-parodontologia/', assign: path => redirects.push(path) } },
     fetch: async (url, options) => {
       const body = JSON.parse(options.body); requests.push({ url, body });

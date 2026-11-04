@@ -9,6 +9,7 @@ const source = await readFile(new URL('../src/utils/submitBooking.ts', import.me
 const script = stripTypeScriptTypes(source)
   .replace(/^import .* from '\.\/attribution';\n/m, '')
   .replace(/^import .* from '\.\/googleAds';\n/m, '')
+  .replace(/^import .* from '\.\/bookingSummary';\n/m, '')
   .replace(/^export /gm, '');
 
 function fixture(response) {
@@ -33,6 +34,7 @@ function fixture(response) {
     FormData: class { constructor(form) { this.fields = form.fields; } entries() { return this.fields.entries(); } },
     getBookingAttribution: () => ({ attributionLandingPage: '/visita-ortodonzia/' }),
     rememberConfirmedLead: receipt => receipts.push(receipt),
+    clearBookingSummary: () => {}, rememberConfirmedBookingSummary: () => {},
     window: { location: { pathname: '/visita-ortodonzia/', assign: path => redirects.push(path) } },
     fetch: async (url, options) => {
       const body = JSON.parse(options.body);
