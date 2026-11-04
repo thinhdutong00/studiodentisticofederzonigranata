@@ -19,7 +19,7 @@ function payload(treatment) {
     attributionSource:'google', attributionMedium:'cpc', attributionAdId:'123', attributionLandingPage:config.source,
     ...(treatment === 'ortodonzia'
       ? { initialReason:orthodonticObjectives[0].title, problem:orthodonticConcerns[0].value, occlusion:orthodonticBites[0].value }
-      : { periodontalObjective:periodontalObjectives[0].title, periodontalSymptom:periodontalSymptoms[0], symptomDuration:periodontalDurations[0], problem:landingBookingTreatments.parodontologia.options[0].value }),
+      : { periodontalObjective:periodontalObjectives[0].title, periodontalSymptom:periodontalSymptoms[0], symptomDuration:periodontalDurations[0] }),
   };
 }
 function fixture(failure = '') {
@@ -59,7 +59,7 @@ for (const treatment of Object.keys(quizConsultationFlows)) {
     const email = f.calls.find(call=>call.url!==crmUrl).body;
     const crm = f.calls.find(call=>call.url===crmUrl).body;
     assert.deepEqual(email.to,[RECIPIENT]);
-    for (const key of treatment==='ortodonzia' ? ['initialReason','problem','occlusion','ageRange'] : ['periodontalObjective','periodontalSymptom','symptomDuration','problem','ageRange']) {
+    for (const key of treatment==='ortodonzia' ? ['initialReason','problem','occlusion','ageRange'] : ['periodontalObjective','periodontalSymptom','symptomDuration','ageRange']) {
       assert.ok(email.text.includes(base[key]),`Missing email answer ${key}`);
       assert.ok(crm.messaggio.includes(base[key]),`Missing CRM answer ${key}`);
     }
@@ -71,7 +71,7 @@ for (const treatment of Object.keys(quizConsultationFlows)) {
     assert.equal(crm.giorniPreferiti,'');
     assert.equal(crm.orariPreferiti,'');
   });
-  for (const field of ['fullName','phone','ageRange','office','problem',...(treatment==='ortodonzia'?['occlusion','initialReason']:['periodontalObjective','periodontalSymptom','symptomDuration'])]) {
+  for (const field of ['fullName','phone','ageRange','office',...(treatment==='ortodonzia'?['problem','occlusion','initialReason']:['periodontalObjective','periodontalSymptom','symptomDuration'])]) {
     test(`${treatment}: rejects missing ${field} before contacting providers`,async()=>{
       const f = fixture();
       assert.equal((await invoke(f.handler,{...base,[field]:''})).statusCode,400);
@@ -99,7 +99,23 @@ test('orthodontic quiz keeps all existing alignment and bite answers',()=>{
     assert.equal(data.problem,problem); assert.equal(data.occlusion,occlusion);
   }
 });
-test('periodontal quiz stores the current problem separately from the previously noticed sign',()=>{
+test('periodontal consultation quiz submits without the removed current-problem answer', async()=>{
+  const base = payload('parodontologia');
+  const data = validateBooking(base);
+  assert.equal(data.problem, '');
+  const f = fixture(), res = await invoke(f.handler, base);
+  assert.equal(res.statusCode, 200);
+  assert.deepEqual(res.body, {ok:true, requestId:base.requestId});
+  const email = f.calls.find(call=>call.url!==crmUrl).body;
+  const crm = f.calls.find(call=>call.url===crmUrl).body;
+  for (const text of [email.text, crm.messaggio]) {
+    assert.doesNotMatch(text, /Motivo della richiesta:/);
+    assert.ok(text.includes(base.periodontalSymptom));
+    assert.ok(text.includes(base.symptomDuration));
+  }
+  assert.equal(validateBooking({...base, problem:''}).problem, '');
+});
+test('periodontal quiz still accepts answers from forms opened before the current-problem step was removed',()=>{
   for (const option of landingBookingTreatments.parodontologia.options) {
     const base = {...payload('parodontologia'),problem:option.value};
     const crm = buildSheetPayload(validateBooking(base),env);

@@ -58,7 +58,7 @@
 .cq-line-field input { display: block; width: 100%; min-width: 0; padding: 16px 0; border: 0; border-bottom: 2px solid var(--border); border-radius: 0; background: var(--surface-white); color: var(--brand-primary-dark); font-size: 34px; font-weight: 400; line-height: 1.35; box-shadow: none; }
 .cq-line-field input::placeholder { color: var(--muted-text); opacity: .65; }
 .cq-line-field input:focus { border-color: var(--brand-cta); outline: none; }
-.cq-email-field { margin-top: 24px; }
+.cq-line-field + .cq-line-field { margin-top: 24px; }
 .cq-email-field input { font-size: 24px; }
 .cq-field-note { margin: 16px 0 0; color: var(--muted-text); font-size: 12px; line-height: 1.6; }
 .cq-actions { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-top: 42px; }

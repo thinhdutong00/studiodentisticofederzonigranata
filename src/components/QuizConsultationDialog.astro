@@ -10,7 +10,6 @@ import { orthodonticObjectives, orthodonticConcerns, orthodonticBites } from '..
 import { periodontalObjectives, periodontalSymptoms, periodontalDurations, getPeriodontalSymptomLabel } from '../data/periodontalQuiz.js';
 import { getOrthodonticQuizRecommendation } from '../data/orthodonticQuizRecommendation.js';
 import { getPeriodontalQuizRecommendation } from '../data/periodontalQuizRecommendation.js';
-import { landingBookingTreatments } from '../data/landingBooking.js';
 import { quizConsultationAges, quizConsultationFlows } from '../data/quizConsultation.js';
 import '../styles/quiz-consultation.css';
 
@@ -100,20 +99,13 @@ const firstQuestions = isOrtho ? [
       </>}
     </section>
 
-    <section class="cq-step" hidden data-cq-step data-cq-key="name">
-      <p class="cq-kicker">Introduzione</p>
-      <h2 id="cq-name-title" tabindex="-1">Ciao! {isOrtho ? 'Parliamo del tuo sorriso.' : 'Prendiamoci cura delle tue gengive.'}<br />Come ti chiami?</h2>
-      <label class="cq-line-field"><span class="cq-sr-only">Nome e cognome</span><input name="fullName" type="text" placeholder="Il tuo nome e cognome…" autocomplete="name" minlength="2" maxlength="120" required /></label>
-      <p class="cq-field-note">Per un minorenne, inserisci il nome del genitore o del tutore.</p>
-    </section>
-
-    {!isOrtho && <section class="cq-step" hidden data-cq-step data-cq-key="current-problem">
-      <p class="cq-kicker">Il problema attuale</p>
-      <h2 id="cq-current-problem-title" tabindex="-1">Piacere, <span data-cq-name></span>.<br />Quale problema vorresti affrontare?</h2>
-      <div class="cq-options" role="radiogroup" aria-labelledby="cq-current-problem-title">
-        {landingBookingTreatments.parodontologia.options.map(option => <label class="cq-option"><input type="radio" name="problem" value={option.value} required /><span class="cq-option-content"><span>{option.label}</span><small>{option.description}</small></span><i aria-hidden="true"></i></label>)}
+    <section class="cq-step" hidden data-cq-step data-cq-key="office">
+      <p class="cq-kicker">Lo studio</p>
+      <h2 id="cq-office-title" tabindex="-1">In quale studio vorresti venire?</h2>
+      <div class="cq-options" role="radiogroup" aria-labelledby="cq-office-title">
+        {site.offices.map(office => <label class="cq-option"><input type="radio" name="office" value={office.city} required /><span class="cq-option-content"><span>{office.city}</span></span><i aria-hidden="true"></i></label>)}
       </div>
-    </section>}
+    </section>
 
     <section class="cq-step" hidden data-cq-step data-cq-key="age">
       <p class="cq-kicker">Il paziente</p>
@@ -124,19 +116,12 @@ const firstQuestions = isOrtho ? [
       </div>
     </section>
 
-    <section class="cq-step" hidden data-cq-step data-cq-key="office">
-      <p class="cq-kicker">Lo studio</p>
-      <h2 id="cq-office-title" tabindex="-1">In quale studio vorresti venire?</h2>
-      <div class="cq-options" role="radiogroup" aria-labelledby="cq-office-title">
-        {site.offices.map(office => <label class="cq-option"><input type="radio" name="office" value={office.city} required /><span class="cq-option-content"><span>{office.city}</span></span><i aria-hidden="true"></i></label>)}
-      </div>
-    </section>
-
     <section class="cq-step" hidden data-cq-step data-cq-key="contact">
-      <p class="cq-kicker">Contatto</p>
-      <h2 id="cq-contact-title" tabindex="-1">Ottimo. A quale numero possiamo ricontattarti?</h2>
-      <label class="cq-line-field"><span class="cq-sr-only">Numero di cellulare</span><input name="phone" type="tel" placeholder="Numero di cellulare…" autocomplete="tel" inputmode="tel" minlength="6" maxlength="30" required /></label>
-      <label class="cq-line-field cq-email-field"><span class="cq-sr-only">Email (facoltativa)</span><input name="email" type="email" placeholder="Email (facoltativa)…" autocomplete="email" inputmode="email" maxlength="254" autocapitalize="none" spellcheck="false" /></label>
+      <p class="cq-kicker">Recapiti di contatto</p>
+      <h2 id="cq-contact-title" tabindex="-1">Come possiamo ricontattarti?</h2>
+      <label class="cq-line-field"><span class="cq-sr-only">Nome e cognome</span><input name="fullName" type="text" placeholder="Il tuo nome e cognome…" autocomplete={`section-${treatment}-contact name`} minlength="2" maxlength="120" required /></label>
+      <label class="cq-line-field"><span class="cq-sr-only">Numero di cellulare</span><input name="phone" type="tel" placeholder="Numero di cellulare…" autocomplete={`section-${treatment}-contact tel`} inputmode="tel" minlength="6" maxlength="30" required /></label>
+      <label class="cq-line-field cq-email-field"><span class="cq-sr-only">Email (facoltativa)</span><input name="email" type="email" placeholder="Email (facoltativa)…" autocomplete={`section-${treatment}-contact email`} inputmode="email" maxlength="254" autocapitalize="none" spellcheck="false" /></label>
       <p class="cq-field-note">Useremo i recapiti per gestire la tua richiesta. Per un minorenne, indica quelli del genitore o del tutore.</p>
     </section>
 

@@ -109,7 +109,6 @@ export function validateBooking(input) {
   const requiredFields = REQUIRED[data.kind].filter(key => !((mobileOrthodonticQuiz || orthodonticConsultationQuiz) && key === 'availability') && !((rangedOrthodonticQuiz || orthodonticConsultationQuiz) && key === 'patientAge'));
   if (mobileOrthodonticQuiz || orthodonticConsultationQuiz) requiredFields.push('initialReason');
   if (orthodonticConsultationQuiz) requiredFields.push('ageRange');
-  if (periodontalConsultationQuiz) requiredFields.push('problem');
   if (requiredFields.some((key) => !data[key])) throw new RequestError(400, 'Completa tutti i passaggi del modulo prima di inviare.');
   if (data.office && !['Modena', 'Reggio Emilia'].includes(data.office)) throw new RequestError(400, 'Seleziona una sede valida.');
   if (data.source && (!data.source.startsWith('/') || data.source.startsWith('//') || /[?#]/.test(data.source))) throw new RequestError(400, 'Pagina di provenienza non valida.');
@@ -169,7 +168,7 @@ export function validateBooking(input) {
     if (!['/visita-parodontologia/', '/visita-parodontologia'].includes(data.source) || choices.some(([value, options]) => !options.includes(value))) {
       throw new RequestError(400, 'Seleziona le risposte tra le opzioni del questionario parodontale.');
     }
-    const currentProblemValid = !periodontalConsultationQuiz ? !data.problem : getLandingBookingConfig(data.source)?.options.some(option => option.value === data.problem);
+    const currentProblemValid = !data.problem || (periodontalConsultationQuiz && getLandingBookingConfig(data.source)?.options.some(option => option.value === data.problem));
     if (!currentProblemValid || data.patientAge || data.occlusion || data.initialReason || data.visitGoal || data.availability || data.preferredDates || data.preferredTimes) {
       throw new RequestError(400, 'I dati del questionario parodontale non sono validi. Ricarica la pagina e riprova.');
     }

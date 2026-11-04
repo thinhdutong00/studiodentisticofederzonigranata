@@ -69,7 +69,7 @@ export function bindQuizConsultation() {
   function updateSummary() {
     const rows = [
       ['Nome', 'fullName'], ['Obiettivo', isOrtho ? 'initialReason' : 'periodontalObjective'],
-      ...(isOrtho ? [['Allineamento', 'problem'], ['Chiusura delle arcate', 'occlusion']] : [['Segnale notato', 'periodontalSymptom'], ['Da quanto tempo', 'symptomDuration'], ['Problema attuale', 'problem']]),
+      ...(isOrtho ? [['Allineamento', 'problem'], ['Chiusura delle arcate', 'occlusion']] : [['Segnale notato', 'periodontalSymptom'], ['Da quanto tempo', 'symptomDuration']]),
       ['Età del paziente', 'ageRange'], ['Studio', 'office'], ['Telefono', 'phone'], ['Email', 'email'],
     ];
     const summary = form.querySelector<HTMLElement>('[data-cq-summary]')!;
@@ -95,7 +95,6 @@ export function bindQuizConsultation() {
     const percent = Math.round((current + 1) / steps.length * 100);
     progress.style.setProperty('--progress', `${percent}%`);
     progress.setAttribute('aria-valuenow', String(percent));
-    form.querySelectorAll<HTMLElement>('[data-cq-name]').forEach(element => { element.textContent = value('fullName').trim().split(/\s+/)[0] || ''; });
     error.textContent = '';
     updateRecommendation();
     if (current === steps.length - 1) updateSummary();
