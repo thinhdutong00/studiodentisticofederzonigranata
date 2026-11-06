@@ -33,7 +33,7 @@ const config = landingBookingTreatments[treatment];
   <div class="simple-booking-fields">
     <label>
       <span>Nome e cognome</span>
-      <input type="text" name="fullName" placeholder="Scrivi nome e cognome" autocomplete="section-visita name" minlength="2" maxlength="120" required />
+      <input type="text" name="fullName" placeholder="Inserisci nome e cognome" autocomplete="section-visita name" minlength="2" maxlength="120" required />
     </label>
     <label>
       <span>Telefono</span>
@@ -97,7 +97,7 @@ const config = landingBookingTreatments[treatment];
 
   .simple-booking-fields {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);
     gap: 14px 12px;
   }
 
