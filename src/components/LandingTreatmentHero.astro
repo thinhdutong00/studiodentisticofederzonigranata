@@ -33,7 +33,7 @@ const facts = [
 ];
 ---
 
-<section class:list={['treatment-hero', 'treatment-hero-portrait', { 'treatment-hero-periodontal': !isOrthodontic, 'treatment-hero-direct': direct }]} aria-labelledby="landing-title" data-treatment-sticky-hero>
+<section class:list={['treatment-hero', 'treatment-hero-portrait', { 'treatment-hero-periodontal': !isOrthodontic, 'treatment-hero-direct': direct, 'treatment-hero-ortho-direct': direct && isOrthodontic }]} aria-labelledby="landing-title" data-treatment-sticky-hero>
   <picture class="treatment-hero-image">
     <source media="(max-width: 720px)" srcset={mobileImage} />
     <img src={image} alt={isOrthodontic ? 'La professionista dello Studio Dentistico Federzoni Granata' : 'Dott. Stefano Granata, Studio Dentistico Federzoni Granata'} width={isOrthodontic ? 1200 : 1920} height={isOrthodontic ? 1800 : 2880} loading="eager" fetchpriority="high" />
@@ -145,6 +145,23 @@ const facts = [
   .treatment-hero-direct .treatment-hero-trust { justify-content: flex-start; }
   .treatment-hero-direct :global(#richiedi-visita) { scroll-margin-top: 124px; }
 
+  @media (min-width: 851px) {
+    .treatment-hero-ortho-direct {
+      --portrait-width: clamp(250px, 29vw, 390px);
+      /* The face occupies 29% of this portrait. Keep it between copy and form. */
+      column-gap: calc(var(--portrait-width) * .29 + 13px);
+    }
+    .treatment-hero-ortho-direct .treatment-hero-image {
+      grid-column: 2;
+      inset: auto auto 0 -7px;
+      width: var(--portrait-width);
+      aspect-ratio: 2 / 3;
+      transform: translateX(-62%);
+      mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent),
+        linear-gradient(180deg, transparent, #000 12%);
+      mask-composite: intersect;
+    }
+  }
   @media (max-width: 850px) {
     .treatment-hero-direct {
       grid-template-columns: minmax(0, 1fr);
@@ -168,6 +185,7 @@ const facts = [
     .treatment-hero-direct .treatment-hero-lead { margin: 18px auto 20px; }
     .treatment-hero-direct .treatment-hero-button { min-height: 48px; padding: 12px 24px; }
     .treatment-hero-direct .treatment-hero-trust { justify-content: center; margin-top: 18px; }
+    .treatment-hero-ortho-direct { padding-top: clamp(133px, 41vw, 205px); }
   }
   @media (prefers-reduced-motion: reduce) {
     .treatment-hero-button { transition: none; }
