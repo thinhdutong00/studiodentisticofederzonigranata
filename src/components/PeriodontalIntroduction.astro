@@ -1,7 +1,12 @@
 ---
 import OrthodonticLinkArrow from './OrthodonticLinkArrow.astro';
-
 import { periodontalProcessSteps as firstVisitSteps } from '../data/periodontalLanding';
+
+interface Props {
+  bookingHref?: string;
+}
+
+const { bookingHref = '#ortho-final' } = Astro.props;
 ---
 
 <slot name="before-first-visit" />
@@ -58,7 +63,7 @@ import { periodontalProcessSteps as firstVisitSteps } from '../data/periodontalL
         </li>
       ))}
     </ol>
-    <a class="ortho-cta ortho-benefits-cta" href="#ortho-final">Prenota la tua prima visita <OrthodonticLinkArrow /></a>
+    <a class="ortho-cta ortho-benefits-cta" href={bookingHref}>Prenota la tua prima visita <OrthodonticLinkArrow /></a>
   </div>
 </section>
 
@@ -71,7 +76,7 @@ import { periodontalProcessSteps as firstVisitSteps } from '../data/periodontalL
     </div>
 
     <slot name="professional" />
-    <a class="ortho-cta ortho-personalized-cta" href="#ortho-final">Prenota una visita parodontale <OrthodonticLinkArrow /></a>
+    <a class="ortho-cta ortho-personalized-cta" href={bookingHref}>Prenota una visita parodontale <OrthodonticLinkArrow /></a>
   </div>
 </section>
 

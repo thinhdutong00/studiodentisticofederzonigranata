@@ -1,7 +1,8 @@
 import { createHash } from 'node:crypto';
 import { orthodonticAgeRanges, orthodonticBites, orthodonticConcerns, orthodonticObjectives, orthodonticTimings, orthodonticVisitGoals } from '../src/data/orthodonticQuiz.js';
 import { periodontalAgeRanges, periodontalDurations, periodontalObjectives, periodontalSymptoms } from '../src/data/periodontalQuiz.js';
-import { getLandingBookingConfig, landingBookingAges, landingBookingTimes, validLandingBookingDays } from '../src/data/landingBooking.js';
+import { getLandingBookingConfig, landingBookingAges, landingBookingTimes, landingBookingTreatments, validLandingBookingDays } from '../src/data/landingBooking.js';
+import { getLandingRoute } from '../src/data/landingRoutes.js';
 import { quizConsultationAges, quizConsultationFlows } from '../src/data/quizConsultation.js';
 
 export const RECIPIENT = 'info.federzonigranata@gmail.com';
@@ -95,7 +96,8 @@ export function validateBooking(input) {
     throw new RequestError(400, 'Controlla nome e numero di telefono.');
   }
   const consultationFlow = Object.values(quizConsultationFlows).find(flow => flow.marker === input.quizFlow);
-  if (consultationFlow && (data.kind !== consultationFlow.kind || ![consultationFlow.source, consultationFlow.source.slice(0, -1)].includes(data.source))) {
+  const landing = getLandingRoute(data.source);
+  if (consultationFlow && (data.kind !== consultationFlow.kind || !landing || quizConsultationFlows[landing.treatment] !== consultationFlow)) {
     throw new RequestError(400, 'Il percorso del questionario non è valido. Ricarica la pagina e riprova.');
   }
   const orthodonticConsultationQuiz = consultationFlow?.kind === 'orthodontic-quiz';
@@ -104,7 +106,7 @@ export function validateBooking(input) {
     throw new RequestError(400, 'Inserisci un indirizzo email valido.');
   }
   if (input.privacyConsent !== true) throw new RequestError(400, 'Accetta l’informativa privacy per inviare la richiesta.');
-  const mobileOrthodonticQuiz = data.kind === 'orthodontic-quiz' && input.quizFlow === 'orthodontic-mobile-v2' && ['/visita-ortodonzia/', '/visita-ortodonzia'].includes(data.source);
+  const mobileOrthodonticQuiz = data.kind === 'orthodontic-quiz' && input.quizFlow === 'orthodontic-mobile-v2' && landing?.treatment === 'ortodonzia';
   const rangedOrthodonticQuiz = (mobileOrthodonticQuiz || orthodonticConsultationQuiz) && Boolean(data.ageRange);
   const requiredFields = REQUIRED[data.kind].filter(key => !((mobileOrthodonticQuiz || orthodonticConsultationQuiz) && key === 'availability') && !((rangedOrthodonticQuiz || orthodonticConsultationQuiz) && key === 'patientAge'));
   if (mobileOrthodonticQuiz || orthodonticConsultationQuiz) requiredFields.push('initialReason');
@@ -123,6 +125,9 @@ export function validateBooking(input) {
     } catch {
       throw new RequestError(400, 'Provenienza esterna non valida.');
     }
+  }
+  if (data.kind === 'callback' && landing?.variant === 'direct') {
+    data.treatment = landingBookingTreatments[landing.treatment].treatment;
   }
   if (data.kind === 'landing-consultation') {
     const config = getLandingBookingConfig(data.source);
@@ -165,10 +170,10 @@ export function validateBooking(input) {
       [data.periodontalSymptom, periodontalSymptoms],
       [data.symptomDuration, periodontalDurations],
     ];
-    if (!['/visita-parodontologia/', '/visita-parodontologia'].includes(data.source) || choices.some(([value, options]) => !options.includes(value))) {
+    if (landing?.treatment !== 'parodontologia' || choices.some(([value, options]) => !options.includes(value))) {
       throw new RequestError(400, 'Seleziona le risposte tra le opzioni del questionario parodontale.');
     }
-    const currentProblemValid = !data.problem || (periodontalConsultationQuiz && getLandingBookingConfig(data.source)?.options.some(option => option.value === data.problem));
+    const currentProblemValid = !data.problem || (periodontalConsultationQuiz && landingBookingTreatments.parodontologia.options.some(option => option.value === data.problem));
     if (!currentProblemValid || data.patientAge || data.occlusion || data.initialReason || data.visitGoal || data.availability || data.preferredDates || data.preferredTimes) {
       throw new RequestError(400, 'I dati del questionario parodontale non sono validi. Ricarica la pagina e riprova.');
     }

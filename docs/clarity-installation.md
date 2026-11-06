@@ -4,7 +4,7 @@ Progetto Microsoft Clarity: Federzoni Granata — Landing Ads. ID: z6cksjkefy.
 
 Le condizioni aggiuntive per il settore Salute e benessere sono state accettate il 31 ottobre 2026 dopo la conferma esplicita dell’utente.
 
-La raccolta è limitata agli host di produzione e alle URL /visita-ortodonzia/ e /visita-parodontologia/. Le due landing condividono un progetto e restano distinguibili per URL. Il consenso a Clarity è distinto da Google Ads: le precedenti scelte pubblicitarie non autorizzano l’analisi della navigazione.
+La raccolta è limitata agli host di produzione e alle landing `/visita-ortodonzia/`, `/visita-parodontologia/`, `/visita-ortodonzia-diretta/` e `/visita-parodontologia-diretta/`. Condividono un progetto e restano distinguibili per URL. Il consenso a Clarity è distinto da Google Ads: le precedenti scelte pubblicitarie non autorizzano l’analisi della navigazione.
 
 Moduli e dialoghi dei questionari sono mascherati prima di caricare il tag. Il consenso pubblicitario Microsoft resta negato. Alla revoca viene interrotta la registrazione. Una nuova registrazione dopo la riattivazione può iniziare dalla successiva apertura della pagina, senza ricaricare moduli in compilazione.
 

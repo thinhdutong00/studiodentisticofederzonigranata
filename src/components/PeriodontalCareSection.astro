@@ -2,6 +2,12 @@
 import CtaArrowIcon from './CtaArrowIcon.astro';
 import PeriodontalJourneyIcon from './PeriodontalJourneyIcon.astro';
 
+interface Props {
+  bookingHref?: string;
+}
+
+const { bookingHref } = Astro.props;
+
 // Fonti SIdP, EFP e AAP raccolte in periodontalContentSources e nella documentazione delle immagini.
 const phases = [
   { label: 'Cosa osserviamo', icon: 'observation' },
@@ -142,10 +148,13 @@ const careJourneys = [
     </div>
 
     <p class="periodontal-journey-schematic">Illustrazioni schematiche di possibili percorsi di cura. Indicazioni e risultati variano in base alla situazione clinica e alla risposta individuale.</p>
-    <button class="periodontal-care-cta" type="button" data-landing-booking-open aria-haspopup="dialog" aria-controls="landing-booking-dialog">
+    {bookingHref ? <a class="periodontal-care-cta" href={bookingHref}>
       <span>Prenota una visita parodontale</span>
       <CtaArrowIcon direction="right" />
-    </button>
+    </a> : <button class="periodontal-care-cta" type="button" data-landing-booking-open aria-haspopup="dialog" aria-controls="landing-booking-dialog">
+      <span>Prenota una visita parodontale</span>
+      <CtaArrowIcon direction="right" />
+    </button>}
   </div>
 </section>
 
@@ -192,7 +201,7 @@ const careJourneys = [
   .periodontal-journey-note { max-width: 95ch; margin: 24px 0 0; color: var(--muted-text); font-size: 16px; font-weight: 400; line-height: 1.5; }
   .periodontal-journey-schematic { margin: 0; color: var(--muted-text); font-size: 13px; font-weight: 400; line-height: 1.5; }
   .periodontal-care strong { color: var(--brand-primary-dark); font-weight: 600; }
-  .periodontal-care-cta { display: inline-flex; justify-self: center; align-items: center; justify-content: center; gap: 18px; max-width: 100%; min-height: 56px; padding: 20px 28px; border: 0; border-radius: 999px; background: var(--brand-cta); color: var(--surface-white); font: inherit; font-size: 16px; font-weight: 500; line-height: 16px; letter-spacing: normal; text-align: center; text-transform: uppercase; cursor: pointer; }
+  .periodontal-care-cta { text-decoration: none; display: inline-flex; justify-self: center; align-items: center; justify-content: center; gap: 18px; max-width: 100%; min-height: 56px; padding: 20px 28px; border: 0; border-radius: 999px; background: var(--brand-cta); color: var(--surface-white); font: inherit; font-size: 16px; font-weight: 500; line-height: 16px; letter-spacing: normal; text-align: center; text-transform: uppercase; cursor: pointer; }
   .periodontal-care-cta:hover { background: var(--brand-cta-hover); }
   .periodontal-care-cta:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 4px; }
 

@@ -1,3 +1,5 @@
+import { getLandingRoute } from '../data/landingRoutes.js';
+
 // Basic consent mode: no Google script/network request before explicit consent.
 export const ADS_TAG_ID = 'AW-988575526';
 export const ADS_LEAD_DESTINATION = 'AW-988575526/I2pSCNjTzaodEKbusdcD';
@@ -6,8 +8,8 @@ export const COOKIE_PREFERENCE_KEY = 'fg-cookie-preference-v2';
 const RECEIPT_KEY = 'fg-confirmed-lead-v1';
 const ORTHODONTIC_RECEIPT_KEY = 'fg-confirmed-orthodontic-lead-v1';
 const LEAD_EVENTS = [
-  { key: RECEIPT_KEY, destination: ADS_LEAD_DESTINATION, paths: ['/visita-parodontologia', '/visita-parodontologia/'], kinds: ['landing-consultation', 'periodontal-quiz'] },
-  { key: ORTHODONTIC_RECEIPT_KEY, destination: ADS_ORTHODONTIC_DESTINATION, paths: ['/visita-ortodonzia', '/visita-ortodonzia/'], kinds: ['landing-consultation', 'orthodontic-quiz'] },
+  { key: RECEIPT_KEY, destination: ADS_LEAD_DESTINATION, treatment: 'parodontologia', quiz: 'periodontal-quiz' },
+  { key: ORTHODONTIC_RECEIPT_KEY, destination: ADS_ORTHODONTIC_DESTINATION, treatment: 'ortodonzia', quiz: 'orthodontic-quiz' },
 ];
 const RECEIPT_TTL = 30 * 60 * 1000;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -37,8 +39,11 @@ function forgetReceipts() {
 export function rememberConfirmedLead({ requestId, kind, source }) {
   forgetReceipts();
   if (!productionHost() || !consentGranted() || !UUID.test(requestId)) return;
-  const event = LEAD_EVENTS.find(event => event.paths.includes(source) && event.kinds.includes(kind));
-  if (!event) return;
+  const landing = getLandingRoute(source);
+  if (!landing) return;
+  const event = LEAD_EVENTS.find(event => event.treatment === landing.treatment);
+  const formKind = landing.variant === 'direct' ? 'callback' : 'landing-consultation';
+  if (!event || (kind !== formKind && kind !== event.quiz)) return;
   try {
     sessionStorage.setItem(event.key, JSON.stringify({ requestId, createdAt: Date.now() }));
   } catch {

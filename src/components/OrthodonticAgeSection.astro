@@ -1,6 +1,12 @@
 ---
 import OrthodonticAgePointIcon from './OrthodonticAgePointIcon.astro';
 
+interface Props {
+  bookingHref?: string;
+}
+
+const { bookingHref = '#ortho-final' } = Astro.props;
+
 interface AgeGroup {
   id: string;
   label: string;
@@ -145,7 +151,7 @@ const archWire = 'M-16 60Q300 162 616 60';
       </button>
     </li>)}
   </ul>
-  <noscript><a class="ortho-cta" href="#ortho-final">Prenota una visita</a></noscript>
+  <noscript><a class="ortho-cta" href={bookingHref}>Prenota una visita</a></noscript>
   <svg class="ortho-age-braces" viewBox="0 0 600 190" width="600" height="190" fill="none" aria-hidden="true" focusable="false">
     <defs>
       <linearGradient id="ortho-age-enamel-fill" x1="0" y1="0" x2="88" y2="0" gradientUnits="userSpaceOnUse">
@@ -219,7 +225,7 @@ const archWire = 'M-16 60Q300 162 616 60';
       </section>
     </div>
     <footer class="ortho-age-actions">
-      <a class="ortho-age-visit" href="#ortho-final" data-ortho-age-visit>
+      <a class="ortho-age-visit" href={bookingHref} data-ortho-age-visit>
         Prenota una visita
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12" /></svg>
       </a>
@@ -299,7 +305,8 @@ const archWire = 'M-16 60Q300 162 616 60';
       document.body.style.overflow = previousOverflow;
       activeTrigger?.setAttribute('aria-expanded', 'false');
       if (visitRequested) {
-        const destination = document.querySelector<HTMLElement>('#ortho-final');
+        const bookingLink = ageSheet.querySelector<HTMLAnchorElement>('[data-ortho-age-visit]');
+        const destination = bookingLink && document.getElementById(bookingLink.hash.slice(1));
         destination?.setAttribute('tabindex', '-1');
         destination?.focus({ preventScroll: true });
         destination?.scrollIntoView({ behavior: reducedMotion.matches ? 'instant' : 'smooth', block: 'start' });

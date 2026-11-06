@@ -1,6 +1,12 @@
 ---
 import OrthodonticLinkArrow from './OrthodonticLinkArrow.astro';
 
+interface Props {
+  bookingHref?: string;
+}
+
+const { bookingHref } = Astro.props;
+
 const benefits = [
   {
     icon: 'function',
@@ -145,7 +151,7 @@ const steps = [
         </li>
       ))}
     </ol>
-    <a class="ortho-cta ortho-benefits-cta" href="#ortho-final">Prenota la tua prima visita <OrthodonticLinkArrow /></a>
+    <a class="ortho-cta ortho-benefits-cta" href={bookingHref ?? '#ortho-final'}>Prenota la tua prima visita <OrthodonticLinkArrow /></a>
   </div>
 </section>
 
@@ -174,7 +180,7 @@ const steps = [
       ))}
     </ol>
 
-    <a class="ortho-cta ortho-personalized-cta" href="#il-tuo-obiettivo" data-quiz-cta>Prenota una visita ortodontica <OrthodonticLinkArrow /></a>
+    <a class="ortho-cta ortho-personalized-cta" href={bookingHref ?? '#il-tuo-obiettivo'} data-quiz-cta={bookingHref ? undefined : true}>Prenota una visita ortodontica <OrthodonticLinkArrow /></a>
   </div>
 </section>
 

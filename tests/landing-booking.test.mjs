@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { Readable } from 'node:stream';
 import { buildSheetPayload, createBookingHandler, validateBooking, RECIPIENT } from '../server/booking.js';
 import { landingBookingTreatments, landingBookingAges, landingBookingDays, landingBookingTimes } from '../src/data/landingBooking.js';
+import { landingRoutes } from '../src/data/landingRoutes.js';
 
 const origin = 'https://studiodentisticofederzonigranata.it';
 const crmUrl = 'https://script.google.com/macros/s/landing-test/exec';
@@ -42,6 +43,23 @@ async function invoke(handler, body) {
 }
 
 for (const [name, config] of Object.entries(landingBookingTreatments)) {
+  test(`${name}: direct callback reaches CRM with the landing service and ad attribution`, async () => {
+    const { requestId, fullName, phone, privacyConsent, office } = payload(config);
+    const source = landingRoutes[name].direct;
+    const f = fixture();
+    const result = await invoke(f.handler, {
+      requestId, fullName, phone, privacyConsent, office, kind: 'callback', source,
+      treatment: 'Servizio alterato dal client', attributionLandingPage: source,
+      attributionSource: 'google', attributionMedium: 'cpc', attributionAdId: '456',
+    });
+    assert.deepEqual(result.body, { ok: true, requestId });
+    const crm = f.calls.find(call => call.url === crmUrl).body;
+    assert.equal(crm.servizio, config.treatment);
+    assert.equal(crm.pagina, source);
+    assert.equal(crm.paginaIngresso, source);
+    assert.equal(crm.idAnnuncio, '456');
+    assert.equal(crm.provenienza, 'Google Ads');
+  });
   test(`${name}: every reason is accepted and the server determines the treatment from the landing`, () => {
     for (const option of config.options) {
       const data = validateBooking({ ...payload(config), problem: option.value });

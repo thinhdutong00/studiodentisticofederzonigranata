@@ -15,7 +15,7 @@
 ## Quando scatta
 
 1. Consenso esplicito alla misurazione Google Ads nel nuovo banner (`fg-cookie-preference-v2`). Il precedente consenso non era specifico per la misurazione: non viene riutilizzato.
-2. Invio del modulo `landing-consultation` oppure `periodontal-quiz` da `/visita-parodontologia/`.
+2. Invio del modulo `landing-consultation` da `/visita-parodontologia/`, del modulo semplice `callback` dalla hero di `/visita-parodontologia-diretta/`, oppure del quiz `periodontal-quiz` da una delle due landing.
 3. `/api/booking` conferma sia email interna sia CRM e restituisce `ok: true` e lo stesso `requestId` del tentativo. Il tracciamento non cambia la logica di invio o quella del CRM.
 4. Il browser conserva solo il riferimento casuale e l’orario in sessionStorage; la conferma apre `/thank-you-page/`.
 5. Il tag Google, caricato dopo il consenso, invia l’evento `conversion` alla nuova etichetta. Il riferimento viene consumato prima dell’evento e passato come `transaction_id` per la deduplicazione di eventuali retry.

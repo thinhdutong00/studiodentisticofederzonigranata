@@ -1,0 +1,726 @@
+---
+import { landingRoutes } from '../data/landingRoutes.js';
+import CookieBanner from './CookieBanner.astro';
+import Footer from './Footer.astro';
+import PeriodontalPatientReviews from './PeriodontalPatientReviews.astro';
+import PeriodontalQuiz from './PeriodontalQuiz.astro';
+import PeriodontalIntroduction from './PeriodontalIntroduction.astro';
+import OrthodonticLinkArrow from './OrthodonticLinkArrow.astro';
+import PeriodontalProfessionalSheet from './PeriodontalProfessionalSheet.astro';
+import PeriodontalCasesCarousel from './PeriodontalCasesCarousel.astro';
+import PeriodontalPathsSection from './PeriodontalPathsSection.astro';
+import PeriodontalCareSection from './PeriodontalCareSection.astro';
+import PeriodontalRecognitionSection from './PeriodontalRecognitionSection.astro';
+import LandingBookingCta from './LandingBookingCta.astro';
+import LandingCtaMonograms from './LandingCtaMonograms.astro';
+import LandingTreatmentHero from './LandingTreatmentHero.astro';
+import LandingBookingDialog from './LandingBookingDialog.astro';
+import PeriodontalLandingHeader from './PeriodontalLandingHeader.astro';
+import TreatmentStickyCta from './TreatmentStickyCta.astro';
+import { featuredPatientReviews } from '../data/reviews';
+import { periodontalFaqs, periodontalProfessional, periodontalLandingAssets } from '../data/periodontalLanding';
+import { site } from '../data/site';
+import '../styles/inter-font.css';
+import '../styles/visit-landing.css';
+import '../styles/orthodontic-landing.css';
+import '../styles/orthodontic-desktop.css';
+
+interface Props { direct?: boolean; }
+const { direct = false } = Astro.props;
+const bookingHref = direct ? '#richiedi-visita' : undefined;
+const canonicalPath = landingRoutes.parodontologia[direct ? 'direct' : 'standard'];
+const canonical = new URL(canonicalPath, site.source).toString();
+const title = 'Visita parodontale a Modena e Reggio Emilia | Federzoni Granata';
+const description =
+  'Gengive che sanguinano, recessioni o denti mobili? Scopri il percorso di valutazione, terapia e mantenimento parodontale a Modena e Reggio Emilia.';
+const heroImage = periodontalLandingAssets.hero;
+const heroImagePath = '/assets/optimized/parodontologia-granata-hero-1920.webp';
+const socialPreviewImage = new URL('/assets/original/2021/02/HOME.jpg', canonical).toString();
+
+const reviewAuthors = new Set(['Francesca Tassinari', 'Rosa Castelluccio', 'Umberto Salatino']);
+const reviews = featuredPatientReviews.filter((review) => reviewAuthors.has(review.author));
+
+const offices = site.offices;
+const periodontalTreatmentLabel = 'Parodontologia (cure gengivali)';
+const periodontalRequestHref = bookingHref ?? `/richiesta/?trattamento=${encodeURIComponent(periodontalTreatmentLabel)}`;
+
+const footerLinks = [
+  { label: 'La salute delle gengive', href: '#ortodonzia-tutte-le-eta' },
+  { label: 'Prima e dopo', href: '#sorrisi-prima-dopo' },
+  { label: 'Questionario sulle gengive', href: '#il-tuo-obiettivo' },
+  { label: 'La tua prima visita', href: '#benefici-ortodontici' },
+  { label: 'Recensioni', href: '#recensioni' },
+  { label: 'Domande frequenti', href: '#ortho-faq-title' },
+  { label: 'Prenota una visita', href: bookingHref ?? '#ortho-final' },
+];
+
+const faqs = periodontalFaqs;
+const structuredFaqs = faqs;
+
+const officeSeoDetails = {
+  Modena: {
+    streetAddress: 'Via Giovanni Segantini, 25',
+    postalCode: '41124',
+    addressLocality: 'Modena',
+    addressRegion: 'MO',
+  },
+  'Reggio Emilia': {
+    streetAddress: 'Via Guido da Castello 8',
+    postalCode: '42121',
+    addressLocality: 'Reggio nell’Emilia',
+    addressRegion: 'RE',
+  },
+} as const;
+
+const organizationId = new URL('/#organization', canonical).toString();
+const serviceId = `${canonical}#service`;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'MedicalWebPage',
+      '@id': `${canonical}#webpage`,
+      url: canonical,
+      name: title,
+      description,
+      inLanguage: 'it-IT',
+      dateModified: '2026-10-20',
+      primaryImageOfPage: socialPreviewImage,
+      about: [
+        { '@type': 'MedicalCondition', name: 'Malattia parodontale' },
+        { '@type': 'MedicalTherapy', name: 'Terapia parodontale' },
+      ],
+      mainEntity: { '@id': serviceId },
+    },
+    {
+      '@type': 'Service',
+      '@id': serviceId,
+      name: 'Parodontologia e salute delle gengive',
+      serviceType: 'Valutazione e trattamento parodontale',
+      description,
+      url: canonical,
+      areaServed: ['Modena', 'Reggio Emilia'],
+      provider: { '@id': organizationId },
+    },
+    {
+      '@type': 'Organization',
+      '@id': organizationId,
+      name: site.name,
+      url: site.source,
+      logo: new URL(site.logo, site.source).toString(),
+      email: site.offices[0]?.email,
+      department: offices.map((office) => ({ '@id': `${canonical}#studio-${office.city.toLowerCase().replaceAll(' ', '-')}` })),
+    },
+    ...offices.map((office) => ({
+      '@type': 'Dentist',
+      '@id': `${canonical}#studio-${office.city.toLowerCase().replaceAll(' ', '-')}`,
+      name: `${site.name} – ${office.city}`,
+      url: new URL(office.href, site.source).toString(),
+      image: socialPreviewImage,
+      telephone: office.phone,
+      email: office.email,
+      parentOrganization: { '@id': organizationId },
+      medicalSpecialty: 'https://schema.org/Dentistry',
+      address: {
+        '@type': 'PostalAddress',
+        ...officeSeoDetails[office.city as keyof typeof officeSeoDetails],
+        addressCountry: 'IT',
+      },
+    })),
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${canonical}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: site.source },
+        { '@type': 'ListItem', position: 2, name: 'Parodontologia e salute delle gengive', item: canonical },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${canonical}#faq`,
+      mainEntity: structuredFaqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+      })),
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="preload" as="font" href="/fonts/inter/inter-latin.woff2" type="font/woff2" crossorigin />
+    <link rel="preload" as="image" href={heroImagePath} type="image/webp" media="(min-width: 721px)" fetchpriority="high" />
+    <link rel="preload" as="image" href="/assets/optimized/parodontologia-granata-hero-720.webp" type="image/webp" media="(max-width: 720px)" fetchpriority="high" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex,nofollow,noarchive" />
+    <meta name="theme-color" content="#10283D" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="it-IT" href={canonical} />
+    <link rel="icon" type="image/png" href="/assets/original/2020/10/cropped-favicon-32x32.png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/assets/original/2020/10/cropped-favicon-180x180.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:image" content={socialPreviewImage} />
+    <meta property="og:image:width" content={String(heroImage.width)} />
+    <meta property="og:image:height" content={String(heroImage.height)} />
+    <meta property="og:image:alt" content={heroImage.alt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialPreviewImage} />
+    <meta name="twitter:image:alt" content={heroImage.alt} />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g, '\\u003c')}></script>
+  </head>
+
+  <body class="ortho-landing ortho-landing-main ortho-unified periodontal-landing">
+    <PeriodontalLandingHeader showExperienceBar mobileSiteMenu unifiedConcept bookingHref={bookingHref} logoHref={canonicalPath} />
+
+    <a class="ortho-skip-link" href="#contenuto">Vai al contenuto</a>
+    <main id="contenuto" tabindex="-1">
+      <LandingTreatmentHero direct={direct} treatment="parodontologia" reviewers={reviews} />
+
+      <PeriodontalPathsSection bookingHref={bookingHref} />
+
+      <PeriodontalCareSection bookingHref={bookingHref} />
+
+      <PeriodontalRecognitionSection bookingHref={bookingHref} />
+
+      <PeriodontalIntroduction bookingHref={bookingHref}>
+        <Fragment slot="before-first-visit">
+          <section class="ortho-experience-mobile" id="esperienza-studio" aria-labelledby="ortho-experience-over ortho-experience-title">
+            <div class="ortho-shell">
+              <p class="ortho-experience-over" id="ortho-experience-over">Studio Dentistico Federzoni Granata</p>
+              <h2 class="ortho-experience-years" id="ortho-experience-title"><span class="ortho-experience-number">35</span> anni di attività, al servizio del tuo sorriso.</h2>
+              <img class="ortho-experience-photo" src={periodontalLandingAssets.studio.src} srcset="/assets/optimized/parodontologia-cura-paziente-720.webp 720w, /assets/optimized/parodontologia-cura-paziente-1440.webp 1440w" sizes="(max-width: 720px) calc(100vw - 68px), (max-width: 978px) 92vw, 900px" alt={periodontalLandingAssets.studio.alt} width={periodontalLandingAssets.studio.width} height={periodontalLandingAssets.studio.height} loading="lazy" decoding="async" />
+            </div>
+          </section>
+          <PeriodontalCasesCarousel />
+          <PeriodontalQuiz bookingHref={bookingHref} consultationFlow>
+            <svg slot="questionnaire-icon" class="ortho-questionnaire-aligner-icon periodontal-questionnaire-icon" viewBox="0 0 112 104" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <circle cx="56" cy="52" r="48" fill="currentColor" fill-opacity=".07" stroke="none" />
+              <path d="M18 58c8-5 14-5 22 0 10 6 22 6 32 0 8-5 14-5 22 0" stroke-opacity=".45" />
+              <path d="M56 23c-8 0-12-6-20-4-11 2-14 12-11 23 2 7 5 11 6 20 2 14 5 25 11 25s5-22 14-22 8 22 14 22 9-11 11-25c1-9 4-13 6-20 3-11 0-21-11-23-8-2-12 4-20 4Z" fill="var(--brand-cta)" />
+              <path d="M56 23c-8 0-12-6-20-4-11 2-14 12-11 23 2 7 5 11 6 20 2 14 5 25 11 25s5-22 14-22 8 22 14 22 9-11 11-25c1-9 4-13 6-20 3-11 0-21-11-23-8-2-12 4-20 4Z" fill="currentColor" fill-opacity=".12" />
+              <path d="M45 31c7 4 15 4 22-1M33 33c-1 4 0 8 2 12" stroke-width="2.2" stroke-opacity=".7" />
+            </svg>
+          </PeriodontalQuiz>
+        </Fragment>
+        <Fragment slot="professional">
+          <aside class="ortho-professional" aria-label="Il professionista">
+            <img src={periodontalProfessional.image} alt={periodontalProfessional.alt} width="600" height="750" loading="lazy" decoding="async" />
+            <div>
+              <h3><span class="ortho-professional-prefix">Dott.</span> {periodontalProfessional.name.replace(/^Dott\.\s+/, '')}</h3>
+              <p>{periodontalProfessional.summary}</p>
+              <a class="ortho-text-link ortho-professional-desktop-link" href="/chi-siamo/">Formazione e percorso professionale <OrthodonticLinkArrow /></a>
+              <button class="ortho-text-link ortho-professional-mobile-trigger" type="button" aria-haspopup="dialog" aria-controls="ortho-professional-sheet" aria-expanded="false" data-ortho-professional-open>Formazione e percorso professionale <OrthodonticLinkArrow /></button>
+            </div>
+          </aside>
+        </Fragment>
+      </PeriodontalIntroduction>
+
+      <PeriodontalPatientReviews reviews={reviews} mobileCarousel conceptCarousel mobilePopupReviews={featuredPatientReviews}>
+        <Fragment slot="eyebrow"><span class="ortho-review-eyebrow-desktop">Esperienze dei pazienti</span></Fragment>
+        <Fragment slot="title"><span class="ortho-review-title-mobile"><strong class="ortho-review-title-emphasis">Esperienze</strong> di chi ci ha scelto</span></Fragment>
+        <button slot="after-heading" class="ortho-reviews-more" type="button" data-review-sheet-trigger>Leggi di più</button>
+        <p slot="after-carousel" class="ortho-review-proof-caption">+ di 200 persone hanno lasciato una recensione positiva con una media di 4,9 stelle</p>
+      </PeriodontalPatientReviews>
+
+
+      <section class="ortho-section ortho-faq" aria-labelledby="ortho-faq-title">
+        <div class="ortho-shell ortho-split">
+          <div class="ortho-section-heading">
+            <p class="ortho-eyebrow">Parodontologia e salute delle gengive</p>
+            <h2 id="ortho-faq-title">Domande frequenti</h2>
+          </div>
+          <div class="ortho-faq-mobile-list">
+            {faqs.slice(0, 3).map((faq, index) => (
+              <details name="ortho-mobile-faq" open={index === 0}>
+                <summary><span>{faq.question}</span><i aria-hidden="true"></i></summary>
+                <div class="ortho-faq-mobile-answer"><p>{faq.answer}</p></div>
+              </details>
+            ))}
+            <button class="ortho-cta ortho-faq-read-more" type="button" aria-expanded="false" aria-controls="ortho-mobile-extra-faqs">Leggi di più</button>
+            <div id="ortho-mobile-extra-faqs" hidden>
+              {faqs.slice(3).map((faq) => (
+                <details name="ortho-mobile-faq">
+                  <summary><span>{faq.question}</span><i aria-hidden="true"></i></summary>
+                  <div class="ortho-faq-mobile-answer"><p>{faq.answer}</p></div>
+                </details>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="ortho-section ortho-final ortho-final-with-instruments periodontal-final-light" id="ortho-final" aria-labelledby="ortho-consultation-title">
+        <LandingCtaMonograms />
+        <LandingBookingCta bookingHref={bookingHref} treatment="parodontologia" />
+      </section>
+    </main>
+
+    <div id="contatti-studio">
+      <Footer bookingHref={bookingHref} logoHref={canonicalPath} logoLabel="Landing parodontologia">
+        <Fragment slot="mobile-navigation-links">
+          {footerLinks.map(item => <li><a href={item.href}>{item.label}</a></li>)}
+        </Fragment>
+      </Footer>
+    </div>
+
+    {!direct && <LandingBookingDialog treatment="parodontologia" />}
+    <PeriodontalProfessionalSheet bookingHref={periodontalRequestHref} />
+    <TreatmentStickyCta treatment={periodontalTreatmentLabel} href={periodontalRequestHref} hideAtFooter={false} mobileLabel="Inizia il tuo percorso" mobileHideFrom="#ortho-final" />
+    <CookieBanner />
+
+    <script>
+      import { bindOrthodonticMobileMotion } from '../utils/orthodonticMobileMotion';
+      bindOrthodonticMobileMotion();
+
+      const quizSection = document.querySelector<HTMLElement>('.ortho-landing-main #il-tuo-obiettivo');
+      quizSection?.removeAttribute('aria-labelledby');
+      quizSection?.setAttribute('aria-label', 'Questionario sulla salute delle gengive');
+      const reviewsSection = document.querySelector<HTMLElement>('.ortho-landing-main #recensioni');
+      const faqSection = document.querySelector<HTMLElement>('.ortho-landing-main .ortho-faq');
+      const faqReadMore = faqSection?.querySelector<HTMLButtonElement>('.ortho-faq-read-more');
+      const extraFaqs = faqSection?.querySelector<HTMLElement>('#ortho-mobile-extra-faqs');
+      if (faqReadMore && extraFaqs) {
+        faqReadMore.addEventListener('click', () => {
+          extraFaqs.hidden = false;
+          faqReadMore.setAttribute('aria-expanded', 'true');
+          faqReadMore.hidden = true;
+          extraFaqs.querySelector<HTMLElement>('summary')?.focus({ preventScroll: true });
+        }, { once: true });
+      }
+
+      const googleRating = reviewsSection?.querySelector<HTMLAnchorElement>('.patient-reviews-rating');
+      const footerDescription = document.querySelector<HTMLElement>('.ortho-landing-main #footer .footer-mobile-brand > p');
+      if (googleRating && footerDescription) footerDescription.after(googleRating);
+
+      const professionalCta = document.querySelector<HTMLAnchorElement>('.ortho-landing-main #percorso-ortodontico .ortho-personalized-cta');
+      professionalCta?.setAttribute('href', document.getElementById('richiedi-visita') ? '#richiedi-visita' : '#ortho-final');
+      professionalCta?.removeAttribute('data-quiz-cta');
+    </script>
+  </body>
+</html>
+
+<style>
+  :global(.periodontal-landing.ortho-unified #ortho-final.periodontal-final-light) {
+    background: var(--soft-blue-bg);
+    color: var(--text-dark);
+  }
+  :global(.periodontal-landing.ortho-unified #ortho-final.periodontal-final-light > .lb-cta) {
+    position: relative;
+    z-index: 1;
+  }
+  :global(.periodontal-landing.ortho-unified #ortho-final.periodontal-final-light .ortho-consultation-heading h2) {
+    color: var(--text-dark);
+  }
+  :global(.periodontal-landing.ortho-unified #ortho-final.periodontal-final-light .ortho-consultation-heading strong) {
+    color: var(--brand-cta);
+  }
+  :global(.periodontal-landing.ortho-unified #ortho-final.periodontal-final-light .ortho-consultation-heading p) {
+    color: var(--muted-text);
+  }
+  :global(.periodontal-landing.ortho-unified #ortho-final.periodontal-final-light .ortho-consultation-symbol) {
+    filter: none;
+  }
+  :global(.periodontal-landing.ortho-unified #ortho-final.periodontal-final-light .lb-open-final) {
+    background: var(--brand-cta);
+    color: var(--surface-white);
+  }
+  :global(.periodontal-landing.ortho-unified #ortho-final.periodontal-final-light .lb-open-final:hover) {
+    background: var(--brand-cta-hover);
+  }
+  .ortho-professional-mobile-trigger { display: none; }
+  .ortho-personalized-title-mobile { display: none; }
+  .ortho-review-title-mobile { display: none; }
+  .ortho-reviews-more { display: inline-flex; min-height: 46px; align-items: center; justify-content: center; margin: 18px 0 0; padding: 14px 22px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface-white); color: var(--brand-primary-dark); font: inherit; font-size: 16px; font-weight: 500; line-height: 1; text-transform: uppercase; cursor: pointer; }
+  .ortho-reviews-more:hover { border-color: var(--brand-cta); color: var(--brand-cta); }
+  .ortho-reviews-more:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 4px; }
+  .ortho-review-proof-caption { display: none; text-decoration: underline; text-underline-offset: 3px; }
+  .ortho-questionnaire-aligner-icon { display: none; }
+  .periodontal-questionnaire-icon { color: var(--surface-white); }
+  .ortho-faq-mobile-list { display: none; }
+  .ortho-faq-eyebrow-mobile { display: none; }
+  .ortho-experience-mobile { display: none; }
+  .ortho-hero-eyebrow-mobile { display: none; }
+  .ortho-hero-title-mobile { display: none; }
+  .ortho-hero-lead-mobile { display: none; }
+
+  @media (max-width: 720px) {
+    .ortho-professional-desktop-link { display: none; }
+    .ortho-professional-mobile-trigger { display: inline-flex; padding: 0; border: 0; background: transparent; font-family: inherit; text-decoration: underline; cursor: pointer; }
+    .ortho-personalized-title-desktop { display: none; }
+    .ortho-personalized-title-mobile { display: inline; }
+    .ortho-review-title-desktop { display: none; }
+    .ortho-review-title-mobile { display: inline; }
+    .ortho-faq-eyebrow-desktop { display: none; }
+    .ortho-faq-eyebrow-mobile { display: inline; }
+    .ortho-review-eyebrow-desktop { display: none; }
+    .ortho-experience-mobile {
+      display: block;
+      padding: 56px 0 0;
+      background: var(--surface-white);
+      color: var(--brand-primary-dark);
+      text-align: left;
+    }
+    .ortho-experience-over { margin: 0; color: var(--brand-cta); font-size: 16px; line-height: 1.3; }
+    .ortho-experience-years {
+      display: flow-root;
+      margin: 10px 0 0;
+      font-size: clamp(21px, 6.14vw, 24px);
+      font-weight: 400;
+      line-height: 1.3;
+      letter-spacing: -.16px;
+    }
+    .ortho-experience-number {
+      float: left;
+      margin: 4px 12px 0 0;
+      font-size: clamp(76px, 23.5vw, 92px);
+      font-weight: 500;
+      line-height: .9;
+    }
+    .ortho-experience-photo { display: block; width: 100%; height: auto; margin-top: 28px; border-radius: 18px; }
+    :global(.ortho-landing-main #percorso-ortodontico) { padding-top: 32px; }
+    :global(.ortho-landing-main #percorso-ortodontico .ortho-professional > img) { width: 104px; height: 136px; }
+    :global(.ortho-landing-main #percorso-ortodontico .ortho-eyebrow),
+    :global(.ortho-landing-main #percorso-ortodontico .ortho-intro-lead),
+    :global(.ortho-landing-main #percorso-ortodontico .ortho-personalized-steps) { display: none; }
+    .ortho-hero-eyebrow-desktop { display: none; }
+    .ortho-hero-overlay .ortho-hero-eyebrow-mobile {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      display: block;
+      width: fit-content;
+      max-width: calc(100% - 28px);
+      margin: 0;
+      padding: 8px 18px 6px 22px;
+      border-radius: 0 18px 0 0;
+      background: var(--surface-white);
+      color: var(--text-dark);
+      font-size: 11px;
+      line-height: 1.3;
+      transform: translateY(-100%);
+    }
+    .ortho-hero-eyebrow-mobile::before,
+    .ortho-hero-eyebrow-mobile::after {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: radial-gradient(circle at 100% 0, transparent 17px, var(--surface-white) 18px);
+      content: '';
+      pointer-events: none;
+    }
+    .ortho-hero-eyebrow-mobile::before { top: 0; left: 0; transform: translateY(-100%); }
+    .ortho-hero-eyebrow-mobile::after { bottom: 0; left: 100%; }
+    .ortho-hero-title-desktop { display: none; }
+    .ortho-hero-title-mobile { display: inline; text-transform: none; }
+    .ortho-hero-title-mobile strong { font-weight: 700; }
+    .ortho-hero-title-context { color: var(--brand-primary-dark); }
+    .ortho-hero-lead-desktop { display: none; }
+    .ortho-hero-lead-mobile { display: block; }
+
+    .ortho-hero-invisalign { font-weight: 700; }
+
+    :global(.ortho-landing-main #recensioni) {
+      position: relative;
+      overflow: clip;
+      isolation: isolate;
+      background: var(--soft-blue-bg);
+      color: var(--brand-primary-dark);
+    }
+    :global(.ortho-landing-main #recensioni::before) {
+      content: '';
+      position: absolute;
+      z-index: 0;
+      top: 0;
+      right: 0;
+      height: 100%;
+      aspect-ratio: 488 / 496;
+      background: url('/assets/decorations/google-g-white.svg') center / contain no-repeat;
+      transform: translateX(33.333333%);
+      pointer-events: none;
+    }
+    :global(.ortho-landing-main #recensioni > .landing-shell) { position: relative; z-index: 1; }
+    .ortho-review-proof-caption {
+      display: block;
+      margin: 16px 0 0;
+      color: var(--muted-text);
+      font-size: 11px;
+      font-weight: 400;
+      line-height: 1.5;
+      text-align: center;
+    }
+    :global(.ortho-landing-main #recensioni .patient-reviews-intro h2) { color: var(--brand-primary-dark); }
+    :global(.ortho-landing-main #recensioni :is(.patient-review, .patient-reviews-rating)) { border-color: var(--border); background: var(--surface-white); color: var(--brand-primary-dark); }
+    :global(.ortho-landing-main #recensioni .patient-review blockquote) { color: var(--text-dark); }
+    :global(.ortho-landing-main #recensioni .patient-review footer strong) { color: var(--brand-primary-dark); }
+    :global(.ortho-landing-main #recensioni :is(.patient-review footer small, .patient-reviews-rating-caption)) { color: var(--muted-text); }
+    :global(.ortho-landing-main #recensioni .patient-reviews-link) { color: var(--brand-cta); }
+    :global(.ortho-landing-main #recensioni .patient-reviews-description) { display: none; }
+    :global(.ortho-landing-main #recensioni .landing-kicker) { display: none; }
+    :global(.ortho-landing-main #recensioni .patient-reviews-intro h2) { margin-top: 0; }
+    :global(.ortho-landing-main #recensioni .patient-reviews-experience) { display: none; }
+    :global(.ortho-landing-main #recensioni .patient-reviews-highlights) { grid-template-columns: minmax(0, 1fr); }
+    :global(.ortho-landing-main #recensioni .patient-reviews-highlights:not(:has(.patient-reviews-rating))) { display: none; }
+    :global(.ortho-landing-main .patient-reviews-rating) {
+      justify-self: center;
+      width: min(100%, 240px);
+      align-items: center;
+      padding: 16px 20px;
+      text-align: center;
+    }
+    :global(.ortho-landing-main #footer .patient-reviews-rating) {
+      margin: 24px 0 0;
+      justify-self: start;
+      align-items: flex-start;
+      text-align: left;
+    }
+    :global(.ortho-landing-main .ortho-age-section) { padding-bottom: 48px; }
+    :global(.ortho-landing-main .ortho-age-braces) { display: none; }
+    :global(.ortho-landing-main .ortho-footer-braces) { display: none; }
+    :global(.ortho-landing-main #footer .footer-mobile-section[aria-labelledby="footer-mobile-contacts-title"]),
+    :global(.ortho-landing-main #footer .footer-mobile-section[aria-labelledby="footer-mobile-social-title"]),
+    :global(.ortho-landing-main #footer .footer-mobile-content) { display: none; }
+    :global(.ortho-landing-main .patient-reviews-rating .patient-reviews-google svg) { width: 20px; height: 20px; }
+    :global(.ortho-landing-main .patient-reviews-rating .patient-reviews-score) { margin-top: 10px; font-size: 40px; }
+    :global(.ortho-landing-main .patient-reviews-rating .patient-reviews-stars) { margin-top: 8px; font-size: 16px; }
+    :global(.ortho-landing-main .patient-reviews-rating .patient-reviews-rating-caption) { margin-top: 8px; font-size: 11px; }
+    :global(.ortho-landing-main .patient-reviews-rating .patient-reviews-link) { margin-top: 12px; }
+
+    :global(.ortho-landing-main #contenuto #ortho-faq-title) {
+      color: var(--brand-cta);
+    }
+
+    :global(.ortho-landing-main .ortho-hero-copy .landing-hero-eyebrow),
+    :global(.ortho-landing-main #percorso-ortodontico .ortho-eyebrow),
+    :global(.ortho-landing-main .ortho-faq .ortho-eyebrow) {
+      color: var(--text-dark);
+    }
+
+    .ortho-faq { background: var(--surface-white); }
+    .ortho-faq-list { display: none; }
+    .ortho-faq-mobile-list { display: block; }
+    .ortho-faq-read-more { width: 100%; margin-top: 24px; }
+    .ortho-faq-read-more[hidden],
+    #ortho-mobile-extra-faqs[hidden] { display: none; }
+
+    .ortho-faq-mobile-list details {
+      border-bottom: 2px solid color-mix(in srgb, var(--brand-cta) 72%, transparent);
+    }
+
+    .ortho-faq-mobile-list > details:first-child {
+      border-top: 2px solid color-mix(in srgb, var(--brand-cta) 72%, transparent);
+    }
+
+    .ortho-faq-mobile-list summary {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 32px;
+      align-items: center;
+      gap: 16px;
+      padding: 24px 0;
+      color: var(--brand-cta-hover);
+      font-family: Inter, sans-serif;
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -.16px;
+      line-height: 30px;
+      list-style: none;
+      cursor: pointer;
+    }
+
+    .ortho-faq-mobile-list summary::-webkit-details-marker { display: none; }
+
+    .ortho-faq-mobile-list summary:focus-visible {
+      outline: 3px solid color-mix(in srgb, var(--brand-cta) 24%, transparent);
+      outline-offset: 7px;
+    }
+
+    .ortho-faq-mobile-list i {
+      position: relative;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--brand-cta);
+    }
+
+    .ortho-faq-mobile-list i::before,
+    .ortho-faq-mobile-list i::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 15px;
+      height: 2px;
+      background: var(--surface-white);
+      transform: translate(-50%, -50%);
+    }
+
+    .ortho-faq-mobile-list i::after {
+      transform: translate(-50%, -50%) rotate(90deg);
+      transition: opacity 140ms ease;
+    }
+
+    .ortho-faq-mobile-list details[open] i::after { opacity: 0; }
+    .ortho-faq-mobile-list details[open] { padding-bottom: 24px; }
+
+    .ortho-faq-mobile-answer {
+      padding: 22px 20px;
+      background: var(--soft-blue-bg);
+    }
+
+    .ortho-faq-mobile-answer p {
+      margin: 0;
+      color: var(--text-dark);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+    }
+
+    :global(.ortho-landing-main #contenuto :is(.ortho-hero h1, .ortho-section-heading h2, .ortho-smile-preview h2, .ortho-age-section h2, .patient-reviews-intro h2, .ortho-consultation-heading h2)) {
+      font-family: Inter, sans-serif;
+      font-size: 30px;
+      font-weight: 500;
+      line-height: 1.16;
+      letter-spacing: -.16px;
+      word-spacing: 0;
+    }
+
+    :global(.ortho-landing-main #contenuto :is(#landing-reviews-title .ortho-review-title-emphasis, #ortho-faq-title, #ortho-consultation-title strong)) {
+      font-weight: 700;
+    }
+
+    :global(.ortho-landing-main > .landing-header) {
+      transition: transform 260ms ease;
+    }
+
+    :global(.ortho-landing-main > .landing-header.is-scroll-hidden) {
+      transform: translateY(calc(-100% - 2px));
+      pointer-events: none;
+    }
+
+    .ortho-hero-quiz-link { display: none; }
+
+    :global(.ortho-landing-main #ortho-final) {
+      padding: 48px 0 0;
+      background: var(--brand-primary-dark);
+      color: var(--surface-white);
+    }
+
+    :global(.ortho-landing-main #ortho-final .ortho-consultation-heading h2),
+    :global(.ortho-landing-main #ortho-final .ortho-consultation-heading p) {
+      color: var(--surface-white);
+    }
+
+    :global(.periodontal-landing #ortho-final .ortho-consultation-heading) {
+      text-align: center;
+    }
+
+    :global(.periodontal-landing #ortho-final .ortho-consultation-symbol) {
+      margin-inline: auto;
+    }
+
+    :global(.ortho-landing-main #ortho-final .ortho-consultation-surface) {
+      background: transparent;
+    }
+
+    :global(.ortho-landing-main #ortho-final::after),
+    :global(.ortho-landing-main #ortho-final > .ortho-final-copy) {
+      display: none;
+    }
+
+    :global(.ortho-landing-main #sedi),
+    :global(.ortho-landing-main .ortho-method),
+    :global(.ortho-landing-main .ortho-nav-list > li:has(> a[href="#sedi"])) {
+      display: none;
+    }
+
+    :global(.ortho-landing-main #il-tuo-obiettivo) {
+      padding-top: 16px;
+    }
+
+    :global(.ortho-landing-main #il-tuo-obiettivo .orthodontic-objectives-shell) {
+      width: calc(100% - 24px);
+      margin-inline: auto;
+    }
+
+    :global(.ortho-landing-main #il-tuo-obiettivo .orthodontic-objectives-layout) {
+      display: none;
+    }
+
+    :global(.ortho-landing-main #il-tuo-obiettivo .orthodontic-questionnaire-banner) {
+      gap: 24px;
+      margin-top: 0;
+      border-radius: 16px;
+      background: var(--brand-cta);
+    }
+
+    :global(.ortho-landing-main .orthodontic-questionnaire-banner > p) {
+      text-align: center;
+    }
+
+    .ortho-questionnaire-aligner-icon {
+      display: block;
+      width: 128px;
+      height: auto;
+      margin-inline: auto;
+      object-fit: contain;
+    }
+
+    .ortho-hero-overlay .landing-hero-stage {
+      display: block;
+      padding-top: 0;
+      border-radius: 18px 18px 0 0;
+    }
+
+    .ortho-hero-overlay .landing-hero-stage::after {
+      display: none;
+    }
+
+    .ortho-hero-overlay .ortho-hero-photo-frame {
+      position: relative;
+      inset: auto;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      border-radius: 18px 18px 18px 0;
+    }
+
+
+    .ortho-hero-overlay .landing-hero-panel {
+      inset: auto;
+      width: 100%;
+      box-shadow: none;
+    }
+  }
+
+  @media (max-width: 720px) and (prefers-reduced-motion: no-preference) {
+    .ortho-hero-overlay,
+    .ortho-hero-overlay .landing-hero-stage {
+      overflow: clip;
+    }
+
+    .ortho-hero-overlay .ortho-hero-photo-frame {
+      position: sticky;
+      top: 0;
+    }
+  }
+
+  @media (max-width: 720px) and (prefers-reduced-motion: reduce) {
+    :global(.ortho-landing-main > .landing-header) {
+      transition: none;
+    }
+  }
+</style>

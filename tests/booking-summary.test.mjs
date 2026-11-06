@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { runInNewContext } from 'node:vm';
 import { quizConsultationFlows } from '../src/data/quizConsultation.js';
+import { getLandingRoute } from '../src/data/landingRoutes.js';
 import { getPeriodontalSymptomLabel } from '../src/data/periodontalQuiz.js';
 
 const key = 'fg-booking-summary-v1';
@@ -23,7 +24,7 @@ function page(storage = new Map(), blocked = false) {
   const list = { children: [], replaceChildren(...children) { this.children = children; } };
   const section = { hidden: true, querySelector: () => list };
   const api = runInNewContext(`${source}\n({ clearBookingSummary, rememberConfirmedBookingSummary, consumeConfirmedBookingSummary, renderBookingSummary });`, {
-    Date, quizConsultationFlows, getPeriodontalSymptomLabel,
+    Date, quizConsultationFlows, getLandingRoute, getPeriodontalSymptomLabel,
     sessionStorage: {
       getItem(name) { if (blocked) throw Error('blocked'); return storage.get(name) ?? null; },
       setItem(name, value) { if (blocked) throw Error('blocked'); storage.set(name, value); },

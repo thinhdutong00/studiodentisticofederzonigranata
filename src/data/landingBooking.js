@@ -1,3 +1,5 @@
+import { landingRoutes } from './landingRoutes.js';
+
 export const landingBookingAges = ['Fino a 17 anni', '18–25 anni', '26–35 anni', '36–50 anni', '51–65 anni', 'Oltre 65 anni'];
 export const landingBookingDays = ['Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Non ho preferenze'];
 export const landingBookingTimes = [
@@ -8,7 +10,7 @@ export const landingBookingTimes = [
 
 export const landingBookingTreatments = {
   ortodonzia: {
-    path: '/visita-ortodonzia/',
+    path: landingRoutes.ortodonzia.standard,
     label: 'Ortodonzia',
     treatment: 'Ortodonzia e allineatori',
     requestTreatment: 'Ortodonzia e Allineatori invisibili (adulti e bimbi)',
@@ -23,7 +25,7 @@ export const landingBookingTreatments = {
     ],
   },
   parodontologia: {
-    path: '/visita-parodontologia/',
+    path: landingRoutes.parodontologia.standard,
     label: 'Parodontologia',
     treatment: 'Parodontologia',
     requestTreatment: 'Parodontologia (cure gengivali)',

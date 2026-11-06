@@ -1,4 +1,5 @@
 import { quizConsultationFlows } from '../data/quizConsultation.js';
+import { getLandingRoute } from '../data/landingRoutes.js';
 import { getPeriodontalSymptomLabel } from '../data/periodontalQuiz.js';
 
 export const BOOKING_SUMMARY_KEY = 'fg-booking-summary-v1';
@@ -7,10 +8,11 @@ const REQUEST_ID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9
 
 function normalizeSummary(data) {
   if (!data || typeof data !== 'object' || typeof data.requestId !== 'string' || !REQUEST_ID.test(data.requestId)) return null;
-  const flow = Object.entries(quizConsultationFlows).find(([, config]) => config.marker === data.quizFlow
-    && config.kind === data.kind && [config.source, config.source.slice(0, -1)].includes(data.source));
-  if (!flow) return null;
-  const isOrtho = flow[0] === 'ortodonzia';
+  const landing = getLandingRoute(data.source);
+  if (!landing) return null;
+  const flow = quizConsultationFlows[landing.treatment];
+  if (flow.marker !== data.quizFlow || flow.kind !== data.kind) return null;
+  const isOrtho = landing.treatment === 'ortodonzia';
   const fields = [
     ['Nome e cognome', 'fullName'], ['Obiettivo', isOrtho ? 'initialReason' : 'periodontalObjective'],
     ...(isOrtho ? [['Allineamento', 'problem'], ['Chiusura delle arcate', 'occlusion']]

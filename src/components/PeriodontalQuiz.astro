@@ -7,8 +7,8 @@ import { periodontalAgeRanges, periodontalDurations, periodontalObjectives, peri
 import { getPeriodontalQuizRecommendation } from '../data/periodontalQuizRecommendation.js';
 import '../styles/orthodontic-quiz.css';
 
-interface Props { contextLabel?: string; consultationFlow?: boolean; }
-const { contextLabel, consultationFlow = false } = Astro.props;
+interface Props { contextLabel?: string; consultationFlow?: boolean; bookingHref?: string; }
+const { contextLabel, consultationFlow = false, bookingHref } = Astro.props;
 const initialRecommendation = getPeriodontalQuizRecommendation();
 const recessionExample = getPeriodontalQuizRecommendation({ periodontalSymptom: 'Gengive che si ritirano' });
 const questions = [
@@ -33,7 +33,7 @@ const questions = [
         <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m8 5 5 5-5 5" /></svg>
       </button>
     </div>
-    <noscript><p>Per compilare il questionario abilita JavaScript oppure <a href="#ortho-final">richiedi una visita dal modulo in fondo alla pagina</a>.</p></noscript>
+    <noscript><p>Per compilare il questionario abilita JavaScript oppure <a href={bookingHref ?? '#ortho-final'}>{bookingHref ? 'vai al modulo di richiesta' : 'richiedi una visita dal modulo in fondo alla pagina'}</a>.</p></noscript>
   </div>
 </section>
 

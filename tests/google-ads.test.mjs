@@ -2,8 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { runInNewContext } from 'node:vm';
+import { getLandingRoute } from '../src/data/landingRoutes.js';
 
-const source = (await readFile(new URL('../src/utils/googleAds.js', import.meta.url), 'utf8')).replace(/^export /gm, '');
+const source = (await readFile(new URL('../src/utils/googleAds.js', import.meta.url), 'utf8'))
+  .replace(/^import .*;\n/gm, '').replace(/^export /gm, '');
 const requestId = 'a3fb3f9c-714c-4d7c-af09-51fe594f6251';
 const confirmed = { requestId, kind: 'landing-consultation', source: '/visita-parodontologia/' };
 const receiptKey = 'fg-confirmed-lead-v1';
@@ -15,7 +17,7 @@ function page({ preference, path = '/visita-parodontologia/', hostname = 'studio
   const dataset = preference ? { cookiePreference: preference } : {};
   const window = { location: { protocol: 'https:', hostname, pathname: path } };
   const api = runInNewContext(`${source}\n({ initGoogleAds, rememberConfirmedLead });`, {
-    window, Date,
+    window, Date, getLandingRoute,
     document: {
       documentElement: { dataset },
       addEventListener: (event, handler) => listeners.set(event, handler),
@@ -66,6 +68,8 @@ for (const hostname of ['localhost', '127.0.0.1', 'example-preview.vercel.app'])
 for (const [service, lead, key, destination, kinds] of [
   ['parodontologia', confirmed, receiptKey, 'AW-988575526/I2pSCNjTzaodEKbusdcD', ['landing-consultation', 'periodontal-quiz']],
   ['ortodonzia', orthodonticConfirmed, orthodonticReceiptKey, 'AW-988575526/gUQ-COLP2aodEKbusdcD', ['landing-consultation', 'orthodontic-quiz']],
+  ['parodontologia diretta', { requestId, source: '/visita-parodontologia-diretta/' }, receiptKey, 'AW-988575526/I2pSCNjTzaodEKbusdcD', ['callback', 'periodontal-quiz']],
+  ['ortodonzia diretta', { requestId, source: '/visita-ortodonzia-diretta' }, orthodonticReceiptKey, 'AW-988575526/gUQ-COLP2aodEKbusdcD', ['callback', 'orthodontic-quiz']],
 ]) {
  for (const kind of kinds) {
   test(`${service}/${kind}: confirmed lead fires once on thank-you, never on the form, with no patient fields`, () => {

@@ -1,10 +1,14 @@
 ---
 import { landingBookingTreatments } from '../data/landingBooking.js';
-interface Props { treatment: 'ortodonzia' | 'parodontologia'; variant?: 'hero' | 'section'; }
-const { treatment, variant = 'section' } = Astro.props;
+interface Props { treatment: 'ortodonzia' | 'parodontologia'; variant?: 'hero' | 'section'; bookingHref?: string; }
+const { treatment, variant = 'section', bookingHref } = Astro.props;
 const config = landingBookingTreatments[treatment];
 const isHero = variant === 'hero';
-const requestHref = `/richiesta/?trattamento=${encodeURIComponent(config.requestTreatment)}`;
+const requestHref = bookingHref ?? `/richiesta/?trattamento=${encodeURIComponent(config.requestTreatment)}`;
+const BookingAction = bookingHref ? 'a' : 'button';
+const bookingAttrs = bookingHref
+  ? { href: bookingHref }
+  : { type: 'button' as const, 'data-landing-booking-open': true, 'aria-haspopup': 'dialog' as const, 'aria-controls': 'landing-booking-dialog' };
 ---
 <div class:list={['ortho-consultation-mobile', 'lb-cta', { 'ortho-consultation-hero': isHero }]}>
   {!isHero && <header class="ortho-consultation-heading">
@@ -12,15 +16,15 @@ const requestHref = `/richiesta/?trattamento=${encodeURIComponent(config.request
     <h2 id="ortho-consultation-title">Prenota la tua visita di <strong>valutazione {treatment === 'ortodonzia' ? 'ortodontica' : 'parodontale'}</strong></h2>
     <p>{treatment === 'ortodonzia' ? 'Facciamo il primo passo verso il tuo nuovo sorriso. Raccontaci le tue esigenze e organizziamo la tua visita.' : 'Facciamo il primo passo per prenderci cura delle tue gengive e proteggere i tuoi denti naturali.'}</p>
   </header>}
-  <button class:list={['lb-open', { 'lb-open-final': !isHero }]} type="button" data-landing-booking-open aria-haspopup="dialog" aria-controls="landing-booking-dialog">
+  <BookingAction class:list={['lb-open', { 'lb-open-final': !isHero }]} {...bookingAttrs}>
     Prenota una {config.visit}<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6" /></svg>
-  </button>
+  </BookingAction>
   <noscript><p><a href={requestHref}>Compila la richiesta di visita</a> oppure chiama lo studio.</p></noscript>
 </div>
 
 <style>
   .lb-cta { display: block; }
-  .lb-open { display: flex; width: 100%; min-height: 60px; align-items: center; justify-content: center; gap: 18px; padding: 20px; border: 0; border-radius: 10px; background: var(--brand-cta); color: var(--surface-white); font: inherit; font-size: 16px; font-weight: 500; line-height: 1.25; text-transform: uppercase; cursor: pointer; }
+  .lb-open { text-decoration: none; display: flex; width: 100%; min-height: 60px; align-items: center; justify-content: center; gap: 18px; padding: 20px; border: 0; border-radius: 10px; background: var(--brand-cta); color: var(--surface-white); font: inherit; font-size: 16px; font-weight: 500; line-height: 1.25; text-transform: uppercase; cursor: pointer; }
   .lb-open svg { flex: 0 0 22px; width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
   .lb-open:hover { background: var(--brand-cta-hover); }
   .lb-open:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 4px; }

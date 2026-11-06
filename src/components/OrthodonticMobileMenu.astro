@@ -1,6 +1,12 @@
 ---
 import { site } from '../data/site';
 
+interface Props {
+  bookingHref: string;
+  logoHref: string;
+}
+
+const { bookingHref, logoHref } = Astro.props;
 const landingSections = [
   { label: 'La tua prima visita', href: '#benefici-ortodontici' },
   { label: 'Prima e dopo', href: '#sorrisi-prima-dopo' },
@@ -22,7 +28,7 @@ const ageGroups = [
 
   <dialog class="ortho-site-menu-panel" id="ortho-site-menu-panel" aria-label="Menu ortodonzia" data-ortho-site-menu-panel>
     <div class="ortho-site-menu-panel-header">
-      <a class="ortho-site-menu-logo" href="/visita-ortodonzia/" aria-label={`${site.name} — Landing ortodonzia`}>
+      <a class="ortho-site-menu-logo" href={logoHref} aria-label={`${site.name} — Landing ortodonzia`}>
         <img src="/assets/optimized/studio-dentistico-federzoni-granata-300.webp" alt="" width="300" height="39" />
       </a>
       <button class="ortho-site-menu-close" type="button" data-ortho-site-menu-close autofocus>
@@ -46,7 +52,7 @@ const ageGroups = [
 
     <div class="ortho-site-menu-actions">
       <a href="#il-tuo-obiettivo">Fai il test <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12" /></svg></a>
-      <a href="#ortho-final">Prenota una visita <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12" /></svg></a>
+      <a href={bookingHref}>Prenota una visita <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12" /></svg></a>
     </div>
   </dialog>
 </div>

@@ -1,6 +1,12 @@
 ---
 import PeriodontalRecognitionIcon from './PeriodontalRecognitionIcon.astro';
 
+interface Props {
+  bookingHref?: string;
+}
+
+const { bookingHref = '#ortho-final' } = Astro.props;
+
 const situations = [
   {
     title: 'Il sangue appena svegli',
@@ -88,7 +94,7 @@ const situations = [
     </ul>
   </div>
   <footer class="periodontal-recognition-actions">
-    <a class="periodontal-recognition-booking" href="#ortho-final" data-periodontal-recognition-booking>
+    <a class="periodontal-recognition-booking" href={bookingHref} data-periodontal-recognition-booking>
       Prenota una visita parodontale
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12" /></svg>
     </a>
@@ -130,7 +136,8 @@ const situations = [
       document.body.style.overflow = previousOverflow;
       recognitionTrigger.setAttribute('aria-expanded', 'false');
       if (visitRequested) {
-        const destination = document.querySelector<HTMLElement>('#ortho-final');
+        const bookingLink = recognitionDialog.querySelector<HTMLAnchorElement>('[data-periodontal-recognition-booking]');
+        const destination = bookingLink && document.getElementById(bookingLink.hash.slice(1));
         destination?.setAttribute('tabindex', '-1');
         destination?.focus({ preventScroll: true });
         destination?.scrollIntoView({ behavior: reducedMotion.matches ? 'instant' : 'smooth', block: 'start' });

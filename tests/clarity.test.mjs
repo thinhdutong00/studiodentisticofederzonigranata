@@ -61,6 +61,17 @@ test('Revocation stops recording, clears cookies, and never reloads an unfinishe
   assert.equal(f.doc.documentElement.dataset.clarityStatus, 'stopped');
 });
 
+test('Direct landing variants mask the form and quiz only after analytics consent', () => {
+  for (const path of ['/visita-ortodonzia-diretta/', '/visita-parodontologia-diretta/']) {
+    const f = fixture('studiodentisticofederzonigranata.it', path);
+    initClarity('testproject', f.browser, f.doc);
+    assert.equal(f.scripts.length, 0);
+    saveClarityConsent(true, f.browser, f.doc);
+    assert.equal(f.scripts.length, 1);
+    assert.deepEqual(f.privateNodes, [['data-clarity-mask', 'true'], ['data-clarity-mask', 'true']]);
+  }
+});
+
 test('Clarity is excluded from previews, other pages, insecure origins, and embedded frames', () => {
   for (const modify of [f => { f.browser.location.hostname = 'preview.vercel.app'; }, f => { f.browser.location.pathname = '/thank-you/'; }, f => { f.browser.location.pathname = '/'; }, f => { f.browser.location.protocol = 'http:'; }, f => { f.browser.top = {}; }]) {
     const f = fixture(); modify(f);

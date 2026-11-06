@@ -44,6 +44,7 @@ const { bookingHref } = Astro.props;
     const enabled = () => document.body.classList.contains('ortho-unified') || mobile.matches;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let previousOverflow = '';
+    let bookingTarget: HTMLElement | null = null;
     let closeTimer: ReturnType<typeof setTimeout> | undefined;
 
     const finishClose = () => {
@@ -70,7 +71,11 @@ const { bookingHref } = Astro.props;
       title.focus({ preventScroll: true });
     });
     sheet.querySelector('[data-ortho-professional-close]')?.addEventListener('click', () => closeSheet());
-    sheet.querySelector('[data-ortho-professional-visit]')?.addEventListener('click', () => closeSheet(true));
+    const bookingLink = sheet.querySelector<HTMLAnchorElement>('[data-ortho-professional-visit]');
+    bookingLink?.addEventListener('click', () => {
+      bookingTarget = document.getElementById(bookingLink.hash.slice(1));
+      closeSheet(true);
+    });
     sheet.addEventListener('cancel', event => { event.preventDefault(); closeSheet(); });
     sheet.addEventListener('click', event => {
       const bounds = sheet.getBoundingClientRect();
@@ -84,7 +89,11 @@ const { bookingHref } = Astro.props;
       sheet.classList.remove('is-closing');
       document.body.style.overflow = previousOverflow;
       trigger.setAttribute('aria-expanded', 'false');
-      if (enabled()) trigger.focus({ preventScroll: true });
+      if (bookingTarget) {
+        bookingTarget.setAttribute('tabindex', '-1');
+        bookingTarget.focus({ preventScroll: true });
+        bookingTarget = null;
+      } else if (enabled()) trigger.focus({ preventScroll: true });
     });
     mobile.addEventListener('change', () => { if (!enabled()) closeSheet(true); });
   }

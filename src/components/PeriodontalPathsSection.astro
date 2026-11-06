@@ -1,6 +1,12 @@
 ---
 import PeriodontalPointIcon from './PeriodontalPointIcon.astro';
 
+interface Props {
+  bookingHref?: string;
+}
+
+const { bookingHref = '#ortho-final' } = Astro.props;
+
 interface PeriodontalPath {
   id: string;
   label: string;
@@ -124,7 +130,7 @@ const paths: PeriodontalPath[] = [
       </button>
     </li>)}
   </ul>
-  <noscript><a class="ortho-cta" href="#ortho-final">Prenota una visita</a></noscript>
+  <noscript><a class="ortho-cta" href={bookingHref}>Prenota una visita</a></noscript>
 </section>
 
 <dialog class="ortho-age-sheet" id="ortho-age-sheet" aria-labelledby="ortho-age-sanguinamento-title" data-ortho-age-sheet>
@@ -164,7 +170,7 @@ const paths: PeriodontalPath[] = [
       </section>
     </div>
     <footer class="ortho-age-actions">
-      <a class="ortho-age-visit" href="#ortho-final" data-ortho-age-visit>
+      <a class="ortho-age-visit" href={bookingHref} data-ortho-age-visit>
         Prenota una visita
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12" /></svg>
       </a>
@@ -243,7 +249,8 @@ const paths: PeriodontalPath[] = [
       document.body.style.overflow = previousOverflow;
       activeTrigger?.setAttribute('aria-expanded', 'false');
       if (visitRequested) {
-        const destination = document.querySelector<HTMLElement>('#ortho-final');
+        const bookingLink = ageSheet.querySelector<HTMLAnchorElement>('[data-ortho-age-visit]');
+        const destination = bookingLink && document.getElementById(bookingLink.hash.slice(1));
         destination?.setAttribute('tabindex', '-1');
         destination?.focus({ preventScroll: true });
         destination?.scrollIntoView({ behavior: reducedMotion.matches ? 'instant' : 'smooth', block: 'start' });

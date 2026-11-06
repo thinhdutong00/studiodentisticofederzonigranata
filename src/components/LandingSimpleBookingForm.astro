@@ -1,0 +1,160 @@
+---
+import BookingFeedback from './BookingFeedback.astro';
+import BookingFields from './BookingFields.astro';
+import BookingPrivacy from './BookingPrivacy.astro';
+import CtaArrowIcon from './CtaArrowIcon.astro';
+import { landingBookingTreatments } from '../data/landingBooking.js';
+import { site } from '../data/site';
+
+interface Props { treatment: 'ortodonzia' | 'parodontologia'; }
+const { treatment } = Astro.props;
+const config = landingBookingTreatments[treatment];
+---
+
+<form
+  id="richiedi-visita"
+  class="simple-booking"
+  aria-labelledby="simple-booking-title"
+  tabindex="-1"
+  action="/api/booking"
+  method="post"
+  autocomplete="on"
+  data-clarity-mask="true"
+  data-contact-form
+  data-booking-kind="callback"
+>
+  <BookingFields />
+  <input type="hidden" name="treatment" value={config.treatment} />
+  <header class="simple-booking-intro">
+    <h2 id="simple-booking-title">Richiedi una {config.visit}</h2>
+    <p>La segreteria ti chiamerà per concordare giorno e orario. Per un minorenne, indica i recapiti del genitore o del tutore.</p>
+  </header>
+
+  <div class="simple-booking-fields">
+    <label>
+      <span>Nome e cognome</span>
+      <input type="text" name="fullName" autocomplete="section-visita name" minlength="2" maxlength="120" required />
+    </label>
+    <label>
+      <span>Telefono</span>
+      <input type="tel" name="phone" autocomplete="section-visita tel" inputmode="tel" minlength="6" maxlength="30" required />
+    </label>
+    <label class="simple-booking-wide">
+      <span>Studio preferito</span>
+      <select name="office" required>
+        <option value="" disabled selected>Seleziona lo studio</option>
+        {site.offices.map(office => <option value={office.city}>{office.city}</option>)}
+      </select>
+    </label>
+    <label class="simple-booking-wide">
+      <span>Email <small>(facoltativa)</small></span>
+      <input type="email" name="email" autocomplete="section-visita email" inputmode="email" autocapitalize="none" spellcheck="false" maxlength="254" />
+    </label>
+  </div>
+
+  <BookingPrivacy />
+  <BookingFeedback />
+  <button class="simple-booking-submit" type="submit">Invia la richiesta <CtaArrowIcon direction="right" /></button>
+</form>
+
+<script>
+  import { bindContactForms } from '../utils/submitBooking';
+  bindContactForms();
+</script>
+
+<style>
+  .simple-booking {
+    position: relative;
+    width: 100%;
+    max-width: 472px;
+    min-width: 0;
+    padding: 30px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: var(--surface-white);
+    box-shadow: 0 16px 48px rgb(16 40 61 / .16);
+    color: var(--text-dark);
+    font-family: Inter, sans-serif;
+    letter-spacing: -.2px;
+    text-align: left;
+  }
+
+  .simple-booking-intro h2 {
+    margin: 0;
+    color: var(--brand-primary-dark);
+    font-size: clamp(24px, 2vw, 30px);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: inherit;
+  }
+
+  .simple-booking-intro p {
+    margin: 10px 0 20px;
+    color: var(--muted-text);
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .simple-booking-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 12px;
+  }
+
+  .simple-booking-wide { grid-column: 1 / -1; }
+  .simple-booking-fields label {
+    display: grid;
+    min-width: 0;
+    gap: 5px;
+    color: var(--brand-primary-dark);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .simple-booking-fields small { color: var(--muted-text); font-size: inherit; font-weight: 400; }
+  .simple-booking-fields :is(input, select) {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--background);
+    color: var(--text-dark);
+    font: 400 16px/1.3 Inter, sans-serif;
+    letter-spacing: inherit;
+  }
+
+  .simple-booking :global(.booking-contact-privacy) { color: var(--muted-text); }
+  .simple-booking :global(.booking-contact-privacy a) { color: var(--brand-cta); }
+  .simple-booking-submit {
+    display: flex;
+    width: 100%;
+    min-height: 50px;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 18px;
+    padding: 14px 18px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--brand-cta);
+    color: var(--surface-white);
+    font: 500 16px/1 Inter, sans-serif;
+    letter-spacing: inherit;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .simple-booking-submit:is(:hover, :focus-visible) { background: var(--brand-cta-hover); }
+  .simple-booking-submit:disabled { cursor: progress; }
+  .simple-booking:focus-visible,
+  .simple-booking :global(:focus-visible) { outline: 3px solid var(--brand-cta); outline-offset: 3px; }
+
+  @media (max-width: 720px) {
+    .simple-booking { padding: 20px; letter-spacing: -.16px; }
+    .simple-booking-fields { grid-template-columns: 1fr; }
+  }
+</style>

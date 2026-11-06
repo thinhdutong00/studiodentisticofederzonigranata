@@ -1,15 +1,16 @@
+import { getLandingRoute } from '../data/landingRoutes.js';
+
 // Clarity is separate from Google Ads: a previous Ads choice is never analytics consent.
 export const CLARITY_CONSENT_KEY = 'fg-clarity-consent-v1';
 export const CLARITY_CONSENT_EVENT = 'fg-clarity-preference';
 const LIFETIME = 180 * 24 * 60 * 60 * 1000;
 const HOSTS = new Set(["studiodentisticofederzonigranata.it", "www.studiodentisticofederzonigranata.it"]);
-const PATHS = new Set(["/visita-ortodonzia", "/visita-parodontologia"]);
 const initialized = new WeakSet();
 
 export function isClarityLanding(browser = window) {
   return browser.top === browser && browser.location.protocol === 'https:'
     && HOSTS.has(browser.location.hostname)
-    && PATHS.has(browser.location.pathname.replace(/\/$/, ''));
+    && Boolean(getLandingRoute(browser.location.pathname));
 }
 
 export function readClarityConsent(browser = window, now = Date.now()) {

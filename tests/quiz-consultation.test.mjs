@@ -7,6 +7,7 @@ import { runInNewContext } from 'node:vm';
 import { webcrypto } from 'node:crypto';
 import { validateBooking, createBookingHandler, buildSheetPayload, RECIPIENT } from '../server/booking.js';
 import { quizConsultationAges, quizConsultationFlows } from '../src/data/quizConsultation.js';
+import { getLandingRoute, landingRoutes } from '../src/data/landingRoutes.js';
 import { orthodonticObjectives, orthodonticConcerns, orthodonticBites } from '../src/data/orthodonticQuiz.js';
 import { periodontalObjectives, periodontalSymptoms, periodontalDurations, getPeriodontalSymptomLabel } from '../src/data/periodontalQuiz.js';
 import { landingBookingTreatments } from '../src/data/landingBooking.js';
@@ -151,8 +152,8 @@ const clientCode = `(() => {
   return { ...summary, initGoogleAds: ads.initGoogleAds, submitBooking: submit };
 })()`;
 
-function clientPage(treatment, handler, { preference = 'accept', email = '', storage = new Map(), thankYou = false, mismatch = false } = {}) {
-  const base = { ...payload(treatment), email };
+function clientPage(treatment, handler, { preference = 'accept', email = '', storage = new Map(), thankYou = false, mismatch = false, variant = 'standard' } = {}) {
+  const base = { ...payload(treatment), email, source: landingRoutes[treatment][variant] };
   const redirects = [], requests = [], scripts = [], attrs = new Map();
   const path = thankYou ? '/thank-you-page/' : base.source;
   const url = new URL(`${origin}${path}?utm_source=google&utm_medium=cpc&creative=123`);
@@ -164,7 +165,7 @@ function clientPage(treatment, handler, { preference = 'accept', email = '', sto
     querySelectorAll: () => [button], setAttribute: (key, value) => attrs.set(key, value), removeAttribute: key => attrs.delete(key),
   };
   const api = runInNewContext(clientCode, {
-    window, Date, URL, URLSearchParams, crypto: webcrypto, AbortSignal, quizConsultationFlows, getPeriodontalSymptomLabel,
+    window, Date, URL, URLSearchParams, crypto: webcrypto, AbortSignal, quizConsultationFlows, getLandingRoute, getPeriodontalSymptomLabel,
     FormData: class { constructor(form) { this.fields = form.fields; } entries() { return this.fields.entries(); } },
     document: {
       documentElement: { dataset: { cookiePreference: preference } }, referrer: '', addEventListener() {},
@@ -189,10 +190,10 @@ function clientPage(treatment, handler, { preference = 'accept', email = '', sto
 }
 
 for (const treatment of Object.keys(quizConsultationFlows)) {
-  for (const preference of ['accept', 'reject']) {
-    test(`${treatment}: contact submit reaches CRM, thank-you summary and conversion with Ads consent ${preference}`, async () => {
+  for (const [variant, preference] of [['standard', 'accept'], ['standard', 'reject'], ['direct', 'accept'], ['direct', 'reject']]) {
+    test(`${treatment} (${variant}): contact submit reaches CRM, thank-you summary and conversion with Ads consent ${preference}`, async () => {
       const f = fixture();
-      const client = clientPage(treatment, f.handler, { preference, email: preference === 'accept' ? 'prova@example.com' : '' });
+      const client = clientPage(treatment, f.handler, { preference, variant, email: preference === 'accept' ? 'prova@example.com' : '' });
       client.initGoogleAds(); client.load();
       const errors = [];
       await client.submitBooking(client.form, error => { if (error) errors.push(error); });

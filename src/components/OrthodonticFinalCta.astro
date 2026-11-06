@@ -1,7 +1,13 @@
 ---
 import { landingBookingTreatments } from '../data/landingBooking.js';
 import LandingCtaMonograms from './LandingCtaMonograms.astro';
-const requestHref = `/richiesta/?trattamento=${encodeURIComponent(landingBookingTreatments.ortodonzia.requestTreatment)}`;
+interface Props { bookingHref?: string; }
+const { bookingHref } = Astro.props;
+const requestHref = bookingHref ?? `/richiesta/?trattamento=${encodeURIComponent(landingBookingTreatments.ortodonzia.requestTreatment)}`;
+const BookingAction = bookingHref ? 'a' : 'button';
+const bookingAttrs = bookingHref
+  ? { href: bookingHref }
+  : { type: 'button' as const, 'data-landing-booking-open': true, 'aria-haspopup': 'dialog' as const, 'aria-controls': 'landing-booking-dialog' };
 ---
 
 <section class="ortho-final-invitation" id="ortho-final" aria-labelledby="ortho-consultation-title">
@@ -10,7 +16,7 @@ const requestHref = `/richiesta/?trattamento=${encodeURIComponent(landingBooking
     <p class="invitation-kicker">Il primo passo è una visita</p>
     <h2 id="ortho-consultation-title">Dai spazio al tuo sorriso.<br /><span>Inizia oggi.</span></h2>
     <p class="invitation-description">Raccontaci cosa desideri migliorare.<br />Ti aiutiamo a capire da dove cominciare.</p>
-    <button class="invitation-button" type="button" data-landing-booking-open aria-haspopup="dialog" aria-controls="landing-booking-dialog">Richiedi una visita <span aria-hidden="true">→</span></button>
+    <BookingAction class="invitation-button" {...bookingAttrs}>Richiedi una visita <span aria-hidden="true">→</span></BookingAction>
     <small class="invitation-note">Poche domande · Richiesta di ricontatto senza impegno</small>
     <noscript><p><a href={requestHref}>Compila la richiesta di visita</a> oppure chiama lo studio.</p></noscript>
   </div>
@@ -23,7 +29,7 @@ const requestHref = `/richiesta/?trattamento=${encodeURIComponent(landingBooking
   .invitation-content h2 { margin: 0; color: var(--text-dark); font-family: Inter, sans-serif; font-size: clamp(40px, 5.2vw, 68px); font-weight: 500; line-height: 1.08; letter-spacing: -2.8px; text-wrap: balance; }
   .invitation-content h2 span { color: var(--brand-cta); }
   .invitation-description { margin: 28px 0 32px; color: var(--muted-text); font-size: 20px; font-weight: 400; line-height: 1.55; }
-  .invitation-button { display: inline-flex; align-items: center; justify-content: center; gap: 18px; min-height: 60px; padding: 20px 32px; border: 0; border-radius: 999px; background: var(--brand-cta); color: var(--surface-white); font: inherit; font-size: 16px; font-weight: 500; line-height: 20px; text-transform: none; cursor: pointer; transition: background .2s, transform .2s; }
+  .invitation-button { text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 18px; min-height: 60px; padding: 20px 32px; border: 0; border-radius: 999px; background: var(--brand-cta); color: var(--surface-white); font: inherit; font-size: 16px; font-weight: 500; line-height: 20px; text-transform: none; cursor: pointer; transition: background .2s, transform .2s; }
   .invitation-button span { font-size: 23px; line-height: 18px; }
   .invitation-button:hover { background: var(--brand-cta-hover); transform: translateY(-2px); }
   .invitation-button:focus-visible { outline: 3px solid var(--brand-blue); outline-offset: 5px; }

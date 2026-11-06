@@ -46,7 +46,7 @@ const firstQuestions = isOrtho ? [
   <form data-clarity-mask="true" class="cq-form" action="/api/booking" method="post" autocomplete="on" novalidate data-booking-kind={config.kind} data-cq-form>
     <BookingFields />
     <input type="hidden" name="quizFlow" value={config.marker} />
-    <input type="hidden" name="message" value={`Richiesta dal questionario della landing ${config.source}. Le risposte raccolgono le esigenze del paziente e non costituiscono una diagnosi.`} />
+    <input type="hidden" name="message" value={`Richiesta dal questionario della landing ${Astro.url.pathname}. Le risposte raccolgono le esigenze del paziente e non costituiscono una diagnosi.`} />
 
     <section class="cq-step" data-cq-step data-cq-key="objective" data-cq-auto-advance>
       <p class="cq-kicker">Il tuo obiettivo</p>

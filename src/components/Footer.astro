@@ -2,11 +2,12 @@
 import { site } from '../data/site';
 
 interface Props {
+  bookingHref?: string;
   logoHref?: string;
   logoLabel?: string;
 }
 
-const { logoHref = '/', logoLabel = 'Home' } = Astro.props;
+const { bookingHref = '/richiesta/', logoHref = '/', logoLabel = 'Home' } = Astro.props;
 
 const footerColumns = [
   {
@@ -15,7 +16,7 @@ const footerColumns = [
       { label: 'Prima visita', href: '/prima-visita/' },
       { label: 'Trattamenti', href: '/trattamenti/' },
       { label: 'Urgenze', href: '/urgenze/' },
-      { label: 'Prenota visita', href: '/richiesta/' },
+      { label: 'Prenota visita', href: bookingHref },
     ],
   },
   {
@@ -51,7 +52,7 @@ const mobileNavigation = [
   { label: 'Trattamenti', href: '/trattamenti/' },
   { label: 'Casi clinici', href: '/casi-clinici/' },
   { label: 'Modalità della visita', href: '/prima-visita/' },
-  { label: 'Prenota ora', href: '/richiesta/' },
+  { label: 'Prenota ora', href: bookingHref },
 ];
 
 const footerOffices = site.offices.map((office) => ({

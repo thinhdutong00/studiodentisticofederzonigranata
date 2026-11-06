@@ -3,12 +3,14 @@ import { site } from '../data/site';
 import PeriodontalMobileMenu from './PeriodontalMobileMenu.astro';
 
 interface Props {
+  bookingHref?: string;
+  logoHref?: string;
   showExperienceBar?: boolean;
   mobileSiteMenu?: boolean;
   unifiedConcept?: boolean;
 }
 
-const { showExperienceBar = false, mobileSiteMenu = false, unifiedConcept = false } = Astro.props;
+const { bookingHref = '#ortho-final', logoHref = '/visita-parodontologia/', showExperienceBar = false, mobileSiteMenu = false, unifiedConcept = false } = Astro.props;
 const experienceMessage = 'Studio dentistico a Modena e Reggio Emilia · Oltre 35 anni di esperienza e riconoscimenti dalle più prestigiose società scientifiche nazionali e internazionali.';
 ---
 
@@ -23,7 +25,7 @@ const experienceMessage = 'Studio dentistico a Modena e Reggio Emilia · Oltre 3
         </div>
       )}
       <div class="landing-shell landing-header-inner">
-        <a class="landing-logo" href="/visita-parodontologia/" aria-label={`${site.name} — Landing parodontologia`}>
+        <a class="landing-logo" href={logoHref} aria-label={`${site.name} — Landing parodontologia`}>
           <img
             src={site.logo}
             srcset="/assets/optimized/studio-dentistico-federzoni-granata-300.webp 300w, /assets/optimized/studio-dentistico-federzoni-granata.webp 400w"
@@ -50,8 +52,8 @@ const experienceMessage = 'Studio dentistico a Modena e Reggio Emilia · Oltre 3
             </ul>
           </nav>
           <a class="landing-header-cta" href="#il-tuo-obiettivo" data-quiz-cta data-quiz-open>Fai il test</a>
-          {unifiedConcept && <a class="landing-header-booking" href="#ortho-final">Prenota una visita</a>}
-          {mobileSiteMenu && <PeriodontalMobileMenu />}
+          {unifiedConcept && <a class="landing-header-booking" href={bookingHref}>Prenota una visita</a>}
+          {mobileSiteMenu && <PeriodontalMobileMenu bookingHref={bookingHref} logoHref={logoHref} />}
           <button class="ortho-menu-toggle" type="button" aria-label="Apri menu di navigazione" aria-expanded="false" aria-controls="ortho-header-navigation">
             <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path class="ortho-menu-open-icon" d="M4 7h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /><path class="ortho-menu-close-icon" d="m6 6 12 12M6 18 18 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg>
           </button>

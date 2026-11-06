@@ -14,7 +14,7 @@
 
 ## Evento dopo conferma
 
-Il tracciamento richiede il consenso Google Ads e HTTPS sul dominio di produzione. Dopo un invio riuscito di `landing-consultation` oppure `orthodontic-quiz` da `/visita-ortodonzia/`, il codice accetta solo la risposta API con `ok: true` e lo stesso `requestId`. Il server conferma la richiesta dopo l'accettazione sia del servizio email sia del CRM.
+Il tracciamento richiede il consenso Google Ads e HTTPS sul dominio di produzione. La landing `/visita-ortodonzia/` misura il modulo `landing-consultation`, mentre `/visita-ortodonzia-diretta/` misura il modulo semplice `callback` nella hero. Entrambe misurano il quiz `orthodontic-quiz`. Il codice accetta solo la risposta API con `ok: true` e lo stesso `requestId`. Il server conferma la richiesta dopo l'accettazione sia del servizio email sia del CRM.
 
 La sessione conserva esclusivamente `{ requestId, createdAt }` nella chiave dedicata `fg-confirmed-orthodontic-lead-v1`. Entro 30 minuti, `/thank-you-page/` consuma il riferimento e invia un solo evento con la destinazione ortodontica e `transaction_id` uguale al riferimento casuale. Ricaricare la pagina non ripete l'evento. La chiave e l'etichetta della parodontologia restano distinte e compatibili con i riferimenti precedenti.
 

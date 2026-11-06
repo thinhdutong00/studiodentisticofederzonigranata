@@ -1,17 +1,23 @@
 ---
 import { periodontalHero } from '../data/periodontalLanding';
+import LandingSimpleBookingForm from './LandingSimpleBookingForm.astro';
 import CtaArrowIcon from './CtaArrowIcon.astro';
 
 interface Props {
   treatment: 'ortodonzia' | 'parodontologia';
+  direct?: boolean;
   reviewers: { author: string; avatar?: string }[];
 }
 
-const { treatment, reviewers } = Astro.props;
+const { treatment, reviewers, direct = false } = Astro.props;
 const heroReviewers = reviewers.slice(0, 3).map(review => ({
   ...review,
   initial: Array.from(review.author.trim())[0]?.toLocaleUpperCase('it-IT') || 'P',
 }));
+const BookingAction = direct ? 'a' : 'button';
+const bookingAttrs = direct
+  ? { href: '#richiedi-visita' }
+  : { type: 'button' as const, 'data-landing-booking-open': true, 'aria-haspopup': 'dialog' as const, 'aria-controls': 'landing-booking-dialog' };
 const isOrthodontic = treatment === 'ortodonzia';
 const image = isOrthodontic
   ? '/assets/optimized/ortodonzia-federzoni-hero-1200.webp'
@@ -27,7 +33,7 @@ const facts = [
 ];
 ---
 
-<section class:list={['treatment-hero', 'treatment-hero-portrait', { 'treatment-hero-periodontal': !isOrthodontic }]} aria-labelledby="landing-title" data-treatment-sticky-hero>
+<section class:list={['treatment-hero', 'treatment-hero-portrait', { 'treatment-hero-periodontal': !isOrthodontic, 'treatment-hero-direct': direct }]} aria-labelledby="landing-title" data-treatment-sticky-hero>
   <picture class="treatment-hero-image">
     <source media="(max-width: 720px)" srcset={mobileImage} />
     <img src={image} alt={isOrthodontic ? 'La professionista dello Studio Dentistico Federzoni Granata' : 'Dott. Stefano Granata, Studio Dentistico Federzoni Granata'} width={isOrthodontic ? 1200 : 1920} height={isOrthodontic ? 1800 : 2880} loading="eager" fetchpriority="high" />
@@ -38,12 +44,13 @@ const facts = [
     <p class="treatment-hero-lead">
       {isOrthodontic ? <>Allinea i tuoi denti con gli allineatori trasparenti <strong>Invisalign®</strong>, apparecchi tradizionali o funzionali. Scopri il percorso ortodontico più adatto a te, pensato per la tua salute e funzionalità orale.</> : periodontalHero.descriptionParts.map(part => part.emphasis ? <strong>{part.text}</strong> : part.text)}
     </p>
-    <button class="treatment-hero-button" type="button" data-landing-booking-open aria-haspopup="dialog" aria-controls="landing-booking-dialog">Inizia il trattamento <span aria-hidden="true">→</span></button>
+    <BookingAction class="treatment-hero-button" {...bookingAttrs}>Inizia il trattamento <span aria-hidden="true">→</span></BookingAction>
     <div class="treatment-hero-trust">
       <div class="treatment-hero-avatars" aria-hidden="true">{heroReviewers.map(review => <span>{review.avatar ? <img src={review.avatar} alt="" width="72" height="72" loading="lazy" decoding="async" /> : review.initial}</span>)}</div>
       <div><span class="treatment-hero-stars" aria-label="5 stelle su 5">★★★★★</span><p>Le esperienze dei nostri pazienti <a href="#recensioni">Leggile qui <CtaArrowIcon /></a></p></div>
     </div>
   </div>
+  {direct && <LandingSimpleBookingForm treatment={treatment} />}
 </section>
 <div class="treatment-hero-proof">
   <div class="treatment-hero-proof-grid">
@@ -113,6 +120,54 @@ const facts = [
     .treatment-hero-proof-grid p:nth-child(2) { border: 0; }
     .treatment-hero-proof-grid strong { font-size: clamp(21px, 6.5vw, 26px); }
     .treatment-hero-proof-grid span { font-size: 8px; letter-spacing: .5px; }
+  }
+  .treatment-hero-direct {
+    grid-template-columns: minmax(0, 1.15fr) minmax(320px, 472px);
+    justify-items: stretch;
+    align-items: center;
+    gap: clamp(32px, 6vw, 100px);
+    min-height: 720px;
+    padding: clamp(40px, 5vw, 72px) max(5vw, calc((100% - 1280px) / 2));
+  }
+  .treatment-hero-direct .treatment-hero-image {
+    width: min(52%, 480px);
+    right: auto;
+    left: 51%;
+    transform: translateX(-50%);
+  }
+  .treatment-hero-direct::after {
+    background: linear-gradient(90deg, rgb(18 24 30 / .89), rgb(23 28 34 / .64) 38%, rgb(23 28 34 / .25) 68%, rgb(23 28 34 / .70));
+  }
+  .treatment-hero-direct .treatment-hero-content { width: 100%; margin: 0; padding: 0; text-align: left; }
+  .treatment-hero-direct h1 { font-size: clamp(48px, 4.9vw, 80px); letter-spacing: -.045em; }
+  .treatment-hero-direct .treatment-hero-lead { max-width: 590px; margin: 24px 0; font-size: clamp(18px, 1.6vw, 23px); }
+  .treatment-hero-direct .treatment-hero-button { text-decoration: none; }
+  .treatment-hero-direct .treatment-hero-trust { justify-content: flex-start; }
+  .treatment-hero-direct :global(#richiedi-visita) { scroll-margin-top: 124px; }
+
+  @media (max-width: 850px) {
+    .treatment-hero-direct {
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: center;
+      gap: 28px;
+      min-height: auto;
+      padding: clamp(110px, 29vw, 180px) 20px 36px;
+      background: var(--text-dark);
+    }
+    .treatment-hero-direct .treatment-hero-image {
+      inset: max(-68px, -14vw) 0 auto;
+      width: min(100%, 490px);
+      height: min(145vw, 735px);
+      transform: none;
+    }
+    .treatment-hero-direct::after {
+      background: linear-gradient(180deg, rgb(29 29 29 / .26), rgb(29 29 29 / .78) 280px, var(--text-dark) 590px);
+    }
+    .treatment-hero-direct .treatment-hero-content { text-align: center; }
+    .treatment-hero-direct h1 { font-size: clamp(36px, 8.4vw, 56px); }
+    .treatment-hero-direct .treatment-hero-lead { margin: 18px auto 20px; }
+    .treatment-hero-direct .treatment-hero-button { min-height: 48px; padding: 12px 24px; }
+    .treatment-hero-direct .treatment-hero-trust { justify-content: center; margin-top: 18px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .treatment-hero-button { transition: none; }
