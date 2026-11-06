@@ -33,22 +33,22 @@ const config = landingBookingTreatments[treatment];
   <div class="simple-booking-fields">
     <label>
       <span>Nome e cognome</span>
-      <input type="text" name="fullName" placeholder="Es. Mario Rossi" autocomplete="section-visita name" minlength="2" maxlength="120" required />
+      <input type="text" name="fullName" placeholder="Scrivi nome e cognome" autocomplete="section-visita name" minlength="2" maxlength="120" required />
     </label>
     <label>
       <span>Telefono</span>
-      <input type="tel" name="phone" placeholder="Es. 333 123 4567" autocomplete="section-visita tel" inputmode="tel" minlength="6" maxlength="30" required />
+      <input type="tel" name="phone" placeholder="Inserisci il tuo numero" autocomplete="section-visita tel" inputmode="tel" minlength="6" maxlength="30" required />
     </label>
     <label class="simple-booking-wide">
       <span>Studio preferito</span>
       <select name="office" required>
-        <option value="" disabled selected>Seleziona lo studio</option>
+        <option value="" disabled selected>Scegli la sede per la visita</option>
         {site.offices.map(office => <option value={office.city}>{office.city}</option>)}
       </select>
     </label>
     <label class="simple-booking-wide">
       <span>Email</span>
-      <input type="email" name="email" placeholder="nome@esempio.it" autocomplete="section-visita email" inputmode="email" autocapitalize="none" spellcheck="false" maxlength="254" />
+      <input type="email" name="email" placeholder="Inserisci la tua email" autocomplete="section-visita email" inputmode="email" autocapitalize="none" spellcheck="false" maxlength="254" />
     </label>
   </div>
 
@@ -117,7 +117,7 @@ const config = landingBookingTreatments[treatment];
     width: 100%;
     min-width: 0;
     min-height: 48px;
-    padding: 10px 12px;
+    padding: 10px 8px;
     border: 1px solid var(--border);
     border-radius: 8px;
     background: var(--background);
