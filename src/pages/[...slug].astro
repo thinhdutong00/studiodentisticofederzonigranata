@@ -2,11 +2,12 @@
 import BaseLayout from '../components/BaseLayout.astro';
 import ContentPage from '../components/ContentPage.astro';
 import TreatmentMarketingPage from '../components/TreatmentMarketingPage.astro';
+import { publishedPages } from '../data/publishedPages';
 import { site } from '../data/site';
 import { treatmentMarketingPages } from '../data/treatmentMarketing';
 
 export function getStaticPaths() {
-  return [...site.pages, ...site.navigationPages, ...site.treatmentPages]
+  return publishedPages
     .filter((page) => page.path !== '/' && page.path !== '/prima-visita/' && page.path !== '/chi-siamo/' && page.path !== '/orari-e-sedi/' && page.path !== '/trattamenti/' && page.path !== '/igiene-orale-prevenzione/' && page.path !== '/sbiancamento/' && page.path !== '/strumentazioni-attrezzature-tecniche/')
     .map((page) => ({
       params: { slug: page.slug },

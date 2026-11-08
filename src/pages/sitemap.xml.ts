@@ -1,10 +1,11 @@
 import { site } from '../data/site';
+import { publishedPages } from '../data/publishedPages';
 import { orthodonticPaths } from '../data/orthodonticPaths';
 import { orthodonticResultsPath } from '../data/orthodonticResults';
 
 export async function GET({ site: astroSite }: { site: URL }) {
   const base = astroSite || new URL(site.source);
-  const paths = [...site.pages, ...site.navigationPages, ...site.treatmentPages].map((page) => page.path);
+  const paths = publishedPages.map((page) => page.path);
   const urls = [
     ...paths,
     '/richiesta/',
