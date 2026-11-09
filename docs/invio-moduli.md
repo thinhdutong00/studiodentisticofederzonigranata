@@ -56,11 +56,11 @@ La scheda operativa mostra esattamente 12 colonne, nell’ordine:
 
 Lo script crea e mantiene nascosta la colonna tecnica M, `ID richiesta`. Non va rinominata, spostata o mostrata al personale: serve esclusivamente per l’idempotenza del webhook.
 
-`Provenienza` usa temporaneamente una classificazione binaria: mostra `Google Ads` quando è presente un segnale pubblicitario riconosciuto e `Risultato organico` in tutti gli altri casi. Di conseguenza, fino all'installazione del tracking Google Ads, `Risultato organico` comprende anche accessi diretti, referral e provenienze non rilevate. `Annuncio` mostra il nome passato con un parametro dedicato oppure l’ID creativo Google Ads; per gli altri lead mostra il link completo della pagina di ingresso. Servizio, preferenze e messaggio del modulo confluiscono in `Comunicazioni`.
+`Provenienza` conserva il canale classificato dal sito: Google Ads, Google organico, Google Maps, Diretto, Altro o Non rilevata. Le vecchie etichette “Risultato organico” e “Ricerca organica” non costituiscono una prova della sorgente. `Annuncio` mostra il nome passato con un parametro dedicato oppure l’ID creativo Google Ads; per gli altri lead mostra il link completo della pagina di ingresso. Servizio, preferenze e messaggio del modulo confluiscono in `Comunicazioni`.
 
 ## Collegamento con Google Ads e SEO
 
-Il sito riconosce automaticamente un clic Google Ads dalla presenza di `gclid`, `gbraid` o `wbraid`. Per compilare anche campagna, gruppo annunci, annuncio e parola chiave, configurare nell'account Google Ads dello Studio il seguente suffisso URL finale:
+Il sito riconosce automaticamente un clic Google Ads da un `gclid`, `gbraid` o `wbraid` valorizzato, oppure da un parametro Google Ads `gad_source` o `gad_campaignid` numerico positivo. Per compilare anche campagna, gruppo annunci, annuncio e parola chiave, configurare nell'account Google Ads dello Studio il seguente suffisso URL finale:
 
 ```text
 utm_source=google&utm_medium=cpc&campaignid={campaignid}&adgroupid={adgroupid}&creative={creative}&keyword={keyword}
@@ -68,7 +68,7 @@ utm_source=google&utm_medium=cpc&campaignid={campaignid}&adgroupid={adgroupid}&c
 
 I parametri ValueTrack vengono risolti da Google al momento del clic. Google espone automaticamente l’ID del creativo, non il nome editoriale dell’annuncio: in assenza di un nome passato esplicitamente il foglio mostra `Google Ads · ID …`. Il valore del click ID non viene salvato.
 
-Per la SEO non serve modificare gli URL: un accesso proveniente da un risultato Google viene riconosciuto tramite il referrer del browser e il foglio riporta la pagina di ingresso. Per la classificazione binaria temporanea, anche le provenienze diverse da Google Ads vengono mostrate come `Risultato organico`.
+Per la SEO non serve modificare gli URL: un accesso proveniente da un risultato Google viene riconosciuto tramite il referrer del browser e il foglio riporta la pagina di ingresso. Il referrer deve essere compatibile con la ricerca. Un link da Google Docs o Gmail è un referral esterno.
 
 ## Verifica
 
@@ -85,14 +85,14 @@ Nessun dato dei moduli viene salvato in localStorage o nei log del server. Le qu
 
 La provenienza marketing viene conservata soltanto per la sessione in `sessionStorage`, senza recapiti o risposte del modulo. Sono memorizzati esclusivamente UTM, identificativi ValueTrack di campagna/gruppo/annuncio, parola chiave, tipo di click ID (non il valore), pagina di ingresso e referrer senza query string. La classificazione avviene sul server con regole conservative:
 
-- `Google Ads` solo con `gclid`/`gbraid`/`wbraid` oppure Google con mezzo esplicitamente a pagamento;
+- `Google Ads` con un identificatore di clic, un parametro pubblicitario `gad_*` riconosciuto oppure Google con mezzo esplicitamente a pagamento;
 - `Google Maps` solo con UTM Maps/Google Business Profile o referrer Maps identificabile;
 - `Google organico` solo con mezzo organico esplicito o referrer Google identificabile;
 - `Diretto` in assenza di parametri e referrer;
 - `Altro` per sorgenti esterne identificabili;
 - `Non rilevata` quando i segnali sono mancanti o ambigui.
 
-La scheda operativa comprime temporaneamente queste categorie in due valori: `Google Ads` resta invariato; ogni altra classificazione viene mostrata come `Risultato organico`.
+La navigazione interna conserva la provenienza iniziale. Un nuovo ingresso esterno riconoscibile nella stessa scheda aggiorna la provenienza. Senza referrer o parametri, `Diretto` indica che la sorgente non è osservabile.
 
 Il nome campagna viene riportato soltanto da `utm_campaign`; l'ID campagna viene riportato da `campaignid`, `gad_campaignid` o `utm_id`. Nessun dato viene ricostruito o inventato dal click ID.
 

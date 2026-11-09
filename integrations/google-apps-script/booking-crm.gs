@@ -133,6 +133,7 @@ function doPost(event) {
         .matchEntireCell(true)
         .findNext();
       if (existing) {
+        sortRequestsNewestFirst_(sheet);
         tryAppendIntegrationLog_(spreadsheet, 'DUPLICATO', payload.requestId, 'Richiesta già presente; nessuna nuova riga creata.');
         return jsonResponse_({ ok: true, requestId: payload.requestId, duplicate: true });
       }
@@ -152,7 +153,8 @@ function doPost(event) {
     } catch (error) {
       console.error('Formattazione riga non riuscita', internalErrorMessage_(error));
     }
-    tryAppendIntegrationLog_(spreadsheet, 'OK', payload.requestId, `Riga ${insertedRow} creata come ${payload.recordType}.`);
+    sortRequestsNewestFirst_(sheet);
+    tryAppendIntegrationLog_(spreadsheet, 'OK', payload.requestId, `Richiesta creata come ${payload.recordType}; elenco ordinato per data decrescente.`);
     return jsonResponse_({ ok: true, requestId: payload.requestId, duplicate: false });
   } catch (error) {
     const safeMessage = safeErrorMessage_(error);
@@ -289,7 +291,10 @@ function campaignLabel_(payload) {
 }
 
 function compactProvenance_(payload) {
-  return payload.provenienza === 'Google Ads' ? 'Google Ads' : 'Risultato organico';
+  const provenance = payload && payload.provenienza;
+  return BOOKING_PROVENANCE_.indexOf(provenance) !== -1
+    ? provenance
+    : 'Non rilevata';
 }
 
 function absoluteSiteUrl_(path) {
@@ -331,8 +336,8 @@ function mapPayloadToRow_(payload, receivedAt) {
     'No',
     '',
     compactCommunications_(payload),
+    'Non ancora inviato',
     '',
-    'No',
   ].map(sanitizeCell_);
 }
 
@@ -401,6 +406,14 @@ function mapPayloadToLegacyRow_(payload, receivedAt) {
   ].map(sanitizeCell_);
 }
 
+function sortRequestsNewestFirst_(sheet) {
+  const lastRow = sheet.getLastRow();
+  if (lastRow <= 2) return;
+  // Esclude l'intestazione e sposta tutta la riga, incluso l'ID tecnico.
+  sheet.getRange(2, 1, lastRow - 1, sheet.getLastColumn()).sort({ column: 1, ascending: false });
+  SpreadsheetApp.flush();
+}
+
 function copyRowRules_(sheet, insertedRow, width) {
   if (insertedRow <= 2) return;
   const template = sheet.getRange(2, 1, 1, width);
@@ -418,7 +431,7 @@ function formatInsertedRow_(sheet, insertedRow, version) {
   sheet.getRange(insertedRow, 3).setNumberFormat('@');
   if (version === 'compact') {
     sheet.getRange(insertedRow, 9).setNumberFormat('dd/mm/yyyy hh:mm');
-    sheet.getRange(insertedRow, 11).setNumberFormat('€ #,##0.00');
+    sheet.getRange(insertedRow, 11).setNumberFormat('@');
     return;
   }
   const dateColumns = version === 'extended' ? [19, 21, 22] : [14, 16, 17];

@@ -58,9 +58,9 @@ const ATTRIBUTION_FIELDS = {
   attributionKeyword: 300,
   attributionReferrer: 500,
   attributionLandingPage: 500,
-  clickIdType: 10,
+  clickIdType: 14,
 };
-const CLICK_ID_TYPES = ['', 'gclid', 'gbraid', 'wbraid'];
+const CLICK_ID_TYPES = ['', 'gclid', 'gbraid', 'wbraid', 'gad_source', 'gad_campaignid'];
 const SITE_HOSTS = new Set(['studiodentisticofederzonigranata.it', 'www.studiodentisticofederzonigranata.it']);
 const SHEET_RECORD_TYPES = new Set(['REALE', 'TEST']);
 const BOOKING_ERROR = 'Non siamo riusciti a confermare l’invio. Riprova tra poco oppure contatta lo studio.';
@@ -272,18 +272,26 @@ export function classifyAttribution(data) {
   const referrer = parsedReferrer(data.attributionReferrer);
   const host = referrer?.hostname.toLowerCase() || '';
   const path = referrer?.pathname.toLowerCase() || '';
-  const googleReferrer = /(^|\.)google\.[a-z.]+$/.test(host);
+  const googleSearchHost = /^(?:www\.)?google\.(?:com|cat|[a-z]{2}|(?:co|com)\.[a-z]{2})$/;
+  const searchHost = googleSearchHost.test(host);
+  const mapsHost = host === 'maps.app.goo.gl' ||
+    (host.startsWith('maps.') && googleSearchHost.test(host.slice(5)));
   const mapsToken = new Set(['google_maps', 'google_business_profile', 'gbp', 'maps']);
   const paidMedium = new Set(['cpc', 'ppc', 'paid', 'paid_search', 'paidsearch', 'display']);
   const organicMedium = new Set(['organic', 'seo', 'search']);
 
   if (data.clickIdType || (source === 'google' && paidMedium.has(medium))) return 'Google Ads';
-  if (mapsToken.has(source) || mapsToken.has(medium) || (googleReferrer && /^\/maps(?:\/|$)/.test(path))) return 'Google Maps';
-  if ((source === 'google' && organicMedium.has(medium)) || googleReferrer) return 'Google organico';
+  if (mapsToken.has(source) || mapsToken.has(medium)) return 'Google Maps';
+  if (source && source !== 'google') return 'Altro';
+  if (source === 'google' && organicMedium.has(medium)) return 'Google organico';
+  if (mapsHost || (searchHost && /^\/maps(?:\/|$)/.test(path))) return 'Google Maps';
 
-  if (source) return source === 'google' ? 'Non rilevata' : 'Altro';
+  const incompleteTags = medium || campaign || data.attributionCampaignId || data.attributionAdGroupId ||
+    data.attributionAdId || data.attributionKeyword;
+  if (incompleteTags) return 'Non rilevata';
+  if (searchHost && (path === '/' || /^\/search(?:\/|$)/.test(path))) return 'Google organico';
+  if (source || searchHost) return 'Non rilevata';
   if (referrer && !SITE_HOSTS.has(host)) return 'Altro';
-  if (medium || campaign) return 'Non rilevata';
   if (!referrer) return 'Diretto';
   return 'Non rilevata';
 }
