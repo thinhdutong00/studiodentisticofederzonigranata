@@ -8,7 +8,7 @@ import {
   RECIPIENT,
   validateBooking,
 } from '../server/booking.js';
-import { deriveAttribution } from '../src/utils/attribution.js';
+import { captureAttribution, deriveAttribution, getBookingAttribution } from '../src/utils/attribution.js';
 import { orthodonticAgeRanges } from '../src/data/orthodonticQuiz.js';
 
 const origin = 'https://studiodentisticofederzonigranata.vercel.app';
@@ -402,6 +402,33 @@ test('captures only bounded non-contact attribution data from the browser URL', 
   assert.ok(!JSON.stringify(attribution).includes('privato@example.com'));
 });
 
+test('an external entry replaces the previous visit while internal navigation keeps its source', (t) => {
+  const site = 'https://studiodentisticofederzonigranata.it';
+  const store = new Map();
+  const before = ['window', 'document', 'sessionStorage'].map(key => [key, Object.getOwnPropertyDescriptor(globalThis, key)]);
+  t.after(() => {
+    for (const [key, descriptor] of before) {
+      if (descriptor) Object.defineProperty(globalThis, key, descriptor);
+      else delete globalThis[key];
+    }
+  });
+  Object.defineProperty(globalThis, 'sessionStorage', { configurable: true, value: {
+    getItem: key => store.get(key), setItem: (key, value) => store.set(key, value),
+  } });
+  function visit(path, referrer) {
+    globalThis.window = { location: new URL(path, site) };
+    globalThis.document = { referrer };
+    return captureAttribution();
+  }
+  assert.equal(classifyAttribution(visit('/visita-ortodonzia-diretta/?gclid=example', '')), 'Google Ads');
+  visit('/contatti/', site + '/visita-ortodonzia-diretta/');
+  assert.equal(classifyAttribution(getBookingAttribution()), 'Google Ads');
+  assert.equal(classifyAttribution(visit('/', 'https://www.google.it/')), 'Google organico');
+  visit('/contatti/', site + '/');
+  assert.equal(classifyAttribution(getBookingAttribution()), 'Google organico');
+  assert.equal(classifyAttribution(visit('/', 'https://docs.google.com/')), 'Altro');
+});
+
 test('builds the payload expected by the operational sheet', () => {
   const data = validateBooking({
     ...base,
@@ -446,3 +473,4 @@ test('builds the payload expected by the operational sheet', () => {
   assert.equal(withoutCampaign.campagna, '');
   assert.equal(withoutCampaign.recordType, 'REALE');
 });
+
