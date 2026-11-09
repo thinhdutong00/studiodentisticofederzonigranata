@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
+import { deriveAttribution } from '../src/utils/attribution.js';
+import { buildSheetPayload, validateBooking } from '../server/booking.js';
 
 const source = await readFile(new URL('../integrations/google-apps-script/booking-crm.gs', import.meta.url), 'utf8');
 
@@ -167,15 +169,15 @@ test('Apps Script matches the exact 12-column operational sheet', () => {
   assert.equal(row[8], '');
   assert.match(row[9], /^TEST – non contattare\nServizio richiesto: Urgenza/);
   assert.match(row[9], /=FORMULA\(\)$/);
-  assert.equal(row[10], '');
-  assert.equal(row[11], 'No');
+  assert.equal(row[10], 'Non ancora inviato');
+  assert.equal(row[11], '');
 
   const realRow = Array.from(mapPayloadToRow_(payload({ recordType: 'REALE' }), new Date()));
   assert.equal(realRow[7], 'No');
   assert.doesNotMatch(realRow[9], /TEST/);
 });
 
-test('Apps Script maps every non-Ads lead to Risultato organico and keeps the booking page link', () => {
+test('Apps Script keeps each acquisition channel and the booking page link', () => {
   const { mapPayloadToRow_ } = loadScript().__sheetTest;
   const row = Array.from(mapPayloadToRow_(payload({
     provenienza: 'Google organico',
@@ -184,12 +186,12 @@ test('Apps Script maps every non-Ads lead to Risultato organico and keeps the bo
     idAnnuncio: '',
     recordType: 'REALE',
   }), new Date()));
-  assert.equal(row[5], 'Risultato organico');
+  assert.equal(row[5], 'Google organico');
   assert.equal(row[6], 'https://studiodentisticofederzonigranata.it/implantologia/');
 
   for (const provenienza of ['Google organico', 'Google Maps', 'Diretto', 'Altro', 'Non rilevata']) {
     const nonAds = Array.from(mapPayloadToRow_(payload({ provenienza, idAnnuncio: '' }), new Date()));
-    assert.equal(nonAds[5], 'Risultato organico');
+    assert.equal(nonAds[5], provenienza);
   }
 
   const unknown = Array.from(mapPayloadToRow_(payload({ provenienza: 'Diretto', idAnnuncio: '' }), new Date()));
@@ -202,6 +204,45 @@ test('Apps Script neutralizes formulas and compares secrets exactly', () => {
   assert.equal(sanitizeCell_('Test'), 'Test');
   assert.equal(secureEquals_('same', 'same'), true);
   assert.equal(secureEquals_('same', 'different'), false);
+});
+
+test('the landing signals reach the Provenienza cell through the booking API and webhook', () => {
+  const origin = 'https://studiodentisticofederzonigranata.it';
+  const search = 'https://www.google.it/search?q=dentista';
+  const cases = [
+    ['?gclid=example&creative=123456789', search, 'Google Ads'],
+    ['?wbraid=example', '', 'Google Ads'],
+    ['?gbraid=example', '', 'Google Ads'],
+    ['?gad_source=1', search, 'Google Ads'],
+    ['?gad_campaignid=123', search, 'Google Ads'],
+    ['?utm_source=google&utm_medium=cpc', '', 'Google Ads'],
+    ['?gclid=', search, 'Google organico'],
+    ['?gad_source=0', '', 'Diretto'],
+    ['', search, 'Google organico'],
+    ['', 'https://www.google.it/', 'Google organico'],
+    ['', 'https://www.google.it/maps/place/Modena', 'Google Maps'],
+    ['', 'https://maps.google.it/', 'Google Maps'],
+    ['', 'https://docs.google.com/', 'Altro'],
+    ['', 'https://mail.google.com/', 'Altro'],
+    ['', 'https://www.google.com.example.org/', 'Altro'],
+    ['?utm_source=facebook&utm_medium=referral', search, 'Altro'],
+    ['?creative=123', search, 'Non rilevata'],
+    ['', '', 'Diretto'],
+    ['', origin + '/contatti/', 'Non rilevata'],
+  ];
+  for (const [query, referrer, expected] of cases) {
+    const path = '/visita-ortodonzia-diretta/';
+    const captured = deriveAttribution({ origin, href: origin + path + query, search: query, referrer });
+    const lead = validateBooking({ ...captured, kind: 'contact', source: path, requestId: payload().requestId,
+      fullName: 'Test tecnico', phone: '+39 333 000 0000', email: 'test@example.com', message: 'Test', privacyConsent: true });
+    const body = buildSheetPayload(lead, { GOOGLE_SHEETS_WEBHOOK_SECRET: payload().secret, GOOGLE_SHEETS_RECORD_TYPE: 'TEST' });
+    const rows = [Array.from(loadScript().__sheetTest.BOOKING_HEADERS_)];
+    const context = loadScript(rows);
+    const result = JSON.parse(context.doPost({ postData: { contents: JSON.stringify(body) } }).text);
+    assert.equal(result.ok, true, query + referrer);
+    assert.equal(rows[1][5], expected, query + referrer);
+    if (query.includes('123456789')) assert.equal(rows[1][6], 'Google Ads · ID 123456789');
+  }
 });
 
 test('Apps Script combines preferences without changing the source values', () => {
@@ -229,7 +270,8 @@ test('Apps Script appends once, logs success and acknowledges duplicate request 
   assert.equal(rows[0][12], 'ID richiesta');
   assert.equal(rows[1][12], payload().requestId);
   assert.equal(rows[1][7], 'No');
-  assert.equal(rows[1][11], 'No');
+  assert.equal(rows[1][10], 'Non ancora inviato');
+  assert.equal(rows[1][11], '');
   assert.equal(logRows.length, 3);
   assert.equal(logRows[1][1], 'OK');
   assert.equal(logRows[2][1], 'DUPLICATO');
