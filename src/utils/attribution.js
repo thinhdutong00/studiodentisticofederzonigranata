@@ -29,6 +29,7 @@ function safePagePath(value, siteOrigin) {
 function safeReferrer(value) {
   try {
     const url = new URL(value);
+    if (url.protocol !== 'https:' && url.protocol !== 'http:') return '';
     return `${url.origin}${url.pathname}`.slice(0, 500);
   } catch {
     return '';
@@ -37,7 +38,8 @@ function safeReferrer(value) {
 
 export function deriveAttribution({ href, origin, search, referrer }) {
   const params = new URLSearchParams(search);
-  const clickIdType = ['gclid', 'gbraid', 'wbraid'].find((key) => params.has(key)) || '';
+  const clickIdType = ['gclid', 'gbraid', 'wbraid'].find((key) => params.get(key)?.trim()) ||
+    ['gad_source', 'gad_campaignid'].find((key) => /^[1-9]\d*$/.test(params.get(key) || '')) || '';
   return {
     attributionSource: clean(params.get('utm_source')),
     attributionMedium: clean(params.get('utm_medium')),
@@ -71,7 +73,9 @@ function readStoredAttribution() {
     const raw = sessionStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw);
-    return isStoredAttribution(parsed) ? parsed : null;
+    if (!isStoredAttribution(parsed)) return null;
+    parsed.attributionReferrer = safeReferrer(parsed.attributionReferrer);
+    return parsed;
   } catch {
     return null;
   }
@@ -101,13 +105,15 @@ function writeStoredAttribution(value) {
 export function captureAttribution() {
   const current = currentAttribution();
   const stored = readStoredAttribution();
-  // Il primo ingresso resta valido per la sessione. Parametri espliciti comparsi
-  // successivamente hanno priorità, ad esempio dopo un nuovo clic pubblicitario.
-  const selected = !stored || hasExplicitCampaignSignal(current) ? current : stored;
+  const referrer = current.attributionReferrer;
+  const externalEntry = referrer && new URL(referrer).hostname.replace(/^www\./, '') !==
+    new URL(window.location.href).hostname.replace(/^www\./, '');
+  // Conserva l'ingresso durante la navigazione interna, fino a un nuovo ingresso riconoscibile.
+  const selected = !stored || hasExplicitCampaignSignal(current) || externalEntry ? current : stored;
   writeStoredAttribution(selected);
   return selected;
 }
 
 export function getBookingAttribution() {
-  return readStoredAttribution() || captureAttribution();
+  return captureAttribution();
 }
