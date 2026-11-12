@@ -3256,7 +3256,7 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<p>Indirizzo:<br><strong>Via Roma, 17, 42121 Reggio nell’Emilia (RE)</strong></p>"
+          "html": "<p>Indirizzo:<br><strong>Via Guido da Castello 8, 42121 Reggio nell’Emilia (RE)</strong></p>"
         },
         {
           "type": "paragraph",
