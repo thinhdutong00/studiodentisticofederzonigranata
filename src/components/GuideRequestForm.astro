@@ -7,6 +7,7 @@ import CtaArrowIcon from './CtaArrowIcon.astro';
 import { site } from '../data/site';
 
 interface GuideForm {
+  notice?: string;
   treatment?: string;
   reasonLabel?: string;
   reasons?: string[];
@@ -35,6 +36,7 @@ const hasFixedTreatment = Boolean(form.treatment);
   {hasFixedTreatment && <input type="hidden" name="trattamento" value={form.treatment} />}
   <p class="guide-request-eyebrow">Richiedi una visita</p>
   <h2 id={`${idPrefix}-form-title`}>{title}</h2>
+  {form.notice && <p>{form.notice}</p>}
 
   <label for={`${idPrefix}-office`}>Sede preferita</label>
   <div class="guide-request-select">

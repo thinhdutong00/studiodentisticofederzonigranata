@@ -60,7 +60,7 @@ export const guides = [
     lead: 'Il costo di un trattamento con allineatori non è una tariffa fissa: dipende da quanto e come devono muoversi i denti. Qui trovi le voci che lo compongono e le domande utili da fare prima di decidere.',
     keyPoints: [
       'Il preventivo nasce dalla diagnosi, non dal tipo di apparecchio',
-      'Complessità e durata sono i fattori che pesano di più',
+      'Contano la complessità dei movimenti e la durata prevista',
       'Contenzione e controlli fanno parte del percorso',
     ],
     form: {
@@ -86,7 +86,7 @@ export const guides = [
           'Eventuali fasi di rifinitura, con allineatori aggiuntivi se i denti non hanno seguito del tutto il programma.',
           'Contenzione finale, fissa o rimovibile, per mantenere la posizione raggiunta.',
         ],
-        note: 'Quando confronti due preventivi, verifica che comprendano le stesse voci: rifiniture e contenzione sono quelle che più spesso fanno la differenza.',
+        note: 'Quando confronti due preventivi, verifica che comprendano le stesse voci: chiedi in particolare come vengono conteggiati rifiniture e contenzione.',
       },
       {
         title: 'Che cosa lo fa salire o scendere',
@@ -94,10 +94,10 @@ export const guides = [
           caption: 'Fattori che incidono sul costo di un trattamento con allineatori',
           headers: ['Fattore', 'Perché incide'],
           rows: [
-            ['Complessità dei movimenti', 'Più movimenti significano più allineatori, più controlli e più tempo.'],
+            ['Complessità dei movimenti', 'Movimenti più complessi possono richiedere ulteriori allineatori o controlli.'],
             ['Una o due arcate', 'Trattare una sola arcata è possibile solo quando la chiusura dei denti lo consente.'],
             ['Cure preliminari', 'Carie, infiammazione gengivale o igiene da recuperare si affrontano prima di iniziare.'],
-            ['Collaborazione', 'Gli allineatori funzionano se vengono indossati per le ore indicate: un uso discontinuo allunga il percorso.'],
+            ['Collaborazione', 'Gli allineatori funzionano se vengono indossati per le ore indicate: un uso discontinuo può rallentare i movimenti previsti.'],
             ['Tipo di contenzione', 'La scelta dipende dal caso e dalla stabilità attesa.'],
           ],
         },
@@ -112,7 +112,7 @@ export const guides = [
       {
         title: 'Come si arriva a una cifra precisa',
         paragraphs: [
-          'Nello studio il preventivo viene definito dopo la visita ortodontica e lo studio del caso, e viene spiegato prima di iniziare. Le cifre e le modalità di pagamento ti vengono comunicate dalla segreteria insieme al piano di cura: questa guida non sostituisce quella valutazione.',
+          'Nello studio il preventivo viene definito dopo la visita ortodontica e lo studio del caso, e viene spiegato prima di iniziare. Puoi chiedere quali voci e controlli comprende il piano proposto.',
         ],
       },
     ],
@@ -140,7 +140,10 @@ export const guides = [
       { label: 'Ortodonzia e allineatori', href: '/ortodonzia-allineatori-invisibili/' },
     ],
     related: ['prima-visita-ortodontica-bambini'],
-    sources: [MINISTERO_RACCOMANDAZIONI],
+    sources: [
+      MINISTERO_RACCOMANDAZIONI,
+      { label: 'FDA, Allineatori trasparenti: trattamento, controlli e limiti (in inglese)', url: 'https://www.fda.gov/medical-devices/dental-devices/clear-dental-aligners' },
+    ],
     cta: { title: 'Per una cifra precisa serve conoscere il tuo caso.', href: '/richiesta/?trattamento=Ortodonzia%20e%20allineatori' },
   },
   {
@@ -154,9 +157,9 @@ export const guides = [
       'Quando portare un bambino alla prima visita odontoiatrica e a che età ha senso una valutazione ortodontica. Indicazioni basate sulle raccomandazioni del Ministero della Salute.',
     summary: 'Le età indicate dalle raccomandazioni e i segnali per cui non conviene aspettare.',
     kicker: 'Bambini e ragazzi',
-    lead: 'La prima visita odontoiatrica è indicata presto, intorno ai 18–24 mesi. La prima valutazione ortodontica ha senso entro i 7 anni. In entrambi i casi visita non significa cura: spesso serve solo a controllare che la crescita proceda bene.',
+    lead: 'Già intorno al primo compleanno puoi portare il bambino dal dentista per un controllo dei primi denti e per chiedere come pulirli. Il controllo ortodontico riguarda invece lo sviluppo dei denti e delle ossa mascellari: è consigliato entro i 7 anni, prima se emergono difficoltà.',
     keyPoints: [
-      'Prima visita odontoiatrica verso i 18–24 mesi',
+      'Primo controllo dei denti già intorno a un anno',
       'Valutazione ortodontica entro i 7 anni',
       'Visitare presto non vuol dire mettere presto l’apparecchio',
     ],
@@ -168,15 +171,15 @@ export const guides = [
       {
         title: 'La prima visita dal dentista',
         paragraphs: [
-          'Le raccomandazioni cliniche del Ministero della Salute indicano la prima visita odontoiatrica verso i 18–24 mesi, anche in assenza di problemi. A quell’età il controllo è breve: si osservano denti e gengive, si parla di igiene, alimentazione e abitudini come ciuccio e biberon.',
-          'Lo scopo principale è un altro: far conoscere al bambino l’ambiente quando non c’è dolore. Un bambino che arriva per la prima volta dal dentista con un’urgenza vive un’esperienza molto diversa.',
+          'La Società Italiana di Odontoiatria Infantile consiglia una prima visita già a un anno. Le raccomandazioni ministeriali del 2017 indicavano i 18–24 mesi in assenza di problemi. Se hai dubbi sui primi denti, puoi parlarne prima con il dentista. Durante il controllo si osservano denti e gengive, si parla di igiene, alimentazione e abitudini come ciuccio e biberon.',
+          'La visita permette anche al bambino di conoscere l’ambiente in un momento tranquillo e ai genitori di porre domande.',
         ],
       },
       {
         title: 'La prima valutazione ortodontica',
         paragraphs: [
           'L’American Association of Orthodontists raccomanda un primo controllo ortodontico non oltre i 7 anni. Intorno a quell’età convivono denti da latte e primi denti permanenti, e si può osservare come stanno crescendo le ossa mascellari e come chiudono i denti.',
-          'Nella maggior parte dei casi la valutazione si conclude con un programma di controlli periodici. In alcune situazioni, invece, intervenire durante la crescita permette di guidare lo sviluppo; in altre conviene attendere la dentatura permanente. Decidere quando è parte della diagnosi.',
+          'La valutazione può concludersi con un programma di controlli periodici. In alcune situazioni, invece, intervenire durante la crescita permette di guidare lo sviluppo; in altre conviene attendere la dentatura permanente. Decidere quando è parte della diagnosi.',
         ],
       },
       {
@@ -211,7 +214,7 @@ export const guides = [
       },
       {
         question: 'Lo studio segue anche i bambini?',
-        answer: 'Sì, lo studio si occupa di odontoiatria infantile e di ortodonzia per bambini e adolescenti in entrambe le sedi.',
+        answer: 'Sì, lo studio si occupa di odontoiatria infantile e di ortodonzia per bambini e adolescenti. Puoi indicare la sede preferita nella richiesta.',
       },
     ],
     treatments: [
@@ -221,7 +224,8 @@ export const guides = [
     related: ['/carie-denti-da-latte/', 'trauma-dentale-cosa-fare'],
     sources: [
       MINISTERO_RACCOMANDAZIONI,
-      { label: 'American Association of Orthodontists, Child orthodontics FAQ', url: 'https://aaoinfo.org/faqs/child-orthodontics/page/4' },
+      { label: 'Società Italiana di Odontoiatria Infantile, prima visita e cura dei primi denti', url: 'https://www.sioi.it/consigli-utili/' },
+      { label: 'American Association of Orthodontists, primo controllo ortodontico (in inglese)', url: 'https://aaoinfo.org/whats-trending/is-there-a-benefit-to-early-treatment/' },
     ],
     cta: { title: 'Una prima visita serve a sapere se e quando intervenire.', href: '/richiesta/' },
   },
@@ -238,7 +242,7 @@ export const guides = [
     kicker: 'Implantologia',
     lead: 'Quello che comunemente si chiama “impianto” è fatto di più parti e di più fasi. Un preventivo completo le elenca tutte: sapere quali sono ti permette di confrontare proposte diverse e capire che cosa stai pagando.',
     keyPoints: [
-      'Impianto, moncone e corona sono tre componenti distinti',
+      'Chiedi quali parti e fasi sono comprese nella sostituzione del dente',
       'Osso e gengiva disponibili cambiano il percorso',
       'Due preventivi si confrontano voce per voce',
     ],
@@ -251,7 +255,7 @@ export const guides = [
       {
         title: 'Di che cosa è fatto un “impianto”',
         paragraphs: [
-          'L’impianto in senso stretto è la vite inserita nell’osso, che fa da radice artificiale. Su questa si fissa un moncone, e sul moncone la corona, cioè la parte visibile del dente. Quando si parla di “prezzo di un impianto” è bene chiarire se si intende solo la prima parte o il dente finito.',
+          'Nella sostituzione di un singolo dente, l’impianto inserito nell’osso agisce da radice artificiale. Nella configurazione più comune, un elemento di collegamento chiamato moncone sostiene la corona, la parte visibile. Quando si parla di “prezzo di un impianto” è bene chiarire se si intende solo la prima parte o il dente finito.',
         ],
       },
       {
@@ -275,7 +279,7 @@ export const guides = [
           rows: [
             ['Numero di denti da sostituire', 'Un dente singolo, un ponte su impianti e un’arcata completa sono progetti diversi.'],
             ['Quantità e qualità dell’osso', 'Se l’osso è scarso possono servire procedure aggiuntive prima o durante l’intervento.'],
-            ['Posizione del dente', 'Nelle zone visibili del sorriso la gestione della gengiva e dell’estetica richiede più passaggi.'],
+            ['Posizione del dente', 'Nelle zone visibili del sorriso la gestione della gengiva e dell’estetica può richiedere passaggi aggiuntivi.'],
             ['Salute delle gengive', 'Una parodontite non trattata va stabilizzata prima di inserire un impianto.'],
             ['Materiale e tipo di protesi', 'La corona può essere realizzata con materiali e tecniche differenti.'],
           ],
@@ -305,7 +309,7 @@ export const guides = [
     faqs: [
       {
         question: 'Esistono impianti “senza viti”?',
-        answer: 'L’impianto dentale è per definizione un elemento inserito nell’osso. Quando si parla di soluzioni “senza viti” di solito ci si riferisce a protesi rimovibili o a ponti su denti naturali, che sono alternative all’impianto e non un tipo di impianto.',
+        answer: 'L’espressione è ambigua. Chiedi quale parte del trattamento viene descritta: un conto è l’impianto nell’osso, un altro è il modo in cui la protesi viene fissata. Un ponte su denti naturali può invece sostituire un dente senza inserire un impianto.',
       },
       {
         question: 'Che cosa cambia con la chirurgia computer guidata?',
@@ -317,7 +321,7 @@ export const guides = [
       },
       {
         question: 'L’intervento è doloroso?',
-        answer: 'Si esegue in anestesia locale. Nei giorni successivi sono possibili gonfiore e fastidio, che variano da persona a persona e per i quali ricevi indicazioni precise.',
+        answer: 'Di solito si esegue in anestesia locale. Nei giorni successivi sono possibili gonfiore e fastidio, che variano da persona a persona e per i quali ricevi indicazioni precise.',
       },
     ],
     treatments: [
@@ -325,7 +329,10 @@ export const guides = [
       { label: 'Protesi fissa e mobile', href: '/protesi-fissa-mobile/' },
     ],
     related: ['denti-mancanti-ponte-impianto-protesi', '/dentiera-fissa-cose-e-vantaggi/'],
-    sources: [MINISTERO_RACCOMANDAZIONI],
+    sources: [
+      MINISTERO_RACCOMANDAZIONI,
+      { label: 'FDA, Impianti dentali: componenti, indicazioni e rischi (in inglese)', url: 'https://www.fda.gov/medical-devices/dental-devices/dental-implants-what-you-should-know' },
+    ],
     cta: { title: 'Un preventivo utile parte da una diagnosi completa.', href: '/richiesta/?trattamento=Implantologia' },
   },
   {
@@ -357,7 +364,7 @@ export const guides = [
           headers: ['', 'Ponte su denti naturali', 'Impianto', 'Protesi rimovibile'],
           rows: [
             ['Come funziona', 'I denti accanto allo spazio sostengono il dente mancante.', 'Una radice artificiale nell’osso sostiene la corona.', 'Una protesi che si toglie e si rimette, sostenuta da denti e gengiva.'],
-            ['Denti vicini', 'Vanno preparati per ricevere le corone.', 'Non vengono toccati.', 'Di norma non vengono preparati; possono servire ganci o attacchi.'],
+            ['Denti vicini', 'Di solito vengono preparati nei ponti tradizionali con corone.', 'In genere non devono sostenere la corona su impianto.', 'Di norma non vengono preparati; possono servire ganci o attacchi.'],
             ['Chirurgia', 'Non necessaria.', 'Necessaria.', 'Non necessaria.'],
             ['Tempi', 'In genere più brevi.', 'Più lunghi: serve la guarigione dell’osso.', 'In genere brevi.'],
             ['Igiene', 'Richiede strumenti specifici sotto il ponte.', 'Come un dente, con controlli regolari.', 'La protesi va rimossa e pulita ogni giorno.'],
@@ -382,7 +389,7 @@ export const guides = [
       {
         title: 'E se non sostituisco il dente?',
         paragraphs: [
-          'Non sempre è necessario intervenire subito, ma è utile sapere che cosa può succedere nel tempo: i denti vicini possono inclinarsi verso lo spazio, il dente opposto può allungarsi, la masticazione si sposta sull’altro lato. Sono cambiamenti lenti, che possono rendere più complesso un intervento futuro.',
+          'Non sempre è necessario intervenire subito, ma è utile sapere che cosa può succedere nel tempo: i denti vicini possono inclinarsi verso lo spazio, il dente opposto può allungarsi, può cambiare il modo di masticare. Sono cambiamenti lenti, che possono rendere più complesso un intervento futuro.',
           'Decidere di aspettare è legittimo: conviene farlo conoscendo tempi e controlli da programmare.',
         ],
       },
@@ -404,7 +411,7 @@ export const guides = [
       },
       {
         question: 'Esistono impianti “senza viti”?',
-        answer: 'No: l’impianto è un elemento inserito nell’osso. Le soluzioni presentate come “senza viti” sono in genere ponti o protesi rimovibili, cioè alternative all’impianto.',
+        answer: 'Chiedi che cosa indica l’espressione. Un conto è il sostegno inserito nell’osso, un altro è il modo in cui si fissa la protesi. Per sostituire il dente senza un impianto si possono valutare un ponte su denti naturali o una protesi rimovibile.',
       },
     ],
     treatments: [
@@ -412,7 +419,10 @@ export const guides = [
       { label: 'Implantologia tradizionale e computer guidata', href: '/implantologia-tradizionale-computer-guidata/' },
     ],
     related: ['preventivo-impianto-dentale', '/protesi-dentarie-mobili-invisibili-vantaggi-e-svantaggi/', '/dentiera-fissa-cose-e-vantaggi/'],
-    sources: [MINISTERO_RACCOMANDAZIONI],
+    sources: [
+      MINISTERO_RACCOMANDAZIONI,
+      { label: 'American Dental Association, Opzioni per i denti mancanti (in inglese)', url: 'https://www.mouthhealthy.org/all-topics-a-z/missing-teeth' },
+    ],
     cta: { title: 'La soluzione giusta dipende da ciò che c’è in bocca oggi.', href: '/richiesta/' },
   },
   {
@@ -426,7 +436,7 @@ export const guides = [
       'Perché le gengive sanguinano, che differenza c’è tra gengivite e parodontite e quando è utile una visita parodontale. Guida dello studio Federzoni Granata, Modena e Reggio Emilia.',
     summary: 'Che cosa indica il sanguinamento, come si distingue una gengivite da una parodontite e come si fa la diagnosi.',
     kicker: 'Parodontologia',
-    lead: 'Gengive sane non sanguinano quando ci si lava i denti. Il sanguinamento è il primo segnale di un’infiammazione: nella maggior parte dei casi è una gengivite, reversibile. Se persiste, va controllato, perché la parodontite può restare a lungo senza altri sintomi.',
+    lead: 'Se le gengive sanguinano spesso quando usi spazzolino o filo, parlane con il dentista. Una causa frequente è la gengivite da placca. Per capire se sono coinvolti anche i tessuti che sostengono i denti occorre esaminare le gengive.',
     keyPoints: [
       'Il sanguinamento è un segnale, non un fatto normale',
       'La gengivite è reversibile, la parodontite va curata',
@@ -469,7 +479,7 @@ export const guides = [
       {
         title: 'Che cosa succede se si aspetta',
         paragraphs: [
-          'Una gengivite trascurata può evolvere in parodontite, anche se non accade in tutte le persone. La parodontite avanza lentamente e spesso senza dolore: per questo molte persone la scoprono quando un dente inizia a muoversi.',
+          'Una gengivite trascurata può evolvere in parodontite, anche se non accade in tutte le persone. La parodontite può progredire con ritmi diversi e dare pochi disturbi. Anche in assenza di dolore, sanguinamento ricorrente o mobilità meritano un controllo.',
           'Intervenire nella fase di gengivite significa di solito igiene professionale e correzione delle abitudini quotidiane. Più avanti il percorso richiede più sedute e controlli più ravvicinati.',
         ],
       },
@@ -483,7 +493,7 @@ export const guides = [
     faqs: [
       {
         question: 'Se sanguinano devo smettere di usare il filo?',
-        answer: 'No. La zona che sanguina è quella dove la placca è rimasta più a lungo. Una pulizia delicata ma completa di solito riduce il sanguinamento in pochi giorni; se continua, è il momento di farsi controllare.',
+        answer: 'Continua a pulire delicatamente la zona. Se il sanguinamento si ripete, chiedi al dentista di controllare la gengiva e mostrarti quale strumento interdentale usare e con quale tecnica.',
       },
       {
         question: 'Il collutorio basta?',
@@ -491,7 +501,7 @@ export const guides = [
       },
       {
         question: 'La parodontite si può curare?',
-        answer: 'Si può fermare e mantenere sotto controllo nel tempo. Il risultato dipende dalla diagnosi precoce, dalla terapia e dalla costanza nel mantenimento.',
+        answer: 'Il trattamento mira a limitare la progressione della malattia. Il risultato si verifica nel tempo con la rivalutazione e i controlli di mantenimento.',
       },
       {
         question: 'Il sondaggio fa male?',
@@ -504,8 +514,8 @@ export const guides = [
     ],
     related: ['preventivo-impianto-dentale'],
     sources: [
-      { label: 'SIdP, Linee guida EFP S3 per il trattamento della parodontite di stadio I–III (adattamento italiano)', url: 'https://www.sidp.it/media-download/ta2e331.pdf' },
-      { label: 'SIdP, gengive.org: informazioni per i pazienti sulle malattie gengivali', url: 'http://www.gengive.org/' },
+      { label: 'European Federation of Periodontology, Linea guida S3 per il trattamento della parodontite di stadio I–III (in inglese)', url: 'https://doi.org/10.1111/jcpe.13290' },
+      { label: 'National Institute of Dental and Craniofacial Research, Malattie gengivali (in inglese)', url: 'https://www.nidcr.nih.gov/health-info/gum-disease' },
       MINISTERO_RACCOMANDAZIONI,
     ],
     cta: { title: 'Un controllo delle gengive chiarisce a che punto sei.', href: '/richiesta/?trattamento=Cura%20delle%20gengive' },
@@ -559,7 +569,7 @@ export const guides = [
         title: 'Bruxismo: digrignare e serrare',
         paragraphs: [
           'Il bruxismo è un’attività dei muscoli masticatori che porta a serrare o digrignare i denti, nel sonno o da svegli. Molte persone non se ne accorgono: i segnali sono l’usura dei denti, la stanchezza muscolare al risveglio o quanto riferisce chi dorme accanto.',
-          'Non si “guarisce” con un dispositivo, ma se ne possono limitare gli effetti. Il bite protegge i denti e può ridurre il carico sui muscoli; di giorno aiuta soprattutto imparare a riconoscere e interrompere il serramento.',
+          'Non si “guarisce” con un dispositivo, ma se ne possono limitare gli effetti. Un bite può proteggere i denti dall’usura. Il beneficio sul dolore mandibolare è meno certo. Durante il giorno può aiutare riconoscere i momenti in cui si tengono i denti serrati.',
         ],
       },
       {
@@ -583,7 +593,7 @@ export const guides = [
     faqs: [
       {
         question: 'Il click peggiorerà nel tempo?',
-        answer: 'Nella maggior parte delle persone resta stabile per anni senza causare problemi. Va rivalutato se compaiono dolore, blocchi o riduzione dell’apertura.',
+        answer: 'Il solo rumore non permette di prevedere come cambierà. Un click senza dolore né limitazione del movimento di solito non richiede terapia. Va rivalutato se compaiono dolore, blocchi o riduzione dell’apertura.',
       },
       {
         question: 'Il bite si porta per sempre?',
@@ -599,7 +609,8 @@ export const guides = [
     ],
     related: ['gengive-che-sanguinano'],
     sources: [
-      { label: 'National Institute of Dental and Craniofacial Research (NIH), TMD – Temporomandibular Disorders', url: 'https://nidcr.nih.gov/health-info/tmd' },
+      { label: 'National Institute of Dental and Craniofacial Research (NIH), TMD – Temporomandibular Disorders', url: 'https://www.nidcr.nih.gov/health-info/tmd' },
+      { label: 'National Institute of Dental and Craniofacial Research, Bruxismo (in inglese)', url: 'https://www.nidcr.nih.gov/health-info/bruxism' },
       MINISTERO_RACCOMANDAZIONI,
     ],
     cta: { title: 'Se il disturbo dura, una valutazione aiuta a capire da dove nasce.', href: '/richiesta/?trattamento=Disturbi%20della%20mandibola%20e%20ATM' },
@@ -615,22 +626,23 @@ export const guides = [
       'Primo soccorso dopo un trauma dentale: come conservare un dente o un frammento, quando non reimpiantare e quando andare al Pronto Soccorso. Dalle linee guida del Ministero della Salute.',
     summary: 'I primi gesti dopo una caduta o un colpo, secondo le linee guida del Ministero della Salute.',
     kicker: 'Urgenze',
-    lead: 'Dopo un colpo ai denti contano i primi minuti. Recupera il dente o il frammento, conservalo in un liquido (latte, soluzione fisiologica o saliva) e raggiungi un dentista o un Pronto Soccorso con servizio odontoiatrico. Se ci sono segni di trauma cranico, la priorità è il Pronto Soccorso.',
+    lead: 'Se un dente permanente è uscito per intero, cerca assistenza odontoiatrica immediata. Prendilo dalla corona, la parte bianca che spunta dalla gengiva. Se non puoi riposizionarlo subito in sicurezza, immergilo nel latte o nella soluzione fisiologica. Un dente da latte non va mai rimesso al suo posto. Se la persona perde conoscenza, ha convulsioni o respira male, chiama il 112.',
     keyPoints: [
-      'Dente o frammento vanno conservati in un liquido',
+      'Dente permanente uscito: assistenza immediata',
       'Un dente da latte caduto non si reimpianta',
-      'Con sintomi generali si va prima al Pronto Soccorso',
+      'Dopo un colpo alla testa i sintomi neurologici hanno la precedenza',
     ],
     form: {
       treatmentLabel: 'Tipo di percorso',
-      treatmentOptions: ['Odontoiatria infantile', 'Carie e otturazioni', 'Altro'],
+      notice: 'Per un trauma recente chiama subito il dentista. Usa il modulo solo per una visita programmata.',
+      treatmentOptions: ['Odontoiatria infantile', 'Carie e otturazioni'],
     },
     sections: [
       {
         title: 'Prima di tutto: è solo un problema di denti?',
         paragraphs: [
-          'Le linee guida del Ministero della Salute indicano di rivolgersi subito al Pronto Soccorso se, dopo il trauma, compaiono perdita di coscienza, stato confusionale, amnesia, mal di testa, nausea o vomito, disturbi della vista, convulsioni, difficoltà a parlare o sanguinamento dall’orecchio.',
-          'In questi casi il dente passa in secondo piano: portalo con te, conservato in un liquido, e segnalalo al personale sanitario.',
+          'Se dopo un colpo alla testa la persona non riprende conoscenza, fatica a restare sveglia, ha convulsioni, difficoltà a parlare o vedere, o perde sangue dall’orecchio, chiama il 112. Anche confusione, perdita di memoria, vomito o un mal di testa che peggiora richiedono una valutazione medica urgente.',
+          'Dai precedenza al soccorso della persona. Se il dente è già stato recuperato, portalo in un contenitore con latte o soluzione fisiologica e segnalalo al personale sanitario.',
         ],
       },
       {
@@ -639,14 +651,14 @@ export const guides = [
           caption: 'Primo soccorso nel trauma dentale',
           headers: ['Che cosa è successo', 'Che cosa fare'],
           rows: [
-            ['Dente permanente uscito del tutto', 'Recuperalo e conservalo in latte, soluzione fisiologica o saliva. Vai subito da un dentista o in un Pronto Soccorso con servizio odontoiatrico: il reimpianto ha tanto più successo quanto prima avviene.'],
-            ['Dente da latte uscito del tutto', 'Non va reimpiantato. Fai comunque controllare il bambino.'],
-            ['Dente scheggiato o rotto', 'Recupera il frammento e conservalo in un liquido: in alcuni casi può essere riattaccato.'],
-            ['Dente spostato o che si muove', 'Non forzarlo. Serve una visita in tempi brevi.'],
+            ['Dente permanente uscito del tutto', 'Se sei certo che sia permanente, afferralo dalla corona. Se è sporco, sciacqualo delicatamente nel latte o nella fisiologica. Se la persona è vigile e collabora e il dente rientra facilmente nella sede, riposizionalo senza forzare e fai mordere delicatamente una garza pulita. Altrimenti immergilo subito nel latte o nella fisiologica. In entrambi i casi cerca subito assistenza odontoiatrica.'],
+            ['Dente da latte uscito del tutto', 'Non reinserirlo. Fai controllare il bambino. Se non sai se il dente è da latte o permanente, non tentare il reimpianto: mettilo nel latte e rivolgiti subito a un dentista.'],
+            ['Dente scheggiato o rotto', 'Recupera il frammento, conservalo nel latte o nella fisiologica e contatta il dentista. In alcuni casi può essere riattaccato.'],
+            ['Dente spostato o che si muove', 'Non forzarlo. Se è spostato o il morso è cambiato, contatta subito il dentista per una valutazione urgente.'],
             ['Colpo senza danni visibili', 'Fai comunque un controllo: alcune conseguenze compaiono a distanza.'],
           ],
         },
-        note: 'Le linee guida indicano che un dente permanente ha buone probabilità di essere reimpiantato se resta in ambiente liquido per non più di 2–3 ore.',
+        note: 'Non aspettare per vedere come va. Conservare il dente umido serve per il trasporto. Anche se è rimasto asciutto, portalo con te e riferisci quanto tempo è trascorso.',
       },
       {
         title: 'Che cosa evitare',
@@ -667,14 +679,14 @@ export const guides = [
       {
         title: 'Come contattare lo studio',
         paragraphs: [
-          'Lo studio riceve dal lunedì al venerdì, dalle 10:00 alle 19:00, nelle sedi di Modena e Reggio Emilia: in quell’orario chiama direttamente la sede più vicina oppure usa la pagina dedicata alle urgenze. Fuori orario, per un trauma con dente uscito o con sintomi generali, rivolgiti al Pronto Soccorso.',
+          'Se è uscito un dente permanente, chiama subito un dentista o un servizio di urgenza odontoiatrica, anche fuori orario. Non aspettare una risposta al modulo online. In caso di lesioni importanti al viso, difficoltà respiratoria o perdita di coscienza, chiama il 112.',
         ],
       },
     ],
     faqs: [
       {
         question: 'In che cosa conservo il dente se non ho latte?',
-        answer: 'Le linee guida indicano latte, soluzione fisiologica o saliva. L’importante è che il dente non resti asciutto.',
+        answer: 'Se non puoi rimettere al suo posto il dente permanente, usa soluzione fisiologica oppure la saliva della persona raccolta in un contenitore pulito. Non tenere il dente nella bocca di un bambino: potrebbe inghiottirlo o inalarlo.',
       },
       {
         question: 'Il dente è diventato più scuro dopo qualche settimana: è normale?',
@@ -694,8 +706,11 @@ export const guides = [
     sources: [
       {
         label: 'Ministero della Salute, Linee guida nazionali per la prevenzione e la gestione clinica dei traumi dentali negli individui in età evolutiva (2018)',
-        url: 'https://www.burlo.trieste.it/sites/default/files/Linee_guida_traumi_2018.pdf',
+        url: 'https://www.salute.gov.it/new/it/pubblicazione/linee-guida-nazionali-la-prevenzione-e-la-gestione-clinica-dei-traumi-dentali-negli/',
       },
+      { label: 'Scottish Dental Clinical Effectiveness Programme, Primo soccorso per traumi dentali (in inglese)', url: 'https://www.acutedentalproblems.sdcep.org.uk/guidance/management-of-oral-conditions/less-common-oral-conditions/injuries-to-the-mouth-face-and-jaws/' },
+      { label: 'NHS, Trauma alla testa: segnali per chiedere assistenza (in inglese)', url: 'https://www.nhs.uk/conditions/head-injury-and-concussion/' },
+      { label: 'Regione Emilia-Romagna, Numero unico di emergenza 112', url: 'https://salute.regione.emilia-romagna.it/assistenza-ospedaliera/emergenza' },
     ],
     cta: { title: 'Dopo un trauma, un controllo serve anche quando il dolore è passato.', href: '/richiesta/' },
   },
@@ -713,7 +728,7 @@ export const guides = [
     lead: 'Quando i problemi sono più di uno, il punto di partenza non è il trattamento che si vede di più ma quello che rende stabili tutti gli altri. Di solito si procede così: prima ciò che fa male o è infetto, poi gengive e carie, poi denti mancanti, allineamento ed estetica.',
     keyPoints: [
       'Si parte da dolore e infezioni, poi dalle fondamenta',
-      'L’estetica dura se poggia su denti e gengive sani',
+      'Prima degli interventi estetici si valuta la salute di denti e gengive',
       'Un piano di cura si può affrontare per tappe',
     ],
     form: {
@@ -734,9 +749,9 @@ export const guides = [
           caption: 'Sequenza tipica di un piano di cura',
           headers: ['Fase', 'Che cosa comprende', 'Perché viene in questo punto'],
           rows: [
-            ['1. Urgenze', 'Dolore, infezioni, denti fratturati.', 'Tolgono il disagio e fermano ciò che può peggiorare.'],
-            ['2. Fondamenta', 'Igiene professionale, cura delle gengive, carie.', 'Tutte le cure successive poggiano su tessuti sani.'],
-            ['3. Denti da recuperare o sostituire', 'Devitalizzazioni, ricostruzioni, corone, ponti, impianti, protesi.', 'Ripristinano la masticazione.'],
+            ['1. Urgenze', 'Dolore, infezioni, denti fratturati.', 'Il primo obiettivo è valutare il dolore e trattarne la causa.'],
+            ['2. Fondamenta', 'Igiene professionale, cura delle gengive, carie.', 'Carie e infiammazione possono influire sulla scelta delle cure successive.'],
+            ['3. Denti da recuperare o sostituire', 'Devitalizzazioni, ricostruzioni, corone, ponti, impianti, protesi.', 'Servono a recuperare denti e funzione masticatoria.'],
             ['4. Posizione dei denti', 'Ortodonzia, quando indicata.', 'Può cambiare lo spazio disponibile per protesi ed estetica.'],
             ['5. Estetica', 'Sbiancamento, faccette.', 'Si rifinisce quando forma e posizione sono definite.'],
           ],
@@ -753,7 +768,7 @@ export const guides = [
       {
         title: 'Si può fare a tappe?',
         paragraphs: [
-          'Sì, nella maggior parte dei casi. Un piano di cura distingue ciò che non conviene rimandare da ciò che può attendere. Sapere quali sono le priorità permette di distribuire le cure nel tempo senza compromettere il risultato.',
+          'Sì, nella maggior parte dei casi. Un piano di cura distingue ciò che non conviene rimandare da ciò che può attendere. Il dentista può spiegare quali fasi si possono distanziare e quali rischi comporterebbe un rinvio.',
           'Vale anche il contrario: alcune fasi hanno senso solo insieme. Per esempio, sostituire un dente senza trattare la causa per cui è stato perso espone a ripetere il problema.',
         ],
       },
@@ -782,7 +797,7 @@ export const guides = [
       MINISTERO_RACCOMANDAZIONI,
       {
         label: 'Ministero della Salute, Linee guida nazionali per la promozione della salute orale e la prevenzione delle patologie orali in età adulta',
-        url: 'https://www.unife.it/medicina/lm.odontoiatria/insegnamenti/principi-di-odontoiatria/modulo-di-odontoiatria-preventiva-e-di-comunita/linee-guida-nazionali-per-la-promozione-della-salute-orale-e-la-prevenzione-delle-patologie-orali-in-eta2019-adulta.pdf/',
+        url: 'https://www.salute.gov.it/imgs/C_17_pubblicazioni_2441_allegato.pdf',
       },
     ],
     cta: { title: 'Il primo passo è sapere che cosa c’è.', href: '/richiesta/' },
@@ -800,7 +815,7 @@ export const guides = [
     kicker: 'Prima della visita',
     lead: 'Un preventivo si capisce solo insieme al piano di cura che descrive. Due cifre diverse spesso corrispondono a due lavori diversi: per confrontarle bisogna guardare che cosa è compreso, con quali materiali e con quali controlli.',
     keyPoints: [
-      'Il preventivo va consegnato in forma scritta o digitale',
+      'Il compenso va comunicato prima, in forma scritta o digitale',
       'Si confrontano i piani di cura, non solo i totali',
       'Chiedere le alternative fa parte della scelta',
     ],
@@ -849,7 +864,7 @@ export const guides = [
           'Chi eseguirà le cure e chi mi seguirà nei controlli?',
         ],
         after: [
-          'Sono domande legittime. Uno studio che lavora con un piano chiaro è in grado di rispondere prima di iniziare.',
+          'Puoi annotare le risposte e chiedere di chiarire eventuali differenze tra le proposte prima di decidere.',
         ],
       },
       {
@@ -861,7 +876,7 @@ export const guides = [
       {
         title: 'Come funziona nello studio',
         paragraphs: [
-          'Nello studio Federzoni Granata il piano di cura viene spiegato prima di iniziare, con priorità, alternative e tempi. Costi e modalità di pagamento vengono comunicati dalla segreteria insieme al piano: questa guida non riporta cifre perché dipendono dalla diagnosi.',
+          'Nello studio Federzoni Granata il piano di cura viene spiegato prima di iniziare, con priorità, alternative e tempi. Chiedi di chiarire le voci del preventivo e le modalità di pagamento prima di decidere.',
         ],
       },
     ],
@@ -887,8 +902,8 @@ export const guides = [
     related: ['preventivo-impianto-dentale', 'costo-allineatori-trasparenti', 'sistemare-i-denti-da-dove-iniziare'],
     sources: [
       {
-        label: 'Legge 4 agosto 2017, n. 124, art. 1, comma 150: preventivo di massima in forma scritta o digitale (sintesi Euroconference News)',
-        url: 'https://www.ecnews.it/fiscale/professionisti/professionisti-obbligo-preventivo-scritto-digitale/',
+        label: 'Legge 4 agosto 2017, n. 124, art. 1, comma 150: preventivo di massima in forma scritta o digitale (Gazzetta Ufficiale)',
+        url: 'https://www.gazzettaufficiale.it/eli/gu/2017/08/14/189/sg/pdf#page=26',
       },
       MINISTERO_RACCOMANDAZIONI,
     ],
@@ -905,7 +920,7 @@ export const guides = [
       'Che cosa comprende una seduta di igiene professionale, quando serve una pulizia sotto gengiva e ogni quanto farla. Guida dello studio Federzoni Granata, Modena e Reggio Emilia.',
     summary: 'Igiene professionale e terapia parodontale non sono la stessa seduta: che cosa cambia e quando serve l’una o l’altra.',
     kicker: 'Igiene e prevenzione',
-    lead: 'La pulizia dei denti rimuove placca e tartaro sopra la gengiva e serve a tutti, a intervalli regolari. La pulizia profonda lavora sotto la gengiva e si esegue solo quando c’è una parodontite. Quale delle due serve lo stabilisce la misurazione delle gengive.',
+    lead: 'La seduta di igiene rimuove depositi che è difficile eliminare a casa. Quando c’è una parodontite, può servire anche una pulizia delle superfici delle radici sotto il margine gengivale. Il dentista valuta denti, gengive e profondità delle tasche prima di indicare il trattamento.',
     keyPoints: [
       'L’igiene professionale è prevenzione',
       'La pulizia profonda è una terapia per la parodontite',
@@ -920,7 +935,7 @@ export const guides = [
       {
         title: 'Che cosa comprende l’igiene professionale',
         paragraphs: [
-          'Durante la seduta si rimuovono placca, tartaro e pigmentazioni dalle superfici dei denti, comprese le zone che spazzolino e filo non raggiungono bene. Si conclude con la lucidatura e con indicazioni su come migliorare la pulizia quotidiana.',
+          'Durante la seduta si rimuovono placca, tartaro e pigmentazioni dalle superfici dei denti, comprese le zone che spazzolino e filo non raggiungono bene. La seduta può comprendere la lucidatura e indicazioni pratiche per la pulizia quotidiana.',
           'È anche un’occasione di controllo: chi esegue la seduta osserva gengive e denti e segnala ciò che merita un approfondimento.',
         ],
       },
@@ -928,7 +943,7 @@ export const guides = [
         title: 'Che cos’è la pulizia profonda',
         paragraphs: [
           'Quando l’infiammazione ha creato tasche tra dente e gengiva, placca e tartaro si depositano anche sulla radice, dove l’igiene normale non arriva. In questo caso si esegue una strumentazione sotto gengiva: è una fase della terapia della parodontite, non una pulizia “più forte”.',
-          'Di solito richiede più sedute, può essere eseguita con anestesia locale ed è seguita da una rivalutazione per verificare come hanno risposto le gengive.',
+          'Può richiedere una o più sedute, anche con anestesia locale. Segue una rivalutazione per verificare come hanno risposto le gengive.',
         ],
       },
       {
@@ -939,7 +954,7 @@ export const guides = [
           rows: [
             ['A che cosa serve', 'Prevenire carie e infiammazione gengivale.', 'Trattare la parodontite.'],
             ['Dove agisce', 'Sopra la gengiva e lungo il margine.', 'Sotto la gengiva, sulla superficie della radice.'],
-            ['Per chi', 'Per tutti, a intervalli regolari.', 'Per chi ha tasche parodontali.'],
+            ['Per chi', 'Per chi ne ha indicazione, in base ai depositi e al rischio individuale.', 'Per chi ha tasche parodontali.'],
             ['Sedute', 'In genere una.', 'In genere più di una, con rivalutazione.'],
             ['Anestesia', 'Di norma non necessaria.', 'Può essere utilizzata.'],
           ],
@@ -948,8 +963,8 @@ export const guides = [
       {
         title: 'Ogni quanto fare la pulizia',
         paragraphs: [
-          'Non esiste un intervallo valido per tutti. La Società Italiana di Parodontologia e Implantologia consiglia igiene professionale e controllo almeno due volte l’anno; chi ha avuto una parodontite, fuma o accumula tartaro rapidamente può avere bisogno di richiami più ravvicinati.',
-          'L’intervallo viene stabilito dopo aver valutato la tua situazione e può cambiare nel tempo.',
+          'La frequenza dipende dalle condizioni delle gengive, dall’accumulo di placca e tartaro e dai fattori di rischio individuali. Un controllo e una seduta di igiene rispondono a esigenze diverse.',
+          'Dopo il trattamento di una parodontite, le linee guida europee indicano richiami di mantenimento da 3 a 12 mesi, da adattare ai risultati della cura e al rischio individuale. Questo intervallo riguarda chi ha seguito una terapia parodontale.',
         ],
       },
       {
@@ -962,7 +977,7 @@ export const guides = [
     faqs: [
       {
         question: 'La pulizia rovina lo smalto?',
-        answer: 'No. Gli strumenti rimuovono i depositi presenti sul dente, non lo smalto sano. La sensazione di denti “diversi” dopo la seduta è dovuta al tartaro che non c’è più.',
+        answer: 'Lo scopo della seduta è rimuovere i depositi con strumenti adatti alle superfici da trattare. Può comparire sensibilità temporanea, soprattutto sulle radici esposte. Se il fastidio persiste, riferiscilo al dentista.',
       },
       {
         question: 'Perché le gengive sanguinano durante la pulizia?',
@@ -970,7 +985,7 @@ export const guides = [
       },
       {
         question: 'Posso chiedere direttamente una pulizia profonda?',
-        answer: 'Non è una scelta ma un’indicazione clinica: si esegue se la misurazione delle gengive rileva tasche. In caso contrario non porta benefici.',
+        answer: 'Puoi chiedere se è indicata nel tuo caso. Profondità delle tasche, infiammazione e condizioni dei tessuti di sostegno aiutano il dentista a decidere dove intervenire.',
       },
       {
         question: 'La pulizia sbianca i denti?',
@@ -984,8 +999,8 @@ export const guides = [
     ],
     related: ['gengive-che-sanguinano', 'sistemare-i-denti-da-dove-iniziare'],
     sources: [
-      { label: 'SIdP, Linee guida EFP S3 per il trattamento della parodontite di stadio I–III (adattamento italiano)', url: 'https://www.sidp.it/media-download/ta2e331.pdf' },
-      { label: 'SIdP, raccomandazioni per la salute delle gengive', url: 'https://www.sidp.it/media-download/ta9w5a6.pdf' },
+      { label: 'European Federation of Periodontology, Linea guida S3 per il trattamento della parodontite di stadio I–III (in inglese)', url: 'https://doi.org/10.1111/jcpe.13290' },
+      { label: 'European Federation of Periodontology, Richiami dopo la terapia parodontale (in inglese)', url: 'https://www.efp.org/fileadmin/uploads/efp/Photos/Continuing_Education/GUIDELINE_STEP04_071022-2.pdf' },
       MINISTERO_RACCOMANDAZIONI,
     ],
     cta: { title: 'Una seduta di igiene è anche un controllo delle gengive.', href: '/richiesta/?trattamento=Igiene%20orale%20e%20prevenzione' },
@@ -1031,7 +1046,7 @@ export const guides = [
             ['Preparazione del dente', 'Spesso minima o assente; dipende dal caso.', 'Dipende dal caso: può essere minima o richiedere una riduzione dello smalto.'],
             ['Colore nel tempo', 'Può pigmentarsi e perdere lucentezza; si può rilucidare.', 'Più stabile.'],
             ['Se si scheggia', 'In genere riparabile in studio.', 'Spesso va sostituita.'],
-            ['Modifiche successive', 'Si può ritoccare.', 'Una volta applicata non si modifica.'],
+            ['Modifiche successive', 'Si può ritoccare.', 'I ritocchi sono limitati. Per cambiare forma o colore può essere necessario sostituirla.'],
           ],
         },
         note: 'Sono caratteristiche generali dei due materiali. Quale sia indicato nel tuo caso si stabilisce dopo l’esame dei denti.',
@@ -1063,7 +1078,7 @@ export const guides = [
     faqs: [
       {
         question: 'Le faccette rovinano i denti?',
-        answer: 'Dipende da quanto dente è necessario preparare, e questo varia da caso a caso. L’obiettivo è conservare il più possibile lo smalto; quando la preparazione richiesta sarebbe eccessiva, si valutano alternative.',
+        answer: 'Dipende da quanto dente è necessario preparare, e questo varia da caso a caso. Lo smalto rimosso non ricresce. Chiedi quanto sarebbe necessario asportarne e quali alternative permetterebbero di conservarlo.',
       },
       {
         question: 'Il risultato sembrerà finto?',
@@ -1086,7 +1101,7 @@ export const guides = [
     related: ['costo-allineatori-trasparenti', 'sistemare-i-denti-da-dove-iniziare'],
     sources: [
       MINISTERO_RACCOMANDAZIONI,
-      { label: 'Università degli Studi di Milano, revisione sulle indicazioni delle faccette in ceramica (archivio AIR)', url: 'https://air.unimi.it/handle/2434/896273' },
+      { label: 'American Dental Association, Faccette in ceramica e in composito (in inglese)', url: 'https://www.mouthhealthy.org/all-topics-a-z/veneers' },
     ],
     cta: { title: 'Il materiale si sceglie dopo aver guardato il sorriso.', href: '/richiesta/?trattamento=Faccette%20dentali' },
   },
@@ -1101,7 +1116,7 @@ export const guides = [
       'Quando un dente si può salvare con la devitalizzazione e quando si valuta l’estrazione, che cosa aspettarsi dalla cura e perché un dente devitalizzato può fare male. Studio Federzoni Granata.',
     summary: 'Quando un dente si può salvare, che cosa comporta la cura e perché un dente già devitalizzato può dare fastidio.',
     kicker: 'Endodonzia',
-    lead: 'Se il dente si può ricostruire in modo affidabile, di norma si cerca di conservarlo con la devitalizzazione. L’estrazione si valuta quando la struttura rimasta non basta a sostenerlo. A decidere sono l’esame clinico e le radiografie, non l’intensità del dolore.',
+    lead: 'Quando la polpa è compromessa, una cura canalare può permettere di conservare il dente. Prima di scegliere tra cura ed estrazione, il dentista valuta la polpa, le radici, il sostegno osseo e se resta abbastanza struttura per ricostruirlo. L’intensità del dolore da sola non risponde a queste domande.',
     keyPoints: [
       'Conservare il dente è la prima strada da valutare',
       'Conta quanto dente sano rimane, non quanto fa male',
@@ -1116,7 +1131,7 @@ export const guides = [
       {
         title: 'Che cos’è la devitalizzazione',
         paragraphs: [
-          'All’interno del dente c’è la polpa, un tessuto con nervi e vasi. Quando una carie profonda, una frattura o un trauma la infiammano o la infettano in modo irreversibile, la cura canalare la rimuove, pulisce e sigilla i canali delle radici. Il dente resta al suo posto e continua a masticare.',
+          'All’interno del dente c’è la polpa, un tessuto con nervi e vasi. Quando una carie profonda, una frattura o un trauma la infiammano o la infettano in modo irreversibile, la cura canalare la rimuove, pulisce e sigilla i canali delle radici. Dopo la cura, una ricostruzione adeguata aiuta a recuperare la funzione del dente.',
           'La cura si esegue in anestesia locale. Nei giorni successivi il dente può essere indolenzito alla masticazione: è un fastidio che di solito si riduce da solo e per il quale ricevi indicazioni.',
         ],
       },
@@ -1127,7 +1142,7 @@ export const guides = [
           headers: ['Che cosa si valuta', 'A favore della cura', 'A favore dell’estrazione'],
           rows: [
             ['Struttura rimasta', 'Sufficiente per una ricostruzione stabile.', 'Dente molto distrutto o fratturato sotto la gengiva.'],
-            ['Radici', 'Integre e trattabili.', 'Frattura della radice.'],
+            ['Radici', 'Integre e trattabili.', 'Frattura verticale che rende il dente non recuperabile.'],
             ['Sostegno', 'Osso e gengive in buone condizioni.', 'Perdita di sostegno avanzata.'],
             ['Ruolo del dente', 'Utile alla masticazione o al sostegno di altri restauri.', 'Dente che non potrà essere utilizzato.'],
           ],
@@ -1145,7 +1160,7 @@ export const guides = [
         title: 'Un dente già devitalizzato che fa male',
         paragraphs: [
           'Può accadere, anche a distanza di anni. Le cause possibili sono diverse: un’infezione che si è ripresentata, una ricostruzione che non sigilla più, una frattura, oppure un problema della gengiva o del dente vicino.',
-          'Non è un dolore da aspettare che passi: una visita con radiografia permette di capire l’origine. In molti casi il dente può essere trattato di nuovo.',
+          'Se il dolore ritorna o compare gonfiore, contatta il dentista. Visita e radiografia aiutano a capire se è possibile un nuovo trattamento. Se il gonfiore rende difficile respirare o deglutire, chiama il 112.',
         ],
       },
     ],
@@ -1173,7 +1188,11 @@ export const guides = [
       { label: 'Chirurgia orale', href: '/chirurgia-stomatologica/' },
     ],
     related: ['denti-mancanti-ponte-impianto-protesi', 'trauma-dentale-cosa-fare'],
-    sources: [MINISTERO_RACCOMANDAZIONI],
+    sources: [
+      MINISTERO_RACCOMANDAZIONI,
+      { label: 'American Association of Endodontists, Dopo la cura canalare (in inglese)', url: 'https://www.aae.org/patients/your-office-visit/post-treatment-care/' },
+      { label: 'NHS, Ascesso dentale e segnali di urgenza (in inglese)', url: 'https://www.nhs.uk/conditions/dental-abscess/' },
+    ],
     cta: { title: 'Prima di decidere serve sapere quanto dente si può conservare.', href: '/richiesta/?trattamento=Devitalizzazione' },
   },
   {
@@ -1185,13 +1204,13 @@ export const guides = [
     seoTitle: 'Gengive ritirate: cause e cosa si può fare',
     description:
       'Perché le gengive si ritirano, se possono ricrescere e quando serve una visita parodontale. Guida dello studio Federzoni Granata, Modena e Reggio Emilia.',
-    summary: 'Perché succede, se la gengiva può tornare com’era e come si evita che la recessione avanzi.',
+    summary: 'Perché succede, se la gengiva può tornare com’era e che cosa si può fare se la recessione avanza.',
     kicker: 'Parodontologia',
-    lead: 'Una gengiva che si è ritirata non ricresce da sola. Si può però capire perché è successo e fermare il peggioramento. Le cause più comuni sono uno spazzolamento troppo energico e la malattia parodontale: distinguerle cambia completamente ciò che conviene fare.',
+    lead: 'Quando il margine della gengiva si ritira, una parte della radice può restare scoperta. Spazzolamento energico, malattia parodontale e caratteristiche dei tessuti possono contribuire, anche insieme. Alla visita si valuta la causa e si misura la recessione per seguirla nel tempo.',
     keyPoints: [
       'La recessione non regredisce spontaneamente',
-      'Le cause principali sono due, con cure diverse',
-      'Fermare la causa viene prima di ogni correzione',
+      'Più fattori possono contribuire alla recessione',
+      'La scelta della cura dipende dalla causa',
     ],
     form: {
       treatment: 'Cura delle gengive',
@@ -1222,8 +1241,8 @@ export const guides = [
       {
         title: 'Possono ricrescere?',
         paragraphs: [
-          'No, il tessuto perso non si riforma da solo e nessun dentifricio o collutorio lo fa ricrescere. Quello che si può ottenere, eliminando la causa, è che la recessione si fermi.',
-          'In alcune situazioni esistono interventi di chirurgia gengivale che ricoprono la radice esposta. Non sono indicati in tutti i casi: la possibilità si valuta durante la visita parodontale.',
+          'No, il tessuto perso non si riforma da solo e nessun dentifricio o collutorio lo fa ricrescere. Correggere i fattori che la favoriscono può aiutare a limitare la progressione.',
+          'In alcune situazioni esistono interventi di chirurgia gengivale che possono ricoprire in tutto o in parte la radice esposta. Non sono indicati in tutti i casi: la possibilità si valuta durante la visita parodontale.',
         ],
       },
       {
@@ -1254,7 +1273,7 @@ export const guides = [
       },
       {
         question: 'Rischio di perdere il dente?',
-        answer: 'Una recessione da spazzolamento, in una bocca sana, di rado mette a rischio il dente. È diverso se la causa è una parodontite: in quel caso va curata la malattia.',
+        answer: 'La sola parte di radice visibile non permette di stabilirlo. Con la visita si controllano il sostegno del dente e l’eventuale presenza di parodontite, che può richiedere una cura specifica.',
       },
     ],
     treatments: [
@@ -1263,10 +1282,11 @@ export const guides = [
     ],
     related: ['gengive-che-sanguinano', 'pulizia-denti-o-pulizia-profonda'],
     sources: [
-      { label: 'SIdP, Linee guida EFP S3 per il trattamento della parodontite di stadio I–III (adattamento italiano)', url: 'https://www.sidp.it/media-download/ta2e331.pdf' },
+      { label: 'European Federation of Periodontology, Linea guida S3 per il trattamento della parodontite di stadio I–III (in inglese)', url: 'https://doi.org/10.1111/jcpe.13290' },
+      { label: 'Cambridge University Hospitals, Recessione gengivale e indicazioni all’innesto (in inglese)', url: 'https://www.cuh.nhs.uk/patient-information/gum-grafting-procedure/' },
       MINISTERO_RACCOMANDAZIONI,
     ],
-    cta: { title: 'Sapere perché la gengiva si ritira è il primo passo per fermarla.', href: '/richiesta/?trattamento=Cura%20delle%20gengive' },
+    cta: { title: 'Una visita permette di misurare la recessione e chiarirne le possibili cause.', href: '/richiesta/?trattamento=Cura%20delle%20gengive' },
   },
   {
     slug: 'bite-a-cosa-serve',
@@ -1279,7 +1299,7 @@ export const guides = [
       'A che cosa serve il bite, che differenza c’è tra quello su misura e quelli pronti all’uso e che cosa non può fare. Guida dello studio Federzoni Granata, Modena e Reggio Emilia.',
     summary: 'Che cosa fa un bite, che cosa non fa e perché quello su misura va controllato nel tempo.',
     kicker: 'Gnatologia',
-    lead: 'Il bite è una placca rimovibile che si porta sui denti, di solito di notte. Protegge i denti dall’usura del bruxismo e può ridurre il carico sui muscoli. Non elimina la causa del serramento e va usato su indicazione, perché un dispositivo non adatto può peggiorare i disturbi.',
+    lead: 'Il bite è una placca rimovibile che si porta sui denti, di solito di notte. Può proteggere i denti dall’usura da bruxismo. Il beneficio sul dolore mandibolare è meno certo. Non elimina la causa del serramento e va usato su indicazione, perché un dispositivo non adatto può peggiorare i disturbi.',
     keyPoints: [
       'Protegge i denti, non “cura” il bruxismo',
       'Su misura significa regolato e controllato',
@@ -1295,7 +1315,7 @@ export const guides = [
         title: 'A che cosa serve',
         list: [
           'Proteggere smalto e restauri quando si digrigna o si serra.',
-          'Distribuire le forze e ridurre il lavoro dei muscoli in alcune persone con dolore.',
+          'Tenere separate le superfici dei denti mentre si stringe o si digrigna.',
           'Fare parte di un trattamento conservativo e reversibile dei disturbi della mandibola.',
         ],
         after: [
@@ -1310,8 +1330,8 @@ export const guides = [
           rows: [
             ['Come si ottiene', 'Realizzato sull’impronta dei denti.', 'Acquistato già fatto, talvolta adattabile a caldo.'],
             ['Contatti tra i denti', 'Regolati alla consegna e ai controlli.', 'Non regolabili con precisione.'],
-            ['Stabilità', 'Resta fermo sull’arcata.', 'Può muoversi o risultare ingombrante.'],
-            ['Controllo nel tempo', 'Previsto.', 'Affidato a chi lo usa.'],
+            ['Stabilità', 'La stabilità viene verificata alla consegna.', 'Può muoversi o risultare ingombrante.'],
+            ['Controllo nel tempo', 'Si programma con il dentista.', 'L’acquisto non include un controllo clinico.'],
           ],
         },
         note: 'Un dispositivo che non appoggia in modo equilibrato può aumentare il fastidio o, se usato a lungo, modificare il modo in cui i denti chiudono.',
@@ -1319,21 +1339,21 @@ export const guides = [
       {
         title: 'Come si arriva al bite',
         paragraphs: [
-          'La visita valuta denti, muscoli, articolazione e chiusura. Se il bite è indicato, si rileva l’impronta e il dispositivo viene consegnato dopo averne controllato l’appoggio. Seguono visite di verifica, perché con l’uso i contatti cambiano.',
+          'La visita valuta denti, muscoli, articolazione e chiusura. Se il bite è indicato, si rileva l’impronta e il dispositivo viene consegnato dopo averne controllato l’appoggio. Seguono visite di verifica, per controllare l’usura, i contatti e gli eventuali disturbi.',
         ],
       },
       {
         title: 'Che cosa aspettarsi',
         paragraphs: [
           'I primi giorni è normale percepire un ingombro e una salivazione maggiore. Se invece il dispositivo provoca o aumenta il dolore, va sospeso e bisogna rivolgersi a chi lo ha prescritto.',
-          'Il bite si consuma: l’usura mostra quanto lavoro sta assorbendo al posto dei denti. Quanto a lungo portarlo dipende dal motivo per cui è stato indicato.',
+          'Se noti usura, crepe o cambiamenti nel modo in cui il bite si appoggia ai denti, portalo al controllo. Quanto a lungo portarlo dipende dal motivo per cui è stato indicato.',
         ],
       },
     ],
     faqs: [
       {
         question: 'Il bite fa smettere di digrignare?',
-        answer: 'No. Limita i danni sui denti e può dare sollievo ai muscoli. Sul serramento diurno aiuta soprattutto imparare a riconoscerlo e a rilassare la mandibola.',
+        answer: 'Non necessariamente. Lo scopo principale è proteggere i denti. Sul serramento diurno aiuta soprattutto imparare a riconoscerlo e a rilassare la mandibola.',
       },
       {
         question: 'Si porta sopra o sotto?',
@@ -1349,7 +1369,8 @@ export const guides = [
     ],
     related: ['dolore-click-mandibola-bruxismo', 'apparecchio-per-non-russare'],
     sources: [
-      { label: 'National Institute of Dental and Craniofacial Research (NIH), TMD – Temporomandibular Disorders', url: 'https://nidcr.nih.gov/health-info/tmd' },
+      { label: 'National Institute of Dental and Craniofacial Research (NIH), TMD – Temporomandibular Disorders', url: 'https://www.nidcr.nih.gov/health-info/tmd' },
+      { label: 'National Institute of Dental and Craniofacial Research, Bruxismo (in inglese)', url: 'https://www.nidcr.nih.gov/health-info/bruxism' },
       MINISTERO_RACCOMANDAZIONI,
     ],
     cta: { title: 'Un bite è utile quando risponde a un’indicazione precisa.', href: '/richiesta/?trattamento=Disturbi%20della%20mandibola%20e%20ATM' },
@@ -1365,7 +1386,7 @@ export const guides = [
       'Come funziona il dispositivo orale per russamento e apnee notturne, per chi può essere indicato e perché serve prima una valutazione medica del sonno. Studio Federzoni Granata.',
     summary: 'Come funziona il dispositivo orale, per chi può essere indicato e che ruolo ha il medico del sonno.',
     kicker: 'Russamento e apnee notturne',
-    lead: 'Il dispositivo orale tiene la mandibola leggermente in avanti durante il sonno, per mantenere più aperte le vie aeree. Può essere indicato per il russamento e, su indicazione medica, per alcune forme di apnea ostruttiva. Prima va chiarito se dietro il russamento ci sono apnee: è una diagnosi che spetta al medico.',
+    lead: 'Negli adulti, un dispositivo di avanzamento mandibolare tiene la mandibola leggermente in avanti durante il sonno per favorire il passaggio dell’aria. Può essere indicato per il russamento e, su indicazione medica, per alcune forme di apnea ostruttiva. Prima va chiarito se dietro il russamento ci sono apnee: è una diagnosi che spetta al medico.',
     keyPoints: [
       'Si porta solo di notte ed è rimovibile',
       'Le apnee vanno diagnosticate dal medico del sonno',
@@ -1419,7 +1440,7 @@ export const guides = [
         title: 'Effetti e controlli',
         paragraphs: [
           'Nei primi tempi sono possibili aumento della salivazione, indolenzimento dei denti o dei muscoli al risveglio e una sensazione temporanea di chiusura diversa. Con l’uso prolungato possono comparire piccoli cambiamenti nella posizione dei denti: per questo sono previsti controlli periodici.',
-          'L’efficacia sulle apnee va verificata dal medico, non dalla sola riduzione del rumore.',
+          'Il medico del sonno verifica l’efficacia sulle apnee con un esame del sonno di controllo. Un russamento meno udibile non basta a stabilire che le apnee siano risolte.',
         ],
       },
     ],
@@ -1430,7 +1451,7 @@ export const guides = [
       },
       {
         question: 'Sostituisce la CPAP?',
-        answer: 'È il medico del sonno a stabilire la terapia. In alcuni casi il dispositivo orale è un’alternativa, in altri no.',
+        answer: 'Negli adulti con apnee diagnosticate che non tollerano la CPAP o desiderano valutare un’alternativa, il medico del sonno può considerare un dispositivo su misura. Se stai usando la CPAP, parlane con il medico prima di cambiare terapia.',
       },
       {
         question: 'Lo studio fa la diagnosi delle apnee?',
@@ -1444,12 +1465,230 @@ export const guides = [
     related: ['bite-a-cosa-serve', 'dolore-click-mandibola-bruxismo'],
     sources: [
       {
-        label: 'Ministero della Salute, Linee guida nazionali per la prevenzione ed il trattamento odontoiatrico della sindrome delle apnee ostruttive nel sonno (presentazione su Odontoiatria33)',
-        url: 'https://www.odontoiatria33.it/approfondimenti/8480/dal-ministero-della-salute-le-linee-guida-sull-osas.html',
+        label: 'Ministero della Salute, Linee guida per il trattamento odontoiatrico delle apnee ostruttive nel sonno negli adulti (2014)',
+        url: 'https://www.salute.gov.it/new/sites/default/files/imported/C_17_pubblicazioni_2307_allegato.pdf',
       },
-      MINISTERO_RACCOMANDAZIONI,
+      { label: 'AASM e AADSM, Linea guida sui dispositivi orali per russamento e apnee negli adulti (in inglese)', url: 'https://doi.org/10.5664/jcsm.4858' },
     ],
     cta: { title: 'Capire se il dispositivo è adatto richiede una valutazione della bocca.', href: '/richiesta/?trattamento=Russamento%20e%20apnee%20notturne' },
+  },
+  {
+    slug: 'ascesso-dentale-quando-chiedere-aiuto',
+    category: 'urgenze-prevenzione',
+    published: true,
+    updated,
+    title: 'Sospetto ascesso dentale: a chi rivolgersi',
+    seoTitle: 'Ascesso dentale e gonfiore: quando chiedere aiuto',
+    description: 'Come descrivere dolore e gonfiore, quando contattare urgentemente il dentista e quali segnali richiedono soccorso immediato.',
+    summary: 'I segnali per distinguere una chiamata urgente al dentista da un’emergenza sanitaria.',
+    kicker: 'Urgenze dentali',
+    lead: 'Se sospetti un ascesso, chiama subito un dentista per una valutazione urgente. Se fai fatica a respirare, deglutire o parlare, chiama il 112 senza aspettare una risposta al modulo online.',
+    keyPoints: [
+      'Riferisci subito se il gonfiore aumenta o se compare febbre',
+      'Un gonfiore esteso in bocca o che coinvolge l’occhio richiede soccorso immediato',
+      'Per curare l’infezione occorre individuarne la causa',
+    ],
+    form: {
+      notice: 'Per un sospetto ascesso chiama subito un dentista. Se fai fatica a respirare o deglutire, chiama il 112.',
+      treatmentLabel: 'Percorso per una visita programmata',
+      treatmentOptions: ['Carie e otturazioni', 'Cura delle gengive'],
+    },
+    sections: [
+      {
+        title: 'Gonfiore vicino a un dente: che cosa osservare',
+        paragraphs: [
+          'Un ascesso è una raccolta di pus dovuta a un’infezione. Può interessare la zona di un dente o la gengiva. Fra i possibili segnali ci sono dolore, gonfiore, cattivo sapore in bocca e febbre. Sintomi simili possono avere anche altre cause.',
+          'Quando chiami, indica dove è iniziato il gonfiore, da quanto tempo c’è e se interessa anche la guancia. Spiega se riesci ad aprire la bocca, a deglutire e a respirare normalmente. Queste informazioni aiutano chi ti risponde a indirizzarti al servizio adatto.',
+        ],
+      },
+      {
+        title: 'Quando serve il pronto soccorso',
+        paragraphs: [
+          'Chiama il 112 se hai difficoltà a respirare, deglutire o parlare. Serve una valutazione immediata anche in presenza di gonfiore importante in bocca, difficoltà marcata ad aprirla, occhio gonfio o dolente oppure disturbi improvvisi della vista.',
+          'In assenza di questi segnali, un sospetto ascesso richiede comunque cure odontoiatriche urgenti. Se il tuo dentista è chiuso, cerca un servizio odontoiatrico d’urgenza. Una richiesta online lascia un recapito e comporta un’attesa.',
+        ],
+      },
+      {
+        title: 'Che cosa può fare il dentista',
+        paragraphs: [
+          'Il dentista cerca l’origine dell’infezione nel dente o nei tessuti circostanti. Secondo i riscontri può essere necessario far defluire il pus, trattare i canali del dente o valutare l’estrazione. Un eventuale antibiotico viene prescritto quando indicato e non sostituisce il trattamento della causa.',
+        ],
+      },
+    ],
+    faqs: [
+      { question: 'Se il dolore si attenua, posso saltare la visita?', answer: 'Se sospetti un ascesso, mantieni il contatto urgente con il dentista. Il solo andamento del dolore non permette di stabilire se l’infezione si è risolta.' },
+      { question: 'Un gonfiore indica sempre un ascesso?', answer: 'Il gonfiore è un segno, non una diagnosi. La visita serve a distinguerne l’origine e a individuare la cura appropriata.' },
+      { question: 'È sufficiente usare il modulo di richiesta?', answer: 'Per un sospetto ascesso è preferibile chiamare subito un servizio odontoiatrico. In caso di difficoltà respiratoria o a deglutire chiama il 112. Usa il modulo per organizzare visite programmate.' },
+    ],
+    treatments: [
+      { label: 'Urgenze dentali', href: '/urgenze/' },
+      { label: 'Endodonzia e devitalizzazioni', href: '/endodonzia-devitalizzazioni/' },
+    ],
+    related: ['devitalizzare-o-togliere-il-dente', 'trauma-dentale-cosa-fare'],
+    sources: [
+      { label: 'NHS, Dental abscess', url: 'https://www.nhs.uk/conditions/dental-abscess/' },
+      { label: 'Regione Emilia-Romagna, emergenze e Numero Unico 112', url: 'https://salute.regione.emilia-romagna.it/assistenza-ospedaliera/emergenza' },
+    ],
+    cta: { title: 'Vuoi organizzare il controllo successivo?', href: '/richiesta/?trattamento=Altro' },
+  },
+  {
+    slug: 'denti-sensibili-al-freddo',
+    category: 'urgenze-prevenzione',
+    published: true,
+    updated,
+    title: 'Denti sensibili al freddo: quando fare un controllo',
+    seoTitle: 'Denti sensibili al freddo: che cosa riferire al dentista',
+    description: 'Una fitta con acqua fredda può avere cause diverse. Quali dettagli annotare e che cosa cambia se il dolore continua dopo lo stimolo.',
+    summary: 'Una fitta breve o un dolore che rimane: quali particolari aiutano a orientare la visita.',
+    kicker: 'Sensibilità dentale',
+    lead: 'Quando bevi acqua fredda, la fitta sparisce appena smetti o continua? Riguarda un solo dente? Questi dettagli aiutano il dentista a capire che cosa controllare.',
+    keyPoints: ['Osserva dove senti la fitta e quanto dura', 'Segnala dolore spontaneo o durante la masticazione', 'Ricorda eventuali cure recenti nella zona'],
+    form: { treatmentLabel: 'Motivo della visita', treatmentOptions: ['Carie e otturazioni', 'Cura delle gengive'] },
+    sections: [
+      {
+        title: 'Perché il freddo può dare fastidio',
+        paragraphs: [
+          'Quando la gengiva si ritira o il dente si usura, alcune zone possono diventare più sensibili. Anche una carie o un’incrinatura possono provocare una fitta al freddo. La sensazione, da sola, non basta per scegliere una cura.',
+          'Se il fastidio ricompare o si concentra su uno stesso dente, chiedi una valutazione. Segnala con particolare attenzione il dolore che resta dopo aver smesso di bere, compare da solo o si fa sentire mentre mastichi.',
+        ],
+      },
+      {
+        title: 'I dettagli da ricordare prima della visita',
+        list: [
+          'Indica il lato e, se lo riconosci, il dente interessato.',
+          'Spiega se succede solo con il freddo, anche con il caldo o quando chiudi i denti.',
+          'Ricorda quando è iniziato, se la durata sta cambiando e se hai ricevuto un’otturazione o un altro trattamento in quella zona.',
+        ],
+      },
+      {
+        title: 'Come si chiarisce la causa',
+        paragraphs: [
+          'Il dentista esamina denti, otturazioni e gengive. Se serve, confronta la risposta del dente interessato con quella dei vicini. Può così distinguere una superficie esposta da un problema che richiede un trattamento diverso.',
+          'Quando si tratta di sensibilità della dentina, l’igienista o il dentista può mostrare una tecnica di spazzolamento adatta e consigliare un dentifricio specifico. Se il fastidio persiste, riferiscilo anche se hai già provato a cambiare prodotto.',
+        ],
+      },
+    ],
+    faqs: [
+      { question: 'Se sento freddo significa che ho una carie?', answer: 'È una delle possibili cause. Anche una radice esposta o un’incrinatura possono dare sintomi simili. La visita permette di valutare il singolo dente.' },
+      { question: 'La sensibilità richiede una devitalizzazione?', answer: 'La decisione dipende dallo stato della polpa e del dente. Per stabilirlo il dentista considera insieme il racconto dei sintomi, l’esame e gli eventuali test.' },
+      { question: 'Devo riprodurre la fitta prima della visita?', answer: 'È sufficiente descrivere che cosa accade normalmente quando bevi, mangi o mastichi. Puoi raccontare anche un episodio terminato prima del controllo.' },
+    ],
+    treatments: [
+      { label: 'Conservativa e otturazioni', href: '/conservativa-otturazioni/' },
+      { label: 'Igiene orale e prevenzione', href: '/igiene-orale-prevenzione/' },
+    ],
+    related: ['gengive-ritirate-cause-cosa-fare', 'devitalizzare-o-togliere-il-dente'],
+    sources: [
+      { label: 'Società Italiana di Endodonzia, Quaderno clinico di endodonzia', url: 'https://www.endodonzia.it/wp-content/uploads/2024/07/BACHECA_QuadernoClinicoDiEndodonzia.pdf' },
+      { label: 'Associazione Igienisti Dentali Italiani, Ipersensibilità dentinale', url: 'https://www.aiditalia.it/wp-content/uploads/2021/10/AIDIVademecum_IPERSENSIBILITA%E2%95%A0%C3%87-DENTALE-1.pdf' },
+      { label: 'American Dental Association, Sensitive Teeth', url: 'https://www.mouthhealthy.org/all-topics-a-z/sensitive-teeth/' },
+    ],
+    cta: { title: 'Hai una sensibilità che si ripresenta?', href: '/richiesta/?trattamento=Altro' },
+  },
+  {
+    slug: 'alitosi-persistente-quando-dal-dentista',
+    category: 'gengive-igiene',
+    published: true,
+    updated,
+    title: 'Alitosi persistente: quando parlarne con il dentista',
+    seoTitle: 'Alitosi persistente: cause orali e visita dentistica',
+    description: 'Come distinguere un episodio occasionale da un disturbo che ritorna, quali segnali riferire e quando è utile anche il parere del medico.',
+    summary: 'Se l’alito cattivo ritorna, la visita può chiarire se contribuiscono denti, gengive, lingua o protesi.',
+    kicker: 'Alitosi e salute orale',
+    lead: 'Un cambiamento dell’alito dopo un pasto è comune. Se il disturbo continua per settimane nonostante l’igiene quotidiana, puoi parlarne con il dentista. Anche bocca asciutta e altri problemi di salute possono contribuire.',
+    keyPoints: ['Descrivi quando compare e da quanto tempo lo noti', 'Riferisci sanguinamento, dolore o difficoltà con una protesi', 'Il percorso successivo dipende dalla causa individuata'],
+    form: { treatmentLabel: 'Tipo di controllo', treatmentOptions: ['Igiene orale e prevenzione', 'Cura delle gengive'] },
+    sections: [
+      {
+        title: 'Quando il disturbo ritorna',
+        paragraphs: [
+          'Cibi dall’odore intenso, fumo e digiuno possono modificare temporaneamente l’alito. Se succede spesso, osserva se avverti anche secchezza della bocca o se le gengive sono gonfie o sanguinano. Dolore ai denti o una protesi che dà fastidio sono altri motivi per contattare il dentista.',
+        ],
+      },
+      {
+        title: 'Che cosa guarda il dentista',
+        paragraphs: [
+          'La valutazione parte dalle tue abitudini e dai cambiamenti che hai notato. Comprende l’esame di lingua, denti, gengive e, se la usi, della protesi. Un accumulo di placca, una carie o un problema gengivale richiedono attenzioni diverse.',
+          'Se l’esame della bocca non spiega il disturbo, il dentista può suggerire di parlarne con il medico. Il solo odore non permette di stabilire se l’origine è digestiva o di altro tipo.',
+        ],
+      },
+      {
+        title: 'L’igiene tra una visita e l’altra',
+        list: [
+          'Pulisci delicatamente denti e gengive con un dentifricio al fluoro.',
+          'Dedica attenzione anche alla lingua e agli spazi tra i denti, scegliendo gli strumenti con il dentista o l’igienista.',
+          'Se porti una protesi rimovibile, segui le indicazioni per pulirla e segnala le zone difficili da raggiungere.',
+        ],
+      },
+    ],
+    faqs: [
+      { question: 'È sufficiente un collutorio?', answer: 'Può modificare temporaneamente l’alito. Se il problema ritorna, è utile capire se contribuiscono una carie, le gengive o la secchezza della bocca.' },
+      { question: 'Devo aspettare qualche settimana anche se mi fa male un dente?', answer: 'Con dolore ai denti, gengive gonfie o sanguinanti oppure problemi con una protesi, contatta il dentista anche prima.' },
+      { question: 'Serve sempre una pulizia professionale?', answer: 'Dipende da ciò che emerge dal controllo. A volte serve rivedere l’igiene quotidiana, in altri casi trattare un problema dentale o gengivale oppure coinvolgere il medico.' },
+    ],
+    treatments: [
+      { label: 'Igiene orale e prevenzione', href: '/igiene-orale-prevenzione/' },
+      { label: 'Parodontologia e cure gengivali', href: '/parodontologia-cure-gengivali/' },
+    ],
+    related: ['gengive-che-sanguinano', 'pulizia-denti-o-pulizia-profonda'],
+    sources: [
+      { label: 'Ministero della Salute, Raccomandazioni cliniche in odontostomatologia, sezione Alitosi', url: 'https://www.salute.gov.it/new/sites/default/files/imported/C_17_pubblicazioni_2637_allegato.pdf' },
+      { label: 'NHS, Bad breath', url: 'https://www.nhs.uk/symptoms/bad-breath/' },
+    ],
+    cta: { title: 'Vuoi far valutare un disturbo che persiste?', href: '/richiesta/?trattamento=Altro' },
+  },
+  {
+    slug: 'gengiva-che-sanguina-attorno-a-un-impianto',
+    category: 'impianti-protesi',
+    published: true,
+    updated,
+    title: 'Gengiva che sanguina attorno a un impianto: che cosa controllare',
+    seoTitle: 'Sanguinamento attorno a un impianto: segnali e controlli',
+    description: 'Quando far controllare un impianto dentale già in funzione, che differenza c’è fra mucosite e perimplantite e come organizzare la pulizia quotidiana.',
+    summary: 'Sanguinamento, gonfiore o una protesi che si muove: quali cambiamenti riferire dopo la guarigione.',
+    kicker: 'Salute degli impianti',
+    lead: 'Se attorno a un impianto già guarito la gengiva inizia a sanguinare quando la pulisci, informa il dentista. Vale anche se non hai dolore. Il controllo serve a distinguere un’infiammazione superficiale da un problema più profondo.',
+    keyPoints: ['Nota se il sangue compare sempre nella stessa zona', 'Segnala gonfiore o movimenti della protesi', 'Fatti mostrare come pulire lo spazio intorno all’impianto'],
+    form: { treatmentLabel: 'Motivo del controllo', treatmentOptions: ['Cura delle gengive', 'Protesi dentali', 'Implantologia'] },
+    sections: [
+      {
+        title: 'Quando anticipare il controllo',
+        paragraphs: [
+          'Contatta il dentista se noti sanguinamento ricorrente durante la pulizia, gonfiore, cattivo sapore o un cambiamento nella stabilità di un ponte o di una corona. Indica da quando lo avverti e in quale punto. Se l’intervento è recente, segui le istruzioni postoperatorie ricevute e chiama chi ti ha operato per un sanguinamento inatteso.',
+        ],
+      },
+      {
+        title: 'Mucosite e perimplantite: che cosa cambia',
+        paragraphs: [
+          'Nella mucosite si infiammano i tessuti molli intorno all’impianto. Quando l’infiammazione si accompagna anche a perdita dell’osso che lo sostiene, si parla di perimplantite. Il sangue sullo spazzolino, da solo, non distingue le due situazioni.',
+          'Il dentista controlla con strumenti dedicati il sanguinamento e la profondità degli spazi intorno all’impianto. Quando occorre, confronta le radiografie con quelle precedenti per valutare l’osso.',
+        ],
+      },
+      {
+        title: 'Come preparare il mantenimento',
+        paragraphs: [
+          'Fatti mostrare in bocca dove appoggiare lo spazzolino e come raggiungere la base della protesi. Uno scovolino adatto allo spazio disponibile può rendere più semplice la pulizia tra gli elementi. Spiega se una zona resta inaccessibile anche dopo la dimostrazione.',
+          'La frequenza dei richiami dipende dalle condizioni dei tessuti e dai fattori di rischio personali, fra cui una storia di parodontite. Una nuova perdita di sangue o una protesi che sembra mobile meritano un contatto prima del richiamo già fissato.',
+        ],
+      },
+    ],
+    faqs: [
+      { question: 'È perimplantite ogni volta che vedo sangue?', answer: 'Il sanguinamento può comparire anche con un’infiammazione limitata alla gengiva. Per stabilire se è coinvolto l’osso serve una valutazione odontoiatrica.' },
+      { question: 'Posso aspettare finché il dolore aumenta?', answer: 'I disturbi intorno all’impianto possono dare poco o nessun dolore. Se il sanguinamento si ripete o la protesi si muove, chiedi un controllo.' },
+      { question: 'Serve uno scovolino particolare?', answer: 'Le dimensioni e l’accesso cambiano secondo la protesi e gli spazi. Porta al controllo lo strumento che usi per verificare insieme come raggiungere la zona.' },
+    ],
+    treatments: [
+      { label: 'Implantologia', href: '/implantologia-tradizionale-computer-guidata/' },
+      { label: 'Parodontologia e cure gengivali', href: '/parodontologia-cure-gengivali/' },
+      { label: 'Igiene orale e prevenzione', href: '/igiene-orale-prevenzione/' },
+    ],
+    related: ['gengive-che-sanguinano', 'pulizia-denti-o-pulizia-profonda'],
+    sources: [
+      { label: 'European Federation of Periodontology, domande dei pazienti sugli impianti', url: 'https://www.efp.org/for-patients/dental-implants/faqs/' },
+      { label: 'European Federation of Periodontology, prevenzione delle malattie peri-implantari', url: 'https://www.efp.org/fileadmin/uploads/efp/Documents/Other_publications/Clinical_guidelines/peri-implantitis-guideline-01-prevention.pdf' },
+      { label: 'Associazione Igienisti Dentali Italiani, igiene degli impianti', url: 'https://www.aiditalia.it/wp-content/uploads/2020/10/AIDI_VADEMECUM_GENERICO-TRENTINO-002-1.pdf' },
+    ],
+    cta: { title: 'Hai notato un cambiamento attorno all’impianto?', href: '/richiesta/?trattamento=Altro' },
   },
 ];
 

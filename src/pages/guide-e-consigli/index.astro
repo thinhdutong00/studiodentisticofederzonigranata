@@ -50,7 +50,9 @@ const structuredData = {
     <section class="guides-hero" aria-labelledby="guides-title" data-transparent-header-region>
       <div class="guides-wrap guides-hero-grid">
         <div class="guides-hero-copy">
-          <p class="guides-kicker">Informazioni</p>
+          <nav class="guides-kicker" aria-label="Percorso di navigazione">
+            <a href="/">Home</a> <span aria-hidden="true">/</span> <span aria-current="page">Guide e consigli</span>
+          </nav>
           <h1 id="guides-title">Guide e consigli</h1>
           <p class="guides-lead">
             Risposte ai dubbi più frequenti prima di una visita: costi, alternative, tempi e segnali da non
@@ -205,6 +207,12 @@ const structuredData = {
       apply();
     });
     input.addEventListener('input', apply);
+    document.querySelectorAll('.guides-categories a').forEach((link) => {
+      link.addEventListener('click', () => {
+        input.value = '';
+        apply();
+      });
+    });
     reset?.addEventListener('click', () => {
       input.value = '';
       apply();
@@ -273,6 +281,11 @@ const structuredData = {
     font-weight: 500;
     line-height: 16px;
     text-transform: uppercase;
+  }
+
+  .guides-kicker a {
+    color: inherit;
+    text-underline-offset: 0.18em;
   }
 
   .guides-hero h1 {
