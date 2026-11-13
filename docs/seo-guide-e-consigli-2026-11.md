@@ -63,6 +63,10 @@ Stato SEO di tutte: creata, indicizzabile, in sitemap. Non pubblicata in produzi
 | `/guide-e-consigli/preventivo-dentista-come-leggerlo/` | Dentista economico, prezzi, confronto preventivi |
 | `/guide-e-consigli/pulizia-denti-o-pulizia-profonda/` | Pulizia denti, pulizia parodontale |
 | `/guide-e-consigli/faccette-composito-o-ceramica/` | Faccette, composite bonding |
+| `/guide-e-consigli/devitalizzare-o-togliere-il-dente/` | Devitalizzare o togliere un dente, dente devitalizzato che fa male |
+| `/guide-e-consigli/gengive-ritirate-cause-cosa-fare/` | Gengive ritirate: cause, ricrescono |
+| `/guide-e-consigli/bite-a-cosa-serve/` | Bite: a cosa serve, bruxismo, farmacia o dentista |
+| `/guide-e-consigli/apparecchio-per-non-russare/` | Apparecchio per non russare, russamento e apnee |
 
 ## Mappa delle opportunità (seconda analisi)
 
@@ -109,3 +113,27 @@ Per le faccette non è stata trovata una fonte istituzionale rivolta ai pazienti
 Eseguiti: confronto dei file con `949eb11`; test automatici (`npm test`); build dell'anteprima su Vercel.
 
 Non disponibili in questa sessione: build locale (pacchetti non installabili), controllo visivo delle pagine renderizzate, confronto dell'HTML generato delle pagine preesistenti, verifica in Search Console.
+
+## Terza analisi: suggerimenti di ricerca Google (13/11/2026)
+
+Fonte: completamento automatico di Google, lingua italiana, Italia, letto il 13/11/2026 per 18 termini di partenza. I suggerimenti mostrano come le persone formulano le ricerche: non sono volumi e non dimostrano domanda locale. Keyword Planner non è stato consultato.
+
+| Termine | Suggerimenti osservati | Trattamento offerto | Decisione |
+| --- | --- | --- | --- |
+| devitalizzazione, dente devitalizzato | fa male, quanto dura, quante sedute, conseguenze, fa male dopo anni, rotto si può ricostruire, "devitalizzare o togliere un dente" | Endodonzia | Nuova guida |
+| russamento, apnee, apparecchio per non russare | russamento e apnee notturne, apparecchio denti per non russare, apnee cosa fare, sono pericolose | Dispositivi per russamento e apnee | Nuova guida |
+| bite denti | a cosa serve, bruxismo, farmacia, costo dentista, per mandibola | Gnatologia | Nuova guida |
+| gengive ritirate | cause, ricrescono, cura, rimedi | Parodontologia | Nuova guida |
+| otturazione, dente scheggiato | costo, fa male, cosa fare, ricostruzione | Conservativa | Già coperto da pagina trattamento e guida sui traumi |
+| apparecchio denti adulti | costo, prima e dopo, quanto tempo, invisibile | Ortodonzia | Già coperto da pagine esistenti e guida sul costo |
+| ascesso dentale, mal di denti | come si cura, antibiotico, cosa prendere | Urgenze | Non realizzata: le ricerche chiedono indicazioni su farmaci, che una guida dello studio non deve dare |
+| sensibilità denti, alitosi | cause, rimedi, dopo pulizia | Igiene, parodontologia | Non realizzate: da valutare con dati di volume |
+| dentista modena, dentista reggio emilia | economico, prezzi, aperto sabato, aperti adesso, vie e nomi di altri studi | — | Costi: guida sul preventivo. Sabato: lo studio è chiuso, nessun contenuto |
+
+Devitalizzazione e russamento erano stati esclusi perché assenti dal campione di Search Console e Google Ads: quel campione non dimostrava la domanda, ma non la escludeva. I suggerimenti di Google mostrano che le ricerche esistono.
+
+## Controllo su prezzi, offerte e comunicazione sanitaria
+
+- Ricerca automatica nelle pagine nuove di importi, euro, gratuità, sconti, promozioni, offerte, rate, finanziamenti, formule "a partire da", superlativi e garanzie: nessuna occorrenza commerciale. Le guide su costi e preventivi spiegano voci e fattori, senza cifre.
+- Riferimenti considerati: legge 145/2018, art. 1, comma 525, come modificato dal D.L. 69/2023 (comunicazioni informative, senza elementi di carattere attrattivo e suggestivo, comprese offerte, sconti e promozioni); Codice di deontologia medica, art. 56 (pubblicità informativa veritiera, corretta, non ingannevole, non comparativa senza indicatori misurabili). La lettura si basa sulle sintesi di ordini professionali e sul testo dell'art. 56 pubblicato da FNOMCeO, non su un parere legale.
+- Le guide non contengono testimonianze, casi clinici, confronti con altri studi, percentuali di successo, promesse di risultato né attribuzioni di autore o revisore.
