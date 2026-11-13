@@ -2,6 +2,7 @@
 // Modulo breve della hero per "Guide e consigli".
 // Non invia la richiesta: passa sede e percorso a /richiesta/ con gli stessi parametri
 // usati dalle pagine trattamento (trattamento, sede, motivo), letti da /richiesta/.
+// /richiesta/ applica sede e motivo solo se riconosce il trattamento: per questo è sempre valorizzato.
 import CtaArrowIcon from './CtaArrowIcon.astro';
 import { site } from '../data/site';
 
@@ -58,7 +59,8 @@ const hasFixedTreatment = Boolean(form.treatment);
       <label for={`${idPrefix}-treatment`}>{form.treatmentLabel || 'Tipo di percorso'}</label>
       <div class="guide-request-select">
         <select id={`${idPrefix}-treatment`} name="trattamento">
-          <option value="">Da valutare insieme</option>
+          {/* "Altro" è un trattamento previsto da /richiesta/: così la sede scelta viene conservata. */}
+          <option value="Altro">Da valutare insieme</option>
           {(form.treatmentOptions || []).map((option) => <option value={option}>{option}</option>)}
         </select>
       </div>

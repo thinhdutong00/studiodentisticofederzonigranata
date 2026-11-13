@@ -1,6 +1,5 @@
 // Raccolta centralizzata di "Guide e consigli".
-// L'indice /guide-e-consigli/, le pagine guida, i collegamenti dai trattamenti e la sitemap
-// leggono tutti da questo file: aggiungere una voce qui aggiorna automaticamente il resto.
+// L'indice /guide-e-consigli/, le pagine guida e la sitemap leggono tutti da questo file: aggiungere una voce qui aggiorna automaticamente il resto.
 //
 // Regole editoriali:
 // - `published: false` tiene una bozza fuori da indice, route e sitemap.
@@ -11,12 +10,13 @@
 export const guidesIndexPath = '/guide-e-consigli/';
 
 export const guideCategories = [
+  { id: 'prima-della-visita', label: 'Prima della visita', description: 'Da dove cominciare, come leggere un preventivo e come scegliere lo studio.' },
   { id: 'ortodonzia-bambini', label: 'Ortodonzia e bambini', description: 'Allineatori, apparecchi e prime visite dei più piccoli.' },
   { id: 'impianti-protesi', label: 'Denti mancanti, impianti e protesi', description: 'Come si sostituisce un dente e cosa cambia tra le soluzioni.' },
-  { id: 'gengive-mandibola', label: 'Gengive e mandibola', description: 'Sanguinamento gengivale, parodontite, dolore e rumori della mandibola.' },
+  { id: 'gengive-mandibola', label: 'Gengive, igiene e mandibola', description: 'Pulizia professionale, sanguinamento gengivale, dolore e rumori della mandibola.' },
+  { id: 'estetica-sorriso', label: 'Estetica del sorriso', description: 'Forma e colore dei denti: materiali e limiti.' },
   { id: 'chirurgia-orale', label: 'Chirurgia orale', description: 'Denti del giudizio, estrazioni e denti che non erompono.' },
   { id: 'urgenze-prevenzione', label: 'Urgenze e prevenzione', description: 'Cosa fare dopo un trauma e quali segnali non trascurare.' },
-  { id: 'scelta-studio', label: 'Scegliere lo studio', description: 'Criteri pratici per valutare uno studio dentistico.' },
 ];
 
 /** Percorsi selezionabili nel modulo breve dell'indice: sono le etichette dei trattamenti di /richiesta/. */
@@ -138,7 +138,6 @@ export const guides = [
       { label: 'Apparecchio fisso', href: '/visita-ortodonzia/apparecchio-fisso/' },
       { label: 'Ortodonzia e allineatori', href: '/ortodonzia-allineatori-invisibili/' },
     ],
-    treatmentPaths: ['/ortodonzia-allineatori-invisibili/'],
     related: ['prima-visita-ortodontica-bambini'],
     sources: [MINISTERO_RACCOMANDAZIONI],
     cta: { title: 'Per una cifra precisa serve conoscere il tuo caso.', href: '/richiesta/?trattamento=Ortodonzia%20e%20allineatori' },
@@ -218,7 +217,6 @@ export const guides = [
       { label: 'Odontoiatria per bambini', href: '/pedodonzia-odontoiatria-infantile/' },
       { label: 'Ortodonzia per bambini e adolescenti', href: '/visita-ortodonzia/ortodonzia-bambini-adolescenti/' },
     ],
-    treatmentPaths: ['/pedodonzia-odontoiatria-infantile/', '/ortodonzia-allineatori-invisibili/'],
     related: ['/carie-denti-da-latte/', 'trauma-dentale-cosa-fare'],
     sources: [
       MINISTERO_RACCOMANDAZIONI,
@@ -325,7 +323,6 @@ export const guides = [
       { label: 'Implantologia tradizionale e computer guidata', href: '/implantologia-tradizionale-computer-guidata/' },
       { label: 'Protesi fissa e mobile', href: '/protesi-fissa-mobile/' },
     ],
-    treatmentPaths: ['/implantologia-tradizionale-computer-guidata/'],
     related: ['denti-mancanti-ponte-impianto-protesi', '/dentiera-fissa-cose-e-vantaggi/'],
     sources: [MINISTERO_RACCOMANDAZIONI],
     cta: { title: 'Un preventivo utile parte da una diagnosi completa.', href: '/richiesta/?trattamento=Implantologia' },
@@ -413,7 +410,6 @@ export const guides = [
       { label: 'Protesi fissa e mobile', href: '/protesi-fissa-mobile/' },
       { label: 'Implantologia tradizionale e computer guidata', href: '/implantologia-tradizionale-computer-guidata/' },
     ],
-    treatmentPaths: ['/protesi-fissa-mobile/', '/implantologia-tradizionale-computer-guidata/'],
     related: ['preventivo-impianto-dentale', '/protesi-dentarie-mobili-invisibili-vantaggi-e-svantaggi/', '/dentiera-fissa-cose-e-vantaggi/'],
     sources: [MINISTERO_RACCOMANDAZIONI],
     cta: { title: 'La soluzione giusta dipende da ciò che c’è in bocca oggi.', href: '/richiesta/' },
@@ -505,7 +501,6 @@ export const guides = [
       { label: 'Parodontologia e cure gengivali', href: '/parodontologia-cure-gengivali/' },
       { label: 'Igiene orale e prevenzione', href: '/igiene-orale-prevenzione/' },
     ],
-    treatmentPaths: ['/parodontologia-cure-gengivali/', '/igiene-orale-prevenzione/'],
     related: ['preventivo-impianto-dentale'],
     sources: [
       { label: 'SIdP, Linee guida EFP S3 per il trattamento della parodontite di stadio I–III (adattamento italiano)', url: 'https://www.sidp.it/media-download/ta2e331.pdf' },
@@ -601,7 +596,6 @@ export const guides = [
     treatments: [
       { label: 'Gnatologia e disturbi dell’articolazione temporo-mandibolare', href: '/gnatologia-articolazione-temporo-mandibolare/' },
     ],
-    treatmentPaths: ['/gnatologia-articolazione-temporo-mandibolare/'],
     related: ['gengive-che-sanguinano'],
     sources: [
       { label: 'National Institute of Dental and Craniofacial Research (NIH), TMD – Temporomandibular Disorders', url: 'https://nidcr.nih.gov/health-info/tmd' },
@@ -695,7 +689,6 @@ export const guides = [
       { label: 'Odontoiatria per bambini', href: '/pedodonzia-odontoiatria-infantile/' },
       { label: 'Conservativa e otturazioni', href: '/conservativa-otturazioni/' },
     ],
-    treatmentPaths: ['/pedodonzia-odontoiatria-infantile/', '/conservativa-otturazioni/', '/endodonzia-devitalizzazioni/'],
     related: ['prima-visita-ortodontica-bambini'],
     sources: [
       {
@@ -704,6 +697,397 @@ export const guides = [
       },
     ],
     cta: { title: 'Dopo un trauma, un controllo serve anche quando il dolore è passato.', href: '/richiesta/' },
+  },
+  {
+    slug: 'sistemare-i-denti-da-dove-iniziare',
+    category: 'prima-della-visita',
+    published: true,
+    updated,
+    title: 'Vorrei sistemare i denti: da dove si comincia',
+    seoTitle: 'Sistemare i denti: da dove si comincia e in che ordine',
+    description:
+      'Più problemi insieme e non sai da dove partire? L’ordine con cui si costruisce un piano di cura e che cosa aspettarsi dalla prima visita. Studio Federzoni Granata, Modena e Reggio Emilia.',
+    summary: 'L’ordine con cui si affrontano più problemi insieme e che cosa decide la prima visita.',
+    kicker: 'Prima della visita',
+    lead: 'Quando i problemi sono più di uno, il punto di partenza non è il trattamento che si vede di più ma quello che rende stabili tutti gli altri. Di solito si procede così: prima ciò che fa male o è infetto, poi gengive e carie, poi denti mancanti, allineamento ed estetica.',
+    keyPoints: [
+      'Si parte da dolore e infezioni, poi dalle fondamenta',
+      'L’estetica dura se poggia su denti e gengive sani',
+      'Un piano di cura si può affrontare per tappe',
+    ],
+    form: {
+      treatmentLabel: 'Che cosa vorresti valutare',
+      treatmentOptions: ['Igiene orale e prevenzione', 'Carie e otturazioni', 'Cura delle gengive', 'Protesi dentali', 'Implantologia', 'Ortodonzia e allineatori', 'Faccette dentali'],
+    },
+    sections: [
+      {
+        title: 'Perché serve un ordine',
+        paragraphs: [
+          'Molte persone rimandano la visita perché i problemi si sono accumulati: un dente che manca, altri consumati o storti, gengive che sanguinano. Davanti a un elenco così è normale non sapere che cosa chiedere.',
+          'In bocca però le cure si sostengono a vicenda. Una faccetta su un dente con la gengiva infiammata, o un impianto accanto a una parodontite non trattata, hanno meno probabilità di durare. Per questo il piano di cura segue una sequenza.',
+        ],
+      },
+      {
+        title: 'L’ordine con cui di solito si procede',
+        table: {
+          caption: 'Sequenza tipica di un piano di cura',
+          headers: ['Fase', 'Che cosa comprende', 'Perché viene in questo punto'],
+          rows: [
+            ['1. Urgenze', 'Dolore, infezioni, denti fratturati.', 'Tolgono il disagio e fermano ciò che può peggiorare.'],
+            ['2. Fondamenta', 'Igiene professionale, cura delle gengive, carie.', 'Tutte le cure successive poggiano su tessuti sani.'],
+            ['3. Denti da recuperare o sostituire', 'Devitalizzazioni, ricostruzioni, corone, ponti, impianti, protesi.', 'Ripristinano la masticazione.'],
+            ['4. Posizione dei denti', 'Ortodonzia, quando indicata.', 'Può cambiare lo spazio disponibile per protesi ed estetica.'],
+            ['5. Estetica', 'Sbiancamento, faccette.', 'Si rifinisce quando forma e posizione sono definite.'],
+          ],
+        },
+        note: 'È uno schema generale: l’ordine reale dipende dalla situazione e viene definito dopo la diagnosi.',
+      },
+      {
+        title: 'Che cosa succede alla prima visita',
+        paragraphs: [
+          'La prima visita serve a raccogliere le informazioni: che cosa ti preoccupa, esame di denti e gengive, radiografie quando indicate. Non si decide tutto subito e non si inizia una cura senza averla spiegata.',
+          'Da qui nasce un piano con priorità, alternative e tempi. Puoi leggere come è organizzata nella pagina dedicata alla prima visita.',
+        ],
+      },
+      {
+        title: 'Si può fare a tappe?',
+        paragraphs: [
+          'Sì, nella maggior parte dei casi. Un piano di cura distingue ciò che non conviene rimandare da ciò che può attendere. Sapere quali sono le priorità permette di distribuire le cure nel tempo senza compromettere il risultato.',
+          'Vale anche il contrario: alcune fasi hanno senso solo insieme. Per esempio, sostituire un dente senza trattare la causa per cui è stato perso espone a ripetere il problema.',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: 'Non vado dal dentista da anni: da dove ricomincio?',
+        answer: 'Da una visita di controllo. Serve proprio a fare il punto della situazione, qualunque sia. Sapere che cosa c’è permette di decidere con calma che cosa fare e quando.',
+      },
+      {
+        question: 'Posso fare solo la parte estetica?',
+        answer: 'Dipende da ciò che emerge alla visita. Se denti e gengive sono sani, sì. Se ci sono carie o infiammazione, intervenire prima su quelle protegge anche il risultato estetico.',
+      },
+      {
+        question: 'Quanto tempo richiede un piano completo?',
+        answer: 'Non c’è una durata tipica: va da poche sedute a percorsi di diversi mesi quando sono coinvolte ortodonzia o implantologia. I tempi vengono indicati insieme al piano.',
+      },
+    ],
+    treatments: [
+      { label: 'Come si svolge la prima visita', href: '/prima-visita/' },
+      { label: 'Tutti i trattamenti dello studio', href: '/trattamenti/' },
+      { label: 'Igiene orale e prevenzione', href: '/igiene-orale-prevenzione/' },
+    ],
+    related: ['preventivo-dentista-come-leggerlo', 'denti-mancanti-ponte-impianto-protesi', 'gengive-che-sanguinano'],
+    sources: [
+      MINISTERO_RACCOMANDAZIONI,
+      {
+        label: 'Ministero della Salute, Linee guida nazionali per la promozione della salute orale e la prevenzione delle patologie orali in età adulta',
+        url: 'https://www.unife.it/medicina/lm.odontoiatria/insegnamenti/principi-di-odontoiatria/modulo-di-odontoiatria-preventiva-e-di-comunita/linee-guida-nazionali-per-la-promozione-della-salute-orale-e-la-prevenzione-delle-patologie-orali-in-eta2019-adulta.pdf/',
+      },
+    ],
+    cta: { title: 'Il primo passo è sapere che cosa c’è.', href: '/richiesta/' },
+  },
+  {
+    slug: 'preventivo-dentista-come-leggerlo',
+    category: 'prima-della-visita',
+    published: true,
+    updated,
+    title: 'Preventivo del dentista: come leggerlo e confrontarlo',
+    seoTitle: 'Preventivo del dentista: come leggerlo e confrontarlo',
+    description:
+      'Che cosa deve contenere un preventivo odontoiatrico, perché due studi propongono cifre diverse e quali domande fare prima di accettare. Guida dello studio Federzoni Granata.',
+    summary: 'Che cosa deve contenere, perché le cifre cambiano da uno studio all’altro e quali domande fare.',
+    kicker: 'Prima della visita',
+    lead: 'Un preventivo si capisce solo insieme al piano di cura che descrive. Due cifre diverse spesso corrispondono a due lavori diversi: per confrontarle bisogna guardare che cosa è compreso, con quali materiali e con quali controlli.',
+    keyPoints: [
+      'Il preventivo va consegnato in forma scritta o digitale',
+      'Si confrontano i piani di cura, non solo i totali',
+      'Chiedere le alternative fa parte della scelta',
+    ],
+    form: {
+      treatmentLabel: 'Che cosa vorresti valutare',
+      treatmentOptions: ['Implantologia', 'Protesi dentali', 'Ortodonzia e allineatori', 'Cura delle gengive', 'Carie e otturazioni', 'Faccette dentali'],
+    },
+    sections: [
+      {
+        title: 'Che cosa deve contenere',
+        paragraphs: [
+          'In Italia i professionisti iscritti a un ordine sono tenuti a comunicare al cliente un preventivo di massima in forma scritta o digitale, indicando le voci di costo delle singole prestazioni. Vale anche per le cure odontoiatriche.',
+          'Un preventivo utile riporta:',
+        ],
+        list: [
+          'La diagnosi o il problema a cui le cure rispondono.',
+          'L’elenco delle prestazioni, dente per dente quando serve.',
+          'Che cosa è compreso: esami, provvisori, controlli.',
+          'I materiali e il tipo di manufatto, per protesi e restauri.',
+          'I tempi previsti e le fasi.',
+          'Le modalità di pagamento.',
+        ],
+      },
+      {
+        title: 'Perché due preventivi sono diversi',
+        table: {
+          caption: 'Motivi per cui due preventivi odontoiatrici possono differire',
+          headers: ['Che cosa cambia', 'Che cosa verificare'],
+          rows: [
+            ['La diagnosi', 'I due studi hanno riscontrato gli stessi problemi? Chiedi su quali esami si basano.'],
+            ['Il piano di cura', 'Stesso obiettivo, strade diverse: per esempio ponte o impianto.'],
+            ['Le voci comprese', 'Esami, provvisori, eventuali interventi aggiuntivi e controlli sono inclusi?'],
+            ['I materiali', 'Per corone, protesi e faccette esistono materiali con caratteristiche diverse.'],
+            ['Il mantenimento', 'Sono previsti richiami e controlli dopo la cura?'],
+          ],
+        },
+        note: 'Il totale più basso non descrive necessariamente lo stesso lavoro. Vale anche al contrario: una cifra più alta non è di per sé garanzia di qualità.',
+      },
+      {
+        title: 'Le domande da fare',
+        list: [
+          'Che cosa succede se non faccio questa cura, o se la rimando?',
+          'Quali alternative ci sono e che cosa cambia tra loro?',
+          'Quali cure sono prioritarie e quali possono attendere?',
+          'Il preventivo può cambiare? In quali casi?',
+          'Chi eseguirà le cure e chi mi seguirà nei controlli?',
+        ],
+        after: [
+          'Sono domande legittime. Uno studio che lavora con un piano chiaro è in grado di rispondere prima di iniziare.',
+        ],
+      },
+      {
+        title: 'Quando il preventivo cambia',
+        paragraphs: [
+          'Può accadere che durante le cure emerga qualcosa che gli esami iniziali non mostravano, per esempio una carie più estesa del previsto sotto una vecchia otturazione. In questi casi la variazione va spiegata e concordata prima di procedere.',
+        ],
+      },
+      {
+        title: 'Come funziona nello studio',
+        paragraphs: [
+          'Nello studio Federzoni Granata il piano di cura viene spiegato prima di iniziare, con priorità, alternative e tempi. Costi e modalità di pagamento vengono comunicati dalla segreteria insieme al piano: questa guida non riporta cifre perché dipendono dalla diagnosi.',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: 'Posso chiedere un preventivo senza fare la visita?',
+        answer: 'Una cifra data senza visita è una stima generica. Per un preventivo affidabile servono l’esame clinico e, quando indicate, le radiografie.',
+      },
+      {
+        question: 'La prima visita ha un costo?',
+        answer: 'Le condizioni della prima visita ti vengono indicate dalla segreteria quando invii la richiesta o chiami lo studio.',
+      },
+      {
+        question: 'Ho un fondo sanitario: che cosa devo fare?',
+        answer: 'Comunica il nome del fondo al momento della richiesta. Lo studio può fornire la documentazione amministrativa utile per presentare la pratica al tuo ente; regole e rimborsi dipendono dal singolo piano sanitario.',
+      },
+    ],
+    treatments: [
+      { label: 'Come si svolge la prima visita', href: '/prima-visita/' },
+      { label: 'Convenzioni e fondi sanitari', href: '/convenzioni/' },
+      { label: 'Tutti i trattamenti dello studio', href: '/trattamenti/' },
+    ],
+    related: ['preventivo-impianto-dentale', 'costo-allineatori-trasparenti', 'sistemare-i-denti-da-dove-iniziare'],
+    sources: [
+      {
+        label: 'Legge 4 agosto 2017, n. 124, art. 1, comma 150: preventivo di massima in forma scritta o digitale (sintesi Euroconference News)',
+        url: 'https://www.ecnews.it/fiscale/professionisti/professionisti-obbligo-preventivo-scritto-digitale/',
+      },
+      MINISTERO_RACCOMANDAZIONI,
+    ],
+    cta: { title: 'Un preventivo chiaro parte da una diagnosi chiara.', href: '/richiesta/' },
+  },
+  {
+    slug: 'pulizia-denti-o-pulizia-profonda',
+    category: 'gengive-mandibola',
+    published: true,
+    updated,
+    title: 'Pulizia dei denti e pulizia profonda delle gengive: le differenze',
+    seoTitle: 'Pulizia dei denti o pulizia profonda delle gengive: differenze',
+    description:
+      'Che cosa comprende una seduta di igiene professionale, quando serve una pulizia sotto gengiva e ogni quanto farla. Guida dello studio Federzoni Granata, Modena e Reggio Emilia.',
+    summary: 'Igiene professionale e terapia parodontale non sono la stessa seduta: che cosa cambia e quando serve l’una o l’altra.',
+    kicker: 'Igiene e prevenzione',
+    lead: 'La pulizia dei denti rimuove placca e tartaro sopra la gengiva e serve a tutti, a intervalli regolari. La pulizia profonda lavora sotto la gengiva e si esegue solo quando c’è una parodontite. Quale delle due serve lo stabilisce la misurazione delle gengive.',
+    keyPoints: [
+      'L’igiene professionale è prevenzione',
+      'La pulizia profonda è una terapia per la parodontite',
+      'La frequenza dei richiami è personale',
+    ],
+    form: {
+      treatment: 'Igiene orale e prevenzione',
+      reasonLabel: 'Motivo della richiesta',
+      reasons: ['Seduta di igiene orale professionale', 'Controllo preventivo di denti e gengive', 'Prevenzione e igiene per un bambino'],
+    },
+    sections: [
+      {
+        title: 'Che cosa comprende l’igiene professionale',
+        paragraphs: [
+          'Durante la seduta si rimuovono placca, tartaro e pigmentazioni dalle superfici dei denti, comprese le zone che spazzolino e filo non raggiungono bene. Si conclude con la lucidatura e con indicazioni su come migliorare la pulizia quotidiana.',
+          'È anche un’occasione di controllo: chi esegue la seduta osserva gengive e denti e segnala ciò che merita un approfondimento.',
+        ],
+      },
+      {
+        title: 'Che cos’è la pulizia profonda',
+        paragraphs: [
+          'Quando l’infiammazione ha creato tasche tra dente e gengiva, placca e tartaro si depositano anche sulla radice, dove l’igiene normale non arriva. In questo caso si esegue una strumentazione sotto gengiva: è una fase della terapia della parodontite, non una pulizia “più forte”.',
+          'Di solito richiede più sedute, può essere eseguita con anestesia locale ed è seguita da una rivalutazione per verificare come hanno risposto le gengive.',
+        ],
+      },
+      {
+        title: 'Le differenze in sintesi',
+        table: {
+          caption: 'Igiene professionale e strumentazione sotto gengiva a confronto',
+          headers: ['', 'Igiene professionale', 'Pulizia profonda'],
+          rows: [
+            ['A che cosa serve', 'Prevenire carie e infiammazione gengivale.', 'Trattare la parodontite.'],
+            ['Dove agisce', 'Sopra la gengiva e lungo il margine.', 'Sotto la gengiva, sulla superficie della radice.'],
+            ['Per chi', 'Per tutti, a intervalli regolari.', 'Per chi ha tasche parodontali.'],
+            ['Sedute', 'In genere una.', 'In genere più di una, con rivalutazione.'],
+            ['Anestesia', 'Di norma non necessaria.', 'Può essere utilizzata.'],
+          ],
+        },
+      },
+      {
+        title: 'Ogni quanto fare la pulizia',
+        paragraphs: [
+          'Non esiste un intervallo valido per tutti. La Società Italiana di Parodontologia e Implantologia consiglia igiene professionale e controllo almeno due volte l’anno; chi ha avuto una parodontite, fuma o accumula tartaro rapidamente può avere bisogno di richiami più ravvicinati.',
+          'L’intervallo viene stabilito dopo aver valutato la tua situazione e può cambiare nel tempo.',
+        ],
+      },
+      {
+        title: 'Dopo la seduta',
+        paragraphs: [
+          'Per alcuni giorni i denti possono essere più sensibili al freddo e le gengive leggermente indolenzite, soprattutto dopo una pulizia profonda. Se le gengive erano gonfie, sgonfiandosi possono lasciare più visibile la base del dente: è l’effetto della riduzione dell’infiammazione.',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: 'La pulizia rovina lo smalto?',
+        answer: 'No. Gli strumenti rimuovono i depositi presenti sul dente, non lo smalto sano. La sensazione di denti “diversi” dopo la seduta è dovuta al tartaro che non c’è più.',
+      },
+      {
+        question: 'Perché le gengive sanguinano durante la pulizia?',
+        answer: 'Sanguinano dove sono infiammate. È un’informazione utile: indica le zone in cui la pulizia quotidiana va migliorata o in cui serve un controllo più approfondito.',
+      },
+      {
+        question: 'Posso chiedere direttamente una pulizia profonda?',
+        answer: 'Non è una scelta ma un’indicazione clinica: si esegue se la misurazione delle gengive rileva tasche. In caso contrario non porta benefici.',
+      },
+      {
+        question: 'La pulizia sbianca i denti?',
+        answer: 'Rimuove le pigmentazioni superficiali, quindi i denti possono apparire più chiari. Il colore naturale del dente non cambia: per quello esiste lo sbiancamento.',
+      },
+    ],
+    treatments: [
+      { label: 'Igiene orale e prevenzione', href: '/igiene-orale-prevenzione/' },
+      { label: 'Parodontologia e cure gengivali', href: '/parodontologia-cure-gengivali/' },
+      { label: 'Sbiancamento dentale', href: '/sbiancamento/' },
+    ],
+    related: ['gengive-che-sanguinano', 'sistemare-i-denti-da-dove-iniziare'],
+    sources: [
+      { label: 'SIdP, Linee guida EFP S3 per il trattamento della parodontite di stadio I–III (adattamento italiano)', url: 'https://www.sidp.it/media-download/ta2e331.pdf' },
+      { label: 'SIdP, raccomandazioni per la salute delle gengive', url: 'https://www.sidp.it/media-download/ta9w5a6.pdf' },
+      MINISTERO_RACCOMANDAZIONI,
+    ],
+    cta: { title: 'Una seduta di igiene è anche un controllo delle gengive.', href: '/richiesta/?trattamento=Igiene%20orale%20e%20prevenzione' },
+  },
+  {
+    slug: 'faccette-composito-o-ceramica',
+    category: 'estetica-sorriso',
+    published: true,
+    updated,
+    title: 'Faccette in composito o in ceramica: che cosa cambia',
+    seoTitle: 'Faccette in composito o in ceramica: differenze e limiti',
+    description:
+      'Differenze tra faccette in composito e in ceramica: come si realizzano, manutenzione, limiti e casi in cui conviene un’altra soluzione. Guida dello studio Federzoni Granata.',
+    summary: 'Come si realizzano, che manutenzione richiedono e quando una faccetta non è la soluzione adatta.',
+    kicker: 'Estetica del sorriso',
+    lead: 'Le faccette in composito si modellano direttamente sul dente, di solito in una seduta. Quelle in ceramica vengono realizzate in laboratorio e applicate in un secondo momento. La scelta dipende da che cosa si vuole correggere, da quanto smalto è presente e da come chiudono i denti.',
+    keyPoints: [
+      'Composito: tecnica diretta, modificabile e riparabile',
+      'Ceramica: lavorazione in laboratorio, colore più stabile',
+      'Non sempre una faccetta è la soluzione indicata',
+    ],
+    form: {
+      treatment: 'Faccette dentali',
+      reasonLabel: 'Tipo di percorso',
+      reasons: ['Faccette in composito', 'Faccette in ceramica'],
+    },
+    sections: [
+      {
+        title: 'Che cosa correggono',
+        paragraphs: [
+          'Una faccetta è un sottile rivestimento della superficie visibile del dente. Si usa per modificare forma, proporzioni e colore: denti scheggiati o consumati, spazi tra i denti, discromie che non rispondono allo sbiancamento.',
+          'Non sposta i denti e non cura carie o gengive: questi aspetti vanno valutati e, se serve, trattati prima.',
+        ],
+      },
+      {
+        title: 'Composito e ceramica a confronto',
+        table: {
+          caption: 'Confronto tra faccette in composito e faccette in ceramica',
+          headers: ['', 'Composito', 'Ceramica'],
+          rows: [
+            ['Come si realizza', 'Modellata direttamente sul dente.', 'Costruita in laboratorio su impronta e poi applicata.'],
+            ['Sedute', 'In genere una.', 'In genere più di una, con una fase di prova.'],
+            ['Preparazione del dente', 'Spesso minima o assente; dipende dal caso.', 'Dipende dal caso: può essere minima o richiedere una riduzione dello smalto.'],
+            ['Colore nel tempo', 'Può pigmentarsi e perdere lucentezza; si può rilucidare.', 'Più stabile.'],
+            ['Se si scheggia', 'In genere riparabile in studio.', 'Spesso va sostituita.'],
+            ['Modifiche successive', 'Si può ritoccare.', 'Una volta applicata non si modifica.'],
+          ],
+        },
+        note: 'Sono caratteristiche generali dei due materiali. Quale sia indicato nel tuo caso si stabilisce dopo l’esame dei denti.',
+      },
+      {
+        title: 'Quando una faccetta non è la scelta adatta',
+        list: [
+          'Se il problema è solo il colore: lo sbiancamento può bastare.',
+          'Se i denti sono molto disallineati: l’ortodonzia evita di preparare denti sani per compensare la posizione.',
+          'Se è presente bruxismo: va riconosciuto e gestito, perché aumenta il rischio di fratture.',
+          'Se lo smalto è scarso o il dente ha grandi ricostruzioni: può essere indicata una soluzione diversa.',
+          'Se ci sono carie o infiammazione gengivale: si curano prima.',
+        ],
+      },
+      {
+        title: 'Come si arriva alla decisione',
+        paragraphs: [
+          'Il percorso parte dall’analisi del sorriso: fotografie, forma e colore dei denti, gengive, masticazione. Quando è utile, il risultato viene simulato prima di intervenire, così si può valutare l’effetto e correggere il progetto.',
+          'Solo a questo punto si sceglie il materiale. In alcuni casi le due soluzioni convivono nello stesso sorriso.',
+        ],
+      },
+      {
+        title: 'Manutenzione',
+        paragraphs: [
+          'Le faccette richiedono la stessa igiene dei denti naturali e controlli periodici. Vanno evitate abitudini come mordere oggetti duri o le unghie. La durata non può essere garantita: dipende dal materiale, dalla masticazione e dalla cura quotidiana.',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: 'Le faccette rovinano i denti?',
+        answer: 'Dipende da quanto dente è necessario preparare, e questo varia da caso a caso. L’obiettivo è conservare il più possibile lo smalto; quando la preparazione richiesta sarebbe eccessiva, si valutano alternative.',
+      },
+      {
+        question: 'Il risultato sembrerà finto?',
+        answer: 'Il progetto parte dal viso e dal colore dei denti vicini. L’obiettivo è un risultato coerente con la persona, non denti tutti uguali.',
+      },
+      {
+        question: 'Si possono sbiancare le faccette?',
+        answer: 'No. I materiali da restauro non cambiano colore con lo sbiancamento. Se desideri denti più chiari, lo sbiancamento si programma prima.',
+      },
+      {
+        question: 'Quale costa meno?',
+        answer: 'Il costo dipende dal numero di denti, dal materiale e dalle fasi necessarie. Conviene confrontare le due soluzioni anche per manutenzione e interventi futuri: le cifre vengono indicate dopo la valutazione.',
+      },
+    ],
+    treatments: [
+      { label: 'Faccette in composito', href: '/estetica-diretta-faccette-composito/' },
+      { label: 'Faccette in ceramica', href: '/estetica-indiretta-faccette-porcellana/' },
+      { label: 'Sbiancamento dentale', href: '/sbiancamento/' },
+    ],
+    related: ['costo-allineatori-trasparenti', 'sistemare-i-denti-da-dove-iniziare'],
+    sources: [
+      MINISTERO_RACCOMANDAZIONI,
+      { label: 'Università degli Studi di Milano, revisione sulle indicazioni delle faccette in ceramica (archivio AIR)', url: 'https://air.unimi.it/handle/2434/896273' },
+    ],
+    cta: { title: 'Il materiale si sceglie dopo aver guardato il sorriso.', href: '/richiesta/?trattamento=Faccette%20dentali' },
   },
 ];
 
@@ -753,7 +1137,7 @@ export const existingArticles = [
   },
   {
     href: '/studio-dentistico-cosa-osservare-per-scegliere-quello-giusto/',
-    category: 'scelta-studio',
+    category: 'prima-della-visita',
     title: 'Studio dentistico: cosa osservare per scegliere quello giusto',
     summary: 'Gli elementi concreti da valutare prima di affidarsi a uno studio.',
   },
@@ -790,12 +1174,3 @@ export const resolveGuideReference = (reference) =>
   entryByHref.get(reference.startsWith('/') ? reference : guidePath(reference));
 
 export const categoryLabel = (id) => guideCategories.find((category) => category.id === id)?.label || '';
-
-/** Guide collegate a una pagina trattamento. */
-export const guidesForTreatment = (treatmentPath) =>
-  publishedGuides
-    .filter((guide) => guide.treatmentPaths?.includes(treatmentPath))
-    .map((guide) => ({ href: guidePath(guide.slug), title: guide.title, summary: guide.summary }));
-
-/** Pagine tecniche o storiche: restano raggiungibili ma fuori da indice di ricerca e sitemap. */
-export const nonIndexablePaths = ['/grazie/', '/new-page/'];

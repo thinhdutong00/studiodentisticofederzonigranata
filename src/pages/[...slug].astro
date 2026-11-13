@@ -34,42 +34,8 @@ const treatmentMarketing =
 const transparentHeader = Boolean(treatmentMarketing) || transparentHeaderPaths.has(page.path);
 const mobileTransparentHeader =
   !transparentHeader && site.clinicalLinks.some((item) => item.href === page.path);
-// Metadati mirati per pagine con title/description generici o segnaposto ereditati dal sito precedente.
-const seoOverrides: Record<string, { title: string; description: string }> = {
-  '/modena/': {
-    title: `Studio dentistico a Modena | ${site.name}`,
-    description:
-      'Studio dentistico a Modena, in Via Giovanni Segantini 25: odontoiatria per adulti e bambini, orari, contatti e richiesta di visita.',
-  },
-  '/reggio-emilia/': {
-    title: `Studio dentistico a Reggio Emilia | ${site.name}`,
-    description:
-      'Studio dentistico a Reggio Emilia, in Via Guido da Castello 8: odontoiatria per adulti e bambini, orari, contatti e richiesta di visita.',
-  },
-  '/urgenze/': {
-    title: `Urgenze dentali a Modena e Reggio Emilia | ${site.name}`,
-    description:
-      'Dolore, trauma o gonfiore: come contattare lo studio per un’urgenza dentale negli orari di apertura delle sedi di Modena e Reggio Emilia.',
-  },
-  '/faq/': {
-    title: `Domande frequenti | ${site.name}`,
-    description:
-      'Risposte alle domande più frequenti su prenotazione, prima visita, bambini, urgenze, trattamenti e fondi sanitari dello Studio Dentistico Federzoni Granata.',
-  },
-  '/casi-clinici/': {
-    title: `Casi clinici | ${site.name}`,
-    description:
-      'Casi clinici dello Studio Dentistico Federzoni Granata per area: estetica, protesi, parodontologia, implantologia, ortodonzia, conservativa ed endodonzia.',
-  },
-  '/informazioni/': {
-    title: `Informazioni | ${site.name}`,
-    description:
-      'Chi siamo, tecnologie, orari e sedi, convenzioni, domande frequenti e guide dello Studio Dentistico Federzoni Granata di Modena e Reggio Emilia.',
-  },
-};
-const seoOverride = seoOverrides[page.path];
-const layoutTitle = treatmentMarketing ? `${treatmentMarketing.seoTitle} | ${site.name}` : seoOverride?.title || page.title;
-const layoutDescription = treatmentMarketing?.description || seoOverride?.description || page.description;
+const layoutTitle = treatmentMarketing ? `${treatmentMarketing.seoTitle} | ${site.name}` : page.title;
+const layoutDescription = treatmentMarketing?.description || page.description;
 const layoutOgImage = treatmentMarketing?.ogImage || page.ogImage || site.heroImage;
 const headerCtaHref = treatmentMarketing
   ? `/richiesta/?trattamento=${encodeURIComponent(treatmentMarketing.requestLabel)}`
@@ -85,5 +51,5 @@ const headerCtaHref = treatmentMarketing
   mobileTransparentHeader={mobileTransparentHeader}
   headerCtaHref={headerCtaHref}
 >
-  {treatmentMarketing ? <TreatmentMarketingPage config={treatmentMarketing} path={page.path} /> : <ContentPage page={page} />}
+  {treatmentMarketing ? <TreatmentMarketingPage config={treatmentMarketing} /> : <ContentPage page={page} />}
 </BaseLayout>

@@ -9,9 +9,7 @@ import {
   guideIndexGroups,
   guidePath,
   guides,
-  guidesForTreatment,
   guidesIndexPath,
-  nonIndexablePaths,
   publishedGuidePaths,
   publishedGuides,
   requestTreatmentLabels,
@@ -78,10 +76,8 @@ test('i collegamenti interni puntano a pagine esistenti', () => {
   for (const article of existingArticles) assert.ok(knownRoutes.has(article.href), `approfondimento inesistente: ${article.href}`);
   for (const guide of publishedGuides) {
     for (const link of guide.treatments) assert.ok(knownRoutes.has(link.href), `${guide.slug}: link inesistente ${link.href}`);
-    for (const path of guide.treatmentPaths || []) assert.ok(knownRoutes.has(path), `${guide.slug}: trattamento inesistente ${path}`);
     for (const reference of guide.related || []) assert.ok(resolveGuideReference(reference), `${guide.slug}: correlato inesistente ${reference}`);
   }
-  for (const path of nonIndexablePaths) assert.ok(knownRoutes.has(path));
 });
 
 test('indice: nessuna categoria vuota, bozze escluse, voci uniche', () => {
@@ -90,16 +86,18 @@ test('indice: nessuna categoria vuota, bozze escluse, voci uniche', () => {
   assert.equal(new Set(guideIndexEntries.map((entry) => entry.href)).size, guideIndexEntries.length);
   const drafts = guides.filter((guide) => !guide.published).map((guide) => guidePath(guide.slug));
   for (const draft of drafts) assert.ok(!guideIndexEntries.some((entry) => entry.href === draft));
-  assert.ok(guidesForTreatment('/implantologia-tradizionale-computer-guidata/').length >= 1);
 });
 
-test('menu, sitemap e robots sono coerenti con la raccolta', () => {
+test('menu, sitemap e modulo breve sono coerenti con la raccolta', () => {
   const header = read('src/components/Header.astro');
   const information = header.slice(header.indexOf('const siteMenuInformation = ['), header.indexOf('const mobileMovedInformationLabels'));
   const labels = Array.from(information.matchAll(/label: '([^']+)'/g), (match) => match[1]);
   assert.equal(labels[labels.indexOf('Video') + 1], 'Guide e consigli', 'la voce deve seguire "Video" nel gruppo Informazioni');
   assert.equal(header.split("label: 'Guide e consigli'").length - 1, 1, 'una sola voce di menu');
   const sitemap = read('src/pages/sitemap.xml.ts');
-  assert.ok(sitemap.includes('publishedGuidePaths') && sitemap.includes('guidesIndexPath') && sitemap.includes('nonIndexablePaths'));
-  assert.ok(read('src/components/BaseLayout.astro').includes('nonIndexablePaths.includes(canonicalPath)'));
+  assert.ok(sitemap.includes('publishedGuidePaths') && sitemap.includes('guidesIndexPath'));
+  const form = read('src/components/GuideRequestForm.astro');
+  assert.ok(form.includes('action="/richiesta/"') && form.includes('method="get"'));
+  assert.ok(form.includes('<option value="Altro">'), 'la scelta aperta deve inviare un trattamento riconosciuto');
+  assert.ok(requestPage.includes("label: 'Altro'"));
 });

@@ -1,100 +1,111 @@
-# Presenza organica e "Guide e consigli" — novembre 2026
+# "Guide e consigli" — stato del lavoro, novembre 2026
 
-Lavoro del 13/11/2026 sul ramo `seo-guide-e-consigli`. Fonte dei dati di ricerca: report `ricerca-query-google-federzoni-granata.md` (Search Console 16/09–10/11/2026, termini di ricerca Google Ads). Keyword Planner, completamento automatico e domande correlate non sono stati consultati: nessun volume di mercato è stato usato.
+Ramo `seo-guide-e-consigli`. Riferimento per le pagine preesistenti: commit `949eb11` (`main`, in produzione dal 12/11/2026).
 
-## Stato SEO delle pagine nuove
+## Regola di ambito
 
-Etichette: creata → pubblicata → indicizzabile → in sitemap → richiesta di indicizzazione inviata → indicizzazione verificata.
+Le pagine che esistevano in `949eb11` non vengono modificate, né direttamente né tramite componenti, CSS, layout, dati o configurazioni condivise. Le sole aggiunte condivise sono:
 
-| URL | Stato raggiunto |
+1. La voce "Guide e consigli" nel gruppo Informazioni del menu, dopo "Video" e prima di "FAQ" (`src/components/Header.astro`, una riga).
+2. Le URL nuove in sitemap (`src/pages/sitemap.xml.ts`, tre righe). Le URL preesistenti restano come prima.
+
+Tutto il resto vive in file nuovi: `src/data/guides.js`, `src/components/GuidePage.astro`, `src/components/GuideRequestForm.astro`, `src/pages/guide-e-consigli/`, `tests/guides.test.mjs`.
+
+Verifica: `git diff 949eb11 --stat -- src public api server integrations` deve elencare, tra i file preesistenti, soltanto `Header.astro` e `sitemap.xml.ts`.
+
+## Modifiche annullate rispetto al primo intervento
+
+- `/modena/`, `/reggio-emilia/`: title, description, dati strutturati `Dentist`, sezione "Prima di prenotare".
+- Pagine trattamento: blocco "Per approfondire prima della visita".
+- Approfondimenti esistenti: blocco "Altri approfondimenti" con collegamenti e richiamo a `/richiesta/`.
+- `/informazioni/`: testo e elenco di collegamenti.
+- `/urgenze/`, `/faq/`, `/casi-clinici/`, `/informazioni/`: title e description.
+- `/richiesta/`: conservazione della sede senza trattamento.
+- `/grazie/`, `/new-page/`: `noindex` ed esclusione dalla sitemap.
+- `/recensioni/`: aggiunta alla sitemap.
+
+## Problemi preesistenti segnalati, non corretti
+
+- `/grazie/` e `/new-page/` sono indicizzabili e in sitemap.
+- `/recensioni/` è indicizzabile ma assente dalla sitemap.
+- `/informazioni/` contiene il testo "Pagina dedicata in preparazione".
+- `/modena/`, `/reggio-emilia/`, `/urgenze/`, `/faq/`, `/casi-clinici/` hanno title e description generici; le pagine sede non hanno dati strutturati e hanno come H1 il solo nome della città.
+- `/richiesta/` ignora `sede` e `motivo` quando `trattamento` manca o non è riconosciuto.
+- Le pagine trattamento e gli approfondimenti esistenti non collegano le guide.
+- `/dentiera-fissa-cose-e-vantaggi/` e altri approfondimenti risultavano non indicizzati al 13/11/2026.
+
+## Modulo breve e `/richiesta/`
+
+`/richiesta/` legge tre parametri: `trattamento` (confrontato con etichette e alias), `motivo` (applicato solo se coincide con un'opzione del trattamento) e `sede`. `motivo` e `sede` vengono applicati solo se il trattamento è riconosciuto.
+
+Le guide si adattano a questo comportamento:
+
+- Guide con trattamento univoco: `trattamento` fisso, `sede` e `motivo` a scelta. I valori di `motivo` sono le opzioni reali del questionario.
+- Guide generiche o di confronto e indice: `trattamento` a scelta, con "Da valutare insieme" che invia il valore `Altro`, previsto dal questionario. Così la sede non va persa.
+
+Il modulo breve non invia richieste: porta a `/richiesta/`, dove avviene l'invio.
+
+## Guide pubblicabili
+
+Stato SEO di tutte: creata, indicizzabile, in sitemap. Non pubblicata in produzione, nessuna richiesta di indicizzazione inviata, nessuna indicizzazione verificata.
+
+| URL | Domanda intercettata |
 | --- | --- |
-| `/guide-e-consigli/` | Creata, indicizzabile, in sitemap. Non pubblicata in produzione. |
-| `/guide-e-consigli/costo-allineatori-trasparenti/` | Come sopra |
-| `/guide-e-consigli/prima-visita-ortodontica-bambini/` | Come sopra |
-| `/guide-e-consigli/preventivo-impianto-dentale/` | Come sopra |
-| `/guide-e-consigli/denti-mancanti-ponte-impianto-protesi/` | Come sopra |
-| `/guide-e-consigli/gengive-che-sanguinano/` | Come sopra |
-| `/guide-e-consigli/dolore-click-mandibola-bruxismo/` | Come sopra |
-| `/guide-e-consigli/trauma-dentale-cosa-fare/` | Come sopra |
+| `/guide-e-consigli/` | Indice |
+| `/guide-e-consigli/costo-allineatori-trasparenti/` | Quanto costa l'apparecchio invisibile |
+| `/guide-e-consigli/prima-visita-ortodontica-bambini/` | A che età la prima visita |
+| `/guide-e-consigli/preventivo-impianto-dentale/` | Quanto costa un impianto completo |
+| `/guide-e-consigli/denti-mancanti-ponte-impianto-protesi/` | Come sostituire un dente mancante |
+| `/guide-e-consigli/gengive-che-sanguinano/` | Gengive che sanguinano, parodontite |
+| `/guide-e-consigli/dolore-click-mandibola-bruxismo/` | Gnatologo, click, bruxismo |
+| `/guide-e-consigli/trauma-dentale-cosa-fare/` | Dente rotto o caduto |
+| `/guide-e-consigli/sistemare-i-denti-da-dove-iniziare/` | Sistemare i denti, più problemi insieme |
+| `/guide-e-consigli/preventivo-dentista-come-leggerlo/` | Dentista economico, prezzi, confronto preventivi |
+| `/guide-e-consigli/pulizia-denti-o-pulizia-profonda/` | Pulizia denti, pulizia parodontale |
+| `/guide-e-consigli/faccette-composito-o-ceramica/` | Faccette, composite bonding |
 
-Nessuna richiesta di indicizzazione è stata inviata e nessuna indicizzazione è stata verificata.
+## Mappa delle opportunità (seconda analisi)
 
-## Correzioni al report dopo la lettura del codice
+Fonti: Search Console, proprietà di dominio, 16/09–10/11/2026, tutti i paesi (665 query lette il 13/11/2026). Google Ads, termini di ricerca: storico dell'account fino al 13/11/2026 (prime 100 righe per conversioni e per impressioni) e ultimi 30 giorni, 14/10–12/11/2026. Le "conversioni" Ads comprendono moduli, chiamate, indicazioni stradali e visualizzazioni: non sono richieste di visita. Keyword Planner, suggerimenti e domande correlate: non consultati, il collegamento al browser non era disponibile. Nessun volume di mercato è stato usato.
 
-- **Le coppie di URL brevi e lunghe non sono doppioni.** `/ortodonzia/`, `/estetica/`, `/protesi/`, `/parodontologia/`, `/implantologia/`, `/conservativa/`, `/endodonzia/` sono le pagine dei casi clinici (`kind: clinical`). Le pagine lunghe sono i trattamenti (`kind: treatment`). Intenti diversi: nessun accorpamento o redirect.
-- **Le pagine non indicizzate non hanno blocchi tecnici nel codice.** Canonical autoreferenziale, nessun `noindex`, `robots.txt` aperto, presenza in sitemap. La causa dello stato "Rilevata, ma attualmente non indicizzata" non è dimostrabile dal codice: il sito è recente e molte pagine avevano pochi collegamenti interni.
-- **Invisalign® è citato dalle landing di ortodonzia del progetto**, non dalla pagina trattamento. Le guide parlano di "allineatori trasparenti" senza attribuire marchi.
+| Domanda | Evidenza | Trattamento | Copertura attuale | Opportunità residua | Potenziale | Decisione |
+| --- | --- | --- | --- | --- | --- | --- |
+| sistemare denti, mettere i denti | Ads storico: 86 clic, 683 impr., 9 conv.; "mettere i denti" 3 clic | Tutto il catalogo | Nessuna pagina di orientamento | Chi ha più problemi non sa da dove partire | Alto (valutazione): intenzione di cura già presente | Nuova guida |
+| dentista economico, prezzi bassi, curarsi i denti a poco prezzo | GSC: 91 impr. su 6 query; Ads storico: "impianti dentali economici" 54 clic | Tutto il catalogo | Solo le due guide su allineatori e impianti | Come leggere e confrontare un preventivo | Medio-alto: il costo è il dubbio più frequente | Nuova guida |
+| pulizia denti + città, pulizia parodontale costo, scaling | GSC: 36 impr. su 8 query; Ads 30 gg: 27 impr.; storico: 12 clic | Igiene, parodontologia | La pagina igiene risponde a "ogni quanto" | Differenza tra igiene e pulizia sotto gengiva | Medio: porta di ingresso frequente | Nuova guida |
+| faccette dentali, composite bonding, faccette + città | Ads storico: 850 impr., 44 clic, 0 conv.; variante locale 4 clic; GSC: circa 14 impr. | Faccette in composito e in ceramica | Due pagine separate, entrambe con l'opzione "Confrontare composito e ceramica" | Il confronto diretto | Medio: evidenza limitata | Nuova guida |
+| sbiancamento + città, sbiancamento denti prezzo | GSC: 176 impr.; Ads storico: 841 impr., 38 clic | Sbiancamento | `/sbiancamento/` copre indicazioni, durata, sensibilità | Nessuna sostanziale | — | Già coperto |
+| impianto di denti fissi, all on six, carico immediato | Ads storico: 46 + 15 clic; GSC: 6 impr. | Implantologia | `/dentiera-fissa-cose-e-vantaggi/` e FAQ del trattamento | Sarebbe una replica | — | Già coperto. Limite: l'articolo non risultava indicizzato |
+| protesi a clip, senza palato, a bottone, overdenture | GSC: circa 200 impr. a posizioni basse; Ads storico: 37 clic | Protesi | Articolo protesi mobili invisibili | Soluzione su impianti non descritta nel sito | — | Escluso: prestazione non confermata |
+| apparecchio palato bambini, apparecchio mobile bambini | GSC: 25 impr. | Ortodonzia bambini | Pagina ortodonzia bambini, guida sulla prima visita | Dispositivo non nominato dal sito | — | Escluso: non confermato |
+| carie, come si cura la carie | GSC: 35 impr. a posizione 20 circa | Conservativa | `/conservativa-otturazioni/` | Minima | Basso | Già coperto |
+| convenzionato Unisalute, Metasalute, ASL | GSC: 10 impr.; Ads storico: 138 clic su "convenzionato asl" | — | `/convenzioni/` | La ricerca vuole studi convenzionati | Basso: lo studio dichiara solo supporto documentale | Escluso |
+| prima visita, visita dentistica | GSC: poche impressioni | — | `/prima-visita/` | Solo il costo, dato dello studio | — | Già coperto |
+| devitalizzazione, endodonzia | GSC: 6 impr. | Endodonzia | Pagina trattamento | Non dimostrata | — | Escluso per assenza di evidenza |
+| russamento, apnee | Nessuna evidenza | Dispositivi antirussamento | Pagina trattamento | Non dimostrata | — | Escluso per assenza di evidenza |
+| denti del giudizio, dente anchilosato, tumore lingua | GSC | Chirurgia orale | Approfondimenti esistenti | — | — | Già coperto |
 
-## Problemi tecnici
+## Argomenti prima sospesi
 
-Corretti:
+- **Prima visita:** le informazioni generali sono già in `/prima-visita/`. Manca solo il costo, che è un dato dello studio: non blocca altre guide, ma una guida dedicata sarebbe una replica.
+- **Convenzioni:** manca l'elenco dei fondi con cui lo studio ha accordi. Senza, una guida attirerebbe una richiesta che non si può soddisfare. Il supporto documentale è citato nella guida sul preventivo.
+- **Faccette:** nessun dato dello studio era indispensabile. Guida realizzata con informazioni generali.
+- **Russamento:** le informazioni cliniche generali sono verificabili; manca l'evidenza di domanda. Da rivalutare con Keyword Planner.
+- **Costi:** non servono i prezzi dello studio per spiegare un preventivo. Guida realizzata.
 
-- `/grazie/` e `/new-page/` (pagine storiche del sito precedente) erano indicizzabili e in sitemap: ora hanno `noindex, follow` e sono fuori dalla sitemap. Gli URL restano attivi.
-- `/recensioni/` era indicizzabile e collegata dalla home ma assente dalla sitemap: aggiunta.
-- `/informazioni/` mostrava "Pagina dedicata in preparazione": sostituito con un'introduzione e l'elenco completo delle pagine informative.
-- Title e description generici o segnaposto su `/modena/`, `/reggio-emilia/`, `/urgenze/`, `/faq/`, `/casi-clinici/`, `/informazioni/`.
-- Nessun dato strutturato sulle pagine sede: aggiunto `Dentist` con indirizzo, telefono e orari già presenti nel progetto.
-- `/richiesta/` ignorava il parametro `sede` quando mancava `trattamento`: ora la sede viene conservata.
+## Fonti cliniche e normative
 
-Da verificare, non modificati:
+- Ministero della Salute, *Raccomandazioni cliniche in odontostomatologia* (2017): prima visita verso i 18–24 mesi (verificato nel testo); riferimento generale per le altre aree.
+- Ministero della Salute, *Linee guida traumi dentali in età evolutiva* (2018): primo soccorso (verificato nel testo).
+- American Association of Orthodontists: controllo ortodontico entro i 7 anni.
+- NIDCR: disordini temporo-mandibolari.
+- SIdP: sanguinamento gengivale, igiene professionale almeno due volte l'anno, linee guida EFP S3.
+- Legge 124/2017, art. 1, comma 150: preventivo di massima in forma scritta o digitale.
 
-- `/richiesta/`, `/prenota-prima-visita/`, `/prenota-urgenza/` sono in sitemap. Sono pagine di richiesta: valutare se tenerle indicizzabili.
-- Le pagine sede hanno come H1 il solo nome della città ("Modena", "Reggio Emilia"). Un H1 più descrittivo richiede una verifica grafica.
-- Canonical selezionata da Google e stato per URL: da controllare con Controllo URL in Search Console dopo la pubblicazione.
-- `/landing-ortodonzia/` riceve ancora impressioni ma non è più una route del sito: valutare un redirect verso `/visita-ortodonzia/` (non applicato).
+Per le faccette non è stata trovata una fonte istituzionale rivolta ai pazienti: la guida riporta caratteristiche generali dei materiali. **Tutte le guide richiedono una lettura clinica prima della pubblicazione; nessuna dichiara autore o revisore.**
 
-## Trattamenti verificati
+## Controlli
 
-I 14 trattamenti dell'elenco hanno ciascuno una pagina attiva. Professionisti documentati nel progetto: Dott.ssa Chiara Federzoni (conservativa, endodonzia, ortodonzia, pedodonzia), Dott. Stefano Granata (protesi, implantologia, chirurgia computer guidata).
+Eseguiti: confronto dei file con `949eb11`; test automatici (`npm test`); build dell'anteprima su Vercel.
 
-Non confermati, quindi non attribuiti allo studio: ortodonzia linguale, impianti zigomatici, convenzioni con fondi specifici o con il servizio pubblico, visite gratuite, prezzi e finanziamenti, disponibilità H24, festiva o nel fine settimana. Orari usati: lunedì–venerdì 10:00–19:00.
-
-## Mappa: ricerche, intento e pagina
-
-| Gruppo di ricerche | Bisogno | Evidenza | Pagina | Decisione |
-| --- | --- | --- | --- | --- |
-| dentista / studio dentistico + Modena | Scegliere uno studio in città | GSC: 15 query, 1.557 impr., 11 clic | `/modena/` | Ottimizzata: metadati, dati strutturati, collegamenti |
-| dentista / studio dentistico + Reggio Emilia | Come sopra | GSC: 10 query, 978 impr., 11 clic | `/reggio-emilia/` | Ottimizzata come sopra |
-| migliori dentisti + città | Prova di affidabilità | GSC: 95 + 42 impr. | Articolo sulla scelta dello studio, `/recensioni/` | Inseriti nell'indice e collegati dalle sedi |
-| costo apparecchio invisibile | Capire la spesa | Ads storico: 169 clic su tre righe | `/guide-e-consigli/costo-allineatori-trasparenti/` | Guida nuova |
-| ortodontista, ortodonzia invisibile + Reggio Emilia | Trovare lo specialista | GSC: 19 query, 708 impr., 0 clic | `/visita-ortodonzia/` e sottopagine | Nessuna pagina nuova: collegamenti dalle guide |
-| ortodonzia bambini, apparecchio bambini a che età | Età e momento giusto | GSC: 73 + 6 impr. | `/guide-e-consigli/prima-visita-ortodontica-bambini/` | Guida nuova |
-| dentista pediatrico + città | A chi portare il bambino | GSC: 49 + 42 impr., 0 clic | `/pedodonzia-odontoiatria-infantile/` | Collegata dalle guide |
-| prezzo impianto dentale completo, listino prezzi impianti | Capire la spesa | Ads storico: 201 clic su cinque righe | `/guide-e-consigli/preventivo-impianto-dentale/` | Guida nuova |
-| denti mancanti soluzione, sistemare denti | Confrontare le alternative | Ads storico: 56 + 86 clic | `/guide-e-consigli/denti-mancanti-ponte-impianto-protesi/` | Guida nuova |
-| impianti dentali senza viti | Equivoco da chiarire | Ads storico: molti clic, poche conversioni | FAQ nelle due guide su impianti e denti mancanti | Nessuna pagina dedicata |
-| protesi mobili invisibili, ganci invisibili, nylon | Alternative e limiti | GSC: pagina con 5.731 impr., 93 clic | Articolo esistente | Mantenuto, inserito nell'indice, collegato |
-| gnatologo + città, bruxismo | Disturbo già definito | GSC: 119 impr., pos. 2,4 | `/guide-e-consigli/dolore-click-mandibola-bruxismo/` | Guida nuova |
-| parodontite, gengive | Riconoscere il problema | Ads: 46 clic; GSC: 36 impr. | `/guide-e-consigli/gengive-che-sanguinano/` | Guida nuova |
-| dentista aperto, urgenze, emergenza | Bisogno immediato | GSC: poche impressioni | `/urgenze/` + `/guide-e-consigli/trauma-dentale-cosa-fare/` | Metadati + guida nuova |
-| dentista economico, prezzi bassi | Sostenibilità | GSC: 91 impr. | — | Sospesa: servono dati dello studio |
-| convenzionato Unisalute, Metasalute, ASL | Copertura | GSC: 10 impr. | `/convenzioni/` | Non modificata: nessuna convenzione confermata |
-| sbiancamento, faccette | Estetica | GSC: 112 impr. (pos. 31) | Pagine trattamento | Non intervenire: già coperte |
-| anchilosato, tumore lingua | Informazione generale | GSC: molte impr., nessun servizio | Articoli esistenti | Mantenuti nell'indice |
-
-## Bozze sospese
-
-| Tema | Dati necessari dallo studio |
-| --- | --- |
-| Costo e contenuto della prima visita | Costo, cosa comprende, eventuali esami inclusi, modalità di pagamento |
-| Convenzioni e fondi sanitari | Elenco dei fondi con convenzione diretta o indiretta, per sede |
-| Faccette in composito o in ceramica | Conferma delle indicazioni cliniche adottate dallo studio; evidenza di ricerca oggi debole |
-| Russamento e apnee: dispositivi | Percorso reale (invio dal medico del sonno, tipo di dispositivo) |
-| Pagamenti e finanziamenti | Conferma di rateizzazioni o finanziamenti |
-
-## Fonti cliniche usate nelle guide
-
-- Ministero della Salute, *Raccomandazioni cliniche in odontostomatologia* (2017). Verificato nel testo: prima visita odontoiatrica verso i 18–24 mesi. Le sezioni su implantologia, protesi, gnatologia e ortognatodonzia sono state usate come riferimento generale, senza citare dati puntuali.
-- Ministero della Salute, *Linee guida nazionali per la prevenzione e la gestione clinica dei traumi dentali negli individui in età evolutiva* (2018). Verificati: conservazione in latte, soluzione fisiologica o saliva; reimpianto sconsigliato per i denti da latte; 2–3 ore in ambiente liquido; sintomi che richiedono il Pronto Soccorso.
-- American Association of Orthodontists: primo controllo ortodontico non oltre i 7 anni.
-- National Institute of Dental and Craniofacial Research: disordini temporo-mandibolari, approccio conservativo e reversibile.
-- SIdP: sanguinamento gengivale come primo segnale, diagnosi con sondaggio; linee guida EFP S3.
-
-Nessuna guida dichiara un autore o un revisore clinico. **Prima della pubblicazione i testi vanno letti dai professionisti dello studio.**
-
-## Verifiche dopo la pubblicazione
-
-1. Inviare di nuovo la sitemap in Search Console.
-2. Controllo URL sulle pagine prioritarie e richiesta di indicizzazione.
-3. Verificare sul sito pubblicato il passaggio modulo breve → `/richiesta/` con sede e percorso preselezionati, senza inviare richieste.
-4. Controllare resa mobile e menu su dispositivo reale.
+Non disponibili in questa sessione: build locale (pacchetti non installabili), controllo visivo delle pagine renderizzate, confronto dell'HTML generato delle pagine preesistenti, verifica in Search Console.

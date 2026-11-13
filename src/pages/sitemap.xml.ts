@@ -2,12 +2,11 @@ import { site } from '../data/site';
 import { publishedPages } from '../data/publishedPages';
 import { orthodonticPaths } from '../data/orthodonticPaths';
 import { orthodonticResultsPath } from '../data/orthodonticResults';
-import { guidesIndexPath, nonIndexablePaths, publishedGuidePaths } from '../data/guides.js';
+import { guidesIndexPath, publishedGuidePaths } from '../data/guides.js';
 
 export async function GET({ site: astroSite }: { site: URL }) {
   const base = astroSite || new URL(site.source);
-  // Le pagine tecniche o storiche restano raggiungibili ma non vengono proposte ai motori di ricerca.
-  const paths = publishedPages.map((page) => page.path).filter((path) => !nonIndexablePaths.includes(path));
+  const paths = publishedPages.map((page) => page.path);
   const urls = [
     ...paths,
     '/richiesta/',
@@ -16,7 +15,6 @@ export async function GET({ site: astroSite }: { site: URL }) {
     '/visita-ortodonzia/',
     orthodonticResultsPath,
     ...orthodonticPaths.map(pathway => pathway.href),
-    '/recensioni/',
     guidesIndexPath,
     ...publishedGuidePaths,
   ]
