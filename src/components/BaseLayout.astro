@@ -6,6 +6,7 @@ import WhatsAppFloatingButton from './WhatsAppFloatingButton.astro';
 import TreatmentStickyCta from './TreatmentStickyCta.astro';
 import SectionReveal from './SectionReveal.astro';
 import { site } from '../data/site';
+import { homeHeroImage } from '../data/homeHeroImage';
 import '../styles/inter-font.css';
 import '../styles/apple-mobile-fonts.css';
 
@@ -29,8 +30,17 @@ const {
 } = Astro.props;
 
 const canonical = new URL(canonicalPath, Astro.site || site.source).toString();
-const socialPreviewImage = '/assets/social/studio-dentistico-federzoni-granata-og.png';
-const socialPreviewImageUrl = new URL(socialPreviewImage, canonical).toString();
+const isHome = canonicalPath === '/';
+const socialImage = isHome
+  ? { ...homeHeroImage, type: 'image/jpeg' }
+  : {
+      src: '/assets/social/studio-dentistico-federzoni-granata-og.png',
+      width: 1200,
+      height: 630,
+      type: 'image/png',
+      alt: `Logo ${site.name} su sfondo bianco`,
+    };
+const socialPreviewImageUrl = new URL(socialImage.src, canonical).toString();
 const whatsappExcludedPaths = new Set([
   '/richiesta/',
   '/prenota-prima-visita/',
@@ -56,10 +66,11 @@ const showSectionReveal = !sectionRevealExcludedPaths.has(canonicalPath);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <link rel="preload" as="font" href="/fonts/inter/inter-latin.woff2" type="font/woff2" crossorigin />
-    {canonicalPath === '/' && <link rel="preload" as="image" href="/assets/optimized/home-hero-mobile.avif" type="image/avif" media="(max-width: 720px)" fetchpriority="high" />}
-    {canonicalPath === '/' && <link rel="preload" as="image" href="/assets/optimized/home-hero-desktop.avif" type="image/avif" media="(min-width: 721px)" fetchpriority="high" />}
+    {isHome && <link rel="preload" as="image" href={homeHeroImage.mobileSrc} type="image/avif" media="(max-width: 720px)" fetchpriority="high" />}
+    {isHome && <link rel="preload" as="image" href={homeHeroImage.desktopSrc} imagesrcset={homeHeroImage.desktopSrcset} imagesizes="100vw" type="image/avif" media="(min-width: 721px)" fetchpriority="high" />}
     <title>{title}</title>
     <meta name="description" content={description} />
+    {isHome && <meta name="robots" content="max-image-preview:large" />}
     {canonicalPath === '/thank-you-page/' && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/png" href="/assets/original/2020/10/cropped-favicon-32x32.png" sizes="32x32" />
@@ -70,15 +81,15 @@ const showSectionReveal = !sectionRevealExcludedPaths.has(canonicalPath);
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:image" content={socialPreviewImageUrl} />
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={`Logo ${site.name} su sfondo bianco`} />
+    <meta property="og:image:type" content={socialImage.type} />
+    <meta property="og:image:width" content={socialImage.width} />
+    <meta property="og:image:height" content={socialImage.height} />
+    <meta property="og:image:alt" content={socialImage.alt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialPreviewImageUrl} />
-    <meta name="twitter:image:alt" content={`Logo ${site.name} su sfondo bianco`} />
+    <meta name="twitter:image:alt" content={socialImage.alt} />
   </head>
   <body class:list={[canonicalPath === '/' && 'is-home-page']}>
     <Header transparent={transparentHeader} mobileTransparent={mobileTransparentHeader} ctaHref={headerCtaHref} />

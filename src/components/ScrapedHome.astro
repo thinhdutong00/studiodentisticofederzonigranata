@@ -1,13 +1,12 @@
 ---
 import { site } from '../data/site';
+import { homeHeroImage } from '../data/homeHeroImage';
 import { videoItems } from '../data/videos';
 import { featuredPatientReviews } from '../data/reviews';
 import { formatParentheticalDetail } from '../utils/formatParentheticalDetail';
 import ClinicalCasesOriginalGrid from './ClinicalCasesOriginalGrid.astro';
 import HomeTreatments from './HomeTreatments.astro';
 
-const heroImage = '/assets/optimized/home-hero-desktop.avif';
-const heroMobileImage = '/assets/optimized/home-hero-mobile.avif';
 const starsFor = (rating: number) => `${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}`;
 
 const treatmentOrder = [
@@ -124,13 +123,13 @@ const locationOffices = site.offices.map((office) => {
     aria-label="Studio dentistico Federzoni Granata"
     data-transparent-header-region>
     <picture class="scraped-hero-media">
-      <source media="(max-width: 720px)" srcset={heroMobileImage} type="image/avif" />
-      <source srcset={heroImage} type="image/avif" />
+      <source media="(max-width: 720px)" srcset={homeHeroImage.mobileSrc} type="image/avif" />
+      <source srcset={homeHeroImage.desktopSrcset} sizes="100vw" type="image/avif" />
       <img
-        src="/assets/original/2021/02/HOME.jpg"
-        alt="I dottori Federzoni e Granata nello studio dentistico"
-        width="1200"
-        height="800"
+        src={homeHeroImage.src}
+        alt={homeHeroImage.alt}
+        width={homeHeroImage.width}
+        height={homeHeroImage.height}
         decoding="async"
         fetchpriority="high"
       />
@@ -1037,10 +1036,7 @@ const locationOffices = site.offices.map((office) => {
     position: absolute;
     inset: 0;
     z-index: 1;
-    background:
-      radial-gradient(ellipse 92% 78% at 8% 94%, rgba(var(--brand-primary-dark-rgb), 0.64) 0%, rgba(var(--brand-primary-dark-rgb), 0.4) 48%, rgba(var(--brand-primary-dark-rgb), 0.08) 78%, transparent 100%),
-      linear-gradient(180deg, rgba(var(--brand-primary-dark-rgb), 0.42) 0%, rgba(var(--brand-primary-dark-rgb), 0.13) 15%, transparent 36%),
-      linear-gradient(90deg, rgba(var(--brand-primary-dark-rgb), 0.16) 0%, transparent 52%, rgba(var(--brand-primary-dark-rgb), 0.08) 100%);
+    background: linear-gradient(180deg, rgb(29 29 29 / .38), rgb(29 29 29 / .78) 44%, rgb(29 29 29 / .98));
   }
 
   .scraped-hero-copy {
@@ -2489,8 +2485,9 @@ const locationOffices = site.offices.map((office) => {
       justify-items: start;
     }
 
-    .scraped-hero-media img {
-      object-position: center;
+    .scraped-hero-media {
+      /* The overlay is opaque below 76%. Keep both faces in the visible area. */
+      bottom: 20%;
     }
 
     .prefooter-section::after {
@@ -2619,15 +2616,7 @@ const locationOffices = site.offices.map((office) => {
     }
 
     .scraped-hero-shade {
-      background: linear-gradient(
-        0deg,
-        rgba(var(--brand-primary-dark-rgb), 1) 0%,
-        rgba(var(--brand-primary-dark-rgb), 0.98) 12%,
-        rgba(var(--brand-primary-dark-rgb), 0.82) 25%,
-        rgba(var(--brand-primary-dark-rgb), 0.54) 39%,
-        rgba(var(--brand-primary-dark-rgb), 0.18) 52%,
-        rgba(var(--brand-primary-dark-rgb), 0) 64%
-      );
+      background: linear-gradient(180deg, rgb(29 29 29 / .2), rgb(29 29 29 / .8) 42%, var(--text-dark) 76%);
     }
 
     .scraped-pretitle {
