@@ -8,6 +8,7 @@ import SectionBand from './SectionBand.astro';
 import TreatmentPrefooterCta from './TreatmentPrefooterCta.astro';
 import { site, type SitePage } from '../data/site';
 import { videoItems } from '../data/videos';
+import { getOriginalImageAlt } from '../data/originalImageAlt';
 
 interface Props {
   page: SitePage;
@@ -1020,7 +1021,7 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
                                   data-clinical-carousel-slide
                                   aria-hidden={imageIndex === 0 ? 'false' : 'true'}
                                 >
-                                  <img src={image.src} alt={image.alt} loading="lazy" />
+                                  <img src={image.src} alt={getOriginalImageAlt(image)} loading="lazy" />
                                   {shouldShowClinicalCaption(image.alt, clinicalShowcaseTitle) && <figcaption>{image.alt}</figcaption>}
                                 </figure>
                               ))}
@@ -1035,7 +1036,7 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
                         ) : (
                           group.images.map((image) => (
                             <figure class="aesthetic-case-figure">
-                              <img src={image.src} alt={image.alt} loading="lazy" />
+                              <img src={image.src} alt={getOriginalImageAlt(image)} loading="lazy" />
                               {shouldShowClinicalCaption(image.alt, clinicalShowcaseTitle) && <figcaption>{image.alt}</figcaption>}
                             </figure>
                           ))
@@ -1063,7 +1064,7 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
             if (block.type === 'image') {
               return (
                 <figure class="aesthetic-case-figure">
-                  <img src={block.src} alt={block.alt} loading="lazy" />
+                  <img src={block.src} alt={getOriginalImageAlt(block)} loading="lazy" />
                   {block.alt && <figcaption>{block.alt}</figcaption>}
                 </figure>
               );
@@ -1135,7 +1136,7 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
             if (block.type === 'image') {
               return (
                 <figure class="content-figure">
-                  <img src={block.src} alt={block.alt} loading="lazy" />
+                  <img src={block.src} alt={getOriginalImageAlt(block)} loading="lazy" />
                   {block.alt && <figcaption>{block.alt}</figcaption>}
                 </figure>
               );

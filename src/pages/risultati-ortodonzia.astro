@@ -110,7 +110,7 @@ const structuredData = {
                   {phases.map(phase => (
                     <figure>
                       <figcaption><strong>{phase.label}</strong><span>Il sorriso</span></figcaption>
-                      <img src={result[phase.key].smile} alt={`${result.title}: sorriso ${phase.label.toLowerCase()} il trattamento ortodontico`} width="600" height="300" loading={index === 0 ? 'eager' : 'lazy'} decoding="async" />
+                      <img src={result[phase.key].smile} alt={`${result.title}: sorriso ${phase.key === 'before' ? 'prima del' : 'dopo il'} trattamento ortodontico`} width="600" height="300" loading={index === 0 ? 'eager' : 'lazy'} decoding="async" />
                     </figure>
                   ))}
                 </div>
@@ -120,7 +120,7 @@ const structuredData = {
                     {phases.map(phase => (
                       <figure>
                         <figcaption><strong>{phase.label}</strong><span>Dettaglio intraorale</span></figcaption>
-                        <img src={result[phase.key].detail} alt={`${result.title}: dettaglio intraorale ${phase.label.toLowerCase()} il trattamento ortodontico`} width="600" height="300" loading="lazy" decoding="async" />
+                        <img src={result[phase.key].detail} alt={`${result.title}: dettaglio intraorale ${phase.key === 'before' ? 'prima del' : 'dopo il'} trattamento ortodontico`} width="600" height="300" loading="lazy" decoding="async" />
                       </figure>
                     ))}
                   </div>

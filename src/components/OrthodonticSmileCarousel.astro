@@ -22,7 +22,7 @@ const phases = [{ key: 'before', label: 'Prima' }, { key: 'after', label: 'Dopo'
         <div class="ortho-smile-slide" role="group" aria-roledescription="diapositiva" aria-label={`${index + 1} di ${orthodonticResults.length}`} data-ortho-smile-slide>
           {phases.map(phase => (
             <figure>
-              <img src={result[phase.key].smile} alt={`Sorriso ${phase.key === 'before' ? 'prima del' : 'dopo il'} trattamento ortodontico`} width="600" height="300" loading="lazy" decoding="async" draggable="false" />
+              <img src={result[phase.key].smile} alt={`${result.title}: sorriso ${phase.key === 'before' ? 'prima del' : 'dopo il'} trattamento ortodontico`} width="600" height="300" loading="lazy" decoding="async" draggable="false" />
               <figcaption>{phase.label}</figcaption>
             </figure>
           ))}

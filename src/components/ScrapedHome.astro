@@ -363,9 +363,8 @@ const locationOffices = site.offices.map((office) => {
             data-video-title={video.title}>
             <span class="sr-only">Riproduci il video: </span>
             <img
-              src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
-              data-src={`/assets/video-thumbnails/${video.id}.webp`}
-              alt=""
+              src={`/assets/video-thumbnails/${video.id}.webp`}
+              alt={video.thumbnailAlt}
               width="480"
               height="360"
               loading="lazy"
@@ -620,13 +619,6 @@ const locationOffices = site.offices.map((office) => {
       if (!(carousel instanceof HTMLElement) || carousel.dataset.carouselReady === 'true') return;
 
       carousel.dataset.carouselReady = 'true';
-      carousel.querySelectorAll('img[data-src]').forEach((image) => {
-        if (!(image instanceof HTMLImageElement) || !image.dataset.src) return;
-
-        image.src = image.dataset.src;
-        image.removeAttribute('data-src');
-      });
-
       const track = carousel.querySelector('[data-clinical-carousel-track]');
       const prev = carousel.querySelector('[data-clinical-carousel-prev]');
       const next = carousel.querySelector('[data-clinical-carousel-next]');

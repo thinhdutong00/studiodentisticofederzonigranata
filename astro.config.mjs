@@ -1,10 +1,12 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import bookingApiDev from './scripts/booking-api-dev.mjs';
+import imageSitemap from './scripts/image-sitemap.mjs';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://studiodentisticofederzonigranata.it',
+  integrations: [imageSitemap],
   redirects: {
     '/ortodonzia-adulti/': '/visita-ortodonzia/ortodonzia-adulti/',
     '/ortodonzia-bambini-adolescenti/': '/visita-ortodonzia/ortodonzia-bambini-adolescenti/',
