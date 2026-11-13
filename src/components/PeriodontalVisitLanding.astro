@@ -30,6 +30,7 @@ const { direct = false } = Astro.props;
 const bookingHref = direct ? '#richiedi-visita' : undefined;
 const canonicalPath = landingRoutes.parodontologia[direct ? 'direct' : 'standard'];
 const canonical = new URL(canonicalPath, site.source).toString();
+const isIndexable = !direct && import.meta.env.PROD && process.env.VERCEL_ENV !== 'preview';
 const title = 'Visita parodontale a Modena e Reggio Emilia | Federzoni Granata';
 const description =
   'Gengive che sanguinano, recessioni o denti mobili? Scopri il percorso di valutazione, terapia e mantenimento parodontale a Modena e Reggio Emilia.';
@@ -159,7 +160,7 @@ const structuredData = {
     <link rel="preload" as="image" href="/assets/optimized/parodontologia-granata-hero-720.webp" type="image/webp" media="(max-width: 720px)" fetchpriority="high" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="robots" content="noindex,nofollow,noarchive" />
+    <meta name="robots" content={isIndexable ? 'index,follow,max-image-preview:large' : 'noindex,nofollow,noarchive'} />
     <meta name="theme-color" content="#10283D" />
     <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang="it-IT" href={canonical} />

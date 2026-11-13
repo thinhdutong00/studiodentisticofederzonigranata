@@ -6,13 +6,15 @@ import { guidesIndexPath, publishedGuidePaths } from '../data/guides.js';
 
 export async function GET({ site: astroSite }: { site: URL }) {
   const base = astroSite || new URL(site.source);
-  const paths = publishedPages.map((page) => page.path);
+  const paths = publishedPages.map((page) => page.path).filter((path) => path !== '/grazie/');
   const urls = [
     ...paths,
+    '/recensioni/',
     '/richiesta/',
     '/prenota-prima-visita/',
     '/prenota-urgenza/',
     '/visita-ortodonzia/',
+    '/visita-parodontologia/',
     orthodonticResultsPath,
     ...orthodonticPaths.map(pathway => pathway.href),
     guidesIndexPath,

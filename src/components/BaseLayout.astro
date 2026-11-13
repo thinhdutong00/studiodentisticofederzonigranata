@@ -31,6 +31,7 @@ const {
 
 const canonical = new URL(canonicalPath, Astro.site || site.source).toString();
 const isHome = canonicalPath === '/';
+const isConfirmationPage = canonicalPath === '/thank-you-page/' || canonicalPath === '/grazie/';
 const socialImage = isHome
   ? { ...homeHeroImage, type: 'image/jpeg' }
   : {
@@ -70,8 +71,7 @@ const showSectionReveal = !sectionRevealExcludedPaths.has(canonicalPath);
     {isHome && <link rel="preload" as="image" href={homeHeroImage.desktopSrc} imagesrcset={homeHeroImage.desktopSrcset} imagesizes="100vw" type="image/avif" media="(min-width: 721px)" fetchpriority="high" />}
     <title>{title}</title>
     <meta name="description" content={description} />
-    {canonicalPath !== '/thank-you-page/' && canonicalPath !== '/404' && <meta name="robots" content="max-image-preview:large" />}
-    {canonicalPath === '/thank-you-page/' && <meta name="robots" content="noindex, nofollow" />}
+    {canonicalPath !== '/404' && <meta name="robots" content={isConfirmationPage ? 'noindex, nofollow' : 'max-image-preview:large'} />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/png" href="/assets/original/2020/10/cropped-favicon-32x32.png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/assets/original/2020/10/cropped-favicon-180x180.png" />
