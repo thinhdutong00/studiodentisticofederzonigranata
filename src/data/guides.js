@@ -13,9 +13,10 @@ export const guideCategories = [
   { id: 'prima-della-visita', label: 'Prima della visita', description: 'Da dove cominciare, come leggere un preventivo e come scegliere lo studio.' },
   { id: 'ortodonzia-bambini', label: 'Ortodonzia e bambini', description: 'Allineatori, apparecchi e prime visite dei più piccoli.' },
   { id: 'impianti-protesi', label: 'Denti mancanti, impianti e protesi', description: 'Come si sostituisce un dente e cosa cambia tra le soluzioni.' },
-  { id: 'gengive-mandibola', label: 'Gengive, igiene e mandibola', description: 'Pulizia professionale, sanguinamento gengivale, dolore e rumori della mandibola.' },
+  { id: 'gengive-igiene', label: 'Gengive e igiene', description: 'Pulizia professionale, sanguinamento e gengive che si ritirano.' },
+  { id: 'mandibola-sonno', label: 'Mandibola, bruxismo e russamento', description: 'Dolore e rumori della mandibola, bite e dispositivi per il sonno.' },
   { id: 'estetica-sorriso', label: 'Estetica del sorriso', description: 'Forma e colore dei denti: materiali e limiti.' },
-  { id: 'chirurgia-orale', label: 'Chirurgia orale', description: 'Denti del giudizio, estrazioni e denti che non erompono.' },
+  { id: 'chirurgia-orale', label: 'Curare o estrarre un dente', description: 'Devitalizzazione, denti del giudizio, estrazioni e denti che non erompono.' },
   { id: 'urgenze-prevenzione', label: 'Urgenze e prevenzione', description: 'Cosa fare dopo un trauma e quali segnali non trascurare.' },
 ];
 
@@ -239,7 +240,7 @@ export const guides = [
     keyPoints: [
       'Impianto, moncone e corona sono tre componenti distinti',
       'Osso e gengiva disponibili cambiano il percorso',
-      'Il prezzo più basso non sempre descrive lo stesso lavoro',
+      'Due preventivi si confrontano voce per voce',
     ],
     form: {
       treatment: 'Implantologia',
@@ -416,7 +417,7 @@ export const guides = [
   },
   {
     slug: 'gengive-che-sanguinano',
-    category: 'gengive-mandibola',
+    category: 'gengive-igiene',
     published: true,
     updated,
     title: 'Gengive che sanguinano: quando farle controllare',
@@ -511,7 +512,7 @@ export const guides = [
   },
   {
     slug: 'dolore-click-mandibola-bruxismo',
-    category: 'gengive-mandibola',
+    category: 'mandibola-sonno',
     published: true,
     updated,
     title: 'Mandibola che fa rumore o fa male: quando serve una visita gnatologica',
@@ -895,7 +896,7 @@ export const guides = [
   },
   {
     slug: 'pulizia-denti-o-pulizia-profonda',
-    category: 'gengive-mandibola',
+    category: 'gengive-igiene',
     published: true,
     updated,
     title: 'Pulizia dei denti e pulizia profonda delle gengive: le differenze',
@@ -1088,6 +1089,367 @@ export const guides = [
       { label: 'Università degli Studi di Milano, revisione sulle indicazioni delle faccette in ceramica (archivio AIR)', url: 'https://air.unimi.it/handle/2434/896273' },
     ],
     cta: { title: 'Il materiale si sceglie dopo aver guardato il sorriso.', href: '/richiesta/?trattamento=Faccette%20dentali' },
+  },
+  {
+    slug: 'devitalizzare-o-togliere-il-dente',
+    category: 'chirurgia-orale',
+    published: true,
+    updated,
+    title: 'Devitalizzare o togliere il dente: come si decide',
+    seoTitle: 'Devitalizzare o togliere un dente: come si decide',
+    description:
+      'Quando un dente si può salvare con la devitalizzazione e quando si valuta l’estrazione, che cosa aspettarsi dalla cura e perché un dente devitalizzato può fare male. Studio Federzoni Granata.',
+    summary: 'Quando un dente si può salvare, che cosa comporta la cura e perché un dente già devitalizzato può dare fastidio.',
+    kicker: 'Endodonzia',
+    lead: 'Se il dente si può ricostruire in modo affidabile, di norma si cerca di conservarlo con la devitalizzazione. L’estrazione si valuta quando la struttura rimasta non basta a sostenerlo. A decidere sono l’esame clinico e le radiografie, non l’intensità del dolore.',
+    keyPoints: [
+      'Conservare il dente è la prima strada da valutare',
+      'Conta quanto dente sano rimane, non quanto fa male',
+      'Dopo la cura il dente va ricostruito e controllato',
+    ],
+    form: {
+      treatment: 'Devitalizzazione',
+      reasonLabel: 'Motivo della richiesta',
+      reasons: ['Dolore o sensibilità persistente', 'Devitalizzazione già consigliata', 'Controllo di un dente già devitalizzato'],
+    },
+    sections: [
+      {
+        title: 'Che cos’è la devitalizzazione',
+        paragraphs: [
+          'All’interno del dente c’è la polpa, un tessuto con nervi e vasi. Quando una carie profonda, una frattura o un trauma la infiammano o la infettano in modo irreversibile, la cura canalare la rimuove, pulisce e sigilla i canali delle radici. Il dente resta al suo posto e continua a masticare.',
+          'La cura si esegue in anestesia locale. Nei giorni successivi il dente può essere indolenzito alla masticazione: è un fastidio che di solito si riduce da solo e per il quale ricevi indicazioni.',
+        ],
+      },
+      {
+        title: 'Quando si cerca di salvare il dente e quando no',
+        table: {
+          caption: 'Elementi che orientano tra cura canalare ed estrazione',
+          headers: ['Che cosa si valuta', 'A favore della cura', 'A favore dell’estrazione'],
+          rows: [
+            ['Struttura rimasta', 'Sufficiente per una ricostruzione stabile.', 'Dente molto distrutto o fratturato sotto la gengiva.'],
+            ['Radici', 'Integre e trattabili.', 'Frattura della radice.'],
+            ['Sostegno', 'Osso e gengive in buone condizioni.', 'Perdita di sostegno avanzata.'],
+            ['Ruolo del dente', 'Utile alla masticazione o al sostegno di altri restauri.', 'Dente che non potrà essere utilizzato.'],
+          ],
+        },
+        note: 'Sono criteri generali. Nel singolo caso pesano insieme e vanno verificati con visita e radiografie.',
+      },
+      {
+        title: 'Che cosa succede dopo',
+        paragraphs: [
+          'Un dente devitalizzato ha spesso perso molta sostanza per la carie e per l’accesso ai canali. Per questo la cura non finisce con la chiusura dei canali: serve una ricostruzione adeguata, che in alcuni casi ricopre il dente per proteggerlo.',
+          'Se invece il dente viene estratto, è utile decidere subito se e come sostituirlo. Le alternative sono descritte nella guida sui denti mancanti.',
+        ],
+      },
+      {
+        title: 'Un dente già devitalizzato che fa male',
+        paragraphs: [
+          'Può accadere, anche a distanza di anni. Le cause possibili sono diverse: un’infezione che si è ripresentata, una ricostruzione che non sigilla più, una frattura, oppure un problema della gengiva o del dente vicino.',
+          'Non è un dolore da aspettare che passi: una visita con radiografia permette di capire l’origine. In molti casi il dente può essere trattato di nuovo.',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: 'La devitalizzazione fa male?',
+        answer: 'Viene eseguita in anestesia locale. Dopo la seduta è possibile un indolenzimento per alcuni giorni, variabile da persona a persona.',
+      },
+      {
+        question: 'Quante sedute servono?',
+        answer: 'Dipende dal dente, dal numero di canali e dalla presenza di infezione. Il numero di sedute ti viene indicato dopo la valutazione.',
+      },
+      {
+        question: 'Se non fa più male posso evitare la cura?',
+        answer: 'La scomparsa del dolore non significa guarigione: può indicare che la polpa non è più vitale, mentre l’infezione prosegue. Va verificato con il dentista.',
+      },
+      {
+        question: 'Un dente devitalizzato può scurirsi?',
+        answer: 'Può succedere. Se il cambiamento di colore è un problema estetico, esistono soluzioni da valutare caso per caso.',
+      },
+    ],
+    treatments: [
+      { label: 'Endodonzia e devitalizzazioni', href: '/endodonzia-devitalizzazioni/' },
+      { label: 'Conservativa e otturazioni', href: '/conservativa-otturazioni/' },
+      { label: 'Chirurgia orale', href: '/chirurgia-stomatologica/' },
+    ],
+    related: ['denti-mancanti-ponte-impianto-protesi', 'trauma-dentale-cosa-fare'],
+    sources: [MINISTERO_RACCOMANDAZIONI],
+    cta: { title: 'Prima di decidere serve sapere quanto dente si può conservare.', href: '/richiesta/?trattamento=Devitalizzazione' },
+  },
+  {
+    slug: 'gengive-ritirate-cause-cosa-fare',
+    category: 'gengive-igiene',
+    published: true,
+    updated,
+    title: 'Gengive ritirate: cause e che cosa si può fare',
+    seoTitle: 'Gengive ritirate: cause e cosa si può fare',
+    description:
+      'Perché le gengive si ritirano, se possono ricrescere e quando serve una visita parodontale. Guida dello studio Federzoni Granata, Modena e Reggio Emilia.',
+    summary: 'Perché succede, se la gengiva può tornare com’era e come si evita che la recessione avanzi.',
+    kicker: 'Parodontologia',
+    lead: 'Una gengiva che si è ritirata non ricresce da sola. Si può però capire perché è successo e fermare il peggioramento. Le cause più comuni sono uno spazzolamento troppo energico e la malattia parodontale: distinguerle cambia completamente ciò che conviene fare.',
+    keyPoints: [
+      'La recessione non regredisce spontaneamente',
+      'Le cause principali sono due, con cure diverse',
+      'Fermare la causa viene prima di ogni correzione',
+    ],
+    form: {
+      treatment: 'Cura delle gengive',
+      reasonLabel: 'Motivo della richiesta',
+      reasons: ['Recessione gengivale o denti che si muovono', 'Gengive che sanguinano o sono infiammate', 'Mantenimento dopo una terapia parodontale'],
+    },
+    sections: [
+      {
+        title: 'Come si riconosce',
+        paragraphs: [
+          'Il dente sembra più lungo, vicino alla gengiva compare una zona più gialla e può aumentare la sensibilità al freddo. A volte si nota uno scalino al passaggio dell’unghia. Può riguardare un solo dente o più denti.',
+        ],
+      },
+      {
+        title: 'Perché le gengive si ritirano',
+        table: {
+          caption: 'Cause più frequenti di recessione gengivale',
+          headers: ['Causa', 'Come si presenta di solito'],
+          rows: [
+            ['Spazzolamento traumatico', 'Gengiva sana e non infiammata, recessione sul lato esterno dei denti, spesso con setole dure o movimenti orizzontali energici.'],
+            ['Parodontite', 'Infiammazione, sanguinamento, perdita di osso; la recessione interessa spesso anche gli spazi tra i denti.'],
+            ['Gengiva sottile o denti fuori dall’arcata', 'Predispone alla recessione, soprattutto se si aggiungono altri fattori.'],
+            ['Piercing, protesi o restauri che irritano il margine', 'Recessione localizzata vicino alla causa.'],
+          ],
+        },
+        note: 'Più fattori possono sommarsi. Per questo l’origine si stabilisce con l’esame delle gengive.',
+      },
+      {
+        title: 'Possono ricrescere?',
+        paragraphs: [
+          'No, il tessuto perso non si riforma da solo e nessun dentifricio o collutorio lo fa ricrescere. Quello che si può ottenere, eliminando la causa, è che la recessione si fermi.',
+          'In alcune situazioni esistono interventi di chirurgia gengivale che ricoprono la radice esposta. Non sono indicati in tutti i casi: la possibilità si valuta durante la visita parodontale.',
+        ],
+      },
+      {
+        title: 'Che cosa si fa',
+        list: [
+          'Si misura la recessione e si controlla se è presente una parodontite.',
+          'Si corregge la tecnica di spazzolamento, con setole e strumenti adatti.',
+          'Si tratta l’infiammazione, quando c’è.',
+          'Si gestisce la sensibilità con prodotti o trattamenti specifici.',
+          'Si tiene sotto controllo nel tempo, confrontando le misure.',
+        ],
+      },
+      {
+        title: 'Quando farsi vedere',
+        paragraphs: [
+          'Conviene una valutazione quando la recessione aumenta, quando compaiono sanguinamento o sensibilità, oppure quando un dente sembra spostarsi. Misurare oggi permette di sapere, al controllo successivo, se la situazione è stabile.',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: 'Devo spazzolare meno?',
+        answer: 'No: va cambiato il modo, non la frequenza. Una tecnica delicata e uno spazzolino adatto puliscono senza traumatizzare la gengiva.',
+      },
+      {
+        question: 'La sensibilità passerà?',
+        answer: 'Spesso si riduce con prodotti desensibilizzanti e correggendo le abitudini. Se persiste, esistono trattamenti da eseguire in studio.',
+      },
+      {
+        question: 'Rischio di perdere il dente?',
+        answer: 'Una recessione da spazzolamento, in una bocca sana, di rado mette a rischio il dente. È diverso se la causa è una parodontite: in quel caso va curata la malattia.',
+      },
+    ],
+    treatments: [
+      { label: 'Parodontologia e cure gengivali', href: '/parodontologia-cure-gengivali/' },
+      { label: 'Igiene orale e prevenzione', href: '/igiene-orale-prevenzione/' },
+    ],
+    related: ['gengive-che-sanguinano', 'pulizia-denti-o-pulizia-profonda'],
+    sources: [
+      { label: 'SIdP, Linee guida EFP S3 per il trattamento della parodontite di stadio I–III (adattamento italiano)', url: 'https://www.sidp.it/media-download/ta2e331.pdf' },
+      MINISTERO_RACCOMANDAZIONI,
+    ],
+    cta: { title: 'Sapere perché la gengiva si ritira è il primo passo per fermarla.', href: '/richiesta/?trattamento=Cura%20delle%20gengive' },
+  },
+  {
+    slug: 'bite-a-cosa-serve',
+    category: 'mandibola-sonno',
+    published: true,
+    updated,
+    title: 'Bite: a che cosa serve e quando è indicato',
+    seoTitle: 'Bite per i denti: a cosa serve e quando è indicato',
+    description:
+      'A che cosa serve il bite, che differenza c’è tra quello su misura e quelli pronti all’uso e che cosa non può fare. Guida dello studio Federzoni Granata, Modena e Reggio Emilia.',
+    summary: 'Che cosa fa un bite, che cosa non fa e perché quello su misura va controllato nel tempo.',
+    kicker: 'Gnatologia',
+    lead: 'Il bite è una placca rimovibile che si porta sui denti, di solito di notte. Protegge i denti dall’usura del bruxismo e può ridurre il carico sui muscoli. Non elimina la causa del serramento e va usato su indicazione, perché un dispositivo non adatto può peggiorare i disturbi.',
+    keyPoints: [
+      'Protegge i denti, non “cura” il bruxismo',
+      'Su misura significa regolato e controllato',
+      'Se aumenta il dolore va sospeso e fatto vedere',
+    ],
+    form: {
+      treatment: 'Disturbi della mandibola e ATM',
+      reasonLabel: 'Motivo della richiesta',
+      reasons: ['Bruxismo, serramento o usura dei denti', 'Dolore, rumori o blocchi della mandibola', 'Valutazione del morso e della funzione'],
+    },
+    sections: [
+      {
+        title: 'A che cosa serve',
+        list: [
+          'Proteggere smalto e restauri quando si digrigna o si serra.',
+          'Distribuire le forze e ridurre il lavoro dei muscoli in alcune persone con dolore.',
+          'Fare parte di un trattamento conservativo e reversibile dei disturbi della mandibola.',
+        ],
+        after: [
+          'Non tutte le persone che serrano i denti hanno bisogno di un bite, e non tutti i dolori della mandibola migliorano con un bite. L’indicazione nasce dalla visita.',
+        ],
+      },
+      {
+        title: 'Su misura o pronto all’uso',
+        table: {
+          caption: 'Differenze tra bite su misura e dispositivi pronti all’uso',
+          headers: ['', 'Su misura', 'Pronto all’uso'],
+          rows: [
+            ['Come si ottiene', 'Realizzato sull’impronta dei denti.', 'Acquistato già fatto, talvolta adattabile a caldo.'],
+            ['Contatti tra i denti', 'Regolati alla consegna e ai controlli.', 'Non regolabili con precisione.'],
+            ['Stabilità', 'Resta fermo sull’arcata.', 'Può muoversi o risultare ingombrante.'],
+            ['Controllo nel tempo', 'Previsto.', 'Affidato a chi lo usa.'],
+          ],
+        },
+        note: 'Un dispositivo che non appoggia in modo equilibrato può aumentare il fastidio o, se usato a lungo, modificare il modo in cui i denti chiudono.',
+      },
+      {
+        title: 'Come si arriva al bite',
+        paragraphs: [
+          'La visita valuta denti, muscoli, articolazione e chiusura. Se il bite è indicato, si rileva l’impronta e il dispositivo viene consegnato dopo averne controllato l’appoggio. Seguono visite di verifica, perché con l’uso i contatti cambiano.',
+        ],
+      },
+      {
+        title: 'Che cosa aspettarsi',
+        paragraphs: [
+          'I primi giorni è normale percepire un ingombro e una salivazione maggiore. Se invece il dispositivo provoca o aumenta il dolore, va sospeso e bisogna rivolgersi a chi lo ha prescritto.',
+          'Il bite si consuma: l’usura mostra quanto lavoro sta assorbendo al posto dei denti. Quanto a lungo portarlo dipende dal motivo per cui è stato indicato.',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: 'Il bite fa smettere di digrignare?',
+        answer: 'No. Limita i danni sui denti e può dare sollievo ai muscoli. Sul serramento diurno aiuta soprattutto imparare a riconoscerlo e a rilassare la mandibola.',
+      },
+      {
+        question: 'Si porta sopra o sotto?',
+        answer: 'Dipende dal caso e dalla dentatura. La scelta dell’arcata fa parte del progetto del dispositivo.',
+      },
+      {
+        question: 'Posso usare il bite sportivo per dormire?',
+        answer: 'No: il paradenti sportivo protegge dai colpi, ha uno spessore e una funzione diversi e non è pensato per l’uso notturno.',
+      },
+    ],
+    treatments: [
+      { label: 'Gnatologia e disturbi dell’articolazione temporo-mandibolare', href: '/gnatologia-articolazione-temporo-mandibolare/' },
+    ],
+    related: ['dolore-click-mandibola-bruxismo', 'apparecchio-per-non-russare'],
+    sources: [
+      { label: 'National Institute of Dental and Craniofacial Research (NIH), TMD – Temporomandibular Disorders', url: 'https://nidcr.nih.gov/health-info/tmd' },
+      MINISTERO_RACCOMANDAZIONI,
+    ],
+    cta: { title: 'Un bite è utile quando risponde a un’indicazione precisa.', href: '/richiesta/?trattamento=Disturbi%20della%20mandibola%20e%20ATM' },
+  },
+  {
+    slug: 'apparecchio-per-non-russare',
+    category: 'mandibola-sonno',
+    published: true,
+    updated,
+    title: 'Apparecchio per non russare: quando può aiutare',
+    seoTitle: 'Apparecchio dentale per non russare: quando può aiutare',
+    description:
+      'Come funziona il dispositivo orale per russamento e apnee notturne, per chi può essere indicato e perché serve prima una valutazione medica del sonno. Studio Federzoni Granata.',
+    summary: 'Come funziona il dispositivo orale, per chi può essere indicato e che ruolo ha il medico del sonno.',
+    kicker: 'Russamento e apnee notturne',
+    lead: 'Il dispositivo orale tiene la mandibola leggermente in avanti durante il sonno, per mantenere più aperte le vie aeree. Può essere indicato per il russamento e, su indicazione medica, per alcune forme di apnea ostruttiva. Prima va chiarito se dietro il russamento ci sono apnee: è una diagnosi che spetta al medico.',
+    keyPoints: [
+      'Si porta solo di notte ed è rimovibile',
+      'Le apnee vanno diagnosticate dal medico del sonno',
+      'Serve una bocca in salute e controlli nel tempo',
+    ],
+    form: {
+      treatment: 'Russamento e apnee notturne',
+      reasonLabel: 'Motivo della richiesta',
+      reasons: ['Russamento abituale da valutare', 'Apnea notturna già diagnosticata', 'Valutazione per un dispositivo intraorale'],
+    },
+    sections: [
+      {
+        title: 'Russamento e apnee non sono la stessa cosa',
+        paragraphs: [
+          'Il russamento è il rumore prodotto dai tessuti della gola che vibrano. Nella sindrome delle apnee ostruttive il passaggio dell’aria si interrompe o si riduce più volte durante la notte. Chi ne soffre può avere sonnolenza di giorno, risvegli con sensazione di soffocamento, mal di testa al mattino.',
+          'Dal solo rumore non si distinguono le due condizioni. Se chi dorme accanto nota pause del respiro, o se di giorno c’è sonnolenza, il primo passo è parlarne con il proprio medico per una valutazione del sonno.',
+        ],
+      },
+      {
+        title: 'Come funziona il dispositivo',
+        paragraphs: [
+          'In genere è formato da due placche su misura, una per arcata, collegate in modo da mantenere la mandibola in posizione avanzata. L’avanzamento viene adattato gradualmente.',
+          'Il Ministero della Salute ha pubblicato linee guida nazionali sulla gestione odontoiatrica della sindrome delle apnee ostruttive nel sonno.',
+        ],
+      },
+      {
+        title: 'Per chi può essere indicato',
+        table: {
+          caption: 'Situazioni e percorso consigliato',
+          headers: ['Situazione', 'Percorso'],
+          rows: [
+            ['Russamento senza apnee, già valutato dal medico', 'Valutazione odontoiatrica per il dispositivo.'],
+            ['Apnea ostruttiva diagnosticata', 'Il dispositivo si considera su indicazione del medico del sonno, in base alla gravità e alle alternative.'],
+            ['Russamento mai valutato, con pause del respiro o sonnolenza', 'Prima la valutazione medica.'],
+          ],
+        },
+      },
+      {
+        title: 'Che cosa valuta il dentista',
+        list: [
+          'Numero e condizioni dei denti, che devono sostenere il dispositivo.',
+          'Salute delle gengive.',
+          'Articolazione della mandibola e muscoli.',
+          'Ampiezza dei movimenti di avanzamento.',
+        ],
+        after: [
+          'Non tutte le bocche sono adatte: denti insufficienti, parodontite non trattata o disturbi dell’articolazione possono richiedere prima altre cure o controindicare il dispositivo.',
+        ],
+      },
+      {
+        title: 'Effetti e controlli',
+        paragraphs: [
+          'Nei primi tempi sono possibili aumento della salivazione, indolenzimento dei denti o dei muscoli al risveglio e una sensazione temporanea di chiusura diversa. Con l’uso prolungato possono comparire piccoli cambiamenti nella posizione dei denti: per questo sono previsti controlli periodici.',
+          'L’efficacia sulle apnee va verificata dal medico, non dalla sola riduzione del rumore.',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: 'I dispositivi pronti all’uso sono equivalenti?',
+        answer: 'Non sono costruiti sulla tua bocca e non vengono regolati né controllati. Soprattutto, usarli senza una valutazione può ritardare la diagnosi di apnee.',
+      },
+      {
+        question: 'Sostituisce la CPAP?',
+        answer: 'È il medico del sonno a stabilire la terapia. In alcuni casi il dispositivo orale è un’alternativa, in altri no.',
+      },
+      {
+        question: 'Lo studio fa la diagnosi delle apnee?',
+        answer: 'No. La diagnosi è medica. Lo studio valuta se la bocca è adatta al dispositivo e ne segue l’adattamento, a partire dalla valutazione del medico.',
+      },
+    ],
+    treatments: [
+      { label: 'Dispositivi per russamento e apnee notturne', href: '/dispositivi-russamento-apnee-notturne/' },
+      { label: 'Gnatologia e disturbi dell’articolazione temporo-mandibolare', href: '/gnatologia-articolazione-temporo-mandibolare/' },
+    ],
+    related: ['bite-a-cosa-serve', 'dolore-click-mandibola-bruxismo'],
+    sources: [
+      {
+        label: 'Ministero della Salute, Linee guida nazionali per la prevenzione ed il trattamento odontoiatrico della sindrome delle apnee ostruttive nel sonno (presentazione su Odontoiatria33)',
+        url: 'https://www.odontoiatria33.it/approfondimenti/8480/dal-ministero-della-salute-le-linee-guida-sull-osas.html',
+      },
+      MINISTERO_RACCOMANDAZIONI,
+    ],
+    cta: { title: 'Capire se il dispositivo è adatto richiede una valutazione della bocca.', href: '/richiesta/?trattamento=Russamento%20e%20apnee%20notturne' },
   },
 ];
 
