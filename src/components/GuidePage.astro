@@ -1,0 +1,712 @@
+---
+import CtaArrowIcon from './CtaArrowIcon.astro';
+import GuideRequestForm from './GuideRequestForm.astro';
+import TreatmentPrefooterCta from './TreatmentPrefooterCta.astro';
+import { site } from '../data/site';
+import { categoryLabel, guidePath, guidesIndexPath, resolveGuideReference } from '../data/guides.js';
+
+const { guide } = Astro.props;
+
+const path = guidePath(guide.slug);
+const canonical = new URL(path, Astro.site || site.source).toString();
+const indexUrl = new URL(guidesIndexPath, canonical).toString();
+const homeUrl = new URL('/', canonical).toString();
+const related = (guide.related || []).map(resolveGuideReference).filter(Boolean);
+const updatedLabel = new Date(`${guide.updated}T12:00:00Z`).toLocaleDateString('it-IT', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+});
+const sectionId = (index: number) => `sezione-${index + 1}`;
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${canonical}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: homeUrl },
+        { '@type': 'ListItem', position: 2, name: 'Guide e consigli', item: indexUrl },
+        { '@type': 'ListItem', position: 3, name: guide.title, item: canonical },
+      ],
+    },
+    {
+      '@type': 'Article',
+      '@id': `${canonical}#article`,
+      headline: guide.title,
+      description: guide.description,
+      inLanguage: 'it-IT',
+      dateModified: guide.updated,
+      mainEntityOfPage: canonical,
+      articleSection: categoryLabel(guide.category),
+      author: { '@type': 'Organization', name: site.name, url: homeUrl },
+      publisher: { '@type': 'Organization', name: site.name, url: homeUrl },
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${canonical}#faq`,
+      mainEntity: guide.faqs.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: { '@type': 'Answer', text: item.answer },
+      })),
+    },
+  ],
+};
+---
+
+<article class="guide-page">
+  <section class="guide-hero" aria-labelledby="guide-title" data-transparent-header-region>
+    <div class="guide-wrap guide-hero-grid">
+      <div class="guide-hero-copy">
+        <nav class="guide-breadcrumb" aria-label="Percorso di navigazione">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li><a href={guidesIndexPath}>Guide e consigli</a></li>
+            <li aria-current="page">{guide.kicker}</li>
+          </ol>
+        </nav>
+        <h1 id="guide-title">{guide.title}</h1>
+        <p class="guide-lead">{guide.lead}</p>
+        <ul class="guide-key-points" aria-label="In breve">
+          {guide.keyPoints.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+
+      <GuideRequestForm form={guide.form} idPrefix="guide" />
+    </div>
+  </section>
+
+  <div class="guide-wrap guide-layout">
+    <aside class="guide-toc" aria-labelledby="guide-toc-title">
+      <p id="guide-toc-title" class="guide-kicker">In questa guida</p>
+      <ol>
+        {guide.sections.map((section, index) => <li><a href={`#${sectionId(index)}`}>{section.title}</a></li>)}
+        <li><a href="#domande-frequenti">Domande frequenti</a></li>
+      </ol>
+      <p class="guide-updated">Aggiornata il {updatedLabel}</p>
+    </aside>
+
+    <div class="guide-body">
+      {guide.sections.map((section, index) => (
+        <section class="guide-section" aria-labelledby={sectionId(index)}>
+          <h2 id={sectionId(index)}>{section.title}</h2>
+          {section.table ? (
+            <div class="guide-table-scroll" tabindex="0" role="region" aria-label={section.table.caption}>
+              <table>
+                <caption>{section.table.caption}</caption>
+                <thead>
+                  <tr>{section.table.headers.map((header) => <th scope="col">{header}</th>)}</tr>
+                </thead>
+                <tbody>
+                  {section.table.rows.map((row) => (
+                    <tr>
+                      {row.map((cell, cellIndex) => (cellIndex === 0 ? <th scope="row">{cell}</th> : <td>{cell}</td>))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : null}
+          {section.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          {section.list ? <ul>{section.list.map((item) => <li>{item}</li>)}</ul> : null}
+          {section.after?.map((paragraph) => <p>{paragraph}</p>)}
+          {section.note ? <p class="guide-note">{section.note}</p> : null}
+        </section>
+      ))}
+
+      <section class="guide-section" aria-labelledby="domande-frequenti">
+        <h2 id="domande-frequenti">Domande frequenti</h2>
+        <div class="guide-faq">
+          {guide.faqs.map((item) => (
+            <details>
+              <summary>
+                <span>{item.question}</span>
+                <i aria-hidden="true"></i>
+              </summary>
+              <p>{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <p class="guide-disclaimer">
+        Queste informazioni hanno scopo divulgativo e non sostituiscono la visita: diagnosi e indicazioni di cura
+        richiedono una valutazione individuale.
+      </p>
+
+      <section class="guide-links" aria-labelledby="guide-treatments-title">
+        <h2 id="guide-treatments-title">Trattamenti collegati</h2>
+        <ul class="guide-link-list">
+          {guide.treatments.map((item) => (
+            <li>
+              <a href={item.href}>
+                <span>{item.label}</span>
+                <CtaArrowIcon className="ui-glyph" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {related.length > 0 && (
+        <section class="guide-links" aria-labelledby="guide-related-title">
+          <h2 id="guide-related-title">Altri approfondimenti</h2>
+          <ul class="guide-link-list">
+            {related.map((item) => (
+              <li>
+                <a href={item.href}>
+                  <span>
+                    {item.title}
+                    <small>{item.summary}</small>
+                  </span>
+                  <CtaArrowIcon className="ui-glyph" />
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p class="guide-all-link"><a href={guidesIndexPath}>Tutte le guide e i consigli</a></p>
+        </section>
+      )}
+
+      <section class="guide-sources" aria-labelledby="guide-sources-title">
+        <h2 id="guide-sources-title">Fonti</h2>
+        <ul>
+          {guide.sources.map((source) => (
+            <li><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label}</a></li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <TreatmentPrefooterCta
+    title={guide.cta.title}
+    href={guide.cta.href}
+    eyebrow="Richiedi una visita"
+    lead="Raccontaci la tua esigenza. La segreteria ti ricontatterà per verificare i dettagli e concordare data e orario: l’invio della richiesta non equivale a un appuntamento già fissato."
+    ctaLabel="Richiedi una visita"
+  />
+</article>
+
+<script type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g, '\\u003c')}></script>
+
+<style>
+  .guide-page {
+    --gp-dark: var(--brand-primary-dark);
+    --gp-accent: var(--brand-blue);
+    --gp-cta: var(--brand-cta);
+    --gp-cta-hover: var(--brand-cta-hover);
+    --gp-letter-spacing: -0.2px;
+    background: var(--surface-white);
+    color: var(--text-dark);
+    font-family: Inter, sans-serif;
+    letter-spacing: var(--gp-letter-spacing);
+    word-spacing: 0;
+  }
+
+  .guide-wrap {
+    width: min(100% - 48px, 1540px);
+    margin: 0 auto;
+  }
+
+  .guide-hero {
+    background:
+      radial-gradient(circle at 20% 82%, rgba(var(--brand-blue-rgb), 0.18), transparent 32%),
+      var(--gp-dark);
+    color: var(--surface-white);
+  }
+
+  .guide-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(360px, 0.65fr);
+    gap: clamp(48px, 7vw, 120px);
+    align-items: center;
+    padding: clamp(150px, 13vw, 200px) 0 clamp(64px, 7vw, 100px);
+  }
+
+  .guide-breadcrumb ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    margin: 0 0 22px;
+    padding: 0;
+    list-style: none;
+    color: var(--gp-accent);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+
+  .guide-breadcrumb li + li::before {
+    content: "/";
+    margin-right: 10px;
+    color: rgba(var(--surface-white-rgb), 0.5);
+  }
+
+  .guide-breadcrumb a {
+    color: var(--surface-white);
+    text-decoration: underline;
+    text-decoration-color: rgba(var(--surface-white-rgb), 0.4);
+    text-underline-offset: 4px;
+  }
+
+  .guide-breadcrumb a:hover,
+  .guide-breadcrumb a:focus-visible {
+    text-decoration-color: var(--surface-white);
+  }
+
+  .guide-hero h1 {
+    max-width: 22ch;
+    margin: 0;
+    color: var(--surface-white);
+    font-size: clamp(38px, 3.9vw, 62px);
+    font-weight: 300;
+    letter-spacing: var(--gp-letter-spacing);
+    line-height: 1.02;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  .guide-lead {
+    max-width: 860px;
+    margin: 28px 0 0;
+    color: var(--gp-accent);
+    font-size: clamp(19px, 1.5vw, 24px);
+    font-weight: 500;
+    line-height: 1.32;
+  }
+
+  .guide-key-points {
+    display: grid;
+    gap: 8px;
+    margin: 28px 0 0;
+    padding: 0;
+    color: var(--surface-white);
+    font-size: 15px;
+    line-height: 1.4;
+    list-style: none;
+  }
+
+  .guide-key-points li {
+    position: relative;
+    padding-left: 17px;
+  }
+
+  .guide-key-points li::before {
+    content: "";
+    position: absolute;
+    top: 0.55em;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gp-accent);
+  }
+
+  .guide-layout {
+    display: grid;
+    grid-template-columns: minmax(220px, 300px) minmax(0, 860px);
+    gap: clamp(40px, 6vw, 110px);
+    padding: clamp(56px, 6vw, 96px) 0 clamp(64px, 7vw, 110px);
+  }
+
+  .guide-kicker {
+    margin: 0 0 16px;
+    color: var(--gp-cta);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .guide-toc {
+    position: sticky;
+    top: 132px;
+    align-self: start;
+  }
+
+  .guide-toc ol {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--border);
+    list-style: none;
+  }
+
+  .guide-toc a {
+    display: block;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--gp-dark);
+    font-size: 15px;
+    line-height: 1.35;
+    text-decoration: none;
+  }
+
+  .guide-toc a:hover,
+  .guide-toc a:focus-visible {
+    color: var(--gp-cta);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .guide-updated {
+    margin: 18px 0 0;
+    color: var(--muted-text);
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .guide-section + .guide-section {
+    margin-top: clamp(40px, 4.5vw, 64px);
+  }
+
+  .guide-body h2 {
+    margin: 0 0 20px;
+    color: var(--gp-cta-hover);
+    font-size: clamp(28px, 2.5vw, 40px);
+    font-weight: 500;
+    letter-spacing: var(--gp-letter-spacing);
+    line-height: 1.12;
+    scroll-margin-top: 140px;
+    text-wrap: balance;
+  }
+
+  .guide-section p,
+  .guide-section li {
+    color: var(--text-dark);
+    font-size: clamp(17px, 1.2vw, 19px);
+    font-weight: 400;
+    line-height: 1.58;
+  }
+
+  .guide-section p {
+    margin: 0;
+  }
+
+  .guide-section p + p,
+  .guide-section ul + p,
+  .guide-section p + ul,
+  .guide-table-scroll + p,
+  .guide-table-scroll + ul {
+    margin-top: 16px;
+  }
+
+  .guide-section ul {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .guide-section ul li {
+    position: relative;
+    padding-left: 22px;
+  }
+
+  .guide-section ul li::before {
+    content: "";
+    position: absolute;
+    top: 0.68em;
+    left: 2px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--gp-accent);
+  }
+
+  .guide-section .guide-note {
+    margin-top: 20px;
+    padding: 18px 20px;
+    border-left: 3px solid var(--gp-cta);
+    background: var(--soft-blue-bg);
+    color: var(--gp-dark);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .guide-table-scroll {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
+  .guide-table-scroll:focus-visible {
+    outline: 3px solid rgba(var(--brand-cta-rgb), 0.24);
+    outline-offset: 3px;
+  }
+
+  .guide-table-scroll table {
+    width: 100%;
+    min-width: 560px;
+    border-collapse: collapse;
+    font-size: 16px;
+    line-height: 1.45;
+  }
+
+  .guide-table-scroll caption {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .guide-table-scroll th,
+  .guide-table-scroll td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .guide-table-scroll thead th {
+    background: var(--soft-blue-bg);
+    color: var(--gp-dark);
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .guide-table-scroll tbody th {
+    width: 30%;
+    color: var(--gp-dark);
+    font-weight: 500;
+  }
+
+  .guide-table-scroll tbody tr:last-child th,
+  .guide-table-scroll tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .guide-faq {
+    border-top: 1px solid var(--border);
+  }
+
+  .guide-faq details {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .guide-faq summary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 28px;
+    gap: 18px;
+    align-items: center;
+    padding: 20px 0;
+    color: var(--gp-dark);
+    cursor: pointer;
+    font-size: clamp(18px, 1.35vw, 21px);
+    font-weight: 500;
+    line-height: 1.3;
+    list-style: none;
+  }
+
+  .guide-faq summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .guide-faq summary:focus-visible {
+    outline: 3px solid rgba(var(--brand-cta-rgb), 0.24);
+    outline-offset: 4px;
+  }
+
+  .guide-faq i {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--gp-cta);
+  }
+
+  .guide-faq i::before,
+  .guide-faq i::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 2px;
+    background: var(--surface-white);
+    transform: translate(-50%, -50%);
+  }
+
+  .guide-faq i::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  .guide-faq details[open] i::after {
+    opacity: 0;
+  }
+
+  .guide-faq details p {
+    margin: 0;
+    padding: 0 46px 22px 0;
+  }
+
+  .guide-disclaimer {
+    margin: clamp(32px, 4vw, 48px) 0 0;
+    color: var(--muted-text);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .guide-links,
+  .guide-sources {
+    margin-top: clamp(40px, 4.5vw, 64px);
+  }
+
+  .guide-links h2,
+  .guide-sources h2 {
+    margin-bottom: 16px;
+    color: var(--gp-dark);
+    font-size: clamp(22px, 1.7vw, 26px);
+  }
+
+  .guide-link-list {
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--border);
+    list-style: none;
+  }
+
+  .guide-link-list a {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 24px;
+    gap: 18px;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--gp-dark);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.3;
+    text-decoration: none;
+  }
+
+  .guide-link-list a:hover,
+  .guide-link-list a:focus-visible {
+    color: var(--gp-cta);
+  }
+
+  .guide-link-list a:focus-visible {
+    outline: 3px solid rgba(var(--brand-cta-rgb), 0.24);
+    outline-offset: 3px;
+  }
+
+  .guide-link-list small {
+    display: block;
+    margin-top: 5px;
+    color: var(--muted-text);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  .guide-all-link {
+    margin: 18px 0 0;
+    font-size: 16px;
+  }
+
+  .guide-all-link a,
+  .guide-sources a {
+    color: var(--gp-cta);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .guide-all-link a:hover,
+  .guide-sources a:hover {
+    color: var(--gp-cta-hover);
+  }
+
+  .guide-sources ul {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  @media (max-width: 980px) {
+    .guide-hero-grid {
+      grid-template-columns: 1fr;
+      gap: 44px;
+    }
+
+    .guide-layout {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+
+    .guide-toc {
+      position: static;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .guide-page {
+      --gp-letter-spacing: -0.16px;
+    }
+
+    .guide-wrap {
+      width: min(100% - 30px, 1540px);
+    }
+
+    .guide-hero-grid {
+      gap: 36px;
+      padding: 150px 0 52px;
+    }
+
+    .guide-breadcrumb ol {
+      margin-bottom: 16px;
+      font-size: 13px;
+    }
+
+    .guide-hero h1 {
+      max-width: none;
+      font-size: 30px;
+      font-weight: 400;
+      line-height: 32px;
+    }
+
+    .guide-lead {
+      margin-top: 20px;
+      font-size: 18px;
+      line-height: 1.32;
+    }
+
+    .guide-key-points {
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    .guide-layout {
+      padding: 44px 0 56px;
+    }
+
+    .guide-body h2 {
+      font-size: 26px;
+      line-height: 29px;
+      scroll-margin-top: 110px;
+    }
+
+    .guide-section p,
+    .guide-section li {
+      font-size: 17px;
+      line-height: 26px;
+    }
+
+    .guide-faq details p {
+      padding-right: 0;
+    }
+  }
+</style>

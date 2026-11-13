@@ -6,6 +6,7 @@ import WhatsAppFloatingButton from './WhatsAppFloatingButton.astro';
 import TreatmentStickyCta from './TreatmentStickyCta.astro';
 import SectionReveal from './SectionReveal.astro';
 import { site } from '../data/site';
+import { nonIndexablePaths } from '../data/guides.js';
 import '../styles/inter-font.css';
 import '../styles/apple-mobile-fonts.css';
 
@@ -61,6 +62,7 @@ const showSectionReveal = !sectionRevealExcludedPaths.has(canonicalPath);
     <title>{title}</title>
     <meta name="description" content={description} />
     {canonicalPath === '/thank-you-page/' && <meta name="robots" content="noindex, nofollow" />}
+    {nonIndexablePaths.includes(canonicalPath) && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/png" href="/assets/original/2020/10/cropped-favicon-32x32.png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/assets/original/2020/10/cropped-favicon-180x180.png" />

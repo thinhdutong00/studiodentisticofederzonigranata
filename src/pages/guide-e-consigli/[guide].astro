@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../../components/BaseLayout.astro';
+import GuidePage from '../../components/GuidePage.astro';
+import { site } from '../../data/site';
+import { guidePath, publishedGuides } from '../../data/guides.js';
+
+export function getStaticPaths() {
+  return publishedGuides.map((guide) => ({
+    params: { guide: guide.slug },
+    props: { guide },
+  }));
+}
+
+const { guide } = Astro.props;
+---
+
+<BaseLayout
+  title={`${guide.seoTitle} | ${site.name}`}
+  description={guide.description}
+  canonicalPath={guidePath(guide.slug)}
+  transparentHeader
+  headerCtaHref={guide.cta.href}
+>
+  <GuidePage guide={guide} />
+</BaseLayout>

@@ -242,12 +242,12 @@ export const site = {
         },
         {
           "type": "paragraph",
-          "html": "<p>Pagina dedicata in preparazione.</p>"
+          "html": "<p>Qui trovi le pagine utili per conoscere lo studio e preparare la visita: chi siamo, come lavoriamo, dove e quando riceviamo, e gli approfondimenti sui dubbi più frequenti.</p>"
         },
         {
           "type": "list",
           "ordered": false,
-          "html": "<ul><li><a href=\"/chi-siamo/\">Chi siamo</a></li><li><a href=\"/strumentazioni-attrezzature-tecniche/\">Qualità e Tecnologia</a></li><li><a href=\"/orari-e-sedi/\">Orari e sedi</a></li><li><a href=\"/convenzioni/\">Convenzioni</a></li><li><a href=\"/faq/\">FAQ</a></li></ul>"
+          "html": "<ul><li><a href=\"/chi-siamo/\">Chi siamo</a></li><li><a href=\"/strumentazioni-attrezzature-tecniche/\">Qualità e Tecnologia</a></li><li><a href=\"/prima-visita/\">Prima visita</a></li><li><a href=\"/orari-e-sedi/\">Orari e sedi</a></li><li><a href=\"/convenzioni/\">Convenzioni</a></li><li><a href=\"/urgenze/\">Urgenze</a></li><li><a href=\"/video/\">Video</a></li><li><a href=\"/guide-e-consigli/\">Guide e consigli</a></li><li><a href=\"/faq/\">FAQ</a></li></ul>"
         }
       ]
     },

@@ -1777,8 +1777,20 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
 
     const preselectTreatmentFromUrl = () => {
       const params = new URLSearchParams(window.location.search);
+      // La sede scelta nel modulo breve viene conservata anche quando il percorso è ancora da definire.
+      const preselectOfficeFromUrl = () => {
+        const requestedOffice = params.get('sede');
+        if (!requestedOffice) return;
+        const matchingOffice = Array.from(form.querySelectorAll('[data-choice="office"]')).find(
+          (button) => button instanceof HTMLButtonElement && button.dataset.value === requestedOffice
+        );
+        if (matchingOffice instanceof HTMLButtonElement) selectChoice(matchingOffice);
+      };
       const requestedTreatment = params.get('trattamento');
-      if (!requestedTreatment) return;
+      if (!requestedTreatment) {
+        preselectOfficeFromUrl();
+        return;
+      }
 
       const normalizedRequest = normalizeLabel(requestedTreatment);
       const matchingTreatment = config.treatments.find((treatment) =>
@@ -1786,7 +1798,10 @@ const requestConfigJson = JSON.stringify(requestConfig).replace(/</g, '\\u003c')
           (alias) => normalizeLabel(alias) === normalizedRequest
         )
       );
-      if (!matchingTreatment) return;
+      if (!matchingTreatment) {
+        preselectOfficeFromUrl();
+        return;
+      }
 
       const matchingButton = Array.from(form.querySelectorAll('[data-choice="treatment"]')).find((button) => {
         if (!(button instanceof HTMLButtonElement)) return false;

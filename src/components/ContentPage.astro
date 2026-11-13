@@ -8,6 +8,7 @@ import SectionBand from './SectionBand.astro';
 import TreatmentPrefooterCta from './TreatmentPrefooterCta.astro';
 import { site, type SitePage } from '../data/site';
 import { videoItems } from '../data/videos';
+import { existingArticles, guideIndexEntries, guidesIndexPath } from '../data/guides.js';
 
 interface Props {
   page: SitePage;
@@ -715,6 +716,42 @@ const officePageConfigs = {
 } as const;
 
 const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs];
+
+// Approfondimenti già pubblicati: collegamento all'indice "Guide e consigli" e ad altre guide dello stesso argomento.
+const guideArticle = existingArticles.find((article) => article.href === page.path);
+const relatedGuideEntries = guideArticle
+  ? guideIndexEntries.filter((entry) => entry.category === guideArticle.category && entry.href !== page.path).slice(0, 3)
+  : [];
+
+// Dati strutturati della sede, costruiti solo con informazioni già presenti nel progetto.
+const officeData = officePage ? site.offices.find((office) => office.city === officePage.city) : undefined;
+const officeUrl = officeData ? new URL(officeData.href, site.source).toString() : '';
+const officeStructuredData = officeData
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'Dentist',
+      '@id': `${officeUrl}#studio`,
+      name: `${site.name} – ${officeData.city}`,
+      url: officeUrl,
+      telephone: officeData.phone,
+      email: officeData.email,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: officeData.address.split(',').slice(0, -1).join(',').trim() || officeData.address,
+        addressLocality: officeData.city,
+        addressCountry: 'IT',
+      },
+      openingHoursSpecification: [
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+          opens: '10:00',
+          closes: '19:00',
+        },
+      ],
+      parentOrganization: { '@type': 'Organization', name: site.name, url: new URL('/', site.source).toString() },
+    }
+  : undefined;
 ---
 
 {page.path === '/' ? (
@@ -949,6 +986,25 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
       </div>
     </section>
 
+    <section class="office-intro" aria-labelledby="office-orientation-title">
+      <div class="office-intro-wrap">
+        <p class="eyebrow">Prima di prenotare</p>
+        <h2 id="office-orientation-title" class="office-lead">Che cosa puoi sapere prima della visita a {officePage.city}</h2>
+        <div class="office-copy-grid">
+          <p>
+            I percorsi di cura dello studio sono descritti nella pagina dei <a href="/trattamenti/">trattamenti</a>, dall’<a href="/igiene-orale-prevenzione/">igiene e prevenzione</a> all’<a href="/ortodonzia-allineatori-invisibili/">ortodonzia</a>, dall’<a href="/implantologia-tradizionale-computer-guidata/">implantologia</a> alla <a href="/parodontologia-cure-gengivali/">parodontologia</a>. La sede in cui svolgere ogni cura viene concordata con la segreteria al momento della richiesta.
+          </p>
+          <p>
+            Se è la prima volta, puoi leggere <a href="/prima-visita/">come si svolge la prima visita</a>, consultare le <a href="/recensioni/">recensioni dei pazienti</a> oppure le <a href={guidesIndexPath}>guide e i consigli</a>, tra cui <a href="/studio-dentistico-cosa-osservare-per-scegliere-quello-giusto/">cosa osservare per scegliere uno studio dentistico</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {officeStructuredData && (
+      <script type="application/ld+json" set:html={JSON.stringify(officeStructuredData).replace(/</g, '\\u003c')}></script>
+    )}
+
     <section class="office-contact-section" aria-labelledby="office-contact-title">
       <div class="office-contact-wrap">
         <div class="office-contact-copy">
@@ -1157,6 +1213,19 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
           )}
 
           {page.hasContactForm && <ContactForm />}
+
+          {guideArticle && (
+            <nav class="guide-article-nav" aria-labelledby="guide-article-nav-title">
+              <h2 id="guide-article-nav-title">Altri approfondimenti</h2>
+              <ul>
+                {relatedGuideEntries.map((entry) => <li><a href={entry.href}>{entry.title}</a></li>)}
+                <li><a href={guidesIndexPath}>Tutte le guide e i consigli</a></li>
+              </ul>
+              <p>
+                Queste informazioni non sostituiscono la visita. Per una valutazione puoi <a href="/richiesta/">richiedere una visita</a>: la segreteria ti ricontatterà per concordare data e orario.
+              </p>
+            </nav>
+          )}
         </div>
       </div>
     </section>
@@ -1241,6 +1310,37 @@ const officePage = officePageConfigs[page.path as keyof typeof officePageConfigs
 </script>
 
 <style>
+  .guide-article-nav {
+    margin-top: clamp(40px, 5vw, 64px);
+    padding-top: clamp(28px, 3vw, 40px);
+    border-top: 1px solid var(--border);
+  }
+
+  .guide-article-nav ul {
+    display: grid;
+    gap: 10px;
+    margin: 0 0 20px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .guide-article-nav a {
+    color: var(--brand-cta);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .guide-article-nav a:hover,
+  .guide-article-nav a:focus-visible {
+    color: var(--brand-cta-hover);
+  }
+
+  .office-copy-grid a {
+    color: var(--brand-cta);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
   .video-hero {
     min-height: clamp(620px, 58vw, 760px);
     display: grid;
