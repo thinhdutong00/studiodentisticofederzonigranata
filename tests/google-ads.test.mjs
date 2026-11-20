@@ -10,6 +10,8 @@ const requestId = 'a3fb3f9c-714c-4d7c-af09-51fe594f6251';
 const confirmed = { requestId, kind: 'landing-consultation', source: '/visita-parodontologia/' };
 const receiptKey = 'fg-confirmed-lead-v1';
 const orthodonticReceiptKey = 'fg-confirmed-orthodontic-lead-v1';
+const generalReceiptKey = 'fg-confirmed-general-lead-v1';
+const generalDestination = 'AW-988575526/bwBrCKn8zLgZEKbusdcD';
 const orthodonticConfirmed = { requestId, kind: 'orthodontic-quiz', source: '/visita-ortodonzia/' };
 
 function page({ preference, path = '/visita-parodontologia/', hostname = 'studiodentisticofederzonigranata.it', storage = new Map(), blocked = false } = {}) {
@@ -66,6 +68,13 @@ for (const hostname of ['localhost', '127.0.0.1', 'example-preview.vercel.app'])
 }
 
 for (const [service, lead, key, destination, kinds] of [
+  ...[
+    ['/', 'contact'], ['/modena/', 'contact'], ['/reggio-emilia/', 'contact'],
+    ['/richiesta/', 'treatment'], ['/prenota-prima-visita/', 'first-visit'],
+    ['/prenota-urgenza/', 'urgent'], ['/modena', 'callback'],
+  ].map(([source, kind]) => [source, { requestId, source }, generalReceiptKey, generalDestination, [kind]]),
+  ['Modena to specialist', { ...confirmed, campaignId: '14399568427' }, generalReceiptKey, generalDestination, ['landing-consultation']],
+  ['Reggio Emilia to specialist', { ...orthodonticConfirmed, campaignId: '14402173679' }, generalReceiptKey, generalDestination, ['orthodontic-quiz']],
   ['parodontologia', confirmed, receiptKey, 'AW-988575526/I2pSCNjTzaodEKbusdcD', ['landing-consultation', 'periodontal-quiz']],
   ['ortodonzia', orthodonticConfirmed, orthodonticReceiptKey, 'AW-988575526/gUQ-COLP2aodEKbusdcD', ['landing-consultation', 'orthodontic-quiz']],
   ['parodontologia diretta', { requestId, source: '/visita-parodontologia-diretta/' }, receiptKey, 'AW-988575526/I2pSCNjTzaodEKbusdcD', ['callback', 'periodontal-quiz']],
@@ -74,7 +83,7 @@ for (const [service, lead, key, destination, kinds] of [
  for (const kind of kinds) {
   test(`${service}/${kind}: confirmed lead fires once on thank-you, never on the form, with no patient fields`, () => {
     const p = page({ preference: 'accept', path: lead.source }); p.initGoogleAds();
-    p.rememberConfirmedLead({ ...lead, kind, fullName: 'PRIVATE NAME', phone: 'PRIVATE PHONE', email: 'PRIVATE EMAIL', periodontalSymptom: 'PRIVATE HEALTH' });
+    p.rememberConfirmedLead({ ...lead, kind, fullName: 'PRIVATE NAME', phone: 'PRIVATE PHONE', email: 'PRIVATE EMAIL', periodontalSymptom: 'PRIVATE HEALTH' }, lead.campaignId);
     p.load();
     assert.equal(p.calls().filter(c => c[0] === 'event').length, 0);
     assert.deepEqual(Object.keys(JSON.parse(p.storage.get(key))).sort(), ['createdAt', 'requestId']);
@@ -103,7 +112,7 @@ test('direct visits, URL query tricks, other services and invalid IDs do not cre
   }
 });
 
-for (const key of [receiptKey, orthodonticReceiptKey]) {
+for (const key of [receiptKey, orthodonticReceiptKey, generalReceiptKey]) {
  test(`${key}: expired, future and malformed receipts never fire`, () => {
   for (const value of ['broken JSON', JSON.stringify({ requestId, createdAt: Date.now() - 31 * 60 * 1000 }), JSON.stringify({ requestId, createdAt: Date.now() + 60_000 }), JSON.stringify({ requestId: 'not-an-id', createdAt: Date.now() })]) {
     const p = page({ preference: 'accept', path: '/thank-you-page/', storage: new Map([[key, value]]) });
@@ -141,7 +150,7 @@ test('a confirmed orthodontic form replaces an unconsumed periodontal receipt wi
 
 test('rejecting consent removes both service receipts and accepting later invents no lead', () => {
   const receipt = JSON.stringify({ requestId, createdAt: Date.now() });
-  const p = page({ preference: 'reject', path: '/thank-you-page/', storage: new Map([[receiptKey, receipt], [orthodonticReceiptKey, receipt]]) });
+  const p = page({ preference: 'reject', path: '/thank-you-page/', storage: new Map([[receiptKey, receipt], [orthodonticReceiptKey, receipt], [generalReceiptKey, receipt]]) });
   p.initGoogleAds();
   assert.equal(p.storage.size, 0);
   p.choose('accept'); p.load();
