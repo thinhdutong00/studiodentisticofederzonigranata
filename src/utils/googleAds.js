@@ -7,9 +7,14 @@ export const ADS_ORTHODONTIC_DESTINATION = 'AW-988575526/gUQ-COLP2aodEKbusdcD';
 export const COOKIE_PREFERENCE_KEY = 'fg-cookie-preference-v2';
 const RECEIPT_KEY = 'fg-confirmed-lead-v1';
 const ORTHODONTIC_RECEIPT_KEY = 'fg-confirmed-orthodontic-lead-v1';
+const GENERAL_LEAD = { key: 'fg-confirmed-general-lead-v1', destination: 'AW-988575526/bwBrCKn8zLgZEKbusdcD' };
+// City search ads can lead to a specialist form through internal navigation.
+const CITY_CAMPAIGN_IDS = new Set(['14399568427', '14402173679']);
+const BOOKING_PAGES = { treatment: '/richiesta', 'first-visit': '/prenota-prima-visita', urgent: '/prenota-urgenza' };
 const LEAD_EVENTS = [
   { key: RECEIPT_KEY, destination: ADS_LEAD_DESTINATION, treatment: 'parodontologia', quiz: 'periodontal-quiz' },
   { key: ORTHODONTIC_RECEIPT_KEY, destination: ADS_ORTHODONTIC_DESTINATION, treatment: 'ortodonzia', quiz: 'orthodontic-quiz' },
+  GENERAL_LEAD,
 ];
 const RECEIPT_TTL = 30 * 60 * 1000;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -34,16 +39,28 @@ function forgetReceipts() {
   for (const { key } of LEAD_EVENTS) forgetReceipt(key);
 }
 
+function conversionForForm(kind, source, campaignId) {
+  const landing = getLandingRoute(source);
+  if (landing) {
+    const event = LEAD_EVENTS.find(event => event.treatment === landing.treatment);
+    const formKind = landing.variant === 'direct' ? 'callback' : 'landing-consultation';
+    if (event && (kind === formKind || kind === event.quiz)) {
+      return CITY_CAMPAIGN_IDS.has(campaignId) ? GENERAL_LEAD : event;
+    }
+    return;
+  }
+  if (typeof source !== 'string' || !/^\/(?:[a-z0-9-]+\/)*[a-z0-9-]*$/.test(source)) return;
+  const path = source.replace(/\/$/, '');
+  if (kind === 'contact' || kind === 'callback' || BOOKING_PAGES[kind] === path) return GENERAL_LEAD;
+}
+
 // Called only after /api/booking has acknowledged this exact requestId.
 // Store no form fields, clinical answers, contact details, or attribution data.
-export function rememberConfirmedLead({ requestId, kind, source }) {
+export function rememberConfirmedLead({ requestId, kind, source }, campaignId = '') {
   forgetReceipts();
   if (!productionHost() || !consentGranted() || !UUID.test(requestId)) return;
-  const landing = getLandingRoute(source);
-  if (!landing) return;
-  const event = LEAD_EVENTS.find(event => event.treatment === landing.treatment);
-  const formKind = landing.variant === 'direct' ? 'callback' : 'landing-consultation';
-  if (!event || (kind !== formKind && kind !== event.quiz)) return;
+  const event = conversionForForm(kind, source, campaignId);
+  if (!event) return;
   try {
     sessionStorage.setItem(event.key, JSON.stringify({ requestId, createdAt: Date.now() }));
   } catch {
