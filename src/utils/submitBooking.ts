@@ -46,7 +46,10 @@ export async function submitBooking(form: HTMLFormElement, setError: (message: s
     succeeded = true;
     buttons.forEach((button) => { button.textContent = 'Richiesta inviata'; });
     rememberConfirmedBookingSummary({ ...payload, requestId: attempt.requestId });
-    rememberConfirmedLead({ requestId: attempt.requestId, kind: payload.kind, source: payload.source });
+    rememberConfirmedLead(
+      { requestId: attempt.requestId, kind: payload.kind, source: payload.source },
+      payload.attributionCampaignId,
+    );
     window.location.assign('/thank-you-page/');
   } catch (error) {
     setError(error instanceof Error && error.name === 'Error' ? error.message : fallback);
